@@ -1,0 +1,1544 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://54.153.215.245'
+    description: ''
+    variables: {}
+  - url: 'https://api.au.whispir.com'
+    description: ''
+    variables: {}
+info:
+  version: 6eb8d4e0-5b3d-45b7-94fc-b0c1bf3b49ee
+  title: Whispir REST API
+  description: |-
+    **Whispir REST API Collection**
+
+    The Postman Whispir REST API collection is a fully parameterised system of API requests to assist developers in understanding the function and purpose of each of the Whispir API methods.
+
+    To use the API Collection, create an environment with the following variables.
+
+    _base-url_ - points to your api region https://api.au.whispir.com
+    _x-api-key_ - given to you by your Whispir admin
+    _whispir-username_ - given to you by your Whispir admin
+    _whispir-password_ - given to you by your Whispir admin
+
+
+    **Limitations**
+    Currently the collection only reports values in JSON
+  termsOfService: ''
+  contact: {}
+  license:
+    name: ''
+paths:
+  /activities:
+    get:
+      summary: 'Activities [Global]'
+      description: |-
+        All parameters are optional and not all combinations are valid.
+
+        **Action**
+        Create
+        Update
+        Move
+        Copy
+        Draft
+        Send
+        Modified
+        Delete
+        Contact Import File
+        Login
+        Approve
+        Reject
+        Dispatch
+        Register
+        Accept
+        Closed
+        Map
+        Un-map
+
+        **Module**
+        System
+        Message
+        Scheduled Message
+        User
+        Contact
+        DistributionList
+        Template
+        Workspace
+        Event
+        WebService
+        Settings
+        Conversation
+        Gateway
+        Workspace Mapping
+        Folders
+        Team
+        RSS
+        API Mapping
+        Asset
+        Instruction
+
+        **Status**
+        Successful
+        Failed
+        Rejected
+      operationId: 'Activities[Global]'
+      parameters:
+        - $ref: '#/components/parameters/action'
+        - $ref: '#/components/parameters/module'
+        - $ref: '#/components/parameters/user'
+        - $ref: '#/components/parameters/workspaceName'
+        - $ref: '#/components/parameters/status'
+        - $ref: '#/components/parameters/description'
+        - $ref: '#/components/parameters/startTime'
+        - $ref: '#/components/parameters/endTime'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/x-api-key'
+        - $ref: '#/components/parameters/Accept'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Activities
+  '/workspaces/{workspace-id}/activities':
+    get:
+      summary: Activities
+      description: |-
+        All parameters are optional and not all combinations are valid.
+
+        Free text parameters are 'contains' matched.
+
+        **Actions**
+        Create
+        Update
+        Move
+        Copy
+        Draft
+        Send
+        Modified
+        Delete
+        Contact Import File
+        Login
+        Approve
+        Reject
+        Dispatch
+        Register
+        Accept
+        Closed
+        Map
+        Un-Map
+        IVR Connection
+        Publish
+
+        **Modules**
+        System
+        Message
+        Scheduled Message
+        User
+        Contact
+        DistributionList
+        Template
+        Workspace
+        Event
+        WebService
+        Settings
+        Conversation
+        Gateway
+        Workspace Mapping
+        Folders
+        Team
+        RSS
+        API Mapping
+        Asset
+        Instruction
+        IVR
+        Announcement
+        2FA
+        Message Publish
+        Twitter
+        Facebook
+
+        **Statuses**
+        Failed
+        Successful
+        Rejected
+      operationId: Activities
+      parameters:
+        - name: action
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: Map
+        - name: module
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: Message
+        - name: user
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: jason
+        - name: status
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: Successful
+        - name: description
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: Imported
+        - name: startTime
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: '01/01/2019%2000:00'
+        - name: endTime
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: '01/01/2019%2000:00'
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+          description: Whispir API Key (Required)
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.activity-v1+json
+        - $ref: '#/components/parameters/workspace-id'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Activities
+    post:
+      summary: Activities
+      description: |-
+        All parameters are optional and not all combinations are valid.
+
+        **Action**
+        Create
+        Update
+        Move
+        Copy
+        Draft
+        Send
+        Modified
+        Delete
+        Contact Import File
+        Login
+        Approve
+        Reject
+        Dispatch
+        Register
+        Accept
+        Closed
+        Map
+        Un-map
+
+        **Module**
+        System
+        Message
+        Scheduled Message
+        User
+        Contact
+        DistributionList
+        Template
+        Workspace
+        Event
+        WebService
+        Settings
+        Conversation
+        Gateway
+        Workspace Mapping
+        Folders
+        Team
+        RSS
+        API Mapping
+        Asset
+        Instruction
+
+        **Status**
+        Successful
+        Failed
+        Rejected
+      operationId: Activities2
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+          description: Whispir API Key (Required)
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.activity-v1+json
+        - $ref: '#/components/parameters/Content-Type'
+        - name: workspace-id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: workspace-id
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        description: |-
+          All parameters are optional and not all combinations are valid.
+
+          **Action**
+          Create
+          Update
+          Move
+          Copy
+          Draft
+          Send
+          Modified
+          Delete
+          Contact Import File
+          Login
+          Approve
+          Reject
+          Dispatch
+          Register
+          Accept
+          Closed
+          Map
+          Un-map
+
+          **Module**
+          System
+          Message
+          Scheduled Message
+          User
+          Contact
+          DistributionList
+          Template
+          Workspace
+          Event
+          WebService
+          Settings
+          Conversation
+          Gateway
+          Workspace Mapping
+          Folders
+          Team
+          RSS
+          API Mapping
+          Asset
+          Instruction
+
+          **Status**
+          Successful
+          Failed
+          Rejected
+        required: true
+        content:
+          application/vnd.whispir.activity-v1+json:
+            schema:
+              type: string
+              example:
+                module: Message
+                action: Send
+                status: Successful
+                description: Message sent via REST API
+            example: |-
+              {
+                "module": "Message",
+                "action" : "Send",
+                "status" : "Successful",
+                "description" : "Message sent via REST API"
+              }
+      tags:
+        - Activities
+  /callbacks:
+    get:
+      summary: Callbacks
+      operationId: Callbacks
+      parameters:
+        - name: offset
+          in: query
+          required: true
+          style: form
+          schema:
+            type: number
+        - name: limit
+          in: query
+          required: true
+          style: form
+          schema:
+            type: number
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+        - name: Content-Type
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.api-callback-v1+json
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.api-callback-v1+json
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Callbacks
+    post:
+      summary: Callback
+      description: Call a nominated URL with payload on receipt of return message.  For testing you should use an open webhook (webhook.site) which requires minimal configuration and accepts all incoming connections before attempting to model a specific configuration in the callback parameters below.
+      operationId: Callback
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+        - name: Content-Type
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.api-callback-v1+json
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.api-callback-v1+json
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        description: Call a nominated URL with payload on receipt of return message.  For testing you should use an open webhook (webhook.site) which requires minimal configuration and accepts all incoming connections before attempting to model a specific configuration in the callback parameters below.
+        required: true
+        content:
+          application/vnd.whispir.api-callback-v1+json:
+            schema:
+              type: string
+              example:
+                name: 'Test Callback {{$timestamp}}'
+                url: '{{callback-url}}'
+                contentType: json
+                removeHTML: disabled
+                retriesEnabled: 'true'
+                email: '{{test-email}}'
+                auth:
+                  type: httpheader
+                  key: HTTP_HEADER_KEY
+                callbacks:
+                  reply: enabled
+                  undeliverable: enabled
+            example: "{\r\n  \"name\" : \"Test Callback {{$timestamp}}\",\r\n  \"url\" : \"{{callback-url}}\",\r\n  \"contentType\" : \"json\",\r\n  \"removeHTML\" : \"disabled\",\r\n  \"retriesEnabled\" : \"true\",\r\n  \"email\" : \"{{test-email}}\",\r\n  \"auth\" : {\r\n\t\"type\" : \"httpheader\",\r\n\t\"key\" : \"HTTP_HEADER_KEY\"\r\n  },\r\n  \"callbacks\" : {\r\n    \"reply\" : \"enabled\",\r\n    \"undeliverable\" : \"enabled\"\r\n  }\r\n}"
+      tags:
+        - Callbacks
+  '/callbacks/{callback-id}':
+    get:
+      summary: 'Callback [id]'
+      description: Gets the callback details and methods based on _callback id_.
+      operationId: 'Callback[id]'
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+          description: Whispir API Key (Required)
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.api-callback-v1+json
+        - $ref: '#/components/parameters/callback-id'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Callbacks
+  //:
+    put:
+      summary: Update Workspace
+      operationId: UpdateWorkspace
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+        - name: Content-Type
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.workspace-v1+json
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.workspace-v1+json
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/vnd.whispir.workspace-v1+json:
+            schema:
+              type: string
+              example:
+                projectName: 'Workspace {{$timestamp}}'
+                projectNumber: '{{$randomInt}}'
+                status: A
+                billingcostcentre: '{{$guid}}'
+            example: "{\r\n  \"projectName\": \"Workspace {{$timestamp}}\",\r\n  \"projectNumber\": \"{{$randomInt}}\",\r\n  \"status\": \"A\",\r\n  \"billingcostcentre\": \"{{$guid}}\"\r\n}"
+      tags:
+        - Utils
+    get:
+      summary: 3. Workspace Details
+      description: |-
+        To use this request, set environment variable _workspace-name_ and use _GET Workspaces_ before this call. 
+        When this call completes successfully, each of the available API methods will be added to environment variables as _name_:_uri_ and used in subsequent requests.
+      operationId: 3.WorkspaceDetails
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+          description: Whispir API Key (Required)
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.workspace-v1+json
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Utils
+    delete:
+      summary: User
+      operationId: User2
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+        - name: Content-Type
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.user-v1+json
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.user-v1+json
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Users
+    post:
+      summary: Workspace
+      description: Creates a new workspace.  Workspaces are unique by name.  The new Workspace is referred to by _workspace-location_ and each of the accessible methods are stored in environment variables.
+      operationId: Workspace
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.workspace-v1+json
+        - name: Content-Type
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.workspace-v1+json
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        description: Creates a new workspace.  Workspaces are unique by name.  The new Workspace is referred to by _workspace-location_ and each of the accessible methods are stored in environment variables.
+        required: true
+        content:
+          application/vnd.whispir.workspace-v1+json:
+            schema:
+              type: string
+              example:
+                projectName: 'Workspace {{$timestamp}}'
+                projectNumber: '{{$randomInt}}'
+                status: A
+                billingcostcentre: '{{$guid}}'
+            example: "{\r\n  \"projectName\": \"Workspace {{$timestamp}}\",\r\n  \"projectNumber\": \"{{$randomInt}}\",\r\n  \"status\": \"A\",\r\n  \"billingcostcentre\": \"{{$guid}}\"\r\n}"
+      tags:
+        - Workspaces
+  /callbacks/1FABCFF46C5935A3/calls:
+    get:
+      summary: Callback History JSON
+      description: 'Retrieve the list of callbacks for a nominated callback.  Ensure the callback links are prepopulated by using the _POST Callback_ or _GET Callback [id]_ request first.'
+      operationId: CallbackHistoryJSON
+      parameters:
+        - name: status
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: FAILED
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.api-call-v1+json
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Callbacks
+  /workspaces/D85E1B2FE68A9EF9/contacts:
+    post:
+      summary: Contact Custom
+      description: Create a new contact
+      operationId: ContactCustom
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+        - name: Content-Type
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.contact-v1+json
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.contact-v1+json
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        description: Create a new contact
+        required: true
+        content:
+          application/vnd.whispir.contact-v1+json:
+            schema:
+              type: string
+              example:
+                firstName: '{{$randomFirstName}}'
+                lastName: '{{$randomLastName}}'
+                title: '{{$randomNamePrefix}}'
+                status: A
+                companyName: '{{$randomCompanyName}} {{$randomCompanySuffix}}'
+                jobTitle: '{{$randomJobDescriptor}} {{$randomJobTitle}}'
+                division: '{{$randomJobArea}}'
+                businessUnit: '{{$randomBs}}'
+                department: '{{$randomBs}}'
+                teamName1: '{{$randomCatchPhraseAdjective}} {{$randomCatchPhraseNoun}}'
+                role1: '{{$randomCatchPhrase}}'
+                teamName2: ''
+                role2: ''
+                workAddress1: '{{$randomStreetAddress}}'
+                workSuburb: '{{$randomCity}}'
+                workPostCode: '{{$randomInt}}'
+                workPostalAddress1: ''
+                workPostalSuburb: ''
+                workPostalPostCode: ''
+                workEmailAddress2: ''
+                workAddress2: ''
+                workState: ''
+                workPostalAddress2: ''
+                workPostalState: ''
+                workPostalCountry: ''
+                workPhoneAreaCode1: ''
+                workPhoneAreaCode2: ''
+                workFaxAreaCode1: ''
+                workSetellitePhone: ''
+                workMobilePhone2: ''
+                workPhone1: ''
+                workPhone2: ''
+                workFax1: ''
+                WorkOtherPhone: ''
+                timezone: Australia/Melbourne
+                workEmailAddress1: '{{test-email}}'
+                workMobilePhone1: '{{test-sms}}'
+                workCountry: Australia
+                messagingoptions:
+                  - channel: sms
+                    enabled: 'true'
+                    primary: WorkMobilePhone1
+                  - channel: email
+                    enabled: 'true'
+                    primary: WorkEmailAddress1
+                  - channel: voice
+                    enabled: 'true'
+                    primary: WorkMobilePhone1
+                locations:
+                  - latitude: '{{$randomLatitude}}'
+                    longitude: '{{$randomLongitude}}'
+                    type: CurrentLocation
+                customFields:
+                  - fieldName: Field Name
+                    fieldValue: '1234'
+                    searchKey: custom_fieldName
+            example: "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"title\": \"{{$randomNamePrefix}}\",\r\n    \"status\": \"A\",\r\n    \"companyName\": \"{{$randomCompanyName}} {{$randomCompanySuffix}}\",\r\n    \"jobTitle\": \"{{$randomJobDescriptor}} {{$randomJobTitle}}\",\r\n    \"division\": \"{{$randomJobArea}}\",\r\n    \"businessUnit\": \"{{$randomBs}}\",\r\n    \"department\": \"{{$randomBs}}\",\r\n    \"teamName1\": \"{{$randomCatchPhraseAdjective}} {{$randomCatchPhraseNoun}}\",\r\n    \"role1\": \"{{$randomCatchPhrase}}\",\r\n    \"teamName2\": \"\",\r\n    \"role2\": \"\",\r\n    \"workAddress1\": \"{{$randomStreetAddress}}\",\r\n    \"workSuburb\": \"{{$randomCity}}\",\r\n    \"workPostCode\": \"{{$randomInt}}\",\r\n    \"workPostalAddress1\": \"\",\r\n    \"workPostalSuburb\": \"\",\r\n    \"workPostalPostCode\": \"\",\r\n    \"workEmailAddress2\": \"\",\r\n    \"workAddress2\": \"\",\r\n    \"workState\": \"\",\r\n    \"workPostalAddress2\": \"\",\r\n    \"workPostalState\": \"\",\r\n    \"workPostalCountry\": \"\",\r\n    \"workPhoneAreaCode1\": \"\",\r\n    \"workPhoneAreaCode2\": \"\",\r\n    \"workFaxAreaCode1\": \"\",\r\n    \"workSetellitePhone\": \"\",\r\n    \"workMobilePhone2\": \"\",\r\n    \"workPhone1\": \"\",\r\n    \"workPhone2\": \"\",\r\n    \"workFax1\": \"\",\r\n    \"WorkOtherPhone\": \"\",\r\n    \"timezone\": \"Australia/Melbourne\",\r\n    \"workEmailAddress1\": \"{{test-email}}\",\r\n    \"workMobilePhone1\": \"{{test-sms}}\",\r\n    \"workCountry\": \"Australia\",\r\n    \"messagingoptions\": [\r\n        {\r\n            \"channel\": \"sms\",\r\n            \"enabled\": \"true\",\r\n            \"primary\": \"WorkMobilePhone1\"\r\n        },\r\n        {\r\n            \"channel\": \"email\",\r\n            \"enabled\": \"true\",\r\n            \"primary\": \"WorkEmailAddress1\"\r\n        },\r\n        {\r\n            \"channel\": \"voice\",\r\n            \"enabled\": \"true\",\r\n            \"primary\": \"WorkMobilePhone1\"\r\n        }\r\n    ],\r\n    \"locations\": [\r\n        {\r\n            \"latitude\": \"{{$randomLatitude}}\",\r\n            \"longitude\": \"{{$randomLongitude}}\",\r\n            \"type\": \"CurrentLocation\"\r\n        }\r\n    ],\r\n    \"customFields\": [\r\n        {\r\n            \"fieldName\": \"Field Name\",\r\n            \"fieldValue\": \"1234\",\r\n            \"searchKey\": \"custom_fieldName\"\r\n        }\r\n    ]\r\n}"
+      tags:
+        - Contacts
+  '/{contact-id}':
+    get:
+      summary: 'Contact [id]'
+      description: Get a contact from _contact-location_ returned from POST /contact
+      operationId: 'Contact[id]'
+      parameters:
+        - name: customFields
+          in: query
+          required: true
+          style: form
+          schema:
+            type: string
+            example: 'true'
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.contact-v1+json
+        - $ref: '#/components/parameters/contact-id'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Contacts
+  '/workspaces/{workspace-id}/distributionlists':
+    get:
+      summary: 'Distribution List [name]'
+      operationId: 'DistributionList[name]'
+      parameters:
+        - $ref: '#/components/parameters/name'
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+          description: Whispir API Key (Required)
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.distributionlist-v1+json
+        - name: workspace-id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: workspace-id
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Distribution Lists
+  '/workspaces/{workspace-id}/distributionlists/{distList-id}':
+    get:
+      summary: 'Distribution List [id]'
+      operationId: 'DistributionList[id]'
+      parameters:
+        - name: offset
+          in: query
+          required: true
+          style: form
+          schema:
+            type: number
+        - name: limit
+          in: query
+          required: true
+          style: form
+          schema:
+            type: number
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+          description: Whispir API Key (Required)
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.distributionlist-v1+json
+        - name: workspace-id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: workspace-id
+        - $ref: '#/components/parameters/distList-id'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Distribution Lists
+  '/workspaces/{workspace-id}/imports':
+    post:
+      summary: 2. Import Contacts
+      operationId: 2.ImportContacts
+      parameters:
+        - name: Content-Type
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.importcontact-v1+json
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+          description: Whispir API Key (Required)
+        - name: workspace-id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: workspace-id
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          application/vnd.whispir.importcontact-v1+json:
+            schema:
+              type: string
+              example:
+                resourceId: '{{resource-id}}'
+                importType: contact
+                importOptions:
+                  fieldMapping:
+                    firstName: firstName
+                    lastName: lastName
+                    workMobilePhone1: workMobilePhone1
+                    workEmailAddress1: workEmailAddress1
+                    workMobilePhone2: workMobilePhone2
+                    workEmailAddress2: workEmailAddress2
+                    workCountry: workCountry
+                    timezone: timezone
+                  importMode: replace
+            example: "{\r\n    \"resourceId\": \"{{resource-id}}\",\r\n    \"importType\" : \"contact\",\r\n    \"importOptions\": {\r\n        \"fieldMapping\" : {\r\n            \"firstName\": \"firstName\",\r\n            \"lastName\": \"lastName\",\r\n            \"workMobilePhone1\": \"workMobilePhone1\",\r\n            \"workEmailAddress1\":\"workEmailAddress1\",\r\n            \"workMobilePhone2\": \"workMobilePhone2\",\r\n            \"workEmailAddress2\":\"workEmailAddress2\",\r\n            \"workCountry\": \"workCountry\",\r\n            \"timezone\": \"timezone\"\r\n        },\r\n        \"importMode\" : \"replace\"\r\n    }\r\n}"
+      tags:
+        - Imports
+  /apps:
+    get:
+      summary: Apps
+      operationId: Apps
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.app-v1+json
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Push
+  '/apps/{app-id}':
+    get:
+      summary: 'Get App [id]'
+      operationId: 'GetApp[id]'
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.app-v1+json
+        - $ref: '#/components/parameters/app-id'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Push
+  '/workspaces/{workspace-id}/templates/{template-id}':
+    get:
+      summary: 'Template [id]'
+      description: This method constructs the URL necessary to retrieve a template definition using the environment variable _template-id_
+      operationId: 'Template[id]'
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+        - name: Content-Type
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.template-v1+json
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.template-v1+json
+        - name: workspace-id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: workspace-id
+        - $ref: '#/components/parameters/template-id'
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Conditional
+  '/workspaces/{workspace-id}/events':
+    get:
+      summary: Events
+      operationId: Events
+      parameters:
+        - $ref: '#/components/parameters/eventType'
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+          description: Whispir API Key (Required)
+        - $ref: '#/components/parameters/accept'
+        - name: workspace-id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: workspace-id
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      tags:
+        - Events
+    post:
+      summary: Event
+      description: Create a new event of _event-name_ with associated event fields and values.
+      operationId: Event
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+          description: Whispir API Key (Required)
+        - $ref: '#/components/parameters/content-type'
+        - name: accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.event-v1+json
+        - name: workspace-id
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: workspace-id
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        description: Create a new event of _event-name_ with associated event fields and values.
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              example:
+                eventLabel: '{{event-name}} - {{$timestamp}}'
+                status: Active
+                eventFormList:
+                  - formName: '{{event-name}}'
+                    eventFieldList:
+                      - name: scheduleDate
+                        value: '03/02/2020 16:00:00'
+                      - name: displayText
+                        value: '{{$randomStreetAddress}}'
+                      - name: default
+                        value: '{{$randomBs}}'
+                      - name: addressbook
+                        value: '[{"mri":"{{distList-mri}}","name":"{{distList-name}}"}]'
+                      - name: messageOptions
+                        value: Option1
+                      - name: eventLocation
+                        value: '{{$randomLatitude}},{{$randomLongitude}}'
+                      - name: test11
+                        value: Test 11 Value
+                      - name: test22
+                        value: RED
+                      - name: test33
+                        value: en-en
+                      - name: number
+                        value: QF12345
+            example: "{\n  \"eventLabel\": \"{{event-name}} - {{$timestamp}}\",\n  \"status\": \"Active\",\n  \"eventFormList\": [\n    {\n      \"formName\": \"{{event-name}}\",\n      \"eventFieldList\": [\n        {\n          \"name\": \"scheduleDate\",\n          \"value\": \"03/02/2020 16:00:00\"\n        },\n        {\n          \"name\": \"displayText\",\n          \"value\": \"{{$randomStreetAddress}}\"\n        },\n        {\n          \"name\": \"default\",\n          \"value\": \"{{$randomBs}}\"\n        },\n        {\n          \"name\": \"addressbook\",\n          \"value\": \"[{\\\"mri\\\":\\\"{{distList-mri}}\\\",\\\"name\\\":\\\"{{distList-name}}\\\"}]\"\n        },\n        {\n          \"name\": \"messageOptions\",\n          \"value\": \"Option1\"\n        },\n        {\n          \"name\": \"eventLocation\",\n          \"value\": \"{{$randomLatitude}},{{$randomLongitude}}\"\n        },\n        {\n\t\t\t\"name\":\"test11\",\n\t\t\t\"value\": \"Test 11 Value\"\n\t\t},\n\t\t{\n\t\t\t\"name\":\"test22\",\n\t\t\t\"value\": \"RED\"\n\t\t},\n\t\t{\n\t\t\t\"name\":\"test33\",\n\t\t\t\"value\": \"en-en\"\n\t\t},\n\t\t{\n\t\t\t\"name\":\"number\",\n\t\t\t\"value\": \"QF12345\"\n\t\t}\n      ]\n    }\n  ]\n}"
+      tags:
+        - Events
+  /workflows:
+    post:
+      summary: Workflows
+      operationId: Workflows
+      parameters:
+        - name: x-api-key
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: '{{x-api-key}}'
+          description: Whispir API Key (Required)
+        - name: Accept
+          in: header
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/vnd.whispir.workflow-v1+json
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: ''
+            example: ''
+      tags:
+        - Events
+components:
+  parameters:
+    action:
+      name: action
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: Map
+    module:
+      name: module
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: Message
+    user:
+      name: user
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: jason
+    workspaceName:
+      name: workspaceName
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: sandbox
+    status:
+      name: status
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: Successful
+    description:
+      name: description
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: Imported
+    startTime:
+      name: startTime
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: '01/01/2020%2000:00'
+    endTime:
+      name: endTime
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: '01/01/2021%2000:00'
+    offset:
+      name: offset
+      in: query
+      required: true
+      style: form
+      schema:
+        type: number
+    limit:
+      name: limit
+      in: query
+      required: true
+      style: form
+      schema:
+        type: number
+    x-api-key:
+      name: x-api-key
+      in: header
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: '{{x-api-key}}'
+      description: Whispir API Key (Required)
+    Accept:
+      name: Accept
+      in: header
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: application/vnd.whispir.activity-v1+json
+    workspace-id:
+      name: workspace-id
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: workspace-id
+    Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: application/vnd.whispir.activity-v1+json
+    callback-id:
+      name: callback-id
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: callback-id
+    sortOrder:
+      name: sortOrder
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: asc
+    sortFields:
+      name: sortFields
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: 'firstName,lastName'
+    firstName:
+      name: firstName
+      in: query
+      required: true
+      style: form
+      schema:
+        type: number
+    lastName:
+      name: lastName
+      in: query
+      required: true
+      style: form
+      schema:
+        type: number
+    customFields:
+      name: customFields
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: 'true'
+    companyName:
+      name: companyName
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: Hoppe Group Inc
+    fields:
+      name: fields
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: 'firstName,lastName,custom_pin'
+    division:
+      name: division
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: inter
+    contact-id:
+      name: contact-id
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: contact-id
+    name:
+      name: name
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: '{{distList-name}}'
+    distList-id:
+      name: distList-id
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: distList-id
+    criteriaFromDate:
+      name: criteriaFromDate
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: 22/01/2020
+      description: '(format: dd/mm/yyyy)'
+    criteriaFromTime:
+      name: criteriaFromTime
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: '00:00'
+      description: '(format: hh:mm)'
+    criteriaToDate:
+      name: criteriaToDate
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: 17/04/2020
+      description: '(format: dd/mm/yyyy)'
+    criteriaToTime:
+      name: criteriaToTime
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: '00:00'
+      description: '(format: hh:mm)'
+    app-id:
+      name: app-id
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: app-id
+    template-id:
+      name: template-id
+      in: path
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: template-id
+    workEmailAddress1:
+      name: workEmailAddress1
+      in: query
+      required: true
+      style: form
+      schema:
+        type: number
+    eventType:
+      name: eventType
+      in: query
+      required: true
+      style: form
+      schema:
+        type: string
+        example: '{{event-name}}'
+    accept:
+      name: accept
+      in: header
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: application/vnd.whispir.event-v1+json
+    content-type:
+      name: content-type
+      in: header
+      required: true
+      style: simple
+      schema:
+        type: string
+        example: application/vnd.whispir.event-v1+json
+  schemas:
+    '401':
+      type: object
+      properties:
+        errorSummary:
+          type: string
+          description: ''
+          default: 'You are attempting to access your account from IP address 202.125.18.109, 3.105.174.229 which has not been white listed within the Whispir platform. If you feel this is being shown in error, please contact your administrator'
+        errorText:
+          type: string
+          description: ''
+          default: Unauthorized
+        errorDetail: {}
+security: []
+tags: []
+externalDocs:
+  url: ''
+  description: ''
+warnings:
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : get{{base-url}}/callbacks'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : put{{updateContact}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createDistList}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createTemplate}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createResource}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createResource}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createTemplate}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{base-url}}/callbacks'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : get{{retrieveMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : get{{retrieveContacts}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : get{{contact-location}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createResource}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createResource}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : put{{updateResource}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createResource}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : get{{retrieveResources}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createResource}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createTemplate}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createTemplate}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createTemplate}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{base-url}}/workspaces/{{workspace-id}}/events'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createMessage}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : get{{event-location}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : get{{retrieveContacts}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : get{{retrieveWorkspaces}}'
+  - 'Two GET or two POST methods for the same path are not allowed in OpenAPI specification : post{{createWorkspaces}}'

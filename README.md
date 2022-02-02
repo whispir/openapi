@@ -1,6 +1,6 @@
 # Whispir's OpenAPI Specification
 
-This repository contains [OpenAPI specifications][openapi] for Stripe's API.
+This repository contains [OpenAPI specifications][openapi] for Whispir's API.
 
 [Changelog](https://github.com/stripe/openapi/releases/)
 

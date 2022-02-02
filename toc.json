@@ -1,0 +1,18 @@
+{
+  "items": [
+    {
+      "type": "item",
+      "title": "Test-Article",
+      "uri": "docs/Test-Article.md"
+    },
+    {
+      "type": "divider",
+      "title": "APIS"
+    },
+    {
+      "type": "item",
+      "title": "Whispir Rest API",
+      "uri": "openapi/whispir.yaml"
+    }
+  ]
+}

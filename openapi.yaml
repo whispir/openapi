@@ -78,7 +78,7 @@ paths:
     post:
       tags:
         - Messages
-      summary: Communications are the core of what the Whispir.io API offers as a service to customers.
+      summary: Send Messages
       description: |
         Communications are the core of what the Whispir.io API offers as a service to customers.    
         Whispir has the ability to send communications across 7 different channels in a single API request:  
@@ -335,7 +335,7 @@ paths:
     post:
       tags:
         - Resources
-      summary: Upload the Resource file via API
+      summary: Upload a Resource file via API
       description: |
         ## Creating a resource
 
@@ -411,7 +411,7 @@ paths:
     get:
       tags:
         - Resources
-      summary: Existing resources can be easily retrieved via the GET /resources API call. The response lists all of the existing public and private resources available in the system.
+      summary: Retrieve existing resources
       description: |
         ## Retrieving existing resources
         Existing resources can be easily retrieved via the GET /resources API call. The response lists all of the existing public and private resources available in the system.
@@ -539,7 +539,7 @@ paths:
     get:
       tags:
         - Resources
-      summary: Retrieving a single resource
+      summary: Retrieve a single resource
       description: |
         ## Retrieving a single resource
 
@@ -584,7 +584,7 @@ paths:
     put:
       tags:
         - Resources
-      summary: 'Updating a resource involves the same process as in creating a resource. The process of using one of the format (CSV, JSON, XML) for private and any format for public -> converting to base64 encoded data is the same.'
+      summary: Update a resource
       description: |
         ## Updating a resource
 
@@ -642,7 +642,7 @@ paths:
     delete:
       tags:
         - Resources
-      summary: Resources can be deleted after use. These can be both public and private in scope.
+      summary: Delete a resource
       description: |
         ## Deleting a resource
 
@@ -673,7 +673,7 @@ paths:
     get:
       tags:
         - Message Status
-      summary: Retrieve a previously sent Message status
+      summary: Retrieve a previously sent message status
       description: |
         Whispir will automatically monitor the status of each message after it has been sent to each recipient. Using the message status information, you are able to determine who received the message, what exact time they received it, on what message channel (SMS, Email, Voice, Web, Push Notification), whether they replied to the message, what time they replied, and on what messaging channel.  
 
@@ -837,7 +837,7 @@ paths:
     get:
       tags:
         - Message Responses
-      summary: 'Using the links provided in the message response, the user can simply make a new API request to retrieve the summaryStatus URL.'
+      summary: Retrieve summaryStatus URL
       description: |
         ## Summary Responses
 
@@ -978,7 +978,7 @@ paths:
     post:
       tags:
         - Templates
-      summary: 'To create a new message template, you can use the /templates endpoint.'
+      summary: Create a new message template
       description: |
         ## Creating Templates
 
@@ -1016,7 +1016,7 @@ paths:
     get:
       tags:
         - Templates
-      summary: To retrieve a list of templates from the Whispir.io API you can execute an HTTP GET using the /templates endpoint.
+      summary: Retrieve a list of templates
       description: |
         ## Retrieving Templates
         To retrieve a list of templates from the Whispir.io API you can execute an HTTP GET using the /templates endpoint.
@@ -1100,7 +1100,7 @@ paths:
     get:
       tags:
         - Templates
-      summary: 'To retrieve existing message templates, you can use a GET request the /templates/{templateId} endpoint.'
+      summary: Retrieve a single template
       description: Retrieve a Template as indicated by templateId
       operationId: getTemplatesById
       parameters:
@@ -1124,7 +1124,7 @@ paths:
     put:
       tags:
         - Templates
-      summary: 'To update existing message templates, you can use a PUT request the /templates endpoint.'
+      summary: Update a template
       description: |
         ## Updating Templates
         To update existing message templates, you can use a PUT request the /templates endpoint.  
@@ -1168,7 +1168,7 @@ paths:
     delete:
       tags:
         - Templates
-      summary: 'Deleting a template is done via the DELETE method. The exact link url of the specific template has to be used as the end point. To get it, one can perform a GET /templates'
+      summary: Delete a template
       description: |
         ## Deleting Template
 
@@ -1198,7 +1198,7 @@ paths:
     post:
       tags:
         - Response Rules
-      summary: 'To create a new Response Rule, you can use the /responserules endpoint.'
+      summary: Create response rules
       description: |
         ## Creating Response Rules
 
@@ -1354,7 +1354,7 @@ paths:
     post:
       tags:
         - Contacts
-      summary: 'To create a new contact, you can use the /contacts endpoint. The method is POST.'
+      summary: Create a contact
       description: 'To create a new contact, you can use the /contacts endpoint. The method is POST.'
       operationId: postContacts
       parameters:
@@ -1428,7 +1428,7 @@ paths:
     get:
       tags:
         - Contacts
-      summary: Contacts can be retrieved quite easily with a GET request to the /contacts. A simple /contacts will result in all contacts being retrieved with all of their information. No filters are applied.
+      summary: Retrieve a contact
       description: |
         Contacts can be retrieved quite easily with a GET request to the /contacts. A simple /contacts will result in all contacts being retrieved with all of their information. No filters are applied.
 
@@ -1497,7 +1497,7 @@ paths:
     get:
       tags:
         - Contacts
-      summary: 'To get details of a specific contact, the URI must be passed with the ID of the contact. So, the URI shall be.'
+      summary: Retrieve details of a single contact
       description: |
         To get details of a specific contact, the URI must be passed with the ID of the contact. So, the URI shall be.
 
@@ -1542,7 +1542,7 @@ paths:
     put:
       tags:
         - Contacts
-      summary: 'Updating a contact can be performed using a PUT request to the /contacts/{contactId} endpoint. So, to perform this, one must be knowing the exact “link” associated with the contact.'
+      summary: Update a contact
       description: |
         Updating a contact can be performed using a PUT request to the `/contacts/{contactId}` endpoint. So, to perform this, one must be knowing the exact “link” associated with the contact.
 
@@ -1589,7 +1589,7 @@ paths:
     delete:
       tags:
         - Contacts
-      summary: 'Deleting a contact can be performed using a DELETE request to the /contacts/{contactId} endpoint. So, to perform this, one must be knowing the exact “link” associated with the contact.'
+      summary: Delete a contact
       description: |
         Deleting a contact can be performed using a DELETE request to the `/contacts/{contactId}` endpoint. So, to perform this, one must be knowing the exact “link” associated with the contact.
 
@@ -1619,7 +1619,7 @@ paths:
     post:
       tags:
         - Distribution Lists
-      summary: 'Distribution lists can be created within the Default Workspace, or within a Specific Workspace. More information on Workspaces will be provided later in this documentation.'
+      summary: Create a distribution list
       description: |
         ## Creating Distribution lists
 
@@ -1675,7 +1675,7 @@ paths:
     get:
       tags:
         - Distribution Lists
-      summary: 'Similar to the creation of distribution list, retrieval of such list too is bound to the workspace it belongs to. So, a distribution list belonging to a workspace cannot be accessed from another workspace.'
+      summary: Retrieve distribution lists
       description: |
         ## Retrieving Distribution Lists
 
@@ -1753,7 +1753,7 @@ paths:
     get:
       tags:
         - Distribution Lists
-      summary: 'A distribution list allows you to associate the following - ContactIds, UserIds, DistListIds'
+      summary: 'Retrieve distribution list by ContactId, UserId, DistListId'
       description: |
         A distribution list allows you to associate the following -  
 
@@ -1803,7 +1803,7 @@ paths:
     put:
       tags:
         - Distribution Lists
-      summary: 'Updating a contact can be performed using a PUT request to the `/contacts/{contactId}` endpoint. So, to perform this, one must be knowing the exact “link” associated with the contact.'
+      summary: Update distribution list details
       description: |
         Any or all three of these can be updated via the PUT method along with the DL properties (name, description, location etc).
 
@@ -1856,7 +1856,7 @@ paths:
     delete:
       tags:
         - Distribution Lists
-      summary: 'Deleting the distribution is done via a DELETE /distributionlist/{distributionlistId} endpoint.'
+      summary: Delete a distribution list
       description: |
         Deleting the distribution is done via a DELETE /distributionlist/{distributionlistId} endpoint.  
         You can only delete the distribution list that you have created or a valid userId associated with the specific distribution list.
@@ -1883,7 +1883,7 @@ paths:
     post:
       tags:
         - Scenarios
-      summary: 'A scenario is a combination of a message and contacts. So, its structure contains section for both message as well as contact information. API currently only supports creation of scenario with SMS as communication mode.'
+      summary: Create a new scenario
       description: |
         ## Creating a new Scenario
 
@@ -1920,7 +1920,7 @@ paths:
     get:
       tags:
         - Scenarios
-      summary: To retrieve a list of scenarios from the Whispir.io API you can execute an HTTP GET using the /scenarios endpoint
+      summary: Retrieve scenarios
       description: |
         ## Retrieving Scenarios
         To retrieve a list of scenarios from the Whispir.io API you can execute an HTTP GET using the /scenarios endpoint.
@@ -1940,7 +1940,7 @@ paths:
     get:
       tags:
         - Scenarios
-      summary: Retrieving details of a single Scenario
+      summary: Retrieve details of a single scenario
       description: |
         Retrieving details of a single Scenario
         While that specifies the master list, doing a GET on a single scenario provides the following information
@@ -1999,7 +1999,7 @@ paths:
     post:
       tags:
         - Scenarios
-      summary: 'Running a Scenario , in other words, invoking a scenario triggers the communication to the intended recipients. The message (static or dynamic) will be sent on all the provided channels.'
+      summary: Run a scenario
       description: |
         ## Running a Scenario
 
@@ -2037,7 +2037,7 @@ paths:
     put:
       tags:
         - Scenarios
-      summary: 'To update existing scenario, you can use a PUT request the /scenarios endpoint.'
+      summary: Update an existing scenario
       description: |
         ## Updating Scenario
 
@@ -2079,7 +2079,7 @@ paths:
     delete:
       tags:
         - Scenarios
-      summary: Deleting a Scenario can be done via a DELETE call to the /scenarios endpoint. The request has to be targeted at a particular Scenario with the Scenario ID in the URI.
+      summary: Delete a scenario
       description: |
         ## Deleting Scenario
         Deleting a Scenario can be done via a DELETE call to the /scenarios endpoint. The request has to be targeted at a particular Scenario with the Scenario ID in the URI.
@@ -2106,7 +2106,7 @@ paths:
     post:
       tags:
         - Callbacks
-      summary: 'To create a new API Callback, you can use the /callbacks endpoint.'
+      summary: Create a new API callback
       description: |
         ## Creating new Callbacks
         To create a new API Callback, you can use the /callbacks endpoint.  
@@ -2128,7 +2128,7 @@ paths:
     get:
       tags:
         - Callbacks
-      summary: To retrieve a list of callbacks from the Whispir API you can execute an HTTP GET using the /callbacks endpoint.
+      summary: Retrieve a list of API callbacks
       description: |
         ## Retrieving Callbacks
         To retrieve a list of callbacks from the Whispir API you can execute an HTTP GET using the /callbacks endpoint.
@@ -2190,7 +2190,7 @@ paths:
     get:
       tags:
         - Callbacks
-      summary: The retriesEnabled flag can be enabled on a callback to ensure that Whispir automatically attempts to retry in the event of a failure occurring.
+      summary: Retrieve a list of attempted API calls
       description: |
         ## Callback Retries
 
@@ -2272,7 +2272,7 @@ paths:
     put:
       tags:
         - Callbacks
-      summary: Updating the status of calls to a callback
+      summary: Update the status of calls to a callback
       description: |
         ## Updating the status of calls to a callback
         As every call to a callback endpoint is now stored within the calls endpoint, it’s possible that when failed calls are successfully processed through a manual exercise, that these calls will then need to be updated to reflect the current status.
@@ -2322,7 +2322,7 @@ paths:
     post:
       tags:
         - Workspaces
-      summary: 'To create a new workspace, you can use the /workspaces endpoint.'
+      summary: Create a new workspace
       description: |
         ## Creating a new workspace
         To create a new workspace, you can use the /workspaces endpoint.
@@ -2349,7 +2349,7 @@ paths:
     get:
       tags:
         - Workspaces
-      summary: To retrieve a list of workspaces from the Whispir.io API you can execute an HTTP GET using the /workspaces endpoint.
+      summary: Retrieve a list of workspaces
       description: |
         ## Retrieving Workspaces**
         To retrieve a list of workspaces from the Whispir.io API you can execute an HTTP GET using the /workspaces endpoint.
@@ -2401,7 +2401,7 @@ paths:
     get:
       tags:
         - Workspaces
-      summary: Get a Workspace
+      summary: Retrieve a single workspace
       description: 'Use GET on a Workspace Id to verify it is a valid Workspace ID, and see a list of all the other endpoint URIs in that workspace'
       operationId: getWorkspacesById
       parameters:
@@ -2420,7 +2420,7 @@ paths:
       tags:
         - Workspaces
         - Activities
-      summary: Get a list of all the Activity entries for a specific Workspace
+      summary: Retrieve a list of activities in a workspace
       description: |
         ## Restricting to only a single workspace 
         By default, GET /activities returns all the activities at company level. This covers all the workspaces. So, if the items has to limited to a specific workspace, one has to use the workspace as the endpoint and activities followed by it.
@@ -2441,7 +2441,7 @@ paths:
       tags:
         - Workspaces
         - Users
-      summary: Retrieving workspace users
+      summary: Retrieve workspace users
       description: |
         ## Retrieving list of users having access on a workspace
         To retrieve the list of users, the request is made to via GET to `/workspaces/{:id}/users` endpoint.
@@ -2492,7 +2492,7 @@ paths:
     post:
       tags:
         - Activities
-      summary: 'To create a new activity entry at the account level, not in a workspace, you can use the /activities endpoint.'
+      summary: Create an activity log
       description: |
         ## Creating an activity log
         To create a new activity entry, you can use the /activities endpoint.
@@ -2520,7 +2520,7 @@ paths:
     get:
       tags:
         - Activities
-      summary: To retrieve a list of activities from the Whispir.io API you can execute an HTTP GET using the /activities endpoint.
+      summary: Retrieve a list of activities from the Whispir.io API
       description: |
         ## Retrieving Activities
         To retrieve a list of activities from the Whispir.io API you can execute an HTTP GET using the /activities endpoint.
@@ -2702,7 +2702,7 @@ paths:
     get:
       tags:
         - Custom Lists
-      summary: Retrieving custom lists
+      summary: Retrieve a custom list
       description: |
         ## Retrieving custom lists
         An array of Custom Lists will be returned to you in the HTTP response body.
@@ -2843,7 +2843,7 @@ paths:
     get:
       tags:
         - Custom Lists
-      summary: Details of a Specific Custom List
+      summary: Retrieve details of a specific custom list
       description: |
         ## Details of a Specific Custom List
         To retrieve the details of a specific list, the end point must be passed with the custom list ID. The link can be usually found in the link attribute of each customlist item.
@@ -2931,7 +2931,7 @@ paths:
     post:
       tags:
         - Users
-      summary: 'To create a new user, you can use the /users endpoint. The method is POST. Ensure that the necessary permissions are provided to the API account to create or modify user accounts'
+      summary: Create a new user
       description: |
         ## Creating new User
         To create a new user, you can use the /users endpoint. The method is POST. Ensure that the necessary permissions are provided to the API account to create or modify user accounts.
@@ -2990,7 +2990,7 @@ paths:
     get:
       tags:
         - Users
-      summary: Users can be retrieved quite easily with a GET request to the /users. A simple /users will result in all users being retrieved with all of their basic identity information.
+      summary: Retrieve users
       description: |
         ## Retrieving Users
         Users can be retrieved quite easily with a GET request to the /users. A simple /users will result in all users being retrieved with all of their basic identity information. The result will only be limited to users with ACTIVE status. User’s with other status will not be listed in the results.
@@ -3079,7 +3079,7 @@ paths:
     delete:
       tags:
         - Users
-      summary: Deleting all users
+      summary: Delete all users in a company
       description: The following statement allows a user to delete all users in their company using the Whispir API.
       operationId: deleteUsersAll
       responses:
@@ -3089,7 +3089,7 @@ paths:
     get:
       tags:
         - Users
-      summary: Retrieving a specific user
+      summary: Retrieve a specific user
       operationId: getUsersById
       parameters:
         - name: userId
@@ -3117,7 +3117,7 @@ paths:
     put:
       tags:
         - Users
-      summary: 'Updating a user can be performed using a PUT request to the /users/{userId} endpoint.'
+      summary: Update a user
       description: |
         ## Updating users
         Updating a user can be performed using a PUT request to the /users/{userId} endpoint.
@@ -3160,7 +3160,7 @@ paths:
     delete:
       tags:
         - Users
-      summary: 'An User can be deleted by calling the DELETE /users/{userId} end point.'
+      summary: Delete a user
       description: |
         ## Deleting an user
         An User can be deleted by calling the DELETE /users/{userId} end point.
@@ -3231,7 +3231,7 @@ paths:
     post:
       tags:
         - Events
-      summary: 'As Whispir works with each organisation to build out the requirements of the events module, the required fields are minimal. The bulk of the event information is from fields that are generic, and only applicable to the customer that is using the module.'
+      summary: Create an Event
       description: |
         ## Creating an Event
         As Whispir works with each organisation to build out the requirements of the events module, the required fields are minimal. The bulk of the event information is from fields that are generic, and only applicable to the customer that is using the module.
@@ -3400,7 +3400,7 @@ paths:
     post:
       tags:
         - Imports
-      summary: 'The Whispir API will expose this functionality as a two stage process:1. Submit contact data within a CSV, JSON, XML payload using the /resource endpoint – which will return a resource ID, 2. Create a new import resource by submitting a POST to the /imports endpoint referencing the resource ID created in step 1.'
+      summary: Import bulk contacts
       description: |
         ## Bulk contact import
         The Whispir API will expose this functionality as a two stage process:

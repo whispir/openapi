@@ -335,7 +335,7 @@ paths:
     post:
       tags:
         - Resources
-      summary: Upload a Resource file via API
+      summary: Upload a resource file via API
       description: |
         ## Creating a resource
 
@@ -1253,7 +1253,7 @@ paths:
     get:
       tags:
         - Response Rules
-      summary: Get a list of Response Rules in a Workspace
+      summary: Retrieve a list of Response Rules in a Workspace
       description: To review a list of Response Rules
       operationId: getResponseRules
       parameters:
@@ -1271,7 +1271,7 @@ paths:
     get:
       tags:
         - Response Rules
-      summary: Get a single Response Rule By ID
+      summary: Retrieve a single Response Rule By ID
       description: Review an individual Response Rule
       operationId: getResponseRulesById
       parameters:

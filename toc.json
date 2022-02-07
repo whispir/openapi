@@ -1,0 +1,111 @@
+{
+  "items": [
+        {
+      "type": "divider",
+      "title": "Getting started"
+    },
+    {
+      "type": "item",
+      "title": "About the Whispir platform API",
+      "uri": "docs/Getting started/About-the-Whispir-platform-API.md"
+    },
+    {
+      "type": "item",
+      "title": "API best practices",
+      "uri": "docs/Getting started/API-best-practices.md"
+    },
+    {
+      "type": "item",
+      "title": "API-rate-limits",
+      "uri": "docs/Getting started/API-rate-limits.md"
+    },
+    {
+      "type": "item",
+      "title": "Auto extension of daily limits",
+      "uri": "docs/Getting started/Auto-extension-of-daily-limits.md"
+    },
+    {
+      "type": "item",
+      "title": "Connect to the API",
+      "uri": "docs/Getting started/Connect-to-the-API.md"
+    },
+    {
+      "type": "item",
+      "title": "Register with Whispir",
+      "uri": "docs/Getting started/Register-with-Whispir.md"
+    },
+    {
+      "type": "item",
+      "title": "Sending messages",
+      "uri": "docs/Getting started/Sending-messages.md"
+    },
+    {
+      "type": "item",
+      "title": "Whispir API Postman Collection",
+      "uri": "docs/Getting started/Whispir-API-Postman-Collection.md"
+    },
+    {
+      "type": "divider",
+      "title": "API gateway changes"
+    },
+    {
+      "type": "item",
+      "title": "API gateway changes",
+      "uri": "docs/API gateway changes/API-gateway-changes.md"
+    },
+    {
+      "type": "item",
+      "title": "JSON-and-XML-headers",
+      "uri": "docs/API gateway changes/JSON-and-XML-headers.md"
+    },
+    {
+      "type": "item",
+      "title": "New API URL",
+      "uri": "docs/API gateway changes/New-API-url.md"
+    },
+    {
+      "type": "item",
+      "title": "Sending API key",
+      "uri": "docs/API gateway changes/Sending-API-key.md"
+    },
+    {
+      "type": "divider",
+      "title": "Conventions"
+    },
+    {
+      "type": "item",
+      "title": "Conventions",
+      "uri": "docs/Conventions/Conventions.md"
+    },
+    {
+      "type": "item",
+      "title": "HTTP response codes",
+      "uri": "docs/Conventions/HTTP-response-codes.md"
+    },
+    {
+      "type": "item",
+      "title": "Pagination",
+      "uri": "docs/Conventions/Pagination.md"
+    },
+    {
+      "type": "item",
+      "title": "RESTful-architecture",
+      "uri": "docs/Conventions/RESTful-architecture.md"
+    },
+    {
+      "type": "item",
+      "title": "Retrieving objects",
+      "uri": "docs/Conventions/Retrieving-objects.md"
+    },
+
+    {
+      "type": "divider",
+      "title": "APIS"
+    },
+    {
+      "type": "item",
+      "title": "Whispir Rest API",
+      "uri": "openapi.yaml"
+    }
+  ]
+}

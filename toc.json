@@ -1,13 +1,13 @@
 {
   "items": [
         {
-      "type": "divider",
-      "title": "Getting started"
-    },
-    {
       "type": "item",
       "title": "About the Whispir platform API",
-      "uri": "docs/Getting started/About-the-Whispir-platform-API.md"
+      "uri": "docs/About-the-Whispir-platform-API.md"
+    },
+        {
+      "type": "divider",
+      "title": "Getting started"
     },
     {
       "type": "item",

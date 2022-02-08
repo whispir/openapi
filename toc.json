@@ -11,39 +11,30 @@
     },
     {
       "type": "item",
-      "title": "API best practices",
-      "uri": "docs/Getting started/API-best-practices.md"
+      "title": "Authentication",
+      "uri": "docs/Getting started/Authentication.md"
     },
-    {
+       {
       "type": "item",
-      "title": "API-rate-limits",
-      "uri": "docs/Getting started/API-rate-limits.md"
+      "title": "Test your API connection",
+      "uri": "docs/Getting started/Test-your-API-connection.md"
     },
-    {
+        {
       "type": "item",
-      "title": "Auto extension of daily limits",
-      "uri": "docs/Getting started/Auto-extension-of-daily-limits.md"
-    },
-    {
-      "type": "item",
-      "title": "Connect to the API",
-      "uri": "docs/Getting started/Connect-to-the-API.md"
-    },
-    {
-      "type": "item",
-      "title": "Register with Whispir",
-      "uri": "docs/Getting started/Register-with-Whispir.md"
-    },
-    {
-      "type": "item",
-      "title": "Sending messages",
-      "uri": "docs/Getting started/Sending-messages.md"
+      "title": "HTTP response codes",
+      "uri": "docs/Getting started/HTTP-response-codes.md"
     },
     {
       "type": "item",
       "title": "Whispir API Postman Collection",
       "uri": "docs/Getting started/Whispir-API-Postman-Collection.md"
     },
+    {
+      "type": "item",
+      "title": "Rate limits, pagination & API best practices",
+      "uri": "docs/Getting started/Rate-limits-pagination-and-best-practices.md"
+    },
+
     {
       "type": "divider",
       "title": "API gateway changes"

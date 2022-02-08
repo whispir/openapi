@@ -25,8 +25,8 @@ Want to try out our API but you're not yet a Whispir customer? No worries. Simpl
 The Whispir API uses [HTTP Basic Authentication ](https://en.wikipedia.org/wiki/Basic_access_authentication) in addition to your API key. HTTP Basic Auth requires an authentication header to be passed along with your API request.
 
 You can generate your authentication header here by filling in the form below.
-
-(registration form here)
+ 
+ (auth header gen here) mmmmmm                                  
 
 > Note: The credentials entered on this page are not submitted or stored, but only processed as part of an algorithm to automatically generate your header.
 

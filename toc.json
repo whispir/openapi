@@ -29,36 +29,7 @@
       "title": "Whispir API Postman Collection",
       "uri": "docs/Getting started/Whispir-API-Postman-Collection.md"
     },
-    {
-      "type": "item",
-      "title": "Rate limits, pagination & API best practices",
-      "uri": "docs/Getting started/Rate-limits-pagination-and-best-practices.md"
-    },
-
-    {
-      "type": "divider",
-      "title": "API gateway changes"
-    },
-    {
-      "type": "item",
-      "title": "API gateway changes",
-      "uri": "docs/API gateway changes/API-gateway-changes.md"
-    },
-    {
-      "type": "item",
-      "title": "JSON-and-XML-headers",
-      "uri": "docs/API gateway changes/JSON-and-XML-headers.md"
-    },
-    {
-      "type": "item",
-      "title": "New API URL",
-      "uri": "docs/API gateway changes/New-API-url.md"
-    },
-    {
-      "type": "item",
-      "title": "Sending API key",
-      "uri": "docs/API gateway changes/Sending-API-key.md"
-    },
+  
     {
       "type": "divider",
       "title": "Conventions"
@@ -70,25 +41,9 @@
     },
     {
       "type": "item",
-      "title": "HTTP response codes",
-      "uri": "docs/Conventions/HTTP-response-codes.md"
+      "title": "Rate limits, pagination & best practices",
+      "uri": "docs/Conventions/Rate-limits-pagination-and-best-practices.md"
     },
-    {
-      "type": "item",
-      "title": "Pagination",
-      "uri": "docs/Conventions/Pagination.md"
-    },
-    {
-      "type": "item",
-      "title": "RESTful-architecture",
-      "uri": "docs/Conventions/RESTful-architecture.md"
-    },
-    {
-      "type": "item",
-      "title": "Retrieving objects",
-      "uri": "docs/Conventions/Retrieving-objects.md"
-    },
-
     {
       "type": "divider",
       "title": "APIS"

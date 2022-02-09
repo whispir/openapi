@@ -29,20 +29,10 @@
       "title": "Whispir API Postman Collection",
       "uri": "docs/Getting started/Whispir-API-Postman-Collection.md"
     },
-  
-    {
-      "type": "divider",
-      "title": "Conventions"
-    },
-    {
-      "type": "item",
-      "title": "Conventions",
-      "uri": "docs/Conventions/Conventions.md"
-    },
     {
       "type": "item",
       "title": "Rate limits, pagination & best practices",
-      "uri": "docs/Conventions/Rate-limits-pagination-and-best-practices.md"
+      "uri": "docs/Getting started/Rate-limits-pagination-and-best-practices.md"
     },
     {
       "type": "divider",

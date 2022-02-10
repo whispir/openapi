@@ -11,14 +11,6 @@ You'll need:
 - [Postman](https://www.postman.com/)
 - [Whispir API Postman Collection](https://github.com/whispir/Whispir-API-Postman-Collection) (clone the GitHub repository or download as a .zip file)
 
-### Selecting the right approach for your scenario
-
-Whispir is a communication platform with an API that provides a versatile way to interact with Whispir’s functions and resources.
-
-[Postman](https://www.getpostman.com/ ) is a popular tool for testing web-based APIs. It organises API requests into collections which can be scripted with parameters and include tests for service validation.
-
-The Whispir Postman Collection provides most of the Whispir REST API methods to demonstrate and validate their use in typical customer scenarios.
-
 ### Request Strategy
 
 The Whispir Postman collection demonstrates the more complex HATEOAS client strategy to utilise the information returned from Whispir to be flexible and versatile in as many contexts as possible.
@@ -34,7 +26,7 @@ If no Content-Type header is provided, Whispir defaults to responses in XML
 
 e.g:
 
-```json
+```XML
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
 <ns3:error xmlns:ns2="http://schemas.api.whispir.com/dap"
@@ -73,15 +65,12 @@ Operating through workspaces helps to separate security concerns, message and re
 
 It’s important to follow the set up procedure to initialise the workspace-id environment variable.
 
-Modern development practices recommend development, testing and production applications are assigned their own workspaces.
-
 ## Set Up the Whispir API Postman Collection
 After installing Postman and importing the Whispir Postman Collection and Whispir Postman Environment definitions, you’ll have access to the Whispir REST requests and a set of Environment variables to use in the Whispir collection.
 
-You can request the latest Whispir Postman Collection from support@whispir.com.
-
-
 > We recommend making duplicates of the collection and the environment so you can always restore to a known good configuration.
+
+
 
 ## Whispir Environment
 
@@ -90,13 +79,13 @@ The Whispir Postman Collection relies heavily on Postman Environment Variables t
 The Whispir environment includes the following values:
 
 
-Column A | Column B | 
+Environment variable | content | 
 ---------|----------
  base-url	 | The regional variant of the Whispir api (api.au.whispir.com; api.us.whispir.com; api.ap1.whispir.com; api.it.whispir.com; api.edu.whispir.com) 
  x-api-key	 | Supplied by Whispir 
  Whispir-username	 | Supplied by Whispir 
  Whispir-password	| Supplied by Whispir 
- test-sms	| Any valid mobile, cell, long code or short code 
+ test-sms	| Any valid mobile number, cell phone number, long code or short code 
  test-email	| An email address to send test content 
  workspace-name	| The name of a Whispir Workspace to use 
  callback-url	| [optional] A callback endpoint

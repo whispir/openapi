@@ -34,6 +34,11 @@
       "title": "Rate limits, pagination & best practices",
       "uri": "docs/Getting started/Rate-limits-pagination-and-best-practices.md"
     },
+        {
+      "type": "item",
+      "title": "Using JSON and XML headers",
+      "uri": "docs/Getting started/JSON-and-XML-headers.md"
+    },
     {
       "type": "divider",
       "title": "APIS"

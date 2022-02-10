@@ -1,4 +1,4 @@
-# JSON-and-XML-headers
+# Using JSON and XML headers
 
 The new Whispir API has been designed and built to support the wide feature set provided in its past version. In particular, Whispir API continues to support both JSON and XML
 

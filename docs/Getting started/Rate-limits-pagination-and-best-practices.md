@@ -48,7 +48,7 @@ Requests that contain multiple items will be paginated by default. Each page wil
 
 Two parameters can be used to control the number of items retrieved:
 
-- `limit`: The number of rows to be returned (maximum: 20, default: 20)
+- `limit`: The number of rows to be returned (maximum: 20)
 - `offset`: The record number to start returning from (default: 0)
 
 Most resources will provide these links at the end of the response object in a link array that supplies links with rel=next and rel=prev attributes. This makes programmatic pagination easy as you can simply detect the presence of these attributes. You can loop through the pages until you receive a response of "No messages found".

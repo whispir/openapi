@@ -5,16 +5,12 @@ To test your connectivity you will now need the following parameters:
 - The URL that you would like to request
 - Your API key
 - Your Authorization header
-- The Content-Type/Accept Headers (this is required for some methods)
+- Specific MIME type for the Content-Type/Accept Headers (this is required for some methods)
 
 To do this you can use a programming language, a cURL script or a generic REST client.
 
 ## Using cURL
-cURL is a computer software project providing a library and command-line tool for transferring data using various protocols. One key use of cURL is to make HTTP requests
-
-In order to test your ability to use the WhispirAPI, cURL is a very quick mechanism to enter into a command line interface and make sure everything is set up correctly.
-
-cURL is a computer software project providing a library and command-line tool for transferring data using various protocols. One key use of cURL is to make HTTP requests
+cURL is a computer software project providing a library and command-line tool for transferring data using various protocols. One key use of cURL is to make HTTP requests.
 
 In order to test your ability to use the WhispirAPI, cURL is a very quick mechanism to enter into a command line interface and make sure everything is set up correctly.
 
@@ -60,8 +56,7 @@ Sample Response
 ```
 
 # Using a generic REST client
-An alternate way to test Whispir API is to install [Postman](https://www.postman.com/) or any other API Client. In the rest of the documentation the APIs will be listed to ease this second option.
-
+An alternate way to test Whispir API is to install [Postman](https://www.postman.com/) or another API Client.
 ```JSON
 Connect to the API using an API Client
 GET https://api.<region>.whispir.com
@@ -85,11 +80,11 @@ If you received a different response, continue to the next section to understand
 
 # Resolving connectivity issues
 
-## HTTP 403 Forbidden or HTTP 401 Unauthorized
+## HTTP 401 Unauthorized or HTTP 403 Forbidden  
 
-- You may be using an invalid API key
-- You may be using an invalid Authorization header, especially if you recently changed the password. If so, please use the tool above to build the new value to be passed
-- If you can't log in it’s possible that your account isn’t active. Contact your Whispir Company Administrator
+- You may be using an invalid API key.
+- You may be using an invalid Authorization header, especially if you recently changed the password. If so, please use the tool above to build the new value to be passed.
+- If you can't log in it’s possible that your account isn’t active. Contact your Whispir Company Administrator.
 
 ## Other HTTP errors or no connectivity at all
 

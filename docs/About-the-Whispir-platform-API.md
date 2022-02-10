@@ -16,3 +16,4 @@ Whispir APIs let developers:
 - Invoke scenario-based communications for quick, effective and targeted communications.
 - Publish messages to internal or external web pages, RSS feeds and social networks.
 - Asynchronously receive all responses to a given message and perform analysis on the data.
+- Further integrations...

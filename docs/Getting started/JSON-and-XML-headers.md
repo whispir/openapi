@@ -1,13 +1,11 @@
 # Using JSON and XML headers
 
-The new Whispir API has been designed and built to support the wide feature set provided in its past version. In particular, Whispir API continues to support both JSON and XML
+The Whispir API has been designed and built to support the wide feature set provided in its past version. In particular, Whispir API continues to support both JSON and XML.
 
-That said, new `Content-Type` and `Accept` headers are needed to successfully execute your calls. In fact - in order to manage and incorporate change in future versions of the API - Whispir’s API has implemented a versioning structure that allows application clients to choose which version of the API they would like to retrieve their responses from
-
-This allows new versions to be built and old versions to be supported concurrently, with no impact to clients when changes are made. Whispir’s API achieves this versioning capability by using Vendor Specific MIME Types (VSMT).
+That said, `Content-Type` and `Accept` headers are needed to successfully execute your calls. In fact - in order to manage and incorporate change in future versions of the API - Whispir’s API has implemented a versioning structure that allows application clients to choose which version of the API they would like to retrieve their responses from.
 
 ## List of Whispir’s VSMTs
-The following table lists the available mime types that will be accepted through Whispir’s API
+The following table lists the available mime types that will be accepted through Whispir’s API.
 
 **IMPORTANT**: The MIME Type is always singular: `message-v1`, not `messages-v1`. When not specified the API defaults to an XML answer.
 
@@ -109,8 +107,6 @@ Accept: application/vnd.whispir.contact-v1+json
     }
 }
 
- 
-
 With VSMT (V2)
 GET /workspaces/123/contacts?firstName=Neil
 Accept: application/vnd.whispir.contact-v2+json
@@ -133,8 +129,6 @@ Accept: application/vnd.whispir.contact-v1+xml
 <contact>
    <name>Neil Armstrong</name>
 </contact>
-
- 
 
 With VSMT (V2)
 GET /workspaces/123/contacts?firstName=Neil

@@ -26,11 +26,6 @@
     },
     {
       "type": "item",
-      "title": "Whispir API Postman Collection",
-      "uri": "docs/Getting started/Whispir-API-Postman-Collection.md"
-    },
-    {
-      "type": "item",
       "title": "Rate limits, pagination & best practices",
       "uri": "docs/Getting started/Rate-limits-pagination-and-best-practices.md"
     },
@@ -38,6 +33,16 @@
       "type": "item",
       "title": "Using JSON and XML headers",
       "uri": "docs/Getting started/JSON-and-XML-headers.md"
+    },
+            {
+      "type": "item",
+      "title": "Domains and IP addresses",
+      "uri": "docs/Getting started/Domains-and-IP-addresses.md"
+    },
+     {
+      "type": "item",
+      "title": "Whispir API Postman Collection",
+      "uri": "docs/Getting started/Whispir-API-Postman-Collection.md"
     },
     {
       "type": "divider",

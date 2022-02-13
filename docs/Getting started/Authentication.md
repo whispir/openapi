@@ -4,13 +4,15 @@ The Whispir API uses authentication from 2 sources: an API key and an authentica
 
 You will require both of these in order to make requests to the API.
 
+> /AUTH ENDPOINT.....
+
 ## Obtain an API key
 
 
 ### I am a Whispir customer
 If you're a Whispir customer with access to Workflows by Whispir, you can obtain an API key through the Workflows platform by following the steps outlined [here](https://help.whispir.com/en/articles/4940972-api-keys-portal).
 
-If you're a Whispir customer using Whispir Classic, please reach out to your friendly support team and they'll will provide you with an API key.
+If you're a Whispir customer using Whispir Classic, please contact your Whispir account manager or the [Whispir Support Team](mailto:support@whispir.com) to obtain an API key.
 
 
 ### I am not yet a Whispir customer
@@ -21,7 +23,7 @@ Want to try out our API but you're not yet a Whispir customer? No worries. Simpl
 - Americas ???
 ## API key as a header
 
-In line with the new API gateway changes, the key information must now be passed in ONLY via the ‘headers’, using the `x-api-key` header value. The header value will be the same as the one used as query parameter with the old deprecated API URL
+API key information is provided via the ‘headers’, using the `x-api-key` header value.
 
 ```json
 Example - if your region is AP
@@ -40,7 +42,7 @@ x-api-key: YOUR-API-KEY
 
 ## Authorization header
 
-The Whispir API uses [HTTP Basic Authentication ](https://en.wikipedia.org/wiki/Basic_access_authentication) in addition to your API key. HTTP Basic Auth requires an authentication header to be passed along with your API request.
+The Whispir API uses [HTTP Basic Authentication ](https://en.wikipedia.org/wiki/Basic_access_authentication) in addition to an API key. HTTP Basic Authentication requires an authentication header to be passed along with your API request.
 
 You can generate your authentication header here by filling in the form below:
  

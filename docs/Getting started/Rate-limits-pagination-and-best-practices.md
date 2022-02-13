@@ -96,7 +96,7 @@ Whispir recommends the following best practices for use with our REST API:
 
 **Create production and development key pairs.** Depending on the size and nature of your project, you may have multiple development environments that you manage. We recommend creating distinct Whispir API user accounts and API keys for this purpose.
 
-**Delete API keys is no longer needed.** If a key (or associate Whispir API user account) is no longer needed, these should be deleted. New keys can easily be created if required in the future.
+**Delete API keys that are no longer needed.** If a key (or associated Whispir API user account) is no longer needed, it should be deleted. New keys can easily be created if required in the future.
 
 Following these best practices will allow you to have the best visibility and supportability of your projects that use the Whispir REST API.
 

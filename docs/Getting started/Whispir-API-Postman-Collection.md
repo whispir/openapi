@@ -8,14 +8,8 @@ tags: [Getting Started]
 
 You'll need:
 
-- [Postman](https://www.postman.com/)
+- [Download Postman](https://www.postman.com/)
 - [Whispir API Postman Collection](https://github.com/whispir/Whispir-API-Postman-Collection) (clone the GitHub repository or download as a .zip file)
-
-### Request Strategy
-
-The Whispir Postman collection demonstrates the more complex HATEOAS client strategy to utilise the information returned from Whispir to be flexible and versatile in as many contexts as possible.
-
-The Whispir Postman collection combines the HATEOAS approach with Postman Environment variables to remember values returned by Whispir for use as parameters in subsequent requests. As you work with the Postman collection, you’ll notice the list of environment variables will grow as new values are added.
 
 ## Best Practice Messaging
 Developers should keep the following recommendations in mind while developing integrated client solutions.
@@ -69,8 +63,6 @@ It’s important to follow the set up procedure to initialise the workspace-id e
 After installing Postman and importing the Whispir Postman Collection and Whispir Postman Environment definitions, you’ll have access to the Whispir REST requests and a set of Environment variables to use in the Whispir collection.
 
 > We recommend making duplicates of the collection and the environment so you can always restore to a known good configuration.
-
-
 
 ## Whispir Environment
 

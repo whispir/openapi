@@ -4,16 +4,13 @@ The Whispir API uses authentication from 2 sources: an API key and an authentica
 
 You will require both of these in order to make requests to the API.
 
-> /AUTH ENDPOINT.....
-
 ## Obtain an API key
 
 
 ### I am a Whispir customer
-If you're a Whispir customer with access to Workflows by Whispir, you can obtain an API key through the Workflows platform by following the steps outlined [here](https://help.whispir.com/en/articles/4940972-api-keys-portal).
+If you're a Whispir customer with access to Whispir Classic and Workflows by Whispir, you can obtain an API key through the Workflows platform by following the steps outlined [here](https://help.whispir.com/en/articles/4940972-api-keys-portal).
 
-If you're a Whispir customer using Whispir Classic, please contact your Whispir account manager or the [Whispir Support Team](mailto:support@whispir.com) to obtain an API key.
-
+If you're a Whispir customer using only Whispir Classic, please contact your Whispir account manager or the [Whispir Support Team](mailto:support@whispir.com) to obtain an API key.
 
 ### I am not yet a Whispir customer
 Want to try out our API but you're not yet a Whispir customer? No worries. Simply fill out the contact form on our website and let us know you'd like to try out our API:

@@ -3499,7 +3499,7 @@ components:
       properties:
         to:
           type: string
-          example: 1000000000
+          example: '61987654321'
         subject:
           type: string
           example: Test Message

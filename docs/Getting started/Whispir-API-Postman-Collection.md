@@ -9,7 +9,7 @@ tags: [Getting Started]
 You'll need:
 
 - [Download Postman](https://www.postman.com/)
-- [Whispir API Postman Collection](https://github.com/whispir/Whispir-API-Postman-Collection) (clone the GitHub repository or download as a .zip file)
+- [Download Whispir API Postman Collection](https://github.com/whispir/Whispir-API-Postman-Collection) (clone the GitHub repository or download as a .zip file)
 
 ## Best Practice Messaging
 Developers should keep the following recommendations in mind while developing integrated client solutions.

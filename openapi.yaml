@@ -335,7 +335,7 @@ paths:
                       status: ''
                       link: []
       security:
-        - api_key: []
+        - apiKey: []
         - basicAuth: []
   '/workspaces/{workspaceId}/resources':
     post:
@@ -3462,7 +3462,7 @@ externalDocs:
   url: 'https://developers.whispir.com/docs/'
 security:
   - basicAuth: []
-  - api_key: []
+  - apiKey: []
 servers:
   - url: 'https://api.au.whispir.com'
     description: Australia
@@ -3494,7 +3494,7 @@ components:
       type: http
       scheme: basic
       description: ''
-    api_key:
+    apiKey:
       type: apiKey
       in: header
       name: x-api-key

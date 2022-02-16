@@ -3,11 +3,14 @@ info:
   description: 'Whispir REST API for cross channel and multi channel communications. Documentation on each endpoint is available at https://developers.whispir.com/api/'
   version: 1.0.0
   title: Whispir Rest API
-  termsOfService: 'https://www.whispir.com'
+  termsOfService: 'https://www.whispir.com/terms-of-service'
   contact:
     email: support@whispir.com
-    name: Whispir Pty Ltd
-    url: 'https://www.whispir.com/services/support'
+    name: Whispir Support
+    url: 'https://www.whispir.com/support'
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
 tags:
   - name: Messages
     description: Communications are the core of what the Whispir.io API offers as a service to customers.
@@ -331,6 +334,9 @@ paths:
                               method: GET
                       status: ''
                       link: []
+      security:
+        - apiKey: []
+        - basicAuth: []
   '/workspaces/{workspaceId}/resources':
     post:
       tags:
@@ -3456,7 +3462,7 @@ externalDocs:
   url: 'https://developers.whispir.com/docs/'
 security:
   - basicAuth: []
-  - api_key: []
+  - apiKey: []
 servers:
   - url: 'https://api.au.whispir.com'
     description: Australia
@@ -3488,7 +3494,7 @@ components:
       type: http
       scheme: basic
       description: ''
-    api_key:
+    apiKey:
       type: apiKey
       in: header
       name: x-api-key

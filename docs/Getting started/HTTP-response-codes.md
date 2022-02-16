@@ -21,13 +21,13 @@ Response Code | Meaning
 
 Response Code | Meaning 
 ---------|----------
-400 Bad Request | B
-401 Unauthorized | B
-403 Forbidden | B
-404 Not Found | B
-405 Method not allowed | B
-415 Unsupported Media Type | B
-429 Too many requests | B
-422 Unprocessable Entity | B
-500 Internal Server Error | B
-501 Method Not Implemented | B
+**400 Bad Request** | Invalid or missing request parameters. <br /><br />Inspect the request parameters and ensure that all required parameters are supplied. <br /><br />Note the error text in the response and update the request accordingly.
+**401 Unauthorized** | Invalid or no credentials passed in the request. <br /><br />Inspect the authorisation header and ensure that a valid authentication has been provided.
+**403 Forbidden** | 	Authorisation credentials passed and accepted but the account doesn't have permission. <br /><br />Inspect the authorisation header and ensure that a valid authentication has been provided. <br /><br />Returned when HTTP is used instead of HTTPS. <br /><br />Returned when invalid API key is used. <br /><br />Returned when you have tried to make more API calls than your allowed quota (QPS). Refer to API rate limits.
+**404 Not Found** | The requested URL doesn't exist. <br /><br />The requested resource was not found. <br /><br />Inspect the ID in the URL that was used and ensure that it's valid. <br /><br />Inspect the Accept and Content-Type headers that are being used to make sure they’re correct for the URL that is being requested.
+**405 Method not allowed** | The requested resource doesn't support the supplied verb. <br /><br />Inspect the HTTP method that was used in the request and ensure that it's valid for the resource being requested.
+**415 Unsupported Media Type** | The request was unsuccessful because the requested content type is not supported by the API. <br /><br />The application client can use this response to determine if it's asking for a supported version of a resource. On receiving this response the client can query the developer documentation to determine the appropriate version for the requested resource. <br /><br />In most cases, this is due to the user not supplying the correct Accept or Content-Type header for the requested URL. <br /><br />See [JSON and XML Headers](JSON-and-XML-headers.md) for more details
+**429 Too many requests** | Above API quota limits. Returned when you have tried to make more API calls than your allowed quota (QPS). <br /><br />Refer to [API rate limits](Rate-limits-pagination-and-best-practices.md).
+**422 Unprocessable Entity**| The request is formed correctly but due to some condition it can’t be processed. For example, email is required and it's not provided in the request. <br /><br />The request did not contain all the information required to perform this method. Check your request for the required fields to be passed in and try again. The offending fields will be specified in the error text of the response.
+**500 Internal Server Error** | An internal error occurred when processing the request. Attempt the request again and if the HTTP 500 error re-occurs contact the [Whispir Support Team](mailto:'support@whispir.com').
+**501 Method Not Implemented**| The HTTP method being used has not yet been implemented for the requested resource.<br /><br /> The method being used is not implemented for this resource. Check the documentation for the specific resource type.

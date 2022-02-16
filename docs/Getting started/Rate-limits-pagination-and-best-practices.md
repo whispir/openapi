@@ -1,14 +1,18 @@
+---
+tags: [Getting Started]
+---
+
 # Rate limits, pagination & API best practices
 
-##  Rate Limits
+## Rate Limits
+
 Each Whispir API key is limited both in terms of calls per second and calls per day. The limits depend on the Whispir plan, according to the table below:
 
-
-Whispir subscription	 | 	Requests per second | Requests per day
----------|----------|---------
- Startup API edition | 5 | 10,000
- Business API edition	 | 10 | 20,000
- Enterprise API edition	 | 30	 | 50,000
+| Whispir subscription   | Requests per second | Requests per day |
+| ---------------------- | ------------------- | ---------------- |
+| Startup API edition    | 5                   | 10,000           |
+| Business API edition   | 10                  | 20,000           |
+| Enterprise API edition | 30                  | 50,000           |
 
 If further calls per second or per day are required for your application, please contact your Whispir account manager or the [Whispir Support Team](mailto:support@whispir.com).
 
@@ -42,6 +46,7 @@ X-Error-Code: ERR_403_DEVELOPER_OVER_QPD
 X-Error-Detail: Account Over Queries Per Day Limit
 
 ```
+
 ## Pagination
 
 Requests that contain multiple items will be paginated by default. Each page will provide a maximum of 20 items per page.
@@ -71,6 +76,7 @@ GET https://api.<region>.whispir.com/workspaces/7311ABEB701E7C60/messages?limit=
     "status" : "No records found"
 }
 ```
+
 ```XML
 Request for the first page of messages:
 
@@ -86,17 +92,17 @@ GET https://api.<region>.whispir.com/workspaces/7311ABEB701E7C60/messages?limit=
     <status>No records found</status>
 </ns2:return>
 ```
+
 ## API best practices
 
 Whispir recommends the following best practices for use with our REST API:
 
-**Associate a single Whispir API user account with a single API key.** The Whispir user account should be created for API usage only, and not re-used for standard Whispir platform purposes.
+- **Associate a single Whispir API user account with a single API key.** The Whispir user account should be created for API usage only, and not re-used for standard Whispir platform purposes.
 
-**Avoid re-use of API Keys across multiple Whispir user accounts**. If you find the need to have multiple Whispir API user accounts, you can create yourself a matching API key to go with it.
+- **Avoid re-use of API Keys across multiple Whispir user accounts**. If you find the need to have multiple Whispir API user accounts, you can create yourself a matching API key to go with it.
 
-**Create production and development key pairs.** Depending on the size and nature of your project, you may have multiple development environments that you manage. We recommend creating distinct Whispir API user accounts and API keys for this purpose.
+- **Create production and development key pairs.** Depending on the size and nature of your project, you may have multiple development environments that you manage. We recommend creating distinct Whispir API user accounts and API keys for this purpose.
 
-**Delete API keys that are no longer needed.** If a key (or associated Whispir API user account) is no longer needed, it should be deleted. New keys can easily be created if required in the future.
+- **Delete API keys that are no longer needed.** If a key (or associated Whispir API user account) is no longer needed, it should be deleted. New keys can easily be created if required in the future.
 
 Following these best practices will allow you to have the best visibility and supportability of your projects that use the Whispir REST API.
-

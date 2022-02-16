@@ -6,7 +6,7 @@ tags: [Getting Started]
 
 ### Before you start
 
-You'll need:
+You'll need to:
 
 - [Download Postman](https://www.postman.com/)
 - [Download Whispir API Postman Collection](https://github.com/whispir/Whispir-API-Postman-Collection) (clone the GitHub repository or download as a .zip file)
@@ -49,6 +49,7 @@ Method | Header | Comment
  PUT / POST | Content Type / Accept | PUT and POST both send content to Whispir to create and update resources and entities. Methods that return the created resource in the body will use the Accept content type specified if appropriate.
  DELETE|  | Technically DELETE requires neither Accept or Content-Type, however you may elect to specify Accept type in the event of an error message returned.
 
+See [Authentication](Authentication.md) for more information.
 ### Operate through a workspace
 
 Whispir employs an internal organisational unit called a Workspace. A workspace helps to segregate access to resources and functionality using Permissions and Roles assigned to Users.

@@ -1,3 +1,7 @@
+---
+tags: [Getting Started]
+---
+
 # Test your connection to the API
 
 To test your connectivity you will now need the following parameters:
@@ -19,3 +23,4 @@ To test your connectivity you will now need the following parameters:
 }
 
 ```
+https://codepen.io/jzcummings/pen/XWzeePo

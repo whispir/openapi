@@ -53,8 +53,7 @@ Once you’ve generated this header you can use it in a request to the API.
 
 ### Important points
 
-- You need to first modify the Whispir endpoint including the region, according to what described in the previous section.
-- The API key is NOT anymore required as a query parameter, please remove it from all your Requests in order to increase the security.
+- You need to first modify the Whispir to include the correct region. See [Domains and IP addresses](Domains-and-IP-addresses.md) for more information.
 - If the API key value is incorrect or not passed properly, a `403 Forbidden` error will be returned by Whispir.
-- If you change the password of your account then you will need to change also the value for the `Authorization` header. You can generate the new Basic token as explained **here**.
-- If you have any queries related to sending the API key, contact the Whispir Support Team. Provide as much detail as possible about your issue.
+- If you change the password of your account then you will need to change also the value for the `Authorization` header. You will then need to generate a new authentication header.
+- If you have any issues related to authentication, please don't hesitate to contact the [Whispir Support Team](mailto='support@whispir.com').

@@ -12,22 +12,22 @@ The following table lists the available mime types that will be accepted through
 
 Mime type | Headers 
 ---------|----------
- **Workspace** | JSON: application/vnd.whispir.workspace-v1+json <br />XML: application/vnd.whispir.workspace-v1+xml 
- **Message** | JSON: application/vnd.whispir.message-v1+json <br />XML: application/vnd.whispir.message-v1+xml 
- **Message Responses**| JSON: application/vnd.whispir.messagestatus-v1+json <br />XML: application/vnd.whispir.messagestatus-v1+xml
- **Response Rule**| JSON: application/vnd.whispir.messageresponse-v1+json <br />XML: application/vnd.whispir.messageresponse-v1+xml
- **Template** | JSON: JSON: application/vnd.whispir.template-v1+json <br />XML: application/vnd.whispir.template-v1+xml
- **Contact** | JSON: application/vnd.whispir.contact-v1+json <br />XML: application/vnd.whispir.contact-v1+xml
- **Distribution List** | 	JSON: application/vnd.whispir.distributionlist-v1+json <br />XML: application/vnd.whispir.distributionlist-v1+xml
- **Scenario** | JSON: application/vnd.whispir.scenario-v1+json <br />XML: application/vnd.whispir.scenario-v1+xml
- **Event** | JSON: application/vnd.whispir.event-v1+json <br />XML: application/vnd.whispir.event-v1+xml 
-  **Callback** | JSON: application/vnd.whispir.api-callback-v1+json <br />XML: application/vnd.whispir.api-callback-v1+xml 
- **Asset** | JSON: application/vnd.whispir.asset-v1+json <br />XML: application/vnd.whispir.asset-v1+xml 
- **Custom List** | JSON: application/vnd.whispir.customlist-v1+json <br />XML: application/vnd.whispir.customlist-v1+xml 
-  **Activity Log** | JSON: application/vnd.whispir.activity-v1+json <br />XML: application/vnd.whispir.activity-v1+xml 
- **User** | JSON: application/vnd.whispir.user-v1+json <br />XML: application/vnd.whispir.user-v1+xml 
- **Resource** | JSON: application/vnd.whispir.resource-v1+json <br />XML: application/vnd.whispir.resource-v1+xml 
-  **Import** | JSON: application/vnd.whispir.importcontact-v1+json <br />XML: application/vnd.whispir.importcontact-v1+xml 
+ **Workspace** | **JSON:** application/vnd.whispir.workspace-v1+json <br />**XML:** application/vnd.whispir.workspace-v1+xml 
+ **Message** | application/vnd.whispir.message-v1+json <br />application/vnd.whispir.message-v1+xml 
+ **Message Responses**| application/vnd.whispir.messagestatus-v1+json <br /> application/vnd.whispir.messagestatus-v1+xml
+ **Response Rule**| application/vnd.whispir.messageresponse-v1+json <br />application/vnd.whispir.messageresponse-v1+xml
+ **Template** | application/vnd.whispir.template-v1+json <br />application/vnd.whispir.template-v1+xml
+ **Contact** | application/vnd.whispir.contact-v1+json <br />application/vnd.whispir.contact-v1+xml
+ **Distribution List** | 	application/vnd.whispir.distributionlist-v1+json <br />application/vnd.whispir.distributionlist-v1+xml
+ **Scenario** | application/vnd.whispir.scenario-v1+json <br />application/vnd.whispir.scenario-v1+xml
+ **Event** | application/vnd.whispir.event-v1+json <br />application/vnd.whispir.event-v1+xml 
+  **Callback** | application/vnd.whispir.api-callback-v1+json <br />application/vnd.whispir.api-callback-v1+xml 
+ **Asset** | application/vnd.whispir.asset-v1+json <br />application/vnd.whispir.asset-v1+xml 
+ **Custom List** | application/vnd.whispir.customlist-v1+json <br />application/vnd.whispir.customlist-v1+xml 
+  **Activity Log** | application/vnd.whispir.activity-v1+json <br />application/vnd.whispir.activity-v1+xml 
+ **User** | Japplication/vnd.whispir.user-v1+json <br />application/vnd.whispir.user-v1+xml 
+ **Resource** |application/vnd.whispir.resource-v1+json <br />application/vnd.whispir.resource-v1+xml 
+  **Import** | application/vnd.whispir.importcontact-v1+json <br />application/vnd.whispir.importcontact-v1+xml 
 
 ## Without VSMT
 This implementation of an API in this manner works correctly, but conceptually it's incorrect. The issue with this design is that the request is only asking for an XML representation of some resource called a contact; it's not specifically asking for the XML version of a contact resource as defined by Whispir’s API.

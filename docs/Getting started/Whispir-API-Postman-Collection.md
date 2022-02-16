@@ -74,7 +74,7 @@ The Whispir environment includes the following values:
 
 Environment variable | content | 
 ---------|----------
- base-url	 | The regional variant of the Whispir api (api.au.whispir.com; api.us.whispir.com; api.ap1.whispir.com; api.it.whispir.com; api.edu.whispir.com) 
+ base-url	 | The regional variant of the Whispir api: <br />api.au.whispir.com <br />api.us.whispir.com <br />api.ap1.whispir.com <br />api.it.whispir.com <br />api.edu.whispir.com 
  x-api-key	 | Supplied by Whispir 
  Whispir-username	 | Supplied by Whispir 
  Whispir-password	| Supplied by Whispir 

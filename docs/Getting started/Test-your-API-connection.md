@@ -21,6 +21,4 @@ To test your connectivity you will now need the following parameters:
     "x-api-key": "OmfEAq1Lak5tjVEi9m0dC9M4iLutkHpG8OSDEYnB"
   },
 }
-
 ```
-https://codepen.io/jzcummings/pen/XWzeePo

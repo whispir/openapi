@@ -3456,8 +3456,8 @@ externalDocs:
   description: API Documentation for Whispir REST API
   url: 'https://developers.whispir.com/docs/'
 security:
-  - basicAuth: []
-  - api_key: []
+  - BasicAuth: []
+    ApiKeyAuth: []
 servers:
   - url: 'https://api.au.whispir.com'
     description: Australia
@@ -3485,9 +3485,14 @@ components:
             $ref: '#/components/schemas/event'
       description: events object that needs to be create events
   securitySchemes:
-    basicAuth:
+    BasicAuth:
       type: http
       scheme: basic
+      description: ''
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
       description: ''
   schemas:
     message:

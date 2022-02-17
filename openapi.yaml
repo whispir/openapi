@@ -3002,6 +3002,8 @@ paths:
         *   timezone
         *   workCountry
       operationId: postUsers
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
       requestBody:
         content:
           application/vnd.whispir.user-v1+json:

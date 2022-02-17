@@ -63,6 +63,8 @@ It’s important to follow the set up procedure to initialise the workspace-id e
 ## Set Up the Whispir API Postman Collection
 After installing Postman and importing the Whispir Postman Collection and Whispir Postman Environment definitions, you’ll have access to the Whispir REST requests and a set of Environment variables to use in the Whispir collection.
 
+
+
 > We recommend making duplicates of the collection and the environment so you can always restore to a known good configuration.
 
 ## Whispir Environment

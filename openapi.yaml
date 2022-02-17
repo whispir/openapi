@@ -4233,11 +4233,3 @@ components:
           example: timezone
       xml:
         name: fieldMapping
-  parameters:
-    x-api-key:
-      name: x-api-key
-      in: header
-      required: true
-      schema:
-        type: string
-      description: The API key for authentication

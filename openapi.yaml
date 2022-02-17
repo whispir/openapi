@@ -3141,6 +3141,8 @@ paths:
       summary: Delete all users in a company
       description: The following statement allows a user to delete all users in their company using the Whispir API.
       operationId: deleteUsersAll
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
       responses:
         '204':
           description: No Content

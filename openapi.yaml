@@ -278,6 +278,7 @@ paths:
           description: Retrieving messages sent in relation to the event
           schema:
             type: string
+        - $ref: '#/components/parameters/x-api-key'
       responses:
         '200':
           description: OK
@@ -4232,3 +4233,11 @@ components:
           example: timezone
       xml:
         name: fieldMapping
+  parameters:
+    x-api-key:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The API key for authentication

@@ -265,6 +265,7 @@ paths:
         The API also supports to use this listing to query the different messages for status or any other purpose. And, any of the features available in Sending Messages, or Advanced Messages, are also available to be used within the Events Messages.
       operationId: getMessages
       parameters:
+        - $ref: '#/components/parameters/x-api-key'
         - name: workspaceId
           in: path
           required: true
@@ -278,7 +279,6 @@ paths:
           description: Retrieving messages sent in relation to the event
           schema:
             type: string
-        - $ref: '#/components/parameters/x-api-key'
       responses:
         '200':
           description: OK
@@ -3488,11 +3488,6 @@ components:
     basicAuth:
       type: http
       scheme: basic
-      description: ''
-    api_key:
-      type: apiKey
-      in: header
-      name: x-api-key
       description: ''
   schemas:
     message:

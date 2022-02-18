@@ -14,12 +14,12 @@ To test your connectivity you will now need the following parameters:
 
 [cURL](https://en.wikipedia.org/wiki/CURL) is a computer software project providing a library and command-line tool for transferring data using various protocols. One key use of cURL is to make HTTP requests.
 
-You can test your connection to the Whispir API with the following cURL code. Simply add the region of the server you want to connect to, your authentication header and your API key as indicated below. 
+You can test your connection to the Whispir API with the following cURL code. Simply add the region of the server you want to connect to, your authorization header and your API key as indicated below. 
 
 ```html
 curl --request GET \
   --url https://api.[YOUR REGION HERE].whispir.com \
-  --header 'Authorization: [YOUR AUTHENTICATION HEADER]' \
+  --header 'Authorization: Basic [YOUR AUTHORIZATION HEADER]' \
   --header 'x-api-key: [YOUR API KEY]'
 ```
 Copy the cURL code into the command line interface of your choice, or use a web-based cURL console such as [Reqbin.](https://reqbin.com/curl)

@@ -39,7 +39,7 @@ Allowlisting (historically referred to as [whitelisting](https://en.wikipedia.or
 
 Whispir's API is hosted via Amazon Web Services (AWS). If you wish to implement allowlisting, you will need to allowlist IP ranges belonging to AWS.
 
-Before you do so, please understanding the following:
+Before you do so, please understand the following:
 - Lists of AWS IP ranges are controlled by Amazon, not Whispir.
 - These lists are dynamic and subject to change with minimal notice.
 - Whispir **does not** provide customers with notice of changes to AWS IP ranges.

@@ -62,6 +62,9 @@ You should receive a status code of `200 (OK)` and the following XML which conta
     <ns2:link uri="https://api.au.whispir.com/customlists" rel="retrieveResources" method="GET"/>
 </ns3:company>
 ```
+
+If you received this response, congratulations! You've successfuly connected to the Whispir API.
+
 ## Resolving connectivity issues
 
 **HTTP 403 Forbidden or HTTP 401 Unauthorized**

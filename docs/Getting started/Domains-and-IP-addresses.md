@@ -43,7 +43,7 @@ Allowlisting (sometimes referred to as [whitelisting](https://en.wikipedia.org/w
 
 Whispir's API is hosted via Amazon Web Services (AWS). If you wish to implement allowlisting, you will need to whitelist IP ranges belonging to AWS.
 
-Before you implement allowlisting, please understanding the following:
+Before you do so, please understanding the following:
 - Lists of AWS IP ranges are controlled by Amazon, not Whispir.
 - These lists are dynamic and subject to change with minimal notice.
 - Whispir **does not** provide customers with notice of changes to AWS IP ranges.
@@ -54,7 +54,7 @@ You can subcribe to a mailing list to be notified of future changes to AWS IP ra
 
 We strongly recommend that you subscribe to this list should you decide to implement allowlisting on your system. 
 
-### AWP IP ranges master list
+## AWS IP ranges master list
 
 The list of AWS's IP ranges can be found here: [https://ip-ranges.amazonaws.com/ip-ranges.json](https://ip-ranges.amazonaws.com/ip-ranges.json)
 
@@ -66,7 +66,7 @@ There are two specific categories of AWS IP ranges that **both** need to be allo
 
 ##### Global
 
-All IP ranges associated with the AWS service 'CLOUDFRONT', region 'GLOBAL', are required for allowlisting the Whispir API.
+**All** IP ranges associated with the AWS service 'CLOUDFRONT', region 'GLOBAL', are required for allowlisting the Whispir API.
 
 ##### Region specific
 

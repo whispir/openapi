@@ -73,7 +73,7 @@ Set all the values in the table above to ensure the proper operation of the Whis
 Over time, the Whispir Postman Collection will add environment variables from information provided by Whispir. In most aspects of Postman, hovering the mouse over the variable will display the resolved value.
 ### Correct headers
 
-**The environemt variable configured ...in the previous section...will supply the Basic and API key authentication headers.**
+The environemt variables configured in the previous section will supply the Basic and API key authentication headers for the API calls in this collection.
 
 Accept and Content-Type headers are used to specify the API version and the dialect of any body content. There is normally only one content type for each request, with a choice of JSON or XML body content
 
@@ -91,9 +91,8 @@ See [Authentication](Authentication.md) for more information.
 
 ### Authentication
 
-The Whispir Postman Collection uses “ inherit authentication from parent” on each request to reduce the configuration burden on you, the user. The Collection comes preconfigured with the {{whispir-username}}, {{whispir-password}} and {{x-api-key}} environment variables set in the Basic Auth parameters and request headers respectively.
+The Whispir Postman Collection uses “inherit authentication from parent” on each request to reduce the configuration burden on you, the user. The Collection comes preconfigured with the {{whispir-username}}, {{whispir-password}} and {{x-api-key}} environment variables set in the Basic Auth parameters and request headers respectively.
 
-> *Note - The use of the apikey in the querystring has been removed from the collection.
 ### Connection Validation
 
 To validate the Postman configuration and your connection to Whispir, perform the following requests in order. If you notice any errors, do not proceed until the error is corrected.

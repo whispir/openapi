@@ -3082,6 +3082,7 @@ paths:
                           rel: self
                           uri: 'http://api.whispir.com/users/AF48A9EC3F02E43C'
                       - ...
+      x-internal: false
     delete:
       tags:
         - Users
@@ -3457,6 +3458,40 @@ paths:
       responses:
         '201':
           description: Created
+  /auth:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-auth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                sample response:
+                  value:
+                    token: your-generated-token
+                    link: []
+      description: generate a bearer token based on basic auth (userId & Password)
+      security:
+        - basicAuth: []
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: '''application/vnd.whispir.auth-v1+json'''
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: Accept
+          description: '''application/vnd.whispir.auth-v1+json'''
+          required: true
+  '/auth/{id}': {}
 externalDocs:
   description: API Documentation for Whispir REST API
   url: 'https://developers.whispir.com/docs/'

@@ -3469,12 +3469,20 @@ paths:
           content:
             application/json:
               schema:
+                description: ''
                 type: object
-              examples:
-                sample response:
-                  value:
-                    token: your-generated-token
+                x-examples:
+                  example-1:
+                    token: your-generated-bearer-token
                     link: []
+                properties:
+                  token:
+                    type: string
+                    minLength: 1
+                  link:
+                    type: array
+                    items:
+                      type: object
       description: generate a bearer token based on basic auth (userId & Password)
       security:
         - basicAuth: []

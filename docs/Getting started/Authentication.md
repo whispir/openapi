@@ -18,11 +18,11 @@ If you're a Whispir customer using only Whispir Classic, please contact your Whi
 
 ### I am not yet a Whispir customer
 
-Want to try out our API but you're not yet a Whispir customer? No worries. Simply fill out the contact form on our website and let us know you'd like to try out our API:
+Want to try out our API but you're not yet a Whispir customer? No worries. Simply get in touch with us and let us know you'd like to try out our API:
 
 - [Australia / New Zealand](https://www.whispir.com/en-au/contact/)
 - [Southeast Asia](https://www.whispir.com/en-sg/contact/)
-- Americas ???
+- [Americas](mailto='sales@whispir.com')
 
 ## API key as a header
 
@@ -49,7 +49,7 @@ The Whispir API uses [HTTP Basic Authentication ](https://en.wikipedia.org/wiki/
 
 You can generate your authentication header here by filling in the form below:
 
-(auth header gen here)
+https://codepen.io/jzcummings/pen/XWzeePo
 
 > Note: The credentials entered on this page are not submitted or stored, but only processed as part of an algorithm to automatically generate your header.
 

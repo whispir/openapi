@@ -33,23 +33,6 @@ xmlns:ns3="https://schemas.api.whispir.com">
 </ns3:error>
 ```
 
-### Correct headers
-
-Always include the following headers to ensure your request is authorised, and that you are sending and receiving content in the correct format.
-
-Accept and Content-Type headers are used to specify the API version and the dialect of any body content. There is normally only one content type for each request, with a choice of JSON or XML body content
-
-Accept: application/vnd.whispir.message-v1+json
-
-
-Method | Header | Comment
----------|----------|---------
- ALL | x-api-key | Missing x-api-key will result in 403 Forbidden and message body: '{"message" : "Forbidden"}`
- GET | Accept | Specify the format for receiving Whispir data.
- PUT / POST | Content Type / Accept | PUT and POST both send content to Whispir to create and update resources and entities. Methods that return the created resource in the body will use the Accept content type specified if appropriate.
- DELETE|  | Technically DELETE requires neither Accept or Content-Type, however you may elect to specify Accept type in the event of an error message returned.
-
-See [Authentication](Authentication.md) for more information.
 ### Operate through a workspace
 
 Whispir employs an internal organisational unit called a Workspace. A workspace helps to segregate access to resources and functionality using Permissions and Roles assigned to Users.
@@ -87,12 +70,29 @@ Environment variable | content |
 
 Set all the values in the table above to ensure the proper operation of the Whispir Postman Collection. In some cases, you may need to execute requests in a specific order to satisfy environment variables. This is indicated by a numbered sequence of requests, 1, 2, 3, … etc
 
-Over time, the Whispir Postman Collection will add environment variables from information provided by Whispir. In most aspects of Postman, hovering the mouse over the variable will display the resolved value. 
+Over time, the Whispir Postman Collection will add environment variables from information provided by Whispir. In most aspects of Postman, hovering the mouse over the variable will display the resolved value.
+### Correct headers
+
+The environemt variables configured in the previous section will supply the Basic and API key authentication headers for the API calls in this collection.
+
+Accept and Content-Type headers are used to specify the API version and the dialect of any body content. There is normally only one content type for each request, with a choice of JSON or XML body content
+
+Accept: application/vnd.whispir.message-v1+json
+
+
+Method | Header | Comment
+---------|----------|---------
+ ALL | x-api-key | Missing x-api-key will result in 403 Forbidden and message body: '{"message" : "Forbidden"}`
+ GET | Accept | Specify the format for receiving Whispir data.
+ PUT / POST | Content Type / Accept | PUT and POST both send content to Whispir to create and update resources and entities. Methods that return the created resource in the body will use the Accept content type specified if appropriate.
+ DELETE|  | Technically DELETE requires neither Accept or Content-Type, however you may elect to specify Accept type in the event of an error message returned.
+
+See [Authentication](Authentication.md) for more information.
+
 ### Authentication
 
-The Whispir Postman Collection uses “ inherit authentication from parent” on each request to reduce the configuration burden on you, the user. The Collection comes preconfigured with the {{whispir-username}}, {{whispir-password}} and {{x-api-key}} environment variables set in the Basic Auth parameters and request headers respectively.
+The Whispir Postman Collection uses “inherit authentication from parent” on each request to reduce the configuration burden on you, the user. The Collection comes preconfigured with the {{whispir-username}}, {{whispir-password}} and {{x-api-key}} environment variables set in the Basic Auth parameters and request headers respectively.
 
-> *Note - The use of the apikey in the querystring has been removed from the collection.
 ### Connection Validation
 
 To validate the Postman configuration and your connection to Whispir, perform the following requests in order. If you notice any errors, do not proceed until the error is corrected.

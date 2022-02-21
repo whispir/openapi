@@ -160,13 +160,6 @@ paths:
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: Content-Type
           in: header
           required: true
@@ -270,13 +263,6 @@ paths:
       operationId: getMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: label
           in: query
           required: false
@@ -336,6 +322,8 @@ paths:
                               method: GET
                       status: ''
                       link: []
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/resources':
     post:
       tags:
@@ -387,13 +375,6 @@ paths:
       operationId: postResources
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       requestBody:
         content:
           application/vnd.whispir.resource-v1+json:
@@ -460,13 +441,6 @@ paths:
       operationId: getResources
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: scope
           in: query
           required: false
@@ -542,6 +516,8 @@ paths:
                             method: GET
                     status: '1 to 7 of 7    '
                     link: []
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/resources/{resourceId}':
     get:
       tags:
@@ -554,13 +530,6 @@ paths:
       operationId: getResourcesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: resourceId
           in: path
           required: true
@@ -602,13 +571,6 @@ paths:
       operationId: putResourcesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: resourceId
           in: path
           description: Enter resources id.
@@ -660,13 +622,6 @@ paths:
       operationId: deleteResources
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: resourceId
           in: path
           description: The id of the resources to be deleted
@@ -679,6 +634,8 @@ paths:
           description: No Content
         '404':
           description: Not Found
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}/messagestatus':
     get:
       tags:
@@ -747,13 +704,6 @@ paths:
       operationId: getMessageStatus
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: messageId
           in: path
           description: Enter message id
@@ -844,6 +794,8 @@ paths:
                               - type: voice
                                 status: ''
                                 destination: ''
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}/messageresponses':
     get:
       tags:
@@ -897,13 +849,6 @@ paths:
       operationId: getMessageResponsesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: messageId
           in: path
           description: Enter message id
@@ -986,6 +931,8 @@ paths:
                           acknowledged: '28/09/12 08:48'
                           channel: SMS
                     link: []
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates':
     post:
       tags:
@@ -1006,13 +953,6 @@ paths:
       operationId: postTemplates
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
@@ -1064,13 +1004,6 @@ paths:
       operationId: getTemplates
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       responses:
         '200':
           description: OK
@@ -1110,6 +1043,8 @@ paths:
                             rel: self
                             method: GET
                     link: []
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates/{templateId}':
     get:
       tags:
@@ -1119,13 +1054,6 @@ paths:
       operationId: getTemplatesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: templateId
           in: path
           description: Enter Templates id.
@@ -1154,13 +1082,6 @@ paths:
       operationId: putTemplatesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: templateId
           in: path
           description: Enter Templates id.
@@ -1194,13 +1115,6 @@ paths:
       operationId: deleteTemplates
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: templateId
           in: path
           description: The id of the Templates to be deleted
@@ -1211,6 +1125,8 @@ paths:
       responses:
         '204':
           description: No Content
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules':
     post:
       tags:
@@ -1248,13 +1164,6 @@ paths:
       operationId: postResponseRules
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       requestBody:
         content:
           application/vnd.whispir.responserule-v1+json:
@@ -1276,16 +1185,11 @@ paths:
       operationId: getResponseRules
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       responses:
         '200':
           description: OK
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules/{responseRuleId}':
     get:
       tags:
@@ -1295,13 +1199,6 @@ paths:
       operationId: getResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: responseRuleId
           in: path
           required: true
@@ -1320,13 +1217,6 @@ paths:
       operationId: putResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: responseRuleId
           in: path
           required: true
@@ -1355,13 +1245,6 @@ paths:
       operationId: deleteResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: responseRuleId
           in: path
           required: true
@@ -1372,6 +1255,8 @@ paths:
       responses:
         '204':
           description: No Content
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/contacts':
     post:
       tags:
@@ -1381,13 +1266,6 @@ paths:
       operationId: postContacts
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       requestBody:
         content:
           application/vnd.whispir.contact-v1+json:
@@ -1479,13 +1357,6 @@ paths:
       operationId: getContacts
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: fieldname
           in: query
           description: |
@@ -1517,6 +1388,8 @@ paths:
       responses:
         '200':
           description: OK
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/contacts/{contactId}':
     get:
       tags:
@@ -1541,13 +1414,6 @@ paths:
       operationId: getContactsById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: contactId
           in: path
           description: Enter contact id.
@@ -1585,13 +1451,6 @@ paths:
       operationId: putContactsById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: contactId
           in: path
           description: Enter contact id.
@@ -1625,13 +1484,6 @@ paths:
       operationId: deleteContacts
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: contactId
           in: path
           description: The id of the contact to be deleted
@@ -1642,6 +1494,8 @@ paths:
       responses:
         '204':
           description: No Content
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/distributionlists':
     post:
       tags:
@@ -1658,13 +1512,6 @@ paths:
       operationId: postDistributionLists
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       requestBody:
         content:
           application/vnd.whispir.distributionlist-v1+json:
@@ -1724,13 +1571,6 @@ paths:
       operationId: getDistributionLists
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: name
           in: query
           required: false
@@ -1778,6 +1618,8 @@ paths:
                             method: GET
                     status: '1 to 2 of 2    '
                     link: []
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/distributionlists/{distributionlistId}':
     get:
       tags:
@@ -1813,13 +1655,6 @@ paths:
       operationId: getDistributionListsById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: distributionlistId
           in: path
           description: Enter Distribution id.
@@ -1857,13 +1692,6 @@ paths:
       operationId: putDistributionListsById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: distributionlistId
           in: path
           description: Enter Distribution id.
@@ -1894,13 +1722,6 @@ paths:
       operationId: deleteDistributionListsById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: distributionlistId
           in: path
           description: The id of the distributionlists to be deleted
@@ -1911,6 +1732,8 @@ paths:
       responses:
         '204':
           description: No Content
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/scenarios':
     post:
       tags:
@@ -1930,13 +1753,6 @@ paths:
       operationId: postScenarios
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       requestBody:
         content:
           application/vnd.whispir.scenario-v1+json:
@@ -1960,16 +1776,11 @@ paths:
       operationId: getScenarios
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       responses:
         '200':
           description: OK
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/scenarios/{scenarioId}':
     get:
       tags:
@@ -1981,13 +1792,6 @@ paths:
       operationId: getScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2053,13 +1857,6 @@ paths:
       operationId: postScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2086,13 +1883,6 @@ paths:
       operationId: putScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2123,13 +1913,6 @@ paths:
       operationId: deleteScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: scenarioId
           in: path
           description: The id of the Scenarios to be deleted
@@ -2140,6 +1923,8 @@ paths:
       responses:
         '204':
           description: No Content
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   /callbacks:
     post:
       tags:
@@ -2454,16 +2239,11 @@ paths:
       operationId: getWorkspacesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       responses:
         '200':
           description: OK
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/activities':
     get:
       tags:
@@ -2476,16 +2256,11 @@ paths:
       operationId: getWorkspaceActivities
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       responses:
         '200':
           description: OK
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/users':
     get:
       tags:
@@ -2499,13 +2274,6 @@ paths:
       operationId: getWorkspaceUsers
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       responses:
         '200':
           description: OK
@@ -2539,6 +2307,8 @@ paths:
                           uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/?offset=10&limit=10'
                           rel: next
                           method: GET
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   /activities:
     post:
       tags:
@@ -2806,13 +2576,6 @@ paths:
       operationId: getCustomLists
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: name
           in: query
           required: false
@@ -2894,6 +2657,8 @@ paths:
                     link: []
         '404':
           description: Not Found
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/customlists/{customlistId}':
     get:
       tags:
@@ -2942,13 +2707,6 @@ paths:
       operationId: getCustomListsById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
         - name: customlistId
           in: path
           required: true
@@ -2983,6 +2741,8 @@ paths:
                         method: GET
         '404':
           description: Not Found
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   /users:
     post:
       tags:
@@ -3276,13 +3036,6 @@ paths:
       operationId: getEvents
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       responses:
         '200':
           description: OK
@@ -3334,13 +3087,6 @@ paths:
       operationId: postEvents
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       requestBody:
         $ref: '#/components/requestBodies/event'
       responses:
@@ -3462,6 +3208,8 @@ paths:
                       - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/messages?label=2701095%20-%20Outage%20of%20Local%20Systems%20in%20Sydney'
                         rel: retrieveEventMessages
                         method: GET
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/imports':
     post:
       tags:
@@ -3499,13 +3247,6 @@ paths:
       operationId: postImports
       parameters:
         - $ref: '#/components/parameters/x-api-key'
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
       requestBody:
         content:
           application/vnd.whispir.import-v1+json:
@@ -3518,6 +3259,8 @@ paths:
       responses:
         '201':
           description: Created
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
 externalDocs:
   description: API Documentation for Whispir REST API
   url: 'https://developers.whispir.com/docs/'
@@ -4302,3 +4045,12 @@ components:
       schema:
         type: string
       description: The API key for authentication.
+    workspaceId:
+      name: workspaceId
+      in: path
+      schema:
+        type: string
+        pattern: '^[A-F0-9]+'
+        example: 9A4C5521FFC7B15B
+      description: The identifier for the workspace.
+      required: true

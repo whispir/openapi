@@ -22,7 +22,7 @@ Want to try out our API but you're not yet a Whispir customer? No worries. Simpl
 
 - [Australia / New Zealand](https://www.whispir.com/en-au/contact/)
 - [Southeast Asia](https://www.whispir.com/en-sg/contact/)
-- [Americas](mailto='sales@whispir.com')
+- [Americas](mailto:sales@whispir.com)
 
 ## API key as a header
 

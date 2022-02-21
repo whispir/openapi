@@ -18,7 +18,7 @@ You can test your connection to the Whispir API with the following cURL code. Si
 
 ```html
 curl --request GET \
-  --url https://api.[YOUR REGION HERE].whispir.com \
+  --url https://api.[YOUR REGION].whispir.com \
   --header 'Authorization: Basic [YOUR AUTHORIZATION HEADER]' \
   --header 'x-api-key: [YOUR API KEY]'
 ```

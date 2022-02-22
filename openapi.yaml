@@ -3308,7 +3308,7 @@ paths:
           in: header
           name: x-api-key
           required: true
-          description: your API key
+          description: The API key for authentication
   /auth/verify:
     get:
       parameters:
@@ -3335,6 +3335,7 @@ paths:
           in: header
           name: x-api-key
           required: true
+          description: The API key for authentication
       description: Verify your authentication token
       operationId: verify-auth-token
       security:

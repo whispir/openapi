@@ -326,8 +326,6 @@ paths:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}/messagestatus':
     get:
-      tags:
-        - Message Status
       summary: Retrieve a message status
       description: |
         Whispir will automatically monitor the status of each message after it has been sent to each recipient. Using the message status information, you are able to determine who received the message, what exact time they received it, on what message channel (SMS, Email, Voice, Web, Push Notification), whether they replied to the message, what time they replied, and on what messaging channel.  
@@ -482,12 +480,12 @@ paths:
                               - type: voice
                                 status: ''
                                 destination: ''
+      tags:
+        - Messages
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}/messageresponses':
     get:
-      tags:
-        - Message Responses
       summary: Retrieve a message response
       description: |
         ## Summary Responses
@@ -619,6 +617,8 @@ paths:
                           acknowledged: '28/09/12 08:48'
                           channel: SMS
                     link: []
+      tags:
+        - Messages
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/resources':
@@ -2244,54 +2244,6 @@ paths:
           description: OK
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-  '/workspaces/{workspaceId}/users':
-    get:
-      tags:
-        - Workspaces
-        - Users
-      summary: List users
-      description: |
-        ## Retrieving list of users having access on a workspace
-        To retrieve the list of users, the request is made to via GET to `/workspaces/{:id}/users` endpoint.
-        By default there will be a limit of 20 users returned in a request.
-      operationId: getWorkspaceUsers
-      parameters:
-        - $ref: '#/components/parameters/x-api-key'
-      responses:
-        '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    users:
-                      - id: AF48A9EC3F02E43C
-                        firstName: Fred
-                        lastName: Smith
-                        companyName: Whispir Pte Ltd
-                        workEmailAddress1: fsmith@whispir.com
-                        workMobilePhone1: 6512348765
-                        link:
-                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/AF48A9EC3F02E43C'
-                            rel: self
-                            method: GET
-                      - id: DFC878BCB2EF9258
-                        firstName: John
-                        lastName: Wick
-                        companyName: ''
-                        workEmailAddress1: jwick@whispir.com
-                        link:
-                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/DFC878BCB2EF9258'
-                            rel: self
-                            method: GET
-                      - status: 1 to 20 of 28
-                        link:
-                          uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/?offset=10&limit=10'
-                          rel: next
-                          method: GET
-    parameters:
-      - $ref: '#/components/parameters/workspaceId'
   /activities:
     post:
       tags:
@@ -2508,9 +2460,8 @@ paths:
   '/workspaces/{workspaceId}/activities':
     get:
       tags:
-        - Workspaces
         - Activities
-      summary: List activities
+      summary: List workspace activities
       description: |
         ## Restricting to only a single workspace 
         By default, GET /activities returns all the activities at company level. This covers all the workspaces. So, if the items has to limited to a specific workspace, one has to use the workspace as the endpoint and activities followed by it.
@@ -3027,6 +2978,50 @@ paths:
       responses:
         '204':
           description: No Content
+  '/workspaces/{workspaceId}/users':
+    get:
+      tags:
+        - Users
+      summary: List workspace users
+      description: ''
+      operationId: getWorkspaceUsers
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
+      responses:
+        '200':
+          description: OK
+          content:
+            examples:
+              examples:
+                response:
+                  value:
+                    users:
+                      - id: AF48A9EC3F02E43C
+                        firstName: Fred
+                        lastName: Smith
+                        companyName: Whispir Pte Ltd
+                        workEmailAddress1: fsmith@whispir.com
+                        workMobilePhone1: 6512348765
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/AF48A9EC3F02E43C'
+                            rel: self
+                            method: GET
+                      - id: DFC878BCB2EF9258
+                        firstName: John
+                        lastName: Wick
+                        companyName: ''
+                        workEmailAddress1: jwick@whispir.com
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/DFC878BCB2EF9258'
+                            rel: self
+                            method: GET
+                      - status: 1 to 20 of 28
+                        link:
+                          uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/?offset=10&limit=10'
+                          rel: next
+                          method: GET
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/events':
     get:
       tags:

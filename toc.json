@@ -6,6 +6,11 @@
     },
     {
       "type": "item",
+      "title": "About the Whispir Platform API",
+      "uri": "docs/Getting started/About.md"
+    },
+    {
+      "type": "item",
       "title": "Authentication",
       "uri": "docs/Getting started/Authentication.md"
     },

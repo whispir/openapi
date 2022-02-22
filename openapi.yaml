@@ -2247,9 +2247,8 @@ paths:
   '/workspaces/{workspaceId}/users':
     get:
       tags:
-        - Workspaces
         - Users
-      summary: List users
+      summary: List workspace users
       description: |
         ## Retrieving list of users having access on a workspace
         To retrieve the list of users, the request is made to via GET to `/workspaces/{:id}/users` endpoint.
@@ -2508,9 +2507,8 @@ paths:
   '/workspaces/{workspaceId}/activities':
     get:
       tags:
-        - Workspaces
         - Activities
-      summary: List activities
+      summary: List workspace activities
       description: |
         ## Restricting to only a single workspace 
         By default, GET /activities returns all the activities at company level. This covers all the workspaces. So, if the items has to limited to a specific workspace, one has to use the workspace as the endpoint and activities followed by it.

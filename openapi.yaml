@@ -81,7 +81,7 @@ paths:
     post:
       tags:
         - Messages
-      summary: Send Messages
+      summary: Send a message
       description: |
         Communications are the core of what the Whispir.io API offers as a service to customers.    
         Whispir has the ability to send communications across 7 different channels in a single API request:  
@@ -159,13 +159,7 @@ paths:
         The smsMappingField should be mapped to the column or key that holds the number to which the SMS has to sent to; and the emailMappingField to the email to which the message has to be sent to. refer to [Dynamic Messages](https://developers.whispir.com/docs/dynamic-messages) for more details on the mapping.  
       operationId: postMessages
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: Content-Type
           in: header
           required: true
@@ -230,7 +224,7 @@ paths:
     get:
       tags:
         - Messages
-      summary: Retrieve a Message
+      summary: Retrieve a message
       description: |
         **Retrieve a Message**
 
@@ -268,13 +262,7 @@ paths:
         The API also supports to use this listing to query the different messages for status or any other purpose. And, any of the features available in Sending Messages, or Advanced Messages, are also available to be used within the Events Messages.
       operationId: getMessages
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: label
           in: query
           required: false
@@ -334,352 +322,11 @@ paths:
                               method: GET
                       status: ''
                       link: []
-      security:
-        - apiKey: []
-        - basicAuth: []
-  '/workspaces/{workspaceId}/resources':
-    post:
-      tags:
-        - Resources
-      summary: Upload a resource file via API
-      description: |
-        ## Creating a resource
-
-        Creating a resource is very easy. To create a new resource we should use the /resources end point.
-        The following are the mandatory fields needed to create a resource
-
-        *   Name
-        *   Scope
-        *   mimeType
-        *   derefUri
-
-        ### High-Level Response Elements
-
-        **name:** String  
-        *   Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name. **Eg:** australia-contacts.csv
-        *   **Note:** It is advised that names should not contain spaces or special characters other than `-` and `.`. This helps for easier search and also for a valid URL link (especially) in case of public scoped files.
-        *   **Eg:** `australia-contacts.csv` is better name convention than `australia contacts.csv` as the latter converts into `australia%20contacts.csv`.  
-
-        **scope:** String  
-        Specifies the permission scope of the file being uploaded. The scope defines the access restriction of the resource. It can be only one between:
-          *   **Public -** Public files have an addressable URL and are available publicly
-          *   **Private -** Private files have no URL and are only available for bulk messaging purposes and for importing contacts.
-
-        **mimeType:** String  
-        The mime type of the file that is being uploaded. The type is dependent on the scope of the resource.
-          *   **Public -** Public files can be of any mimetype. text/html; text/csv
-          *   **Private -** Private files are restricted to CSV, JSON, and XML
-
-        **derefUri:** The base64 representation of the file being submitted.
-
-        **Note:** When creating a resource, the following conditions apply -
-
-        *   Maximum of 10MB per file being uploaded.
-        *   Transactions will have an enforced timeout.
-        *   Resources will be available in the Whispir Platform for a limited timeframe (30 days). These will then be automatically cleaned. This will be a configurable setting for Whispir Administrators.
-
-        ### Upload the Resource file via API  
-        To upload a file to Whispir’s API, users will make an API call to the /resources endpoint.  
-        Applications can use this endpoint to store the source files for dynamic messages. This endpoint can also be used to store any file based data (e.g. images, pdf documents, spreadsheets) for an unlimited amount of time.  
-
-        **Note:** The types of files allowed are - CSV, JSON, XML, Images [JPEG, PNG], and WAV.  
-
-        Information about the resources endpoint is documented in the Resources section of the documentation.
-      operationId: postResources
-      parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
-      requestBody:
-        content:
-          application/vnd.whispir.resource-v1+json:
-            schema:
-              $ref: '#/components/schemas/resource'
-          application/vnd.whispir.resource-v1+xml:
-            schema:
-              $ref: '#/components/schemas/resource'
-        description: resources object that needs to be create resources
-        required: true
-      responses:
-        '201':
-          description: Created
-          content:
-            application/vnd.whispir.resource-v1+json:
-              schema:
-                $ref: '#/components/schemas/resource'
-            application/vnd.whispir.resource-v1+xml:
-              schema:
-                $ref: '#/components/schemas/resource'
-    get:
-      tags:
-        - Resources
-      summary: Retrieve existing resources
-      description: |
-        ## Retrieving existing resources
-        Existing resources can be easily retrieved via the GET /resources API call. The response lists all of the existing public and private resources available in the system.
-
-        **name:** String  
-        - Specifies the name of the resource. The name is given during creation.
-
-        **scope:** String  
-        - Specifies the permission scope of the file being uploaded.
-
-        **mimeType:** String  
-        - The mime type of the file that is being uploaded.
-
-        **url:** String  
-        - The downloaded link to the resource location. Browsing this link results in a download of the resource.  
-        - **Note:** Only available for Public scoped resources.
-
-        **link:** Array  
-        - Provides a list of URLs that can be used to manipulate or access the message template.
-          - uri - the link to access the message template
-          - rel - the descriptor for what the link will do
-          - method - the HTTP method to use with this particular link
-
-        ## Filtering search results
-
-        ### Filtering By scope
-
-        Resources can be filtered by their scope. This can be achieved by sending in the required scope type in the URL as query parameter. The scope can be one of the allowed scope types.
-
-        *   Public - &scope=public
-        *   Private - &scope=private
-
-        ### Filtering By name
-
-        Resources can be filtered by their name. This can be achieved by sending in the name in the URL as query parameter.
-
-        **Note:** The name including the file extension makes it a unique search.
-
-        **Eg:** - &name=australia.csv
-      operationId: getResources
-      parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
-        - name: scope
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - private
-              - public
-        - name: name
-          in: query
-          required: false
-          schema:
-            type: string
-            example: recipients.json
-      responses:
-        '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    resources:
-                      - name: singapore.csv
-                        scope: private
-                        mimeType: application/json
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/D9A8DC34EDRSD7E4'
-                            rel: self
-                            method: GET
-                      - name: australia.json
-                        scope: private
-                        mimeType: application/json
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
-                            rel: self
-                            method: GET
-                      - name: usa.csv
-                        scope: private
-                        mimeType: text/csv
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/3E2F6E72642F949'
-                            rel: self
-                            method: GET
-                      - name: users.json
-                        scope: public
-                        mimeType: application/json
-                        url: 'https://cdn-ap.whispir.com/public/resources/2163b29d4edf1bd77d71a36210d472360cd.json'
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/F1212CF334EDR68'
-                            rel: self
-                            method: GET
-                      - name: whispir-example-bulk-message-1.csv
-                        scope: private
-                        mimeType: text/csv
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/32SDF43ED6829B2'
-                            rel: self
-                            method: GET
-                      - name: whispir-example-bulk-message-2.csv
-                        scope: private
-                        mimeType: text/csv
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/C708D712EDRB0'
-                            rel: self
-                            method: GET
-                      - name: whispir-example-bulk-message-3.csv
-                        scope: private
-                        mimeType: text/csv
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/2FEED897U46E2'
-                            rel: self
-                            method: GET
-                    status: '1 to 7 of 7    '
-                    link: []
-  '/workspaces/{workspaceId}/resources/{resourceId}':
-    get:
-      tags:
-        - Resources
-      summary: Retrieve a single resource
-      description: |
-        ## Retrieving a single resource
-
-        A single resource (public|private) can be retrieved from the available resource by using the resource’s specific link uri
-      operationId: getResourcesById
-      parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
-        - name: resourceId
-          in: path
-          required: true
-          schema:
-            type: string
-            example: 2C32F4AA38917318D52A279D1946BDE8
-      responses:
-        '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    name: australia.json
-                    scope: private
-                    mimeType: application/json
-                    link:
-                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
-                        rel: self
-                        method: GET
-                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
-                        rel: updateResource
-                        method: PUT
-                        type: 'application/vnd.whispir.resource-v1+json,application/vnd.whispir.resource-v1+xml'
-                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
-                        rel: deleteResource
-                        method: DELETE
-    put:
-      tags:
-        - Resources
-      summary: Update a resource
-      description: |
-        ## Updating a resource
-
-        Updating a resource involves the same process as in creating a resource. The process of using one of the format (CSV, JSON, XML) for private and any format for public -> converting to base64 encoded data is the same.  
-        The change is doing a PUT to the existing resource URL that needs to be updated. Please be careful that doing an update overwrites the previous resource. There is no versioning available in Whispir for the resources.  
-        Any or all of the 4 values can be changed. i.e, name, scope, mimeType, derefUri, but all 4 are mandatory values to be sent.  
-      operationId: putResourcesById
-      parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
-        - name: resourceId
-          in: path
-          description: Enter resources id.
-          required: true
-          schema:
-            type: string
-            example: 2C32F4AA38917318D52A279D1946BDE8
-      requestBody:
-        content:
-          application/vnd.whispir.resource-v1+json:
-            schema:
-              $ref: '#/components/schemas/resource'
-          application/vnd.whispir.resource-v1+xml:
-            schema:
-              $ref: '#/components/schemas/resource'
-        description: resources object that needs to be update resources
-        required: true
-      responses:
-        '204':
-          description: No Content
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    title: Emergency Comms - Fire
-                    description: Scenario to use during fire evacuation
-                    allowedUsers: EVERYONE
-                    message:
-                      to: '+1000000000'
-                      subject: Scenario Emergency Comms - Fire
-                      body: Evacuate the building Immediately. Do not use the lifts.
-                      label: ''
-                      voice: {}
-                      from: joe.bloggs.company@Contact.Melbourne.whispir.au
-                      social:
-                        social:
-                          - id: socialType
-                            body: text/plain
-    delete:
-      tags:
-        - Resources
-      summary: Delete a resource
-      description: |
-        ## Deleting a resource
-
-        Resources can be deleted after use. These can be both public and private in scope.  
-        **Note:** Deleting a public resource may result in 404 File Not Found error for any sites or material referencing to it. So, ensure that DELETE is only executed when the reference to all material is removed or the content has to be removed for other purposes immediately.
-      operationId: deleteResources
-      parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
-        - name: resourceId
-          in: path
-          description: The id of the resources to be deleted
-          required: true
-          schema:
-            type: string
-            example: 2C32F4AA38917318D52A279D1946BDE8
-      responses:
-        '204':
-          description: No Content
-        '404':
-          description: Not Found
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}/messagestatus':
     get:
-      tags:
-        - Message Status
-      summary: Retrieve a previously sent message status
+      summary: Retrieve a message status
       description: |
         Whispir will automatically monitor the status of each message after it has been sent to each recipient. Using the message status information, you are able to determine who received the message, what exact time they received it, on what message channel (SMS, Email, Voice, Web, Push Notification), whether they replied to the message, what time they replied, and on what messaging channel.  
 
@@ -742,13 +389,7 @@ paths:
         Once you have processed the status information, the next likely piece of information you will be looking to find is the content of the responses (if any). The section on Message Responses describes how to retrieve this information.
       operationId: getMessageStatus
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: messageId
           in: path
           description: Enter message id
@@ -839,11 +480,13 @@ paths:
                               - type: voice
                                 status: ''
                                 destination: ''
+      tags:
+        - Messages
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}/messageresponses':
     get:
-      tags:
-        - Message Responses
-      summary: Retrieve summaryStatus URL
+      summary: Retrieve a message response
       description: |
         ## Summary Responses
 
@@ -891,13 +534,7 @@ paths:
         *   The **responseMessage acknowledged** shows the date of when the response was received by the Whispir Platform
       operationId: getMessageResponsesById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: messageId
           in: path
           description: Enter message id
@@ -980,11 +617,327 @@ paths:
                           acknowledged: '28/09/12 08:48'
                           channel: SMS
                     link: []
+      tags:
+        - Messages
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/resources':
+    post:
+      tags:
+        - Resources
+      summary: Create a resource
+      description: |
+        ## Creating a resource
+
+        Creating a resource is very easy. To create a new resource we should use the /resources end point.
+        The following are the mandatory fields needed to create a resource
+
+        *   Name
+        *   Scope
+        *   mimeType
+        *   derefUri
+
+        ### High-Level Response Elements
+
+        **name:** String  
+        *   Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name. **Eg:** australia-contacts.csv
+        *   **Note:** It is advised that names should not contain spaces or special characters other than `-` and `.`. This helps for easier search and also for a valid URL link (especially) in case of public scoped files.
+        *   **Eg:** `australia-contacts.csv` is better name convention than `australia contacts.csv` as the latter converts into `australia%20contacts.csv`.  
+
+        **scope:** String  
+        Specifies the permission scope of the file being uploaded. The scope defines the access restriction of the resource. It can be only one between:
+          *   **Public -** Public files have an addressable URL and are available publicly
+          *   **Private -** Private files have no URL and are only available for bulk messaging purposes and for importing contacts.
+
+        **mimeType:** String  
+        The mime type of the file that is being uploaded. The type is dependent on the scope of the resource.
+          *   **Public -** Public files can be of any mimetype. text/html; text/csv
+          *   **Private -** Private files are restricted to CSV, JSON, and XML
+
+        **derefUri:** The base64 representation of the file being submitted.
+
+        **Note:** When creating a resource, the following conditions apply -
+
+        *   Maximum of 10MB per file being uploaded.
+        *   Transactions will have an enforced timeout.
+        *   Resources will be available in the Whispir Platform for a limited timeframe (30 days). These will then be automatically cleaned. This will be a configurable setting for Whispir Administrators.
+
+        ### Upload the Resource file via API  
+        To upload a file to Whispir’s API, users will make an API call to the /resources endpoint.  
+        Applications can use this endpoint to store the source files for dynamic messages. This endpoint can also be used to store any file based data (e.g. images, pdf documents, spreadsheets) for an unlimited amount of time.  
+
+        **Note:** The types of files allowed are - CSV, JSON, XML, Images [JPEG, PNG], and WAV.  
+
+        Information about the resources endpoint is documented in the Resources section of the documentation.
+      operationId: postResources
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
+      requestBody:
+        content:
+          application/vnd.whispir.resource-v1+json:
+            schema:
+              $ref: '#/components/schemas/resource'
+          application/vnd.whispir.resource-v1+xml:
+            schema:
+              $ref: '#/components/schemas/resource'
+        description: resources object that needs to be create resources
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/vnd.whispir.resource-v1+json:
+              schema:
+                $ref: '#/components/schemas/resource'
+            application/vnd.whispir.resource-v1+xml:
+              schema:
+                $ref: '#/components/schemas/resource'
+    get:
+      tags:
+        - Resources
+      summary: List resources
+      description: |
+        ## Retrieving existing resources
+        Existing resources can be easily retrieved via the GET /resources API call. The response lists all of the existing public and private resources available in the system.
+
+        **name:** String  
+        - Specifies the name of the resource. The name is given during creation.
+
+        **scope:** String  
+        - Specifies the permission scope of the file being uploaded.
+
+        **mimeType:** String  
+        - The mime type of the file that is being uploaded.
+
+        **url:** String  
+        - The downloaded link to the resource location. Browsing this link results in a download of the resource.  
+        - **Note:** Only available for Public scoped resources.
+
+        **link:** Array  
+        - Provides a list of URLs that can be used to manipulate or access the message template.
+          - uri - the link to access the message template
+          - rel - the descriptor for what the link will do
+          - method - the HTTP method to use with this particular link
+
+        ## Filtering search results
+
+        ### Filtering By scope
+
+        Resources can be filtered by their scope. This can be achieved by sending in the required scope type in the URL as query parameter. The scope can be one of the allowed scope types.
+
+        *   Public - &scope=public
+        *   Private - &scope=private
+
+        ### Filtering By name
+
+        Resources can be filtered by their name. This can be achieved by sending in the name in the URL as query parameter.
+
+        **Note:** The name including the file extension makes it a unique search.
+
+        **Eg:** - &name=australia.csv
+      operationId: getResources
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
+        - name: scope
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - private
+              - public
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+            example: recipients.json
+      responses:
+        '200':
+          description: OK
+          content:
+            examples:
+              examples:
+                response:
+                  value:
+                    resources:
+                      - name: singapore.csv
+                        scope: private
+                        mimeType: application/json
+                        link:
+                          - uri: 'https://api.au.whispir.com/resources/D9A8DC34EDRSD7E4'
+                            rel: self
+                            method: GET
+                      - name: australia.json
+                        scope: private
+                        mimeType: application/json
+                        link:
+                          - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
+                            rel: self
+                            method: GET
+                      - name: usa.csv
+                        scope: private
+                        mimeType: text/csv
+                        link:
+                          - uri: 'https://api.au.whispir.com/resources/3E2F6E72642F949'
+                            rel: self
+                            method: GET
+                      - name: users.json
+                        scope: public
+                        mimeType: application/json
+                        url: 'https://cdn-ap.whispir.com/public/resources/2163b29d4edf1bd77d71a36210d472360cd.json'
+                        link:
+                          - uri: 'https://api.au.whispir.com/resources/F1212CF334EDR68'
+                            rel: self
+                            method: GET
+                      - name: whispir-example-bulk-message-1.csv
+                        scope: private
+                        mimeType: text/csv
+                        link:
+                          - uri: 'https://api.au.whispir.com/resources/32SDF43ED6829B2'
+                            rel: self
+                            method: GET
+                      - name: whispir-example-bulk-message-2.csv
+                        scope: private
+                        mimeType: text/csv
+                        link:
+                          - uri: 'https://api.au.whispir.com/resources/C708D712EDRB0'
+                            rel: self
+                            method: GET
+                      - name: whispir-example-bulk-message-3.csv
+                        scope: private
+                        mimeType: text/csv
+                        link:
+                          - uri: 'https://api.au.whispir.com/resources/2FEED897U46E2'
+                            rel: self
+                            method: GET
+                    status: '1 to 7 of 7    '
+                    link: []
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/resources/{resourceId}':
+    get:
+      tags:
+        - Resources
+      summary: Retrieve a resource
+      description: |
+        ## Retrieving a single resource
+
+        A single resource (public|private) can be retrieved from the available resource by using the resource’s specific link uri
+      operationId: getResourcesById
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
+        - name: resourceId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2C32F4AA38917318D52A279D1946BDE8
+      responses:
+        '200':
+          description: OK
+          content:
+            examples:
+              examples:
+                response:
+                  value:
+                    name: australia.json
+                    scope: private
+                    mimeType: application/json
+                    link:
+                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
+                        rel: self
+                        method: GET
+                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
+                        rel: updateResource
+                        method: PUT
+                        type: 'application/vnd.whispir.resource-v1+json,application/vnd.whispir.resource-v1+xml'
+                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
+                        rel: deleteResource
+                        method: DELETE
+    put:
+      tags:
+        - Resources
+      summary: Update a resource
+      description: |
+        ## Updating a resource
+
+        Updating a resource involves the same process as in creating a resource. The process of using one of the format (CSV, JSON, XML) for private and any format for public -> converting to base64 encoded data is the same.  
+        The change is doing a PUT to the existing resource URL that needs to be updated. Please be careful that doing an update overwrites the previous resource. There is no versioning available in Whispir for the resources.  
+        Any or all of the 4 values can be changed. i.e, name, scope, mimeType, derefUri, but all 4 are mandatory values to be sent.  
+      operationId: putResourcesById
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
+        - name: resourceId
+          in: path
+          description: Enter resources id.
+          required: true
+          schema:
+            type: string
+            example: 2C32F4AA38917318D52A279D1946BDE8
+      requestBody:
+        content:
+          application/vnd.whispir.resource-v1+json:
+            schema:
+              $ref: '#/components/schemas/resource'
+          application/vnd.whispir.resource-v1+xml:
+            schema:
+              $ref: '#/components/schemas/resource'
+        description: resources object that needs to be update resources
+        required: true
+      responses:
+        '204':
+          description: No Content
+          content:
+            examples:
+              examples:
+                response:
+                  value:
+                    title: Emergency Comms - Fire
+                    description: Scenario to use during fire evacuation
+                    allowedUsers: EVERYONE
+                    message:
+                      to: '+1000000000'
+                      subject: Scenario Emergency Comms - Fire
+                      body: Evacuate the building Immediately. Do not use the lifts.
+                      label: ''
+                      voice: {}
+                      from: joe.bloggs.company@Contact.Melbourne.whispir.au
+                      social:
+                        social:
+                          - id: socialType
+                            body: text/plain
+    delete:
+      tags:
+        - Resources
+      summary: Delete a resource
+      description: |
+        ## Deleting a resource
+
+        Resources can be deleted after use. These can be both public and private in scope.  
+        **Note:** Deleting a public resource may result in 404 File Not Found error for any sites or material referencing to it. So, ensure that DELETE is only executed when the reference to all material is removed or the content has to be removed for other purposes immediately.
+      operationId: deleteResources
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
+        - name: resourceId
+          in: path
+          description: The id of the resources to be deleted
+          required: true
+          schema:
+            type: string
+            example: 2C32F4AA38917318D52A279D1946BDE8
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates':
     post:
       tags:
         - Templates
-      summary: Create a new message template
+      summary: Create a template
       description: |
         ## Creating Templates
 
@@ -999,13 +952,7 @@ paths:
         - web - The web content for the message. If no web content is required, an empty object must be presented.
       operationId: postTemplates
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
@@ -1022,7 +969,7 @@ paths:
     get:
       tags:
         - Templates
-      summary: Retrieve a list of templates
+      summary: List templates
       description: |
         ## Retrieving Templates
         To retrieve a list of templates from the Whispir.io API you can execute an HTTP GET using the /templates endpoint.
@@ -1056,13 +1003,7 @@ paths:
         *   method - the HTTP method to use with this particular link
       operationId: getTemplates
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       responses:
         '200':
           description: OK
@@ -1102,21 +1043,17 @@ paths:
                             rel: self
                             method: GET
                     link: []
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates/{templateId}':
     get:
       tags:
         - Templates
-      summary: Retrieve a single template
-      description: Retrieve a Template as indicated by templateId
+      summary: Retrieve a template
+      description: Retrieve a template.
       operationId: getTemplatesById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: templateId
           in: path
           description: Enter Templates id.
@@ -1144,13 +1081,7 @@ paths:
         **Note:** Currently users cannot update templates with the same name as a template that already exists in Whispir. Users can overcome this by saving the updated template with a new name, then either changing this back in a subsequent save, or retaining the updated name.
       operationId: putTemplatesById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: templateId
           in: path
           description: Enter Templates id.
@@ -1183,13 +1114,7 @@ paths:
         **Note:** When a template is DELETED, all the associated Scenarios, events, and references of template use in other endpoints will fail. So, ensure that the template is not used anywhere before it is deleted. Whispir **will not** do that check before it deletes the template.
       operationId: deleteTemplates
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: templateId
           in: path
           description: The id of the Templates to be deleted
@@ -1200,11 +1125,13 @@ paths:
       responses:
         '204':
           description: No Content
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules':
     post:
       tags:
         - Response Rules
-      summary: Create response rules
+      summary: Create a response rule
       description: |
         ## Creating Response Rules
 
@@ -1236,13 +1163,7 @@ paths:
         For more information about using **Rich Messages**, [click here.](https://developers.whispir.com/docs/rich-messages)
       operationId: postResponseRules
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       requestBody:
         content:
           application/vnd.whispir.responserule-v1+json:
@@ -1259,35 +1180,25 @@ paths:
     get:
       tags:
         - Response Rules
-      summary: Retrieve a list of Response Rules in a Workspace
+      summary: List response rules
       description: To review a list of Response Rules
       operationId: getResponseRules
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       responses:
         '200':
           description: OK
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules/{responseRuleId}':
     get:
       tags:
         - Response Rules
-      summary: Retrieve a single Response Rule By ID
+      summary: Retrieve a response rule
       description: Review an individual Response Rule
       operationId: getResponseRulesById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: responseRuleId
           in: path
           required: true
@@ -1301,17 +1212,11 @@ paths:
     put:
       tags:
         - Response Rules
-      summary: Update a Response Rule By ID
+      summary: Update a response rule
       description: Update a Response Rule By ID
       operationId: putResponseRulesById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: responseRuleId
           in: path
           required: true
@@ -1335,17 +1240,11 @@ paths:
     delete:
       tags:
         - Response Rules
-      summary: Delete a single Response Rule By ID
+      summary: Delete a response rule
       description: Delete a single Response Rule By ID
       operationId: deleteResponseRulesById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: responseRuleId
           in: path
           required: true
@@ -1356,6 +1255,8 @@ paths:
       responses:
         '204':
           description: No Content
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/contacts':
     post:
       tags:
@@ -1364,13 +1265,7 @@ paths:
       description: 'To create a new contact, you can use the /contacts endpoint. The method is POST.'
       operationId: postContacts
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       requestBody:
         content:
           application/vnd.whispir.contact-v1+json:
@@ -1461,13 +1356,7 @@ paths:
         `/contacts?custom_StaffId=12345`
       operationId: getContacts
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: fieldname
           in: query
           description: |
@@ -1499,11 +1388,13 @@ paths:
       responses:
         '200':
           description: OK
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/contacts/{contactId}':
     get:
       tags:
         - Contacts
-      summary: Retrieve details of a single contact
+      summary: Retrieve a contact
       description: |
         To get details of a specific contact, the URI must be passed with the ID of the contact. So, the URI shall be.
 
@@ -1522,13 +1413,7 @@ paths:
         Example: `/contacts/AB38CB3EFD38AFDB?customFields=true`
       operationId: getContactsById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: contactId
           in: path
           description: Enter contact id.
@@ -1565,13 +1450,7 @@ paths:
         The response to the PUT request upon success is usually a 204 with no content being provided.
       operationId: putContactsById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: contactId
           in: path
           description: Enter contact id.
@@ -1604,13 +1483,7 @@ paths:
         The user has requested to delete a contact, and when the response of 204 No Content is returned, the contact is successfully deleted.
       operationId: deleteContacts
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: contactId
           in: path
           description: The id of the contact to be deleted
@@ -1621,6 +1494,8 @@ paths:
       responses:
         '204':
           description: No Content
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/distributionlists':
     post:
       tags:
@@ -1636,13 +1511,7 @@ paths:
         To create a new distribution list, you can use the /distributionlists endpoint.
       operationId: postDistributionLists
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       requestBody:
         content:
           application/vnd.whispir.distributionlist-v1+json:
@@ -1681,7 +1550,7 @@ paths:
     get:
       tags:
         - Distribution Lists
-      summary: Retrieve distribution lists
+      summary: List distribution lists
       description: |
         ## Retrieving Distribution Lists
 
@@ -1701,13 +1570,7 @@ paths:
         *   **&description=** - to search by description
       operationId: getDistributionLists
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: name
           in: query
           required: false
@@ -1755,11 +1618,13 @@ paths:
                             method: GET
                     status: '1 to 2 of 2    '
                     link: []
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/distributionlists/{distributionlistId}':
     get:
       tags:
         - Distribution Lists
-      summary: 'Retrieve distribution list by ContactId, UserId, DistListId'
+      summary: Retrieve a distribution list
       description: |
         A distribution list allows you to associate the following -  
 
@@ -1789,13 +1654,7 @@ paths:
         3.  For Modifying the Location Information refer to Location Tags for Distribution Lists
       operationId: getDistributionListsById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: distributionlistId
           in: path
           description: Enter Distribution id.
@@ -1809,7 +1668,7 @@ paths:
     put:
       tags:
         - Distribution Lists
-      summary: Update distribution list details
+      summary: Update a distribution list
       description: |
         Any or all three of these can be updated via the PUT method along with the DL properties (name, description, location etc).
 
@@ -1832,13 +1691,7 @@ paths:
         -  For Modifying the Location Information refer to Location Tags for Distribution Lists
       operationId: putDistributionListsById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: distributionlistId
           in: path
           description: Enter Distribution id.
@@ -1868,13 +1721,7 @@ paths:
         You can only delete the distribution list that you have created or a valid userId associated with the specific distribution list.
       operationId: deleteDistributionListsById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: distributionlistId
           in: path
           description: The id of the distributionlists to be deleted
@@ -1885,11 +1732,13 @@ paths:
       responses:
         '204':
           description: No Content
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/scenarios':
     post:
       tags:
         - Scenarios
-      summary: Create a new scenario
+      summary: Create a scenario
       description: |
         ## Creating a new Scenario
 
@@ -1903,13 +1752,7 @@ paths:
         -  message { to, subject, body }
       operationId: postScenarios
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       requestBody:
         content:
           application/vnd.whispir.scenario-v1+json:
@@ -1926,39 +1769,29 @@ paths:
     get:
       tags:
         - Scenarios
-      summary: Retrieve scenarios
+      summary: List scenarios
       description: |
         ## Retrieving Scenarios
         To retrieve a list of scenarios from the Whispir.io API you can execute an HTTP GET using the /scenarios endpoint.
       operationId: getScenarios
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       responses:
         '200':
           description: OK
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/scenarios/{scenarioId}':
     get:
       tags:
         - Scenarios
-      summary: Retrieve details of a single scenario
+      summary: Retrieve a scenario
       description: |
         Retrieving details of a single Scenario
         While that specifies the master list, doing a GET on a single scenario provides the following information
       operationId: getScenariosById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2023,13 +1856,7 @@ paths:
         Now invoking this scenario is just making a /POST call. There is no need for a Content-type header as the payload is empty.
       operationId: postScenariosById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2043,7 +1870,7 @@ paths:
     put:
       tags:
         - Scenarios
-      summary: Update an existing scenario
+      summary: Update a scenario
       description: |
         ## Updating Scenario
 
@@ -2055,13 +1882,7 @@ paths:
         - **message** - `{ to, subject, body }`
       operationId: putScenariosById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2091,13 +1912,7 @@ paths:
         Deleting a Scenario can be done via a DELETE call to the /scenarios endpoint. The request has to be targeted at a particular Scenario with the Scenario ID in the URI.
       operationId: deleteScenariosById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: scenarioId
           in: path
           description: The id of the Scenarios to be deleted
@@ -2108,11 +1923,13 @@ paths:
       responses:
         '204':
           description: No Content
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   /callbacks:
     post:
       tags:
         - Callbacks
-      summary: Create a new API callback
+      summary: Create a callback
       description: |
         ## Creating new Callbacks
         To create a new API Callback, you can use the /callbacks endpoint.  
@@ -2131,10 +1948,12 @@ paths:
       responses:
         '201':
           description: Created
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
     get:
       tags:
         - Callbacks
-      summary: Retrieve a list of API callbacks
+      summary: List callbacks
       description: |
         ## Retrieving Callbacks
         To retrieve a list of callbacks from the Whispir API you can execute an HTTP GET using the /callbacks endpoint.
@@ -2192,11 +2011,13 @@ paths:
                             rel: self
                             method: GET
                     link: []
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
   '/callbacks/{callbackId}/calls':
     get:
       tags:
         - Callbacks
-      summary: Retrieve a list of attempted API calls
+      summary: List callback calls
       description: |
         ## Callback Retries
 
@@ -2220,6 +2041,7 @@ paths:
         To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL.
       operationId: getCallbacksCalls
       parameters:
+        - $ref: '#/components/parameters/x-api-key'
         - name: callbackId
           in: path
           required: true
@@ -2278,7 +2100,7 @@ paths:
     put:
       tags:
         - Callbacks
-      summary: Update the status of calls to a callback
+      summary: Update a callback call
       description: |
         ## Updating the status of calls to a callback
         As every call to a callback endpoint is now stored within the calls endpoint, it’s possible that when failed calls are successfully processed through a manual exercise, that these calls will then need to be updated to reflect the current status.
@@ -2305,6 +2127,7 @@ paths:
         The PUT request takes a single API parameter in the body
       operationId: putCallbacksCallsById
       parameters:
+        - $ref: '#/components/parameters/x-api-key'
         - name: callbackId
           in: path
           description: Enter Scenarios id.
@@ -2328,7 +2151,7 @@ paths:
     post:
       tags:
         - Workspaces
-      summary: Create a new workspace
+      summary: Create a workspace
       description: |
         ## Creating a new workspace
         To create a new workspace, you can use the /workspaces endpoint.
@@ -2352,10 +2175,12 @@ paths:
       responses:
         '201':
           description: Created
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
     get:
       tags:
         - Workspaces
-      summary: Retrieve a list of workspaces
+      summary: List workspaces
       description: |
         ## Retrieving Workspaces**
         To retrieve a list of workspaces from the Whispir.io API you can execute an HTTP GET using the /workspaces endpoint.
@@ -2403,102 +2228,27 @@ paths:
                           - uri: 'https://api.au.whispir.com/workspaces/B7BFEF555F0F7F81'
                             rel: self
                             method: GET
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
   '/workspaces/{workspaceId}':
     get:
       tags:
         - Workspaces
-      summary: Retrieve a single workspace
+      summary: Retrieve a workspace
       description: 'Use GET on a Workspace Id to verify it is a valid Workspace ID, and see a list of all the other endpoint URIs in that workspace'
       operationId: getWorkspacesById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       responses:
         '200':
           description: OK
-  '/workspaces/{workspaceId}/activities':
-    get:
-      tags:
-        - Workspaces
-        - Activities
-      summary: Retrieve a list of activities in a workspace
-      description: |
-        ## Restricting to only a single workspace 
-        By default, GET /activities returns all the activities at company level. This covers all the workspaces. So, if the items has to limited to a specific workspace, one has to use the workspace as the endpoint and activities followed by it.
-      operationId: getWorkspaceActivities
-      parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
-      responses:
-        '200':
-          description: OK
-  '/workspaces/{workspaceId}/users':
-    get:
-      tags:
-        - Workspaces
-        - Users
-      summary: Retrieve workspace users
-      description: |
-        ## Retrieving list of users having access on a workspace
-        To retrieve the list of users, the request is made to via GET to `/workspaces/{:id}/users` endpoint.
-        By default there will be a limit of 20 users returned in a request.
-      operationId: getWorkspaceUsers
-      parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
-      responses:
-        '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    users:
-                      - id: AF48A9EC3F02E43C
-                        firstName: Fred
-                        lastName: Smith
-                        companyName: Whispir Pte Ltd
-                        workEmailAddress1: fsmith@whispir.com
-                        workMobilePhone1: 6512348765
-                        link:
-                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/AF48A9EC3F02E43C'
-                            rel: self
-                            method: GET
-                      - id: DFC878BCB2EF9258
-                        firstName: John
-                        lastName: Wick
-                        companyName: ''
-                        workEmailAddress1: jwick@whispir.com
-                        link:
-                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/DFC878BCB2EF9258'
-                            rel: self
-                            method: GET
-                      - status: 1 to 20 of 28
-                        link:
-                          uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/?offset=10&limit=10'
-                          rel: next
-                          method: GET
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   /activities:
     post:
       tags:
         - Activities
-      summary: Create an activity log
+      summary: Create an activity
       description: |
         ## Creating an activity log
         To create a new activity entry, you can use the /activities endpoint.
@@ -2523,10 +2273,12 @@ paths:
       responses:
         '201':
           description: Created
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
     get:
       tags:
         - Activities
-      summary: Retrieve a list of activities from the Whispir.io API
+      summary: List activities
       description: |
         ## Retrieving Activities
         To retrieve a list of activities from the Whispir.io API you can execute an HTTP GET using the /activities endpoint.
@@ -2541,6 +2293,7 @@ paths:
         **Note:** The API currently results in a 404 Not Found when there are no activities present in the log for a given search criteria. This should not be not confused with a failed response. But rather as No Data Found.
       operationId: getActivities
       parameters:
+        - $ref: '#/components/parameters/x-api-key'
         - name: action
           in: query
           required: false
@@ -2704,11 +2457,27 @@ paths:
                     link: []
         '404':
           description: Not Found
+  '/workspaces/{workspaceId}/activities':
+    get:
+      tags:
+        - Activities
+      summary: List workspace activities
+      description: |
+        ## Restricting to only a single workspace 
+        By default, GET /activities returns all the activities at company level. This covers all the workspaces. So, if the items has to limited to a specific workspace, one has to use the workspace as the endpoint and activities followed by it.
+      operationId: getWorkspaceActivities
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
+      responses:
+        '200':
+          description: OK
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/customlists':
     get:
       tags:
         - Custom Lists
-      summary: Retrieve a custom list
+      summary: List custom lists
       description: |
         ## Retrieving custom lists
         An array of Custom Lists will be returned to you in the HTTP response body.
@@ -2757,13 +2526,7 @@ paths:
         **Note:** The API currently results in a 404 Not Found when there are no activities present in the log for a given search criteria. This should not be not confused with a failed response. But rather as No Data Found.
       operationId: getCustomLists
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: name
           in: query
           required: false
@@ -2845,11 +2608,13 @@ paths:
                     link: []
         '404':
           description: Not Found
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/customlists/{customlistId}':
     get:
       tags:
         - Custom Lists
-      summary: Retrieve details of a specific custom list
+      summary: Retrieve a custom list
       description: |
         ## Details of a Specific Custom List
         To retrieve the details of a specific list, the end point must be passed with the custom list ID. The link can be usually found in the link attribute of each customlist item.
@@ -2892,13 +2657,7 @@ paths:
         *   method - the HTTP method to use with this particular link
       operationId: getCustomListsById
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
         - name: customlistId
           in: path
           required: true
@@ -2933,11 +2692,13 @@ paths:
                         method: GET
         '404':
           description: Not Found
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   /users:
     post:
       tags:
         - Users
-      summary: Create a new user
+      summary: Create a user
       description: |
         ## Creating new User
         To create a new user, you can use the /users endpoint. The method is POST. Ensure that the necessary permissions are provided to the API account to create or modify user accounts.
@@ -2952,6 +2713,8 @@ paths:
         *   timezone
         *   workCountry
       operationId: postUsers
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
       requestBody:
         content:
           application/vnd.whispir.user-v1+json:
@@ -2996,7 +2759,7 @@ paths:
     get:
       tags:
         - Users
-      summary: Retrieve users
+      summary: List users
       description: |
         ## Retrieving Users
         Users can be retrieved quite easily with a GET request to the /users. A simple /users will result in all users being retrieved with all of their basic identity information. The result will only be limited to users with ACTIVE status. User’s with other status will not be listed in the results.
@@ -3040,6 +2803,7 @@ paths:
         **Note:** While searching for users via status, use the short code ‘A’ for ACTIVE, similarly, 'I’ for INACTIVE, rather than the full words ACTIVE, INACTIVE, etc. so, it is &status=A not &status=ACTIVE.
       operationId: getUsers
       parameters:
+        - $ref: '#/components/parameters/x-api-key'
         - name: fieldname
           in: query
           required: false
@@ -3086,9 +2850,11 @@ paths:
     delete:
       tags:
         - Users
-      summary: Delete all users in a company
+      summary: Delete all users
       description: The following statement allows a user to delete all users in their company using the Whispir API.
       operationId: deleteUsersAll
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
       responses:
         '204':
           description: No Content
@@ -3096,9 +2862,10 @@ paths:
     get:
       tags:
         - Users
-      summary: Retrieve a specific user
+      summary: Retrieve a user
       operationId: getUsersById
       parameters:
+        - $ref: '#/components/parameters/x-api-key'
         - name: userId
           in: path
           required: true
@@ -3144,6 +2911,7 @@ paths:
         The response to the PUT request upon success is usually a 204 with no content being provided.
       operationId: putUsersById
       parameters:
+        - $ref: '#/components/parameters/x-api-key'
         - name: userId
           in: path
           description: Enter Users id.
@@ -3200,6 +2968,7 @@ paths:
         Example: active != ACTIVE; inActive != INACTIVE
       operationId: deleteUsersById
       parameters:
+        - $ref: '#/components/parameters/x-api-key'
         - name: userId
           in: path
           description: Enter User id
@@ -3210,21 +2979,59 @@ paths:
       responses:
         '204':
           description: No Content
+  '/workspaces/{workspaceId}/users':
+    get:
+      tags:
+        - Users
+      summary: List workspace users
+      description: ''
+      operationId: getWorkspaceUsers
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
+      responses:
+        '200':
+          description: OK
+          content:
+            examples:
+              examples:
+                response:
+                  value:
+                    users:
+                      - id: AF48A9EC3F02E43C
+                        firstName: Fred
+                        lastName: Smith
+                        companyName: Whispir Pte Ltd
+                        workEmailAddress1: fsmith@whispir.com
+                        workMobilePhone1: 6512348765
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/AF48A9EC3F02E43C'
+                            rel: self
+                            method: GET
+                      - id: DFC878BCB2EF9258
+                        firstName: John
+                        lastName: Wick
+                        companyName: ''
+                        workEmailAddress1: jwick@whispir.com
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/DFC878BCB2EF9258'
+                            rel: self
+                            method: GET
+                      - status: 1 to 20 of 28
+                        link:
+                          uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/?offset=10&limit=10'
+                          rel: next
+                          method: GET
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/events':
     get:
       tags:
         - Events
-      summary: Retrieve an Event
+      summary: Retrieve an event
       description: Retrieve an Event
       operationId: getEvents
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       responses:
         '200':
           description: OK
@@ -3238,7 +3045,7 @@ paths:
     post:
       tags:
         - Events
-      summary: Create an Event
+      summary: Create an event
       description: |
         ## Creating an Event
         As Whispir works with each organisation to build out the requirements of the events module, the required fields are minimal. The bulk of the event information is from fields that are generic, and only applicable to the customer that is using the module.
@@ -3275,13 +3082,7 @@ paths:
         *   Event Field Name – End Date
       operationId: postEvents
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       requestBody:
         $ref: '#/components/requestBodies/event'
       responses:
@@ -3403,11 +3204,13 @@ paths:
                       - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/messages?label=2701095%20-%20Outage%20of%20Local%20Systems%20in%20Sydney'
                         rel: retrieveEventMessages
                         method: GET
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/imports':
     post:
       tags:
         - Imports
-      summary: Import bulk contacts
+      summary: Create an import
       description: |
         ## Bulk contact import
         The Whispir API will expose this functionality as a two stage process:
@@ -3439,13 +3242,7 @@ paths:
         **Note:** Import processes take place asynchronously. Any contacts will be created once the import process starts, and users will be able to utilise imported contacts as soon as each is completed.
       operationId: postImports
       parameters:
-        - name: workspaceId
-          in: path
-          required: true
-          description: Workspaces Id
-          schema:
-            type: string
-            default: '{{workspaceId}}'
+        - $ref: '#/components/parameters/x-api-key'
       requestBody:
         content:
           application/vnd.whispir.import-v1+json:
@@ -3545,13 +3342,12 @@ paths:
       responses:
         '200':
           description: OK
-  '/auth/{id}': {}
 externalDocs:
   description: API Documentation for Whispir REST API
   url: 'https://developers.whispir.com/docs/'
 security:
-  - basicAuth: []
-  - apiKey: []
+  - BasicAuth: []
+    ApiKeyAuth: []
 servers:
   - url: 'https://api.au.whispir.com'
     description: Australia
@@ -3579,14 +3375,9 @@ components:
             $ref: '#/components/schemas/event'
       description: events object that needs to be create events
   securitySchemes:
-    basicAuth:
+    BasicAuth:
       type: http
       scheme: basic
-      description: ''
-    apiKey:
-      type: apiKey
-      in: header
-      name: x-api-key
       description: ''
   schemas:
     message:
@@ -3635,17 +3426,115 @@ components:
       xml:
         name: message
         prefix: ns2
-    callbackParameters:
+      x-examples: {}
+      title: Message
+      x-internal: false
+      x-tags:
+        - Messages
+    email:
       type: object
       properties:
-        CustomID:
+        body:
           type: string
-          example: 890h0ef0fe09efw90e0jsdj0
-        CustomID2:
+          example: This is the body of my test Email message
+        footer:
           type: string
-          example: 9ef0fe09efw90e0jsdjsd43fw
+          example: This is the footer of my message (generally where a signature would go)
+        type:
+          type: string
+          enum:
+            - text/plain
+            - text/html
       xml:
-        name: callbackParameters
+        name: email
+      x-tags:
+        - Messages
+      title: Email
+    voice:
+      type: object
+      properties:
+        header:
+          type: string
+          example: 'This is the introduction, read out prior to any key press'
+        body:
+          type: string
+          example: 'This is the body of the voice call, read out after the key press'
+        type:
+          type: string
+          example: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
+      xml:
+        name: voice
+      x-tags:
+        - Messages
+      title: Voice
+    web:
+      type: object
+      properties:
+        body:
+          type: string
+          example: This is the content of my web publishing or Rich Push Message
+        type:
+          type: string
+          example: text/plain
+      xml:
+        name: web
+      x-tags:
+        - Messages
+      title: Web
+    social:
+      type: object
+      properties:
+        social:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: social_long
+              body:
+                type: string
+                example: Facebook Content.
+              type:
+                type: string
+                example: text/plain
+      xml:
+        name: social
+      x-tags:
+        - Messages
+      title: Social
+    resource:
+      type: object
+      required:
+        - name
+        - scope
+        - mimeType
+        - derefUri
+      properties:
+        name:
+          type: string
+          description: 'Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name. Eg:australia-contacts.csv'
+          example: sample.json
+        scope:
+          type: string
+          description: Specifies the permission scope of the file being uploaded. The scope defines the access restriction of the resource. It can be only one of
+          enum:
+            - private
+            - public
+        mimeType:
+          type: string
+          description: The mime type of the file that is being uploaded. The type is dependent on the scope of the resource.
+          example: application/json
+        derefUri:
+          type: string
+          description: The base64 representation of the file being submitted.
+          example: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
+      xml:
+        name: resource
+        prefix: ns3
+      x-tags:
+        - Resources
+      title: Resource
     template:
       type: object
       required:
@@ -3692,20 +3581,9 @@ components:
       xml:
         name: template
         prefix: ns3
-    responseRule:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Response Rule 1
-        description:
-          type: string
-          example: ''
-        responseTemplatePatterns:
-          $ref: '#/components/schemas/responseTemplatePattern'
-      xml:
-        name: responserule
-        prefix: ns3
+      x-tags:
+        - Templates
+      title: Template
     responseTemplatePattern:
       type: object
       properties:
@@ -3729,113 +3607,26 @@ components:
           example: '#00947d'
       xml:
         name: responseTemplatePattern
-    email:
+      x-tags:
+        - Response Rules
+      title: Response Template Pattern
+    responseRule:
       type: object
-      properties:
-        body:
-          type: string
-          example: This is the body of my test Email message
-        footer:
-          type: string
-          example: This is the footer of my message (generally where a signature would go)
-        type:
-          type: string
-          enum:
-            - text/plain
-            - text/html
-      xml:
-        name: email
-    voice:
-      type: object
-      properties:
-        header:
-          type: string
-          example: 'This is the introduction, read out prior to any key press'
-        body:
-          type: string
-          example: 'This is the body of the voice call, read out after the key press'
-        type:
-          type: string
-          example: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
-      xml:
-        name: voice
-    web:
-      type: object
-      properties:
-        body:
-          type: string
-          example: This is the content of my web publishing or Rich Push Message
-        type:
-          type: string
-          example: text/plain
-      xml:
-        name: web
-    social:
-      type: object
-      properties:
-        social:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: social_long
-              body:
-                type: string
-                example: Facebook Content.
-              type:
-                type: string
-                example: text/plain
-      xml:
-        name: social
-    features:
-      type: object
-      properties:
-        pushOptions:
-          $ref: '#/components/schemas/pushOptions'
-      xml:
-        name: features
-    pushOptions:
-      type: object
-      properties:
-        notifications:
-          type: string
-          example: enabled
-        escalationMins:
-          type: string
-          example: 3
-      xml:
-        name: pushOptions
-    resource:
-      type: object
-      required:
-        - name
-        - scope
-        - mimeType
-        - derefUri
       properties:
         name:
           type: string
-          description: 'Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name. Eg:australia-contacts.csv'
-          example: sample.json
-        scope:
+          example: Response Rule 1
+        description:
           type: string
-          description: Specifies the permission scope of the file being uploaded. The scope defines the access restriction of the resource. It can be only one of
-          enum:
-            - private
-            - public
-        mimeType:
-          type: string
-          description: The mime type of the file that is being uploaded. The type is dependent on the scope of the resource.
-          example: application/json
-        derefUri:
-          type: string
-          description: The base64 representation of the file being submitted.
-          example: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
+          example: ''
+        responseTemplatePatterns:
+          $ref: '#/components/schemas/responseTemplatePattern'
       xml:
-        name: resource
+        name: responserule
         prefix: ns3
+      x-tags:
+        - Response Rules
+      title: Response Rule
     contact:
       type: object
       required:
@@ -3894,48 +3685,9 @@ components:
       xml:
         name: contact
         prefix: ns2
-    locations:
-      type: object
-      properties:
-        location:
-          $ref: '#/components/schemas/location'
-      xml:
-        name: locations
-    location:
-      type: object
-      properties:
-        latitude:
-          type: string
-          example: 0
-        longitude:
-          type: string
-          example: 0
-        type:
-          type: string
-          example: CurrentLocation
-      xml:
-        name: location
-    messagingOptions:
-      type: object
-      properties:
-        messagingOption:
-          $ref: '#/components/schemas/messagingOption'
-      xml:
-        name: messagingOptions
-    messagingOption:
-      type: object
-      properties:
-        channel:
-          type: string
-          example: sms
-        enabled:
-          type: string
-          example: true
-        primary:
-          type: string
-          example: WorkMobilePhone1
-      xml:
-        name: messagingOption
+      x-tags:
+        - Contacts
+      title: Contact
     distributionlist:
       type: object
       required:
@@ -3965,6 +3717,9 @@ components:
       xml:
         name: distributionlists
         prefix: ns1
+      x-tags:
+        - Distribution Lists
+      title: Distribution List
     scenario:
       type: object
       required:
@@ -3991,6 +3746,9 @@ components:
       xml:
         name: scenario
         prefix: ns2
+      x-tags:
+        - Scenarios
+      title: Scenario
     callback:
       type: object
       properties:
@@ -4025,6 +3783,9 @@ components:
       xml:
         name: companyapicallback
         prefix: ns2
+      x-tags:
+        - Callbacks
+      title: Callback
     callbacks:
       type: object
       properties:
@@ -4036,17 +3797,23 @@ components:
           example: enabled
       xml:
         name: callbacks
-    auth:
+      x-tags:
+        - Callbacks
+      title: Callbacks
+    callbackParameters:
       type: object
       properties:
-        type:
+        CustomID:
           type: string
-          example: querystring
-        key:
+          example: 890h0ef0fe09efw90e0jsdj0
+        CustomID2:
           type: string
-          example: MY_AUTH_KEY
+          example: 9ef0fe09efw90e0jsdjsd43fw
       xml:
-        name: auth
+        name: callbackParameters
+      x-tags:
+        - Callbacks
+      title: Callback Parameters
     workspace:
       type: object
       properties:
@@ -4069,6 +3836,87 @@ components:
       xml:
         name: workspace
         prefix: ns3
+      x-tags:
+        - Workspaces
+      title: Workspace
+    features:
+      type: object
+      properties:
+        pushOptions:
+          $ref: '#/components/schemas/pushOptions'
+      xml:
+        name: features
+      title: Features
+    pushOptions:
+      type: object
+      properties:
+        notifications:
+          type: string
+          example: enabled
+        escalationMins:
+          type: string
+          example: 3
+      xml:
+        name: pushOptions
+      title: Push Options
+    locations:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/location'
+      xml:
+        name: locations
+      title: Locations
+    location:
+      type: object
+      properties:
+        latitude:
+          type: string
+          example: 0
+        longitude:
+          type: string
+          example: 0
+        type:
+          type: string
+          example: CurrentLocation
+      xml:
+        name: location
+      title: Location
+    messagingOptions:
+      type: object
+      properties:
+        messagingOption:
+          $ref: '#/components/schemas/messagingOption'
+      xml:
+        name: messagingOptions
+      title: Messaging Options
+    messagingOption:
+      type: object
+      properties:
+        channel:
+          type: string
+          example: sms
+        enabled:
+          type: string
+          example: true
+        primary:
+          type: string
+          example: WorkMobilePhone1
+      xml:
+        name: messagingOption
+      title: Messaging Option
+    auth:
+      type: object
+      properties:
+        type:
+          type: string
+          example: querystring
+        key:
+          type: string
+          example: MY_AUTH_KEY
+      xml:
+        name: auth
+      title: Auth
     activity:
       type: object
       required:
@@ -4103,6 +3951,9 @@ components:
       xml:
         name: activity
         prefix: ns3
+      x-tags:
+        - Activities
+      title: Activity
     user:
       type: object
       required:
@@ -4184,6 +4035,9 @@ components:
       xml:
         name: user
         prefix: ns2
+      x-tags:
+        - Users
+      title: User
     event:
       type: object
       required:
@@ -4271,6 +4125,9 @@ components:
       xml:
         name: event
         prefix: ns3
+      x-tags:
+        - Events
+      title: Event
     import:
       type: object
       required:
@@ -4296,6 +4153,9 @@ components:
       xml:
         name: import
         prefix: ns2
+      x-tags:
+        - Imports
+      title: Import
     fieldMapping:
       type: object
       required:
@@ -4327,3 +4187,22 @@ components:
           example: timezone
       xml:
         name: fieldMapping
+      title: Field Mapping
+  parameters:
+    x-api-key:
+      name: x-api-key
+      in: header
+      required: true
+      schema:
+        type: string
+      description: The API key for authentication.
+    workspaceId:
+      name: workspaceId
+      in: path
+      schema:
+        type: string
+        pattern: '^[A-F0-9]+'
+        example: 9A4C5521FFC7B15B
+      description: The identifier for the workspace.
+      required: true
+  responses: {}

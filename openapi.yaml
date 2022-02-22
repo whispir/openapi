@@ -2244,53 +2244,6 @@ paths:
           description: OK
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-  '/workspaces/{workspaceId}/users':
-    get:
-      tags:
-        - Users
-      summary: List workspace users
-      description: |
-        ## Retrieving list of users having access on a workspace
-        To retrieve the list of users, the request is made to via GET to `/workspaces/{:id}/users` endpoint.
-        By default there will be a limit of 20 users returned in a request.
-      operationId: getWorkspaceUsers
-      parameters:
-        - $ref: '#/components/parameters/x-api-key'
-      responses:
-        '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    users:
-                      - id: AF48A9EC3F02E43C
-                        firstName: Fred
-                        lastName: Smith
-                        companyName: Whispir Pte Ltd
-                        workEmailAddress1: fsmith@whispir.com
-                        workMobilePhone1: 6512348765
-                        link:
-                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/AF48A9EC3F02E43C'
-                            rel: self
-                            method: GET
-                      - id: DFC878BCB2EF9258
-                        firstName: John
-                        lastName: Wick
-                        companyName: ''
-                        workEmailAddress1: jwick@whispir.com
-                        link:
-                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/DFC878BCB2EF9258'
-                            rel: self
-                            method: GET
-                      - status: 1 to 20 of 28
-                        link:
-                          uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/?offset=10&limit=10'
-                          rel: next
-                          method: GET
-    parameters:
-      - $ref: '#/components/parameters/workspaceId'
   /activities:
     post:
       tags:
@@ -3025,6 +2978,50 @@ paths:
       responses:
         '204':
           description: No Content
+  '/workspaces/{workspaceId}/users':
+    get:
+      tags:
+        - Users
+      summary: List workspace users
+      description: ''
+      operationId: getWorkspaceUsers
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
+      responses:
+        '200':
+          description: OK
+          content:
+            examples:
+              examples:
+                response:
+                  value:
+                    users:
+                      - id: AF48A9EC3F02E43C
+                        firstName: Fred
+                        lastName: Smith
+                        companyName: Whispir Pte Ltd
+                        workEmailAddress1: fsmith@whispir.com
+                        workMobilePhone1: 6512348765
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/AF48A9EC3F02E43C'
+                            rel: self
+                            method: GET
+                      - id: DFC878BCB2EF9258
+                        firstName: John
+                        lastName: Wick
+                        companyName: ''
+                        workEmailAddress1: jwick@whispir.com
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/DFC878BCB2EF9258'
+                            rel: self
+                            method: GET
+                      - status: 1 to 20 of 28
+                        link:
+                          uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/?offset=10&limit=10'
+                          rel: next
+                          method: GET
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/events':
     get:
       tags:

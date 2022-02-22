@@ -1050,7 +1050,7 @@ paths:
       tags:
         - Templates
       summary: Retrieve a template
-      description: Retrieve a Template as indicated by templateId
+      description: Retrieve a template.
       operationId: getTemplatesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -3340,17 +3340,115 @@ components:
       xml:
         name: message
         prefix: ns2
-    callbackParameters:
+      x-examples: {}
+      title: Message
+      x-internal: false
+      x-tags:
+        - Messages
+    email:
       type: object
       properties:
-        CustomID:
+        body:
           type: string
-          example: 890h0ef0fe09efw90e0jsdj0
-        CustomID2:
+          example: This is the body of my test Email message
+        footer:
           type: string
-          example: 9ef0fe09efw90e0jsdjsd43fw
+          example: This is the footer of my message (generally where a signature would go)
+        type:
+          type: string
+          enum:
+            - text/plain
+            - text/html
       xml:
-        name: callbackParameters
+        name: email
+      x-tags:
+        - Messages
+      title: Email
+    voice:
+      type: object
+      properties:
+        header:
+          type: string
+          example: 'This is the introduction, read out prior to any key press'
+        body:
+          type: string
+          example: 'This is the body of the voice call, read out after the key press'
+        type:
+          type: string
+          example: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
+      xml:
+        name: voice
+      x-tags:
+        - Messages
+      title: Voice
+    web:
+      type: object
+      properties:
+        body:
+          type: string
+          example: This is the content of my web publishing or Rich Push Message
+        type:
+          type: string
+          example: text/plain
+      xml:
+        name: web
+      x-tags:
+        - Messages
+      title: Web
+    social:
+      type: object
+      properties:
+        social:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: social_long
+              body:
+                type: string
+                example: Facebook Content.
+              type:
+                type: string
+                example: text/plain
+      xml:
+        name: social
+      x-tags:
+        - Messages
+      title: Social
+    resource:
+      type: object
+      required:
+        - name
+        - scope
+        - mimeType
+        - derefUri
+      properties:
+        name:
+          type: string
+          description: 'Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name. Eg:australia-contacts.csv'
+          example: sample.json
+        scope:
+          type: string
+          description: Specifies the permission scope of the file being uploaded. The scope defines the access restriction of the resource. It can be only one of
+          enum:
+            - private
+            - public
+        mimeType:
+          type: string
+          description: The mime type of the file that is being uploaded. The type is dependent on the scope of the resource.
+          example: application/json
+        derefUri:
+          type: string
+          description: The base64 representation of the file being submitted.
+          example: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
+      xml:
+        name: resource
+        prefix: ns3
+      x-tags:
+        - Resources
+      title: Resource
     template:
       type: object
       required:
@@ -3397,20 +3495,9 @@ components:
       xml:
         name: template
         prefix: ns3
-    responseRule:
-      type: object
-      properties:
-        name:
-          type: string
-          example: Response Rule 1
-        description:
-          type: string
-          example: ''
-        responseTemplatePatterns:
-          $ref: '#/components/schemas/responseTemplatePattern'
-      xml:
-        name: responserule
-        prefix: ns3
+      x-tags:
+        - Templates
+      title: Template
     responseTemplatePattern:
       type: object
       properties:
@@ -3434,113 +3521,26 @@ components:
           example: '#00947d'
       xml:
         name: responseTemplatePattern
-    email:
+      x-tags:
+        - Response Rules
+      title: Response Template Pattern
+    responseRule:
       type: object
-      properties:
-        body:
-          type: string
-          example: This is the body of my test Email message
-        footer:
-          type: string
-          example: This is the footer of my message (generally where a signature would go)
-        type:
-          type: string
-          enum:
-            - text/plain
-            - text/html
-      xml:
-        name: email
-    voice:
-      type: object
-      properties:
-        header:
-          type: string
-          example: 'This is the introduction, read out prior to any key press'
-        body:
-          type: string
-          example: 'This is the body of the voice call, read out after the key press'
-        type:
-          type: string
-          example: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
-      xml:
-        name: voice
-    web:
-      type: object
-      properties:
-        body:
-          type: string
-          example: This is the content of my web publishing or Rich Push Message
-        type:
-          type: string
-          example: text/plain
-      xml:
-        name: web
-    social:
-      type: object
-      properties:
-        social:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: social_long
-              body:
-                type: string
-                example: Facebook Content.
-              type:
-                type: string
-                example: text/plain
-      xml:
-        name: social
-    features:
-      type: object
-      properties:
-        pushOptions:
-          $ref: '#/components/schemas/pushOptions'
-      xml:
-        name: features
-    pushOptions:
-      type: object
-      properties:
-        notifications:
-          type: string
-          example: enabled
-        escalationMins:
-          type: string
-          example: 3
-      xml:
-        name: pushOptions
-    resource:
-      type: object
-      required:
-        - name
-        - scope
-        - mimeType
-        - derefUri
       properties:
         name:
           type: string
-          description: 'Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name. Eg:australia-contacts.csv'
-          example: sample.json
-        scope:
+          example: Response Rule 1
+        description:
           type: string
-          description: Specifies the permission scope of the file being uploaded. The scope defines the access restriction of the resource. It can be only one of
-          enum:
-            - private
-            - public
-        mimeType:
-          type: string
-          description: The mime type of the file that is being uploaded. The type is dependent on the scope of the resource.
-          example: application/json
-        derefUri:
-          type: string
-          description: The base64 representation of the file being submitted.
-          example: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
+          example: ''
+        responseTemplatePatterns:
+          $ref: '#/components/schemas/responseTemplatePattern'
       xml:
-        name: resource
+        name: responserule
         prefix: ns3
+      x-tags:
+        - Response Rules
+      title: Response Rule
     contact:
       type: object
       required:
@@ -3599,48 +3599,9 @@ components:
       xml:
         name: contact
         prefix: ns2
-    locations:
-      type: object
-      properties:
-        location:
-          $ref: '#/components/schemas/location'
-      xml:
-        name: locations
-    location:
-      type: object
-      properties:
-        latitude:
-          type: string
-          example: 0
-        longitude:
-          type: string
-          example: 0
-        type:
-          type: string
-          example: CurrentLocation
-      xml:
-        name: location
-    messagingOptions:
-      type: object
-      properties:
-        messagingOption:
-          $ref: '#/components/schemas/messagingOption'
-      xml:
-        name: messagingOptions
-    messagingOption:
-      type: object
-      properties:
-        channel:
-          type: string
-          example: sms
-        enabled:
-          type: string
-          example: true
-        primary:
-          type: string
-          example: WorkMobilePhone1
-      xml:
-        name: messagingOption
+      x-tags:
+        - Contacts
+      title: Contact
     distributionlist:
       type: object
       required:
@@ -3670,6 +3631,9 @@ components:
       xml:
         name: distributionlists
         prefix: ns1
+      x-tags:
+        - Distribution Lists
+      title: Distribution List
     scenario:
       type: object
       required:
@@ -3696,6 +3660,9 @@ components:
       xml:
         name: scenario
         prefix: ns2
+      x-tags:
+        - Scenarios
+      title: Scenario
     callback:
       type: object
       properties:
@@ -3730,6 +3697,9 @@ components:
       xml:
         name: companyapicallback
         prefix: ns2
+      x-tags:
+        - Callbacks
+      title: Callback
     callbacks:
       type: object
       properties:
@@ -3741,17 +3711,23 @@ components:
           example: enabled
       xml:
         name: callbacks
-    auth:
+      x-tags:
+        - Callbacks
+      title: Callbacks
+    callbackParameters:
       type: object
       properties:
-        type:
+        CustomID:
           type: string
-          example: querystring
-        key:
+          example: 890h0ef0fe09efw90e0jsdj0
+        CustomID2:
           type: string
-          example: MY_AUTH_KEY
+          example: 9ef0fe09efw90e0jsdjsd43fw
       xml:
-        name: auth
+        name: callbackParameters
+      x-tags:
+        - Callbacks
+      title: Callback Parameters
     workspace:
       type: object
       properties:
@@ -3774,6 +3750,87 @@ components:
       xml:
         name: workspace
         prefix: ns3
+      x-tags:
+        - Workspaces
+      title: Workspace
+    features:
+      type: object
+      properties:
+        pushOptions:
+          $ref: '#/components/schemas/pushOptions'
+      xml:
+        name: features
+      title: Features
+    pushOptions:
+      type: object
+      properties:
+        notifications:
+          type: string
+          example: enabled
+        escalationMins:
+          type: string
+          example: 3
+      xml:
+        name: pushOptions
+      title: Push Options
+    locations:
+      type: object
+      properties:
+        location:
+          $ref: '#/components/schemas/location'
+      xml:
+        name: locations
+      title: Locations
+    location:
+      type: object
+      properties:
+        latitude:
+          type: string
+          example: 0
+        longitude:
+          type: string
+          example: 0
+        type:
+          type: string
+          example: CurrentLocation
+      xml:
+        name: location
+      title: Location
+    messagingOptions:
+      type: object
+      properties:
+        messagingOption:
+          $ref: '#/components/schemas/messagingOption'
+      xml:
+        name: messagingOptions
+      title: Messaging Options
+    messagingOption:
+      type: object
+      properties:
+        channel:
+          type: string
+          example: sms
+        enabled:
+          type: string
+          example: true
+        primary:
+          type: string
+          example: WorkMobilePhone1
+      xml:
+        name: messagingOption
+      title: Messaging Option
+    auth:
+      type: object
+      properties:
+        type:
+          type: string
+          example: querystring
+        key:
+          type: string
+          example: MY_AUTH_KEY
+      xml:
+        name: auth
+      title: Auth
     activity:
       type: object
       required:
@@ -3808,6 +3865,9 @@ components:
       xml:
         name: activity
         prefix: ns3
+      x-tags:
+        - Activities
+      title: Activity
     user:
       type: object
       required:
@@ -3889,6 +3949,9 @@ components:
       xml:
         name: user
         prefix: ns2
+      x-tags:
+        - Users
+      title: User
     event:
       type: object
       required:
@@ -3976,6 +4039,9 @@ components:
       xml:
         name: event
         prefix: ns3
+      x-tags:
+        - Events
+      title: Event
     import:
       type: object
       required:
@@ -4001,6 +4067,9 @@ components:
       xml:
         name: import
         prefix: ns2
+      x-tags:
+        - Imports
+      title: Import
     fieldMapping:
       type: object
       required:
@@ -4032,6 +4101,7 @@ components:
           example: timezone
       xml:
         name: fieldMapping
+      title: Field Mapping
   parameters:
     x-api-key:
       name: x-api-key
@@ -4049,3 +4119,4 @@ components:
         example: 9A4C5521FFC7B15B
       description: The identifier for the workspace.
       required: true
+  responses: {}

@@ -3454,8 +3454,6 @@ components:
           example: enabled
       xml:
         name: callbacks
-      x-tags:
-        - Callbacks
       title: Callbacks
     callbackParameters:
       type: object
@@ -3468,8 +3466,6 @@ components:
           example: 9ef0fe09efw90e0jsdjsd43fw
       xml:
         name: callbackParameters
-      x-tags:
-        - Callbacks
       title: Callback Parameters
     workspace:
       type: object

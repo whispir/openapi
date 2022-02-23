@@ -1237,7 +1237,7 @@ paths:
     get:
       tags:
         - Contacts
-      summary: Retrieve a contact
+      summary: List contacts
       description: |
         **Note:** There is no global search feature available where one can search on all the workspaces present in the system (under allowed user permission). So, When no workspace is provided, the search is performed on the default workspace of the user.
 

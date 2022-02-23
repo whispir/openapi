@@ -233,6 +233,8 @@ paths:
 
         The example request below returns the Message that the API user requested.
 
+
+
         `GET /messages/069BF68E5E0FE99B`
 
         Each of the URLs specified in the response can be accessed using the REL and appropriate METHOD to perform the specified functionality.  

@@ -3455,6 +3455,13 @@ paths:
       responses:
         '201':
           description: Created
+  /demo:
+    get:
+      summary: demo
+      tags: []
+      responses: {}
+      operationId: get-demo
+      x-internal: false
 externalDocs:
   description: API Documentation for Whispir REST API
   url: 'https://developers.whispir.com/docs/'

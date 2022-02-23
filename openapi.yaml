@@ -2846,6 +2846,7 @@ paths:
                           rel: self
                           uri: 'http://api.whispir.com/users/AF48A9EC3F02E43C'
                       - ...
+      x-internal: false
     delete:
       tags:
         - Users
@@ -3254,8 +3255,99 @@ paths:
       responses:
         '201':
           description: Created
-    parameters:
-      - $ref: '#/components/parameters/workspaceId'
+  /auth:
+    parameters: []
+    post:
+      summary: Create an auth token
+      operationId: postAuth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    token: your-generated-bearer-token
+                    link: []
+                properties:
+                  token:
+                    type: string
+                    minLength: 1
+                    example: '"your-generated-token-string"'
+                  link:
+                    type: array
+                    items:
+                      type: object
+      description: Create an auth token
+      parameters:
+        - schema:
+            type: string
+            default: application/vnd.whispir.auth-v1+json
+            enum:
+              - application/vnd.whispir.auth-v1+json
+              - application/vnd.whispir.auth-v1+xml
+          in: header
+          name: Content-Type
+          required: true
+        - schema:
+            type: string
+            default: application/vnd.whispir.auth-v1+json
+            enum:
+              - application/vnd.whispir.auth-v1+json
+              - application/vnd.whispir.auth-v1+xml
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+          required: true
+          description: The API key for authentication
+      tags:
+        - Auth
+      security:
+        - BasicAuth: []
+  /auth/verify:
+    get:
+      parameters:
+        - schema:
+            type: string
+            default: application/vnd.whispir.auth-v1+json
+            enum:
+              - application/vnd.whispir.auth-v1+json
+              - application/vnd.whispir.auth-v1+xml
+          in: header
+          name: Content-Type
+          required: true
+        - schema:
+            type: string
+            default: application/vnd.whispir.auth-v1+json
+            enum:
+              - application/vnd.whispir.auth-v1+json
+              - application/vnd.whispir.auth-v1+xml
+          in: header
+          name: Accept
+          required: true
+        - schema:
+            type: string
+          in: header
+          name: x-api-key
+          required: true
+          description: The API key for authentication
+      description: Verify an auth token
+      operationId: getAuthVerification
+      responses:
+        '200':
+          description: OK
+      summary: Verify an auth token
+      tags:
+        - Auth
+      security:
+        - BasicAuth: []
 externalDocs:
   description: API Documentation for Whispir REST API
   url: 'https://developers.whispir.com/docs/'

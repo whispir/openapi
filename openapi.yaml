@@ -465,6 +465,8 @@ paths:
     get:
       summary: Retrieve a message response
       description: |
+        ## Summary Responses
+
         Using the links provided in the message response, the user can simply make a new API request to retrieve the summaryStatus URL.
 
         The request for this information would look as follows:

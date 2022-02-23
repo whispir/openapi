@@ -2820,7 +2820,6 @@ paths:
         - Events
       summary: Create an event
       description: |
-        ## Creating an Event
         As Whispir works with each organisation to build out the requirements of the events module, the required fields are minimal. The bulk of the event information is from fields that are generic, and only applicable to the customer that is using the module.
 
         Events have sub sections under them called as ‘actions’ (maximum of 10). When an Event occurs/is triggered, the related actions are to be performed. Each action has an owner, a set time, and details associated with it. The owner or responsible person for the event could be a /contacts in the system. This ensures that proper communication is sent to the individual based on their preferred channel (message, email, voice) automatically without having to key in the phone, email, and other communication information again.

@@ -13,7 +13,7 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 tags:
   - name: Messages
-    description: Communications are the core of what the Whispir.io API offers as a service to customers.
+    description: Communications are the core of what the Whispir Platform API offers as a service to customers.
     externalDocs:
       url: 'https://developers.whispir.com/docs/messages'
   - name: Resources
@@ -25,11 +25,11 @@ tags:
     externalDocs:
       url: 'https://developers.whispir.com/docs/message-status'
   - name: Message Responses
-    description: 'Recipients of Whispir Messages have the ability to respond directly to the message via the channels that they received the message on.If they received the message via SMS, they can respond directly to the SMS message, and this will be visible through the Whispir.io API.'
+    description: 'Recipients of Whispir Messages have the ability to respond directly to the message via the channels that they received the message on.If they received the message via SMS, they can respond directly to the SMS message, and this will be visible through the Whispir Platform API.'
     externalDocs:
       url: 'https://developers.whispir.com/docs/message-responses'
   - name: Templates
-    description: 'Using the Whispir.io API, messages can be stored as Message Templates that can be easily referenced within your API calls.'
+    description: 'Using the Whispir Platform API, messages can be stored as Message Templates that can be easily referenced within your API calls.'
     externalDocs:
       url: 'https://developers.whispir.com/docs/templates'
   - name: Response Rules
@@ -83,7 +83,7 @@ paths:
         - Messages
       summary: Send a message
       description: |
-        Communications are the core of what the Whispir.io API offers as a service to customers.    
+        Communications are the core of what the Whispir Platform API offers as a service to customers.    
         Whispir has the ability to send communications across 7 different channels in a single API request:  
         - **SMS** - up to 1600 characters per message, premium routes, delivery receipts  
         - **Email** - free email messaging with HTML and Plain Text support 
@@ -99,31 +99,14 @@ paths:
 
         These are described in more detail below:  
         As message resources can exist in the default (My Company) workspace or other workspace, messages have two access URLs:
-        - https://api.au.whispir.com/messages - for My Company Workspace messages  
-        - https://api.au.whispir.com/workspaces/{workspaceId}/messages - for other Workspace messages  
+        - /messages - for My Company Workspace messages  
+        - /workspaces/{workspaceId}/messages - for other Workspace messages  
 
-        If your application does not require separate workspaces, you can simply send all messages from the default My Company workspace.  
-
-        SMS Messages 3 fields are required: To, Subject, Body
-
-        Email Messages 4 fields are required: To, Subject, Body, Type
-
-        Voice Messages 3 fields are required: To, Subject, voice
-
-        Rich Messages 3 fields are required: To, Subject, web
-
-        Web and Social Messaging 4 fields are required: To, Subject, web, social
-
-        Schedule Delivery 6 fields are required: To, Subject, email, messageType, scheduleType, scheduleDate
-
-        Message Variables 3 fields are required: To, Subject, body
-
-        Message Attributes 3 fields are required: To, Subject, body, email
-
+        If your application does not require separate workspaces, you can simply send all messages from the default My Company workspace.
         * * *
 
         **Using Templates**  
-        Whispir.io API messages can simply specify the Message Template ID in the messages request, instead of specifying the entire content payload.  
+        Messages can simply specify the Message Template ID in the messages request, instead of specifying the entire content payload.  
         The message template can then easily be changed (using either another API request or by logging in to the Whispir Platform) and the part of the application sending the messages does not need to be altered.  
 
         * * *
@@ -226,13 +209,7 @@ paths:
         - Messages
       summary: Retrieve a message
       description: |
-        **Retrieve a Message**
-
-        The example request below returns the Message that the API user requested.
-
-        `GET /messages/069BF68E5E0FE99B`
-
-        Each of the URLs specified in the response can be accessed using the REL and appropriate METHOD to perform the specified functionality.  
+        Retrieve a sent message. Each of the URLs specified in the response can be accessed using the REL and appropriate METHOD to perform the specified functionality.  
 
         **Rel Attribute Descriptions**
 
@@ -359,7 +336,7 @@ paths:
 
         So the request would look as follows:
 
-        `GET https://api.au.whispir.com/messages/069BF68E5E0FE99B/messagestatus?view=summary`
+        `GET /messages/069BF68E5E0FE99B/messagestatus?view=summary`
 
         As this is a GET request we don’t have to provide any message body.
 
@@ -371,7 +348,7 @@ paths:
 
         Similar to the summaryStatus, using the links provided in the message response, the user can simply make a new API request to retrieve the detailedStatus URL.
 
-        `GET https://api.au.whispir.com/messages/069BF68E5E0FE99B/messagestatus?view=detailed`
+        `GET /messages/069BF68E5E0FE99B/messagestatus?view=detailed`
 
         As this is a GET request we don’t have to provide any message body.
 
@@ -488,13 +465,11 @@ paths:
     get:
       summary: Retrieve a message response
       description: |
-        ## Summary Responses
-
         Using the links provided in the message response, the user can simply make a new API request to retrieve the summaryStatus URL.
 
         The request for this information would look as follows:
 
-        `GET https://api.au.whispir.com/messages/069BF68E5E0FE99B/messagestatus?view=summary`
+        `GET /messages/069BF68E5E0FE99B/messagestatus?view=summary`
 
         This request is asking for a couple of things:
 
@@ -515,7 +490,7 @@ paths:
 
         The resulting request would look as follows:
 
-        `GET https://api.au.whispir.com/messages/069BF68E5E0FE99B/messageresponses?view=detailed&filter=default`
+        `GET /messages/069BF68E5E0FE99B/messageresponses?view=detailed&filter=default`
 
         This request is asking for a couple of things:
 
@@ -627,8 +602,6 @@ paths:
         - Resources
       summary: Create a resource
       description: |
-        ## Creating a resource
-
         Creating a resource is very easy. To create a new resource we should use the /resources end point.
         The following are the mandatory fields needed to create a resource
 
@@ -697,7 +670,6 @@ paths:
         - Resources
       summary: List resources
       description: |
-        ## Retrieving existing resources
         Existing resources can be easily retrieved via the GET /resources API call. The response lists all of the existing public and private resources available in the system.
 
         **name:** String  
@@ -821,8 +793,6 @@ paths:
         - Resources
       summary: Retrieve a resource
       description: |
-        ## Retrieving a single resource
-
         A single resource (public|private) can be retrieved from the available resource by using the resource’s specific link uri
       operationId: getResourcesById
       parameters:
@@ -860,8 +830,6 @@ paths:
         - Resources
       summary: Update a resource
       description: |
-        ## Updating a resource
-
         Updating a resource involves the same process as in creating a resource. The process of using one of the format (CSV, JSON, XML) for private and any format for public -> converting to base64 encoded data is the same.  
         The change is doing a PUT to the existing resource URL that needs to be updated. Please be careful that doing an update overwrites the previous resource. There is no versioning available in Whispir for the resources.  
         Any or all of the 4 values can be changed. i.e, name, scope, mimeType, derefUri, but all 4 are mandatory values to be sent.  
@@ -912,11 +880,10 @@ paths:
         - Resources
       summary: Delete a resource
       description: |
-        ## Deleting a resource
-
         Resources can be deleted after use. These can be both public and private in scope.  
+
         **Note:** Deleting a public resource may result in 404 File Not Found error for any sites or material referencing to it. So, ensure that DELETE is only executed when the reference to all material is removed or the content has to be removed for other purposes immediately.
-      operationId: deleteResources
+      operationId: deleteResourcesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
         - name: resourceId
@@ -938,18 +905,7 @@ paths:
       tags:
         - Templates
       summary: Create a template
-      description: |
-        ## Creating Templates
-
-        To create a new message template, you can use the /templates endpoint.
-
-        The following fields are required:
-        - messageTemplateName - the name of the template to be stored
-        - subject - the first line or identifier of the SMS
-        - body - At least one of the Body fields must be populated (SMS, Email, Voice or Web).
-        - email - The email content for the message. If no email is required, an empty object must be presented.
-        - voice - The voice content for the message. If no voice call is required, an empty object must be presented.
-        - web - The web content for the message. If no web content is required, an empty object must be presented.
+      description: ''
       operationId: postTemplates
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -971,19 +927,7 @@ paths:
         - Templates
       summary: List templates
       description: |
-        ## Retrieving Templates
-        To retrieve a list of templates from the Whispir.io API you can execute an HTTP GET using the /templates endpoint.
-
-        You will need to supply one of the following headers (for retrieving JSON or XML):
-
-        *   Accept:application/vnd.whispir.template-v1+xml
-        *   Accept:application/vnd.whispir.template-v1+json
-
-        An array of Message Templates will be returned to you in the HTTP response body.
-
-        Each of these templates will provide the following information:
-
-        ### Response Elements
+        ## Response Elements
 
         **messageTemplateName:** String
 
@@ -1050,7 +994,7 @@ paths:
       tags:
         - Templates
       summary: Retrieve a template
-      description: Retrieve a template.
+      description: ''
       operationId: getTemplatesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1069,15 +1013,6 @@ paths:
         - Templates
       summary: Update a template
       description: |
-        ## Updating Templates
-        To update existing message templates, you can use a PUT request the /templates endpoint.  
-
-        The following fields are required:
-
-        - messageTemplateName - the name of the template to be stored
-        - subject - the first line or identifier of the SMS
-        - body - At least one of the Body fields must be populated (SMS, Email, Voice or Web).
-
         **Note:** Currently users cannot update templates with the same name as a template that already exists in Whispir. Users can overcome this by saving the updated template with a new name, then either changing this back in a subsequent save, or retaining the updated name.
       operationId: putTemplatesById
       parameters:
@@ -1107,12 +1042,8 @@ paths:
         - Templates
       summary: Delete a template
       description: |
-        ## Deleting Template
-
-        Deleting a template is done via the DELETE method. The exact link url of the specific template has to be used as the end point. To get it, one can perform a GET /templates which returns the list of all templates and their link url. If the template is within a workspace, ensure that the workspace is included in the URI.
-
         **Note:** When a template is DELETED, all the associated Scenarios, events, and references of template use in other endpoints will fail. So, ensure that the template is not used anywhere before it is deleted. Whispir **will not** do that check before it deletes the template.
-      operationId: deleteTemplates
+      operationId: deleteTemplatesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
         - name: templateId
@@ -1133,24 +1064,7 @@ paths:
         - Response Rules
       summary: Create a response rule
       description: |
-        ## Creating Response Rules
-
-        To create a new Response Rule, you can use the /responserules endpoint.
-
-        The following fields can be utilised within the request:
-
-        ### High-Level Request Elements
-
-        **name:** String  
-        Specifies the name of the Response Rule.
-
-        **description:** String  
-        Specifies the description of the response rule for others to understand it’s purpose.
-
-        **responseTemplatePatterns:** Object  
-        This object contains the responseTemplatePattern array which contains each of the response rule elements.
-
-        ### Response Template Patterns
+        ## Response Template Patterns
 
         Each Response Rule has a series of **Patterns** that allow the creator to specify what textual content should be matched in the response SMS or Email, and a number that should be entered when IVR (Voice) is being used.
 
@@ -1172,7 +1086,7 @@ paths:
           application/vnd.whispir.responserule-v1+xml:
             schema:
               $ref: '#/components/schemas/responseRule'
-        description: Response Rules object that needs to be create Response Rules
+        description: ''
         required: true
       responses:
         '201':
@@ -1181,7 +1095,7 @@ paths:
       tags:
         - Response Rules
       summary: List response rules
-      description: To review a list of Response Rules
+      description: ''
       operationId: getResponseRules
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1195,7 +1109,7 @@ paths:
       tags:
         - Response Rules
       summary: Retrieve a response rule
-      description: Review an individual Response Rule
+      description: ''
       operationId: getResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1213,7 +1127,7 @@ paths:
       tags:
         - Response Rules
       summary: Update a response rule
-      description: Update a Response Rule By ID
+      description: ''
       operationId: putResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1241,7 +1155,7 @@ paths:
       tags:
         - Response Rules
       summary: Delete a response rule
-      description: Delete a single Response Rule By ID
+      description: ''
       operationId: deleteResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1262,7 +1176,7 @@ paths:
       tags:
         - Contacts
       summary: Create a contact
-      description: 'To create a new contact, you can use the /contacts endpoint. The method is POST.'
+      description: ''
       operationId: postContacts
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1331,18 +1245,6 @@ paths:
         - Contacts
       summary: Retrieve a contact
       description: |
-        Contacts can be retrieved quite easily with a GET request to the /contacts. A simple /contacts will result in all contacts being retrieved with all of their information. No filters are applied.
-
-        Once the request is placed, the response will be a list of url’s to each of the contacts that the API user has access to/or has requested for via the search criteria.
-
-        **Note**:The sample request here shows contacts from the default workspace. If you need to retrieve contacts from a specific workspace, please ensure that the workspace information is passed in the URL.
-
-        **URI for My Company  workspace** - `https://api.au.whispir.com/contacts`
-
-        **URI for a specific workspace with id BC348DC83DF1AB34**> - `https://api.au.whispir.com/workspaces/BC348DC83DF1AB34/contacts`
-
-        The search can also be done inside a specific workspace if needed, by adding the workspace information in the URI.
-
         **Note:** There is no global search feature available where one can search on all the workspaces present in the system (under allowed user permission). So, When no workspace is provided, the search is performed on the default workspace of the user.
 
         ### Searching for contacts with Custom Fields
@@ -1396,12 +1298,6 @@ paths:
         - Contacts
       summary: Retrieve a contact
       description: |
-        To get details of a specific contact, the URI must be passed with the ID of the contact. So, the URI shall be.
-
-        `https://api.au.whispir.com/contacts/AF48A9EC3F02E43C`
-
-        Where `AF48A9EC3F02E43C` is the contact id.
-
         ### Showing Custom Fields
 
         Whispir supports extension of the default Contact Profile through the use of Custom Fields. Custom fields can support other fields that may be required to be stored on your Contacts, such as Staff ID, Internal Billing Codes, or One Up Manager.
@@ -1435,8 +1331,6 @@ paths:
         - Contacts
       summary: Update a contact
       description: |
-        Updating a contact can be performed using a PUT request to the `/contacts/{contactId}` endpoint. So, to perform this, one must be knowing the exact “link” associated with the contact.
-
         The application must provide all the fields during the update request, even if they are not being updated.
 
         ## **NOTE:** Any missing fields will be automatically removed from the existing record.
@@ -1476,12 +1370,10 @@ paths:
         - Contacts
       summary: Delete a contact
       description: |
-        Deleting a contact can be performed using a DELETE request to the `/contacts/{contactId}` endpoint. So, to perform this, one must be knowing the exact “link” associated with the contact.
-
         After performing this request, the response does not contain any information other than the headers as it is not necessary.
 
         The user has requested to delete a contact, and when the response of 204 No Content is returned, the contact is successfully deleted.
-      operationId: deleteContacts
+      operationId: deleteContactsById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
         - name: contactId
@@ -1552,12 +1444,6 @@ paths:
         - Distribution Lists
       summary: List distribution lists
       description: |
-        ## Retrieving Distribution Lists
-
-        Similar to the creation of distribution list, retrieval of such list too is bound to the workspace it belongs to. So, a distribution list belonging to a workspace cannot be accessed from another workspace.
-
-        The code samples on the right describe the methods to retrieve Distribution Lists using the Whispir API.
-
         ## Searching for Distribution Lists
 
         The distribution list is usually retrieved by its id, but one can also search or refer to the distribution list by its name. This feature has to do with the unique name requirement for the distribution list.
@@ -1636,17 +1522,15 @@ paths:
 
         The steps usually are:
 
-        1.  Create a Distribution List (DL)
-        2.  While creating the DL itself, you can put in the ContactIds, UserIds, distListIds (nested) so that the DL is created with those values readily placed in.
-        3.  After the DL is created, if you want to add/update the values, then
-        4.  Do a GET request to retrieve the specific DL.
-            -  `GET https://api.au.whispir.com/workspaces/{workspaceId}/distributionlists/{distributionlistId}`
-            -  This will return you the DL object
-        5.  Modify the DL properties (name, description, contactIds, UserIds, dlIds, location etc) as needed
-        6.  Do a PUT request to update the DL details
-            -  `PUT https://api.au.whispir.com/workspaces/{workspaceId}/distributionlists/{distributionlistId}`
-            -  Successful update gives you a 204 No Content
-            -  The contactIds, userIds, distListIds can be passed all together in a single request.
+        1. Create a Distribution List (DL)
+        2. While creating the DL itself, you can put in the ContactIds, UserIds, distListIds (nested) so that the DL is created with those values readily placed in.
+        3. After the DL is created, if you want to add/update the values, then
+        4. Do a GET request to retrieve the specific DL.
+           -  This will return you the DL object
+        5. Modify the DL properties (name, description, contactIds, UserIds, dlIds, location etc) as needed
+        6. Do a PUT request to update the DL details
+           -  Successful update gives you a 204 No Content
+           -  The contactIds, userIds, distListIds can be passed all together in a single request.
 
         Note:
         1.  If an existing contactId is again added, it does neither throws an error, nor create two entries. The contactId is just neglected and only 1 record is maintained.
@@ -1677,18 +1561,16 @@ paths:
         2.  While creating the DL itself, you can put in the ContactIds, UserIds, distListIds (nested) so that the DL is created with those values readily placed in.
         3.  After the DL is created, if you want to add/update the values, then
         4.  Do a GET request to retrieve the specific DL.
-            -  `GET https://api.au.whispir.com/workspaces/{workspaceId}/distributionlists/{distributionlistId}`
-            -  This will return you the DL object
+            - This will return you the DL object
         5.  Modify the DL properties (name, description, contactIds, UserIds, dlIds, location etc) as needed
         6.  Do a PUT request to update the DL details
-            -   `PUT https://api.au.whispir.com/workspaces/{workspaceId}/distributionlists/{distributionlistId}`
-            -   Successful update gives you a 204 No Content
-            -  The contactIds, userIds, distListIds can be passed all together in a single request.
+            - Successful update gives you a 204 No Content
+            - The contactIds, userIds, distListIds can be passed all together in a single request.
 
         Note:
-        -  If an existing contactId is again added, it does neither throws an error, nor create two entries. The contactId is just neglected and only 1 record is maintained.
-        -  If the PUT request was successful, the expected response code is a 204 No Content
-        -  For Modifying the Location Information refer to Location Tags for Distribution Lists
+        - If an existing contactId is again added, it does neither throws an error, nor create two entries. The contactId is just neglected and only 1 record is maintained.
+        - If the PUT request was successful, the expected response code is a 204 No Content
+        - For Modifying the Location Information refer to Location Tags for Distribution Lists
       operationId: putDistributionListsById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1717,7 +1599,6 @@ paths:
         - Distribution Lists
       summary: Delete a distribution list
       description: |
-        Deleting the distribution is done via a DELETE /distributionlist/{distributionlistId} endpoint.  
         You can only delete the distribution list that you have created or a valid userId associated with the specific distribution list.
       operationId: deleteDistributionListsById
       parameters:
@@ -1740,16 +1621,7 @@ paths:
         - Scenarios
       summary: Create a scenario
       description: |
-        ## Creating a new Scenario
-
         A scenario is a combination of a message and contacts. So, its structure contains section for both message as well as contact information. API currently only supports creation of scenario with SMS as communication mode.
-
-        To create a scenario, you can use the /scenarios endpoint.
-
-        The following fields are required:
-        -  name - name of the scenario
-        -  description - details of the scenario
-        -  message { to, subject, body }
       operationId: postScenarios
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1770,9 +1642,7 @@ paths:
       tags:
         - Scenarios
       summary: List scenarios
-      description: |
-        ## Retrieving Scenarios
-        To retrieve a list of scenarios from the Whispir.io API you can execute an HTTP GET using the /scenarios endpoint.
+      description: ''
       operationId: getScenarios
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1786,9 +1656,7 @@ paths:
       tags:
         - Scenarios
       summary: Retrieve a scenario
-      description: |
-        Retrieving details of a single Scenario
-        While that specifies the master list, doing a GET on a single scenario provides the following information
+      description: ''
       operationId: getScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1840,18 +1708,14 @@ paths:
         - Scenarios
       summary: Run a scenario
       description: |
-        ## Running a Scenario
-
-        Running a Scenario , in other words, invoking a scenario triggers the communication to the intended recipients. The message (static or dynamic) will be sent on all the provided channels.
+        Running a scenario triggers the communication to the intended recipients. The message (static or dynamic) will be sent on all the provided channels.
 
         Running a scenario is very simple to do. The specific scenario has to called via a /POST request.
 
         Step wise example:
-        1.  Get all the scenarios
-        2.  Pick the required scenario’s link attribute
-        3.  Make a /POST call
-
-        From the retrieving scenarios call above, we can get all the scenarios in the workspace. Choosing the Emergency Comms - Fire named Scenario, the link provided is `https://api.au.whispir.com/scenarios/F0547F6F2E4839F8`
+        1. Get all the scenarios
+        2. Pick the required scenario’s link attribute
+        3. Make a /POST call
 
         Now invoking this scenario is just making a /POST call. There is no need for a Content-type header as the payload is empty.
       operationId: postScenariosById
@@ -1871,15 +1735,7 @@ paths:
       tags:
         - Scenarios
       summary: Update a scenario
-      description: |
-        ## Updating Scenario
-
-        To update existing scenario, you can use a PUT request the /scenarios endpoint.
-
-        The following fields are required:
-        - **name** - name of the scenario
-        - **description** - details of the scenario
-        - **message** - `{ to, subject, body }`
+      description: ''
       operationId: putScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1907,9 +1763,7 @@ paths:
       tags:
         - Scenarios
       summary: Delete a scenario
-      description: |
-        ## Deleting Scenario
-        Deleting a Scenario can be done via a DELETE call to the /scenarios endpoint. The request has to be targeted at a particular Scenario with the Scenario ID in the URI.
+      description: ''
       operationId: deleteScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1930,10 +1784,7 @@ paths:
       tags:
         - Callbacks
       summary: Create a callback
-      description: |
-        ## Creating new Callbacks
-        To create a new API Callback, you can use the /callbacks endpoint.  
-        The following table describes the fields that can be used within the request.  
+      description: ''
       operationId: postCallbacks
       requestBody:
         content:
@@ -1955,13 +1806,6 @@ paths:
         - Callbacks
       summary: List callbacks
       description: |
-        ## Retrieving Callbacks
-        To retrieve a list of callbacks from the Whispir API you can execute an HTTP GET using the /callbacks endpoint.
-
-        An array of Callbacks will be returned to you in the HTTP response body.
-
-        Each of these Callbacks will provide the following information:
-
         ### Response Elements
 
         **id:** String  
@@ -2035,11 +1879,12 @@ paths:
         *   If the callback service takes longer than 24h, the user can access the callback information from the /callbacks/:id/calls endpoint.
 
         An array of calls will be returned to you in the HTTP response body.
+
         ### Retrieving the list of calls based on their Status
         To retrieve a list of attempted API calls from the Whispir API you can execute an HTTP GET using the /calls endpoint on a specific callback.
 
         To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL.
-      operationId: getCallbacksCalls
+      operationId: getCallbacksCallsById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
         - name: callbackId
@@ -2102,7 +1947,6 @@ paths:
         - Callbacks
       summary: Update a callback call
       description: |
-        ## Updating the status of calls to a callback
         As every call to a callback endpoint is now stored within the calls endpoint, it’s possible that when failed calls are successfully processed through a manual exercise, that these calls will then need to be updated to reflect the current status.
 
         Take the following example:
@@ -2153,13 +1997,6 @@ paths:
         - Workspaces
       summary: Create a workspace
       description: |
-        ## Creating a new workspace
-        To create a new workspace, you can use the /workspaces endpoint.
-
-        Only 2 fields are required:
-        - **projectName** - The name of the Workspace to be created.
-        - **status** - The status of the Workspace being created. This should be ‘A’ for 'Active’ when creating new workspaces.
-
         Note: There is no limit to the amount of workspaces each API user can create.
       operationId: postWorkspaces
       requestBody:
@@ -2181,11 +2018,7 @@ paths:
       tags:
         - Workspaces
       summary: List workspaces
-      description: |
-        ## Retrieving Workspaces**
-        To retrieve a list of workspaces from the Whispir.io API you can execute an HTTP GET using the /workspaces endpoint.
-
-        An array of Workspaces will be returned to you in the HTTP response body
+      description: ''
       operationId: getWorkspaces
       responses:
         '200':
@@ -2250,14 +2083,6 @@ paths:
         - Activities
       summary: Create an activity
       description: |
-        ## Creating an activity log
-        To create a new activity entry, you can use the /activities endpoint.
-
-        Only 3 fields are required:
-        - **module** - The name of the module in which the activity is performed (see the high-level request elements table below for list of modules).
-        - **action** - The action performed.
-        - **status** - The status of the action.
-
         Note: There is no limit to the amount of activities that can be created.
       operationId: postActivities
       requestBody:
@@ -2280,16 +2105,11 @@ paths:
         - Activities
       summary: List activities
       description: |
-        ## Retrieving Activities
-        To retrieve a list of activities from the Whispir.io API you can execute an HTTP GET using the /activities endpoint.
-
-        An array of activities will be returned to you in the HTTP response body.
-
         ### Search or Filter on Activity Logs
         Activity logs can become quickly huge owing to the amount of actions performed. In such cases, to have a proper filtering of data during a GET /activities, Whispir API provides very neat filtering options on the data.
 
         All filter options are to be passed in as URL query parameters.
-        ***
+
         **Note:** The API currently results in a 404 Not Found when there are no activities present in the log for a given search criteria. This should not be not confused with a failed response. But rather as No Data Found.
       operationId: getActivities
       parameters:
@@ -2465,7 +2285,7 @@ paths:
       description: |
         ## Restricting to only a single workspace 
         By default, GET /activities returns all the activities at company level. This covers all the workspaces. So, if the items has to limited to a specific workspace, one has to use the workspace as the endpoint and activities followed by it.
-      operationId: getWorkspaceActivities
+      operationId: getActivities
       parameters:
         - $ref: '#/components/parameters/x-api-key'
       responses:
@@ -2479,8 +2299,6 @@ paths:
         - Custom Lists
       summary: List custom lists
       description: |
-        ## Retrieving custom lists
-        An array of Custom Lists will be returned to you in the HTTP response body.
         ### High-Level Response Elements
         **id:** Number  
         Specifies the unique id of the List.
@@ -2616,8 +2434,6 @@ paths:
         - Custom Lists
       summary: Retrieve a custom list
       description: |
-        ## Details of a Specific Custom List
-        To retrieve the details of a specific list, the end point must be passed with the custom list ID. The link can be usually found in the link attribute of each customlist item.
         ### High-Level Response Elements
 
         **id:** Number  
@@ -2699,19 +2515,22 @@ paths:
       tags:
         - Users
       summary: Create a user
-      description: |
-        ## Creating new User
-        To create a new user, you can use the /users endpoint. The method is POST. Ensure that the necessary permissions are provided to the API account to create or modify user accounts.
+      description: |-
+        Create a new user. Ensure that the necessary permissions are provided to the API account to create or modify user accounts.
+
+        ### Activating a User after the creation
 
         When created new users are in the PENDING (P) state. To Activate the user, the User must be set to INACTIVE first via a PUT request and then finally set to ACTIVE (A) via another PUT. They cannot be directly set to (A) from (P).
 
-        When creating an account, the following fields are mandatory:
-        *   userName
-        *   password
-        *   firstName
-        *   lastName
-        *   timezone
-        *   workCountry
+        An user when created is assigned the PENDING status. So, to set the user to ACTIVE, one has to follow the “user state machine” rules. Here’s how we do it:
+        1.  POST /users for user account creation. Capture the Location header value which is the unique link to the User record. This is used in Step 2
+        2.  GET /users/{userId} for the user object
+        3.  PUT /users/{userId} with STATUS set to 'INACTIVE’ - using the user object retreived in step 2
+        4.  PUT /users/{userId} with STATUS set to 'ACTIVE’ - using the user object retreived in step 2
+
+        **Note:** The status text is case sensitive. Lowercase or mixed case text is invalid. Always use uppercase.
+
+        Example: active != ACTIVE; inActive != INACTIVE
       operationId: postUsers
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -2761,15 +2580,11 @@ paths:
         - Users
       summary: List users
       description: |
-        ## Retrieving Users
-        Users can be retrieved quite easily with a GET request to the /users. A simple /users will result in all users being retrieved with all of their basic identity information. The result will only be limited to users with ACTIVE status. User’s with other status will not be listed in the results.
+        Retrieve a list of users in the account. The result will only be limited to users with ACTIVE status. User’s with other status will not be listed in the results.
 
         Once the request is placed, the response will be a list of url’s to each of the users that the API user has access to/or has requested for via the search criteria.
 
         **Note:** The sample request here shows users from the company the existing API user is associated with. You cannot retrieve users list from outside of your company and users with status != ACTIVE.
-
-        ### Get a specific user
-        To get details of a specific user, the URI must be passed with the ID of the user. So, the URI shall be: `https://api.au.whispir.com/users/AF48A9EC3F02E43C` Where `AF48A9EC3F02E43C` is the user id.
 
         ## Retrieving workspace users
         To retrieve the list of users, the request is made to via GET to `/workspaces/{workspaceId}/users` endpoint.
@@ -2850,8 +2665,11 @@ paths:
       tags:
         - Users
       summary: Delete all users
-      description: The following statement allows a user to delete all users in their company using the Whispir API.
-      operationId: deleteUsersAll
+      description: |-
+        Delete all users in the company.
+
+        **Note**: use this endpoint with caution!
+      operationId: deleteUsers
       parameters:
         - $ref: '#/components/parameters/x-api-key'
       responses:
@@ -2892,12 +2710,9 @@ paths:
         - Users
       summary: Update a user
       description: |
-        ## Updating users
-        Updating a user can be performed using a PUT request to the /users/{userId} endpoint.
-
         The application must provide all the fields during the update request, even if they are not being updated.
 
-        **Any missing fields,except for the password field, will be automatically removed from the existing record.**
+        **Any missing fields, except for the password field, will be automatically removed from the existing record.**
 
         **Note:** You cannot selectively update the user fields needed as this is a PUT request.
 
@@ -2936,35 +2751,9 @@ paths:
         - Users
       summary: Delete a user
       description: |
-        ## Deleting an user
-        An User can be deleted by calling the DELETE /users/{userId} end point.
-
-        Deleting an user can be performed using a DELETE request to the /users/{userId} endpoint.
-
         After performing this request, the response does not contain any information other than the headers as it is not necessary.
 
         The delete a user if successful shall respond with a 204 No Content.
-
-        ### Deleting multiple users
-        All users in the company can be deleted with a single API call.
-
-        Deleting an user can be performed using a DELETE request to the /users/{userId} endpoint. So, to perform this, one must be knowing the exact “link” associated with the user.
-
-        After performing this request, the response does not contain any information other than the headers as it is not necessary.
-
-        The delete a user if successful shall respond with a 204 No Content.
-
-        Activating an User after the creation
-
-        An user when created is assigned the PENDING status. So, to set the user to ACTIVE, one has to follow the “user state machine” rules. Here’s how we do it:
-        1.  POST /users for user account creation. Capture the Location header value which is the unique link to the User record. This is used in Step 2
-        2.  GET /users/{userId} for the user object
-        3.  PUT /users/{userId} with STATUS set to 'INACTIVE’ - using the user object retreived in step 2
-        4.  PUT /users/{userId} with STATUS set to 'ACTIVE’ - using the user object retreived in step 2
-
-        **Note:** The status text is case sensitive. Lowercase or mixed case text is invalid. Always use uppercase.
-
-        Example: active != ACTIVE; inActive != INACTIVE
       operationId: deleteUsersById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -3027,7 +2816,7 @@ paths:
       tags:
         - Events
       summary: Retrieve an event
-      description: Retrieve an Event
+      description: ''
       operationId: getEvents
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -3056,29 +2845,6 @@ paths:
         Events are created within a workspace. As they are custom built the information to be captured will depend on your organisations specific requirements. Generally at a minimum an event will have a label, start date, and a status.
 
         Most importantly, to create an event, one must have the create access for Incident row in the Roles & Permission section of the account settings.
-
-        ### Required Fields:
-        *   Event Label – The concatenated unique Event ID and Event Name e.g. (2701095 - Outage of Local Systems in Sydney)
-
-        *   Event Status – The current status of the event e.g. 'Open’ or 'Inactive’
-
-        and one set of Actions for this event
-
-        *   Action Date - The date and time of the action
-
-        *   Action Owner - The contact who is responsible for this action execution
-
-        *   Action Detail - The details of the action
-
-        All other fields on the event are defined through name/value pairs. E.g.
-
-        ### Optional Fields:
-
-        *   Event Field Name – Start Date
-
-        *   Event Field Value – 11 Sep 2015
-
-        *   Event Field Name – End Date
       operationId: postEvents
       parameters:
         - $ref: '#/components/parameters/x-api-key'

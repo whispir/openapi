@@ -1388,13 +1388,9 @@ paths:
         - Distribution Lists
       summary: Create a distribution list
       description: |
-        ## Creating Distribution lists
-
         Distribution lists can be created within the Default Workspace, or within a Specific Workspace. More information on Workspaces will be provided later in this documentation.
 
         The MRI value is important here. It is the required unique identifier for any communications that are to be sent out to this distribution list.
-
-        To create a new distribution list, you can use the /distributionlists endpoint.
       operationId: postDistributionLists
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1437,17 +1433,12 @@ paths:
       tags:
         - Distribution Lists
       summary: List distribution lists
-      description: |
-        ## Searching for Distribution Lists
-
+      description: |-
         The distribution list is usually retrieved by its id, but one can also search or refer to the distribution list by its name. This feature has to do with the unique name requirement for the distribution list.
 
         Apart from the name, the description field can also be used to search for a distribution list. While name can be directly used to send in messages, the description is solely for the purpose of search. Once search yields the required result, the mri has to be picked from the selected DL and then used to send the messages.
 
-        Both these operations can be performed by passing in the relevant search parameters in the URL - as query params
-
-        *   **&name=** - to search for name
-        *   **&description=** - to search by description
+        Both these operations can be performed by passing in the relevant search parameters in the URL as query params.
       operationId: getDistributionLists
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1506,7 +1497,7 @@ paths:
         - Distribution Lists
       summary: Retrieve a distribution list
       description: |
-        A distribution list allows you to associate the following -  
+        A distribution list allows you to associate the following:
 
         *   **ContactIds** (type:String) is a comma separated list of Contact IDs that you would like added to the list.
         *   **UserIds** (type:String) specifies the Whispir Users that should also be notified when this list is used.

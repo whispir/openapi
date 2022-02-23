@@ -3453,8 +3453,6 @@ components:
             - text/html
       xml:
         name: email
-      x-tags:
-        - Messages
       title: Email
     voice:
       type: object
@@ -3470,8 +3468,6 @@ components:
           example: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
       xml:
         name: voice
-      x-tags:
-        - Messages
       title: Voice
     web:
       type: object
@@ -3484,8 +3480,6 @@ components:
           example: text/plain
       xml:
         name: web
-      x-tags:
-        - Messages
       title: Web
     social:
       type: object
@@ -3506,8 +3500,6 @@ components:
                 example: text/plain
       xml:
         name: social
-      x-tags:
-        - Messages
       title: Social
     resource:
       type: object

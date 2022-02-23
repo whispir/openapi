@@ -604,14 +604,6 @@ paths:
         - Resources
       summary: Create a resource
       description: |
-        Creating a resource is very easy. To create a new resource we should use the /resources end point.
-        The following are the mandatory fields needed to create a resource
-
-        *   Name
-        *   Scope
-        *   mimeType
-        *   derefUri
-
         ### High-Level Response Elements
 
         **name:** String  

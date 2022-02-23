@@ -47,15 +47,17 @@ x-api-key: YOUR-API-KEY
 
 The Whispir API uses [HTTP Basic Authentication ](https://en.wikipedia.org/wiki/Basic_access_authentication) in addition to an API key. HTTP Basic Authentication requires an authentication header to be passed along with your API request.
 
-You can generate your authentication header here by filling in the form below:
+You can generate your authorization header with the developer tools included in this documentation. Go to any page, for instance [List workspaces](openapi.yaml/paths/~1workspaces), and enter your Whispir username and password into the following fields:
 
-https://codepen.io/jzcummings/pen/XWzeePo
+![auth header generation.png](https://stoplight.io/api/v1/projects/cHJqOjExMTU5Mw/images/VVyfnAMLWGQ)
+
+Your authorization header will appear in the code sample window.
 
 > Note: The credentials entered on this page are not submitted or stored, but only processed as part of an algorithm to automatically generate your header.
 
 > **IMPORTANT:** Please be aware that since your Header is built from your credentials you must recalculate it any time you change your Whispir password.
 
-Once you’ve generated this header you can use it in a request to the API.
+Once you’ve generated this header you can use it to make requests to the API.
 
 ### Important points
 

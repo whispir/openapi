@@ -3258,8 +3258,8 @@ paths:
   /auth:
     parameters: []
     post:
-      summary: Generate Auth Token
-      operationId: post-auth
+      summary: Create an auth token
+      operationId: postAuth
       responses:
         '200':
           description: OK
@@ -3281,9 +3281,7 @@ paths:
                     type: array
                     items:
                       type: object
-      description: generate a bearer token based on basic auth (userId & Password)
-      security:
-        - basicAuth: []
+      description: Create an auth token
       parameters:
         - schema:
             type: string
@@ -3309,6 +3307,10 @@ paths:
           name: x-api-key
           required: true
           description: The API key for authentication
+      tags:
+        - Auth
+      security:
+        - BasicAuth: []
   /auth/verify:
     get:
       parameters:
@@ -3336,13 +3338,16 @@ paths:
           name: x-api-key
           required: true
           description: The API key for authentication
-      description: Verify your authentication token
-      operationId: verify-auth-token
-      security:
-        - basicAuth: []
+      description: Verify an auth token
+      operationId: getAuthVerification
       responses:
         '200':
           description: OK
+      summary: Verify an auth token
+      tags:
+        - Auth
+      security:
+        - BasicAuth: []
 externalDocs:
   description: API Documentation for Whispir REST API
   url: 'https://developers.whispir.com/docs/'

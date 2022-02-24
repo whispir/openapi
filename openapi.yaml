@@ -3098,6 +3098,12 @@ paths:
         - Auth
       security:
         - BasicAuth: []
+  /demo-test:
+    get:
+      summary: demos
+      tags: []
+      responses: {}
+      operationId: get-demo-test
 externalDocs:
   description: API Documentation for Whispir REST API
   url: 'https://developers.whispir.com/docs/'

@@ -18,11 +18,7 @@ If you're a Whispir customer using only Whispir Classic, please contact your Whi
 
 ### I am not yet a Whispir customer
 
-Want to try out our API but you're not yet a Whispir customer? No worries. Simply get in touch with us and let us know you'd like to try out our API:
-
-- [Australia / New Zealand](https://www.whispir.com/en-au/contact/)
-- [Southeast Asia](https://www.whispir.com/en-sg/contact/)
-- [Americas](mailto:sales@whispir.com)
+Want to try out our API but you're not yet a Whispir customer? No worries. Simply [get in touch with us ](mailto:'sales@whispir.com') and let us know you'd like to try out our API.
 
 ## API key as a header
 

@@ -3242,6 +3242,14 @@ components:
   schemas:
     message:
       type: object
+      xml:
+        name: message
+        prefix: ns2
+      x-examples: {}
+      title: Message
+      x-internal: false
+      x-tags:
+        - Messages
       properties:
         to:
           type: string
@@ -3283,14 +3291,10 @@ components:
         eventId:
           type: string
           example: 2EE7FEA3343662BE
-      xml:
-        name: message
-        prefix: ns2
-      x-examples: {}
-      title: Message
-      x-internal: false
-      x-tags:
-        - Messages
+      required:
+        - to
+        - subject
+        - body
     email:
       type: object
       properties:

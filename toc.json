@@ -50,7 +50,7 @@
     },
     {
       "type": "item",
-      "title": "Whispir Rest API",
+      "title": "Whispir Platform API",
       "uri": "openapi.yaml"
     }
   ]

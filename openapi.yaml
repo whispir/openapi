@@ -207,9 +207,9 @@ paths:
     get:
       tags:
         - Messages
-      summary: Retrieve a message
+      summary: List messages
       description: |
-        Retrieve a sent message. Each of the URLs specified in the response can be accessed using the REL and appropriate METHOD to perform the specified functionality.  
+        Each of the URLs specified in the response can be accessed using the REL and appropriate METHOD to perform the specified functionality.  
 
         **Rel Attribute Descriptions**
 
@@ -301,6 +301,55 @@ paths:
                       link: []
     parameters:
       - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/messages/{messageId}':
+    get:
+      tags:
+        - Messages
+      summary: Retrieve a message
+      description: |
+        Each of the URLs specified in the response can be accessed using the REL and appropriate METHOD to perform the specified functionality.
+
+        **Rel Attribute Descriptions**
+
+        * * *
+
+        - **self:** Retrieves the current message.  
+
+        - **summaryStatus:** Returns the status information of the message as a messagestatus object, in a summary view.  
+
+        - **detailedStatus:** Returns the status information of the message as a messagestatus object, in a detailed view.  
+
+        - **summaryResponses:** Returns the response information of the message as a messageresponse object, in a summary view.  
+
+        - **detailedResponses:** Returns the response information of the message as a messageresponse object, in a detailed view.  
+        - **summaryResponsesWithResponseRule:** Returns the response information of the message as a messageresponse object, filtered by the Response Rule (if one was used) in a summary view.  
+
+        - **detailedResponsesWithResponseRule:** Returns the response information of the message as a messageresponse object, filtered by the Response Rule (if one was used) in a detailed view.
+
+        * * *
+
+        **Retrieving messages sent in relation to the event**
+
+        You can easily retrieve all of the messages that are associated with an Event by using the unique label that is created for each event.
+
+        The label that should be used for searching is provided to users in both the /events and /events/ requests as a link element. The rel field for this element is: `retrieveEventMessages`  
+
+        The API also supports to use this listing to query the different messages for status or any other purpose. And, any of the features available in Sending Messages, or Advanced Messages, are also available to be used within the Events Messages.
+      operationId: getMessageById
+      parameters:
+        - $ref: '#/components/parameters/x-api-key'
+      responses:
+        '200':
+          description: OK
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
+      - schema:
+          type: string
+          pattern: '^[A-F0-9]+'
+        name: messageId
+        in: path
+        required: true
+        description: The identifier for the message.
   '/workspaces/{workspaceId}/messages/{messageId}/messagestatus':
     get:
       summary: Retrieve a message status

@@ -154,6 +154,17 @@ paths:
               - application/vnd.whispir.bulkmessage-v1+json
               - application/vnd.whispir.message-v1+xml
               - application/vnd.whispir.bulkmessage-v1+xml
+        - name: Accept
+          in: header
+          required: true
+          description: Application specific mime-type
+          schema:
+            type: string
+            enum:
+              - application/vnd.whispir.message-v1+json
+              - application/vnd.whispir.bulkmessage-v1+json
+              - application/vnd.whispir.message-v1+xml
+              - application/vnd.whispir.bulkmessage-v1+xml
       requestBody:
         content:
           application/vnd.whispir.message-v1+json:
@@ -240,6 +251,28 @@ paths:
       operationId: getMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'
+        - name: Content-Type
+          in: header
+          required: true
+          description: Application specific mime-type
+          schema:
+            type: string
+            enum:
+              - application/vnd.whispir.message-v1+json
+              - application/vnd.whispir.bulkmessage-v1+json
+              - application/vnd.whispir.message-v1+xml
+              - application/vnd.whispir.bulkmessage-v1+xml
+        - name: Accept
+          in: header
+          required: true
+          description: Application specific mime-type
+          schema:
+            type: string
+            enum:
+              - application/vnd.whispir.message-v1+json
+              - application/vnd.whispir.bulkmessage-v1+json
+              - application/vnd.whispir.message-v1+xml
+              - application/vnd.whispir.bulkmessage-v1+xml
         - name: label
           in: query
           required: false
@@ -343,6 +376,28 @@ paths:
           description: OK
     parameters:
       - $ref: '#/components/parameters/workspaceId'
+      - name: Content-Type
+        in: header
+        required: true
+        description: Application specific mime-type
+        schema:
+          type: string
+          enum:
+            - application/vnd.whispir.message-v1+json
+            - application/vnd.whispir.bulkmessage-v1+json
+            - application/vnd.whispir.message-v1+xml
+            - application/vnd.whispir.bulkmessage-v1+xml
+      - name: Accept
+        in: header
+        required: true
+        description: Application specific mime-type
+        schema:
+          type: string
+          enum:
+            - application/vnd.whispir.message-v1+json
+            - application/vnd.whispir.bulkmessage-v1+json
+            - application/vnd.whispir.message-v1+xml
+            - application/vnd.whispir.bulkmessage-v1+xml
       - schema:
           type: string
           pattern: '^[A-F0-9]+'

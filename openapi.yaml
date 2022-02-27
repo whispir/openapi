@@ -307,6 +307,8 @@ paths:
         - Messages
       summary: Retrieve a message
       description: |
+        Each of the URLs specified in the response can be accessed using the REL and appropriate METHOD to perform the specified functionality.
+
         **Rel Attribute Descriptions**
 
         * * *

@@ -57,7 +57,7 @@ Once you’ve generated this header you can use it to make requests to the API.
 
 ### Important points
 
-- You need to first modify the Whispir to include the correct region. See [Domains and IP addresses](Domains-and-IP-addresses.md) for more information.
+- You need to first modify endpoint settings to include the correct region. See [Domains and IP addresses](Domains-and-IP-addresses.md) for more information.
 - If the API key value is incorrect or not passed properly, a `403 Forbidden` error will be returned by Whispir.
 - If you change the password of your account then you will need to change also the value for the `Authorization` header. You will then need to generate a new authentication header.
 - If you have any issues related to authentication, please don't hesitate to contact the [Whispir Support Team](mailto='support@whispir.com').

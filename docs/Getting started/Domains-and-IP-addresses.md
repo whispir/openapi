@@ -52,7 +52,7 @@ You can subcribe to a mailing list to be notified of future changes to AWS IP ra
 
 We strongly recommend that you subscribe to this list should you decide to implement allowlisting on your system. 
 
-## AWS IP ranges master list
+## AWS IP ranges list
 
 The list of AWS IP ranges can be found via [the AWS website.](https://ip-ranges.amazonaws.com/ip-ranges.json)
 

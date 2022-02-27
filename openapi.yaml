@@ -301,14 +301,12 @@ paths:
                       link: []
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-  '/workspaces/messages/{messageId}':
+  '/workspaces/{workspaceId}/messages/{messageId}':
     get:
       tags:
         - Messages
       summary: Retrieve a message
       description: |
-        Each of the URLs specified in the response can be accessed using the REL and appropriate METHOD to perform the specified functionality.  
-
         **Rel Attribute Descriptions**
 
         * * *

@@ -3254,12 +3254,15 @@ components:
         to:
           type: string
           example: '61987654321'
+          description: The recipient's mobile number or email address.
         subject:
           type: string
           example: Test Message
+          description: The message subject. Used to populate the subject field on some messaging channels.
         body:
           type: string
           example: This is the body of my test SMS message
+          description: The SMS message body.
         email:
           $ref: '#/components/schemas/email'
         voice:
@@ -3296,10 +3299,14 @@ components:
         - subject
     email:
       type: object
+      xml:
+        name: email
+      title: Email
       properties:
         body:
           type: string
           example: This is the body of my test Email message
+          description: The email message body.
         footer:
           type: string
           example: This is the footer of my message (generally where a signature would go)
@@ -3308,9 +3315,8 @@ components:
           enum:
             - text/plain
             - text/html
-      xml:
-        name: email
-      title: Email
+      required:
+        - body
     voice:
       type: object
       properties:
@@ -3328,16 +3334,17 @@ components:
       title: Voice
     web:
       type: object
+      xml:
+        name: web
+      title: Web
       properties:
         body:
           type: string
           example: This is the content of my web publishing or Rich Push Message
+          description: The linked web content body.
         type:
           type: string
           example: text/plain
-      xml:
-        name: web
-      title: Web
     social:
       type: object
       properties:

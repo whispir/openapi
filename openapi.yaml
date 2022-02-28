@@ -1775,7 +1775,7 @@ paths:
         - A message has been replied to
         - A message delivery failure occurred [wrong number or service unavailable]
 
-        > IMPORTANT: unlike all the other API endpoints seen so far, Callbacks are not defined at a Workspace level but at a Company level. In other words, they can be referenced from any Workspace of that Company
+        > **IMPORTANT**: unlike all the other API endpoints seen so far, Callbacks are not defined at a Workspace level but at a Company level. In other words, they can be referenced from any Workspace of that Company.
 
         Callbacks are used widely in web applications to transfer information that may become available at some point in the future. These are sometimes referred to as ‘webhooks’.
 
@@ -1790,11 +1790,11 @@ paths:
 
         ## Configuration tips
 
-        - Always use a domain name for the callback. Do not use an IP
+        - Always use a domain name for the callback. Do not use an IP.
         - Ensure that your callback server is reachable on the internet. It should not be localhost or an intranet-only application that can't be reached from the World Wide Web.
-        - Limit the port to 80 or 443. Do not use any other ports
-        - Depending on the type chosen (‘json’ or ‘xml’) for the Content-Type, Whispir would make a similar `GET` (and subsequently `POST`) call. Ensure that your web server is configured to handle such MIME types
-        - Most importantly, if your application infrastructure is behind a firewall, make sure that the firewall allows an incoming `POST` request
+        - Limit the port to 80 or 443. Do not use any other ports.
+        - Depending on the type chosen (‘json’ or ‘xml’) for the Content-Type, Whispir would make a similar `GET` (and subsequently `POST`) call. Ensure that your web server is configured to handle such MIME types.
+        - Most importantly, if your application infrastructure is behind a firewall, make sure that the firewall allows an incoming `POST` request.
       operationId: postCallbacks
       requestBody:
         content:

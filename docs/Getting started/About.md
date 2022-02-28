@@ -6,7 +6,7 @@ tags: [Getting Started]
 
 Built by developers, for developers, Whispir is the place where you can easily build communications into your app – SMS, email, push, voice, chat, web, social networks and web pages.
 
-![Whispir Logo](https://developers.whispir.com/assets/img/developers/home-img-row.svg)
+![HomePageBanner.png](https://stoplight.io/api/v1/projects/cHJqOjExMTU5Mw/images/bYivSZAAZco)
 
 ## REST architecture
 

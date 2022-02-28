@@ -15,67 +15,63 @@ tags:
   - name: Messages
     description: Communications are the core of what the Whispir Platform API offers as a service to customers.
     externalDocs:
-      url: 'https://developers.whispir.com/docs/messages'
+      url: 'https://developers.whispir.com/c2NoOjE0NDgyNjQ-message'
   - name: Resources
     description: 'Using Whispir’s API, one can submit data payloads to be stored by Whispir and used in various API calls. These files are uploaded through the /resources endpoint.'
     externalDocs:
-      url: 'https://developers.whispir.com/docs/messages'
-  - name: Message Status
-    description: 'Whispir will automatically monitor the status of each message after it has been sent to each recipient.  Using the message status information, you are able to determine who received the message, what exact time they received it, on what message channel (SMS, Email, Voice, Web, Push Notification), whether they replied to the message, what time they replied, and on what messaging channel.Each message progresses through various states, from Pending to Acknowledged.'
-    externalDocs:
-      url: 'https://developers.whispir.com/docs/message-status'
-  - name: Message Responses
-    description: 'Recipients of Whispir Messages have the ability to respond directly to the message via the channels that they received the message on.If they received the message via SMS, they can respond directly to the SMS message, and this will be visible through the Whispir Platform API.'
-    externalDocs:
-      url: 'https://developers.whispir.com/docs/message-responses'
+      url: 'https://developers.whispir.com/c2NoOjI0NTEwMjA-resource'
   - name: Templates
     description: 'Using the Whispir Platform API, messages can be stored as Message Templates that can be easily referenced within your API calls.'
     externalDocs:
-      url: 'https://developers.whispir.com/docs/templates'
+      url: 'https://developers.whispir.com/c2NoOjM0ODAzNDA4-template'
   - name: Response Rules
     description: Using Response Rules in combination with Message Templates allows users to automatically group responses to messages into different response groups for reporting purposes.
     externalDocs:
-      url: 'https://developers.whispir.com/docs/response-rules'
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTA1-response-rule'
   - name: Contacts
     description: 'Contacts form the core of the Whispir offerings. They make up the base data to which and from which all communications are performed. The Whispir API provides secure cloud based storage for your contact information. This can then easily be retrieved by any application or device that requires access, and has permission to do so.'
     externalDocs:
-      url: 'https://developers.whispir.com/docs/contacts'
+      url: 'https://developers.whispir.com/c2NoOjM0ODAzNDA5-contact'
   - name: Distribution Lists
     description: Whispir’s API allows users to categorise their contacts into different groups to simplify the distribution of messages.
     externalDocs:
-      url: 'https://developers.whispir.com/docs/distribution-lists'
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTE5-distribution-list'
   - name: Scenarios
     description: 'Scenarios allows users to simplify the message delivery processes through automated one click communications. The process involves creating a fixed message or a message template combined with a contact or a distribution list. When the scenario is executed, the message is sent to the contacts.'
     externalDocs:
-      url: 'https://developers.whispir.com/docs/scenarios'
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTIw-scenario'
   - name: Callbacks
     description: Whispir utilises API Callbacks to send simple notifications to different registered services in the event that some change has occurred on the Whispir Platform.
     externalDocs:
-      url: 'https://developers.whispir.com/docs/callbacks'
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTIx-callback'
   - name: Workspaces
     description: 'Workspace allows application developers to create new work areas for the varying use cases of their application. They provides different functions that can be provided to users of the application, e.g. creating messages, executing scenarios, or viewing distribution lists.'
     externalDocs:
-      url: 'https://developers.whispir.com/docs/workspaces'
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTI0-workspace'
   - name: Activities
     description: 'Activities are all the individual changes, tasks, calls, messages.. just about everything performed in a given company workspaces. Each Activity log entry contains information about the workspace, the module (message, email, IVR..), the user who performed it, time stamps, description of the activity, and its status (success, fail) etc.'
     externalDocs:
-      url: 'https://developers.whispir.com/docs/activities'
+      url: 'https://developers.whispir.com/c2NoOjQ2MzAxMjM-activity'
   - name: Custom Lists
     description: Custom Lists are user specific translations or preferred options in the various list controls used in the platform tool. These provide the freedom for the user to customize the list options in various modules like Messages and Events. These custom list either can complement or completely overwrite the existing list items.
     externalDocs:
-      url: 'https://developers.whispir.com/docs/custom-lists'
+      url: 'https://developers.whispir.com/b3A6Mzg5NDM5NzY-list-custom-lists'
   - name: Users
     description: 'Access to use the Whispir API, Platform and its features is strictly limited to user permission set. One needs to have proper permissions to access all the features provided by the platform, and when using the API, have appropriate permissions to modify the user attributes of themselves or others in their company workspaces.'
     externalDocs:
-      url: 'https://developers.whispir.com/docs/users'
+      url: 'https://developers.whispir.com/c2NoOjU4ODQwOQ-user'
   - name: Events
     description: 'Whispir’s Events API allows users to capture, create and manage Events (including Incidents, Issues, Places, and Assets). Link multi-channel communications to each event to track report and disseminate information textually and Geo-spatially.'
     externalDocs:
-      url: 'https://developers.whispir.com/docs/events'
+      url: 'https://developers.whispir.com/c2NoOjY5MTI5NA-event'
   - name: Imports
     description: The Imports endpoint allows users to import a CSV/JSON/XML file of contacts (via /resources) to be added to the contacts database.
     externalDocs:
-      url: 'https://developers.whispir.com/docs/imports'
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTI4-import'
+  - name: Auth
+    description: The Auth endpoint allows users to retrieve and verify a JWT authentication token.
+    externalDocs:
+      url: 'https://developers.whispir.com/b3A6NDEyMTEzOA-create-an-auth-token'
 paths:
   '/workspaces/{workspaceId}/messages':
     post:
@@ -133,13 +129,11 @@ paths:
         * * *
 
         **Sending Messages using template and resources**  
-        Apart from use in the [Dynamic Messages](https://developers.whispir.com/docs/dynamic-messages), resources can be equally used sending dynamic messages with or without a template.  
-
         Assuming there is a template that has already been created with stencil as -  
 
         Now we have the templateId(for content) with the resourceID (for recipients). Using these two key pieces of information, developers can submit an API request to kick off the Dynamic Messaging process.  
 
-        The smsMappingField should be mapped to the column or key that holds the number to which the SMS has to sent to; and the emailMappingField to the email to which the message has to be sent to. refer to [Dynamic Messages](https://developers.whispir.com/docs/dynamic-messages) for more details on the mapping.  
+        The smsMappingField should be mapped to the column or key that holds the number to which the SMS has to sent to; and the emailMappingField to the email to which the message has to be sent to.  
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -179,7 +173,7 @@ paths:
           application/vnd.whispir.bulkmessage-v1+xml:
             schema:
               $ref: '#/components/schemas/message'
-        description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web]. Please refer to the [Templates documentation](https://developers.whispir.com/docs/creating-templates) for more information about building the request payload'
+        description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web].'
         required: true
       responses:
         '202':
@@ -1171,8 +1165,6 @@ paths:
         Each of the Patterns specified will also dynamically create buttons within any Rich Message that is associated with the Response Rule.
 
         This provides an out of the box capability to quickly gather feedback from the field using a Rich User interface, and leveraging SMS as the delivery mechanism.
-
-        For more information about using **Rich Messages**, [click here.](https://developers.whispir.com/docs/rich-messages)
       operationId: postResponseRules
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -3135,7 +3127,7 @@ paths:
                     type: array
                     items:
                       type: object
-      description: Create an auth token
+      description: Create a JWT authentication token
       parameters:
         - schema:
             type: string
@@ -3192,7 +3184,7 @@ paths:
           name: x-api-key
           required: true
           description: The API key for authentication
-      description: Verify an auth token
+      description: Verify a JWT authentication token
       operationId: getAuthVerification
       responses:
         '200':
@@ -3203,8 +3195,8 @@ paths:
       security:
         - BasicAuth: []
 externalDocs:
-  description: API Documentation for Whispir REST API
-  url: 'https://developers.whispir.com/docs/'
+  description: API Documentation for Whispir Platform API
+  url: 'https://developers.whispir.com'
 security:
   - BasicAuth: []
     ApiKeyAuth: []
@@ -3878,7 +3870,7 @@ components:
           example: Australia
         timezone:
           type: string
-          description: 'Specifies the timezone in which the user lives in. Values in relation to GMT.<p>Supported values are:</p><ul><li>Offset from GMT in the format `+/-NN` e.g. `+10`</li><li>Worldwide Timezone Format in the format `Country/City` e.g. `Australia/Melbourne`</li></ul><p>For a list of available worldwide timezones, <a href="http://developers.whispir.com/files/Whispir-Timezones-v1.csv">click here.</a></p>'
+          description: 'Specifies the timezone in which the user lives in. Values in relation to GMT.<p>Supported values are:</p><ul><li>Offset from GMT in the format `+/-NN` e.g. `+10`</li><li>Worldwide Timezone Format in the format `Country/City` e.g. `Australia/Melbourne`</li></ul>'
           example: Australia/Melbourne
         Personal Address:
           type: string

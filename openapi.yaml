@@ -1882,7 +1882,7 @@ paths:
         - Response-based workflows can be built quickly and effectively.
 
         The following diagram explains the entire high-level process:
-        ![API diagram](assets/images/Whispir_API_diagram.png)
+        ![API diagram](https://github.com/whispir/openapi/blob/main/assets/images/Whispir_API_diagram.png?raw=true)
 
         ## Configuration tips
 

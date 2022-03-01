@@ -1891,6 +1891,62 @@ paths:
         - Limit the port to 80 or 443. Do not use any other ports.
         - Depending on the type chosen (‘json’ or ‘xml’) for the Content-Type, Whispir would make a similar `GET` (and subsequently `POST`) call. Ensure that your web server is configured to handle such MIME types.
         - Most importantly, if your application infrastructure is behind a firewall, make sure that the firewall allows an incoming `POST` request.
+
+        ### Example
+        The example below shows the callback payload that your application or service would receive when your SMS, email or voice messages receive a reply.
+
+        ```json
+        POST http://yourserver/callback.php
+        Content-Type: application/json
+        {
+          "messageid":"ABC4857BCCF484575FCA",
+          "messagelocation" : "https://api.<region>.whispir.com/messages/ABC4857BCCF484575FCA",
+          "from":{
+            "name":"John Smith",
+            "mri":"John_Smith.528798.Sandbox@Contact.whispir.com",
+            "mobile":"61400400400",
+            "email":"jsmith@example.com",
+            "voice":"61400400400"
+          },
+          "responseMessage":{
+            "channel":"SMS",
+            "acknowledged":"27/04/22 11:27",
+            "content":"Ok, message received!"
+          },
+          "customParameters": {
+            "date": "2022-04-27",
+            "dd": "27",
+            "recipient_voice": "61401401401",
+            "recipient_full_name": "Recipient Whispir",
+            "sec": "42",
+            "companyid": "31846",
+            "min": "27",
+            "recipient_role": "Recipient",
+            "short_hour": "11:27 AM",
+            "recipient_sms": "61401401401",
+            "department": "APIs",
+            "sender_first_name": "Tester",
+            "first_name": "Tester",
+            "day": "Monday",
+            "sender_email": "tester@test.com",
+            "yy": "20",
+            "mm": "04",
+            "recipient_last_name": "Whispir",
+            "recipient_first_name": "Recipient",
+            "recipient_email": "recipient@test.com",
+            "hrs": "11",
+            "last_name": "Whispir",
+            "business_unit": "QA",
+            "month": "April",
+            "sender_sms": "743983498743298",
+            "sender_last_name": "Whispir",
+            "sender_full_name": "Tester Whispir",
+            "yyyy": "2022",
+            "time": "11:27"
+            }
+        }
+
+        ```
       operationId: postCallbacks
       requestBody:
         content:

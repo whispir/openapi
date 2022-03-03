@@ -4123,66 +4123,46 @@ components:
         name: fieldMapping
       title: Field Mapping
     whatsapp:
-      description: This object represents a WhatsApp message to be used with the POST /messages method.
+      description: This object is a WhatsApp message payload to be used with the POST /messages method.
       type: object
       x-examples:
         hello-world:
-          to: '61430933333'
-          subject: message subject
-          whatsapp:
-            type: icebreaker
-            name: igniteagain
-            content:
-              body:
-                - text: hello
-                - text: world
+          type: icebreaker
+          name: igniteagain
+          content:
+            body:
+              - text: hello
+              - text: world
       properties:
-        to:
+        type:
           type: string
           minLength: 1
-          description: Message recipient. Can be ad hoc (e.g. phone number) or a defined Whispir recipient (e.g. Contact MRI "John_Smith.782749@Contact.whispir.com".
-        subject:
+          description: Type of WhatsApp message.
+        name:
           type: string
           minLength: 1
-          description: A description of the WhatsApp message to be sent.
-        whatsapp:
+          description: Internal name for message e.g. "aue_image_quick_reply".
+        content:
           type: object
           description: The WhatsApp message payload.
           required:
-            - type
-            - name
-            - content
+            - body
           properties:
-            type:
+            header:
+              $ref: '#/components/schemas/whatsapp_header'
+            body:
+              type:
+                - string
+                - array
+              description: An array of whatsapp_body objects.
+              items:
+                $ref: '#/components/schemas/whatsapp_body'
+            buttons:
               type: string
-              minLength: 1
-              description: Type of WhatsApp message.
-            name:
-              type: string
-              minLength: 1
-              description: Intenal name for message e.g. "aue_image_quick_reply".
-            content:
-              type: object
-              description: WhatsApp message content.
-              required:
-                - body
-              properties:
-                header:
-                  $ref: '#/components/schemas/whatsapp_header'
-                body:
-                  type: array
-                  description: An array of WhatsApp body objects. Each object represents one line of text in the sent message. Minumum 1 required.
-                  items:
-                    $ref: '#/components/schemas/whatsapp_body'
-                buttons:
-                  type: array
-                  description: An array of WhatsApp button objects. One object per button. Optional.
-                  items:
-                    $ref: '#/components/schemas/whatsapp_button'
       required:
-        - to
-        - subject
-        - whatsapp
+        - type
+        - name
+        - content
     whatsapp_header:
       title: whatsapp_header
       type: object

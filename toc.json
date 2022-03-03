@@ -44,6 +44,15 @@
       "title": "Whispir API Postman Collection",
       "uri": "docs/Getting started/Whispir-API-Postman-Collection.md"
     },
+            {
+      "type": "divider",
+      "title": "Message types"
+    },
+          {
+          "type": "item",
+      "title": "WhatsApp messages",
+      "uri": "docs/Message types/WhatsApp-messages.md"
+    },
     {
       "type": "divider",
       "title": "APIS"

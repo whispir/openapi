@@ -174,7 +174,7 @@ paths:
           application/vnd.whispir.bulkmessage-v1+xml:
             schema:
               $ref: '#/components/schemas/message'
-        description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web].'
+        description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice, web or whatsapp].'
         required: true
       responses:
         '202':
@@ -4154,11 +4154,14 @@ components:
               type:
                 - string
                 - array
-              description: An array of whatsapp_body objects.
+              description: An array of whatsapp_body objects. Each object represents a line of text in the WhatsApp message. Minimum 1 required.
               items:
                 $ref: '#/components/schemas/whatsapp_body'
             buttons:
-              type: string
+              type: array
+              description: An array of whatsapp_button objects. Each object represents one button in the WhatsApp message.
+              items:
+                $ref: '#/components/schemas/whatsapp_button'
       required:
         - type
         - name

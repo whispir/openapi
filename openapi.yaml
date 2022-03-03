@@ -4151,9 +4151,7 @@ components:
             header:
               $ref: '#/components/schemas/whatsapp_header'
             body:
-              type:
-                - string
-                - array
+              type: array
               description: An array of whatsapp_body objects. Each object represents a line of text in the WhatsApp message. Minimum 1 required.
               items:
                 $ref: '#/components/schemas/whatsapp_body'

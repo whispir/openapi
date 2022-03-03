@@ -84,7 +84,8 @@ paths:
         - **SMS** - up to 1600 characters per message, premium routes, delivery receipts  
         - **Email** - free email messaging with HTML and Plain Text support 
         - **Voice** - high quality outbound voice calls delivered to mobiles and landlines within seconds  
-        - **Rich Messages** - personalised, targeted rich messaging to drive conversations  
+        - **Rich Messages** - personalised, targeted rich messaging to drive conversations
+        - **WhatsApp** - customised WhatsApp messages of multiple message types  
         - **Twitter** - support for instant publishing to multiple twitter accounts  
         - **Facebook** - simplify the process of publishing to multiple facebook accounts instantaneously  
         - **RSS** - easily generate RSS feeds for consumption by other services
@@ -3344,6 +3345,8 @@ components:
           $ref: '#/components/schemas/web'
         social:
           $ref: '#/components/schemas/social'
+        whatsapp:
+          $ref: '#/components/schemas/whatsapp'
         type:
           type: string
           enum:
@@ -4120,20 +4123,137 @@ components:
         name: fieldMapping
       title: Field Mapping
     whatsapp:
-      title: whatsapp
+      description: This object represents a WhatsApp message to be used with the POST /messages method.
       type: object
+      x-examples:
+        hello-world:
+          to: '61430933333'
+          subject: message subject
+          whatsapp:
+            type: icebreaker
+            name: igniteagain
+            content:
+              body:
+                - text: hello
+                - text: world
       properties:
         to:
           type: string
+          minLength: 1
+          description: Message recipient. Can be ad hoc (e.g. phone number) or a defined Whispir recipient (e.g. Contact MRI "John_Smith.782749@Contact.whispir.com".
         subject:
           type: string
-        type:
+          minLength: 1
+          description: A description of the WhatsApp message to be sent.
+        whatsapp:
+          type: object
+          description: The WhatsApp message payload.
+          required:
+            - type
+            - name
+            - content
+          properties:
+            type:
+              type: string
+              minLength: 1
+              description: Type of WhatsApp message.
+            name:
+              type: string
+              minLength: 1
+              description: Intenal name for message e.g. "aue_image_quick_reply".
+            content:
+              type: object
+              description: WhatsApp message content.
+              required:
+                - body
+              properties:
+                header:
+                  $ref: '#/components/schemas/whatsapp_header'
+                body:
+                  type: array
+                  description: An array of WhatsApp body objects. Each object represents one line of text in the sent message. Minumum 1 required.
+                  items:
+                    $ref: '#/components/schemas/whatsapp_body'
+                buttons:
+                  type: array
+                  description: An array of WhatsApp button objects. One object per button. Optional.
+                  items:
+                    $ref: '#/components/schemas/whatsapp_button'
+      required:
+        - to
+        - subject
+        - whatsapp
+    whatsapp_header:
+      title: whatsapp_header
+      type: object
+      x-examples:
+        image-example:
+          image:
+            link: 'http://placekitten.com/200/300'
+        video-example:
+          video:
+            link: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'
+        document-example:
+          document:
+            link: 'https://s3-eu-west-1.amazonaws.com/hughhopkins.co.uk/sample_media/Sf+flight+itinerary.pdf'
+        location-example:
+          location:
+            longitude: -122.425332
+            latitude: 37.758056
+            name: Facebook HQ
+            address: '1 Hacker Way, Menlo Park, CA 94025'
+      description: Optional object for a Whatsapp message.
+      properties:
+        image:
           type: string
-        name:
+          description: Link to image location.
+        video:
           type: string
-        content:
-          type: array
-          items: {}
+          description: Link to video location.
+        document:
+          type: string
+          description: Link to document location.
+        location:
+          type: string
+          description: '“Longitude”, "latitude", "name", and "address".'
+    whatsapp_button:
+      title: whatsapp_button
+      type: object
+      description: Optional button object for a WhatsApp message.
+      properties:
+        index:
+          type: string
+        sub_type:
+          type: string
+          description: The type of dynamic button i.e. "quick reply" or "url".
+        text:
+          type: string
+          description: Required if sub_type = url. The url destination when the button is clicked.
+        payload:
+          type: string
+          description: Required if sub_type = quick reply. Name of the quick reply buttons configured within your WhatsApp Business Manager account.
+      required:
+        - index
+        - sub_type
+      x-examples:
+        quick-reply-example:
+          index: '0'
+          sub_type: quick_reply
+          payload: Yes-Button-Payload
+        url-example:
+          index: '0'
+          sub_type: url
+          text: 'https://www.google.com/search?q=Whispir'
+    whatsapp_body:
+      title: whatsapp_body
+      type: object
+      description: Textual body of a WhatsApp message.
+      properties:
+        text:
+          type: string
+          description: A line of text in a WhatsApp message.
+      required:
+        - text
   parameters:
     x-api-key:
       name: x-api-key

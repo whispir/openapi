@@ -4119,6 +4119,21 @@ components:
       xml:
         name: fieldMapping
       title: Field Mapping
+    whatsapp:
+      title: whatsapp
+      type: object
+      properties:
+        to:
+          type: string
+        subject:
+          type: string
+        type:
+          type: string
+        name:
+          type: string
+        content:
+          type: array
+          items: {}
   parameters:
     x-api-key:
       name: x-api-key

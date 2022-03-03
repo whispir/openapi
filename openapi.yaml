@@ -4152,9 +4152,9 @@ components:
               $ref: '#/components/schemas/whatsapp_header'
             body:
               type: array
-              description: An array of whatsapp_body objects. Each object represents a line of text in the WhatsApp message. Minimum 1 required.
+              description: 'Message body is an array of strings. Each string should be labeled ''text''. Each string will appear as one line of text in WhatsApp messasge (see example). Minimum 1 string required. '
               items:
-                $ref: '#/components/schemas/whatsapp_body'
+                type: string
             buttons:
               type: array
               description: An array of whatsapp_button objects. Each object represents one button in the WhatsApp message.
@@ -4225,16 +4225,6 @@ components:
           index: '0'
           sub_type: url
           text: 'https://www.google.com/search?q=Whispir'
-    whatsapp_body:
-      title: whatsapp_body
-      type: object
-      description: Textual body of a WhatsApp message.
-      properties:
-        text:
-          type: string
-          description: A line of text in a WhatsApp message.
-      required:
-        - text
   parameters:
     x-api-key:
       name: x-api-key

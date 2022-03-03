@@ -4137,7 +4137,7 @@ components:
         type:
           type: string
           minLength: 1
-          description: Type of WhatsApp message.
+          description: 'The type of WhatsApp message to be sent, e.g. "template".'
         name:
           type: string
           minLength: 1

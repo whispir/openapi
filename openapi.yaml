@@ -216,6 +216,172 @@ paths:
          @@min@@ | Current minute with leading zero.<br/><br/> For example, 45. 
          @@date@ | Current date in format (yyyy-mm-dd)<br/><br/> For example, 2022-02-02.
          @@time@@| Current time in 24-hour format. <br/><br/>For example, 16:37. 
+         
+        * * *
+        ## Message attributes
+        Whispir’s API customers can simplify their requests by using the message attributes directly from the API.
+
+        Using message attributes allows to achieve flexibility in the communications. With this solution, Developers just need to take care of the data behind a message while the Marketing team can focus on the presentation or messaging channels within the message.
+
+        > Unlike native tags, user-defined attributes require Whispir administrative assistance to enable and are configured at the account level. Please contact your Whispir account manager or the [Whispir Support Team](mailto='support@whispir.com') if interested in using them. Whispir’s API only accepts message attributes containing alpha-numeric ASCII characters.
+
+        We are about to see a full example where an initial fixed message has been adapted to be reusable.
+        ### Sending an invitation message without message attributes:
+        ```JSON
+        POST http://api.<region>.whispir.com/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+json
+        Accept: application/vnd.whispir.message-v1+json
+         
+        {
+           "to" : "jsmith@test.com", 
+           "subject" : "Reminder", 
+           "body" : "Your invitation to the Acme Event will expire on 13/06/2019 at 23:59:59", 
+           "email" : { 
+              "type" : "text/plain", 
+              "body" : "Your invitation to the Acme Event will expire on 13/06/2019 at 23:59:59" 
+           }
+        }
+        ```
+        ```XML
+        POST http://api.<region>.whispir.com/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+xml
+        Accept: application/vnd.whispir.message-v1+xml
+         
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <ns2:message xmlns:ns2="http://schemas.api.whispir.com">
+            <to>jsmith@test.com</to>
+            <subject>Reminder</subject>
+            <body>Your invitation to the Acme Event will expire on 13/06/2019 at 23:59:59</body>
+            <email>
+                <type>text/plain</type>
+                <body>Your invitation to the Acme Event will expire on 13/06/2019 at 23:59:59</body>
+            </email>
+        </ns2:message>
+        ```
+        ## Using Templates including attributes
+
+        Using message attributes and message Templates allows developers to cleanly separate these responsibilities. This is done by combining the message channels being used for the message and the data driving the message.
+
+        Under the operational point of view this solution is achieved with two steps:
+        1. Creating a Template including attributes
+        2. Using the Template and replacing the values for the attributes
+
+        ```JSON
+        Step 1 - Creating a Template including the attributes
+        POST http://api.<region>.whispir.com/templates
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.template-v1+json
+        Accept: application/vnd.whispir.template-v1+json 
+         
+        { 
+           "messageTemplateName" : "Event Reminder", 
+           "subject" : "Reminder:", 
+           "body" : "Your invitation to the Acme Event will expire on @@event_expiry@@ at @@event_expiry_time@@", 
+           "email" : { 
+              "type" : "text/plain", 
+              "body" : "Your invitation to the Acme Event will expire on @@event_expiry@@." 
+           }
+        }
+
+        Response - template created
+        201 - Created
+        Location: http://api.<region>.whispir.com/templates/DACADB02209CC93C
+        { 
+           ...
+           "id": "DACADB02209CC93C", 
+           ...
+        }
+
+        Step 2 - Using Template including attributes to send the message
+        POST http://api.<region>.whispir.com/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+json
+        Accept: application/vnd.whispir.message-v1+json
+         
+        { 
+           "to" : "jsmith@test.com", 
+           "messageTemplateId" : "DACADB02209CC93C", 
+           "messageattributes" : {
+              "attribute" : [{
+                 "name" : "event_expiry",     
+                 "value" : "13/06/2019"   
+              },{
+                 "name" : "event_expiry_time",     
+                 "value" : "23:59:59"   
+              }]
+           } 
+        }
+        ```
+        ```XML
+        Step 1 - Creating a Template including attributes
+        POST http://api.<region>.whispir.com/templates
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.template-v1+xml
+        Accept: application/vnd.whispir.template-v1+xml
+         
+        <?xml version="1.0" encoding="UTF-8"?>
+        <ns3:template xmlns:ns3="http://schemas.api.whispir.com" 
+                      xmlns:ns2="http://schemas.api.whispir.com/dap">
+          <messageTemplateName>Event Reminder</messageTemplateName>
+          <subject>Reminder</subject>
+          <body>Your invitation to the Acme Event will expire on @@event_expiry@@ at @@event_expiry_time@@</body>
+          <email>
+             <type>text/plain</type>
+             <body>Your invitation to the Acme Event will expire on @@event_expiry@@ at @@event_expiry_time@@</body>
+          </email>
+        </ns3:template>
+
+        Response - template created
+        201 - Created
+        Location: http://api.<region>.whispir.com/templates/DACADB02209CC93C
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <ns3:template xmlns:ns2="http://schemas.api.whispir.com/dap" xmlns:ns3="http://schemas.api.whispir.com">
+            ...
+            <id>DACADB02209CC93C</id>
+            ...
+        <ns3:template>
+
+        Step 2 - Using Template including attributes to send the message
+        POST http://api.<region>.whispir.com/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+xml
+        Accept: application/vnd.whispir.message-v1+xml
+         
+        <?xml version="1.0" encoding="UTF-8"?>
+        <ns3:template xmlns:ns3="http://schemas.api.whispir.com" 
+                      xmlns:ns2="http://schemas.api.whispir.com/dap">
+           <to>jsmith@test.com</to>
+           <messageTemplateId>DACADB02209CC93C</messageTemplateId>
+           <messageattributes>
+              <attribute>
+                 <element>
+                    <name>@@event_expiry@@</name>
+                    <value>13/06/2019</value>
+                 </element>
+                 <element>
+                    <name>@@event_expiry_time@@</name>
+                    <value>23:59:59</value>
+                 </element>
+              </attribute>
+           </messageattributes>
+        <ns3:template>
+        ```
+
+        Using this message template ID and now using the message attribute @@event_expiry@@, the updated code example (combining the message template and message attribute) is far simpler to implement and is more efficient.
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'

@@ -78,7 +78,7 @@ paths:
       tags:
         - Messages
       summary: Send a message
-      description: |
+      description: |-
         Communications are the core of what the Whispir Platform API offers as a service to customers.    
         Whispir has the ability to send communications across 7 different channels in a single API request:  
         - **SMS** - up to 1600 characters per message, premium routes, delivery receipts  
@@ -135,6 +135,87 @@ paths:
         Now we have the templateId(for content) with the resourceID (for recipients). Using these two key pieces of information, developers can submit an API request to kick off the Dynamic Messaging process.  
 
         The smsMappingField should be mapped to the column or key that holds the number to which the SMS has to sent to; and the emailMappingField to the email to which the message has to be sent to.  
+
+        * * *
+        ## Native message variables
+        When sending messages using the Whispir API you can automatically customise your communications including recipients information as part of the message. This is facilitated by the Whispir's native message variables [or native tags] that will be resolved against the recipients MRIs.
+
+        > **IMPORTANT**: the following tags can be included in any SMS, email or voice message. They are NOT meant to be used in rich messages. In this case recipient-specific fields can be populated using the Whispir JavaScript API.
+
+        Contact tag| Description|
+        ---------|----------
+         @@first_name@@ | Recipient’s first name.  <br/> For example, John. 
+         @@last_name@@ | Recipient’s last name. <br/> For example, Smith.
+         @@recipient_email@@ | Recipient’s primary email address.<br/>For example, jsmith@email.com 
+         @@recipient_sms@@ | Recipient’s primary mobile phone number. <br/><br/>For example, 61400400400. 
+         @@recipient_voice@@ | Recipient’s primary phone number for voice calls.<br/><br/> For example, 61400400400. 
+         @@pin@@ | Whispir message retrieval service call back PIN (only populated when voice is used). <br/><br/> For example, 1234. 
+         @@recipient_role@@ | Resolves to the recipient’s ‘Role’ field.<br/><br/> For example, Manager. 
+         @@recipient_additionalrole@@ | Resolves to the recipient’s ‘Additional Role’ field. <br/><br/>For example, Team Leader. 
+         @@team_name1@@ | Resolves to the recipient’s ‘Team Name’ field.<br/><br/> For example, Red Team. 
+         @@messagelabel@@| Resolves to the label field of the sent message. <br/><br/>For example, Incident #1234. 
+         @@messagecategories@@ | Resolves to the list of categories used in the message, separated with commas. <br/><br/>For example, Product Update. 
+         
+         ``` JSON
+        # To call from a User-defined workspace
+        POST https://api.<region>.whispir.com/workspaces/:workspace_id/messages 
+        # To call from the default workspace
+        POST https://api.<region>.whispir.com/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+json
+        Accept: application/vnd.whispir.message-v1+json
+         
+        {
+           "to" : "John_Wick.1143139@Contact.whispir.sg",
+           "subject" : "Test SMS Message with tags",
+           "body" : "Hi @@first_name@@. This is your message."
+        }
+         ```
+         ``` XML
+        # To call from a User-defined workspace
+        POST https://api.<region>.whispir.com/workspaces/:workspace_id/messages 
+        # To call from the default workspace
+        POST https://api.<region>.whispir.com/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+xml
+        Accept: application/vnd.whispir.message-v1+xml
+         
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <ns2:message xmlns:ns2="http://schemas.api.whispir.com">
+            <to>John_Wick.1143139@Contact.whispir.sg</to>
+            <subject>Test SMS Message with tags</subject>
+            <body>Hi @@first_name@@. This is your message.</body>
+        </ns2:message>
+         ```
+         
+        The main difference with the examples seen so far is given here by the `to` field of the payloads.
+
+        * * *
+        ## Request Body Details
+        field | recipients
+        ---|---
+        To | **Defined Whispir recipients** <br/><br/> **Contact MRI**:<br/>John_Smith.782749@Contact.whispir.com <br/> **User MRI:** <br/> John_Smith@User.whispir.com <br/> **Distribution List MRI:**<br/> Incidents.373947@List.whispir.com
+
+        * * *
+        ## Native system tags
+        When sending messages using the Whispir API, you can automatically include system-generated information via system variables. Each of them will resolve to the value obtained when you send the message. Unlike the preceding ones, they don't depend from the Contacts information stored in Whispir, so they can be included also in messages where the recipients are not represented by their MRI.
+
+         Contact tag| Description|
+        ---------|----------
+        @@dd@@| Current day with leading zero. <br/> For example, 08.
+         @@mm@@ | Current month with leading zero. <br/> For example, 06.
+        @@yy@@| Current year, short form.<br/>For example, 22.
+        @@yyyy@@| Current year, long form. <br/><br/>For example, 2022.
+         @@day@@ | Day in spoken form.<br/><br/> For example, Wednesday. 
+         @@month@@| Month in spoken form. <br/><br/> For example, January. 
+        @@hrs@@| Current hour with leading zero, in 24 hour format.<br/><br/> For example, 16. 
+         @@min@@ | Current minute with leading zero.<br/><br/> For example, 45. 
+         @@date@ | Current date in format (yyyy-mm-dd)<br/><br/> For example, 2022-02-02.
+         @@time@@| Current time in 24-hour format. <br/><br/>For example, 16:37. 
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'

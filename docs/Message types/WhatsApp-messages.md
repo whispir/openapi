@@ -316,3 +316,11 @@ Following query parameters are supported:
 Sample response:
 - Can be downloaded in CSV format. 
 - Output columns: Message ID, Workspace, User ID, Time, Type, Template, From, To, Status
+
+
+
+Column A | Column B |
+---------|----------
+ A1 | B1 | 
+ A2 | B2 | 
+ A3 | B3 | 

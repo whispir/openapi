@@ -4183,7 +4183,7 @@ components:
             latitude: 37.758056
             name: Facebook HQ
             address: '1 Hacker Way, Menlo Park, CA 94025'
-      description: Optional object for a Whatsapp message.
+      description: Optional header for a Whatsapp message.
       properties:
         image:
           type: string

@@ -85,7 +85,7 @@ paths:
         - **Email** - free email messaging with HTML and Plain Text support 
         - **Voice** - high quality outbound voice calls delivered to mobiles and landlines within seconds  
         - **Rich Messages** - personalised, targeted rich messaging to drive conversations
-        - **WhatsApp** - customised WhatsApp messages featuring mutliple content types
+        - **WhatsApp** - customised WhatsApp messages featuring mutliple content types (__presently only available in AP1 region__)
         - **Twitter** - support for instant publishing to multiple twitter accounts  
         - **Facebook** - simplify the process of publishing to multiple facebook accounts instantaneously  
         - **RSS** - easily generate RSS feeds for consumption by other services
@@ -4500,12 +4500,12 @@ components:
       properties:
         type:
           type: string
-          minLength: 1
-          description: 'The type of WhatsApp message to be sent, e.g. "template".'
+          description: The type of WhatsApp message to be sent.
+          enum:
+            - template
         name:
           type: string
-          minLength: 1
-          description: Internal name for message e.g. "aue_image_quick_reply".
+          description: The name of the template to be sent (must be the same as how it appears in your WhatsApp Business Manager).
         content:
           type: object
           description: The WhatsApp message payload.
@@ -4516,9 +4516,15 @@ components:
               $ref: '#/components/schemas/whatsapp_header'
             body:
               type: array
-              description: 'Message body is an array of strings. Each string should be labeled ''text''. Each string will appear as one line of text in WhatsApp messasge (see example). Minimum 1 string required. '
+              description: Message body is an array of text objects. Each object represents 1 variable field in the WhatsApp template.
               items:
-                type: string
+                type: object
+                minProperties: 1
+                properties:
+                  text:
+                    type: string
+                required:
+                  - text
             buttons:
               type: array
               description: An array of whatsapp_button objects. Each object represents one button in the WhatsApp message.

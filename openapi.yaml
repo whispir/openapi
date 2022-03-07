@@ -4487,7 +4487,7 @@ components:
         name: fieldMapping
       title: Field Mapping
     whatsapp:
-      description: This object is a WhatsApp message payload to be used with the POST /messages method.
+      description: A structured WhatsApp channel payload.
       type: object
       x-examples:
         hello-world:
@@ -4534,6 +4534,7 @@ components:
         - type
         - name
         - content
+      title: WhatsApp
     whatsapp_header:
       title: whatsapp_header
       type: object
@@ -4558,34 +4559,23 @@ components:
         image:
           type: string
           description: Link to image location.
+          format: uri
         video:
           type: string
           description: Link to video location.
+          format: uri
         document:
           type: string
           description: Link to document location.
+          format: uri
         location:
           type: string
           description: '“Longitude”, "latitude", "name", and "address".'
+          format: uri
     whatsapp_button:
       title: whatsapp_button
       type: object
-      description: Optional button object for a WhatsApp message.
-      properties:
-        index:
-          type: string
-        sub_type:
-          type: string
-          description: The type of dynamic button i.e. "quick reply" or "url".
-        text:
-          type: string
-          description: Required if sub_type = url. The url destination when the button is clicked.
-        payload:
-          type: string
-          description: Required if sub_type = quick reply. Name of the quick reply buttons configured within your WhatsApp Business Manager account.
-      required:
-        - index
-        - sub_type
+      description: Button object for a WhatsApp message.
       x-examples:
         quick-reply-example:
           index: '0'
@@ -4595,6 +4585,22 @@ components:
           index: '0'
           sub_type: url
           text: 'https://www.google.com/search?q=Whispir'
+      properties:
+        index:
+          type: string
+          description: The index of the object in the array.
+        sub_type:
+          type: string
+          description: The type of dynamic button i.e. "quick reply" or "url".
+        text:
+          type: string
+          description: The url destination when the button is clicked. Required if sub_type = url.
+        payload:
+          type: string
+          description: 'Name of the quick reply buttons configured within your WhatsApp Business Manager account. Required if sub_type = quick reply. '
+      required:
+        - index
+        - sub_type
   parameters:
     x-api-key:
       name: x-api-key

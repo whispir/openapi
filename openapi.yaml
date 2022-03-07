@@ -4573,25 +4573,28 @@ components:
           example: 'https://s3-eu-west-1.amazonaws.com/hughhopkins.co.uk/sample_media/Sf+flight+itinerary.pdf'
         location:
           type: object
-          description: '“Longitude”, "latitude", "name", and "address".'
-          format: uri
+          description: A location for the header.
           properties:
             longitude:
-              example: '-122.425332'
               type: integer
+              example: -122.425332
               description: Location longitude.
+              minimum: -180
+              maximum: 180
             latitude:
               type: integer
               example: 37.758056
-              description: Location latitude
+              description: Location latitude.
+              minimum: -90
+              maximum: 90
             name:
               type: string
               example: Facebook HQ
               description: Location name.
             address:
               type: string
-              description: Location address
               example: '1 Hacker Way, Menlo Park, CA 94025'
+              description: Location street address.
           required:
             - longitude
             - latitude

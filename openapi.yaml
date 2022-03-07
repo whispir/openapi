@@ -78,7 +78,7 @@ paths:
       tags:
         - Messages
       summary: Send a message
-      description: |-
+      description: |
         Communications are the core of what the Whispir Platform API offers as a service to customers.    
         Whispir has the ability to send communications across 7 different channels in a single API request:  
         - **SMS** - up to 1600 characters per message, premium routes, delivery receipts  
@@ -382,6 +382,123 @@ paths:
         ```
 
         Using this message template ID and now using the message attribute @@event_expiry@@, the updated code example (combining the message template and message attribute) is far simpler to implement and is more efficient.
+
+        * * *
+        ## Scheduled message delivery
+        ### Timezone - Scheduling rules
+        Using the Whispir API you can schedule messages to be sent later, both once or repeatedly with the possibility to specify the interval between the sessions. The service is available for SMS, email, voice, rich messages 
+
+        A message is scheduled according to the timezone set in the Whispir account of the user who initiates the message request. This setting can be found in the Whispir Portal under "Settings"->"User Manager"->"View/Edit". Whispir DOES NOT honor the timezone where the sender or the message recipient are currently located in
+
+        For example if the user’s time zone is set to UTC in their Whispir profile then messages are scheduled to be sent as per UTC, even if the user triggers the message while sitting in Singapore (+8). So please ensure that any scheduled communication is sent at the appropriate/preferred time
+
+        Also, changing the user's timezone setting after the message is triggered DOES NOT change the original scheduled time.
+
+        #### Sending messages at a later date
+        ```JSON
+        # To send from a User-defined workspace
+        POST https://api.<region>.whispir.com/workspaces/:workspace_id/messages 
+        # To send from the default workspace
+        POST https://api.<region>.whispir.com/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+json
+        Accept: application/vnd.whispir.message-v1+json
+
+        ONCE
+        In this sample we will schedule a single message to be delivered at 3:55pm on 14 February 2019
+
+        {
+            "to" : "jsmith@test.com",
+            "subject" : "Test scheduled email message",
+            "email" : {
+                "body" : "This is my scheduled content",
+                "type" : "text/plain"
+            },
+            "messageType" : "SCHEDULED",
+            "scheduleType" : "ONCE",
+            "scheduleDate" : "14/02/2019 15:55"
+        }
+
+        REPEAT
+        In this sample we will will schedule 10 messages to be delivered every hour starting from 3:55pm on 14 February 2019
+
+        {
+            "to" : "jsmith@test.com",
+            "subject" : "Test scheduled email message",
+            "email" : {
+                "body" : "This is my scheduled content",
+                "type" : "text/plain"
+            },
+            "messageType" : "SCHEDULED",
+            "scheduleType" : "REPEAT",
+            "scheduleDate" : "14/02/2019 15:55",
+            "repetitionCount" : "10",
+            "repeatDays" : "0",
+            "repeatHrs" : "1",
+            "repeatMin" : "0"
+        }
+        ```
+        ```XML
+        # To send from a User-defined workspace
+        POST https://api.<region>.whispir.com/workspaces/:workspace_id/messages 
+        # To send from the default workspace
+        POST https://api.<region>.whispir.com/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+json
+        Accept: application/vnd.whispir.message-v1+json
+
+        ONCE
+        In this sample we will schedule a single message to be delivered at 3:55pm on 14 February 2019
+
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <ns2:message xmlns:ns2="http://schemas.api.whispir.com" xmlns:ns3="http://schemas.api.whispir.com/dap">
+            <to>john.smith@test.com</to>
+            <subject>Test scheduled email message</subject>
+            <email>
+                <body>This is my scheduled content</body>
+                <type>text/plain</type>
+            </email>
+            <messageType>SCHEDULED</messageType>
+            <scheduleType>ONCE</scheduleType>
+            <scheduleDate>14/02/2019 15:55</scheduleDate>
+        </ns2:message>
+
+        REPEAT
+        In this sample we will will schedule 10 messages to be delivered every hour starting from 3:55pm on 14 February 2019
+
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <ns2:message xmlns:ns2="http://schemas.api.whispir.com" xmlns:ns3="http://schemas.api.whispir.com/dap">
+            <to>john.smith@test.com</to>
+            <subject>Test scheduled email message</subject>
+            <email>
+                <body>This is my scheduled content</body>
+                <type>text/plain</type>
+            </email>
+            <messageType>SCHEDULED</messageType>
+            <scheduleType>REPEAT</scheduleType>
+            <scheduleDate>14/02/2019 15:55</scheduleDate>
+            <repetitionCount>10</repetitionCount>
+            <repeatDays>0</repeatDays>
+            <repeatHrs>1</repeatHrs>
+            <repeatMin>0</repeatMin>
+        </ns2:message>
+        ```
+        ### Request Body Details
+        In addition to the parameters already specified for each of the channels of interest the following ones are the ones related to the scheduling:
+
+        Parameter| Description|
+        ---------|----------
+        messageType **(required)**| To be set to "SCHEDULED" in order to start the scheduling.
+        scheduleType **(required)** | To be set either to "ONCE" or "REPEAT", depending on the messaging policy to be adopted.
+        scheduleDate **(required)**| For scheduled one-off messages it specifies the date to trigger the single delivery. For scheduled messages meant to be sent multiple times it determines the moment in which the first of them will be sent.
+        repetitionCount| Specifies how many times the scheduled message will be sent to the recipient. When omitted its value will be set to 1 by default.
+        repeatDays |It specifies the interval in days between each repetition. It can be combined with the other "repeat" parameters. It can be omitted if equal to zero, but in this case it must be ensured that at least one of the other "repeat" parameters is non-zero.
+        repeatHrs| It specifies the interval in hours between each repetition. It can be combined with the other "repeat" parameters. It can be omitted if equal to zero, but in this case it must be ensured that at least one of the other "repeat" parameters is non-zero.
+        repeatMin| It specifies the interval in minutes between each repetition. It can be combined with the other "repeat" parameters. It can be omitted if equal to zero, but in this case it must be ensured that at least one of the other "repeat" parameters is non-zero.
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'

@@ -4,7 +4,7 @@ tags: [Getting Started]
 
 # Authentication
 
-The Whispir API uses authentication from 2 sources: an API key and an authentication header.
+The Whispir API uses authentication from 1 sources: an API key.
 
 You will require both of these in order to make requests to the API.
 

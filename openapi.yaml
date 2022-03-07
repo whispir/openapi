@@ -4560,18 +4560,43 @@ components:
           type: string
           description: Link to image location.
           format: uri
+          example: 'http://placekitten.com/200/300'
         video:
           type: string
           description: Link to video location.
           format: uri
+          example: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'
         document:
           type: string
           description: Link to document location.
           format: uri
+          example: 'https://s3-eu-west-1.amazonaws.com/hughhopkins.co.uk/sample_media/Sf+flight+itinerary.pdf'
         location:
-          type: string
+          type: object
           description: '“Longitude”, "latitude", "name", and "address".'
           format: uri
+          properties:
+            longitude:
+              example: '-122.425332'
+              type: integer
+              description: Location longitude.
+            latitude:
+              type: integer
+              example: 37.758056
+              description: Location latitude
+            name:
+              type: string
+              example: Facebook HQ
+              description: Location name.
+            address:
+              type: string
+              description: Location address
+              example: '1 Hacker Way, Menlo Park, CA 94025'
+          required:
+            - longitude
+            - latitude
+            - name
+            - address
     whatsapp_button:
       title: whatsapp_button
       type: object

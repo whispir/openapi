@@ -4620,7 +4620,10 @@ components:
           description: The index of the object in the array.
         sub_type:
           type: string
-          description: The type of dynamic button i.e. "quick reply" or "url".
+          description: The type of dynamic button.
+          enum:
+            - quick reply
+            - url
         text:
           type: string
           description: The url destination when the button is clicked. Required if sub_type = url.

@@ -4497,6 +4497,7 @@ components:
             body:
               - text: hello
               - text: world
+      title: WhatsApp
       properties:
         type:
           type: string
@@ -4516,13 +4517,14 @@ components:
               $ref: '#/components/schemas/whatsapp_header'
             body:
               type: array
-              description: Message body is an array of text objects. Each object represents 1 variable field in the WhatsApp template.
+              description: Message body is an array of text objects. Each object is inserted into a variable field in the WhatsApp message template.
               items:
                 type: object
                 minProperties: 1
                 properties:
                   text:
                     type: string
+                    description: Text objects in the array are inserted into variable fields in the WhatsApp template.
                 required:
                   - text
             buttons:
@@ -4534,7 +4536,6 @@ components:
         - type
         - name
         - content
-      title: WhatsApp
     whatsapp_header:
       title: whatsapp_header
       type: object

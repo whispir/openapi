@@ -2,8 +2,7 @@ formats:
   - oas3
   - oas3.0
   - oas3.1
-extends:
-  - 'spectral:oas'
+extends: [[spectral:oas, all]]
 rules:
   info-matches-whispir:
     description: The title field must contain Whispir.

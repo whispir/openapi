@@ -1185,7 +1185,7 @@ paths:
       tags:
         - Response Rules
       summary: List response rules
-      description: ''
+      description: 'Returns a list of response rules.'
       operationId: getResponseRules
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1199,7 +1199,7 @@ paths:
       tags:
         - Response Rules
       summary: Retrieve a response rule
-      description: ''
+      description: 'Retrieves a response rule object.'
       operationId: getResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'

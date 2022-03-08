@@ -7,7 +7,7 @@ extends:
 rules:
   info-matches-whispir:
     description: The title field must contain Whispir.
-    message: Info must contain Stoplight
+    message: Info must contain Whispir
     given: $.info
     recommended: true
     type: style

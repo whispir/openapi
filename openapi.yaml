@@ -2447,7 +2447,7 @@ paths:
       description: |
         ## Restricting to only a single workspace 
         By default, GET /activities returns all the activities at company level. This covers all the workspaces. So, if the items has to limited to a specific workspace, one has to use the workspace as the endpoint and activities followed by it.
-      operationId: getActivities
+      operationId: getWorkspaceActivities
       parameters:
         - $ref: '#/components/parameters/x-api-key'
       responses:
@@ -3182,6 +3182,8 @@ paths:
       responses:
         '201':
           description: Created
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   /auth:
     parameters: []
     post:
@@ -3533,7 +3535,7 @@ components:
           example: 'YES'
         voicePrompt:
           type: string
-          example: 1
+          example: '1'
         spokenVoicePrompt:
           type: string
           example: to select YES
@@ -3553,7 +3555,6 @@ components:
           example: Response Rule 1
         description:
           type: string
-          example: ''
         responseTemplatePatterns:
           $ref: '#/components/schemas/responseTemplatePattern'
       xml:
@@ -3600,7 +3601,7 @@ components:
           example: jsmith@testcompany.com
         workMobilePhone1:
           type: string
-          example: 61423456789
+          example: '61423456789'
         workCountry:
           type: string
           example: Australia
@@ -3755,7 +3756,7 @@ components:
         projectNumber:
           type: string
           description: 'Specifies the reference ID for the workspace from the User Side. Generally not used. Note:This is not the actual workspace ID. It is just a custom reference ID given by you for your own purposes.'
-          example: 2001
+          example: '2001'
         status:
           type: string
           description: Specifies the status of the Workspace being created. The status can be one of - 1) Active (A) 2)Disabled (D)
@@ -3785,7 +3786,7 @@ components:
           type: string
           example: enabled
         escalationMins:
-          type: string
+          type: number
           example: 3
       xml:
         name: pushOptions
@@ -3803,10 +3804,10 @@ components:
       properties:
         latitude:
           type: string
-          example: 0
+          example: '0.0'
         longitude:
           type: string
-          example: 0
+          example: '0.0'
         type:
           type: string
           example: CurrentLocation
@@ -3828,7 +3829,7 @@ components:
           type: string
           example: sms
         enabled:
-          type: string
+          type: boolean
           example: true
         primary:
           type: string

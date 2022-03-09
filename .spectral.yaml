@@ -1,0 +1,17 @@
+formats:
+  - oas3
+  - oas3.0
+  - oas3.1
+extends: [[spectral:oas, all]]
+rules:
+  info-matches-whispir:
+    description: The title field must contain Whispir.
+    message: Info must contain Whispir
+    given: $.info
+    recommended: true
+    type: style
+    then:
+      field: title
+      function: pattern
+      functionOptions:
+        match: Whispir

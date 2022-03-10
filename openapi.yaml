@@ -3925,16 +3925,23 @@ components:
       xml:
         name: pushOptions
       title: Push Options
-      description: ''
+      description: The Push Options object contains all the attributes required to customise your message for push notifications.
       x-examples:
         example-1:
           notifications: enabled
-          escalationMins: 3
-          deepLink: my_app_activity_1
+          priority: HIGH
+          fcm:
+            sound: /res/raw/alert_sound.wav
+            action: campaign_intent
+            image: 'https://mycompany.com/sales/campaign.png'
+          apns:
+            sound: Library/Sounds/alert_sound.wav
+            action: campaign_action
           data:
-            image-for-my-app: 'https://mycompany.com/sales/ad.png'
-            video-for-my-app: 'https://mycompany.com/sales/ad.mp4'
-            link-for-my-app: 'https://ad-campaign-feedback/id'
+            custom-image: 'https://mycompany.com/sales/ad.png'
+            custom-video: 'https://mycompany.com/sales/ad.mp4'
+            custmo-link: 'https://ad-campaign-feedback/id'
+            custom-gif: 'https://ad-campaign-resources/2022/campaign.gif'
       properties:
         notifications:
           type: string
@@ -3961,6 +3968,7 @@ components:
           default: LOW
         fcm:
           type: object
+          description: Translates FCM-specific attributes for Android apps
           properties:
             sound:
               type: string
@@ -3979,6 +3987,7 @@ components:
                 Supports JPEG, PNG and BMP but no support for animated GIF and video. Android also has a 1MB image size limit.
         apns:
           type: object
+          description: Translates APNS-specific attributes for iOS apps
           properties:
             sound:
               type: string
@@ -3993,7 +4002,7 @@ components:
                 Translates to the *category* attribute in APNS.
         data:
           type: object
-          description: 'Custom key-value pairs of the notification''s payload. These values can be used by the target app for enhanced functionality provided that it has been designed to handle them. These attributes translate to *data*  in the FCM and GCM payloads. For APNS, attributes of data are inserted into the APNS payload as custom properties outside of the *aps* payload. '
+          description: 'Custom key-value pairs of the notification''s payload. These values can be used by the target app for enhanced functionality provided that it has been designed to handle them (images, videos, links etc). These attributes translate to *data*  in the FCM and GCM payloads. For APNS, attributes of data are inserted into the APNS payload as custom properties outside of the *aps* payload. '
       required:
         - notifications
     locations:

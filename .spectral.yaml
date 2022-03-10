@@ -15,3 +15,5 @@ rules:
       function: pattern
       functionOptions:
         match: Whispir
+  openapi-tags-alphabetical: off
+

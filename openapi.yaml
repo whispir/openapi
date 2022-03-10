@@ -803,6 +803,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/x-api-key'
         - name: scope
+          description: A filter parameter for the visibility of the resource.
           in: query
           required: false
           schema:
@@ -811,6 +812,7 @@ paths:
               - private
               - public
         - name: name
+          description: A filter parameter for the name of the resource.
           in: query
           required: false
           schema:
@@ -890,6 +892,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/x-api-key'
         - name: resourceId
+          description: The identifier for the resource.
           in: path
           required: true
           schema:
@@ -997,7 +1000,7 @@ paths:
       tags:
         - Templates
       summary: Create a template
-      description: ''
+      description: 'Create a message template, combining multi-channel content for use with the Message resource. The message template can be reused across multiple sent messages.'
       operationId: postTemplates
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1086,7 +1089,7 @@ paths:
       tags:
         - Templates
       summary: Retrieve a template
-      description: ''
+      description: 'Retrieves a Template object.'
       operationId: getTemplatesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1217,7 +1220,7 @@ paths:
       tags:
         - Response Rules
       summary: Update a response rule
-      description: ''
+      description: 'Updates a Response Rule object.'
       operationId: putResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1245,7 +1248,7 @@ paths:
       tags:
         - Response Rules
       summary: Delete a response rule
-      description: ''
+      description: 'Deletes a Response Rule object.'
       operationId: deleteResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1266,7 +1269,7 @@ paths:
       tags:
         - Contacts
       summary: Create a contact
-      description: ''
+      description: 'Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.'
       operationId: postContacts
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1723,7 +1726,7 @@ paths:
       tags:
         - Scenarios
       summary: List scenarios
-      description: ''
+      description: 'Returns a list of your scenarios.'
       operationId: getScenarios
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1737,7 +1740,7 @@ paths:
       tags:
         - Scenarios
       summary: Retrieve a scenario
-      description: ''
+      description: 'Retrieves a Scenario object.'
       operationId: getScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1816,7 +1819,7 @@ paths:
       tags:
         - Scenarios
       summary: Update a scenario
-      description: ''
+      description: 'Updates a Scenario object.'
       operationId: putScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1844,7 +1847,7 @@ paths:
       tags:
         - Scenarios
       summary: Delete a scenario
-      description: ''
+      description: 'Deletes a Scenario object.'
       operationId: deleteScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -2180,7 +2183,7 @@ paths:
       tags:
         - Workspaces
       summary: List workspaces
-      description: ''
+      description: 'Returns a list of your workspaces.'
       operationId: getWorkspaces
       responses:
         '200':
@@ -2782,6 +2785,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/x-api-key'
         - name: fieldname
+          description: A filter on the User attributes. Only Users with matching attributes will be returned.
           in: query
           required: false
           schema:
@@ -2843,10 +2847,12 @@ paths:
       tags:
         - Users
       summary: Retrieve a user
+      description: Retrieves a User object.
       operationId: getUsersById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
         - name: userId
+          description: The identifier for the User.
           in: path
           required: true
           schema:
@@ -2935,7 +2941,7 @@ paths:
       tags:
         - Users
       summary: List workspace users
-      description: ''
+      description: 'Returns a list of your Users.'
       operationId: getWorkspaceUsers
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -2979,7 +2985,7 @@ paths:
       tags:
         - Events
       summary: Retrieve an event
-      description: ''
+      description: 'Retrieves an Event object.'
       operationId: getEvents
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -3218,6 +3224,7 @@ paths:
             enum:
               - application/vnd.whispir.auth-v1+json
               - application/vnd.whispir.auth-v1+xml
+          description: Application specific mime-type
           in: header
           name: Content-Type
           required: true
@@ -3227,6 +3234,7 @@ paths:
             enum:
               - application/vnd.whispir.auth-v1+json
               - application/vnd.whispir.auth-v1+xml
+          description: Application specific mime-type
           in: header
           name: Accept
           required: true
@@ -3249,6 +3257,7 @@ paths:
             enum:
               - application/vnd.whispir.auth-v1+json
               - application/vnd.whispir.auth-v1+xml
+          description: Application specific mime-type
           in: header
           name: Content-Type
           required: true
@@ -3258,6 +3267,7 @@ paths:
             enum:
               - application/vnd.whispir.auth-v1+json
               - application/vnd.whispir.auth-v1+xml
+          description: Application specific mime-type
           in: header
           name: Accept
           required: true

@@ -144,6 +144,48 @@ paths:
         > #### Watch Out!
         >
         > The documentation for push enhancements is work in progress and subject to change.
+
+
+        Whispir allows you to send push notifications to any iOS and Android-based apps. 
+
+        The attributes specific for push notifications are detailed in the $ref: '#/components/schemas/feature/pushOptions' 
+
+        Push notifications also use the following (required) fields from the messages resource:
+        - *to* - contact-mri, distribution-list or a comma-separated list of the two types
+        - *subject* - specifies the first line or the badge header text in the push notification
+        - *body* - the body of the notification
+
+
+        ***Example***
+
+        ```
+        {
+           "to":"contact-mri-value",
+           "subject":"Test push message",
+           "body":"This is the body of my test push message",
+           "features":{
+              "pushOptions":{
+                 "notifications":"enabled",
+                 "priority":"HIGH",
+                 "fcm":{
+                    "sound":"/res/raw/alert_sound.wav",
+                    "action":"campaign_intent",
+                    "image":"https://mycompany.com/sales/campaign.png"
+                 },
+                 "apns":{
+                    "sound":"Library/Sounds/alert_sound.wav",
+                    "action":"campaign_action"
+                 },
+                 "data":{
+                    "custom-image":"https://mycompany.com/sales/ad.png",
+                    "custom-video":"https://mycompany.com/sales/ad.mp4",
+                    "custmo-link":"https://ad-campaign-feedback/id",
+                    "custom-gif":"https://ad-campaign-resources/2022/campaign.gif"
+                 }
+              }
+          }
+        }
+        ```
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'

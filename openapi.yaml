@@ -3975,6 +3975,7 @@ components:
               type: string
         data:
           type: object
+          description: 'Custom key-value pairs of the notification''s payload. These values can be used by the target app for enhanced functionality provided that it has been designed to handle them. These attributes translate to *data*  in the FCM and GCM payloads. For APNS, attributes of data are inserted into the APNS payload as custom properties outside of the *aps* payload. '
       required:
         - notifications
     locations:

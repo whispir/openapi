@@ -88,6 +88,7 @@ paths:
         - **Twitter** - support for instant publishing to multiple twitter accounts  
         - **Facebook** - simplify the process of publishing to multiple facebook accounts instantaneously  
         - **RSS** - easily generate RSS feeds for consumption by other services
+        - **Push** - send push notifications to apps on Android and iOS devices
 
         All communications are driven from the /messages endpoint within the API. This endpoint allows a user to perform the following tasks:
         1.  Create and Send a new message
@@ -164,6 +165,45 @@ paths:
           application/vnd.whispir.message-v1+json:
             schema:
               $ref: '#/components/schemas/message'
+            examples:
+              example-1:
+                value:
+                  to: '61987654321'
+                  subject: Test Message
+                  body: This is the body of my test SMS message
+                  email:
+                    body: This is the body of my test Email message
+                    footer: This is the footer of my message (generally where a signature would go)
+                    type: text/plain
+                  voice:
+                    header: 'This is the introduction, read out prior to any key press'
+                    body: 'This is the body of the voice call, read out after the key press'
+                    type: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
+                  web:
+                    body: This is the content of my web publishing or Rich Push Message
+                    type: text/plain
+                  social:
+                    social:
+                      - id: social_long
+                        body: Facebook Content.
+                        type: text/plain
+                  type: defaultNoReply
+                  features:
+                    pushOptions:
+                      notifications: enabled
+                      escalationMins: 3
+                  resource:
+                    name: sample.json
+                    scope: private
+                    mimeType: application/json
+                    derefUri: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
+                  messageTemplateId: BACEB8D46BEF5315
+                  messageTemplateName: Sample SMS Template
+                  callbackId: myCallbackName
+                  callbackParameters:
+                    CustomID: 890h0ef0fe09efw90e0jsdj0
+                    CustomID2: 9ef0fe09efw90e0jsdjsd43fw
+                  eventId: 2EE7FEA3343662BE
           application/vnd.whispir.bulkmessage-v1+json:
             schema:
               $ref: '#/components/schemas/message'
@@ -173,6 +213,102 @@ paths:
           application/vnd.whispir.bulkmessage-v1+xml:
             schema:
               $ref: '#/components/schemas/message'
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+          text/html:
+            schema:
+              type: object
+              properties: {}
+          text/plain:
+            schema:
+              type: object
+              properties: {}
+          application/EDI-X12:
+            schema:
+              type: object
+              properties: {}
+          application/EDIFACT:
+            schema:
+              type: object
+              properties: {}
+          application/atom+xml:
+            schema:
+              type: object
+              properties: {}
+          application/font-woff:
+            schema:
+              type: object
+              properties: {}
+          application/gzip:
+            schema:
+              type: object
+              properties: {}
+          application/javascript:
+            schema:
+              type: object
+              properties: {}
+          application/octet-stream:
+            schema:
+              type: object
+              properties: {}
+          application/ogg:
+            schema:
+              type: object
+              properties: {}
+          application/pdf:
+            schema:
+              type: object
+              properties: {}
+          application/postscript:
+            schema:
+              type: object
+              properties: {}
+          application/soap+xml:
+            schema:
+              type: object
+              properties: {}
+          application/x-bittorrent:
+            schema:
+              type: object
+              properties: {}
+          application/x-tex:
+            schema:
+              type: object
+              properties: {}
+          application/xhtml+xml:
+            schema:
+              type: object
+              properties: {}
+          application/xml-dtd:
+            schema:
+              type: object
+              properties: {}
+          application/xop+xml:
+            schema:
+              type: object
+              properties: {}
+          application/zip:
+            schema:
+              type: object
+              properties: {}
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties: {}
+          new:
+            schema:
+              type: object
+              properties: {}
         description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web].'
         required: true
       responses:
@@ -3783,8 +3919,12 @@ components:
       xml:
         name: features
       title: Features
+      description: ''
     pushOptions:
       type: object
+      xml:
+        name: pushOptions
+      title: Push Options
       properties:
         notifications:
           type: string
@@ -3792,9 +3932,9 @@ components:
         escalationMins:
           type: number
           example: 3
-      xml:
-        name: pushOptions
-      title: Push Options
+        deepLink:
+          type: string
+      description: ''
     locations:
       type: object
       properties:

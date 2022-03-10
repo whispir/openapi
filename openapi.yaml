@@ -135,6 +135,15 @@ paths:
         Now we have the templateId(for content) with the resourceID (for recipients). Using these two key pieces of information, developers can submit an API request to kick off the Dynamic Messaging process.  
 
         The smsMappingField should be mapped to the column or key that holds the number to which the SMS has to sent to; and the emailMappingField to the email to which the message has to be sent to.  
+
+        * * *
+
+        **Sending Push Notifications**
+          
+        <!-- theme: warning -->
+        > #### Watch Out!
+        >
+        > The documentation for push enhancements is work in progress and subject to change.
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -3919,13 +3928,19 @@ components:
       xml:
         name: features
       title: Features
-      description: ''
+      description: 'Enables special message features, e.g. push notifications'
     pushOptions:
       type: object
       xml:
         name: pushOptions
       title: Push Options
-      description: The Push Options object contains all the attributes required to customise your message for push notifications.
+      description: |-
+        <!-- theme: warning -->
+        > #### Watch Out!
+        >
+        > The documentation for push enhancements is work in progress and subject to change.
+
+        The Push Options object contains all the attributes required to customise your message for push notifications.
       x-examples:
         example-1:
           notifications: enabled

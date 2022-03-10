@@ -3925,6 +3925,16 @@ components:
       xml:
         name: pushOptions
       title: Push Options
+      description: ''
+      x-examples:
+        example-1:
+          notifications: enabled
+          escalationMins: 3
+          deepLink: string
+          data:
+            myImage: 'https://mystorageserver.com/sales/ad.png'
+            myVideo: 'https://mystorageserver.com/sales/ad.mp4'
+            someLink: 'https://ad-campaign-feedback/id'
       properties:
         notifications:
           type: string
@@ -3932,9 +3942,15 @@ components:
         escalationMins:
           type: number
           example: 3
+          deprecated: true
+        sound:
+          type: string
         deepLink:
           type: string
-      description: ''
+        data:
+          type: object
+      required:
+        - notifications
     locations:
       type: object
       properties:

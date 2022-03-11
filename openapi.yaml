@@ -78,7 +78,7 @@ paths:
       tags:
         - Messages
       summary: Send a message
-      description: |
+      description: |-
         Communications are the core of what the Whispir Platform API offers as a service to customers.    
         Whispir has the ability to send communications across 7 different channels in a single API request:  
         - **SMS** - up to 1600 characters per message, premium routes, delivery receipts  
@@ -186,6 +186,19 @@ paths:
           }
         }
         ```
+
+        ***Push Payload Size***
+
+        Whispir will translate the push request to specific payloads for:
+        - FCM (Firebase Cloud Messaging) for Android devices and 
+        - APNS (Apple Push Notification service) for iOS devices
+
+        Both of these messaging providers have their own limits for message paylaod sizes. 
+        If the translated push message exceeds the provider limits, the message will fail to be sent. 
+        The status of the message can be retrieved by calling /messages/{mesasgeid}/status endpoint or via  callback notifications. 
+        The current message payload size limits for these platforms can be found here:
+        - FCM  - https://firebase.google.com/docs/cloud-messaging/concept-options 
+        - APNS - https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'

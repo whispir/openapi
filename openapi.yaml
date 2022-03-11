@@ -3505,53 +3505,110 @@ components:
       title: Scenario
     callback:
       type: object
-      properties:
-        name:
-          type: string
-          description: Specifies the name (ID) of the callback to be used within message requests.
-          example: Callback Name
-        url:
-          type: string
-          description: Specifies the service URL that API Callbacks should be forwarded to.
-          example: 'http://myserver.com/mycallback.php'
-        auth:
-          $ref: '#/components/schemas/auth'
-        contentType:
-          type: string
-          description: Specifies the content type that should be sent to this endpoint.
-          example: json
-        removeHTML:
-          type: string
-          description: Specifies whether HTML should be stripped from responses.
-          example: disabled
-        retriesEnabled:
-          type: boolean
-          description: Specifies whether Whispir should perform retries in the event there is a failure accessing the callback service.
-          example: true
-        email:
-          type: string
-          description: Specifies the email address where failure notifications should be sent.
-          example: me@example.com
-        callbacks:
-          $ref: '#/components/schemas/callbacks'
       xml:
         name: companyapicallback
         prefix: ns2
       x-tags:
         - Callbacks
       title: Callback
+      properties:
+        name:
+          type: string
+          description: |-
+            The name of the callback. 
+
+            This is the value that should be passed in the message payload for triggering the callbacks
+          example: Callback Name
+          maxLength: 50
+        url:
+          type: string
+          description: The destination url on your servers that Whispir should reach out to.
+          example: 'http://myserver.com/mycallback.php'
+          maxLength: 256
+        auth:
+          $ref: '#/components/schemas/auth'
+        contentType:
+          type: string
+          description: |-
+            The Content-Type header value to be passed when reaching the destination URL
+
+            You will receive -
+            - `application/json`
+            - `application/xml`
+          example: json
+          enum:
+            - json
+            - xml
+          default: xml
+        removeHTML:
+          type: string
+          description: Whispir will strip all HTML content tags from the content before passing it to the destination URL
+          example: disabled
+          enum:
+            - enabled
+            - disabled
+          default: disabled
+        email:
+          type: string
+          description: |-
+            Whispir notify this email address that a callback has failed (only when retries are disabled). 
+
+            The email will contain the details of the callback content.
+          example: me@example.com
+          maxLength: 64
+        callbacks:
+          $ref: '#/components/schemas/callbacks'
+        retriesEnabled:
+          type: boolean
+          description: |-
+            If retriesEnabled is `false`, then Whispir will only try once and when a failure (non 200 OK response code) happens, it will not retry again
+
+            When `true`, it will try every 5 mins for the next 24 hours.
+
+            Refer to callback calls for more details on retrieving the SUCCESS and FAIL logs
+          example: true
+          default: false
+      required:
+        - name
+        - url
+        - auth
+        - contentType
+        - removeHTML
+        - email
+        - callbacks
     callbacks:
       type: object
+      xml:
+        name: callbacks
+      title: Callbacks
+      description: |
+        This is the key factor in a callback definition.
+
+        `reply`: when enabled callback will be triggered when a response is received for the message sent. 
+
+        This will be triggered every time a response is received. 
+        For all channels this is active for a maximum of 7 days.
+
+        `undeliverable`: when enabled callback will be triggered when the message is undeliverable. 
+
+        For SMS, this could be instant or delayed by 7 days (not a norm) due to carriers retrying to deliver the message and notifying Whispir about failure then.
+
+        For Email, this is instant if we receive a bounce back. Out of Office is considered a response and not as `undeliverable`. 
       properties:
         reply:
           type: string
           example: enabled
+          enum:
+            - enabled
+            - disabled
+          default: disabled
         undeliverable:
           type: string
           example: enabled
-      xml:
-        name: callbacks
-      title: Callbacks
+          enum:
+            - enabled
+            - disabled
+          default: disabled
     callbackParameters:
       type: object
       properties:
@@ -3657,16 +3714,38 @@ components:
       title: Messaging Option
     auth:
       type: object
+      xml:
+        name: auth
+      title: Auth
+      description: |
+        The authentication model details. You will receive - 
+
+        For queryparam
+        - Auth={{KeyValue}}
+
+        For httpheader
+        - X-Whispir-Callback-Key: {{KeyValue}}
+
+        For basicauth
+        - Authorization: Basic {{KeyValue}}
+
+        For bearertoken
+        - Authorization: Bearer {{KeyValue}}
       properties:
         type:
           type: string
           example: querystring
+          enum:
+            - queryparam
+            - httpheader
+            - basicauth
+            - bearertoken
+          default: queryparam
         key:
           type: string
           example: MY_AUTH_KEY
-      xml:
-        name: auth
-      title: Auth
+          maxLength: 128
+          pattern: '/^[ A-Za-z0-9_@./#&+-]*$/'
     activity:
       type: object
       required:

@@ -151,9 +151,9 @@ paths:
         The attributes specific for push notifications are detailed in the $ref: '#/components/schemas/feature/pushOptions' 
 
         Push notifications also use the following (required) fields from the messages resource:
-        - *to* - contact-mri, distribution-list or a comma-separated list of the two types
-        - *subject* - specifies the first line or the badge header text in the push notification
-        - *body* - the body of the notification
+        - **to** - contact-mri, distribution-list or a comma-separated list of the two types
+        - **subject** - specifies the first line or the badge header text in the push notification
+        - **body** - the body/message of the notification 
 
 
         ***Example***
@@ -192,6 +192,7 @@ paths:
         Whispir will translate the push request to specific payloads for:
         - FCM (Firebase Cloud Messaging) for Android devices and 
         - APNS (Apple Push Notification service) for iOS devices
+
 
         Both of these messaging providers have their own limits for message paylaod sizes. 
         If the translated push message exceeds the provider limits, the message will fail to be sent. 

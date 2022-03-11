@@ -160,27 +160,28 @@ paths:
 
         ```
         {
-           "to":"contact-mri-value",
-           "subject":"Test push message",
-           "body":"This is the body of my test push message",
-           "features":{
-              "pushOptions":{
-                 "notifications":"enabled",
-                 "priority":"HIGH",
-                 "fcm":{
-                    "sound":"/res/raw/alert_sound.wav",
-                    "action":"campaign_intent",
-                    "image":"https://mycompany.com/sales/campaign.png"
+           "to": "contact-mri-value",
+           "subject": "Test push message",
+           "body": "This is the body of my test push message",
+           "features": {
+           
+              "pushOptions": {
+                 "notifications": "enabled",
+                 "priority": "HIGH",
+                 "fcm": {
+                    "sound": "/res/raw/alert_sound.wav",
+                    "action": "campaign_intent",
+                    "image": "https://mycompany.com/sales/campaign.png"
                  },
-                 "apns":{
-                    "sound":"Library/Sounds/alert_sound.wav",
-                    "action":"campaign_action"
+                 "apns": {
+                    "sound": "Library/Sounds/alert_sound.wav",
+                    "action": "campaign_action"
                  },
-                 "data":{
-                    "custom-image":"https://mycompany.com/sales/ad.png",
-                    "custom-video":"https://mycompany.com/sales/ad.mp4",
-                    "custmo-link":"https://ad-campaign-feedback/id",
-                    "custom-gif":"https://ad-campaign-resources/2022/campaign.gif"
+                 "data": {
+                    "custom-image": "https://mycompany.com/sales/ad.png",
+                    "custom-video": "https://mycompany.com/sales/ad.mp4",
+                    "custmo-link": "https://ad-campaign-feedback/id",
+                    "custom-gif": "https://ad-campaign-resources/2022/campaign.gif"
                  }
               }
           }
@@ -196,7 +197,7 @@ paths:
 
         Both of these messaging providers have their own limits for message paylaod sizes. 
         If the translated push message exceeds the provider limits, the message will fail to be sent. 
-        The status of the message can be retrieved by calling /messages/{mesasgeid}/status endpoint or via  callback notifications. 
+        The status of the message can be retrieved by calling /messages/{mesasgeid}/status endpoint or via  callback notifications. (TODO - links
         The current message payload size limits for these platforms can be found here:
         - FCM  - https://firebase.google.com/docs/cloud-messaging/concept-options 
         - APNS - https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification

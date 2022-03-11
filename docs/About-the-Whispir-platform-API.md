@@ -8,7 +8,7 @@ It is based on the currently published release documentation with a few sections
 
 # About the Whispir platform API
 
-
+**This document is subject to change.**
 Built by developers, for developers, Whispir is the place where you can easily build communications into your app – SMS, email, push, voice, chat, web, social networks and web pages.
 
 ## REST architecture

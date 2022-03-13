@@ -138,7 +138,7 @@ paths:
 
         * * *
 
-        **Sending Push Notifications**
+        ## Sending Push Notifications
           
         <!-- theme: warning -->
         > #### Watch Out!
@@ -146,9 +146,9 @@ paths:
         > The documentation for push enhancements is work in progress and subject to change.
 
 
-        Whispir allows you to send push notifications to any iOS and Android-based apps. 
+        Whispir allows you to send push notifications to your registered iOS and Android-based apps. 
 
-        The attributes specific for push notifications are detailed in the $ref: '#/components/schemas/feature/pushOptions' 
+        The attributes specific for push notifications are configured in the <span style="color:blue">features/pushOptions</span> object defined in the Schema section.
 
         Push notifications also use the following (required) fields from the messages resource:
         - **to** - contact-mri, distribution-list or a comma-separated list of the two types
@@ -164,7 +164,6 @@ paths:
            "subject": "Test push message",
            "body": "This is the body of my test push message",
            "features": {
-           
               "pushOptions": {
                  "notifications": "enabled",
                  "priority": "HIGH",

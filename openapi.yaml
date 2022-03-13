@@ -158,7 +158,7 @@ paths:
 
         ***Example***
 
-        ```
+        ```json
         {
            "to": "contact-mri-value",
            "subject": "Test push message",
@@ -178,10 +178,11 @@ paths:
                     "action": "campaign_action"
                  },
                  "data": {
-                    "custom-image": "https://mycompany.com/sales/ad.png",
-                    "custom-video": "https://mycompany.com/sales/ad.mp4",
-                    "custmo-link": "https://ad-campaign-feedback/id",
-                    "custom-gif": "https://ad-campaign-resources/2022/campaign.gif"
+                    "customImageForAndroid": "https://mycompany.com/sales/android/ad.png",
+                    "customImageForIOS": "https://mycompany.com/sales/ios/ad.png",
+                    "customVideo": "https://mycompany.com/sales/ad.mp4",
+                    "custmoLink": "https://ad-campaign-feedback/id",
+                    "customGif": "https://ad-campaign-resources/2022/campaign.gif"
                  }
               }
           }

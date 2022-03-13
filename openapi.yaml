@@ -4018,7 +4018,7 @@ components:
         notifications:
           type: string
           example: enabled
-          description: 'Tags the message as push-enabled. '
+          description: 'Tags the message as either push-enabled or disabled. '
           enum:
             - enabled
             - disabled

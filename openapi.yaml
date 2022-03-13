@@ -145,10 +145,10 @@ paths:
         >
         > The documentation for push enhancements is work in progress and subject to change.
 
-
+        ## Introduction
         Whispir allows you to send push notifications to your registered iOS and Android-based apps. 
 
-        The attributes specific for push notifications are configured in the <span style="color:blue">features/pushOptions</span> object defined in the Schema section.
+        To see the attributes specific for push notifications please view *features/pushOptions* object defined in the Schema section.
 
         Push notifications also use the following (required) fields from the messages resource:
         - **to** - contact-mri, distribution-list or a comma-separated list of the two types
@@ -156,7 +156,7 @@ paths:
         - **body** - the body/message of the notification 
 
 
-        ***Example***
+        *Below is a sample push notification payload supported by the Whispir API*
 
         ```json
         {
@@ -188,7 +188,7 @@ paths:
         }
         ```
 
-        ***Push Payload Size***
+        ## Push Size Validation
 
         Whispir will translate the push request to specific payloads for:
         - FCM (Firebase Cloud Messaging) for Android devices and 
@@ -197,10 +197,10 @@ paths:
 
         Both of these messaging providers have their own limits for message paylaod sizes. 
         If the translated push message exceeds the provider limits, the message will fail to be sent. 
-        The status of the message can be retrieved by calling /messages/{mesasgeid}/status endpoint or via  callback notifications. (TODO - links
+
         The current message payload size limits for these platforms can be found here:
-        - FCM  - https://firebase.google.com/docs/cloud-messaging/concept-options 
-        - APNS - https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification
+        - [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/concept-options) 
+        - [Apple Push Notification Service](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification)
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'

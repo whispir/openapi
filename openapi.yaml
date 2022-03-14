@@ -4003,7 +4003,7 @@ components:
         >
         > The documentation for push enhancements is work in progress and subject to change.
 
-        The Push Options object contains all the attributes required to customise your message for push notifications.
+        The Push Options object defines all the attributes required to customise your message for push notifications.
       x-examples:
         example-1:
           notifications: enabled
@@ -4036,6 +4036,7 @@ components:
           type: string
           description: |
             The priority of the notification. 
+
             NORMAL (the default value) will indicate to FCM/APNS to take into consideration the target device's battery consumption at the expense of delivering the message with a delay. 
 
             The value NORMAL maps to priority NORMAL in FCN and priority 5 in APNS. 
@@ -4053,17 +4054,18 @@ components:
               type: string
               description: |-
                 The sound to play when the device receives the notification.
-                The value *default* will play the system sound, otherwise this attribute must point to a sound resource bundled in the app. E.g. */res/raw/notification_sound.wav*
+                The value *default* will play the system sound, otherwise this attribute must point to a sound resource bundled in the app, e.g. */res/raw/notification_sound.wav*
             action:
               type: string
               description: |-
                 The action linked with a user click on the notification.
-                Translates to the *click_action* attribute in FCM.
+                Translates to the <span style="color:red">*click_action*</span> attribute in FCM.
             image:
               type: string
               description: |-
                 The URL of an image to be downloaded and displayed in the notification. 
-                Supports JPEG, PNG and BMP but no support for animated GIF and video. Android also has a 1MB image size limit.
+
+                Details of the Android support for images in push notifications can be found [here](https://firebase.google.com/docs/cloud-messaging/android/send-image)
         apns:
           type: object
           description: Translates APNS-specific attributes for iOS apps
@@ -4078,10 +4080,15 @@ components:
               type: string
               description: |-
                 The action linked with a user click on the notification.
-                Translates to the *category* attribute in APNS.
+                Translates to the <span style="color:red">*category*</span> attribute in APNS.
         data:
           type: object
-          description: 'Custom key-value pairs of the notification''s payload. These values can be used by the target app for enhanced functionality provided that it has been designed to handle them (images, videos, links etc). These attributes translate to *data*  in the FCM and GCM payloads. For APNS, attributes of data are inserted into the APNS payload as custom properties outside of the *aps* payload. '
+          description: |-
+            Custom key-value pairs of the notification's payload. These values can be used by the target app for enhanced functionality provided that it has been designed to handle them (images, videos, links etc). 
+
+            These attributes translate to <span style="color:red">*data*</span>  in the FCM and GCM payloads. 
+
+            For APNS, the custom attributes of *data* are inserted as custom properties outside of the *aps* payload. 
       required:
         - notifications
     locations:

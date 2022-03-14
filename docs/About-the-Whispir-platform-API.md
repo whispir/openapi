@@ -1,14 +1,5 @@
-# Note - work in progress
-This is a work-in-progress document for documenting the Whispir push notification enhancements. 
-It is based on the currently published release documentation with a few sections updated describing the rich/priority push changes. 
-
-**This document is subject to change.**
-
-//TODO Links to push sections? 
-
 # About the Whispir platform API
 
-**This document is subject to change.**
 Built by developers, for developers, Whispir is the place where you can easily build communications into your app – SMS, email, push, voice, chat, web, social networks and web pages.
 
 ## REST architecture

@@ -138,7 +138,7 @@ paths:
 
         * * *
 
-        ## Sending Push Notifications
+        # Sending Push Notifications
           
         <!-- theme: warning -->
         > #### Watch Out!
@@ -148,20 +148,20 @@ paths:
         ## Introduction
         Whispir allows you to send push notifications to your registered iOS and Android-based apps. 
 
-        To see the attributes specific for push notifications please view *features/pushOptions* object defined in the Schema section.
+        To see the attributes specific for push notifications please view the *features/pushOptions* object defined in the Schema section.
 
-        Push notifications also use the following (required) fields from the messages resource:
+        Push notifications also use the following (required) fields from the messages object:
         - **to** - contact-mri, distribution-list or a comma-separated list of the two types
         - **subject** - specifies the first line or the badge header text in the push notification
-        - **body** - the body/message of the notification 
+        - **body** - the push notification message content
 
 
-        *Below is a sample push notification payload supported by the Whispir API*
+        *A sample of a push notification payload supported by the Whispir API*
 
         ```json
         {
            "to": "contact-mri-value",
-           "subject": "Test push message",
+           "subject": "Test push message badge header text",
            "body": "This is the body of my test push message",
            "features": {
               "pushOptions": {
@@ -180,7 +180,7 @@ paths:
                     "customImageForAndroid": "https://mycompany.com/sales/android/ad.png",
                     "customImageForIOS": "https://mycompany.com/sales/ios/ad.png",
                     "customVideo": "https://mycompany.com/sales/ad.mp4",
-                    "custmoLink": "https://ad-campaign-feedback/id",
+                    "customLink": "https://ad-campaign-feedback/id",
                     "customGif": "https://ad-campaign-resources/2022/campaign.gif"
                  }
               }
@@ -188,19 +188,25 @@ paths:
         }
         ```
 
-        ## Push Size Validation
+        ## Push Message Validation
+        ### Push Payload Size Limits
 
         Whispir will translate the push request to specific payloads for:
         - FCM (Firebase Cloud Messaging) for Android devices and 
         - APNS (Apple Push Notification service) for iOS devices
 
 
-        Both of these messaging providers have their own limits for message paylaod sizes. 
+        Both of these messaging providers have their own limits for message payload sizes. 
         If the translated push message exceeds the provider limits, the message will fail to be sent. 
 
         The current message payload size limits for these platforms can be found here:
         - [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/concept-options) 
         - [Apple Push Notification Service](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/generating_a_remote_notification)
+
+
+        If the message fails to be sent due to payload size restrictions, the sender can be notified in two ways: 
+        - calling the */workspaces/{workspaceId}/messages/{messageId}/status* endpoint
+        - getting notified via Whispir *callbacks* (if configured)
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/x-api-key'

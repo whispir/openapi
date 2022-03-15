@@ -1089,7 +1089,7 @@ paths:
       tags:
         - Templates
       summary: Retrieve a template
-      description: 'Retrieves a Template object.'
+      description: Retrieves a Template object.
       operationId: getTemplatesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1103,6 +1103,52 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/template'
+              examples:
+                sample response:
+                  value:
+                    messageTemplateName: Sample SMS Template
+                    messageTemplateDescription: Template to provide an example on whispir.io
+                    subject: Test SMS Message
+                    body: This is the body of my test SMS message
+                    responseTemplateId: string
+                    email:
+                      body: This is the body of my test Email message
+                      footer: This is the footer of my message (generally where a signature would go)
+                      type: text/plain
+                    voice:
+                      header: 'This is the introduction, read out prior to any key press'
+                      body: 'This is the body of the voice call, read out after the key press'
+                      type: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
+                    web:
+                      body: This is the content of my web publishing or Rich Push Message
+                      type: text/plain
+                    social:
+                      social:
+                        - id: social_long
+                          body: Facebook Content.
+                          type: text/plain
+                    type: defaultNoReply
+                    features:
+                      pushOptions:
+                        notifications: enabled
+                        escalationMins: 3
+                    id: C23D6E2DD3D251BF
+                    tags: ''
+                    dir:
+                      period: ''
+                      rule: ''
+                      type: ''
+                      publishToWeb: false
+                      expiryDay: 0
+                      expiryHour: 0
+                      expiryMin: 0
+                      feedIds: ''
+                      bool: false
+                    link: []
     put:
       tags:
         - Templates
@@ -1127,7 +1173,7 @@ paths:
           application/vnd.whispir.template-v1+xml:
             schema:
               $ref: '#/components/schemas/template'
-        description: Templates object that needs to be update Templates
+        description: Templates object that needs to be updated Templates
         required: true
       responses:
         '204':
@@ -1220,7 +1266,7 @@ paths:
       tags:
         - Response Rules
       summary: Update a response rule
-      description: 'Updates a Response Rule object.'
+      description: Updates a Response Rule object.
       operationId: putResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1248,7 +1294,7 @@ paths:
       tags:
         - Response Rules
       summary: Delete a response rule
-      description: 'Deletes a Response Rule object.'
+      description: Deletes a Response Rule object.
       operationId: deleteResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1269,7 +1315,7 @@ paths:
       tags:
         - Contacts
       summary: Create a contact
-      description: 'Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.'
+      description: Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.
       operationId: postContacts
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1726,7 +1772,7 @@ paths:
       tags:
         - Scenarios
       summary: List scenarios
-      description: 'Returns a list of your scenarios.'
+      description: Returns a list of your scenarios.
       operationId: getScenarios
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1740,7 +1786,7 @@ paths:
       tags:
         - Scenarios
       summary: Retrieve a scenario
-      description: 'Retrieves a Scenario object.'
+      description: Retrieves a Scenario object.
       operationId: getScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1819,7 +1865,7 @@ paths:
       tags:
         - Scenarios
       summary: Update a scenario
-      description: 'Updates a Scenario object.'
+      description: Updates a Scenario object.
       operationId: putScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1847,7 +1893,7 @@ paths:
       tags:
         - Scenarios
       summary: Delete a scenario
-      description: 'Deletes a Scenario object.'
+      description: Deletes a Scenario object.
       operationId: deleteScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -2183,7 +2229,7 @@ paths:
       tags:
         - Workspaces
       summary: List workspaces
-      description: 'Returns a list of your workspaces.'
+      description: Returns a list of your workspaces.
       operationId: getWorkspaces
       responses:
         '200':
@@ -2941,7 +2987,7 @@ paths:
       tags:
         - Users
       summary: List workspace users
-      description: 'Returns a list of your Users.'
+      description: Returns a list of your Users.
       operationId: getWorkspaceUsers
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -2985,7 +3031,7 @@ paths:
       tags:
         - Events
       summary: Retrieve an event
-      description: 'Retrieves an Event object.'
+      description: Retrieves an Event object.
       operationId: getEvents
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -3391,6 +3437,7 @@ components:
       xml:
         name: email
       title: Email
+      description: ''
       properties:
         body:
           type: string
@@ -3404,8 +3451,6 @@ components:
           enum:
             - text/plain
             - text/html
-      required:
-        - body
     voice:
       type: object
       properties:
@@ -3488,33 +3533,65 @@ components:
       title: Resource
     template:
       type: object
-      required:
-        - messageTemplateName
-        - subject
-        - body
-        - email
-        - voice
-        - web
+      xml:
+        name: template
+        prefix: ns3
+      x-tags:
+        - Templates
+      title: Template
+      x-examples:
+        example-1:
+          messageTemplateName: Sample SMS Template
+          messageTemplateDescription: Template to provide an example on whispir.io
+          responseTemplateId: string
+          subject: Test SMS Message
+          body: This is the body of my test SMS message
+          email:
+            body: This is the body of my test Email message
+            footer: This is the footer of my message (generally where a signature would go)
+            type: text/plain
+          voice:
+            header: 'This is the introduction, read out prior to any key press'
+            body: 'This is the body of the voice call, read out after the key press'
+            type: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
+          web:
+            body: This is the content of my web publishing or Rich Push Message
+            type: text/plain
+          social:
+            social:
+              - id: social_long
+                body: Facebook Content.
+                type: text/plain
+          type: defaultNoReply
+          features:
+            pushOptions:
+              notifications: enabled
+              escalationMins: 3
+      description: ''
       properties:
         messageTemplateName:
           type: string
           description: Specifies the name of the message template to be used within message requests.
           example: Sample SMS Template
+          maxLength: 50
         messageTemplateDescription:
           type: string
           description: Specifies the description of the message template for others to understand its purpose.
           example: Template to provide an example on whispir.io
-        responseTemplateId:
-          type: string
-          description: Specifies the ID of the Response Rule that should be associated with this Message Template.
+          maxLength: 250
         subject:
           type: string
           description: 'Specifies the first line of the SMS message or Voice call, and the subject of the Email message.'
           example: Test SMS Message
+          maxLength: 1570
         body:
           type: string
           description: Specifies the content of the SMS message.
           example: This is the body of my test SMS message
+          maxLength: 1570
+        responseTemplateId:
+          type: string
+          description: Specifies the ID of the Response Rule that should be associated with this Message Template.
         email:
           $ref: '#/components/schemas/email'
         voice:
@@ -3529,12 +3606,10 @@ components:
           example: defaultNoReply
         features:
           $ref: '#/components/schemas/features'
-      xml:
-        name: template
-        prefix: ns3
-      x-tags:
-        - Templates
-      title: Template
+      required:
+        - messageTemplateName
+        - subject
+        - body
     responseTemplatePattern:
       type: object
       properties:
@@ -4134,6 +4209,25 @@ components:
       xml:
         name: fieldMapping
       title: Field Mapping
+    link:
+      title: link
+      type: object
+      description: 'related link of the retrieved resource '
+      properties:
+        uri:
+          type: string
+          description: specifies assoiciated API endpoint that you can use to interact with the resource
+        rel:
+          type: string
+        method:
+          type: string
+          description: 'Operation method name (e.g. "GET","POST", etc)'
+        host:
+          type: string
+        port:
+          type: integer
+        '':
+          type: string
   parameters:
     x-api-key:
       name: x-api-key
@@ -4151,4 +4245,67 @@ components:
         example: 9A4C5521FFC7B15B
       description: The identifier for the workspace.
       required: true
-  responses: {}
+  responses:
+    getTemplateById:
+      description: This is a sample response of retrieving a template
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/template'
+          examples:
+            Get a template sample response:
+              value:
+                messageTemplateName: Sample SMS Template
+                messageTemplateDescription: Template to provide an example on whispir.io
+                subject: Test SMS Message
+                body: This is the body of my test SMS message
+                responseTemplateId: string
+                email:
+                  body: This is the body of my test Email message
+                  footer: This is the footer of my message (generally where a signature would go)
+                  type: text/plain
+                voice:
+                  header: 'This is the introduction, read out prior to any key press'
+                  body: 'This is the body of the voice call, read out after the key press'
+                  type: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
+                web:
+                  body: This is the content of my web publishing or Rich Push Message
+                  type: text/plain
+                social:
+                  social:
+                    - id: social_long
+                      body: Facebook Content.
+                      type: text/plain
+                type: defaultNoReply
+                features:
+                  pushOptions:
+                    notifications: enabled
+                    escalationMins: 3
+                id: C23D6E2DD3D251BF
+                tags: ''
+                dir:
+                  period: ''
+                  rule: ''
+                  type: ''
+                  publishToWeb: false
+                  expiryDay: 0
+                  expiryHour: 0
+                  expiryMin: 0
+                  feedIds: ''
+                  bool: false
+                link:
+                  - uri: 'https://api.ap1.whispir.com/workspaces/573716059009818C/templates/C23D6E2DD3D251BF'
+                    rel: self
+                    method: GET
+                    host: api.ap1.whispir.com
+                    port: -1
+                  - uri: 'https://api.ap1.whispir.com/workspaces/573716059009818C/templates/C23D6E2DD3D251BF'
+                    rel: updateTemplate
+                    method: PUT
+                    host: api.ap1.whispir.com
+                    port: -1
+                  - uri: 'https://api.ap1.whispir.com/workspaces/573716059009818C/templates/C23D6E2DD3D251BF'
+                    rel: deleteTemplate
+                    method: DELETE
+                    host: api.ap1.whispir.com
+                    port: -1

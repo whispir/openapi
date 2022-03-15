@@ -81,10 +81,10 @@ rules:
     then:
       field: description
       function: truthy
-  schema-property-examples: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
-    description: Schema properties must have an "example". This includes $ref'd schemas.
+  schema-property-examples:
+    description: Schema properties must have an "example".
     severity: error
-    given: $.components.schemas.*..properties.*
+    given: $.components.schemas.[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && !@.enum)]
     then:
       field: example
       function: truthy

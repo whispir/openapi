@@ -1087,7 +1087,7 @@ paths:
       tags:
         - Templates
       summary: Retrieve a template
-      description: 'Retrieves a Template object.'
+      description: Retrieves a Template object.
       operationId: getTemplatesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1218,7 +1218,7 @@ paths:
       tags:
         - Response Rules
       summary: Update a response rule
-      description: 'Updates a Response Rule object.'
+      description: Updates a Response Rule object.
       operationId: putResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1246,7 +1246,7 @@ paths:
       tags:
         - Response Rules
       summary: Delete a response rule
-      description: 'Deletes a Response Rule object.'
+      description: Deletes a Response Rule object.
       operationId: deleteResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1267,7 +1267,7 @@ paths:
       tags:
         - Contacts
       summary: Create a contact
-      description: 'Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.'
+      description: Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.
       operationId: postContacts
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1724,7 +1724,7 @@ paths:
       tags:
         - Scenarios
       summary: List scenarios
-      description: 'Returns a list of your scenarios.'
+      description: Returns a list of your scenarios.
       operationId: getScenarios
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1738,7 +1738,7 @@ paths:
       tags:
         - Scenarios
       summary: Retrieve a scenario
-      description: 'Retrieves a Scenario object.'
+      description: Retrieves a Scenario object.
       operationId: getScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1817,7 +1817,7 @@ paths:
       tags:
         - Scenarios
       summary: Update a scenario
-      description: 'Updates a Scenario object.'
+      description: Updates a Scenario object.
       operationId: putScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1845,7 +1845,7 @@ paths:
       tags:
         - Scenarios
       summary: Delete a scenario
-      description: 'Deletes a Scenario object.'
+      description: Deletes a Scenario object.
       operationId: deleteScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -2181,7 +2181,7 @@ paths:
       tags:
         - Workspaces
       summary: List workspaces
-      description: 'Returns a list of your workspaces.'
+      description: Returns a list of your workspaces.
       operationId: getWorkspaces
       responses:
         '200':
@@ -2939,7 +2939,7 @@ paths:
       tags:
         - Users
       summary: List workspace users
-      description: 'Returns a list of your Users.'
+      description: Returns a list of your Users.
       operationId: getWorkspaceUsers
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -2983,7 +2983,7 @@ paths:
       tags:
         - Events
       summary: Retrieve an event
-      description: 'Retrieves an Event object.'
+      description: Retrieves an Event object.
       operationId: getEvents
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -3332,24 +3332,65 @@ components:
       xml:
         name: message
         prefix: ns2
-      x-examples: {}
+      x-examples:
+        SMS:
+          to: '61400400400'
+          subject: Test Message
+          body: This is the body of my test SMS message
+        Email:
+          to: test@test.com
+          subject: Test Message
+          email:
+            body: This is the body of my test Email message
+            footer: This is the footer of my message
+            type: text/plain
       title: Message
       x-internal: false
       x-tags:
         - Messages
+      description: |
+        Whispir has a maximum API request payload size of 10MB. Whispir will reject the request if the payload is any bigger. This payload size limit should be adhered to when creatin the message payload.
       properties:
         to:
           type: string
           example: '61987654321'
-          description: The recipient's mobile number or email address.
+          description: |
+            Allows a combination of phone numbers, email address, Whispir Contact MRIs, User MRI, Distribution List MRI, separated by `,`.
+
+            Whispir will pick the relevant recipients based on the channels provided in the request payload 
+            (including template information).
+
+            The maximum payload size rule applies.
+
+            When used for bulk messages, this field is optional, as bulk messages has another model to specify the `to` field recipients.
+          maxLength: 10000
+          minLength: 1
         subject:
           type: string
           example: Test Message
-          description: The message subject. Used to populate the subject field on some messaging channels.
+          description: |-
+            The message subject. This is common for both SMS and Email channels.
+
+            Read `body` notes on limits.
+
+            The maximum payload size rule applies.
+
+            When used for templates, this field is optional.
+          minLength: 0
+          maxLength: 1570
         body:
           type: string
-          example: This is the body of my test SMS message
-          description: The SMS message body.
+          example: This is the body of my SMS message
+          description: |-
+            The SMS body.
+
+            The maximum payload size rule applies.
+
+            IMPORTANT: The total SMS length is 1570 characters for english text and 800 when UTF-8 characters are used (primarily non-english)
+
+            The 1570 length is a combination of subject and body.
+          minLength: 0
+          maxLength: 1570
         email:
           $ref: '#/components/schemas/email'
         voice:
@@ -3389,36 +3430,83 @@ components:
       xml:
         name: email
       title: Email
+      description: |-
+        The email channel payload, used when sending an email Message.
+
+        Not required when a template is provided.
+      x-examples:
+        Email:
+          body: This is the body of my test Email message
+          footer: This is the footer of my message
+          type: text/plain
+        Email with attachment:
+          body: This is the body of my test Email message
+          footer: This is the footer of my message
+          type: text/plain
+          resources:
+            attachments:
+              - attachmentName: My Awesome Photo.jpg
+                attachmentDesc: This is an awesome photo of me
+                derefUri: The base64 string value of `My Awesome Photo.jpg` file content
       properties:
         body:
           type: string
-          example: This is the body of my test Email message
+          example: This is the body of my email message.
           description: The email message body.
         footer:
           type: string
-          example: This is the footer of my message (generally where a signature would go)
+          example: This is the footer of my message.
+          description: Plain text or html displayed at the bottom of your email message.
         type:
           type: string
           enum:
             - text/plain
             - text/html
+          default: text/plain
+        resources:
+          type: object
+          description: The resources to attach to the email message.
+          properties:
+            attachments:
+              type: array
+              uniqueItems: false
+              items:
+                $ref: '#/components/schemas/attachment'
       required:
         - body
     voice:
       type: object
-      properties:
-        header:
-          type: string
-          example: 'This is the introduction, read out prior to any key press'
-        body:
-          type: string
-          example: 'This is the body of the voice call, read out after the key press'
-        type:
-          type: string
-          example: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
       xml:
         name: voice
       title: Voice
+      description: |
+        The voice channel payload, used when sending a Message.
+
+        Calls are charged in 30 seconds intervals (rounded up).
+
+        Text max length is 5000 characters.
+
+        The maximum payload size rule applies for the body, header and type usage.
+      properties:
+        header:
+          type: string
+          example: 'This is the introduction, read out to the recipient prior to any key press.'
+          description: Introduction text played with the subject.
+        body:
+          type: string
+          example: 'This is the body of the voice call, read out after the key press'
+          description: 'Body text, read out to the recipient after the subject and header.'
+        type:
+          type: string
+          example: 'ConfCall'
+          enum:
+            - ConfCall
+            - ConfAccountNo
+            - ConfPinNo
+            - ConfModPinNo
+            - Pin
+      required:
+        - header
     web:
       type: object
       xml:
@@ -3699,6 +3787,12 @@ components:
       title: Scenario
     callback:
       type: object
+      xml:
+        name: companyapicallback
+        prefix: ns2
+      x-tags:
+        - Callbacks
+      title: Callback
       properties:
         name:
           type: string
@@ -3728,12 +3822,6 @@ components:
           example: me@example.com
         callbacks:
           $ref: '#/components/schemas/callbacks'
-      xml:
-        name: companyapicallback
-        prefix: ns2
-      x-tags:
-        - Callbacks
-      title: Callback
     callbacks:
       type: object
       properties:
@@ -4132,6 +4220,35 @@ components:
       xml:
         name: fieldMapping
       title: Field Mapping
+    attachment:
+      type: object
+      description: |-
+        Attachments can be of any type [e.g. PDF, images and documents], and the maximum size of all attached files combined is 10 MB
+
+        Attachments must be provided in the payload of the message. URLs can be referenced in the email but will not be added as message attachments.
+      x-examples:
+        example:
+          attachmentName: TestIcon.png
+          attachmentDesc: TestIcon.png
+          derefUri: iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMvSURBVDhPTVT5S1RhFD3fezOOOePTXHKriWgjsogWC1TSMuuHIFqoX0KsIIgSWwiq/6FFU8MKK6KyXYSKpkUKR4QMSSpCLQpyxHHUZpztzdu63xub5vKWj/fu+c6599z3mMfjSU9P13UdZoiCaLfZYQWiUGKq1WrBLEBDOBpWNTWeQyEIwvT0NAsEAgROPKXFxceNbQOtv4ShkKCkaZZ5kYU1Sw6dqT0NMTkLBIbf7zf+xaOuJzgG4RmyPyP/Kwq/oWAYeT+R6gYOofnmlUQmLQjI6JQkifasu368KdCQWwFEwBiYQOIgiDBETDFIORh/iZ0De55cehgXQJIphce9d/ebJhuyV0P3QY9Cj/HDUKhseIPomP/CW2QYB42nSx+db76YUM9IusPhYHVM2g5Bpo5xNuIkZibCF8On0oGVjhWabmR8EBx5GDuHaItsy0zhzA6bo/H5ZSyDMQ1d4YQa0Sqc1hdAe3E7IYkqp9tiUcHGkXIQZ8+fm+k5uXK3/46YAV3mMMLEt/BHUJ1Vua9oH+WV9ayLyLpVhRYFkT8d4mUzRuI0DAcHmQngSLrGoBJ/GC/L31JSy/cm91ifXTcboYDJGLX+1kI6WS3AQFSRCUDvwhGEwubiD1yVLkLKWuxoT50kzGwab6Ru6HIsahpiwTybkwTLU9iUU1Ezf394CmuyV20p2kLg8mcbRHLLxGimLlWFFMpMc6TRFlx29aJqePBgx4M3u7tubb1dMXfjw6rHhOwb+/jhV3+qNtMFKspQEZnA+oxSPr9UdjgUllV59pHZhSUFI/We5AnMv5o7bvhsFu5f3DlmR7ATr/a+rtq2mVulqEqmlFlbUuv5MbqudW0C7PrhGpvwidRhIoyXqiHoRam/tGrT5n9Wmfcb9TfmBOf0DXy80H0h/uKU6yQRcqlmk+mji0RhbbN2XOpAygzF/9nmfp4oc4+4y6vLqRnuUTdsfNqYFRop/4JFw4t723qz52YlZpvPd/K30vm+03nAie1ADXAYOADsgHOXs/laix7RkzMJyJJ/BjQ09lQ7me8f9/cP9nsnvemzpOIFy3PzclkK0wyNgvDEHP8Z/AXQ58rAz69IBAAAAABJRU5ErkJggg==
+      title: Attachment
+      properties:
+        attachmentName:
+          type: string
+          minLength: 1
+          description: 'The name of the attachment, including the extension.'
+        derefUri:
+          type: string
+          minLength: 1
+          description: The Base64 encoded value for the email attachment.
+          pattern: '^[A-Za-z-0-9]+'
+        attachmentDesc:
+          type: string
+          minLength: 1
+          description: A description for the attachment.
+      required:
+        - attachmentName
+        - derefUri
   parameters:
     x-api-key:
       name: x-api-key

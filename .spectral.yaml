@@ -90,8 +90,10 @@ rules:
       function: truthy
 overrides:
   - rules:
-      schema-examples: 'off'
-      schema-descriptions: 'off'
+      schema-examples: off
+      schema-descriptions: off
+      schema-property-descriptions: off
+      schema-property-examples: off
     files:
       - '**#/components/schemas/message' # Message Endpoint Schemas
       - '**#/components/schemas/email'

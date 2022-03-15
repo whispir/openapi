@@ -3500,7 +3500,7 @@ components:
           description: 'Body text, read out to the recipient after the subject and header.'
         type:
           type: string
-          example: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
+          example: 'ConfCall'
           enum:
             - ConfCall
             - ConfAccountNo

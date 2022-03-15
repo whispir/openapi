@@ -57,7 +57,6 @@ rules:
         match: Whispir
   schema-examples:
     description: Schemas must have non-empty "x-examples" object.
-    message: '{{description}} - {{error}} - {{path}} - {{property}} must be non-empty.'
     severity: error
     given: $.components.schemas.*
     then:
@@ -70,7 +69,6 @@ rules:
           minProperties: 1
   schema-descriptions:
     description: Schemas must have a description.
-    message: '{{description}} - {{error}} - {{path}} - {{property}} must be present.'
     severity: error
     given: $.components.schemas.*
     then:
@@ -78,38 +76,18 @@ rules:
       function: truthy
   schema-property-descriptions:
     description: Schema properties must have a description.
-    message: '{{description}} - {{error}} - {{path}} - {{property}} must be present.'
     severity: error
-    given: $.components.schemas.*
+    given: $.components.schemas.*..properties.*
     then:
-      function: schema
-      functionOptions:
-        type: object
-        required: properties
-  # schema-property-descriptions:
-  #   description: Schema properties must have a description.
-  #   message: '{{description}} - {{error}} - {{path}} - {{property}} must be present.'
-  #   severity: error
-  #   given: $.components.schemas.[message,template,social,web,email,resource].properties.*
-  #   then:
-  #     field: description
-  #     function: truthy
-  # schema-property-descriptions:
-  #   description: Schema properties must have a description.
-  #   message: '{{description}} - {{error}} - {{path}} - {{property}} must be present.'
-  #   severity: error
-  #   given: $.components.schemas.*..properties[?(@ && @.type)]
-  #   then:
-  #     field: description
-  #     function: truthy
-  # schema-property-examples:
-  #   description: Schema properties must have a example.
-  #   message: '{{description}} - {{error}} - {{path}} - {{property}} must be present.'
-  #   severity: error
-  #   given: $.components.schemas[*]..properties[*]
-  #   then:
-  #     field: example
-  #     function: truthy
+      field: description
+      function: truthy
+  schema-property-examples:
+    description: Schema properties must have a example. This includes $ref'd schemas.
+    severity: error
+    given: $.components.schemas.*..properties.*
+    then:
+      field: example
+      function: truthy
 overrides:
   - rules:
       schema-examples: 'off'

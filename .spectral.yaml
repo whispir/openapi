@@ -97,7 +97,7 @@ overrides:
       schema-examples: 'off'
       schema-descriptions: 'off'
     files:
-      - '**#/components/schemas/message'
+      - '**#/components/schemas/message' # Message Endpoint Schemas
       - '**#/components/schemas/email'
       - '**#/components/schemas/voice'
       - '**#/components/schemas/web'
@@ -107,22 +107,22 @@ overrides:
       - '**#/components/schemas/features'
       - '**#/components/schemas/pushOptions'
       - '**#/components/schemas/attachment'
-      - '**#/components/schemas/responseTemplatePattern'
+      - '**#/components/schemas/responseTemplatePattern' # Response Template Endpoint Schemas
       - '**#/components/schemas/responseRule'
-      - '**#/components/schemas/contact'
+      - '**#/components/schemas/contact' # Contact Endpoint Schemas
       - '**#/components/schemas/messagingOptions'
       - '**#/components/schemas/messagingOption'
-      - '**#/components/schemas/distributionlist'
+      - '**#/components/schemas/distributionlist' # Distribution List Endpoint Schemas
       - '**#/components/schemas/locations'
       - '**#/components/schemas/location'
-      - '**#/components/schemas/scenario'
-      - '**#/components/schemas/callback'
+      - '**#/components/schemas/scenario' # Scenario Endpoint Schemas
+      - '**#/components/schemas/callback' # Callback Endpoint Schemas
       - '**#/components/schemas/callbacks'
       - '**#/components/schemas/callbackParameters'
-      - '**#/components/schemas/workspace'
-      - '**#/components/schemas/user'
-      - '**#/components/schemas/event'
-      - '**#/components/schemas/import'
+      - '**#/components/schemas/workspace' # Workspace Endpoint Schemas
+      - '**#/components/schemas/user' # User Endpoint Schemas
+      - '**#/components/schemas/event' # Event Endpoint Schemas
+      - '**#/components/schemas/import' # Import Endpoint Schemas
       - '**#/components/schemas/fieldMapping'
-      - '**#/components/schemas/auth'
-      - '**#/components/schemas/activity'
+      - '**#/components/schemas/auth' # Auth Endpoint Schemas
+      - '**#/components/schemas/activity' # Activity Endpoint Schemas

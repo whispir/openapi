@@ -68,21 +68,21 @@ rules:
           type: object
           minProperties: 1
   schema-descriptions:
-    description: Schemas must have a description.
+    description: Schemas must have a "description".
     severity: error
     given: $.components.schemas.*
     then:
       field: description
       function: truthy
   schema-property-descriptions:
-    description: Schema properties must have a description.
+    description: Schema properties must have a "description".
     severity: error
     given: $.components.schemas.*..properties.*
     then:
       field: description
       function: truthy
   schema-property-examples:
-    description: Schema properties must have a example. This includes $ref'd schemas.
+    description: Schema properties must have an "example". This includes $ref'd schemas.
     severity: error
     given: $.components.schemas.*..properties.*
     then:

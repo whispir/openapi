@@ -2,18 +2,127 @@ formats:
   - oas3
   - oas3.0
   - oas3.1
-extends: [[spectral:oas, all]]
+extends:
+  - - 'spectral:oas'
+    - all
 rules:
+  openapi-tags-alphabetical: off
+  operation-success-response: error
+  oas2-operation-formData-consume-check: error
+  operation-parameters: error
+  operation-tag-defined: error
+  contact-properties: error
+  duplicated-entry-in-enum: error
+  info-contact: error
+  info-description: error
+  info-license: error
+  license-url: error
+  no-eval-in-markdown: error
+  no-script-tags-in-markdown: error
+  openapi-tags: error
+  operation-description: error
+  operation-operationId: error
+  operation-operationId-valid-in-url: error
+  operation-singular-tag: error
+  operation-tags: error
+  path-declarations-must-exist: error
+  path-keys-no-trailing-slash: error
+  path-not-include-query: error
+  tag-description: error
+  typed-enum: error
+  oas2-api-host: error
+  oas2-api-schemes: error
+  oas2-host-not-example: error
+  oas2-host-trailing-slash: error
+  oas2-parameter-description: error
+  oas2-operation-security-defined: error
+  oas2-anyOf: error
+  oas2-oneOf: error
+  oas2-unused-definition: error
+  oas3-api-servers: error
+  oas3-examples-value-or-externalValue: error
+  oas3-operation-security-defined: error
+  oas3-parameter-description: error
+  oas3-server-not-example.com: error
+  oas3-server-trailing-slash: error
+  oas3-unused-component: error
   info-matches-whispir:
     description: The title field must contain Whispir.
-    message: Info must contain Whispir
+    severity: error
     given: $.info
-    recommended: true
-    type: style
     then:
       field: title
       function: pattern
       functionOptions:
         match: Whispir
-  openapi-tags-alphabetical: off
-
+  schema-examples:
+    description: Schemas must have non-empty "x-examples" object.
+    message: '{{description}} - {{path}} - {{property}} must be non-empty.'
+    severity: error
+    given: $.components.schemas.*
+    then:
+      field: x-examples
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          minProperties: 1
+  schema-descriptions:
+    description: Schemas must have a description.
+    message: '{{description}} - {{path}} - {{property}} must be present.'
+    severity: error
+    given: $.components.schemas.*
+    then:
+      field: description
+      function: truthy
+  schema-property-descriptions:
+    description: Schema properties must have a description.
+    message: '{{description}} - {{path}} - {{property}} must be present.'
+    severity: error
+    given: $.components.schemas.*.properties.*
+    then:
+      field: description
+      function: truthy
+  schema-property-examples:
+    description: Schema properties must have a example.
+    message: '{{description}} - {{path}} - {{property}} must be present.'
+    severity: error
+    given: $.components.schemas.*.properties.*
+    then:
+      field: example
+      function: truthy
+overrides:
+  - rules:
+      schema-examples: 'off'
+      schema-descriptions: 'off'
+    files:
+      - '**#/components/schemas/message'
+      - '**#/components/schemas/email'
+      - '**#/components/schemas/voice'
+      - '**#/components/schemas/web'
+      - '**#/components/schemas/social'
+      - '**#/components/schemas/resource'
+      - '**#/components/schemas/template'
+      - '**#/components/schemas/features'
+      - '**#/components/schemas/pushOptions'
+      - '**#/components/schemas/attachment'
+      - '**#/components/schemas/responseTemplatePattern'
+      - '**#/components/schemas/responseRule'
+      - '**#/components/schemas/contact'
+      - '**#/components/schemas/messagingOptions'
+      - '**#/components/schemas/messagingOption'
+      - '**#/components/schemas/distributionlist'
+      - '**#/components/schemas/locations'
+      - '**#/components/schemas/location'
+      - '**#/components/schemas/scenario'
+      - '**#/components/schemas/callback'
+      - '**#/components/schemas/callbacks'
+      - '**#/components/schemas/callbackParameters'
+      - '**#/components/schemas/workspace'
+      - '**#/components/schemas/user'
+      - '**#/components/schemas/event'
+      - '**#/components/schemas/import'
+      - '**#/components/schemas/fieldMapping'
+      - '**#/components/schemas/auth'
+      - '**#/components/schemas/activity'

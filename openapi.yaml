@@ -3344,6 +3344,10 @@ components:
             body: This is the body of my test Email message
             footer: This is the footer of my message
             type: text/plain
+      example:
+        to: '61400400400'
+        subject: Test Message
+        body: This is the body of my test SMS message
       title: Message
       x-internal: false
       x-tags:
@@ -3403,7 +3407,13 @@ components:
           type: string
           enum:
             - defaultNoReply
-            - NoDlr
+            - noDlr
+          example: defaultNoReply
+          description: |-
+            Allows the user to modify the message behaviour for replies and DLRs (delivery receipts).
+
+            - `defaultNoReply`: Used to reject any replies to this message.
+            - `noDlr`: Used to specify that DLRs should not be enabled for this message.
         features:
           $ref: '#/components/schemas/features'
         resource:
@@ -3411,17 +3421,21 @@ components:
         messageTemplateId:
           type: string
           example: BACEB8D46BEF5315
+          description: The identifier for the Messsage Template.
         messageTemplateName:
           type: string
           example: Sample SMS Template
+          description: A human-readable name for the Message Template.
         callbackId:
           type: string
           example: myCallbackName
+          description: The identifier for the Callback to be invoked on Message delivery events.
         callbackParameters:
           $ref: '#/components/schemas/callbackParameters'
         eventId:
           type: string
           example: 2EE7FEA3343662BE
+          description: The identifier for the Event to trigger.
       required:
         - to
         - subject
@@ -3498,7 +3512,7 @@ components:
           description: 'Body text, read out to the recipient after the subject and header.'
         type:
           type: string
-          example: 'ConfCall'
+          example: ConfCall
           enum:
             - ConfCall
             - ConfAccountNo

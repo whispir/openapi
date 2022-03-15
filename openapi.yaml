@@ -537,8 +537,6 @@ paths:
                             destination: ''
                           - name: Fred Smith
                             info: Out bound SMS text message sent OK.
-                            link:
-                              - null
                             uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B/messagestatus?view=detailed'
                             rel: self
                             method: GET

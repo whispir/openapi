@@ -74,14 +74,14 @@ rules:
     then:
       field: description
       function: truthy
-  schema-property-descriptions:
+  schema-property-descriptions: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
     description: Schema properties must have a "description".
     severity: error
     given: $.components.schemas.*..properties.*
     then:
       field: description
       function: truthy
-  schema-property-examples:
+  schema-property-examples: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
     description: Schema properties must have an "example". This includes $ref'd schemas.
     severity: error
     given: $.components.schemas.*..properties.*

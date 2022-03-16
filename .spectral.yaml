@@ -105,9 +105,6 @@ overrides:
       - '**#/components/schemas/locations'
       - '**#/components/schemas/location'
       - '**#/components/schemas/scenario' # Scenario Endpoint Schemas
-      - '**#/components/schemas/callback' # Callback Endpoint Schemas
-      - '**#/components/schemas/callbacks'
-      - '**#/components/schemas/callbackParameters'
       - '**#/components/schemas/workspace' # Workspace Endpoint Schemas
       - '**#/components/schemas/user' # User Endpoint Schemas
       - '**#/components/schemas/event' # Event Endpoint Schemas

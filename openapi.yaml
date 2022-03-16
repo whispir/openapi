@@ -179,36 +179,38 @@ paths:
         '202':
           description: Accepted
           content:
-            examples:
+            application/json:
+              schema:
+                type: string
+                enum:
+                  - Your request has been accepted for processing
               examples:
-                response:
-                  value:
-                    to: '+1000000000'
-                    subject: Test Message
-                    body: This is the body of my test SMS message
-                    email:
-                      body: This is the body of my test Email message
-                      footer: This is the footer of my message (generally where a signature would go)
-                      type: text/plain
-                    voice:
-                      header: 'This is the introduction, read out prior to any key press'
-                      body: 'This is the body of the voice call, read out after the key press'
-                      type: 'ConfCall:, ConfAccountNo:, ConfPinNo:, ConfModPinNo:, Pin:'
-                    web:
-                      body: This is the content of my web publishing or Rich Push Message
-                      type: text/plain
-                    social:
-                      social:
-                        - id: social
-                          body: Twitter Content.
-                        - id: social_long
-                          body: Facebook Content.
-                          type: text/plain
-                    type: defaultNoReply
-                    features:
-                      pushOptions:
-                        notifications: enabled
-                        escalationMins: '3'
+                Response:
+                  value: Your request has been accepted for processing
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                enum:
+                  - application/vnd.whispir.message-v1+json
+                  - application/vnd.whispir.message-v1+xml
+              description: Application specific mime type.
+            Content-Length:
+              schema:
+                type: number
+                example: 45
+              description: Length of the response content.
+            Location:
+              schema:
+                type: string
+                example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
+              description: The URI to fetch details of the resource.
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+                enum:
+                  - '*'
+              description: The origins allowed to perform cross-origin requests.
     get:
       tags:
         - Messages
@@ -277,55 +279,180 @@ paths:
         '200':
           description: OK
           content:
-            examples:
-              examples:
-                response:
-                  value:
-                    to: '+1000000000'
-                    subject: test subject
-                    body: test body
-                    direction: OUTGOING
-                    responseCount: '0'
-                    createdTime: '1460070991'
-                    link:
-                      - method: GET
-                        rel: self
-                        uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B'
-                      - method: GET
-                        rel: summaryStatus
-                        uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B/messagestatus?view=summary'
-                      - method: GET
-                        rel: detailedStatus
-                        uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B/messagestatus?view=detailed'
-                      - method: GET
-                        rel: summaryResponses
-                        uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B/messageresponses?view=summary&filter=default'
-                      - method: GET
-                        rel: detailedResponses
-                        uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B/messageresponses?view=detailed&filter=default'
-                      - method: GET
-                        rel: summaryResponsesWithResponseRule
-                        uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B/messageresponses?view=summary&filter=responserule'
-                      - method: GET
-                        rel: detailedResponsesWithResponseRule
-                        uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B/messageresponses?view=detailed&filter=responserule'
-                    Event Messages:
-                      messages:
-                        - subject: Event Notification
-                          repetitionCount: 0
-                          repeatDays: 0
-                          repeatHrs: 0
-                          repeatMin: 0
-                          from: John Wick
-                          direction: OUTGOING
-                          responseCount: '0'
-                          createdTime: 1424062773000
-                          link:
-                            - uri: 'http://api.whispir.com/messages/47707420BAE1288B'
-                              rel: self
-                              method: GET
-                      status: ''
-                      link: []
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      required:
+                        - subject
+                        - repetitionCount
+                        - repeatDays
+                        - repeatHrs
+                        - repeatMin
+                        - from
+                        - direction
+                        - responseCount
+                        - createdTime
+                        - validBody
+                        - validSubject
+                        - whatsappValidMessage
+                      properties:
+                        subject:
+                          type: string
+                          minLength: 1
+                        repetitionCount:
+                          type: number
+                        repeatDays:
+                          type: number
+                        repeatHrs:
+                          type: number
+                        repeatMin:
+                          type: number
+                        from:
+                          type: string
+                          minLength: 1
+                        direction:
+                          type: string
+                          minLength: 1
+                        responseCount:
+                          type: string
+                          minLength: 1
+                        createdTime:
+                          type: number
+                        link:
+                          type: array
+                          uniqueItems: true
+                          minItems: 1
+                          items:
+                            required:
+                              - uri
+                              - rel
+                              - method
+                              - host
+                              - port
+                            properties:
+                              uri:
+                                type: string
+                                minLength: 1
+                              rel:
+                                type: string
+                                minLength: 1
+                              method:
+                                type: string
+                                minLength: 1
+                              host:
+                                type: string
+                                minLength: 1
+                              port:
+                                type: number
+                        validBody:
+                          type: boolean
+                        validSubject:
+                          type: boolean
+                        whatsappValidMessage:
+                          type: boolean
+                  status:
+                    type: string
+                  link:
+                    type: array
+                    items:
+                      required: []
+                      properties: {}
+                required:
+                  - messages
+                  - status
+                  - link
+                x-examples:
+                  example-1:
+                    messages:
+                      - subject: SMS Message 1
+                        repetitionCount: 0
+                        repeatDays: 0
+                        repeatHrs: 0
+                        repeatMin: 0
+                        from: Richard Fontein
+                        direction: OUTGOING
+                        responseCount: '0'
+                        createdTime: 1647380725000
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/EFD2552263B99B13BACA291578943327'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                        validBody: false
+                        validSubject: true
+                        whatsappValidMessage: true
+                      - subject: No Subject
+                        repetitionCount: 0
+                        repeatDays: 0
+                        repeatHrs: 0
+                        repeatMin: 0
+                        from: Richard Fontein
+                        direction: OUTGOING
+                        responseCount: '0'
+                        createdTime: 1647380697000
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/2201F3DE82392379FD9CB3989C230BCD'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                        validBody: false
+                        validSubject: true
+                        whatsappValidMessage: true
+                      - subject: No Subject
+                        repetitionCount: 0
+                        repeatDays: 0
+                        repeatHrs: 0
+                        repeatMin: 0
+                        from: Richard Fontein
+                        direction: OUTGOING
+                        responseCount: '0'
+                        createdTime: 1647380635000
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/6189AC18F56A5374F7F299ECE22FD4F5'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                        validBody: false
+                        validSubject: true
+                        whatsappValidMessage: true
+                      - subject: Hello
+                        repetitionCount: 0
+                        repeatDays: 0
+                        repeatHrs: 0
+                        repeatMin: 0
+                        from: Richard Fontein
+                        direction: OUTGOING
+                        responseCount: '0'
+                        createdTime: 1646700519000
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/A7C67E408251854FF566540DC87955F9'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                        validBody: false
+                        validSubject: true
+                        whatsappValidMessage: true
+                    status: ''
+                    link: []
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                enum:
+                  - application/vnd.whispir.message-v1+json
+                  - application/vnd.whispir.message-v1+xml
+              description: Application specific mime-type
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}':

@@ -3431,7 +3431,8 @@ components:
           example: myCallbackName
           description: The identifier for the Callback to be invoked on Message delivery events.
         callbackParameters:
-          $ref: '#/components/schemas/callbackParameters'
+          description: Set of key-value pairs that you can attach to a callback. This can be useful for returning additional information about the object in a structured format.
+          type: object
         eventId:
           type: string
           example: 2EE7FEA3343662BE
@@ -3601,8 +3602,8 @@ components:
 
                 | Voice field    | attachmentDesc |
                 | -------------- |--------------- |
-                | header         | `"voiceintro.wav"`
-                | body           | `"voicebody.wav"`
+                | header         | `"voiceintro.wav"` |
+                | body           | `"voicebody.wav"` |
               items:
                 $ref: '#/components/schemas/attachment'
       required:
@@ -3637,58 +3638,145 @@ components:
           type: text/plain
     social:
       type: object
-      properties:
-        social:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: social_long
-              body:
-                type: string
-                example: Facebook Content.
-              type:
-                type: string
-                example: text/plain
       xml:
         name: social
       title: Social
       x-tags:
         - Messages
+      x-examples:
+        Twitter:
+          social:
+            - id: social
+              body: Twitter Content
+              type: text/plain
+        Facebook:
+          social:
+            - id: social_long
+              body: Facebook Content
+              type: text/plain
+      description: Whispir can publish content to your Twitter and Facebook walls. Other socials can be made available upon request.
+      properties:
+        social:
+          type: array
+          description: The list of social channel content.
+          items:
+            type: object
+            description: The social channel object.
+            properties:
+              id:
+                type: string
+                description: |-
+                  The identifier for the social content channel. Read the following section for information on each channel.
+
+                  | Channel        | id |
+                  | -------------- |--------------- |
+                  | Twitter        | `"social"` |
+                  | Facebook       | `"social_long"` |
+                enum:
+                  - social
+                  - social_long
+              body:
+                type: string
+                example: Facebook Content
+                description: The social content body.
+              type:
+                type: string
+                description: The social message content type.
+                enum:
+                  - text/plain
+                  - text/html
+    features:
+      type: object
+      xml:
+        name: features
+      title: Features
+      x-tags:
+        - Messages
+      description: |-
+        Whispir allows you to send push notifications to any iOS and Android-based apps
+
+        Setting up the platform to handle push notifications involves some one-time steps and some periodically repeated steps (updating push tokens). See Apps to get a clear understanding of the related steps and endpoints. Whispir doesn't support sending push notifications to device tokens directly. Read more in Contact devices about how to register the device tokens under contacts.
+      x-examples:
+        Push Message:
+          pushOptions:
+            appId: appId
+        Escalation:
+          pushOptions:
+            escalationMins: 3
+        Notifications:
+          pushOptions:
+            notifications: enabled
+      properties:
+        pushOptions:
+          type: object
+          description: The object defining options for push messages.
+          properties:
+            notifications:
+              type: string
+              description: A flag indicating whether notifications should be enabled for message replies.
+              enum:
+                - enabled
+                - disabled
+            escalationMins:
+              type: string
+              example: '3'
+              description: The number of minutes to wait for a reply until escalating to the next contact.
+            appId:
+              type: string
+              description: The identifier for the registered application.
+              example: appId
     resource:
       type: object
-      required:
-        - name
-        - scope
-        - mimeType
-        - derefUri
-      properties:
-        name:
-          type: string
-          description: 'Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name. Eg:australia-contacts.csv'
-          example: sample.json
-        scope:
-          type: string
-          description: Specifies the permission scope of the file being uploaded. The scope defines the access restriction of the resource. It can be only one of
-          enum:
-            - private
-            - public
-        mimeType:
-          type: string
-          description: The mime type of the file that is being uploaded. The type is dependent on the scope of the resource.
-          example: application/json
-        derefUri:
-          type: string
-          description: The base64 representation of the file being submitted.
-          example: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
       xml:
         name: resource
         prefix: ns3
       x-tags:
         - Resources
       title: Resource
+      description: |-
+        When you’re creating a resource, the following conditions apply:
+
+        - Maximum of 10 MB per file being uploaded
+        - Transactions have an enforced timeout
+        - Resources are available in the Whispir platform for a limited time [90 days]. After this time they are automatically cleaned. This is a configurable setting for Whispir Administrators
+      properties:
+        name:
+          type: string
+          description: Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name.
+          example: sample.json
+        scope:
+          type: string
+          description: |-
+            Specifies the permission scope of the file being uploaded. The scope defines the access restriction of the resource. It can only be one of the following:
+
+            - **public**: Public files have an addressable URL and are available publicly
+            - **private**: Private files have no URL and are only available for bulk messaging purposes and for importing contacts
+          enum:
+            - private
+            - public
+        mimeType:
+          type: string
+          description: |-
+            The mime type of the file that is being uploaded. The type is dependent on the scope of the resource.
+
+            - **public**: Public files can be any mimetype, e.g. text/HTML or text/CSV
+            - **private**: Private files are restricted to CSV, JSON and XML. The respective mimetypes to be used are text/csv, application/json, application/xml
+          example: application/json
+        derefUri:
+          type: string
+          description: The base64 representation of the file being submitted.
+          example: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
+      required:
+        - name
+        - scope
+        - mimeType
+        - derefUri
+      x-examples:
+        JSON:
+          name: sample.json
+          scope: private
+          mimeType: application/json
+          derefUri: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
     template:
       type: object
       required:
@@ -3710,6 +3798,7 @@ components:
         responseTemplateId:
           type: string
           description: Specifies the ID of the Response Rule that should be associated with this Message Template.
+          example: responseTemplateId
         subject:
           type: string
           description: 'Specifies the first line of the SMS message or Voice call, and the subject of the Email message.'
@@ -3938,31 +4027,14 @@ components:
           description: Specifies the email address where failure notifications should be sent.
           example: me@example.com
         callbacks:
-          $ref: '#/components/schemas/callbacks'
-    callbacks:
-      type: object
-      properties:
-        reply:
-          type: string
-          example: enabled
-        undeliverable:
-          type: string
-          example: enabled
-      xml:
-        name: callbacks
-      title: Callbacks
-    callbackParameters:
-      type: object
-      properties:
-        CustomID:
-          type: string
-          example: 890h0ef0fe09efw90e0jsdj0
-        CustomID2:
-          type: string
-          example: 9ef0fe09efw90e0jsdjsd43fw
-      xml:
-        name: callbackParameters
-      title: Callback Parameters
+          type: object
+          properties:
+            reply:
+              type: string
+              example: enabled
+            undeliverable:
+              type: string
+              example: enabled
     workspace:
       type: object
       properties:
@@ -3988,26 +4060,6 @@ components:
       x-tags:
         - Workspaces
       title: Workspace
-    features:
-      type: object
-      properties:
-        pushOptions:
-          $ref: '#/components/schemas/pushOptions'
-      xml:
-        name: features
-      title: Features
-    pushOptions:
-      type: object
-      properties:
-        notifications:
-          type: string
-          example: enabled
-        escalationMins:
-          type: number
-          example: 3
-      xml:
-        name: pushOptions
-      title: Push Options
     locations:
       type: object
       properties:
@@ -4353,11 +4405,11 @@ components:
         attachmentName:
           type: string
           description: 'The name of the attachment, including the extension.'
-          example: 'photo.jpeg'
+          example: photo.jpeg
         derefUri:
           type: string
           description: The Base64 encoded value for the email attachment.
-          example: 'iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='
+          example: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
         attachmentDesc:
           type: string
           description: A description for the attachment.

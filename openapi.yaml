@@ -1017,6 +1017,20 @@ paths:
       responses:
         '201':
           description: Created
+        '400':
+          $ref: '#/components/responses/400badRequest'
+        '401':
+          $ref: '#/components/responses/401unauthorised'
+        '403':
+          $ref: '#/components/responses/403forbidden'
+        '404':
+          $ref: '#/components/responses/404notFound'
+        '415':
+          $ref: '#/components/responses/415unsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422unprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500internalServerError'
     get:
       tags:
         - Templates
@@ -1044,44 +1058,20 @@ paths:
       parameters:
         - $ref: '#/components/parameters/x-api-key'
       responses:
-        '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    status: '1 to 4 of 4    '
-                    messagetemplates:
-                      - messageTemplateName: Appointment Reminder
-                        messageTemplateDescription: ''
-                        id: F0547F6F2E4839F8
-                        link:
-                          - uri: 'https://api.au.whispir.com/templates/F0547F6F2E4839F8'
-                            rel: self
-                            method: GET
-                      - messageTemplateName: Customer Survey
-                        messageTemplateDescription: ''
-                        id: DDE10AC13FB0E457
-                        link:
-                          - uri: 'https://api.au.whispir.com/templates/DDE10AC13FB0E457'
-                            rel: self
-                            method: GET
-                      - messageTemplateName: Service announcement
-                        messageTemplateDescription: ''
-                        id: 900972D1C916FE84
-                        link:
-                          - uri: 'https://api.au.whispir.com/templates/900972D1C916FE84'
-                            rel: self
-                            method: GET
-                      - messageTemplateName: Shift Opportunity
-                        messageTemplateDescription: ''
-                        id: 9CB9BE20B885542D
-                        link:
-                          - uri: 'https://api.au.whispir.com/templates/9CB9BE20B885542D'
-                            rel: self
-                            method: GET
-                    link: []
+        '400':
+          $ref: '#/components/responses/400badRequest'
+        '401':
+          $ref: '#/components/responses/401unauthorised'
+        '403':
+          $ref: '#/components/responses/403forbidden'
+        '404':
+          $ref: '#/components/responses/404notFound'
+        '415':
+          $ref: '#/components/responses/415unsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422unprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500internalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates/{templateId}':
@@ -1102,53 +1092,21 @@ paths:
             example: 321D8505157C5F27
       responses:
         '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/template'
-              examples:
-                sample response:
-                  value:
-                    messageTemplateName: Sample SMS Template
-                    messageTemplateDescription: Template to provide an example on whispir.io
-                    subject: Test SMS Message
-                    body: This is the body of my test SMS message
-                    responseTemplateId: string
-                    email:
-                      body: This is the body of my test Email message
-                      footer: This is the footer of my message (generally where a signature would go)
-                      type: text/plain
-                    voice:
-                      header: 'This is the introduction, read out prior to any key press'
-                      body: 'This is the body of the voice call, read out after the key press'
-                      type: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
-                    web:
-                      body: This is the content of my web publishing or Rich Push Message
-                      type: text/plain
-                    social:
-                      social:
-                        - id: social_long
-                          body: Facebook Content.
-                          type: text/plain
-                    type: defaultNoReply
-                    features:
-                      pushOptions:
-                        notifications: enabled
-                        escalationMins: 3
-                    id: C23D6E2DD3D251BF
-                    tags: ''
-                    dir:
-                      period: ''
-                      rule: ''
-                      type: ''
-                      publishToWeb: false
-                      expiryDay: 0
-                      expiryHour: 0
-                      expiryMin: 0
-                      feedIds: ''
-                      bool: false
-                    link: []
+          $ref: '#/components/responses/template'
+        '400':
+          $ref: '#/components/responses/400badRequest'
+        '401':
+          $ref: '#/components/responses/401unauthorised'
+        '403':
+          $ref: '#/components/responses/403forbidden'
+        '404':
+          $ref: '#/components/responses/404notFound'
+        '415':
+          $ref: '#/components/responses/415unsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422unprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500internalServerError'
     put:
       tags:
         - Templates
@@ -1178,6 +1136,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400badRequest'
+        '401':
+          $ref: '#/components/responses/401unauthorised'
+        '403':
+          $ref: '#/components/responses/403forbidden'
+        '404':
+          $ref: '#/components/responses/404notFound'
+        '415':
+          $ref: '#/components/responses/415unsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422unprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500internalServerError'
     delete:
       tags:
         - Templates
@@ -1197,6 +1169,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400badRequest'
+        '401':
+          $ref: '#/components/responses/401unauthorised'
+        '403':
+          $ref: '#/components/responses/403forbidden'
+        '404':
+          $ref: '#/components/responses/404notFound'
+        '415':
+          $ref: '#/components/responses/415unsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422unprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500internalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules':
@@ -3365,6 +3351,11 @@ components:
           schema:
             $ref: '#/components/schemas/event'
       description: events object that needs to be create events
+    template:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/template'
   securitySchemes:
     BasicAuth:
       type: http
@@ -3540,7 +3531,7 @@ components:
         - Templates
       title: Template
       x-examples:
-        example-1:
+        Template:
           messageTemplateName: Sample SMS Template
           messageTemplateDescription: Template to provide an example on whispir.io
           responseTemplateId: string
@@ -4212,22 +4203,26 @@ components:
     link:
       title: link
       type: object
-      description: 'related link of the retrieved resource '
       properties:
         uri:
           type: string
-          description: specifies assoiciated API endpoint that you can use to interact with the resource
+          example: 'https://api.ap1.whispir.com/workspaces/573716059009818C/templates/C23D6E2DD3D251BF'
         rel:
           type: string
+          example: self
         method:
           type: string
-          description: 'Operation method name (e.g. "GET","POST", etc)'
+          enum:
+            - GET
+            - POST
+            - DELETE
+            - PUT
         host:
           type: string
+          example: api.ap1.whispir.com
         port:
           type: integer
-        '':
-          type: string
+          example: -1
   parameters:
     x-api-key:
       name: x-api-key
@@ -4246,14 +4241,28 @@ components:
       description: The identifier for the workspace.
       required: true
   responses:
-    getTemplateById:
-      description: This is a sample response of retrieving a template
+    500internalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: INTERNAL SERVER ERROR
+          examples:
+            500 Internal Server Error:
+              value:
+                message: INTERNAL SERVER ERROR
+    template:
+      description: Example response of a template resource
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/template'
           examples:
-            Get a template sample response:
+            example-1:
               value:
                 messageTemplateName: Sample SMS Template
                 messageTemplateDescription: Template to provide an example on whispir.io
@@ -4309,3 +4318,192 @@ components:
                     method: DELETE
                     host: api.ap1.whispir.com
                     port: -1
+    400badRequest:
+      description: Example response of a 400 bad request error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                errorSummary: Your request was malformed and could not be processed by the server. Please try again
+                errorText: Bad Request
+                errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+                example: Your request was malformed and could not be processed by the server. Please try again
+              errorText:
+                type: string
+                minLength: 1
+                example: Bad Request
+              errorDetail:
+                type: string
+                minLength: 1
+                example: 'java.io.EOFException: No content to map to Object due to end of input'
+              link:
+                type: array
+                items: {}
+          examples:
+            400 Bad Request:
+              value:
+                errorSummary: Your request was malformed and could not be processed by the server. Please try again
+                errorText: Bad Request
+                errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
+                link: []
+    401unauthorised:
+      description: 401 Unauthorized Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
+                errorText: Unauthorized
+                errorDetail: ''
+                link: []
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+                example: Your username and password combination was incorrect. Please check your authentication details and try again
+              errorText:
+                type: string
+                minLength: 1
+                example: Unauthorized
+              errorDetail:
+                type: string
+              link:
+                type: array
+                items: {}
+          examples:
+            401 Unauthorized Error:
+              value:
+                errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
+                errorText: Unauthorized
+                errorDetail: ''
+                link: []
+    403forbidden:
+      description: 403 Forbidden Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Forbidden
+          examples:
+            403 Forbidden:
+              value:
+                message: Forbidden
+    404notFound:
+      description: 404 Not Found Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                errorSummary: The resource that you have requested does not exist. Please check the identifier and try again
+                errorText: Not Found
+                errorDetail: ''
+                link: []
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+                example: The resource that you have requested does not exist. Please check the identifier and try again
+              errorText:
+                type: string
+                minLength: 1
+                example: Not Found
+              errorDetail:
+                type: string
+              link:
+                type: array
+                items: {}
+          examples:
+            example-1:
+              value:
+                errorSummary: The resource that you have requested does not exist. Please check the identifier and try again
+                errorText: Not Found
+                errorDetail: ''
+                link: []
+    415unsupportedMediaType:
+      description: 415 Unsupported Media Type
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
+                errorText: Unsupported Media Type
+                errorDetail: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
+                link: []
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+                example: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
+              errorText:
+                type: string
+                minLength: 1
+                example: Unsupported Media Type
+              errorDetail:
+                type: string
+                minLength: 1
+                example: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
+              link:
+                type: array
+                items: {}
+          examples:
+            415 Unsupported Media Type:
+              value:
+                errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
+                errorText: Unsupported Media Type
+                errorDetail: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
+                link: []
+    422unprocessibleEntity:
+      description: 422 Unprocessible Entitity
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              example-1:
+                errorSummary: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
+                errorText: |
+                  A Template name already exists in the current Workspace, please select another name and try again.
+                errorDetail: ''
+                link: []
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+                example: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
+              errorText:
+                type: string
+                minLength: 1
+                example: 'A Template name already exists in the current Workspace, please select another name and try again.\n'
+              errorDetail:
+                type: string
+              link:
+                type: array
+                items: {}
+          examples:
+            422 Unprocessable Entity:
+              value:
+                errorSummary: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
+                errorText: 'A Template name already exists in the current Workspace, please select another name and try again.\n'
+                errorDetail: ''
+                link: []
+  examples: {}

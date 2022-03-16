@@ -1087,7 +1087,7 @@ paths:
       tags:
         - Templates
       summary: Retrieve a template
-      description: 'Retrieves a Template object.'
+      description: Retrieves a Template object.
       operationId: getTemplatesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1218,7 +1218,7 @@ paths:
       tags:
         - Response Rules
       summary: Update a response rule
-      description: 'Updates a Response Rule object.'
+      description: Updates a Response Rule object.
       operationId: putResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1246,7 +1246,7 @@ paths:
       tags:
         - Response Rules
       summary: Delete a response rule
-      description: 'Deletes a Response Rule object.'
+      description: Deletes a Response Rule object.
       operationId: deleteResponseRulesById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1267,7 +1267,7 @@ paths:
       tags:
         - Contacts
       summary: Create a contact
-      description: 'Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.'
+      description: Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.
       operationId: postContacts
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1724,7 +1724,7 @@ paths:
       tags:
         - Scenarios
       summary: List scenarios
-      description: 'Returns a list of your scenarios.'
+      description: Returns a list of your scenarios.
       operationId: getScenarios
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1738,7 +1738,7 @@ paths:
       tags:
         - Scenarios
       summary: Retrieve a scenario
-      description: 'Retrieves a Scenario object.'
+      description: Retrieves a Scenario object.
       operationId: getScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1817,7 +1817,7 @@ paths:
       tags:
         - Scenarios
       summary: Update a scenario
-      description: 'Updates a Scenario object.'
+      description: Updates a Scenario object.
       operationId: putScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -1845,7 +1845,7 @@ paths:
       tags:
         - Scenarios
       summary: Delete a scenario
-      description: 'Deletes a Scenario object.'
+      description: Deletes a Scenario object.
       operationId: deleteScenariosById
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -2181,7 +2181,7 @@ paths:
       tags:
         - Workspaces
       summary: List workspaces
-      description: 'Returns a list of your workspaces.'
+      description: Returns a list of your workspaces.
       operationId: getWorkspaces
       responses:
         '200':
@@ -2939,7 +2939,7 @@ paths:
       tags:
         - Users
       summary: List workspace users
-      description: 'Returns a list of your Users.'
+      description: Returns a list of your Users.
       operationId: getWorkspaceUsers
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -2983,7 +2983,7 @@ paths:
       tags:
         - Events
       summary: Retrieve an event
-      description: 'Retrieves an Event object.'
+      description: Retrieves an Event object.
       operationId: getEvents
       parameters:
         - $ref: '#/components/parameters/x-api-key'
@@ -3332,24 +3332,69 @@ components:
       xml:
         name: message
         prefix: ns2
-      x-examples: {}
+      x-examples:
+        SMS:
+          to: '61400400400'
+          subject: Test Message
+          body: This is the body of my test SMS message
+        Email:
+          to: test@test.com
+          subject: Test Message
+          email:
+            body: This is the body of my test Email message
+            footer: This is the footer of my message
+            type: text/plain
+      example:
+        to: '61400400400'
+        subject: Test Message
+        body: This is the body of my test SMS message
       title: Message
       x-internal: false
       x-tags:
         - Messages
+      description: |
+        Whispir has a maximum API request payload size of 10MB. Whispir will reject the request if the payload is any bigger. This payload size limit should be adhered to when creatin the message payload.
       properties:
         to:
           type: string
           example: '61987654321'
-          description: The recipient's mobile number or email address.
+          description: |
+            Allows a combination of phone numbers, email address, Whispir Contact MRIs, User MRI, Distribution List MRI, separated by `,`.
+
+            Whispir will pick the relevant recipients based on the channels provided in the request payload 
+            (including template information).
+
+            The maximum payload size rule applies.
+
+            When used for bulk messages, this field is optional, as bulk messages has another model to specify the `to` field recipients.
+          maxLength: 10000
+          minLength: 1
         subject:
           type: string
           example: Test Message
-          description: The message subject. Used to populate the subject field on some messaging channels.
+          description: |-
+            The message subject. This is common for both SMS and Email channels.
+
+            Read `body` notes on limits.
+
+            The maximum payload size rule applies.
+
+            When used for templates, this field is optional.
+          minLength: 0
+          maxLength: 1570
         body:
           type: string
-          example: This is the body of my test SMS message
-          description: The SMS message body.
+          example: This is the body of my SMS message
+          description: |-
+            The SMS body.
+
+            The maximum payload size rule applies.
+
+            IMPORTANT: The total SMS length is 1570 characters for english text and 800 when UTF-8 characters are used (primarily non-english)
+
+            The 1570 length is a combination of subject and body.
+          minLength: 0
+          maxLength: 1570
         email:
           $ref: '#/components/schemas/email'
         voice:
@@ -3362,7 +3407,13 @@ components:
           type: string
           enum:
             - defaultNoReply
-            - NoDlr
+            - noDlr
+          example: defaultNoReply
+          description: |-
+            Allows the user to modify the message behaviour for replies and DLRs (delivery receipts).
+
+            - `defaultNoReply`: Used to reject any replies to this message.
+            - `noDlr`: Used to specify that DLRs should not be enabled for this message.
         features:
           $ref: '#/components/schemas/features'
         resource:
@@ -3370,17 +3421,22 @@ components:
         messageTemplateId:
           type: string
           example: BACEB8D46BEF5315
+          description: The identifier for the Messsage Template.
         messageTemplateName:
           type: string
           example: Sample SMS Template
+          description: A human-readable name for the Message Template.
         callbackId:
           type: string
           example: myCallbackName
+          description: The identifier for the Callback to be invoked on Message delivery events.
         callbackParameters:
-          $ref: '#/components/schemas/callbackParameters'
+          description: Set of key-value pairs that you can attach to a callback. This can be useful for returning additional information about the object in a structured format.
+          type: object
         eventId:
           type: string
           example: 2EE7FEA3343662BE
+          description: The identifier for the Event to trigger.
       required:
         - to
         - subject
@@ -3389,37 +3445,175 @@ components:
       xml:
         name: email
       title: Email
+      description: |-
+        The email channel payload, used when sending an email Message.
+
+        Not required when a template is provided.
+      x-examples:
+        Email:
+          body: This is the body of my test Email message
+          footer: This is the footer of my message
+          type: text/plain
+        Email with attachment:
+          body: This is the body of my test Email message
+          footer: This is the footer of my message
+          type: text/plain
+          resources:
+            attachments:
+              - attachmentName: My Awesome Photo.jpg
+                attachmentDesc: This is an awesome photo of me
+                derefUri: The base64 string value of `My Awesome Photo.jpg` file content
       properties:
         body:
           type: string
-          example: This is the body of my test Email message
+          example: This is the body of my email message.
           description: The email message body.
         footer:
           type: string
-          example: This is the footer of my message (generally where a signature would go)
+          example: This is the footer of my message.
+          description: Plain text or html displayed at the bottom of your email message.
         type:
           type: string
           enum:
             - text/plain
             - text/html
+          default: text/plain
+          description: The email Message content type.
+        resources:
+          type: object
+          description: The resources to attach to the email Message.
+          properties:
+            attachments:
+              description: A list of attachments to attach to the email Message.
+              type: array
+              uniqueItems: false
+              items:
+                $ref: '#/components/schemas/attachment'
       required:
         - body
+      x-tags:
+        - Messages
     voice:
       type: object
-      properties:
-        header:
-          type: string
-          example: 'This is the introduction, read out prior to any key press'
-        body:
-          type: string
-          example: 'This is the body of the voice call, read out after the key press'
-        type:
-          type: string
-          example: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
       xml:
         name: voice
       title: Voice
+      description: |-
+        The voice channel payload, used when sending a Message.
+
+        Calls are charged in 30 seconds intervals (rounded up).
+
+        Text max length is 5000 characters.
+
+        The maximum payload size rule applies for the body, header and type usage.
+
+        <!-- theme: info -->
+
+        > #### Requirements
+        >
+        > In order to use this functionality your account must be enabled to use the Voice module. If you're unsure whether you can use Voice, please contact the Whispir Support Team.
+
+        ---
+
+        ### Overview
+
+        Whispir’s API provides you with the ability to send a voice message to any landline phone or mobile phone around the world, both via text-to-speech and custom WAV files to be played over the phone
+
+        Whispir’s Voice module can easily connect all recipients to a single bridged call, simplifying your teleconferences and ensuring your message gets through
+
+        Each voice call is made up of three parts:
+
+        - Message introduction: Either Text-To-Speech (TTS) or a WAV file
+        - Message acceptance: Asks the recipient to press a button or insert a PIN to hear the message
+        - Message content: The concatenation of the message subject and message body. The latter can be either TTS or a WAV file. At the end the recipient will be given the possibility to acknowledge the message.
+        <!-- theme: info -->
+
+        > #### Adding pauses
+        >
+        > Pauses can be added to conference call details using the `+` character. Each `+` represents 1 second. Pauses allow some wait time to ensure the conference call service is ready to accept the account number and PIN.
+
+        ### WAV files requirements
+
+        WAV files can be used in place of Text-To-Speech to provide a custom `header` and `body`.
+
+        Before a WAV file can be used for the Voice module, it needs to conform to certain criteria:
+
+        - All the WAV files combined must not exceed 10 MB in total file size
+        - All the WAV files must be a maximum of 8 bit, 8000 Hz, 1ch, 64 kbps
+        - If a WAV file is outside these criteria please use TTS instead
+      x-examples:
+        Text-To-Speech (TTS):
+          header: 'This is the introduction, read out to the recipient prior to any key press.'
+          body: 'This is the body of the voice call, read out after the key press'
+          type: 'Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:'
+        TTS with conference:
+          header: 'This is the introduction, read out to the recipient prior to any key press.'
+          body: 'This is the body of the voice call, read out after the key press'
+          type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+        WAV:
+          header: ''
+          body: ''
+          type: 'Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:'
+          resources:
+            attachment:
+              - attachmentName: MessageHeader.wav
+                attachmentDesc: voiceintro.wav
+                derefUri: base64_uri_data
+              - attachmentName: MessageBody.wav
+                attachmentDesc: voicebody.wav
+                derefUri: base64_uri_data
+      x-tags:
+        - Messages
+      properties:
+        header:
+          type: string
+          example: 'This is the introduction, read out to the recipient prior to any key press.'
+          description: Introduction text played with the subject.
+        body:
+          type: string
+          example: 'This is the body of the voice call, read out after the key press'
+          description: 'Body text, read out to the recipient after the subject and header.'
+        type:
+          type: string
+          default: 'Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:'
+          example: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+          description: |-
+            The conference call details of the voice message. Required when no conference call is being used. The minimum string to be used is specified in the example. Read the following section for information on each field.
+
+            The following parameters can be set by specifying the value after the `:` in the `type` string:
+
+            | Field         | Description |
+            | ------------- |------------ |
+            | Pin           | The access code required to be inserted from the recipient to hear the Voice message after the "header" is over. It can be left blank and then the user will be asked to proceed dialling "1". <br><br> For example, `7171`. <br><br> If the right code is inserted then "subject" and "body" of the Voice Message will be reproduced. The user will be able to dial "1" to replay the message, "2" to join the conference call or "3" to receive the details to dial in later. <br><br> In this last case the details - a Dial-In number and a PIN - will be repeated 3 times. |
+            | ConfCall      | The teleconference line that will be used in the voice call. <br><br> For example, `1800123123`. <br><br> It is possible to reference this value in other channels using the **@@teleconf_number@@** custom variable. |
+            | ConfAccountNo | The teleconference account or room number that is used in the voice call. <br><br> For example, `098711234`. <br><br> It is possible to reference this value in other channels using the **@@teleconf_account@@** custom variable. |
+            | ConfPinNo     | The teleconference room PIN that is used in the voice call. <br><br> For example, `8181`. <br><br> It is possible to reference this value in other channels using the **@@teleconf_pin@@** custom variable. |
+            | ConfModPinNo  | The teleconference moderator PIN that is used in the voice call. <br><br> For example, `4242`. <br><br> It is possible to reference this value in other channels using the **@@teleconf_mod_pin@@** custom variable. |
+        resources:
+          type: object
+          description: Provides a configuration object for specifying custom audio for the voice header and body.
+          properties:
+            attachment:
+              type: array
+              description: |-
+                The header and body attachments containing WAV files. Read the following section for configuring each voice field attachment:
+
+                In addition to the parameters already specified for the TTS Voice calls, each attached WAV file must have the `attachmentDesc` named these specific values, to override the TTS voice:
+
+                | Voice field    | attachmentDesc |
+                | -------------- |--------------- |
+                | header         | `"voiceintro.wav"` |
+                | body           | `"voicebody.wav"` |
+              items:
+                $ref: '#/components/schemas/attachment'
+      required:
+        - body
+        - type
     web:
+      description: |-
+        The web channel payload, used when attaching web content to a Message.
+
+        Not required when a template is provided.
       type: object
       xml:
         name: web
@@ -3431,59 +3625,158 @@ components:
           description: The linked web content body.
         type:
           type: string
-          example: text/plain
+          enum:
+            - text/plain
+            - text/html
+          default: text/plain
+          description: The web Message content type.
+      x-tags:
+        - Messages
+      x-examples:
+        Web:
+          body: This is the content of my web publishing or Rich Push Message
+          type: text/plain
     social:
       type: object
-      properties:
-        social:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: social_long
-              body:
-                type: string
-                example: Facebook Content.
-              type:
-                type: string
-                example: text/plain
       xml:
         name: social
       title: Social
+      x-tags:
+        - Messages
+      x-examples:
+        Twitter:
+          social:
+            - id: social
+              body: Twitter Content
+              type: text/plain
+        Facebook:
+          social:
+            - id: social_long
+              body: Facebook Content
+              type: text/plain
+      description: Whispir can publish content to your Twitter and Facebook walls. Other socials can be made available upon request.
+      properties:
+        social:
+          type: array
+          description: The list of social channel content.
+          items:
+            type: object
+            description: The social channel object.
+            properties:
+              id:
+                type: string
+                description: |-
+                  The identifier for the social content channel. Read the following section for information on each channel.
+
+                  | Channel        | id |
+                  | -------------- |--------------- |
+                  | Twitter        | `"social"` |
+                  | Facebook       | `"social_long"` |
+                enum:
+                  - social
+                  - social_long
+              body:
+                type: string
+                example: Facebook Content
+                description: The social content body.
+              type:
+                type: string
+                description: The social message content type.
+                enum:
+                  - text/plain
+                  - text/html
+    features:
+      type: object
+      xml:
+        name: features
+      title: Features
+      x-tags:
+        - Messages
+      description: |-
+        Whispir allows you to send push notifications to any iOS and Android-based apps
+
+        Setting up the platform to handle push notifications involves some one-time steps and some periodically repeated steps (updating push tokens). See Apps to get a clear understanding of the related steps and endpoints. Whispir doesn't support sending push notifications to device tokens directly. Read more in Contact devices about how to register the device tokens under contacts.
+      x-examples:
+        Push Message:
+          pushOptions:
+            appId: appId
+        Escalation:
+          pushOptions:
+            escalationMins: 3
+        Notifications:
+          pushOptions:
+            notifications: enabled
+      properties:
+        pushOptions:
+          type: object
+          description: The object defining options for push messages.
+          properties:
+            notifications:
+              type: string
+              description: A flag indicating whether notifications should be enabled for message replies.
+              enum:
+                - enabled
+                - disabled
+            escalationMins:
+              type: string
+              example: '3'
+              description: The number of minutes to wait for a reply until escalating to the next contact.
+            appId:
+              type: string
+              description: The identifier for the registered application.
+              example: appId
     resource:
       type: object
-      required:
-        - name
-        - scope
-        - mimeType
-        - derefUri
-      properties:
-        name:
-          type: string
-          description: 'Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name. Eg:australia-contacts.csv'
-          example: sample.json
-        scope:
-          type: string
-          description: Specifies the permission scope of the file being uploaded. The scope defines the access restriction of the resource. It can be only one of
-          enum:
-            - private
-            - public
-        mimeType:
-          type: string
-          description: The mime type of the file that is being uploaded. The type is dependent on the scope of the resource.
-          example: application/json
-        derefUri:
-          type: string
-          description: The base64 representation of the file being submitted.
-          example: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
       xml:
         name: resource
         prefix: ns3
       x-tags:
         - Resources
       title: Resource
+      description: |-
+        When you’re creating a resource, the following conditions apply:
+
+        - Maximum of 10 MB per file being uploaded
+        - Transactions have an enforced timeout
+        - Resources are available in the Whispir platform for a limited time [90 days]. After this time they are automatically cleaned. This is a configurable setting for Whispir Administrators
+      properties:
+        name:
+          type: string
+          description: Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name.
+          example: sample.json
+        scope:
+          type: string
+          description: |-
+            Specifies the permission scope of the file being uploaded. The scope defines the access restriction of the resource. It can only be one of the following:
+
+            - **public**: Public files have an addressable URL and are available publicly
+            - **private**: Private files have no URL and are only available for bulk messaging purposes and for importing contacts
+          enum:
+            - private
+            - public
+        mimeType:
+          type: string
+          description: |-
+            The mime type of the file that is being uploaded. The type is dependent on the scope of the resource.
+
+            - **public**: Public files can be any mimetype, e.g. text/HTML or text/CSV
+            - **private**: Private files are restricted to CSV, JSON and XML. The respective mimetypes to be used are text/csv, application/json, application/xml
+          example: application/json
+        derefUri:
+          type: string
+          description: The base64 representation of the file being submitted.
+          example: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
+      required:
+        - name
+        - scope
+        - mimeType
+        - derefUri
+      x-examples:
+        JSON:
+          name: sample.json
+          scope: private
+          mimeType: application/json
+          derefUri: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
     template:
       type: object
       required:
@@ -3505,6 +3798,7 @@ components:
         responseTemplateId:
           type: string
           description: Specifies the ID of the Response Rule that should be associated with this Message Template.
+          example: responseTemplateId
         subject:
           type: string
           description: 'Specifies the first line of the SMS message or Voice call, and the subject of the Email message.'
@@ -3699,6 +3993,12 @@ components:
       title: Scenario
     callback:
       type: object
+      xml:
+        name: companyapicallback
+        prefix: ns2
+      x-tags:
+        - Callbacks
+      title: Callback
       properties:
         name:
           type: string
@@ -3727,37 +4027,14 @@ components:
           description: Specifies the email address where failure notifications should be sent.
           example: me@example.com
         callbacks:
-          $ref: '#/components/schemas/callbacks'
-      xml:
-        name: companyapicallback
-        prefix: ns2
-      x-tags:
-        - Callbacks
-      title: Callback
-    callbacks:
-      type: object
-      properties:
-        reply:
-          type: string
-          example: enabled
-        undeliverable:
-          type: string
-          example: enabled
-      xml:
-        name: callbacks
-      title: Callbacks
-    callbackParameters:
-      type: object
-      properties:
-        CustomID:
-          type: string
-          example: 890h0ef0fe09efw90e0jsdj0
-        CustomID2:
-          type: string
-          example: 9ef0fe09efw90e0jsdjsd43fw
-      xml:
-        name: callbackParameters
-      title: Callback Parameters
+          type: object
+          properties:
+            reply:
+              type: string
+              example: enabled
+            undeliverable:
+              type: string
+              example: enabled
     workspace:
       type: object
       properties:
@@ -3783,26 +4060,6 @@ components:
       x-tags:
         - Workspaces
       title: Workspace
-    features:
-      type: object
-      properties:
-        pushOptions:
-          $ref: '#/components/schemas/pushOptions'
-      xml:
-        name: features
-      title: Features
-    pushOptions:
-      type: object
-      properties:
-        notifications:
-          type: string
-          example: enabled
-        escalationMins:
-          type: number
-          example: 3
-      xml:
-        name: pushOptions
-      title: Push Options
     locations:
       type: object
       properties:
@@ -4132,6 +4389,34 @@ components:
       xml:
         name: fieldMapping
       title: Field Mapping
+    attachment:
+      type: object
+      description: |-
+        Attachments can be of any type [e.g. PDF, images and documents], and the maximum size of all attached files combined is 10 MB
+
+        Attachments must be provided in the payload of the message. URLs can be referenced in the email but will not be added as message attachments.
+      x-examples:
+        example:
+          attachmentName: TestIcon.png
+          attachmentDesc: TestIcon.png
+          derefUri: iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMvSURBVDhPTVT5S1RhFD3fezOOOePTXHKriWgjsogWC1TSMuuHIFqoX0KsIIgSWwiq/6FFU8MKK6KyXYSKpkUKR4QMSSpCLQpyxHHUZpztzdu63xub5vKWj/fu+c6599z3mMfjSU9P13UdZoiCaLfZYQWiUGKq1WrBLEBDOBpWNTWeQyEIwvT0NAsEAgROPKXFxceNbQOtv4ShkKCkaZZ5kYU1Sw6dqT0NMTkLBIbf7zf+xaOuJzgG4RmyPyP/Kwq/oWAYeT+R6gYOofnmlUQmLQjI6JQkifasu368KdCQWwFEwBiYQOIgiDBETDFIORh/iZ0De55cehgXQJIphce9d/ebJhuyV0P3QY9Cj/HDUKhseIPomP/CW2QYB42nSx+db76YUM9IusPhYHVM2g5Bpo5xNuIkZibCF8On0oGVjhWabmR8EBx5GDuHaItsy0zhzA6bo/H5ZSyDMQ1d4YQa0Sqc1hdAe3E7IYkqp9tiUcHGkXIQZ8+fm+k5uXK3/46YAV3mMMLEt/BHUJ1Vua9oH+WV9ayLyLpVhRYFkT8d4mUzRuI0DAcHmQngSLrGoBJ/GC/L31JSy/cm91ifXTcboYDJGLX+1kI6WS3AQFSRCUDvwhGEwubiD1yVLkLKWuxoT50kzGwab6Ru6HIsahpiwTybkwTLU9iUU1Ezf394CmuyV20p2kLg8mcbRHLLxGimLlWFFMpMc6TRFlx29aJqePBgx4M3u7tubb1dMXfjw6rHhOwb+/jhV3+qNtMFKspQEZnA+oxSPr9UdjgUllV59pHZhSUFI/We5AnMv5o7bvhsFu5f3DlmR7ATr/a+rtq2mVulqEqmlFlbUuv5MbqudW0C7PrhGpvwidRhIoyXqiHoRam/tGrT5n9Wmfcb9TfmBOf0DXy80H0h/uKU6yQRcqlmk+mji0RhbbN2XOpAygzF/9nmfp4oc4+4y6vLqRnuUTdsfNqYFRop/4JFw4t723qz52YlZpvPd/K30vm+03nAie1ADXAYOADsgHOXs/laix7RkzMJyJJ/BjQ09lQ7me8f9/cP9nsnvemzpOIFy3PzclkK0wyNgvDEHP8Z/AXQ58rAz69IBAAAAABJRU5ErkJggg==
+      title: Attachment
+      properties:
+        attachmentName:
+          type: string
+          description: 'The name of the attachment, including the extension.'
+          example: photo.jpeg
+        derefUri:
+          type: string
+          description: The Base64 encoded value for the email attachment.
+          example: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+        attachmentDesc:
+          type: string
+          description: A description for the attachment.
+          example: My photo
+      required:
+        - attachmentName
+        - derefUri
   parameters:
     x-api-key:
       name: x-api-key

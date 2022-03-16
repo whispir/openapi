@@ -187,12 +187,6 @@ paths:
               examples:
                 Response:
                   value: Your request has been accepted for processing
-            application/vnd.whispir.message-v1+xml:
-              schema:
-                type: string
-              examples:
-                Response:
-                  value: Your request has been accepted for processing
           headers:
             Content-Type:
               $ref: '#/components/headers/Message-Content-Type'
@@ -299,7 +293,6 @@ paths:
                       properties:
                         subject:
                           type: string
-                          minLength: 1
                           example: Test Message
                         repetitionCount:
                           type: number
@@ -315,17 +308,14 @@ paths:
                           example: 0
                         from:
                           type: string
-                          minLength: 1
                           example: Test User
                         direction:
                           type: string
-                          minLength: 1
                           enum:
                             - OUTGOING
                           readOnly: true
                         responseCount:
                           type: string
-                          minLength: 1
                           example: '0'
                         createdTime:
                           type: number
@@ -339,19 +329,15 @@ paths:
                             properties:
                               uri:
                                 type: string
-                                minLength: 1
                                 example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
                               rel:
                                 type: string
-                                minLength: 1
                                 example: self
                               method:
                                 type: string
-                                minLength: 1
                                 example: GET
                               host:
                                 type: string
-                                minLength: 1
                                 example: api.au.whispir.com
                               port:
                                 type: number
@@ -448,7 +434,7 @@ paths:
       tags:
         - Messages
       summary: Retrieve a message
-      description: |
+      description: |-
         Each of the URLs specified in the response can be accessed using the REL and appropriate METHOD to perform the specified functionality.
 
         **Rel Attribute Descriptions**
@@ -467,53 +453,341 @@ paths:
         - **summaryResponsesWithResponseRule:** Returns the response information of the message as a messageresponse object, filtered by the Response Rule (if one was used) in a summary view.  
 
         - **detailedResponsesWithResponseRule:** Returns the response information of the message as a messageresponse object, filtered by the Response Rule (if one was used) in a detailed view.
-
-        * * *
-
-        **Retrieving messages sent in relation to the event**
-
-        You can easily retrieve all of the messages that are associated with an Event by using the unique label that is created for each event.
-
-        The label that should be used for searching is provided to users in both the /events and /events/ requests as a link element. The rel field for this element is: `retrieveEventMessages`  
-
-        The API also supports to use this listing to query the different messages for status or any other purpose. And, any of the features available in Sending Messages, or Advanced Messages, are also available to be used within the Events Messages.
       operationId: getMessageById
-      parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
       responses:
         '200':
           description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Message-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+          content:
+            application/vnd.whispir.message-v1+json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    to: '61400400400'
+                    subject: Test Message
+                    body: This is the body of my test SMS message
+                    label: ''
+                    type: default
+                    repetitionCount: 0
+                    dlr:
+                      period: ''
+                      rule: ''
+                      type: ''
+                      publishToWeb: false
+                      expiryDay: 0
+                      expiryHour: 0
+                      expiryMin: 0
+                      feedIds: ''
+                      bool: false
+                    repeatDays: 0
+                    repeatHrs: 0
+                    repeatMin: 0
+                    voice: {}
+                    from: rfontein.au@User.whispir.com
+                    direction: OUTGOING
+                    responseCount: '0'
+                    social:
+                      social:
+                        - id: social
+                        - id: social_long
+                    createdTime: 1647466923000
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=summary'
+                        rel: summaryStatus
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed'
+                        rel: detailedStatus
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=default'
+                        rel: summaryResponses
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=default'
+                        rel: detailedResponses
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=responserule'
+                        rel: summaryResponsesWithResponseRule
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=responserule'
+                        rel: detailedResponsesWithResponseRule
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                    validBody: true
+                    validSubject: true
+                    whatsappValidMessage: true
+                properties:
+                  to:
+                    type: string
+                    example: '61400400400'
+                  subject:
+                    type: string
+                    example: Test Message
+                  body:
+                    type: string
+                    example: This is the body of my test SMS message
+                  label:
+                    type: string
+                  type:
+                    type: string
+                    example: default
+                  repetitionCount:
+                    type: number
+                    example: 0
+                  dlr:
+                    type: object
+                    required:
+                      - period
+                      - rule
+                      - type
+                      - publishToWeb
+                      - expiryDay
+                      - expiryHour
+                      - expiryMin
+                      - feedIds
+                      - bool
+                    properties:
+                      period:
+                        type: string
+                      rule:
+                        type: string
+                      type:
+                        type: string
+                      publishToWeb:
+                        type: boolean
+                      expiryDay:
+                        type: number
+                        example: 0
+                      expiryHour:
+                        type: number
+                        example: 0
+                      expiryMin:
+                        type: number
+                        example: 0
+                      feedIds:
+                        type: string
+                      bool:
+                        type: boolean
+                  repeatDays:
+                    type: number
+                    example: 0
+                  repeatHrs:
+                    type: number
+                    example: 0
+                  repeatMin:
+                    type: number
+                    example: 0
+                  voice:
+                    type: object
+                  from:
+                    type: string
+                    example: testUser.au@User.whispir.com
+                  direction:
+                    type: string
+                    readOnly: true
+                  responseCount:
+                    type: string
+                    example: '0'
+                  social:
+                    type: object
+                    required:
+                      - social
+                    properties:
+                      social:
+                        type: array
+                        uniqueItems: true
+                        minItems: 1
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                          required:
+                            - id
+                  createdTime:
+                    type: number
+                    example: 1647466923000
+                  link:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      type: object
+                      properties:
+                        uri:
+                          type: string
+                          example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
+                        rel:
+                          type: string
+                          example: self
+                        method:
+                          type: string
+                          example: GET
+                        host:
+                          type: string
+                          example: api.au.whispir.com
+                        port:
+                          type: number
+                          enum:
+                            - -1
+                      required:
+                        - uri
+                        - rel
+                        - method
+                        - host
+                        - port
+                  validBody:
+                    type: boolean
+                  validSubject:
+                    type: boolean
+                  whatsappValidMessage:
+                    type: boolean
+                required:
+                  - to
+                  - subject
+                  - body
+                  - label
+                  - type
+                  - repetitionCount
+                  - dlr
+                  - repeatDays
+                  - repeatHrs
+                  - repeatMin
+                  - voice
+                  - from
+                  - direction
+                  - responseCount
+                  - social
+                  - createdTime
+                  - link
+                  - validBody
+                  - validSubject
+                  - whatsappValidMessage
+              examples:
+                Response:
+                  value:
+                    to: '61400400400'
+                    subject: Test Message
+                    body: This is the body of my test SMS message
+                    label: ''
+                    type: default
+                    repetitionCount: 0
+                    dlr:
+                      period: ''
+                      rule: ''
+                      type: ''
+                      publishToWeb: false
+                      expiryDay: 0
+                      expiryHour: 0
+                      expiryMin: 0
+                      feedIds: ''
+                      bool: false
+                    repeatDays: 0
+                    repeatHrs: 0
+                    repeatMin: 0
+                    voice: {}
+                    from: testUser.au@User.whispir.com
+                    direction: OUTGOING
+                    responseCount: '0'
+                    social:
+                      social:
+                        - id: social
+                        - id: social_long
+                    createdTime: 1647466923000
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=summary'
+                        rel: summaryStatus
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed'
+                        rel: detailedStatus
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=default'
+                        rel: summaryResponses
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=default'
+                        rel: detailedResponses
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=responserule'
+                        rel: summaryResponsesWithResponseRule
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=responserule'
+                        rel: detailedResponsesWithResponseRule
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                    validBody: true
+                    validSubject: true
+                    whatsappValidMessage: true
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - name: Content-Type
+          in: header
+          required: true
+          description: Application specific mime-type
+          schema:
+            type: string
+            enum:
+              - application/vnd.whispir.message-v1+json
+              - application/vnd.whispir.bulkmessage-v1+json
+              - application/vnd.whispir.message-v1+xml
+              - application/vnd.whispir.bulkmessage-v1+xml
+        - name: Accept
+          in: header
+          required: true
+          description: Application specific mime-type
+          schema:
+            type: string
+            enum:
+              - application/vnd.whispir.message-v1+json
+              - application/vnd.whispir.bulkmessage-v1+json
+              - application/vnd.whispir.message-v1+xml
+              - application/vnd.whispir.bulkmessage-v1+xml
+        - schema:
+            type: string
+            pattern: '^[A-F0-9]+'
+          name: messageId
+          in: path
+          required: true
+          description: The identifier for the message.
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-      - name: Content-Type
-        in: header
-        required: true
-        description: Application specific mime-type
-        schema:
-          type: string
-          enum:
-            - application/vnd.whispir.message-v1+json
-            - application/vnd.whispir.bulkmessage-v1+json
-            - application/vnd.whispir.message-v1+xml
-            - application/vnd.whispir.bulkmessage-v1+xml
-      - name: Accept
-        in: header
-        required: true
-        description: Application specific mime-type
-        schema:
-          type: string
-          enum:
-            - application/vnd.whispir.message-v1+json
-            - application/vnd.whispir.bulkmessage-v1+json
-            - application/vnd.whispir.message-v1+xml
-            - application/vnd.whispir.bulkmessage-v1+xml
-      - schema:
-          type: string
-          pattern: '^[A-F0-9]+'
-        name: messageId
-        in: path
-        required: true
-        description: The identifier for the message.
   '/workspaces/{workspaceId}/messages/{messageId}/messagestatus':
     get:
       summary: Retrieve a message status
@@ -3267,7 +3541,6 @@ paths:
                 properties:
                   token:
                     type: string
-                    minLength: 1
                     example: '"your-generated-token-string"'
                   link:
                     type: array
@@ -3427,7 +3700,6 @@ components:
 
             When used for bulk messages, this field is optional, as bulk messages has another model to specify the `to` field recipients.
           maxLength: 10000
-          minLength: 1
         subject:
           type: string
           example: Test Message
@@ -3439,7 +3711,6 @@ components:
             The maximum payload size rule applies.
 
             When used for templates, this field is optional.
-          minLength: 0
           maxLength: 1570
         body:
           type: string
@@ -3452,7 +3723,6 @@ components:
             IMPORTANT: The total SMS length is 1570 characters for english text and 800 when UTF-8 characters are used (primarily non-english)
 
             The 1570 length is a combination of subject and body.
-          minLength: 0
           maxLength: 1570
         email:
           $ref: '#/components/schemas/email'

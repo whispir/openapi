@@ -95,16 +95,7 @@ overrides:
       schema-property-descriptions: off
       schema-property-examples: off
     files:
-      # - '**#/components/schemas/message' # Message Endpoint Schemas
-      # - '**#/components/schemas/email'
-      # - '**#/components/schemas/voice'
-      # - '**#/components/schemas/web'
-      # - '**#/components/schemas/social'
-      # - '**#/components/schemas/resource'
-      # - '**#/components/schemas/template'
-      # - '**#/components/schemas/features'
-      # - '**#/components/schemas/pushOptions'
-      # - '**#/components/schemas/attachment'
+      - '**#/components/schemas/template' # Template Endpoint Schemas
       - '**#/components/schemas/responseTemplatePattern' # Response Template Endpoint Schemas
       - '**#/components/schemas/responseRule'
       - '**#/components/schemas/contact' # Contact Endpoint Schemas

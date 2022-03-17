@@ -632,7 +632,8 @@ paths:
                   link:
                     type: array
                     uniqueItems: true
-                    minItems: 1
+                    maxItems: 7
+                    minItems: 7
                     items:
                       type: object
                       properties:
@@ -641,7 +642,14 @@ paths:
                           example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
                         rel:
                           type: string
-                          example: self
+                          enum:
+                            - self
+                            - summaryStatus
+                            - detailedStatus
+                            - summaryResponses
+                            - detailedResponses
+                            - summaryResponsesWithResponseRule
+                            - detailedResponsesWithResponseRule
                         method:
                           type: string
                           example: GET
@@ -864,25 +872,62 @@ paths:
         - name: view
           in: query
           required: false
-          description: 'Enter view = detailed, summary'
+          description: The view of the message status.
           schema:
             type: string
             enum:
               - summary
               - detailed
+            default: summary
+        - name: Accept
+          in: header
+          required: true
+          description: Application specific mime-type
+          schema:
+            type: string
+            enum:
+              - application/vnd.whispir.messagestatus-v1+json
+              - application/vnd.whispir.messagestatus-v1+xml
+        - name: Content-Type
+          in: header
+          required: true
+          description: Application specific mime-type
+          schema:
+            type: string
+            enum:
+              - application/vnd.whispir.messagestatus-v1+json
+              - application/vnd.whispir.messagestatus-v1+xml
+        - schema:
+            type: string
+            enum:
+              - default
+              - responserule
+            default: default
+          in: query
+          name: filter
+          description: The filter for the message status.
       responses:
         '200':
           description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Message-Status-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
           content:
-            examples:
+            application/vnd.whispir.messagestatus-v1+json:
               examples:
-                response:
+                Summary:
                   value:
                     messageStatuses:
                       - link:
-                          - uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B/messagestatus?view=summary'
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                         categories:
                           - name: Sent
                             recipientCount: 0
@@ -891,57 +936,190 @@ paths:
                             recipientCount: 0
                             percentageTotal: 0.0%
                           - name: Received
+                            recipientCount: 1
+                            percentageTotal: 100.0%
+                          - name: Acknowledged
                             recipientCount: 0
                             percentageTotal: 0.0%
-                          - name: Acknowledged
-                            recipientCount: 2
-                            percentageTotal: 100.0%
                           - name: Undeliverable
                             recipientCount: 0
                             percentageTotal: 0.0%
                     link: []
-            detailed_examples:
-              examples:
-                response:
+                Detailed:
                   value:
                     messageStatuses:
-                      - name: John Smith
-                        info: Out bound SMS text message sent OK.
+                      - name: '61400400400'
+                        info: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
                         link:
-                          - uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B/messagestatus?view=detailed'
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed'
                             rel: self
-                        method: GET
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
                         status:
                           - type: email
                             status: ''
                             destination: ''
                           - type: sms
-                            status: READ
-                            destination: '+1000000000'
-                            sentTimestamp: 1460070991
-                            receivedTimestamp: 1460070991
-                            acknowlegedTimestamp: 1460070991
+                            status: DELIVRD
+                            destination: '61400400400'
+                            sentTimestamp: 1647466923000
+                            receivedTimestamp: 1647466931000
                           - type: voice
                             status: ''
                             destination: ''
-                          - name: Fred Smith
-                            info: Out bound SMS text message sent OK.
-                            uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B/messagestatus?view=detailed'
+                    status: '1 to 1 of 1    '
+                    link: []
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    messageStatuses:
+                      - link:
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                        categories:
+                          - name: Sent
+                            recipientCount: 0
+                            percentageTotal: 0.0%
+                          - name: Pending
+                            recipientCount: 0
+                            percentageTotal: 0.0%
+                          - name: Received
+                            recipientCount: 1
+                            percentageTotal: 100.0%
+                          - name: Acknowledged
+                            recipientCount: 0
+                            percentageTotal: 0.0%
+                          - name: Undeliverable
+                            recipientCount: 0
+                            percentageTotal: 0.0%
+                    link: []
+                properties:
+                  messageStatuses:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      type: object
+                      properties:
+                        link:
+                          type: array
+                          uniqueItems: true
+                          minItems: 1
+                          items:
+                            type: object
+                            properties:
+                              uri:
+                                type: string
+                                minLength: 1
+                                example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
+                              rel:
+                                type: string
+                                minLength: 1
+                                example: self
+                              method:
+                                type: string
+                                minLength: 1
+                                example: GET
+                              host:
+                                type: string
+                                minLength: 1
+                                example: api.au.whispir.com
+                              port:
+                                type: number
+                                enum:
+                                  - -1
+                            required:
+                              - uri
+                              - rel
+                              - method
+                              - host
+                              - port
+                        categories:
+                          type: array
+                          uniqueItems: true
+                          minItems: 5
+                          maxItems: 5
+                          description: Present when `view` is `summary`.
+                          items:
+                            type: object
+                            additionalProperties: false
+                            properties:
+                              name:
+                                type: string
+                                enum:
+                                  - Sent
+                                  - Pending
+                                  - Received
+                                  - Acknowledged
+                                  - Undeliverable
+                              recipientCount:
+                                type: number
+                                example: 1
+                              percentageTotal:
+                                type: string
+                                minLength: 1
+                                example: 100.0%
+                            required:
+                              - name
+                              - recipientCount
+                              - percentageTotal
+                        name:
+                          type: string
+                          example: '61400400400'
+                          description: Present when `view` is `detailed`.
+                        info:
+                          type: string
+                          example: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
+                          description: Present when `view` is `detailed`.
+                        status:
+                          type: object
+                          description: Present when `view` is `detailed`.
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                                - sms
+                                - email
+                                - voice
                             status:
-                              - type: email
-                                status: ''
-                                destination: ''
-                              - type: sms
-                                status: READ
-                                destination: '+1000000000'
-                                sentTimestamp: 1460070991
-                                receivedTimestamp: 1460070991
-                                acknowlegedTimestamp: 1460070991
-                              - type: voice
-                                status: ''
-                                destination: ''
+                              type: string
+                              enum:
+                                - ''
+                                - PENDING
+                                - SENT
+                                - DELIVRD
+                                - READ
+                                - FAILED
+                            destination:
+                              type: string
+                              example: '61400400400'
+                            sentTimestamp:
+                              type: number
+                              example: 1647466923000
+                            receivedTimestamp:
+                              type: number
+                              example: 1647466931000
+                          required:
+                            - type
+                            - status
+                            - destination
+                      required:
+                        - link
+                  link:
+                    type: array
+                    items: {}
+                  status:
+                    type: string
+                    example: '1 to 1 of 1    '
+                    description: Present when `view` is `detailed`.
+                required:
+                  - messageStatuses
+                  - link
       tags:
         - Messages
     parameters:
@@ -4851,3 +5029,11 @@ components:
         enum:
           - application/vnd.whispir.message-v1+json
           - application/vnd.whispir.message-v1+xml
+    Message-Status-Content-Type:
+      description: Message status content mime type.
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.messagestatus-v1+json
+          - application/vnd.whispir.messagestatus-v1+xml

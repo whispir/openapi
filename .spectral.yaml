@@ -88,6 +88,18 @@ rules:
     then:
       field: example
       function: truthy
+  response-content-examples:
+    description: Response content must have non-empty "examples" object.
+    severity: error
+    given: $..responses[*].content[*]
+    then:
+      field: examples
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          minProperties: 1
 overrides:
   - rules:
       schema-examples: off
@@ -112,3 +124,11 @@ overrides:
       - '**#/components/schemas/fieldMapping'
       - '**#/components/schemas/auth' # Auth Endpoint Schemas
       - '**#/components/schemas/activity' # Activity Endpoint Schemas
+  - rules:
+      response-content-examples: off
+    files:
+      - '**#/paths/~1workspaces~1{workspaceId}~1resources' # Resource Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1contacts' # Resource Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1distributionlists' # Resource Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1events' # Resource Endpoint Examples
+      - '**#/paths/~1auth' # Resource Endpoint Examples

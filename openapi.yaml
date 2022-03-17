@@ -5471,6 +5471,179 @@ components:
                     method: GET
                     host: string
                     port: -1
+    400BadRequest:
+      description: 400 Bad Request Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+              errorText:
+                type: string
+                minLength: 1
+              errorDetail:
+                type: string
+                minLength: 1
+            required:
+              - errorSummary
+              - errorText
+              - errorDetail
+            x-examples:
+              example-1:
+                errorSummary: Your request was malformed and could not be processed by the server. Please try again
+                errorText: Bad Request
+                errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
+    401Unauthorized:
+      description: 401 Unauthorized Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              links: {}
+              errorSummary:
+                type: string
+                minLength: 1
+              errorText:
+                type: string
+                minLength: 1
+              errorDetail:
+                type: string
+            required:
+              - errorSummary
+              - errorText
+              - errorDetail
+            x-examples:
+              example-1:
+                links: null
+                errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
+                errorText: Unauthorized
+                errorDetail: ''
+    403Forbidden:
+      description: 403 Forbidden Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+            required:
+              - message
+            x-examples:
+              example-1:
+                message: Forbidden
+    404NotFound:
+      description: 404 Not found Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+              errorText:
+                type: string
+                minLength: 1
+              errorDetail:
+                type: string
+              link:
+                type: array
+                items:
+                  required: []
+                  properties: {}
+            required:
+              - errorSummary
+              - errorText
+              - errorDetail
+              - link
+            x-examples:
+              example-1:
+                errorSummary: 'The resource that you have requested does not exist. Please check the identifier and try again '
+                errorText: Not Found
+                errorDetail: ''
+                link: []
+    415UnsupportedMediaType:
+      description: 415 Unsupported Media Type Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+              errorText:
+                type: string
+                minLength: 1
+              errorDetail:
+                type: string
+                minLength: 1
+            required:
+              - errorSummary
+              - errorText
+              - errorDetail
+            x-examples:
+              example-1:
+                errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
+                errorText: Unsupported Media Type
+                errorDetail: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
+    422UnprocessibleEntity:
+      description: 422 Unprocessible Entity Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+              errorText:
+                type: string
+                minLength: 1
+              errorDetail:
+                type: string
+              link:
+                type: array
+                items:
+                  required: []
+                  properties: {}
+            required:
+              - errorSummary
+              - errorText
+              - errorDetail
+              - link
+            x-examples:
+              example-1:
+                errorSummary: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
+                errorText: |
+                  A Template name already exists in the current Workspace, please select another name and try again.
+                errorDetail: ''
+                link: []
+    500InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          examples:
+            example-1:
+              value:
+                message: Internal Server Error
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.

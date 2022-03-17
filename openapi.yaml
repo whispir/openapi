@@ -1275,6 +1275,12 @@ paths:
                         - properties:
                             from:
                               type: object
+                              required:
+                                - name
+                                - mri
+                                - mobile
+                                - email
+                                - voice
                               properties:
                                 name:
                                   type: string
@@ -1298,6 +1304,10 @@ paths:
                                 - notmatched
                             responseMessage:
                               type: object
+                              required:
+                                - content
+                                - acknowledged
+                                - channel
                               properties:
                                 content:
                                   type: string
@@ -1322,10 +1332,20 @@ paths:
                       properties:
                         uri:
                           type: string
+                          example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
                         rel:
                           type: string
+                          example: self
                         method:
                           type: string
+                          example: GET
+                        host:
+                          type: string
+                          example: api.au.whispir.com
+                        port:
+                          type: number
+                          enum:
+                            - -1
                       required:
                         - uri
                         - rel
@@ -1350,9 +1370,11 @@ paths:
                         link: []
                         type: notmatched
                     link:
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
                         rel: self
                         method: GET
+                        host: api.au.whispir.com
+                        port: -1
                 Detailed:
                   value:
                     status: '1 to 2 of 2    '

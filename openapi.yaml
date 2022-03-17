@@ -869,16 +869,6 @@ paths:
           schema:
             type: string
             example: 44F4DA8F04755430BEC5A0E1E2154EBA
-        - name: view
-          in: query
-          required: false
-          description: The view of the message status.
-          schema:
-            type: string
-            enum:
-              - summary
-              - detailed
-            default: summary
         - name: Accept
           in: header
           required: true
@@ -897,14 +887,24 @@ paths:
             enum:
               - application/vnd.whispir.messagestatus-v1+json
               - application/vnd.whispir.messagestatus-v1+xml
-        - schema:
+        - name: view
+          in: query
+          required: false
+          description: The view for the message status.
+          schema:
+            type: string
+            enum:
+              - summary
+              - detailed
+            default: summary
+        - name: filter
+          schema:
             type: string
             enum:
               - default
               - responserule
             default: default
           in: query
-          name: filter
           description: The filter for the message status.
       responses:
         '200':
@@ -1015,19 +1015,15 @@ paths:
                             properties:
                               uri:
                                 type: string
-                                minLength: 1
                                 example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
                               rel:
                                 type: string
-                                minLength: 1
                                 example: self
                               method:
                                 type: string
-                                minLength: 1
                                 example: GET
                               host:
                                 type: string
-                                minLength: 1
                                 example: api.au.whispir.com
                               port:
                                 type: number
@@ -1062,7 +1058,6 @@ paths:
                                 example: 1
                               percentageTotal:
                                 type: string
-                                minLength: 1
                                 example: 100.0%
                             required:
                               - name
@@ -1077,37 +1072,38 @@ paths:
                           example: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
                           description: Present when `view` is `detailed`.
                         status:
-                          type: object
+                          type: array
                           description: Present when `view` is `detailed`.
-                          properties:
-                            type:
-                              type: string
-                              enum:
-                                - sms
-                                - email
-                                - voice
-                            status:
-                              type: string
-                              enum:
-                                - ''
-                                - PENDING
-                                - SENT
-                                - DELIVRD
-                                - READ
-                                - FAILED
-                            destination:
-                              type: string
-                              example: '61400400400'
-                            sentTimestamp:
-                              type: number
-                              example: 1647466923000
-                            receivedTimestamp:
-                              type: number
-                              example: 1647466931000
-                          required:
-                            - type
-                            - status
-                            - destination
+                          items:
+                            properties:
+                              type:
+                                type: string
+                                enum:
+                                  - sms
+                                  - email
+                                  - voice
+                              status:
+                                type: string
+                                enum:
+                                  - ''
+                                  - PENDING
+                                  - SENT
+                                  - DELIVRD
+                                  - READ
+                                  - FAILED
+                              destination:
+                                type: string
+                                example: '61400400400'
+                              sentTimestamp:
+                                type: number
+                                example: 1647466923000
+                              receivedTimestamp:
+                                type: number
+                                example: 1647466931000
+                            required:
+                              - type
+                              - status
+                              - destination
                       required:
                         - link
                   link:
@@ -1182,18 +1178,37 @@ paths:
           schema:
             type: string
             example: 44F4DA8F04755430BEC5A0E1E2154EBA
+        - name: Accept
+          in: header
+          required: true
+          description: Application specific mime-type
+          schema:
+            type: string
+            enum:
+              - application/vnd.whispir.messageresponse-v1+json
+              - application/vnd.whispir.messageresponse-v1+xml
+        - name: Content-Type
+          in: header
+          required: true
+          description: Application specific mime-type
+          schema:
+            type: string
+            enum:
+              - application/vnd.whispir.messageresponse-v1+json
+              - application/vnd.whispir.messageresponse-v1+xml
         - name: view
           in: query
-          description: 'two types of view ente here eg.summary, detailed'
           required: false
+          description: The view for the message response.
           schema:
             type: string
             enum:
               - summary
               - detailed
+            default: summary
         - name: filter
           in: query
-          description: Enter default value of filter
+          description: The filter for the message response.
           required: false
           schema:
             type: string
@@ -1204,17 +1219,20 @@ paths:
       responses:
         '200':
           description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Message-Response-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
           content:
             application/vnd.whispir.message-v1+json:
               schema:
-                $ref: '#/components/schemas/message'
-            application/vnd.whispir.message-v1+xml:
-              schema:
-                $ref: '#/components/schemas/message'
-            Summary examples:
-              examples:
-                response:
-                  value:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
                     messageresponses:
                       - percentageTotal: 50%
                         responseCount: '1'
@@ -1225,12 +1243,108 @@ paths:
                         link: []
                         type: notmatched
                     link:
-                      - uri: 'https://api.au.whispir.com/messages/069BF68E5E0FE99B/messageresponses?view=summary&filter=default'
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
                         rel: self
                         method: GET
-            Detailed examples:
+                properties:
+                  messageresponses:
+                    type: array
+                    uniqueItems: true
+                    description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
+                    items:
+                      oneOf:
+                        - properties:
+                            percentageTotal:
+                              type: string
+                            responseCount:
+                              type: string
+                            link:
+                              type: array
+                              items: {}
+                            type:
+                              type: string
+                          required:
+                            - percentageTotal
+                            - responseCount
+                            - type
+                        - properties:
+                            from:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                  example: Test User
+                                mri:
+                                  type: string
+                                  example: testUser.au@User.whispir.com
+                                mobile:
+                                  type: string
+                                  example: '61400400400'
+                                email:
+                                  type: string
+                                  example: tuser@whispir.com
+                                voice:
+                                  type: string
+                                  example: '61400400400'
+                            responseCategory:
+                              type: string
+                              enum:
+                                - noresponse
+                                - notmatched
+                            responseMessage:
+                              type: object
+                              properties:
+                                content:
+                                  type: string
+                                  example: N/A
+                                acknowledged:
+                                  type: string
+                                  example: N/A
+                                channel:
+                                  type: string
+                                  example: N/A
+                      description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
+                      type: object
+                  link:
+                    type: array
+                    uniqueItems: true
+                    items:
+                      type: object
+                      properties:
+                        uri:
+                          type: string
+                        rel:
+                          type: string
+                        method:
+                          type: string
+                      required:
+                        - uri
+                        - rel
+                        - method
+                  status:
+                    type: string
+                    example: '1 to 1 of 1    '
+                    description: Present when `view` is `detailed`.
+                required:
+                  - messageresponses
+                  - link
               examples:
-                response:
+                Summary:
+                  value:
+                    messageresponses:
+                      - percentageTotal: '50%'
+                        responseCount: '1'
+                        link: []
+                        type: noresponse
+                      - percentageTotal: 50%
+                        responseCount: '1'
+                        link: []
+                        type: notmatched
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
+                        rel: self
+                        method: GET
+                Detailed:
                   value:
                     status: '1 to 2 of 2    '
                     messageresponses:
@@ -5037,3 +5151,11 @@ components:
         enum:
           - application/vnd.whispir.messagestatus-v1+json
           - application/vnd.whispir.messagestatus-v1+xml
+    Message-Response-Content-Type:
+      description: Message response content mime type.
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.messageresponse-v1+json
+          - application/vnd.whispir.messageresponse-v1+xml

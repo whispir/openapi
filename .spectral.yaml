@@ -95,7 +95,6 @@ overrides:
       schema-property-descriptions: off
       schema-property-examples: off
     files:
-      - '**#/components/schemas/template' # Template Endpoint Schemas
       - '**#/components/schemas/responseTemplatePattern' # Response Template Endpoint Schemas
       - '**#/components/schemas/responseRule'
       - '**#/components/schemas/contact' # Contact Endpoint Schemas

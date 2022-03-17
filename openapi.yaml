@@ -1727,29 +1727,28 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/Template'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          description: Unsupported Media Type
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     get:
       tags:
         - Templates
       summary: List templates
       description: |
-        ## Response Elements
+        List all message templates for the workspace.
 
-        **messageTemplateName:** String
-
-        Specifies the name of the message template to be used within message requests.
-
-        **messageTemplateDescription:** String  
-        Specifies the description of the message template for others to understand it’s purpose.
-
-        **id:** String  
-        Specifies the ID of the template that can be used for message sending.
-
-        **link:** array  
-        Provides a list of URLs that can be used to manipulate or access the message template.
-
-        *   uri - the link to access the message template
-        *   rel - the descriptor for what the link will do
-        *   method - the HTTP method to use with this particular link
+        Pagination is available.
       operationId: getTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -1783,7 +1782,7 @@ paths:
                             port: -1
                     link: []
               schema:
-                description: ''
+                description: Returns a list of templates
                 type: object
                 x-examples:
                   example-1:
@@ -1870,6 +1869,12 @@ paths:
                   - status
                   - messagetemplates
                   - link
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates/{templateId}':
@@ -1877,7 +1882,7 @@ paths:
       tags:
         - Templates
       summary: Retrieve a template
-      description: Retrieves a Template object.
+      description: Retrieves a message template
       operationId: getTemplatesById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -1902,6 +1907,20 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/Template'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     put:
       tags:
         - Templates
@@ -1931,6 +1950,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     delete:
       tags:
         - Templates
@@ -1950,6 +1983,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules':
@@ -4568,6 +4615,46 @@ components:
       x-tags:
         - Templates
       title: Template
+      description: The shape of the template request payload when creating one
+      x-examples:
+        Template:
+          messageTemplateName: Sample SMS Template
+          messageTemplateDescription: Template to provide an example on whispir.io
+          responseTemplateId: responseTemplateId
+          subject: Test SMS Message
+          body: This is the body of my test SMS message
+          email:
+            body: This is the body of my email message.
+            footer: This is the footer of my message.
+            type: text/plain
+            resources:
+              attachments:
+                - attachmentName: photo.jpeg
+                  derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                  attachmentDesc: My photo
+          voice:
+            header: 'This is the introduction, read out to the recipient prior to any key press.'
+            body: 'This is the body of the voice call, read out after the key press'
+            type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+            resources:
+              attachment:
+                - attachmentName: photo.jpeg
+                  derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                  attachmentDesc: My photo
+          web:
+            body: This is the content of my web publishing or Rich Push Message
+            type: text/plain
+          social:
+            social:
+              - id: social
+                body: Facebook Content
+                type: text/plain
+          type: defaultNoReply
+          features:
+            pushOptions:
+              notifications: enabled
+              escalationMins: '3'
+              appId: appId
     responseTemplatePattern:
       type: object
       properties:
@@ -5246,7 +5333,7 @@ components:
       content:
         application/json:
           schema:
-            description: ''
+            description: This is the shape of a template response
             type: object
             x-examples:
               example-1:
@@ -5337,6 +5424,16 @@ components:
                   bool:
                     type: boolean
                     default: false
+                required:
+                  - period
+                  - rule
+                  - type
+                  - publishToWeb
+                  - expiryDay
+                  - expiryHour
+                  - expiryMin
+                  - feedIds
+                  - bool
               body:
                 type: string
                 minLength: 1
@@ -5478,22 +5575,31 @@ components:
           schema:
             description: ''
             type: object
+            x-examples:
+              example-1:
+                errorSummary: Your request was malformed and could not be processed by the server. Please try again
+                errorText: Bad Request
+                errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
             properties:
               errorSummary:
                 type: string
                 minLength: 1
+                example: Your request was malformed and could not be processed by the server. Please try again
               errorText:
                 type: string
                 minLength: 1
+                example: Bad Request
               errorDetail:
                 type: string
                 minLength: 1
+                example: '"java.io.EOFException: No content to map to Object due to end of inpu'
             required:
               - errorSummary
               - errorText
               - errorDetail
-            x-examples:
-              example-1:
+          examples:
+            example-1:
+              value:
                 errorSummary: Your request was malformed and could not be processed by the server. Please try again
                 errorText: Bad Request
                 errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
@@ -5504,23 +5610,32 @@ components:
           schema:
             description: ''
             type: object
+            x-examples:
+              example-1:
+                links: null
+                errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
+                errorText: Unauthorized
+                errorDetail: ''
             properties:
               links: {}
               errorSummary:
                 type: string
                 minLength: 1
+                example: Your username and password combination was incorrect. Please check your authentication details and try again
               errorText:
                 type: string
                 minLength: 1
+                example: Unauthorised
               errorDetail:
                 type: string
             required:
               - errorSummary
               - errorText
               - errorDetail
-            x-examples:
-              example-1:
-                links: null
+          examples:
+            example-1:
+              value:
+                links: []
                 errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
                 errorText: Unauthorized
                 errorDetail: ''
@@ -5531,14 +5646,19 @@ components:
           schema:
             description: ''
             type: object
+            x-examples:
+              example-1:
+                message: Forbidden
             properties:
               message:
                 type: string
                 minLength: 1
+                example: Forbidden
             required:
               - message
-            x-examples:
-              example-1:
+          examples:
+            example-1:
+              value:
                 message: Forbidden
     404NotFound:
       description: 404 Not found Error
@@ -5547,28 +5667,31 @@ components:
           schema:
             description: ''
             type: object
+            x-examples:
+              example-1:
+                errorSummary: 'The resource that you have requested does not exist. Please check the identifier and try again '
+                errorText: Not Found
+                errorDetail: ''
+                link: []
             properties:
               errorSummary:
                 type: string
                 minLength: 1
+                example: The resource that you have requested does not exist. Please check the identifier and try again
               errorText:
                 type: string
                 minLength: 1
+                example: Not Found
               errorDetail:
                 type: string
               link:
                 type: array
                 items:
-                  required: []
-                  properties: {}
-            required:
-              - errorSummary
-              - errorText
-              - errorDetail
-              - link
-            x-examples:
-              example-1:
-                errorSummary: 'The resource that you have requested does not exist. Please check the identifier and try again '
+                  type: object
+          examples:
+            example-1:
+              value:
+                errorSummary: The resource that you have requested does not exist. Please check the identifier and try again
                 errorText: Not Found
                 errorDetail: ''
                 link: []
@@ -5579,22 +5702,31 @@ components:
           schema:
             description: ''
             type: object
+            x-examples:
+              example-1:
+                errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
+                errorText: Unsupported Media Type
+                errorDetail: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
             properties:
               errorSummary:
                 type: string
                 minLength: 1
+                example: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
               errorText:
                 type: string
                 minLength: 1
+                example: Unsupported Media Type
               errorDetail:
                 type: string
                 minLength: 1
+                example: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
             required:
               - errorSummary
               - errorText
               - errorDetail
-            x-examples:
-              example-1:
+          examples:
+            example-1:
+              value:
                 errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
                 errorText: Unsupported Media Type
                 errorDetail: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
@@ -5605,27 +5737,31 @@ components:
           schema:
             description: ''
             type: object
+            x-examples:
+              example-1:
+                errorSummary: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
+                errorText: |
+                  A Template name already exists in the current Workspace, please select another name and try again.
+                errorDetail: ''
+                link: []
             properties:
               errorSummary:
                 type: string
                 minLength: 1
+                example: '"Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
               errorText:
                 type: string
                 minLength: 1
+                example: 'A Template name already exists in the current Workspace, please select another name and try again.'
               errorDetail:
                 type: string
               link:
                 type: array
                 items:
-                  required: []
-                  properties: {}
-            required:
-              - errorSummary
-              - errorText
-              - errorDetail
-              - link
-            x-examples:
-              example-1:
+                  type: object
+          examples:
+            example-1:
+              value:
                 errorSummary: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
                 errorText: |
                   A Template name already exists in the current Workspace, please select another name and try again.
@@ -5640,6 +5776,7 @@ components:
             properties:
               message:
                 type: string
+                example: Internal Server Error
           examples:
             example-1:
               value:

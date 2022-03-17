@@ -4573,7 +4573,7 @@ components:
         Alias Fields:
           type: string
         Messaging Options:
-          $ref: '#/components/schemas/messagingOptions'
+          $ref: '#/components/schemas/messagingoptions'
         Other Fields:
           type: string
       xml:
@@ -4773,51 +4773,99 @@ components:
         - Workspaces
       title: Workspace
     locations:
-      type: object
-      properties:
-        location:
-          $ref: '#/components/schemas/location'
+      description: The locations for the contact.
+      type: array
       xml:
         name: locations
       title: Locations
-    location:
-      type: object
-      properties:
-        latitude:
-          type: string
-          example: '0.0'
-        longitude:
-          type: string
-          example: '0.0'
-        type:
-          type: string
-          example: CurrentLocation
-      xml:
-        name: location
-      title: Location
-    messagingOptions:
-      type: object
-      properties:
-        messagingOption:
-          $ref: '#/components/schemas/messagingOption'
-      xml:
-        name: messagingOptions
+      x-examples:
+        One Location:
+          - location:
+              latitude: 41.9028
+              longitude: -12.4964
+              type: CurrentLocation
+        Multiple Locations:
+          - location:
+              latitude: 41.9028
+              longitude: -12.4964
+              type: CurrentLocation
+          - location:
+              latitude: 41.5825
+              longitude: -12.3842
+              type: Work
+          - location:
+              latitude: 41.7262
+              longitude: -12.4726
+              type: Home
+      items:
+        type: object
+        description: The location object.
+        properties:
+          latitude:
+            type: number
+            description: 'The measurement of distance north or south of the Equator, for the contact.'
+            example: 41.9028
+            minimum: -90
+            maximum: 90
+          longitude:
+            type: number
+            description: 'The measurement of distance east or west of the prime meridian, for the contact.'
+            example: -12.4964
+            minimum: -180
+            maximum: 180
+          type:
+            description: A description for the location. At least one element of the `locations` array must have a `type` equal to `CurrentLocation`.
+            type: string
+            example: CurrentLocation
+    messagingoptions:
+      description: The message channel options for the contact.
+      type: array
       title: Messaging Options
-    messagingOption:
-      type: object
-      properties:
-        channel:
-          type: string
-          example: sms
-        enabled:
-          type: boolean
-          example: true
-        primary:
-          type: string
-          example: WorkMobilePhone1
-      xml:
-        name: messagingOption
-      title: Messaging Option
+      items:
+        type: object
+        description: The object to configure message channel options.
+        properties:
+          channel:
+            type: string
+            description: The message channel.
+            enum:
+              - sms
+              - email
+              - voice
+          enabled:
+            description: A boolean flag indicating whether messaging is enabled for the `channel`.
+            type: boolean
+            example: true
+          primary:
+            type: string
+            description: The primary contact address for the `channel`.
+            enum:
+              - workMobilePhone1
+              - workMobilePhone2
+              - workEmailAddress1
+              - workEmailAddress2
+              - personalMobilePhone1
+              - personalEmailAddress1
+          secondary:
+            type: string
+            description: The secondary contact address for the `channel`.
+            enum:
+              - workMobilePhone1
+              - workMobilePhone2
+              - workEmailAddress1
+              - workEmailAddress2
+              - personalMobilePhone1
+              - personalEmailAddress1
+          tertiary:
+            type: string
+            description: The tertiary contact address for the `channel`.
+            enum:
+              - workMobilePhone1
+              - workMobilePhone2
+              - workEmailAddress1
+              - workEmailAddress2
+              - personalMobilePhone1
+              - personalEmailAddress1
     activity:
       type: object
       required:

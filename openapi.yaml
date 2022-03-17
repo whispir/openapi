@@ -1249,23 +1249,28 @@ paths:
                 properties:
                   messageresponses:
                     type: array
-                    uniqueItems: true
-                    description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
+                    uniqueItems: false
                     items:
                       oneOf:
                         - properties:
                             percentageTotal:
                               type: string
+                              example: 100%
                             responseCount:
                               type: string
+                              example: '1'
                             link:
                               type: array
                               items: {}
                             type:
                               type: string
+                              enum:
+                                - noresponse
+                                - notmatched
                           required:
                             - percentageTotal
                             - responseCount
+                            - link
                             - type
                         - properties:
                             from:
@@ -1303,6 +1308,10 @@ paths:
                                 channel:
                                   type: string
                                   example: N/A
+                          required:
+                            - from
+                            - responseCategory
+                            - responseMessage
                       description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
                       type: object
                   link:
@@ -1332,7 +1341,7 @@ paths:
                 Summary:
                   value:
                     messageresponses:
-                      - percentageTotal: '50%'
+                      - percentageTotal: 50%
                         responseCount: '1'
                         link: []
                         type: noresponse

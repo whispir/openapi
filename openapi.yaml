@@ -379,7 +379,7 @@ paths:
                   - status
                   - link
               examples:
-                Example:
+                Response:
                   value:
                     messages:
                       - subject: Test Message

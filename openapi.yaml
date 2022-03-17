@@ -1719,57 +1719,14 @@ paths:
           application/vnd.whispir.template-v1+json:
             schema:
               $ref: '#/components/schemas/template'
-            examples:
-              The Template Object:
-                value:
-                  messageTemplateName: Sample SMS Template
-                  messageTemplateDescription: Template to provide an example on whispir.io
-                  subject: Test SMS Message
-                  body: This is the body of my test SMS message
-                  responseTemplateId: string
-                  email:
-                    body: This is the body of my test Email message
-                    footer: This is the footer of my message (generally where a signature would go)
-                    type: text/plain
-                  voice:
-                    header: 'This is the introduction, read out prior to any key press'
-                    body: 'This is the body of the voice call, read out after the key press'
-                    type: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
-                  web:
-                    body: This is the content of my web publishing or Rich Push Message
-                    type: text/plain
-                  social:
-                    social:
-                      - id: social_long
-                        body: Facebook Content.
-                        type: text/plain
-                  type: defaultNoReply
-                  features:
-                    pushOptions:
-                      notifications: enabled
-                      escalationMins: 3
           application/vnd.whispir.template-v1+xml:
             schema:
               $ref: '#/components/schemas/template'
-        description: The template object
+        description: Templates object that needs to be create Templates
         required: true
       responses:
         '201':
-          $ref: '#/components/responses/Template'
-        '400':
-          $ref: '#/components/responses/400badRequest'
-        '401':
-          $ref: '#/components/responses/401unauthorised'
-        '403':
-          $ref: '#/components/responses/403forbidden'
-        '404':
-          $ref: '#/components/responses/404notFound'
-        '415':
-          $ref: '#/components/responses/415unsupportedMediaType'
-        '422':
-          $ref: '#/components/responses/422unprocessibleEntity'
-        '500':
-          $ref: '#/components/responses/500internalServerError'
+          description: Created
     get:
       tags:
         - Templates
@@ -1798,21 +1755,43 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
       responses:
         '200':
-          $ref: '#/components/responses/Templates'
-        '400':
-          $ref: '#/components/responses/400badRequest'
-        '401':
-          $ref: '#/components/responses/401unauthorised'
-        '403':
-          $ref: '#/components/responses/403forbidden'
-        '404':
-          $ref: '#/components/responses/404notFound'
-        '415':
-          $ref: '#/components/responses/415unsupportedMediaType'
-        '422':
-          $ref: '#/components/responses/422unprocessibleEntity'
-        '500':
-          $ref: '#/components/responses/500internalServerError'
+          description: OK
+          content:
+            examples:
+              examples:
+                response:
+                  value:
+                    status: '1 to 4 of 4    '
+                    messagetemplates:
+                      - messageTemplateName: Appointment Reminder
+                        messageTemplateDescription: ''
+                        id: F0547F6F2E4839F8
+                        link:
+                          - uri: 'https://api.au.whispir.com/templates/F0547F6F2E4839F8'
+                            rel: self
+                            method: GET
+                      - messageTemplateName: Customer Survey
+                        messageTemplateDescription: ''
+                        id: DDE10AC13FB0E457
+                        link:
+                          - uri: 'https://api.au.whispir.com/templates/DDE10AC13FB0E457'
+                            rel: self
+                            method: GET
+                      - messageTemplateName: Service announcement
+                        messageTemplateDescription: ''
+                        id: 900972D1C916FE84
+                        link:
+                          - uri: 'https://api.au.whispir.com/templates/900972D1C916FE84'
+                            rel: self
+                            method: GET
+                      - messageTemplateName: Shift Opportunity
+                        messageTemplateDescription: ''
+                        id: 9CB9BE20B885542D
+                        link:
+                          - uri: 'https://api.au.whispir.com/templates/9CB9BE20B885542D'
+                            rel: self
+                            method: GET
+                    link: []
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates/{templateId}':
@@ -1831,23 +1810,20 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
+        - schema:
+            type: string
+            default: application/vnd.whispir.template-v1+json
+          in: header
+          name: Content-Type
+          description: Indicates the resource's media type
+        - schema:
+            type: string
+          in: header
+          name: Content-Length
+          description: 'Indicates the size of the entity body, in bytes'
       responses:
-        '200':
+        '201':
           $ref: '#/components/responses/Template'
-        '400':
-          $ref: '#/components/responses/400badRequest'
-        '401':
-          $ref: '#/components/responses/401unauthorised'
-        '403':
-          $ref: '#/components/responses/403forbidden'
-        '404':
-          $ref: '#/components/responses/404notFound'
-        '415':
-          $ref: '#/components/responses/415unsupportedMediaType'
-        '422':
-          $ref: '#/components/responses/422unprocessibleEntity'
-        '500':
-          $ref: '#/components/responses/500internalServerError'
     put:
       tags:
         - Templates
@@ -1872,25 +1848,11 @@ paths:
           application/vnd.whispir.template-v1+xml:
             schema:
               $ref: '#/components/schemas/template'
-        description: Templates object that needs to be updated Templates
+        description: Templates object that needs to be update Templates
         required: true
       responses:
         '204':
           description: No Content
-        '400':
-          $ref: '#/components/responses/400badRequest'
-        '401':
-          $ref: '#/components/responses/401unauthorised'
-        '403':
-          $ref: '#/components/responses/403forbidden'
-        '404':
-          $ref: '#/components/responses/404notFound'
-        '415':
-          $ref: '#/components/responses/415unsupportedMediaType'
-        '422':
-          $ref: '#/components/responses/422unprocessibleEntity'
-        '500':
-          $ref: '#/components/responses/500internalServerError'
     delete:
       tags:
         - Templates
@@ -1910,20 +1872,6 @@ paths:
       responses:
         '204':
           description: No Content
-        '400':
-          $ref: '#/components/responses/400badRequest'
-        '401':
-          $ref: '#/components/responses/401unauthorised'
-        '403':
-          $ref: '#/components/responses/403forbidden'
-        '404':
-          $ref: '#/components/responses/404notFound'
-        '415':
-          $ref: '#/components/responses/415unsupportedMediaType'
-        '422':
-          $ref: '#/components/responses/422unprocessibleEntity'
-        '500':
-          $ref: '#/components/responses/500internalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules':
@@ -4035,11 +3983,6 @@ components:
           schema:
             $ref: '#/components/schemas/event'
       description: events object that needs to be create events
-    template:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/template'
   securitySchemes:
     BasicAuth:
       type: http
@@ -4499,52 +4442,22 @@ components:
           derefUri: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
     template:
       type: object
-      xml:
-        name: template
-        prefix: ns3
-      x-tags:
-        - Templates
-      title: Template
-      x-examples:
-        Template:
-          messageTemplateName: Sample SMS Template
-          messageTemplateDescription: Template to provide an example on whispir.io
-          responseTemplateId: string
-          subject: Test SMS Message
-          body: This is the body of my test SMS message
-          email:
-            body: This is the body of my test Email message
-            footer: This is the footer of my message (generally where a signature would go)
-            type: text/plain
-          voice:
-            header: 'This is the introduction, read out prior to any key press'
-            body: 'This is the body of the voice call, read out after the key press'
-            type: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
-          web:
-            body: This is the content of my web publishing or Rich Push Message
-            type: text/plain
-          social:
-            social:
-              - id: social_long
-                body: Facebook Content.
-                type: text/plain
-          type: defaultNoReply
-          features:
-            pushOptions:
-              notifications: enabled
-              escalationMins: 3
-      description: ''
+      required:
+        - messageTemplateName
+        - subject
+        - body
+        - email
+        - voice
+        - web
       properties:
         messageTemplateName:
           type: string
           description: Specifies the name of the message template to be used within message requests.
           example: Sample SMS Template
-          maxLength: 50
         messageTemplateDescription:
           type: string
           description: Specifies the description of the message template for others to understand its purpose.
           example: Template to provide an example on whispir.io
-          maxLength: 250
         responseTemplateId:
           type: string
           description: Specifies the ID of the Response Rule that should be associated with this Message Template.
@@ -4553,15 +4466,10 @@ components:
           type: string
           description: 'Specifies the first line of the SMS message or Voice call, and the subject of the Email message.'
           example: Test SMS Message
-          maxLength: 1570
         body:
           type: string
           description: Specifies the content of the SMS message.
           example: This is the body of my test SMS message
-          maxLength: 1570
-        responseTemplateId:
-          type: string
-          description: Specifies the ID of the Response Rule that should be associated with this Message Template.
         email:
           $ref: '#/components/schemas/email'
         voice:
@@ -4576,10 +4484,12 @@ components:
           example: defaultNoReply
         features:
           $ref: '#/components/schemas/features'
-      required:
-        - messageTemplateName
-        - subject
-        - body
+      xml:
+        name: template
+        prefix: ns3
+      x-tags:
+        - Templates
+      title: Template
     responseTemplatePattern:
       type: object
       properties:
@@ -5190,63 +5100,6 @@ components:
       xml:
         name: fieldMapping
       title: Field Mapping
-    link:
-      title: link
-      type: object
-      properties:
-        uri:
-          type: string
-          example: 'https://api.ap1.whispir.com/workspaces/{workspaceId}/{resourceName}/{resourceId}'
-        rel:
-          type: string
-          example: self
-        method:
-          type: string
-          enum:
-            - GET
-            - POST
-            - DELETE
-            - PUT
-        host:
-          type: string
-          example: api.ap1.whispir.com
-        port:
-          type: integer
-          example: -1
-    dlr:
-      description: Has a fixed object structure and is used for Whispir Internal tracking purposes and has no related value to the Customer.
-      type: object
-      x-examples:
-        example-1:
-          period: ''
-          rule: ''
-          type: ''
-          publishToWeb: false
-          expiryDay: 0
-          expiryHour: 0
-          expiryMin: 0
-          feedIds: ''
-          bool: false
-      properties:
-        period:
-          type: string
-        rule:
-          type: string
-        type:
-          type: string
-        publishToWeb:
-          type: boolean
-        expiryDay:
-          type: number
-        expiryHour:
-          type: number
-        expiryMin:
-          type: number
-        feedIds:
-          type: string
-        bool:
-          type: boolean
-      x-internal: true
     attachment:
       type: object
       description: |-
@@ -5292,23 +5145,26 @@ components:
         example: 9A4C5521FFC7B15B
       description: The identifier for the workspace.
       required: true
+    limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: number
+        default: 20
+        maximum: 20
+      description: The number of records to be returned.
+    offset:
+      name: offset
+      in: query
+      required: false
+      schema:
+        type: number
+        default: 0
+      description: The record number to start returning from.
   responses:
-    500internalServerError:
-      description: 500 Internal Server Error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: INTERNAL SERVER ERROR
-          examples:
-            500 Internal Server Error:
-              value:
-                message: INTERNAL SERVER ERROR
     Template:
-      description: This is the response object returned for creating and retrieving a message template
+      description: Example Template response object
       content:
         application/json:
           schema:
@@ -5316,8 +5172,8 @@ components:
             type: object
             x-examples:
               example-1:
-                messageTemplateName: Sample SMS Template
-                messageTemplateDescription: Template to provide an example on whispir.io
+                messageTemplateName: Sample SMS Template with tags
+                messageTemplateDescription: Template to provide an example on whispir.io no.1
                 subject: Test SMS Message
                 tags: ''
                 dlr:
@@ -5346,19 +5202,19 @@ components:
                   footer: ''
                   other: ''
                 responseTemplateId: 7D9A8AAA54747711
-                id: D358B574E4FC18DB
+                id: 3148356543415EE7
                 link:
-                  - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/D358B574E4FC18DB'
+                  - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
                     rel: self
                     method: GET
                     host: api.au.whispir.com
                     port: -1
-                  - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/D358B574E4FC18DB'
+                  - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
                     rel: deleteTemplate
                     method: DELETE
                     host: api.au.whispir.com
                     port: -1
-                  - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/D358B574E4FC18DB'
+                  - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
                     rel: updateTemplate
                     method: PUT
                     host: api.au.whispir.com
@@ -5367,27 +5223,61 @@ components:
               messageTemplateName:
                 type: string
                 minLength: 1
-                description: Specifies the name of the message template to be used within message requests.
+                description: Specifies the name of the message template to be stored
               messageTemplateDescription:
                 type: string
                 minLength: 1
-                description: Specifies the description of the message template for others to understand its purpose.
+                description: 'Specifies the description of the message template, so that others can understand its purpose'
               subject:
                 type: string
                 minLength: 1
-                description: 'Specifies the first line of the SMS message or Voice call, and the subject of the Email message.'
+                description: Specifies the subject of the email message
               tags:
                 type: string
-                description: Metadata to identify related resources together for easy group viewing from the UI
+                description: Information which helps to label related message templates together
               dlr:
-                $ref: '#/components/schemas/dlr'
+                type: object
+                description: dlr stands for "delivery receipt" which has a fixed object structure and is used for Whispir internal tracking purposes.
+                properties:
+                  period:
+                    type: string
+                  rule:
+                    type: string
+                  type:
+                    type: string
+                  publishToWeb:
+                    type: boolean
+                    default: false
+                  expiryDay:
+                    type: number
+                  expiryHour:
+                    type: number
+                  expiryMin:
+                    type: number
+                  feedIds:
+                    type: string
+                  bool:
+                    type: boolean
+                    default: false
               body:
                 type: string
-                description: Specifies the content of the SMS message.
+                minLength: 1
+                description: |-
+                  The SMS body.
+
+                  The maximum payload size rule applies.
+
+                  IMPORTANT: The total SMS length is 1570 characters for english text and 800 when UTF-8 characters are used (primarily non-english)
+
+                  The 1570 length is a combination of subject and body.
+                maxLength: 1570
               type:
                 type: string
                 minLength: 1
                 description: Allows the user to modify the message behaviour for replies and DLRs (delivery receipts)
+                enum:
+                  - defaultNoReply
+                  - noDlr
                 example: defaultNoReply
               email:
                 $ref: '#/components/schemas/email'
@@ -5398,50 +5288,71 @@ components:
               responseTemplateId:
                 type: string
                 minLength: 1
-                description: Specifies the ID of the Response Rule that should be associated with this Message Template.
+                example: 7D9A8AAA54747711
+                description: Specifies the ID of the Response Rule that should be associated with this message template. Do not insert in the payload when unused
               id:
                 type: string
                 minLength: 1
-                description: The given identifier of the message template object
+                description: Specifies the ID of the template that can be referenced to use it
+                example: 3148356543415EE7
+                readOnly: true
               link:
                 type: array
                 uniqueItems: true
-                minItems: 1
-                description: Describes the available API endpoints for the given resource
+                description: Provides a list of URLs that can be used to manipulate or access the message template. This following attribute may return an empty array.
+                minItems: 0
                 items:
-                  $ref: '#/components/schemas/link'
+                  type: object
+                  description: Provides a list of URLs that can be used to manipulate or access the message template. This following attribute may return an empty array when there are no available URLs
+                  properties:
+                    uri:
+                      type: string
+                      minLength: 1
+                      format: uri
+                      example: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
+                      description: The link to access the message template
+                      readOnly: true
+                    rel:
+                      type: string
+                      minLength: 1
+                      description: The descriptor for what the link will do
+                      default: self
+                      readOnly: true
+                    method:
+                      type: string
+                      minLength: 1
+                      description: The HTTP method to use with this particular link
+                      enum:
+                        - GET
+                        - DELETE
+                        - PUT
+                      example: GET
+                      readOnly: true
+                    host:
+                      type: string
+                      minLength: 1
+                      description: Host of the endpoint
+                      readOnly: true
+                    port:
+                      type: number
+                      description: Port number of the endpoint
+                      default: -1
+                      readOnly: true
+            required:
+              - messageTemplateName
+              - subject
+              - body
+              - type
+              - responseTemplateId
+              - id
           examples:
-            The Message Template:
+            Template Response Object:
               value:
-                messageTemplateName: Sample SMS Template
-                messageTemplateDescription: Template to provide an example on whispir.io
-                subject: Test SMS Message
-                body: This is the body of my test SMS message
-                responseTemplateId: string
-                email:
-                  body: This is the body of my test Email message
-                  footer: This is the footer of my message (generally where a signature would go)
-                  type: text/plain
-                voice:
-                  header: 'This is the introduction, read out prior to any key press'
-                  body: 'This is the body of the voice call, read out after the key press'
-                  type: 'ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:,Pin'
-                web:
-                  body: This is the content of my web publishing or Rich Push Message
-                  type: text/plain
-                social:
-                  social:
-                    - id: social_long
-                      body: Facebook Content.
-                      type: text/plain
-                type: defaultNoReply
-                features:
-                  pushOptions:
-                    notifications: enabled
-                    escalationMins: 3
-                id: C23D6E2DD3D251BF
+                messageTemplateName: Example template name
+                messageTemplateDescription: template description
+                subject: template subject
                 tags: ''
-                dir:
+                dlr:
                   period: ''
                   rule: ''
                   type: ''
@@ -5451,298 +5362,37 @@ components:
                   expiryMin: 0
                   feedIds: ''
                   bool: false
+                body: template message body
+                type: defaultNoReply
+                email:
+                  body: This is the body of my email message.
+                  footer: This is the footer of my message.
+                  type: text/plain
+                  resources:
+                    attachments:
+                      - attachmentName: photo.jpeg
+                        derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                        attachmentDesc: My photo
+                web:
+                  body: This is the content of my web publishing or Rich Push Message
+                  type: text/plain
+                voice:
+                  header: 'This is the introduction, read out to the recipient prior to any key press.'
+                  body: 'This is the body of the voice call, read out after the key press'
+                  type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                  resources:
+                    attachment:
+                      - attachmentName: photo.jpeg
+                        derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                        attachmentDesc: My photo
+                responseTemplateId: 7D9A8AAA54747711
+                id: 3148356543415EE7
                 link:
-                  - uri: 'https://api.ap1.whispir.com/workspaces/573716059009818C/templates/C23D6E2DD3D251BF'
+                  - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
                     rel: self
                     method: GET
-                    host: api.ap1.whispir.com
+                    host: string
                     port: -1
-                  - uri: 'https://api.ap1.whispir.com/workspaces/573716059009818C/templates/C23D6E2DD3D251BF'
-                    rel: updateTemplate
-                    method: PUT
-                    host: api.ap1.whispir.com
-                    port: -1
-                  - uri: 'https://api.ap1.whispir.com/workspaces/573716059009818C/templates/C23D6E2DD3D251BF'
-                    rel: deleteTemplate
-                    method: DELETE
-                    host: api.ap1.whispir.com
-                    port: -1
-    400badRequest:
-      description: Example response of a 400 bad request error
-      content:
-        application/json:
-          schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                errorSummary: Your request was malformed and could not be processed by the server. Please try again
-                errorText: Bad Request
-                errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
-            properties:
-              errorSummary:
-                type: string
-                minLength: 1
-                example: Your request was malformed and could not be processed by the server. Please try again
-              errorText:
-                type: string
-                minLength: 1
-                example: Bad Request
-              errorDetail:
-                type: string
-                minLength: 1
-                example: 'java.io.EOFException: No content to map to Object due to end of input'
-              link:
-                type: array
-                items: {}
-          examples:
-            400 Bad Request:
-              value:
-                errorSummary: Your request was malformed and could not be processed by the server. Please try again
-                errorText: Bad Request
-                errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
-                link: []
-    401unauthorised:
-      description: 401 Unauthorized Error
-      content:
-        application/json:
-          schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
-                errorText: Unauthorized
-                errorDetail: ''
-                link: []
-            properties:
-              errorSummary:
-                type: string
-                minLength: 1
-                example: Your username and password combination was incorrect. Please check your authentication details and try again
-              errorText:
-                type: string
-                minLength: 1
-                example: Unauthorized
-              errorDetail:
-                type: string
-              link:
-                type: array
-                items: {}
-          examples:
-            401 Unauthorized Error:
-              value:
-                errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
-                errorText: Unauthorized
-                errorDetail: ''
-                link: []
-    403forbidden:
-      description: 403 Forbidden Error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: Forbidden
-          examples:
-            403 Forbidden:
-              value:
-                message: Forbidden
-    404notFound:
-      description: 404 Not Found Error
-      content:
-        application/json:
-          schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                errorSummary: The resource that you have requested does not exist. Please check the identifier and try again
-                errorText: Not Found
-                errorDetail: ''
-                link: []
-            properties:
-              errorSummary:
-                type: string
-                minLength: 1
-                example: The resource that you have requested does not exist. Please check the identifier and try again
-              errorText:
-                type: string
-                minLength: 1
-                example: Not Found
-              errorDetail:
-                type: string
-              link:
-                type: array
-                items: {}
-          examples:
-            example-1:
-              value:
-                errorSummary: The resource that you have requested does not exist. Please check the identifier and try again
-                errorText: Not Found
-                errorDetail: ''
-                link: []
-    415unsupportedMediaType:
-      description: 415 Unsupported Media Type
-      content:
-        application/json:
-          schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
-                errorText: Unsupported Media Type
-                errorDetail: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
-                link: []
-            properties:
-              errorSummary:
-                type: string
-                minLength: 1
-                example: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
-              errorText:
-                type: string
-                minLength: 1
-                example: Unsupported Media Type
-              errorDetail:
-                type: string
-                minLength: 1
-                example: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
-              link:
-                type: array
-                items: {}
-          examples:
-            415 Unsupported Media Type:
-              value:
-                errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
-                errorText: Unsupported Media Type
-                errorDetail: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
-                link: []
-    422unprocessibleEntity:
-      description: 422 Unprocessible Entitity
-      content:
-        application/json:
-          schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                errorSummary: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
-                errorText: |
-                  A Template name already exists in the current Workspace, please select another name and try again.
-                errorDetail: ''
-                link: []
-            properties:
-              errorSummary:
-                type: string
-                minLength: 1
-                example: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
-              errorText:
-                type: string
-                minLength: 1
-                example: 'A Template name already exists in the current Workspace, please select another name and try again.\n'
-              errorDetail:
-                type: string
-              link:
-                type: array
-                items: {}
-          examples:
-            422 Unprocessable Entity:
-              value:
-                errorSummary: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
-                errorText: 'A Template name already exists in the current Workspace, please select another name and try again.\n'
-                errorDetail: ''
-                link: []
-    Templates:
-      description: Response object which returns a list of message templates
-      content:
-        application/json:
-          schema:
-            description: ''
-            type: object
-            x-examples:
-              example-1:
-                status: '1 to 1 of 1    '
-                messagetemplates:
-                  - messageTemplateName: Sample SMS Template no.2
-                    messageTemplateDescription: Template to provide an example on whispir.io no.2
-                    id: F79CF32E37767CFC
-                    link:
-                      - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/F79CF32E37767CFC'
-                        rel: self
-                        method: GET
-                        host: api.au.whispir.com
-                        port: -1
-                link: []
-            properties:
-              status:
-                type: string
-                minLength: 1
-                description: Describes the number of records fetched
-                example: 1 to 1 of 1
-              messagetemplates:
-                type: array
-                uniqueItems: true
-                minItems: 0
-                description: Contains a list of all the message templates. This following attributed will be omitted when there are no records to be fetched
-                items:
-                  type: object
-                  properties:
-                    messageTemplateName:
-                      type: string
-                      description: Specifies the name of the message template to be used within message requests.
-                      example: Sample Template Name
-                    messageTemplateDescription:
-                      type: string
-                      description: Specifies the description of the message template for others to understand its purpose.
-                      example: Template to provide an example on whispir.io
-                    id:
-                      type: string
-                      example: B99F5F0A95F35E57
-                    link:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/link'
-              link:
-                type: array
-                items:
-                  $ref: '#/components/schemas/link'
-          examples:
-            A List of Message Templates:
-              value:
-                status: string
-                messagetemplates:
-                  - messageTemplateName: string
-                    messageTemplateDescription: string
-                    id: string
-                    link:
-                      - uri: 'https://api.ap1.whispir.com/workspaces/573716059009818C/templates/C23D6E2DD3D251BF'
-                        rel: self
-                        method: GET
-                        host: api.ap1.whispir.com
-                        port: -1
-                link: []
-  examples: {}
-    limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: number
-        default: 20
-        maximum: 20
-      description: The number of records to be returned.
-    offset:
-      name: offset
-      in: query
-      required: false
-      schema:
-        type: number
-        default: 0
-      description: The record number to start returning from.
-  responses: {}
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.

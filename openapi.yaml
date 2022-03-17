@@ -1726,7 +1726,7 @@ paths:
         required: true
       responses:
         '201':
-          description: Created
+          $ref: '#/components/responses/Template'
     get:
       tags:
         - Templates
@@ -1759,39 +1759,117 @@ paths:
           content:
             examples:
               examples:
-                response:
+                A list of templates:
                   value:
-                    status: '1 to 4 of 4    '
+                    status: '1 to 2 of 2    '
                     messagetemplates:
-                      - messageTemplateName: Appointment Reminder
-                        messageTemplateDescription: ''
-                        id: F0547F6F2E4839F8
+                      - messageTemplateName: Sample SMS Template 2
+                        messageTemplateDescription: Template to provide an example on whispir.io no.1
+                        id: 236EA3E3E63439DA
                         link:
-                          - uri: 'https://api.au.whispir.com/templates/F0547F6F2E4839F8'
+                          - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/236EA3E3E63439DA'
                             rel: self
                             method: GET
-                      - messageTemplateName: Customer Survey
-                        messageTemplateDescription: ''
-                        id: DDE10AC13FB0E457
+                            host: api.au.whispir.com
+                            port: -1
+                      - messageTemplateName: Sample SMS Template with tags
+                        messageTemplateDescription: Template to provide an example on whispir.io no.1
+                        id: D09B63AD6BD1A503
                         link:
-                          - uri: 'https://api.au.whispir.com/templates/DDE10AC13FB0E457'
+                          - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/D09B63AD6BD1A503'
                             rel: self
                             method: GET
-                      - messageTemplateName: Service announcement
-                        messageTemplateDescription: ''
-                        id: 900972D1C916FE84
-                        link:
-                          - uri: 'https://api.au.whispir.com/templates/900972D1C916FE84'
-                            rel: self
-                            method: GET
-                      - messageTemplateName: Shift Opportunity
-                        messageTemplateDescription: ''
-                        id: 9CB9BE20B885542D
-                        link:
-                          - uri: 'https://api.au.whispir.com/templates/9CB9BE20B885542D'
-                            rel: self
-                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
                     link: []
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    status: '1 to 1 of 1    '
+                    messagetemplates:
+                      - messageTemplateName: Sample SMS Template with tags
+                        messageTemplateDescription: Template to provide an example on whispir.io no.1
+                        id: 3148356543415EE7
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                    link: []
+                properties:
+                  status:
+                    type: string
+                    minLength: 1
+                    example: 1 to 1 of 1
+                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no message templates available.
+                    readOnly: true
+                  messagetemplates:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    description: Specifies the name of the message template
+                    items:
+                      type: object
+                      properties:
+                        messageTemplateName:
+                          type: string
+                          minLength: 1
+                          description: Specifies the name of the message template
+                          readOnly: true
+                        messageTemplateDescription:
+                          type: string
+                          minLength: 1
+                          description: 'Specifies the description of the message template, so that anyone can understand its purpose'
+                          readOnly: true
+                        id:
+                          type: string
+                          minLength: 1
+                          description: Specifies the template id needed for all the API Operations
+                          readOnly: true
+                        link:
+                          type: array
+                          uniqueItems: true
+                          minItems: 1
+                          description: Provides a list of URLs that can be used to manipulate or access the message template. This following attribute may return an empty array.
+                          items:
+                            type: object
+                            properties:
+                              uri:
+                                type: string
+                                minLength: 1
+                                description: The link to access the message template
+                                readOnly: true
+                              rel:
+                                type: string
+                                minLength: 1
+                                description: The descriptor for what the link will do
+                              method:
+                                type: string
+                                minLength: 1
+                                description: The HTTP method to use with this particular link
+                              host:
+                                type: string
+                                minLength: 1
+                                description: Host of the endpoint
+                              port:
+                                type: number
+                                description: Port number
+                            readOnly: true
+                          readOnly: true
+                    readOnly: true
+                  link:
+                    type: array
+                    description: Provides a list of URLs that can be used to manipulate or access the message template. This following attribute may return an empty array.
+                    items:
+                      type: object
+                    readOnly: true
+                required:
+                  - status
+                  - messagetemplates
+                  - link
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates/{templateId}':

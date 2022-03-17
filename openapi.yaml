@@ -2000,49 +2000,10 @@ paths:
             application/vnd.whispir.contact-v1+json:
               schema:
                 $ref: '#/components/schemas/contact'
+              examples: {}
             application/vnd.whispir.contact-v1+xml:
               schema:
                 $ref: '#/components/schemas/contact'
-            examples:
-              examples:
-                response:
-                  value:
-                    id: CB4558257DD86D09
-                    type: COMPANY
-                    firstName: John
-                    lastName: Wick
-                    locations:
-                      - latitude: '0.0'
-                        longitude: '0.0'
-                        type: CurrentLocation
-                    lastModifiedTime: '2015-06-04T17:37:01+10:00'
-                    status: A
-                    timezone: '+10'
-                    workEmailAddress1: jsmith@testcompany.com
-                    workMobilePhone1: '61423456789'
-                    workCountry: Australia
-                    mri: John_Wick.1143139@Contact.whispir.sg
-                    messagingoptions:
-                      - channel: sms
-                        enabled: 'true'
-                        primary: WorkMobilePhone1
-                      - channel: email
-                        enabled: 'true'
-                        primary: WorkEmailAddress1
-                      - channel: voice
-                        enabled: 'true'
-                        primary: WorkMobilePhone1
-                    link:
-                      - uri: 'https://api.au.whispir.com/contacts/CB4558257DD86D09'
-                        rel: self
-                        method: GET
-                      - uri: 'https://api.au.whispir.com/contacts/CB4558257DD86D09'
-                        rel: updateContact
-                        method: PUT
-                        type: 'application/vnd.whispir.contact-v1+json,application/vnd.whispir.contact-v1+xml'
-                      - uri: 'https://api.au.whispir.com/contacts/CB4558257DD86D09'
-                        rel: deleteContact
-                        method: DELETE
     get:
       tags:
         - Contacts
@@ -4523,65 +4484,338 @@ components:
       title: Response Rule
     contact:
       type: object
-      required:
-        - firstName
-        - lastName
-        - workEmailAddress1
-        - workMobilePhone1
-        - timezone
-        - workCountry
-      properties:
-        firstName:
-          type: string
-          example: John
-        lastName:
-          type: string
-          example: Wick
-        title:
-          type: string
-        status:
-          type: string
-          example: A
-        companyName:
-          type: string
-        jobTitle:
-          type: string
-        division:
-          type: string
-        businessUnit:
-          type: string
-        department:
-          type: string
-        Teams and Roles:
-          type: string
-        workEmailAddress1:
-          type: string
-          example: jsmith@testcompany.com
-        workMobilePhone1:
-          type: string
-          example: '61423456789'
-        workCountry:
-          type: string
-          example: Australia
-        timezone:
-          type: string
-          example: Australia/Melbourne
-        Personal Address:
-          type: string
-        Personal Phones:
-          type: integer
-        Alias Fields:
-          type: string
-        Messaging Options:
-          $ref: '#/components/schemas/messagingoptions'
-        Other Fields:
-          type: string
       xml:
         name: contact
         prefix: ns2
       x-tags:
         - Contacts
       title: Contact
+      x-examples:
+        Basic:
+          firstName: John
+          lastName: Wick
+          workMobilePhone1: '61400400400'
+          workEmailAddress1: testUser@example.com
+          workCountry: Australia
+        Comprehensive:
+          firstName: John
+          lastName: Wick
+          workMobilePhone1: '61400400400'
+          workEmailAddress1: testUser@example.com
+          workCountry: Australia
+          timezone: Australia/Melbourne
+          title: Dr
+          workMobilePhone2: '61500500500'
+          workEmailAddress2: newUser@example.com
+          workPhoneAreaCode1: '09'
+          workPhone1: '5006000'
+          workPhoneAreaCode2: '09'
+          workPhone2: '5007000'
+          workFaxAreaCode1: '09'
+          workFax1: '5008000'
+          workSatellitePhone: '61600600600'
+          workOtherPhone: '61700700700'
+          workAddress1: Level 15
+          workAddress2: 360 Collins St
+          workSuburb: Melboure
+          workState: Victoria
+          workPostCode: '3000'
+          workPostalAddress1: Level 15
+          workPostalAddress2: 360 Collins St
+          workPostalSuburb: Melboure
+          workPostalState: Victoria
+          workPostalPostCode: '3000'
+          personalEmailAddress1: personalPrimaryUser@example.com
+          personalEmailAddress2: personalSecondaryUser@example.com
+          personalAddress1: Level 15
+          personalAddress2: 360 Collins St
+          personalSuburb: Melboure
+          personalState: Victoria
+          personalPostCode: '3000'
+          personalCountry: Australia
+          personalPhoneAreaCode1: '09'
+          personalPhone1: '5006000'
+          personalPhoneAreaCode2: '09'
+          personalPhone2: '5007000'
+          personalFaxAreaCode1: '09'
+          personalFax1: '5008000'
+          otherPhoneAreaCode1: '09'
+          otherPhone1: '5009000'
+          otherMobile: '61900900900'
+          otherFirstName: Harold
+          otherLastName: Wickman
+          otherTitle: Mr
+          status: A
+          companyName: Whispir
+          jobTitle: Software Engineer
+          division: Technology
+          businessUnit: Core Platform
+          department: Research & Development
+          teamName1: Optimus Prime
+          teamName2: Bumblebee
+          role1: Administrator
+          role2: Analyst
+          locations:
+            - latitude: 41.9028
+              longitude: -12.4964
+              type: CurrentLocation
+          messagingoptions:
+            - channel: sms
+              enabled: true
+              primary: workMobilePhone1
+              secondary: workMobilePhone1
+              tertiary: workMobilePhone1
+      properties:
+        firstName:
+          type: string
+          example: John
+          description: The first name of the contact.
+        lastName:
+          type: string
+          example: Wick
+          description: The last name of the contact.
+        workMobilePhone1:
+          type: string
+          example: '61400400400'
+          description: The primary work mobile number of the contact.
+        workEmailAddress1:
+          type: string
+          example: testUser@example.com
+          description: The primary work email address of the contact.
+        workCountry:
+          type: string
+          example: Australia
+          description: The work country of the contact.
+        timezone:
+          type: string
+          example: Australia/Melbourne
+          description: |-
+            The time zone in which the contact lives in. Values are relative to GMT.
+
+            Supported values are:
+
+            * Offset from GMT in the format `+/-NN`. For example, `+10`.
+            * Worldwide time zone in the format `Country/City`. For example, `Australia/Melbourne`
+
+            See the list of [worldwide time zones](https://en.wikipedia.org/wiki/List_of_time_zones_by_country).
+        title:
+          type: string
+          example: Dr
+          description: The title to address the contact with.
+        workMobilePhone2:
+          type: string
+          example: '61500500500'
+          description: The secondary work mobile number of the contact.
+        workEmailAddress2:
+          type: string
+          example: newUser@example.com
+          description: The secondary work email address of the contact.
+        workPhoneAreaCode1:
+          type: string
+          example: '09'
+          description: The primary work phone number area code of the contact.
+        workPhone1:
+          type: string
+          example: '5006000'
+          description: The primary work phone number of the contact.
+        workPhoneAreaCode2:
+          type: string
+          example: '09'
+          description: The secondary work phone number area code of the contact.
+        workPhone2:
+          type: string
+          example: '5007000'
+          description: The secondary work phone number of the contact.
+        workFaxAreaCode1:
+          type: string
+          example: '09'
+          description: The work fax number area code of the contact.
+        workFax1:
+          type: string
+          example: '5008000'
+          description: The work fax number of the contact.
+        workSatellitePhone:
+          type: string
+          example: '61600600600'
+          description: The work satellite phone number of the contact.
+        workOtherPhone:
+          type: string
+          example: '61700700700'
+          description: The work other phone number of the contact.
+        workAddress1:
+          type: string
+          example: Level 15
+          description: The first work address line of the contact.
+        workAddress2:
+          type: string
+          example: 360 Collins St
+          description: The second work address line of the contact.
+        workSuburb:
+          type: string
+          example: Melboure
+          description: The work address suburb of the contact.
+        workState:
+          type: string
+          example: Victoria
+          description: The work address state of the contact.
+        workPostCode:
+          type: string
+          example: '3000'
+          description: The work address post code of the contact.
+        workPostalAddress1:
+          type: string
+          example: Level 15
+          description: The first work postal address line of the contact.
+        workPostalAddress2:
+          type: string
+          example: 360 Collins St
+          description: The second work postal address line of the contact.
+        workPostalSuburb:
+          type: string
+          example: Melboure
+          description: The work postal address suburb of the contact.
+        workPostalState:
+          type: string
+          example: Victoria
+          description: The work postal address state of the contact.
+        workPostalPostCode:
+          type: string
+          example: '3000'
+          description: The work postal address post code of the contact.
+        personalEmailAddress1:
+          type: string
+          example: personalPrimaryUser@example.com
+          description: The primary personal email address of the contact.
+        personalEmailAddress2:
+          type: string
+          example: personalSecondaryUser@example.com
+          description: The secondary personal email address of the contact.
+        personalAddress1:
+          type: string
+          example: Level 15
+          description: The first personal address line of the contact.
+        personalAddress2:
+          type: string
+          example: 360 Collins St
+          description: The second personal address line of the contact.
+        personalSuburb:
+          type: string
+          example: Melboure
+          description: The personal address suburb of the contact.
+        personalState:
+          type: string
+          example: Victoria
+          description: The personal address state of the contact.
+        personalPostCode:
+          type: string
+          example: '3000'
+          description: The personal address post code of the contact.
+        personalCountry:
+          type: string
+          example: Australia
+          description: The personal address country of the contact.
+        personalPhoneAreaCode1:
+          type: string
+          example: '09'
+          description: The primary personal phone number area code of the contact.
+        personalPhone1:
+          type: string
+          example: '5006000'
+          description: The primary personal phone number of the contact.
+        personalPhoneAreaCode2:
+          type: string
+          example: '09'
+          description: The secondary personal phone number area code of the contact.
+        personalPhone2:
+          type: string
+          example: '5007000'
+          description: The secondary personal phone number of the contact.
+        personalFaxAreaCode1:
+          type: string
+          example: '09'
+          description: The personal fax number area code of the contact.
+        personalFax1:
+          type: string
+          example: '5008000'
+          description: The personal fax number of the contact.
+        otherPhoneAreaCode1:
+          type: string
+          example: '09'
+          description: The other phone number area code of the contact.
+        otherPhone1:
+          type: string
+          example: '5009000'
+          description: The other phone number of the contact.
+        otherMobile:
+          type: string
+          example: '61900900900'
+          description: The other mobile number of the contact.
+        otherFirstName:
+          type: string
+          example: Harold
+          description: The other first name of the contact.
+        otherLastName:
+          type: string
+          example: Wickman
+          description: The other last name of the contact.
+        otherTitle:
+          type: string
+          example: Mr
+          description: The other title to address the contact with.
+        status:
+          type: string
+          enum:
+            - A
+            - D
+          description: 'The validity status of the contact, either `A`ctive or `D`isabled.'
+        companyName:
+          type: string
+          description: The company name of the contact.
+          example: Whispir
+        jobTitle:
+          type: string
+          description: The job title of the contact.
+          example: Software Engineer
+        division:
+          type: string
+          description: The division in the company to which the contact is associated.
+          example: Technology
+        businessUnit:
+          type: string
+          description: The business unit in the company to which the contact is associated.
+          example: Core Platform
+        department:
+          type: string
+          description: The department in the company to which the contact is associated.
+          example: Research & Development
+        teamName1:
+          type: string
+          description: The primary team name of the contact.
+          example: Optimus Prime
+        teamName2:
+          type: string
+          description: The secondary team name of the contact.
+          example: Bumblebee
+        role1:
+          type: string
+          description: The primary role of the contact.
+          example: Administrator
+        role2:
+          type: string
+          description: The secondary role of the contact.
+          example: Analyst
+        locations:
+          $ref: '#/components/schemas/locations'
+        messagingoptions:
+          $ref: '#/components/schemas/messagingoptions'
+      required:
+        - firstName
+        - lastName
+        - workMobilePhone1
+        - workEmailAddress1
+        - workCountry
+        - timezone
+      description: The contact object.
     distributionlist:
       type: object
       required:
@@ -4606,8 +4840,6 @@ components:
           type: string
         distListIds:
           type: string
-        locations:
-          $ref: '#/components/schemas/locations'
       xml:
         name: distributionlists
         prefix: ns1
@@ -4954,9 +5186,6 @@ components:
         department:
           type: string
           description: Specifies the Department in the company to which this user is associated with
-        Teams and Roles:
-          type: string
-          description: 'Specifies the primary and Secondary values for each respective variable<ul><li>teamName1, teamName2</li><li>role1, role2</li></ul>'
         Work Place Address:
           type: string
           description: 'Specifies the primary and Secondary values for each respective type. Of all these the workEmailAddress1 is the mandatory field.<ul><li>workEmailAddress1, workEmailAddress2</li><li>workAddress1, workAddress2</li><li>workSuburb, workState</li><li>workPostCode, workCountry</li><li>workPostalAddress1, workPostalAddress2</li><li>workPostalSuburb, workPostalState</li><li>workPostalPostCode, workPostalCountry</li></ul>'

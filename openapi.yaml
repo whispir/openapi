@@ -5434,6 +5434,10 @@ components:
     links:
       type: object
       title: callbackLinks
+      description: |-
+        Object with fixed keys - uri, rel, method, host, port.
+
+        Is included in the payload as part of HATEOAS.
       properties:
         uri:
           type: string

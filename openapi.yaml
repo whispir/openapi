@@ -4893,17 +4893,20 @@ components:
           callbacks:
             reply: enabled
         example-1:
-          name: Undeliverable Message
+          id: string
+          name: Callback Name
           url: 'https://example.com/callback'
           auth:
             type: httpheader
             key: MY_AUTH_KEY
           contentType: json
           removeHTML: disabled
-          retriesEnabled: true
+          retriesEnabled: false
           email: me@example.com
           callbacks:
-            undeliverable: disabled
+            reply: enabled
+            undeliverable: enabled
+          links: string
       properties:
         id:
           type: string
@@ -4966,6 +4969,7 @@ components:
           type: boolean
           description: Specifies whether Whispir should perform retries in the event there is a failure accessing the callback service.
           example: true
+          default: false
         email:
           type: string
           description: |-
@@ -4991,8 +4995,7 @@ components:
                 - disabled
               description: A boolean flag specifying whether undeliverable message callbacks are enabled.
         links:
-          type: string
-          readOnly: true
+          $ref: '#/components/schemas/links'
     workspace:
       type: object
       properties:
@@ -5408,6 +5411,33 @@ components:
       required:
         - attachmentName
         - derefUri
+    links:
+      type: object
+      title: callbackLinks
+      properties:
+        uri:
+          type: string
+        rel:
+          type: string
+        method:
+          type: string
+          default: GET
+          example: GET
+        host:
+          type: string
+          default: api.ap1.whispir.com
+        port:
+          type:
+            - string
+            - number
+          default: -1
+      required:
+        - uri
+        - rel
+        - method
+        - host
+        - port
+      readOnly: true
   parameters:
     X-Api-Key:
       name: X-Api-Key

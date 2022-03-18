@@ -1,79 +1,79 @@
 openapi: 3.0.0
 info:
-  description: "Whispir Platform API for cross channel and multi channel communications. Documentation on each endpoint is available at https://developers.whispir.com."
+  description: 'Whispir Platform API for cross channel and multi channel communications. Documentation on each endpoint is available at https://developers.whispir.com.'
   version: 1.0.0
   title: Whispir Platform API
-  termsOfService: "https://www.whispir.com/terms-of-service"
+  termsOfService: 'https://www.whispir.com/terms-of-service'
   contact:
     email: support@whispir.com
     name: Whispir Support
-    url: "https://www.whispir.com/support"
+    url: 'https://www.whispir.com/support'
   license:
     name: MIT
-    url: "https://opensource.org/licenses/MIT"
+    url: 'https://opensource.org/licenses/MIT'
 tags:
   - name: Messages
     description: Communications are the core of what the Whispir Platform API offers as a service to customers.
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjE0NDgyNjQ-message"
+      url: 'https://developers.whispir.com/c2NoOjE0NDgyNjQ-message'
   - name: Resources
-    description: "Using Whispir’s API, one can submit data payloads to be stored by Whispir and used in various API calls. These files are uploaded through the /resources endpoint."
+    description: 'Using Whispir’s API, one can submit data payloads to be stored by Whispir and used in various API calls. These files are uploaded through the /resources endpoint.'
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjI0NTEwMjA-resource"
+      url: 'https://developers.whispir.com/c2NoOjI0NTEwMjA-resource'
   - name: Templates
-    description: "Using the Whispir Platform API, messages can be stored as Message Templates that can be easily referenced within your API calls."
+    description: 'Using the Whispir Platform API, messages can be stored as Message Templates that can be easily referenced within your API calls.'
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjM0ODAzNDA4-template"
+      url: 'https://developers.whispir.com/c2NoOjM0ODAzNDA4-template'
   - name: Response Rules
     description: Using Response Rules in combination with Message Templates allows users to automatically group responses to messages into different response groups for reporting purposes.
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjM4OTQzOTA1-response-rule"
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTA1-response-rule'
   - name: Contacts
-    description: "Contacts form the core of the Whispir offerings. They make up the base data to which and from which all communications are performed. The Whispir API provides secure cloud based storage for your contact information. This can then easily be retrieved by any application or device that requires access, and has permission to do so."
+    description: 'Contacts form the core of the Whispir offerings. They make up the base data to which and from which all communications are performed. The Whispir API provides secure cloud based storage for your contact information. This can then easily be retrieved by any application or device that requires access, and has permission to do so.'
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjM0ODAzNDA5-contact"
+      url: 'https://developers.whispir.com/c2NoOjM0ODAzNDA5-contact'
   - name: Distribution Lists
     description: Whispir’s API allows users to categorise their contacts into different groups to simplify the distribution of messages.
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjM4OTQzOTE5-distribution-list"
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTE5-distribution-list'
   - name: Scenarios
-    description: "Scenarios allows users to simplify the message delivery processes through automated one click communications. The process involves creating a fixed message or a message template combined with a contact or a distribution list. When the scenario is executed, the message is sent to the contacts."
+    description: 'Scenarios allows users to simplify the message delivery processes through automated one click communications. The process involves creating a fixed message or a message template combined with a contact or a distribution list. When the scenario is executed, the message is sent to the contacts.'
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjM4OTQzOTIw-scenario"
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTIw-scenario'
   - name: Callbacks
     description: Whispir utilises API Callbacks to send simple notifications to different registered services in the event that some change has occurred on the Whispir Platform.
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjM4OTQzOTIx-callback"
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTIx-callback'
   - name: Workspaces
-    description: "Workspace allows application developers to create new work areas for the varying use cases of their application. They provides different functions that can be provided to users of the application, e.g. creating messages, executing scenarios, or viewing distribution lists."
+    description: 'Workspace allows application developers to create new work areas for the varying use cases of their application. They provides different functions that can be provided to users of the application, e.g. creating messages, executing scenarios, or viewing distribution lists.'
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjM4OTQzOTI0-workspace"
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTI0-workspace'
   - name: Activities
-    description: "Activities are all the individual changes, tasks, calls, messages.. just about everything performed in a given company workspaces. Each Activity log entry contains information about the workspace, the module (message, email, IVR..), the user who performed it, time stamps, description of the activity, and its status (success, fail) etc."
+    description: 'Activities are all the individual changes, tasks, calls, messages.. just about everything performed in a given company workspaces. Each Activity log entry contains information about the workspace, the module (message, email, IVR..), the user who performed it, time stamps, description of the activity, and its status (success, fail) etc.'
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjQ2MzAxMjM-activity"
+      url: 'https://developers.whispir.com/c2NoOjQ2MzAxMjM-activity'
   - name: Custom Lists
     description: Custom Lists are user specific translations or preferred options in the various list controls used in the platform tool. These provide the freedom for the user to customize the list options in various modules like Messages and Events. These custom list either can complement or completely overwrite the existing list items.
     externalDocs:
-      url: "https://developers.whispir.com/b3A6Mzg5NDM5NzY-list-custom-lists"
+      url: 'https://developers.whispir.com/b3A6Mzg5NDM5NzY-list-custom-lists'
   - name: Users
-    description: "Access to use the Whispir API, Platform and its features is strictly limited to user permission set. One needs to have proper permissions to access all the features provided by the platform, and when using the API, have appropriate permissions to modify the user attributes of themselves or others in their company workspaces."
+    description: 'Access to use the Whispir API, Platform and its features is strictly limited to user permission set. One needs to have proper permissions to access all the features provided by the platform, and when using the API, have appropriate permissions to modify the user attributes of themselves or others in their company workspaces.'
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjU4ODQwOQ-user"
+      url: 'https://developers.whispir.com/c2NoOjU4ODQwOQ-user'
   - name: Events
-    description: "Whispir’s Events API allows users to capture, create and manage Events (including Incidents, Issues, Places, and Assets). Link multi-channel communications to each event to track report and disseminate information textually and Geo-spatially."
+    description: 'Whispir’s Events API allows users to capture, create and manage Events (including Incidents, Issues, Places, and Assets). Link multi-channel communications to each event to track report and disseminate information textually and Geo-spatially.'
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjY5MTI5NA-event"
+      url: 'https://developers.whispir.com/c2NoOjY5MTI5NA-event'
   - name: Imports
     description: The Imports endpoint allows users to import a CSV/JSON/XML file of contacts (via /resources) to be added to the contacts database.
     externalDocs:
-      url: "https://developers.whispir.com/c2NoOjM4OTQzOTI4-import"
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTI4-import'
   - name: Auth
     description: The Auth endpoint allows users to retrieve and verify a JWT authentication token.
     externalDocs:
-      url: "https://developers.whispir.com/b3A6NDEyMTEzOA-create-an-auth-token"
+      url: 'https://developers.whispir.com/b3A6NDEyMTEzOA-create-an-auth-token'
 paths:
-  "/workspaces/{workspaceId}/messages":
+  '/workspaces/{workspaceId}/messages':
     post:
       tags:
         - Messages
@@ -136,7 +136,7 @@ paths:
         The smsMappingField should be mapped to the column or key that holds the number to which the SMS has to sent to; and the emailMappingField to the email to which the message has to be sent to.
       operationId: postMessages
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: Content-Type
           in: header
           required: true
@@ -163,20 +163,20 @@ paths:
         content:
           application/vnd.whispir.message-v1+json:
             schema:
-              $ref: "#/components/schemas/message"
+              $ref: '#/components/schemas/message'
           application/vnd.whispir.bulkmessage-v1+json:
             schema:
-              $ref: "#/components/schemas/message"
+              $ref: '#/components/schemas/message'
           application/vnd.whispir.message-v1+xml:
             schema:
-              $ref: "#/components/schemas/message"
+              $ref: '#/components/schemas/message'
           application/vnd.whispir.bulkmessage-v1+xml:
             schema:
-              $ref: "#/components/schemas/message"
-        description: "Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web]."
+              $ref: '#/components/schemas/message'
+        description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web].'
         required: true
       responses:
-        "202":
+        '202':
           description: Accepted
           content:
             application/vnd.whispir.message-v1+json:
@@ -189,15 +189,15 @@ paths:
                   value: Your request has been accepted for processing
           headers:
             Content-Type:
-              $ref: "#/components/headers/Message-Content-Type"
+              $ref: '#/components/headers/Message-Content-Type'
             Content-Length:
-              $ref: "#/components/headers/Content-Length"
+              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
-              $ref: "#/components/headers/Access-Control-Allow-Origin"
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
             Location:
               schema:
                 type: string
-              example: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8"
+              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
     get:
       tags:
@@ -209,7 +209,7 @@ paths:
         Pagination is available.
       operationId: getMessages
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: Content-Type
           in: header
           required: true
@@ -232,15 +232,15 @@ paths:
               - application/vnd.whispir.bulkmessage-v1+json
               - application/vnd.whispir.message-v1+xml
               - application/vnd.whispir.bulkmessage-v1+xml
-        - $ref: "#/components/parameters/limit"
-        - $ref: "#/components/parameters/offset"
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                description: ""
+                description: ''
                 type: object
                 x-examples:
                   example-1:
@@ -252,10 +252,10 @@ paths:
                         repeatMin: 0
                         from: Test User
                         direction: OUTGOING
-                        responseCount: "0"
+                        responseCount: '0'
                         createdTime: 1647467664000
                         link:
-                          - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/E9F52215AD0787EBECDD691916955C1E"
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/E9F52215AD0787EBECDD691916955C1E'
                             rel: self
                             method: GET
                             host: api.au.whispir.com
@@ -270,10 +270,10 @@ paths:
                         repeatMin: 0
                         from: Test User
                         direction: OUTGOING
-                        responseCount: "0"
+                        responseCount: '0'
                         createdTime: 1647466923000
                         link:
-                          - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8"
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
                             rel: self
                             method: GET
                             host: api.au.whispir.com
@@ -281,7 +281,7 @@ paths:
                         whatsappValidMessage: true
                         validBody: false
                         validSubject: true
-                    status: ""
+                    status: ''
                     link: []
                 properties:
                   messages:
@@ -316,7 +316,7 @@ paths:
                           readOnly: true
                         responseCount:
                           type: string
-                          example: "0"
+                          example: '0'
                         createdTime:
                           type: number
                           example: 1647467664000
@@ -329,7 +329,7 @@ paths:
                             properties:
                               uri:
                                 type: string
-                                example: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8"
+                                example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
                               rel:
                                 type: string
                                 example: self
@@ -370,7 +370,7 @@ paths:
                         - validSubject
                   status:
                     type: string
-                    example: ""
+                    example: ''
                   link:
                     type: array
                     items: {}
@@ -389,10 +389,10 @@ paths:
                         repeatMin: 0
                         from: Test User
                         direction: OUTGOING
-                        responseCount: "0"
+                        responseCount: '0'
                         createdTime: 1647467664000
                         link:
-                          - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8"
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
                             rel: self
                             method: GET
                             host: api.au.whispir.com
@@ -407,10 +407,10 @@ paths:
                         repeatMin: 0
                         from: Test User
                         direction: OUTGOING
-                        responseCount: "0"
+                        responseCount: '0'
                         createdTime: 1647466923000
                         link:
-                          - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/E9F52215AD0787EBECDD691916955C1E"
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/E9F52215AD0787EBECDD691916955C1E'
                             rel: self
                             method: GET
                             host: api.au.whispir.com
@@ -418,18 +418,18 @@ paths:
                         whatsappValidMessage: true
                         validBody: true
                         validSubject: true
-                    status: ""
+                    status: ''
                     link: []
           headers:
             Content-Type:
-              $ref: "#/components/headers/Message-Content-Type"
+              $ref: '#/components/headers/Message-Content-Type'
             Content-Length:
-              $ref: "#/components/headers/Content-Length"
+              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
-              $ref: "#/components/headers/Access-Control-Allow-Origin"
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/messages/{messageId}":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/messages/{messageId}':
     get:
       tags:
         - Messages
@@ -455,37 +455,37 @@ paths:
         - **detailedResponsesWithResponseRule:** Returns the response information of the message as a messageresponse object, filtered by the Response Rule (if one was used) in a detailed view.
       operationId: getMessageById
       responses:
-        "200":
+        '200':
           description: OK
           headers:
             Content-Type:
-              $ref: "#/components/headers/Message-Content-Type"
+              $ref: '#/components/headers/Message-Content-Type'
             Content-Length:
-              $ref: "#/components/headers/Content-Length"
+              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
-              $ref: "#/components/headers/Access-Control-Allow-Origin"
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
           content:
             application/vnd.whispir.message-v1+json:
               schema:
-                description: ""
+                description: ''
                 type: object
                 x-examples:
                   example-1:
-                    to: "61400400400"
+                    to: '61400400400'
                     subject: Test Message
                     body: This is the body of my test SMS message
-                    label: ""
+                    label: ''
                     type: default
                     repetitionCount: 0
                     dlr:
-                      period: ""
-                      rule: ""
-                      type: ""
+                      period: ''
+                      rule: ''
+                      type: ''
                       publishToWeb: false
                       expiryDay: 0
                       expiryHour: 0
                       expiryMin: 0
-                      feedIds: ""
+                      feedIds: ''
                       bool: false
                     repeatDays: 0
                     repeatHrs: 0
@@ -493,44 +493,44 @@ paths:
                     voice: {}
                     from: rfontein.au@User.whispir.com
                     direction: OUTGOING
-                    responseCount: "0"
+                    responseCount: '0'
                     social:
                       social:
                         - id: social
                         - id: social_long
                     createdTime: 1647466923000
                     link:
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
                         rel: self
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=summary"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=summary'
                         rel: summaryStatus
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed'
                         rel: detailedStatus
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=default"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=default'
                         rel: summaryResponses
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=default"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=default'
                         rel: detailedResponses
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=responserule"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=responserule'
                         rel: summaryResponsesWithResponseRule
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=responserule"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=responserule'
                         rel: detailedResponsesWithResponseRule
                         method: GET
                         host: api.au.whispir.com
@@ -541,7 +541,7 @@ paths:
                 properties:
                   to:
                     type: string
-                    example: "61400400400"
+                    example: '61400400400'
                   subject:
                     type: string
                     example: Test Message
@@ -609,7 +609,7 @@ paths:
                     readOnly: true
                   responseCount:
                     type: string
-                    example: "0"
+                    example: '0'
                   social:
                     type: object
                     required:
@@ -639,7 +639,7 @@ paths:
                       properties:
                         uri:
                           type: string
-                          example: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8"
+                          example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
                         rel:
                           type: string
                           enum:
@@ -696,21 +696,21 @@ paths:
               examples:
                 Response:
                   value:
-                    to: "61400400400"
+                    to: '61400400400'
                     subject: Test Message
                     body: This is the body of my test SMS message
-                    label: ""
+                    label: ''
                     type: default
                     repetitionCount: 0
                     dlr:
-                      period: ""
-                      rule: ""
-                      type: ""
+                      period: ''
+                      rule: ''
+                      type: ''
                       publishToWeb: false
                       expiryDay: 0
                       expiryHour: 0
                       expiryMin: 0
-                      feedIds: ""
+                      feedIds: ''
                       bool: false
                     repeatDays: 0
                     repeatHrs: 0
@@ -718,44 +718,44 @@ paths:
                     voice: {}
                     from: testUser.au@User.whispir.com
                     direction: OUTGOING
-                    responseCount: "0"
+                    responseCount: '0'
                     social:
                       social:
                         - id: social
                         - id: social_long
                     createdTime: 1647466923000
                     link:
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
                         rel: self
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=summary"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=summary'
                         rel: summaryStatus
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed'
                         rel: detailedStatus
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=default"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=default'
                         rel: summaryResponses
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=default"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=default'
                         rel: detailedResponses
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=responserule"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary&filter=responserule'
                         rel: summaryResponsesWithResponseRule
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=responserule"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=responserule'
                         rel: detailedResponsesWithResponseRule
                         method: GET
                         host: api.au.whispir.com
@@ -764,7 +764,7 @@ paths:
                     validSubject: true
                     whatsappValidMessage: true
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: Content-Type
           in: header
           required: true
@@ -789,14 +789,14 @@ paths:
               - application/vnd.whispir.bulkmessage-v1+xml
         - schema:
             type: string
-            pattern: "^[A-F0-9]+"
+            pattern: '^[A-F0-9]+'
           name: messageId
           in: path
           required: true
           description: The identifier for the message.
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/messages/{messageId}/messagestatus":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/messages/{messageId}/messagestatus':
     get:
       summary: Retrieve a message status
       description: |
@@ -861,7 +861,7 @@ paths:
         Once you have processed the status information, the next likely piece of information you will be looking to find is the content of the responses (if any). The section on Message Responses describes how to retrieve this information.
       operationId: getMessageStatus
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: messageId
           in: path
           description: Enter message id
@@ -907,15 +907,15 @@ paths:
           in: query
           description: The filter for the message status.
       responses:
-        "200":
+        '200':
           description: OK
           headers:
             Content-Type:
-              $ref: "#/components/headers/Message-Status-Content-Type"
+              $ref: '#/components/headers/Message-Status-Content-Type'
             Content-Length:
-              $ref: "#/components/headers/Content-Length"
+              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
-              $ref: "#/components/headers/Access-Control-Allow-Origin"
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
           content:
             application/vnd.whispir.messagestatus-v1+json:
               examples:
@@ -923,7 +923,7 @@ paths:
                   value:
                     messageStatuses:
                       - link:
-                          - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus"
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
                             rel: self
                             method: GET
                             host: api.au.whispir.com
@@ -948,36 +948,36 @@ paths:
                 Detailed:
                   value:
                     messageStatuses:
-                      - name: "61400400400"
-                        info: "  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 "
+                      - name: '61400400400'
+                        info: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
                         link:
-                          - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed"
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed'
                             rel: self
                             method: GET
                             host: api.au.whispir.com
                             port: -1
                         status:
                           - type: email
-                            status: ""
-                            destination: ""
+                            status: ''
+                            destination: ''
                           - type: sms
                             status: DELIVRD
-                            destination: "61400400400"
+                            destination: '61400400400'
                             sentTimestamp: 1647466923000
                             receivedTimestamp: 1647466931000
                           - type: voice
-                            status: ""
-                            destination: ""
-                    status: "1 to 1 of 1    "
+                            status: ''
+                            destination: ''
+                    status: '1 to 1 of 1    '
                     link: []
               schema:
-                description: ""
+                description: ''
                 type: object
                 x-examples:
                   example-1:
                     messageStatuses:
                       - link:
-                          - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus"
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
                             rel: self
                             method: GET
                             host: api.au.whispir.com
@@ -1015,7 +1015,7 @@ paths:
                             properties:
                               uri:
                                 type: string
-                                example: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus"
+                                example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
                               rel:
                                 type: string
                                 example: self
@@ -1065,11 +1065,11 @@ paths:
                               - percentageTotal
                         name:
                           type: string
-                          example: "61400400400"
+                          example: '61400400400'
                           description: Present when `view` is `detailed`.
                         info:
                           type: string
-                          example: "  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 "
+                          example: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
                           description: Present when `view` is `detailed`.
                         status:
                           type: array
@@ -1085,7 +1085,7 @@ paths:
                               status:
                                 type: string
                                 enum:
-                                  - ""
+                                  - ''
                                   - PENDING
                                   - SENT
                                   - DELIVRD
@@ -1093,7 +1093,7 @@ paths:
                                   - FAILED
                               destination:
                                 type: string
-                                example: "61400400400"
+                                example: '61400400400'
                               sentTimestamp:
                                 type: number
                                 example: 1647466923000
@@ -1111,7 +1111,7 @@ paths:
                     items: {}
                   status:
                     type: string
-                    example: "1 to 1 of 1    "
+                    example: '1 to 1 of 1    '
                     description: Present when `view` is `detailed`.
                 required:
                   - messageStatuses
@@ -1119,8 +1119,8 @@ paths:
       tags:
         - Messages
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/messages/{messageId}/messageresponses":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/messages/{messageId}/messageresponses':
     get:
       summary: Retrieve a message response
       description: |
@@ -1170,7 +1170,7 @@ paths:
         *   The **responseMessage acknowledged** shows the date of when the response was received by the Whispir Platform
       operationId: getMessageResponsesById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: messageId
           in: path
           description: Enter message id
@@ -1217,33 +1217,33 @@ paths:
               - notmatched
               - responserule
       responses:
-        "200":
+        '200':
           description: OK
           headers:
             Content-Type:
-              $ref: "#/components/headers/Message-Response-Content-Type"
+              $ref: '#/components/headers/Message-Response-Content-Type'
             Content-Length:
-              $ref: "#/components/headers/Content-Length"
+              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
-              $ref: "#/components/headers/Access-Control-Allow-Origin"
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
           content:
             application/vnd.whispir.message-v1+json:
               schema:
-                description: ""
+                description: ''
                 type: object
                 x-examples:
                   example-1:
                     messageresponses:
                       - percentageTotal: 50%
-                        responseCount: "1"
+                        responseCount: '1'
                         link: []
                         type: noresponse
                       - percentageTotal: 50%
-                        responseCount: "1"
+                        responseCount: '1'
                         link: []
                         type: notmatched
                     link:
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
                         rel: self
                         method: GET
                 properties:
@@ -1258,7 +1258,7 @@ paths:
                               example: 100%
                             responseCount:
                               type: string
-                              example: "1"
+                              example: '1'
                             link:
                               type: array
                               items: {}
@@ -1290,13 +1290,13 @@ paths:
                                   example: testUser.au@User.whispir.com
                                 mobile:
                                   type: string
-                                  example: "61400400400"
+                                  example: '61400400400'
                                 email:
                                   type: string
                                   example: tuser@whispir.com
                                 voice:
                                   type: string
-                                  example: "61400400400"
+                                  example: '61400400400'
                             responseCategory:
                               type: string
                               enum:
@@ -1322,7 +1322,7 @@ paths:
                             - from
                             - responseCategory
                             - responseMessage
-                      description: "First object if `view` is `summary`, second object if `view` is `detailed`."
+                      description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
                       type: object
                   link:
                     type: array
@@ -1332,7 +1332,7 @@ paths:
                       properties:
                         uri:
                           type: string
-                          example: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses"
+                          example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
                         rel:
                           type: string
                           example: self
@@ -1352,7 +1352,7 @@ paths:
                         - method
                   status:
                     type: string
-                    example: "1 to 1 of 1    "
+                    example: '1 to 1 of 1    '
                     description: Present when `view` is `detailed`.
                 required:
                   - messageresponses
@@ -1362,29 +1362,29 @@ paths:
                   value:
                     messageresponses:
                       - percentageTotal: 50%
-                        responseCount: "1"
+                        responseCount: '1'
                         link: []
                         type: noresponse
                       - percentageTotal: 50%
-                        responseCount: "1"
+                        responseCount: '1'
                         link: []
                         type: notmatched
                     link:
-                      - uri: "https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses"
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
                         rel: self
                         method: GET
                         host: api.au.whispir.com
                         port: -1
                 Detailed:
                   value:
-                    status: "1 to 2 of 2    "
+                    status: '1 to 2 of 2    '
                     messageresponses:
                       - from:
                           name: John Smith
                           mri: John_Smith.484215.Critical_Incident_Management@Contact.whispir.com
-                          mobile: "+1000000000"
+                          mobile: '+1000000000'
                           email: jsmith@test.com
-                          voice: "+1000000000"
+                          voice: '+1000000000'
                         responseCategory: noresponse
                         responseMessage:
                           content: N/A
@@ -1393,20 +1393,20 @@ paths:
                       - from:
                           name: Fred Smith
                           mri: Fred_Smith.341550.Critical_Incident_Management@Contact.whispir.com
-                          mobile: "+1000000000"
+                          mobile: '+1000000000'
                           email: fsmith@test.com
-                          voice: "+1000000000"
+                          voice: '+1000000000'
                         responseCategory: notmatched
                         responseMessage:
-                          content: "OK, got it. Thanks."
-                          acknowledged: "28/09/12 08:48"
+                          content: 'OK, got it. Thanks.'
+                          acknowledged: '28/09/12 08:48'
                           channel: SMS
                     link: []
       tags:
         - Messages
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/resources":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/resources':
     post:
       tags:
         - Resources
@@ -1446,27 +1446,27 @@ paths:
         Information about the resources endpoint is documented in the Resources section of the documentation.
       operationId: postResources
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       requestBody:
         content:
           application/vnd.whispir.resource-v1+json:
             schema:
-              $ref: "#/components/schemas/resource"
+              $ref: '#/components/schemas/resource'
           application/vnd.whispir.resource-v1+xml:
             schema:
-              $ref: "#/components/schemas/resource"
+              $ref: '#/components/schemas/resource'
         description: resources object that needs to be create resources
         required: true
       responses:
-        "201":
+        '201':
           description: Created
           content:
             application/vnd.whispir.resource-v1+json:
               schema:
-                $ref: "#/components/schemas/resource"
+                $ref: '#/components/schemas/resource'
             application/vnd.whispir.resource-v1+xml:
               schema:
-                $ref: "#/components/schemas/resource"
+                $ref: '#/components/schemas/resource'
     get:
       tags:
         - Resources
@@ -1511,7 +1511,7 @@ paths:
         **Eg:** - &name=australia.csv
       operationId: getResources
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: scope
           description: A filter parameter for the visibility of the resource.
           in: query
@@ -1529,7 +1529,7 @@ paths:
             type: string
             example: recipients.json
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
@@ -1541,57 +1541,57 @@ paths:
                         scope: private
                         mimeType: application/json
                         link:
-                          - uri: "https://api.au.whispir.com/resources/D9A8DC34EDRSD7E4"
+                          - uri: 'https://api.au.whispir.com/resources/D9A8DC34EDRSD7E4'
                             rel: self
                             method: GET
                       - name: australia.json
                         scope: private
                         mimeType: application/json
                         link:
-                          - uri: "https://api.au.whispir.com/resources/D3E2XCDF3WS4859"
+                          - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
                             rel: self
                             method: GET
                       - name: usa.csv
                         scope: private
                         mimeType: text/csv
                         link:
-                          - uri: "https://api.au.whispir.com/resources/3E2F6E72642F949"
+                          - uri: 'https://api.au.whispir.com/resources/3E2F6E72642F949'
                             rel: self
                             method: GET
                       - name: users.json
                         scope: public
                         mimeType: application/json
-                        url: "https://cdn-ap.whispir.com/public/resources/2163b29d4edf1bd77d71a36210d472360cd.json"
+                        url: 'https://cdn-ap.whispir.com/public/resources/2163b29d4edf1bd77d71a36210d472360cd.json'
                         link:
-                          - uri: "https://api.au.whispir.com/resources/F1212CF334EDR68"
+                          - uri: 'https://api.au.whispir.com/resources/F1212CF334EDR68'
                             rel: self
                             method: GET
                       - name: whispir-example-bulk-message-1.csv
                         scope: private
                         mimeType: text/csv
                         link:
-                          - uri: "https://api.au.whispir.com/resources/32SDF43ED6829B2"
+                          - uri: 'https://api.au.whispir.com/resources/32SDF43ED6829B2'
                             rel: self
                             method: GET
                       - name: whispir-example-bulk-message-2.csv
                         scope: private
                         mimeType: text/csv
                         link:
-                          - uri: "https://api.au.whispir.com/resources/C708D712EDRB0"
+                          - uri: 'https://api.au.whispir.com/resources/C708D712EDRB0'
                             rel: self
                             method: GET
                       - name: whispir-example-bulk-message-3.csv
                         scope: private
                         mimeType: text/csv
                         link:
-                          - uri: "https://api.au.whispir.com/resources/2FEED897U46E2"
+                          - uri: 'https://api.au.whispir.com/resources/2FEED897U46E2'
                             rel: self
                             method: GET
-                    status: "1 to 7 of 7    "
+                    status: '1 to 7 of 7    '
                     link: []
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/resources/{resourceId}":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/resources/{resourceId}':
     get:
       tags:
         - Resources
@@ -1600,7 +1600,7 @@ paths:
         A single resource (public|private) can be retrieved from the available resource by using the resource’s specific link uri
       operationId: getResourcesById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: resourceId
           description: The identifier for the resource.
           in: path
@@ -1609,7 +1609,7 @@ paths:
             type: string
             example: 2C32F4AA38917318D52A279D1946BDE8
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
@@ -1620,14 +1620,14 @@ paths:
                     scope: private
                     mimeType: application/json
                     link:
-                      - uri: "https://api.au.whispir.com/resources/D3E2XCDF3WS4859"
+                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
                         rel: self
                         method: GET
-                      - uri: "https://api.au.whispir.com/resources/D3E2XCDF3WS4859"
+                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
                         rel: updateResource
                         method: PUT
-                        type: "application/vnd.whispir.resource-v1+json,application/vnd.whispir.resource-v1+xml"
-                      - uri: "https://api.au.whispir.com/resources/D3E2XCDF3WS4859"
+                        type: 'application/vnd.whispir.resource-v1+json,application/vnd.whispir.resource-v1+xml'
+                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
                         rel: deleteResource
                         method: DELETE
     put:
@@ -1640,7 +1640,7 @@ paths:
         Any or all of the 4 values can be changed. i.e, name, scope, mimeType, derefUri, but all 4 are mandatory values to be sent.
       operationId: putResourcesById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: resourceId
           in: path
           description: Enter resources id.
@@ -1652,14 +1652,14 @@ paths:
         content:
           application/vnd.whispir.resource-v1+json:
             schema:
-              $ref: "#/components/schemas/resource"
+              $ref: '#/components/schemas/resource'
           application/vnd.whispir.resource-v1+xml:
             schema:
-              $ref: "#/components/schemas/resource"
+              $ref: '#/components/schemas/resource'
         description: resources object that needs to be update resources
         required: true
       responses:
-        "204":
+        '204':
           description: No Content
           content:
             examples:
@@ -1670,10 +1670,10 @@ paths:
                     description: Scenario to use during fire evacuation
                     allowedUsers: EVERYONE
                     message:
-                      to: "+1000000000"
+                      to: '+1000000000'
                       subject: Scenario Emergency Comms - Fire
                       body: Evacuate the building Immediately. Do not use the lifts.
-                      label: ""
+                      label: ''
                       voice: {}
                       from: joe.bloggs.company@Contact.Melbourne.whispir.au
                       social:
@@ -1690,7 +1690,7 @@ paths:
         **Note:** Deleting a public resource may result in 404 File Not Found error for any sites or material referencing to it. So, ensure that DELETE is only executed when the reference to all material is removed or the content has to be removed for other purposes immediately.
       operationId: deleteResourcesById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: resourceId
           in: path
           description: The id of the resources to be deleted
@@ -1699,33 +1699,33 @@ paths:
             type: string
             example: 2C32F4AA38917318D52A279D1946BDE8
       responses:
-        "204":
+        '204':
           description: No Content
-        "404":
+        '404':
           description: Not Found
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/templates":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/templates':
     post:
       tags:
         - Templates
       summary: Create a template
-      description: "Create a message template, combining multi-channel content for use with the Message resource. The message template can be reused across multiple sent messages."
+      description: 'Create a message template, combining multi-channel content for use with the Message resource. The message template can be reused across multiple sent messages.'
       operationId: postTemplates
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
             schema:
-              $ref: "#/components/schemas/template"
+              $ref: '#/components/schemas/template'
           application/vnd.whispir.template-v1+xml:
             schema:
-              $ref: "#/components/schemas/template"
+              $ref: '#/components/schemas/template'
         description: Templates object that needs to be create Templates
         required: true
       responses:
-        "201":
+        '201':
           description: Created
     get:
       tags:
@@ -1752,49 +1752,49 @@ paths:
         *   method - the HTTP method to use with this particular link
       operationId: getTemplates
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
               examples:
                 response:
                   value:
-                    status: "1 to 4 of 4    "
+                    status: '1 to 4 of 4    '
                     messagetemplates:
                       - messageTemplateName: Appointment Reminder
-                        messageTemplateDescription: ""
+                        messageTemplateDescription: ''
                         id: F0547F6F2E4839F8
                         link:
-                          - uri: "https://api.au.whispir.com/templates/F0547F6F2E4839F8"
+                          - uri: 'https://api.au.whispir.com/templates/F0547F6F2E4839F8'
                             rel: self
                             method: GET
                       - messageTemplateName: Customer Survey
-                        messageTemplateDescription: ""
+                        messageTemplateDescription: ''
                         id: DDE10AC13FB0E457
                         link:
-                          - uri: "https://api.au.whispir.com/templates/DDE10AC13FB0E457"
+                          - uri: 'https://api.au.whispir.com/templates/DDE10AC13FB0E457'
                             rel: self
                             method: GET
                       - messageTemplateName: Service announcement
-                        messageTemplateDescription: ""
+                        messageTemplateDescription: ''
                         id: 900972D1C916FE84
                         link:
-                          - uri: "https://api.au.whispir.com/templates/900972D1C916FE84"
+                          - uri: 'https://api.au.whispir.com/templates/900972D1C916FE84'
                             rel: self
                             method: GET
                       - messageTemplateName: Shift Opportunity
-                        messageTemplateDescription: ""
+                        messageTemplateDescription: ''
                         id: 9CB9BE20B885542D
                         link:
-                          - uri: "https://api.au.whispir.com/templates/9CB9BE20B885542D"
+                          - uri: 'https://api.au.whispir.com/templates/9CB9BE20B885542D'
                             rel: self
                             method: GET
                     link: []
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/templates/{templateId}":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/templates/{templateId}':
     get:
       tags:
         - Templates
@@ -1802,7 +1802,7 @@ paths:
       description: Retrieves a Template object.
       operationId: getTemplatesById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
           in: path
           description: Enter Templates id.
@@ -1811,7 +1811,7 @@ paths:
             type: string
             example: 321D8505157C5F27
       responses:
-        "200":
+        '200':
           description: OK
     put:
       tags:
@@ -1821,7 +1821,7 @@ paths:
         **Note:** Currently users cannot update templates with the same name as a template that already exists in Whispir. Users can overcome this by saving the updated template with a new name, then either changing this back in a subsequent save, or retaining the updated name.
       operationId: putTemplatesById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
           in: path
           description: Enter Templates id.
@@ -1833,14 +1833,14 @@ paths:
         content:
           application/vnd.whispir.template-v1+json:
             schema:
-              $ref: "#/components/schemas/template"
+              $ref: '#/components/schemas/template'
           application/vnd.whispir.template-v1+xml:
             schema:
-              $ref: "#/components/schemas/template"
+              $ref: '#/components/schemas/template'
         description: Templates object that needs to be update Templates
         required: true
       responses:
-        "204":
+        '204':
           description: No Content
     delete:
       tags:
@@ -1850,7 +1850,7 @@ paths:
         **Note:** When a template is DELETED, all the associated Scenarios, events, and references of template use in other endpoints will fail. So, ensure that the template is not used anywhere before it is deleted. Whispir **will not** do that check before it deletes the template.
       operationId: deleteTemplatesById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
           in: path
           description: The id of the Templates to be deleted
@@ -1859,11 +1859,11 @@ paths:
             type: string
             example: 321D8505157C5F27
       responses:
-        "204":
+        '204':
           description: No Content
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/responserules":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/responserules':
     post:
       tags:
         - Response Rules
@@ -1880,19 +1880,19 @@ paths:
         This provides an out of the box capability to quickly gather feedback from the field using a Rich User interface, and leveraging SMS as the delivery mechanism.
       operationId: postResponseRules
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       requestBody:
         content:
           application/vnd.whispir.responserule-v1+json:
             schema:
-              $ref: "#/components/schemas/responseRule"
+              $ref: '#/components/schemas/responseRule'
           application/vnd.whispir.responserule-v1+xml:
             schema:
-              $ref: "#/components/schemas/responseRule"
-        description: ""
+              $ref: '#/components/schemas/responseRule'
+        description: ''
         required: true
       responses:
-        "201":
+        '201':
           description: Created
     get:
       tags:
@@ -1901,13 +1901,13 @@ paths:
       description: Returns a list of response rules.
       operationId: getResponseRules
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       responses:
-        "200":
+        '200':
           description: OK
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/responserules/{responseRuleId}":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/responserules/{responseRuleId}':
     get:
       tags:
         - Response Rules
@@ -1915,7 +1915,7 @@ paths:
       description: Retrieves a response rule object.
       operationId: getResponseRulesById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: responseRuleId
           in: path
           required: true
@@ -1924,7 +1924,7 @@ paths:
             type: string
             example: 64BC5314665B947B
       responses:
-        "200":
+        '200':
           description: OK
     put:
       tags:
@@ -1933,7 +1933,7 @@ paths:
       description: Updates a Response Rule object.
       operationId: putResponseRulesById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: responseRuleId
           in: path
           required: true
@@ -1945,14 +1945,14 @@ paths:
         content:
           application/vnd.whispir.responserule-v1+json:
             schema:
-              $ref: "#/components/schemas/responseRule"
+              $ref: '#/components/schemas/responseRule'
           application/vnd.whispir.responserule-v1+xml:
             schema:
-              $ref: "#/components/schemas/responseRule"
+              $ref: '#/components/schemas/responseRule'
         description: Response Rules object used to update Response Rules
         required: true
       responses:
-        "204":
+        '204':
           description: No Content
     delete:
       tags:
@@ -1961,7 +1961,7 @@ paths:
       description: Deletes a Response Rule object.
       operationId: deleteResponseRulesById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: responseRuleId
           in: path
           required: true
@@ -1970,11 +1970,11 @@ paths:
             type: string
             example: 64BC5314665B947B
       responses:
-        "204":
+        '204':
           description: No Content
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/contacts":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/contacts':
     post:
       tags:
         - Contacts
@@ -1982,28 +1982,28 @@ paths:
       description: Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.
       operationId: postContacts
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       requestBody:
         content:
           application/vnd.whispir.contact-v1+json:
             schema:
-              $ref: "#/components/schemas/contact"
+              $ref: '#/components/schemas/contact'
           application/vnd.whispir.contact-v1+xml:
             schema:
-              $ref: "#/components/schemas/contact"
+              $ref: '#/components/schemas/contact'
         description: Contact object to be created
         required: true
       responses:
-        "201":
+        '201':
           description: Created
           content:
             application/vnd.whispir.contact-v1+json:
               schema:
-                $ref: "#/components/schemas/contact"
+                $ref: '#/components/schemas/contact'
               examples: {}
             application/vnd.whispir.contact-v1+xml:
               schema:
-                $ref: "#/components/schemas/contact"
+                $ref: '#/components/schemas/contact'
     get:
       tags:
         - Contacts
@@ -2022,7 +2022,7 @@ paths:
         `/contacts?custom_StaffId=12345`
       operationId: getContacts
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: fieldname
           in: query
           description: |
@@ -2052,11 +2052,11 @@ paths:
           schema:
             type: boolean
       responses:
-        "200":
+        '200':
           description: OK
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/contacts/{contactId}":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/contacts/{contactId}':
     get:
       tags:
         - Contacts
@@ -2073,7 +2073,7 @@ paths:
         Example: `/contacts/AB38CB3EFD38AFDB?customFields=true`
       operationId: getContactsById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: contactId
           in: path
           description: Enter contact id.
@@ -2088,7 +2088,7 @@ paths:
           schema:
             type: boolean
       responses:
-        "200":
+        '200':
           description: OK
     put:
       tags:
@@ -2108,7 +2108,7 @@ paths:
         The response to the PUT request upon success is usually a 204 with no content being provided.
       operationId: putContactsById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: contactId
           in: path
           description: Enter contact id.
@@ -2120,14 +2120,14 @@ paths:
         content:
           application/vnd.whispir.contact-v1+json:
             schema:
-              $ref: "#/components/schemas/contact"
+              $ref: '#/components/schemas/contact'
           application/vnd.whispir.contact-v1+xml:
             schema:
-              $ref: "#/components/schemas/contact"
+              $ref: '#/components/schemas/contact'
         description: contact object that needs to be update contact
         required: true
       responses:
-        "204":
+        '204':
           description: No Content
     delete:
       tags:
@@ -2139,7 +2139,7 @@ paths:
         The user has requested to delete a contact, and when the response of 204 No Content is returned, the contact is successfully deleted.
       operationId: deleteContactsById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: contactId
           in: path
           description: The id of the contact to be deleted
@@ -2148,11 +2148,11 @@ paths:
             type: string
             example: 5130D4DDDED0AD4D69D33C3E64419A51
       responses:
-        "204":
+        '204':
           description: No Content
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/distributionlists":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/distributionlists':
     post:
       tags:
         - Distribution Lists
@@ -2163,38 +2163,38 @@ paths:
         The MRI value is important here. It is the required unique identifier for any communications that are to be sent out to this distribution list.
       operationId: postDistributionLists
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       requestBody:
         content:
           application/vnd.whispir.distributionlist-v1+json:
             schema:
-              $ref: "#/components/schemas/distributionlist"
+              $ref: '#/components/schemas/distributionlist'
           application/vnd.whispir.distributionlist-v1+xml:
             schema:
-              $ref: "#/components/schemas/distributionlist"
+              $ref: '#/components/schemas/distributionlist'
         description: Distribution list object that needs to be create Distribution list
         required: true
       responses:
-        "201":
+        '201':
           description: Created
           content:
             application/vnd.whispir.distributionlist-v1+json:
               schema:
-                $ref: "#/components/schemas/distributionlist"
+                $ref: '#/components/schemas/distributionlist'
             application/vnd.whispir.distributionlist-v1+xml:
               schema:
-                $ref: "#/components/schemas/distributionlist"
+                $ref: '#/components/schemas/distributionlist'
             examples:
               examples:
                 response:
                   value:
                     name: My Distribution List
-                    description: ""
+                    description: ''
                     access: Open
                     visibility: Public
-                    contactIds: ""
-                    userIds: ""
-                    distListIds: ""
+                    contactIds: ''
+                    userIds: ''
+                    distListIds: ''
                     locations:
                       longitude: -122.3493552
                       latitude: 47.6204232
@@ -2211,7 +2211,7 @@ paths:
         Both these operations can be performed by passing in the relevant search parameters in the URL as query params.
       operationId: getDistributionLists
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: name
           in: query
           required: false
@@ -2227,7 +2227,7 @@ paths:
             type: string
             example: Sample Distribution List
       responses:
-        "200":
+        '200':
           description: Ok
           content:
             examples:
@@ -2239,29 +2239,29 @@ paths:
                         name: DL 1
                         mri: dl1.company_name@list.company.whispir.sg
                         description: test distribution list for company
-                        memberCount: "4"
+                        memberCount: '4'
                         access: ByApproval
                         visibility: Private
                         link:
-                          - uri: "https://api.au.whispir.com/distributionlists/CF5AF1AE49ED07A6"
+                          - uri: 'https://api.au.whispir.com/distributionlists/CF5AF1AE49ED07A6'
                             rel: self
                             method: GET
                       - id: 9FF7C2B470CCEC1E
                         name: Docs Distribution List
                         mri: Docs_Distribution_List.company@list.company.whispir.sg
                         description: A Distribution List created while writing the docs
-                        memberCount: "2"
+                        memberCount: '2'
                         access: Open
                         visibility: Public
                         link:
-                          - uri: "https://api.au.whispir.com/distributionlists/9FF7C2B470CCEC1E"
+                          - uri: 'https://api.au.whispir.com/distributionlists/9FF7C2B470CCEC1E'
                             rel: self
                             method: GET
-                    status: "1 to 2 of 2    "
+                    status: '1 to 2 of 2    '
                     link: []
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/distributionlists/{distributionlistId}":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/distributionlists/{distributionlistId}':
     get:
       tags:
         - Distribution Lists
@@ -2293,7 +2293,7 @@ paths:
         3.  For Modifying the Location Information refer to Location Tags for Distribution Lists
       operationId: getDistributionListsById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: distributionlistId
           in: path
           description: Enter Distribution id.
@@ -2302,7 +2302,7 @@ paths:
             type: string
             example: 5EFBA89462693D7B
       responses:
-        "200":
+        '200':
           description: OK
     put:
       tags:
@@ -2328,7 +2328,7 @@ paths:
         - For Modifying the Location Information refer to Location Tags for Distribution Lists
       operationId: putDistributionListsById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: distributionlistId
           in: path
           description: Enter Distribution id.
@@ -2340,14 +2340,14 @@ paths:
         content:
           application/vnd.whispir.distributionlist-v1+json:
             schema:
-              $ref: "#/components/schemas/distributionlist"
+              $ref: '#/components/schemas/distributionlist'
           application/vnd.whispir.distributionlist-v1+xml:
             schema:
-              $ref: "#/components/schemas/distributionlist"
+              $ref: '#/components/schemas/distributionlist'
         description: Distribution list object that needs to be update Distribution list
         required: true
       responses:
-        "204":
+        '204':
           description: No Content
     delete:
       tags:
@@ -2357,7 +2357,7 @@ paths:
         You can only delete the distribution list that you have created or a valid userId associated with the specific distribution list.
       operationId: deleteDistributionListsById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: distributionlistId
           in: path
           description: The id of the distributionlists to be deleted
@@ -2366,11 +2366,11 @@ paths:
             type: string
             example: 5EFBA89462693D7B
       responses:
-        "204":
+        '204':
           description: No Content
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/scenarios":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/scenarios':
     post:
       tags:
         - Scenarios
@@ -2379,19 +2379,19 @@ paths:
         A scenario is a combination of a message and contacts. So, its structure contains section for both message as well as contact information. API currently only supports creation of scenario with SMS as communication mode.
       operationId: postScenarios
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       requestBody:
         content:
           application/vnd.whispir.scenario-v1+json:
             schema:
-              $ref: "#/components/schemas/scenario"
+              $ref: '#/components/schemas/scenario'
           application/vnd.whispir.scenario-v1+xml:
             schema:
-              $ref: "#/components/schemas/scenario"
+              $ref: '#/components/schemas/scenario'
         description: Scenario list object that needs to be create Scenario
         required: true
       responses:
-        "201":
+        '201':
           description: Created
     get:
       tags:
@@ -2400,13 +2400,13 @@ paths:
       description: Returns a list of your scenarios.
       operationId: getScenarios
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       responses:
-        "200":
+        '200':
           description: OK
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/scenarios/{scenarioId}":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/scenarios/{scenarioId}':
     get:
       tags:
         - Scenarios
@@ -2414,7 +2414,7 @@ paths:
       description: Retrieves a Scenario object.
       operationId: getScenariosById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2423,7 +2423,7 @@ paths:
             type: string
             example: 41048D9483C8CF2A
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
@@ -2435,10 +2435,10 @@ paths:
                     createdTime: 1437383938000
                     allowedUsers: EVERYONE
                     message:
-                      to: "+1000000000"
+                      to: '+1000000000'
                       subject: Scenario Emergency Comms - Fire
                       body: sms test
-                      label: ""
+                      label: ''
                       voice: {}
                       from: joe.bloggs.company@Contact.Melbourne.whispir.au
                       social:
@@ -2447,17 +2447,17 @@ paths:
                             body: text/plain
                       createdTime: 1437569311000
                     link:
-                      - uri: "https://api.au.whispir.com/scenarios/F0547F6F2E4839F8"
+                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
                         rel: self
                         method: GET
-                      - uri: "https://api.au.whispir.com/scenarios/F0547F6F2E4839F8"
+                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
                         rel: updateScenario
                         method: PUT
-                        type: "application/vnd.whispir.scenario-v1+json,application/vnd.whispir.scenario-v1+xml"
-                      - uri: "https://api.au.whispir.com/scenarios/F0547F6F2E4839F8"
+                        type: 'application/vnd.whispir.scenario-v1+json,application/vnd.whispir.scenario-v1+xml'
+                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
                         rel: deleteScenario
                         method: DELETE
-                        type: "application/vnd.whispir.scenario-v1+json,application/vnd.whispir.scenario-v1+xml"
+                        type: 'application/vnd.whispir.scenario-v1+json,application/vnd.whispir.scenario-v1+xml'
     post:
       tags:
         - Scenarios
@@ -2475,7 +2475,7 @@ paths:
         Now invoking this scenario is just making a /POST call. There is no need for a Content-type header as the payload is empty.
       operationId: postScenariosById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2484,7 +2484,7 @@ paths:
             type: string
             example: 41048D9483C8CF2A
       responses:
-        "204":
+        '204':
           description: No Content
     put:
       tags:
@@ -2493,7 +2493,7 @@ paths:
       description: Updates a Scenario object.
       operationId: putScenariosById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2505,14 +2505,14 @@ paths:
         content:
           application/vnd.whispir.scenario-v1+json:
             schema:
-              $ref: "#/components/schemas/scenario"
+              $ref: '#/components/schemas/scenario'
           application/vnd.whispir.scenario-v1+xml:
             schema:
-              $ref: "#/components/schemas/scenario"
+              $ref: '#/components/schemas/scenario'
         description: Scenarios object that needs to be update Scenarios
         required: true
       responses:
-        "204":
+        '204':
           description: No Content
     delete:
       tags:
@@ -2521,7 +2521,7 @@ paths:
       description: Deletes a Scenario object.
       operationId: deleteScenariosById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: scenarioId
           in: path
           description: The id of the Scenarios to be deleted
@@ -2530,10 +2530,10 @@ paths:
             type: string
             example: 41048D9483C8CF2A
       responses:
-        "204":
+        '204':
           description: No Content
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
+      - $ref: '#/components/parameters/workspaceId'
   /callbacks:
     post:
       tags:
@@ -2570,17 +2570,17 @@ paths:
         content:
           application/vnd.whispir.api-callback-v1+json:
             schema:
-              $ref: "#/components/schemas/callback"
+              $ref: '#/components/schemas/callback'
           application/vnd.whispir.api-callback-v1+xml:
             schema:
-              $ref: "#/components/schemas/callback"
+              $ref: '#/components/schemas/callback'
         description: Callbacks list object that needs to be create Callbacks
         required: true
       responses:
-        "201":
+        '201':
           description: Created
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
     get:
       tags:
         - Callbacks
@@ -2604,20 +2604,29 @@ paths:
         *   method - the HTTP method to use with this particular link
       operationId: getCallbacks
       responses:
-        "200":
-          $ref: "#/components/responses/callback"
-        "201":
-          description: Created
-        "400":
+        '201':
+          $ref: '#/components/responses/callbacks'
+        '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 type: object
                 properties: {}
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/callback'
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
-  "/callbacks/{callbackId}/calls":
+        - $ref: '#/components/parameters/X-Api-Key'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/callback'
+  '/callbacks/{callbackId}/calls':
     get:
       tags:
         - Callbacks
@@ -2646,7 +2655,7 @@ paths:
         To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL.
       operationId: getCallbacksCallsById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
           in: path
           required: true
@@ -2657,14 +2666,14 @@ paths:
         - name: status
           in: query
           required: false
-          description: "To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL."
+          description: 'To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL.'
           schema:
             type: string
             enum:
               - SUCCESS
               - FAILED
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
@@ -2675,23 +2684,23 @@ paths:
                     calls:
                       - id: B3EDFE83DF389DFE
                         messageId: ABC4857BCCF484575FCA
-                        messageLocation: "https://api.au.whispir.com/messages/ABC4857BCCF484575FCA"
+                        messageLocation: 'https://api.au.whispir.com/messages/ABC4857BCCF484575FCA'
                         status: FAILED
                         from:
                           name: Fred Waters
                           mri: Fred_Waters.528798.Sandbox@Contact.whispir.com
-                          mobile: "+1000000000"
-                          email: ""
-                          voice: ""
+                          mobile: '+1000000000'
+                          email: ''
+                          voice: ''
                         responseMessage:
                           channel: SMS
-                          acknowledged: "09/01/13 13:22"
-                          content: "Yes, I accept. Will I need to bring steel cap boots?"
+                          acknowledged: '09/01/13 13:22'
+                          content: 'Yes, I accept. Will I need to bring steel cap boots?'
                         callback:
                           id: B384FD38DCBADE38
                           name: My Callback Server
-                          url: "https://www.myapplication.com/myapp"
-                          attemptedDate: "09/01/13 13:22"
+                          url: 'https://www.myapplication.com/myapp'
+                          attemptedDate: '09/01/13 13:22'
                           statusCode: 500
                           statusMessage: Internal Server Error
                         link:
@@ -2731,7 +2740,7 @@ paths:
         The PUT request takes a single API parameter in the body
       operationId: putCallbacksCallsById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
           in: path
           description: Enter Scenarios id.
@@ -2749,7 +2758,7 @@ paths:
               - SUCCESS
               - FAILED
       responses:
-        "204":
+        '204':
           description: No Content
   /workspaces:
     post:
@@ -2763,17 +2772,17 @@ paths:
         content:
           application/vnd.whispir.workspace-v1+json:
             schema:
-              $ref: "#/components/schemas/workspace"
+              $ref: '#/components/schemas/workspace'
           application/vnd.whispir.workspace-v1+xml:
             schema:
-              $ref: "#/components/schemas/workspace"
+              $ref: '#/components/schemas/workspace'
         description: Workspaces list object that needs to be create Workspaces
         required: true
       responses:
-        "201":
+        '201':
           description: Created
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
     get:
       tags:
         - Workspaces
@@ -2781,7 +2790,7 @@ paths:
       description: Returns a list of your workspaces.
       operationId: getWorkspaces
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
@@ -2790,53 +2799,53 @@ paths:
                   value:
                     workspaces:
                       - projectName: Sales Lead Notifications
-                        projectNumber: ""
+                        projectNumber: ''
                         status: A
-                        billingcostcentre: "0"
+                        billingcostcentre: '0'
                         link:
-                          - uri: "https://api.au.whispir.com/workspaces/7311ABEB701E7C60"
+                          - uri: 'https://api.au.whispir.com/workspaces/7311ABEB701E7C60'
                             rel: self
                             method: GET
                       - projectName: Product Release Management
-                        projectNumber: ""
+                        projectNumber: ''
                         status: A
-                        billingcostcentre: "0"
+                        billingcostcentre: '0'
                         link:
-                          - uri: "https://api.au.whispir.com/workspaces/26B1A09C1FEC20A2"
+                          - uri: 'https://api.au.whispir.com/workspaces/26B1A09C1FEC20A2'
                             rel: self
                             method: GET
                       - projectName: Business Working Group
-                        projectNumber: ""
+                        projectNumber: ''
                         status: A
                         billingcostcentre: CLSA
                         link:
-                          - uri: "https://api.au.whispir.com/workspaces/A358845BF004C113"
+                          - uri: 'https://api.au.whispir.com/workspaces/A358845BF004C113'
                             rel: self
                             method: GET
                       - projectName: Critical Incident Management
-                        projectNumber: ""
+                        projectNumber: ''
                         status: A
-                        billingcostcentre: ""
+                        billingcostcentre: ''
                         link:
-                          - uri: "https://api.au.whispir.com/workspaces/B7BFEF555F0F7F81"
+                          - uri: 'https://api.au.whispir.com/workspaces/B7BFEF555F0F7F81'
                             rel: self
                             method: GET
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
-  "/workspaces/{workspaceId}":
+        - $ref: '#/components/parameters/X-Api-Key'
+  '/workspaces/{workspaceId}':
     get:
       tags:
         - Workspaces
       summary: Retrieve a workspace
-      description: "Use GET on a Workspace Id to verify it is a valid Workspace ID, and see a list of all the other endpoint URIs in that workspace"
+      description: 'Use GET on a Workspace Id to verify it is a valid Workspace ID, and see a list of all the other endpoint URIs in that workspace'
       operationId: getWorkspacesById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       responses:
-        "200":
+        '200':
           description: OK
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
+      - $ref: '#/components/parameters/workspaceId'
   /activities:
     post:
       tags:
@@ -2849,17 +2858,17 @@ paths:
         content:
           application/vnd.whispir.activity-v1+json:
             schema:
-              $ref: "#/components/schemas/activity"
+              $ref: '#/components/schemas/activity'
           application/vnd.whispir.activity-v1+xml:
             schema:
-              $ref: "#/components/schemas/activity"
+              $ref: '#/components/schemas/activity'
         description: activity list object that needs to be create activity
         required: true
       responses:
-        "201":
+        '201':
           description: Created
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
     get:
       tags:
         - Activities
@@ -2873,7 +2882,7 @@ paths:
         **Note:** The API currently results in a 404 Not Found when there are no activities present in the log for a given search criteria. This should not be not confused with a failed response. But rather as No Data Found.
       operationId: getActivities
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: action
           in: query
           required: false
@@ -2939,7 +2948,7 @@ paths:
           description: /activities?workspace=Whispir.
           schema:
             type: string
-            default: "{{workspaceName}}"
+            default: '{{workspaceName}}'
         - name: status
           in: query
           required: false
@@ -2960,19 +2969,19 @@ paths:
         - name: Start time
           in: query
           required: false
-          description: "The date and time to start searching from in the format:dd/mm/yyyy hh:mm. This will search on the `time` field <p>/activities?startTime=01/01/2015%2000:00</p>"
+          description: 'The date and time to start searching from in the format:dd/mm/yyyy hh:mm. This will search on the `time` field <p>/activities?startTime=01/01/2015%2000:00</p>'
           schema:
             type: string
-            default: "{{startTime}}"
+            default: '{{startTime}}'
         - name: End time
           in: query
           required: false
-          description: "The date and time to start searching from in the format:dd/mm/yyyy hh:mm <p>/activities?endTime=01/01/2015%2000:00</p>"
+          description: 'The date and time to start searching from in the format:dd/mm/yyyy hh:mm <p>/activities?endTime=01/01/2015%2000:00</p>'
           schema:
             type: string
-            default: "{{endTime}}"
+            default: '{{endTime}}'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
@@ -2981,63 +2990,63 @@ paths:
                   value:
                     activities:
                       - user: james.cameron
-                        time: "17/08/15 13:29"
+                        time: '17/08/15 13:29'
                         action: Send
                         description: Message sent via the Whispir's Java library
                         status: Successful
                         module: Message
                         workspaceName: Whispir
                         link:
-                          - uri: "https://api.au.whispir.com/activities/9B26BCE6A7C1997D3E3C04D4C0B62165"
+                          - uri: 'https://api.au.whispir.com/activities/9B26BCE6A7C1997D3E3C04D4C0B62165'
                             rel: self
                             method: GET
                       - user: james.cameron
-                        time: "17/08/15 12:56"
+                        time: '17/08/15 12:56'
                         action: Create
                         status: Successful
                         module: Workspace
                         workspaceName: Whispir
                         link:
-                          - uri: "https://api.au.whispir.com/activities/CF8F388F18FDDA7CA40F42E888EC8E67"
+                          - uri: 'https://api.au.whispir.com/activities/CF8F388F18FDDA7CA40F42E888EC8E67'
                             rel: self
                             method: GET
                       - user: james.cameron
-                        time: "17/08/15 12:26"
+                        time: '17/08/15 12:26'
                         action: Draft
                         description: Template for default notification messages
                         status: Successful
                         module: Template
                         workspaceName: Whispir
                         link:
-                          - uri: "https://api.au.whispir.com/activities/19F603F21E8A7D536D577A6B4DBCFE3F"
+                          - uri: 'https://api.au.whispir.com/activities/19F603F21E8A7D536D577A6B4DBCFE3F'
                             rel: self
                             method: GET
                       - user: markm
-                        time: "22/12/14 11:37"
+                        time: '22/12/14 11:37'
                         action: Logout
                         description: Loged out
                         status: Successful
                         module: System
                         workspaceName: ABC Operations
                         link:
-                          - uri: "https://api.au.whispir.com/activities/0DEB48AB3D3B6069D7DA1A808F5A5DE4"
+                          - uri: 'https://api.au.whispir.com/activities/0DEB48AB3D3B6069D7DA1A808F5A5DE4'
                             rel: self
                             method: GET
                       - user: markm
-                        time: "22/12/14 11:20"
+                        time: '22/12/14 11:20'
                         action: Login
-                        description: "Logged in, IP:8.8.8.8, Country: USA"
+                        description: 'Logged in, IP:8.8.8.8, Country: USA'
                         status: Successful
                         module: System
                         workspaceName: ABC Operations
                         link:
-                          - uri: "https://api.au.whispir.com/activities/0CEC8009230B3B92F5B548A22B55C407"
+                          - uri: 'https://api.au.whispir.com/activities/0CEC8009230B3B92F5B548A22B55C407'
                             rel: self
                             method: GET
                     link: []
-        "404":
+        '404':
           description: Not Found
-  "/workspaces/{workspaceId}/activities":
+  '/workspaces/{workspaceId}/activities':
     get:
       tags:
         - Activities
@@ -3047,13 +3056,13 @@ paths:
         By default, GET /activities returns all the activities at company level. This covers all the workspaces. So, if the items has to limited to a specific workspace, one has to use the workspace as the endpoint and activities followed by it.
       operationId: getWorkspaceActivities
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       responses:
-        "200":
+        '200':
           description: OK
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/customlists":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/customlists':
     get:
       tags:
         - Custom Lists
@@ -3104,7 +3113,7 @@ paths:
         **Note:** The API currently results in a 404 Not Found when there are no activities present in the log for a given search criteria. This should not be not confused with a failed response. But rather as No Data Found.
       operationId: getCustomLists
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: name
           in: query
           required: false
@@ -3124,7 +3133,7 @@ paths:
               - CONTACT
               - RSS
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
@@ -3136,59 +3145,59 @@ paths:
                       - id: 4E2101D0E5D16229
                         name: Category
                         type: INCIDENT
-                        createdDate: "02/08/11 14:20"
+                        createdDate: '02/08/11 14:20'
                         sortType: As Displayed
                         linked: disabled
                         link:
-                          - uri: "https://api.au.whispir.com/customlists/40E5D16229E2101D"
+                          - uri: 'https://api.au.whispir.com/customlists/40E5D16229E2101D'
                             rel: self
                             method: GET
                       - id: 0CA7B9E2B21A3B1A
                         name: Day of Month
                         type: MESSAGE
-                        createdDate: "13/10/14 16:30"
+                        createdDate: '13/10/14 16:30'
                         sortType: As Displayed
                         linked: disabled
                         link:
-                          - uri: "https://api.au.whispir.com/customlists/0CA7B9E2B21A3B1A"
+                          - uri: 'https://api.au.whispir.com/customlists/0CA7B9E2B21A3B1A'
                             rel: self
                             method: GET
                       - id: 87F23964C25ECF22
                         name: Day of Week
                         type: MESSAGE
-                        createdDate: "07/01/14 09:51"
+                        createdDate: '07/01/14 09:51'
                         sortType: As Displayed
                         linked: disabled
                         link:
-                          - uri: "https://api.au.whispir.com/customlists/87F23964C25ECF22"
+                          - uri: 'https://api.au.whispir.com/customlists/87F23964C25ECF22'
                             rel: self
                             method: GET
                       - id: F0771B97F1EF770B
                         name: External Vendor
                         type: INCIDENT
-                        createdDate: "02/08/11 14:20"
+                        createdDate: '02/08/11 14:20'
                         sortType: As Displayed
                         linked: disabled
                         link:
-                          - uri: "https://api.au.whispir.com/customlists/F0771B97F1EF770B"
+                          - uri: 'https://api.au.whispir.com/customlists/F0771B97F1EF770B'
                             rel: self
                             method: GET
                       - id: 768E4ACA5DA7500C
                         name: Finish Time
                         type: MESSAGE
-                        createdDate: "01/08/11 12:38"
+                        createdDate: '01/08/11 12:38'
                         sortType: As Displayed
                         linked: disabled
                         link:
-                          - uri: "https://api.au.whispir.com/customlists/768E4ACA5DA7500C"
+                          - uri: 'https://api.au.whispir.com/customlists/768E4ACA5DA7500C'
                             rel: self
                             method: GET
                     link: []
-        "404":
+        '404':
           description: Not Found
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/customlists/{customlistId}":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/customlists/{customlistId}':
     get:
       tags:
         - Custom Lists
@@ -3233,7 +3242,7 @@ paths:
         *   method - the HTTP method to use with this particular link
       operationId: getCustomListsById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: customlistId
           in: path
           required: true
@@ -3242,7 +3251,7 @@ paths:
             type: string
             example: 43E9046401B18269
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
@@ -3252,7 +3261,7 @@ paths:
                     id: 4E2101D0E5D16229
                     name: Category
                     type: INCIDENT
-                    createdDate: "02/08/11 14:20"
+                    createdDate: '02/08/11 14:20'
                     sortType: As Displayed
                     linked: disabled
                     customlabellists:
@@ -3263,13 +3272,13 @@ paths:
                       - name: Infrastructure
                         value: Infrastructure
                     link:
-                      - uri: "https://api.au.whispir.com/customlists/40E5D16229E2101D"
+                      - uri: 'https://api.au.whispir.com/customlists/40E5D16229E2101D'
                         rel: self
                         method: GET
-        "404":
+        '404':
           description: Not Found
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
+      - $ref: '#/components/parameters/workspaceId'
   /users:
     post:
       tags:
@@ -3293,19 +3302,19 @@ paths:
         Example: active != ACTIVE; inActive != INACTIVE
       operationId: postUsers
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       requestBody:
         content:
           application/vnd.whispir.user-v1+json:
             schema:
-              $ref: "#/components/schemas/user"
+              $ref: '#/components/schemas/user'
           application/vnd.whispir.user-v1+xml:
             schema:
-              $ref: "#/components/schemas/user"
+              $ref: '#/components/schemas/user'
         description: Users list object that needs to be create Users
         required: true
       responses:
-        "201":
+        '201':
           description: Created
           content:
             examples:
@@ -3313,26 +3322,26 @@ paths:
                 response:
                   value:
                     userName: John.Wick
-                    password: ""
+                    password: ''
                     status: PENDING
                     firstName: John
                     lastName: Wick
-                    personalEmailAddress2: ""
+                    personalEmailAddress2: ''
                     personalCountry: Australia
                     workEmailAddress1: jwick@testcompany.com
-                    workMobilePhone1: "61423456789"
+                    workMobilePhone1: '61423456789'
                     workCountry: Australia
                     workPostalCountry: Australia
                     timezone: Australia/Melbourne
                     link:
-                      - uri: "https://api.au.whispir.com/users/AF48A9EC3F02E43C"
+                      - uri: 'https://api.au.whispir.com/users/AF48A9EC3F02E43C'
                         rel: self
                         method: GET
-                      - uri: "https://api.au.whispir.com/users/AF48A9EC3F02E43C"
+                      - uri: 'https://api.au.whispir.com/users/AF48A9EC3F02E43C'
                         rel: updateUser
                         method: PUT
-                        type: "application/vnd.whispir.user-v1+xml,application/vnd.whispir.user-v1+json"
-                      - uri: "https://api.au.whispir.com/users/AF48A9EC3F02E43C"
+                        type: 'application/vnd.whispir.user-v1+xml,application/vnd.whispir.user-v1+json'
+                      - uri: 'https://api.au.whispir.com/users/AF48A9EC3F02E43C'
                         rel: deleteUser
                         method: DELETE
     get:
@@ -3378,7 +3387,7 @@ paths:
         **Note:** While searching for users via status, use the short code ‘A’ for ACTIVE, similarly, 'I’ for INACTIVE, rather than the full words ACTIVE, INACTIVE, etc. so, it is &status=A not &status=ACTIVE.
       operationId: getUsers
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: fieldname
           description: A filter on the User attributes. Only Users with matching attributes will be returned.
           in: query
@@ -3396,13 +3405,13 @@ paths:
               - desc
         - name: sortFields
           in: query
-          description: "The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma."
+          description: 'The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.'
           required: false
           schema:
             type: string
-            example: "lastName,jobTitle"
+            example: 'lastName,jobTitle'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
@@ -3416,11 +3425,11 @@ paths:
                         lastName: Smith
                         companyName: Whispir Pte Ltd
                         workEmailAddress1: fsmith@testcompany.com
-                        workMobilePhone1: "61423456789"
+                        workMobilePhone1: '61423456789'
                         link:
                           method: GET
                           rel: self
-                          uri: "http://api.whispir.com/users/AF48A9EC3F02E43C"
+                          uri: 'http://api.whispir.com/users/AF48A9EC3F02E43C'
                       - ...
       x-internal: false
     delete:
@@ -3433,11 +3442,11 @@ paths:
         **Note**: use this endpoint with caution!
       operationId: deleteUsers
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       responses:
-        "204":
+        '204':
           description: No Content
-  "/users/{userId}":
+  '/users/{userId}':
     get:
       tags:
         - Users
@@ -3445,7 +3454,7 @@ paths:
       description: Retrieves a User object.
       operationId: getUsersById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: userId
           description: The identifier for the User.
           in: path
@@ -3454,7 +3463,7 @@ paths:
             type: string
             example: 4821DCC420494A3A
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
@@ -3468,7 +3477,7 @@ paths:
                     link:
                       method: GET
                       rel: self
-                      uri: "http://api.whispir.com/users/AF48A9EC3F02E43C"
+                      uri: 'http://api.whispir.com/users/AF48A9EC3F02E43C'
     put:
       tags:
         - Users
@@ -3489,7 +3498,7 @@ paths:
         The response to the PUT request upon success is usually a 204 with no content being provided.
       operationId: putUsersById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: userId
           in: path
           description: Enter Users id.
@@ -3501,14 +3510,14 @@ paths:
         content:
           application/vnd.whispir.user-v1+json:
             schema:
-              $ref: "#/components/schemas/user"
+              $ref: '#/components/schemas/user'
           application/vnd.whispir.user-v1+xml:
             schema:
-              $ref: "#/components/schemas/user"
+              $ref: '#/components/schemas/user'
         description: Users object that needs to be update Users
         required: true
       responses:
-        "204":
+        '204':
           description: Created
     delete:
       tags:
@@ -3520,7 +3529,7 @@ paths:
         The delete a user if successful shall respond with a 204 No Content.
       operationId: deleteUsersById
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
         - name: userId
           in: path
           description: Enter User id
@@ -3529,9 +3538,9 @@ paths:
             type: string
             example: 4821DCC420494A3A
       responses:
-        "204":
+        '204':
           description: No Content
-  "/workspaces/{workspaceId}/users":
+  '/workspaces/{workspaceId}/users':
     get:
       tags:
         - Users
@@ -3539,9 +3548,9 @@ paths:
       description: Returns a list of your Users.
       operationId: getWorkspaceUsers
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             examples:
@@ -3556,26 +3565,26 @@ paths:
                         workEmailAddress1: fsmith@whispir.com
                         workMobilePhone1: 6512348765
                         link:
-                          - uri: "https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/AF48A9EC3F02E43C"
+                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/AF48A9EC3F02E43C'
                             rel: self
                             method: GET
                       - id: DFC878BCB2EF9258
                         firstName: John
                         lastName: Wick
-                        companyName: ""
+                        companyName: ''
                         workEmailAddress1: jwick@whispir.com
                         link:
-                          - uri: "https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/DFC878BCB2EF9258"
+                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/DFC878BCB2EF9258'
                             rel: self
                             method: GET
                       - status: 1 to 20 of 28
                         link:
-                          uri: "https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/?offset=10&limit=10"
+                          uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/?offset=10&limit=10'
                           rel: next
                           method: GET
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/events":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/events':
     get:
       tags:
         - Events
@@ -3583,17 +3592,17 @@ paths:
       description: Retrieves an Event object.
       operationId: getEvents
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/xml:
               schema:
-                $ref: "#/components/schemas/event"
+                $ref: '#/components/schemas/event'
             application/json:
               schema:
-                $ref: "#/components/schemas/event"
+                $ref: '#/components/schemas/event'
     post:
       tags:
         - Events
@@ -3610,11 +3619,11 @@ paths:
         Most importantly, to create an event, one must have the create access for Incident row in the Roles & Permission section of the account settings.
       operationId: postEvents
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       requestBody:
-        $ref: "#/components/requestBodies/event"
+        $ref: '#/components/requestBodies/event'
       responses:
-        "201":
+        '201':
           description: Created
           content:
             examples:
@@ -3630,111 +3639,111 @@ paths:
                           - name: summary
                             value: Outage of systems in Sydney
                           - name: location
-                            value: "0.0,0.0"
+                            value: '0.0,0.0'
                           - name: endDate
                           - name: type
-                            value: ""
+                            value: ''
                           - name: actionDetails2
-                            value: ""
+                            value: ''
                           - name: actionDetails3
-                            value: ""
+                            value: ''
                           - name: actionDetails1
                             value: investigation to take place asap.
                           - name: priority
-                            value: ""
+                            value: ''
                           - name: description
-                            value: "ATMs are non responsive, teams to be sent to investigate."
+                            value: 'ATMs are non responsive, teams to be sent to investigate.'
                           - name: actionDetails8
-                            value: ""
+                            value: ''
                           - name: actionDetails9
-                            value: ""
+                            value: ''
                           - name: actionDetails6
-                            value: ""
+                            value: ''
                           - name: actionDetails7
-                            value: ""
+                            value: ''
                           - name: actionDetails4
-                            value: ""
+                            value: ''
                           - name: actionOwner10
-                            value: ""
+                            value: ''
                           - name: actionDetails5
-                            value: ""
+                            value: ''
                           - name: platform
-                            value: ""
+                            value: ''
                           - name: services
-                            value: ""
+                            value: ''
                           - name: status
                             value: Open
                           - name: openedBy
-                            value: ""
+                            value: ''
                           - name: category
                             value: Internal
                           - name: externalVendor
-                            value: ""
+                            value: ''
                           - name: externalCaseNumber
-                            value: ""
+                            value: ''
                           - name: actionOwner6
-                            value: ""
+                            value: ''
                           - name: startDate
-                            value: "11/09/2015 00:00:00"
+                            value: '11/09/2015 00:00:00'
                           - name: actionOwner5
-                            value: ""
+                            value: ''
                           - name: actionOwner8
-                            value: ""
+                            value: ''
                           - name: actionOwner7
-                            value: ""
+                            value: ''
                           - name: actionOwner9
-                            value: ""
+                            value: ''
                           - name: actionDate8
                           - name: actionDate9
                           - name: actionDetails10
-                            value: ""
+                            value: ''
                           - name: actionDate4
                           - name: actionOwner2
-                            value: ""
+                            value: ''
                           - name: actionDate5
                           - name: actionOwner1
                             value: John Wick
                           - name: actionDate6
                           - name: actionOwner4
-                            value: ""
+                            value: ''
                           - name: actionDate7
                           - name: actionOwner3
-                            value: ""
+                            value: ''
                           - name: actionDate1
-                            value: "11/09/2015 00:00:00"
+                            value: '11/09/2015 00:00:00'
                           - name: actionDate3
                           - name: actionDate2
                           - name: locations
-                            value: ""
+                            value: ''
                           - name: impactToOrg
-                            value: ""
+                            value: ''
                           - name: actionDate10
                           - name: locationDisplay
-                            value: ""
+                            value: ''
                           - name: subCategory
-                            value: ""
+                            value: ''
                           - name: severity
                             value: Severity 3 - Minor Outage (Some Service Degradation)
                           - name: duration
-                            value: ""
+                            value: ''
                           - name: lineNumber
-                            value: ""
+                            value: ''
                           - name: impactCondition
-                            value: ""
+                            value: ''
                     link:
-                      - uri: "https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2"
+                      - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
                         rel: self
                         method: GET
-                      - uri: "https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2"
+                      - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
                         rel: self
                         method: PUT
-                        type: "application/vnd.whispir.event-v1+xml,application/vnd.whispir.event-v1+json"
-                      - uri: "https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/messages?label=2701095%20-%20Outage%20of%20Local%20Systems%20in%20Sydney"
+                        type: 'application/vnd.whispir.event-v1+xml,application/vnd.whispir.event-v1+json'
+                      - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/messages?label=2701095%20-%20Outage%20of%20Local%20Systems%20in%20Sydney'
                         rel: retrieveEventMessages
                         method: GET
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
-  "/workspaces/{workspaceId}/imports":
+      - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/imports':
     post:
       tags:
         - Imports
@@ -3770,33 +3779,33 @@ paths:
         **Note:** Import processes take place asynchronously. Any contacts will be created once the import process starts, and users will be able to utilise imported contacts as soon as each is completed.
       operationId: postImports
       parameters:
-        - $ref: "#/components/parameters/X-Api-Key"
+        - $ref: '#/components/parameters/X-Api-Key'
       requestBody:
         content:
           application/vnd.whispir.import-v1+json:
             schema:
-              $ref: "#/components/schemas/import"
+              $ref: '#/components/schemas/import'
           application/vnd.whispir.import-v1+xml:
             schema:
-              $ref: "#/components/schemas/import"
+              $ref: '#/components/schemas/import'
         description: import object that needs to be create import
       responses:
-        "201":
+        '201':
           description: Created
     parameters:
-      - $ref: "#/components/parameters/workspaceId"
+      - $ref: '#/components/parameters/workspaceId'
   /auth:
     parameters: []
     post:
       summary: Create an auth token
       operationId: postAuth
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                description: ""
+                description: ''
                 type: object
                 x-examples:
                   example-1:
@@ -3874,7 +3883,7 @@ paths:
       description: Verify a JWT authentication token
       operationId: getAuthVerification
       responses:
-        "200":
+        '200':
           description: OK
       summary: Verify an auth token
       tags:
@@ -3889,24 +3898,24 @@ paths:
       operationId: get-demo-test
 externalDocs:
   description: API Documentation for Whispir Platform API
-  url: "https://developers.whispir.com"
+  url: 'https://developers.whispir.com'
 security:
   - BasicAuth: []
     ApiKeyAuth: []
 servers:
-  - url: "https://api.au.whispir.com"
+  - url: 'https://api.au.whispir.com'
     description: Australia
-  - url: "https://api.ap.whispir.com"
+  - url: 'https://api.ap.whispir.com'
     description: Singapore
-  - url: "https://api.ap1.whispir.com"
+  - url: 'https://api.ap1.whispir.com'
     description: AP1
-  - url: "https://api.nz.whispir.com"
+  - url: 'https://api.nz.whispir.com'
     description: New Zealand
-  - url: "https://api.us.whispir.com"
+  - url: 'https://api.us.whispir.com'
     description: United States
-  - url: "https://api.it.whispir.com"
+  - url: 'https://api.it.whispir.com'
     description: IT
-  - url: "https://api.education.whispir.com"
+  - url: 'https://api.education.whispir.com'
     description: Education
 components:
   requestBodies:
@@ -3914,16 +3923,16 @@ components:
       content:
         application/vnd.whispir.event-v1+json:
           schema:
-            $ref: "#/components/schemas/event"
+            $ref: '#/components/schemas/event'
         application/vnd.whispir.event-v1+xml:
           schema:
-            $ref: "#/components/schemas/event"
+            $ref: '#/components/schemas/event'
       description: events object that needs to be create events
   securitySchemes:
     BasicAuth:
       type: http
       scheme: basic
-      description: ""
+      description: ''
     ApiKeyAuth:
       name: API Key
       type: apiKey
@@ -3936,7 +3945,7 @@ components:
         prefix: ns2
       x-examples:
         SMS:
-          to: "61400400400"
+          to: '61400400400'
           subject: Test Message
           body: This is the body of my test SMS message
         Email:
@@ -3947,7 +3956,7 @@ components:
             footer: This is the footer of my message
             type: text/plain
       example:
-        to: "61400400400"
+        to: '61400400400'
         subject: Test Message
         body: This is the body of my test SMS message
       title: Message
@@ -3959,7 +3968,7 @@ components:
       properties:
         to:
           type: string
-          example: "61987654321"
+          example: '61987654321'
           description: |
             Allows a combination of phone numbers, email address, Whispir Contact MRIs, User MRI, Distribution List MRI, separated by `,`.
 
@@ -3995,13 +4004,13 @@ components:
             The 1570 length is a combination of subject and body.
           maxLength: 1570
         email:
-          $ref: "#/components/schemas/email"
+          $ref: '#/components/schemas/email'
         voice:
-          $ref: "#/components/schemas/voice"
+          $ref: '#/components/schemas/voice'
         web:
-          $ref: "#/components/schemas/web"
+          $ref: '#/components/schemas/web'
         social:
-          $ref: "#/components/schemas/social"
+          $ref: '#/components/schemas/social'
         type:
           type: string
           enum:
@@ -4014,9 +4023,9 @@ components:
             - `defaultNoReply`: Used to reject any replies to this message.
             - `noDlr`: Used to specify that DLRs should not be enabled for this message.
         features:
-          $ref: "#/components/schemas/features"
+          $ref: '#/components/schemas/features'
         resource:
-          $ref: "#/components/schemas/resource"
+          $ref: '#/components/schemas/resource'
         messageTemplateId:
           type: string
           example: BACEB8D46BEF5315
@@ -4087,7 +4096,7 @@ components:
               type: array
               uniqueItems: false
               items:
-                $ref: "#/components/schemas/attachment"
+                $ref: '#/components/schemas/attachment'
       required:
         - body
       x-tags:
@@ -4142,17 +4151,17 @@ components:
         - If a WAV file is outside these criteria please use TTS instead
       x-examples:
         Text-To-Speech (TTS):
-          header: "This is the introduction, read out to the recipient prior to any key press."
-          body: "This is the body of the voice call, read out after the key press"
-          type: "Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:"
+          header: 'This is the introduction, read out to the recipient prior to any key press.'
+          body: 'This is the body of the voice call, read out after the key press'
+          type: 'Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:'
         TTS with conference:
-          header: "This is the introduction, read out to the recipient prior to any key press."
-          body: "This is the body of the voice call, read out after the key press"
-          type: "Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242"
+          header: 'This is the introduction, read out to the recipient prior to any key press.'
+          body: 'This is the body of the voice call, read out after the key press'
+          type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
         WAV:
-          header: ""
-          body: ""
-          type: "Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:"
+          header: ''
+          body: ''
+          type: 'Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:'
           resources:
             attachment:
               - attachmentName: MessageHeader.wav
@@ -4166,16 +4175,16 @@ components:
       properties:
         header:
           type: string
-          example: "This is the introduction, read out to the recipient prior to any key press."
+          example: 'This is the introduction, read out to the recipient prior to any key press.'
           description: Introduction text played with the subject.
         body:
           type: string
-          example: "This is the body of the voice call, read out after the key press"
-          description: "Body text, read out to the recipient after the subject and header."
+          example: 'This is the body of the voice call, read out after the key press'
+          description: 'Body text, read out to the recipient after the subject and header.'
         type:
           type: string
-          default: "Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:"
-          example: "Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242"
+          default: 'Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:'
+          example: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
           description: |-
             The conference call details of the voice message. Required when no conference call is being used. The minimum string to be used is specified in the example. Read the following section for information on each field.
 
@@ -4204,7 +4213,7 @@ components:
                 | header         | `"voiceintro.wav"` |
                 | body           | `"voicebody.wav"` |
               items:
-                $ref: "#/components/schemas/attachment"
+                $ref: '#/components/schemas/attachment'
       required:
         - body
         - type
@@ -4318,7 +4327,7 @@ components:
                 - disabled
             escalationMins:
               type: string
-              example: "3"
+              example: '3'
               description: The number of minutes to wait for a reply until escalating to the next contact.
             appId:
               type: string
@@ -4400,26 +4409,26 @@ components:
           example: responseTemplateId
         subject:
           type: string
-          description: "Specifies the first line of the SMS message or Voice call, and the subject of the Email message."
+          description: 'Specifies the first line of the SMS message or Voice call, and the subject of the Email message.'
           example: Test SMS Message
         body:
           type: string
           description: Specifies the content of the SMS message.
           example: This is the body of my test SMS message
         email:
-          $ref: "#/components/schemas/email"
+          $ref: '#/components/schemas/email'
         voice:
-          $ref: "#/components/schemas/voice"
+          $ref: '#/components/schemas/voice'
         web:
-          $ref: "#/components/schemas/web"
+          $ref: '#/components/schemas/web'
         social:
-          $ref: "#/components/schemas/social"
+          $ref: '#/components/schemas/social'
         type:
           type: string
           description: Allows the user to modify the message behaviour for replies and DLRs (delivery receipts)
           example: defaultNoReply
         features:
-          $ref: "#/components/schemas/features"
+          $ref: '#/components/schemas/features'
       xml:
         name: template
         prefix: ns3
@@ -4437,16 +4446,16 @@ components:
           example: startswith
         textPrompt:
           type: string
-          example: "YES"
+          example: 'YES'
         voicePrompt:
           type: string
-          example: "1"
+          example: '1'
         spokenVoicePrompt:
           type: string
           example: to select YES
         colour:
           type: string
-          example: "#00947d"
+          example: '#00947d'
       xml:
         name: responseTemplatePattern
       x-tags:
@@ -4461,7 +4470,7 @@ components:
         description:
           type: string
         responseTemplatePatterns:
-          $ref: "#/components/schemas/responseTemplatePattern"
+          $ref: '#/components/schemas/responseTemplatePattern'
       xml:
         name: responserule
         prefix: ns3
@@ -4480,54 +4489,54 @@ components:
         Basic:
           firstName: John
           lastName: Wick
-          workMobilePhone1: "61400400400"
+          workMobilePhone1: '61400400400'
           workEmailAddress1: testUser@example.com
           workCountry: Australia
         Comprehensive:
           firstName: John
           lastName: Wick
-          workMobilePhone1: "61400400400"
+          workMobilePhone1: '61400400400'
           workEmailAddress1: testUser@example.com
           workCountry: Australia
           timezone: Australia/Melbourne
           title: Dr
-          workMobilePhone2: "61500500500"
+          workMobilePhone2: '61500500500'
           workEmailAddress2: newUser@example.com
-          workPhoneAreaCode1: "09"
-          workPhone1: "5006000"
-          workPhoneAreaCode2: "09"
-          workPhone2: "5007000"
-          workFaxAreaCode1: "09"
-          workFax1: "5008000"
-          workSatellitePhone: "61600600600"
-          workOtherPhone: "61700700700"
+          workPhoneAreaCode1: '09'
+          workPhone1: '5006000'
+          workPhoneAreaCode2: '09'
+          workPhone2: '5007000'
+          workFaxAreaCode1: '09'
+          workFax1: '5008000'
+          workSatellitePhone: '61600600600'
+          workOtherPhone: '61700700700'
           workAddress1: Level 15
           workAddress2: 360 Collins St
           workSuburb: Melboure
           workState: Victoria
-          workPostCode: "3000"
+          workPostCode: '3000'
           workPostalAddress1: Level 15
           workPostalAddress2: 360 Collins St
           workPostalSuburb: Melboure
           workPostalState: Victoria
-          workPostalPostCode: "3000"
+          workPostalPostCode: '3000'
           personalEmailAddress1: personalPrimaryUser@example.com
           personalEmailAddress2: personalSecondaryUser@example.com
           personalAddress1: Level 15
           personalAddress2: 360 Collins St
           personalSuburb: Melboure
           personalState: Victoria
-          personalPostCode: "3000"
+          personalPostCode: '3000'
           personalCountry: Australia
-          personalPhoneAreaCode1: "09"
-          personalPhone1: "5006000"
-          personalPhoneAreaCode2: "09"
-          personalPhone2: "5007000"
-          personalFaxAreaCode1: "09"
-          personalFax1: "5008000"
-          otherPhoneAreaCode1: "09"
-          otherPhone1: "5009000"
-          otherMobile: "61900900900"
+          personalPhoneAreaCode1: '09'
+          personalPhone1: '5006000'
+          personalPhoneAreaCode2: '09'
+          personalPhone2: '5007000'
+          personalFaxAreaCode1: '09'
+          personalFax1: '5008000'
+          otherPhoneAreaCode1: '09'
+          otherPhone1: '5009000'
+          otherMobile: '61900900900'
           otherFirstName: Harold
           otherLastName: Wickman
           otherTitle: Mr
@@ -4562,7 +4571,7 @@ components:
           description: The last name of the contact.
         workMobilePhone1:
           type: string
-          example: "61400400400"
+          example: '61400400400'
           description: The primary work mobile number of the contact.
         workEmailAddress1:
           type: string
@@ -4590,7 +4599,7 @@ components:
           description: The title to address the contact with.
         workMobilePhone2:
           type: string
-          example: "61500500500"
+          example: '61500500500'
           description: The secondary work mobile number of the contact.
         workEmailAddress2:
           type: string
@@ -4598,35 +4607,35 @@ components:
           description: The secondary work email address of the contact.
         workPhoneAreaCode1:
           type: string
-          example: "09"
+          example: '09'
           description: The primary work phone number area code of the contact.
         workPhone1:
           type: string
-          example: "5006000"
+          example: '5006000'
           description: The primary work phone number of the contact.
         workPhoneAreaCode2:
           type: string
-          example: "09"
+          example: '09'
           description: The secondary work phone number area code of the contact.
         workPhone2:
           type: string
-          example: "5007000"
+          example: '5007000'
           description: The secondary work phone number of the contact.
         workFaxAreaCode1:
           type: string
-          example: "09"
+          example: '09'
           description: The work fax number area code of the contact.
         workFax1:
           type: string
-          example: "5008000"
+          example: '5008000'
           description: The work fax number of the contact.
         workSatellitePhone:
           type: string
-          example: "61600600600"
+          example: '61600600600'
           description: The work satellite phone number of the contact.
         workOtherPhone:
           type: string
-          example: "61700700700"
+          example: '61700700700'
           description: The work other phone number of the contact.
         workAddress1:
           type: string
@@ -4646,7 +4655,7 @@ components:
           description: The work address state of the contact.
         workPostCode:
           type: string
-          example: "3000"
+          example: '3000'
           description: The work address post code of the contact.
         workPostalAddress1:
           type: string
@@ -4666,7 +4675,7 @@ components:
           description: The work postal address state of the contact.
         workPostalPostCode:
           type: string
-          example: "3000"
+          example: '3000'
           description: The work postal address post code of the contact.
         personalEmailAddress1:
           type: string
@@ -4694,7 +4703,7 @@ components:
           description: The personal address state of the contact.
         personalPostCode:
           type: string
-          example: "3000"
+          example: '3000'
           description: The personal address post code of the contact.
         personalCountry:
           type: string
@@ -4702,39 +4711,39 @@ components:
           description: The personal address country of the contact.
         personalPhoneAreaCode1:
           type: string
-          example: "09"
+          example: '09'
           description: The primary personal phone number area code of the contact.
         personalPhone1:
           type: string
-          example: "5006000"
+          example: '5006000'
           description: The primary personal phone number of the contact.
         personalPhoneAreaCode2:
           type: string
-          example: "09"
+          example: '09'
           description: The secondary personal phone number area code of the contact.
         personalPhone2:
           type: string
-          example: "5007000"
+          example: '5007000'
           description: The secondary personal phone number of the contact.
         personalFaxAreaCode1:
           type: string
-          example: "09"
+          example: '09'
           description: The personal fax number area code of the contact.
         personalFax1:
           type: string
-          example: "5008000"
+          example: '5008000'
           description: The personal fax number of the contact.
         otherPhoneAreaCode1:
           type: string
-          example: "09"
+          example: '09'
           description: The other phone number area code of the contact.
         otherPhone1:
           type: string
-          example: "5009000"
+          example: '5009000'
           description: The other phone number of the contact.
         otherMobile:
           type: string
-          example: "61900900900"
+          example: '61900900900'
           description: The other mobile number of the contact.
         otherFirstName:
           type: string
@@ -4753,7 +4762,7 @@ components:
           enum:
             - A
             - D
-          description: "The validity status of the contact, either `A`ctive or `D`isabled."
+          description: 'The validity status of the contact, either `A`ctive or `D`isabled.'
         companyName:
           type: string
           description: The company name of the contact.
@@ -4791,9 +4800,9 @@ components:
           description: The secondary role of the contact.
           example: Analyst
         locations:
-          $ref: "#/components/schemas/locations"
+          $ref: '#/components/schemas/locations'
         messagingoptions:
-          $ref: "#/components/schemas/messagingoptions"
+          $ref: '#/components/schemas/messagingoptions'
       required:
         - firstName
         - lastName
@@ -4849,12 +4858,12 @@ components:
           example: Fire evacuation notification for A block residents
         allowedUsers:
           type: string
-          description: "Specifies the usage permission - 1)EVERYONE 2)SELECTEDUSERS When SELECTEDUSERS is provided, then `allowedUserIds` shall contain the userID of the allowed users."
+          description: 'Specifies the usage permission - 1)EVERYONE 2)SELECTEDUSERS When SELECTEDUSERS is provided, then `allowedUserIds` shall contain the userID of the allowed users.'
         allowedUserIds:
           type: string
           description: Specifies the comma separated list of users who can run this scenario.Only contains value when the allowedUsers is set to `SELECTEDUSERS`
         message:
-          $ref: "#/components/schemas/message"
+          $ref: '#/components/schemas/message'
       xml:
         name: scenario
         prefix: ns2
@@ -4869,11 +4878,11 @@ components:
       x-tags:
         - Callbacks
       title: Callback
-      description: "The callback object, used to configure the callback (also known as webhook)."
+      description: 'The callback object, used to configure the callback (also known as webhook).'
       x-examples:
         Message Reply:
           name: Message Reply
-          url: "https://example.com/callback"
+          url: 'https://example.com/callback'
           auth:
             type: httpheader
             key: MY_AUTH_KEY
@@ -4885,7 +4894,7 @@ components:
             reply: enabled
         example-1:
           name: Undeliverable Message
-          url: "https://example.com/callback"
+          url: 'https://example.com/callback'
           auth:
             type: httpheader
             key: MY_AUTH_KEY
@@ -4896,6 +4905,14 @@ components:
           callbacks:
             undeliverable: disabled
       properties:
+        id:
+          type: string
+          maxLength: 32
+          description: |-
+            The id of the callback. 
+
+            This is the value that should be passed when referring to the callback using the API endpoints
+          readOnly: true
         name:
           type: string
           description: |-
@@ -4907,7 +4924,7 @@ components:
         url:
           type: string
           description: Specifies the service URL that API Callbacks should be forwarded to.
-          example: "https://example.com/callback"
+          example: 'https://example.com/callback'
           format: uri
         auth:
           type: object
@@ -4973,6 +4990,9 @@ components:
                 - enabled
                 - disabled
               description: A boolean flag specifying whether undeliverable message callbacks are enabled.
+        links:
+          type: string
+          readOnly: true
     workspace:
       type: object
       properties:
@@ -4982,8 +5002,8 @@ components:
           example: A Space Odessey
         projectNumber:
           type: string
-          description: "Specifies the reference ID for the workspace from the User Side. Generally not used. Note:This is not the actual workspace ID. It is just a custom reference ID given by you for your own purposes."
-          example: "2001"
+          description: 'Specifies the reference ID for the workspace from the User Side. Generally not used. Note:This is not the actual workspace ID. It is just a custom reference ID given by you for your own purposes.'
+          example: '2001'
         status:
           type: string
           description: Specifies the status of the Workspace being created. The status can be one of - 1) Active (A) 2)Disabled (D)
@@ -5029,13 +5049,13 @@ components:
         properties:
           latitude:
             type: number
-            description: "The measurement of distance north or south of the Equator, for the contact."
+            description: 'The measurement of distance north or south of the Equator, for the contact.'
             example: 41.9028
             minimum: -90
             maximum: 90
           longitude:
             type: number
-            description: "The measurement of distance east or west of the prime meridian, for the contact."
+            description: 'The measurement of distance east or west of the prime meridian, for the contact.'
             example: -12.4964
             minimum: -180
             maximum: 180
@@ -5122,7 +5142,7 @@ components:
           example: Message sent via the Whispir's Java library
         time:
           type: string
-          description: "The date and time of the activity in the format:dd/mm/yy hh:mm. This will be defaulted to the time at which this activity is created."
+          description: 'The date and time of the activity in the format:dd/mm/yy hh:mm. This will be defaulted to the time at which this activity is created.'
       xml:
         name: activity
         prefix: ns3
@@ -5145,7 +5165,7 @@ components:
           example: John.Wick
         password:
           type: string
-          description: "Specifies the password for the account <p><b>Note:</b>The following are the rules for the password:</p><p><ul><li>Alpha Numeric [a-zA-Z0-9_]</li><li>Must have at least one uppercase and one lowercase character</li></ul></p>"
+          description: 'Specifies the password for the account <p><b>Note:</b>The following are the rules for the password:</p><p><ul><li>Alpha Numeric [a-zA-Z0-9_]</li><li>Must have at least one uppercase and one lowercase character</li></ul></p>'
         firstName:
           type: string
           description: Specifies the firstName of the user
@@ -5153,7 +5173,7 @@ components:
         middleName:
           type: string
           description: Specifies the middleName of the user
-          example: ""
+          example: ''
         lastName:
           type: string
           description: Specifies the lastName of the user
@@ -5161,13 +5181,13 @@ components:
         title:
           type: string
           description: The title of the name
-          example: ""
+          example: ''
         nickname:
           type: string
           description: Preferred name to be shown in the platfom interface
         status:
           type: string
-          description: "Specifies the validity status of the user. The status can be one of -<ul><li>Active (A)</li><li>InActive (I)</li><li>Pending ( P)</li><li>Suspended (B)</li><li>Deleted (D)</li></ul><p><b>Note:</b>The default status is PENDING. One cannot set the status while creation of account. Read `User State Machine` again mentioned above.</p>"
+          description: 'Specifies the validity status of the user. The status can be one of -<ul><li>Active (A)</li><li>InActive (I)</li><li>Pending ( P)</li><li>Suspended (B)</li><li>Deleted (D)</li></ul><p><b>Note:</b>The default status is PENDING. One cannot set the status while creation of account. Read `User State Machine` again mentioned above.</p>'
         companyName:
           type: string
           description: Specifies the company name
@@ -5182,28 +5202,28 @@ components:
           description: Specifies the Department in the company to which this user is associated with
         Work Place Address:
           type: string
-          description: "Specifies the primary and Secondary values for each respective type. Of all these the workEmailAddress1 is the mandatory field.<ul><li>workEmailAddress1, workEmailAddress2</li><li>workAddress1, workAddress2</li><li>workSuburb, workState</li><li>workPostCode, workCountry</li><li>workPostalAddress1, workPostalAddress2</li><li>workPostalSuburb, workPostalState</li><li>workPostalPostCode, workPostalCountry</li></ul>"
+          description: 'Specifies the primary and Secondary values for each respective type. Of all these the workEmailAddress1 is the mandatory field.<ul><li>workEmailAddress1, workEmailAddress2</li><li>workAddress1, workAddress2</li><li>workSuburb, workState</li><li>workPostCode, workCountry</li><li>workPostalAddress1, workPostalAddress2</li><li>workPostalSuburb, workPostalState</li><li>workPostalPostCode, workPostalCountry</li></ul>'
         Work Place Phones:
           type: integer
-          description: "Specifies the primary and Secondary values for each respective type. Of all these the workMobilePhone1 is the mandatory field.<ul><li>workMobilePhone1, workMobilePhone2</li><li>workPhoneAreaCode1, workPhone1</li><li>workPhoneAreaCode2, workPhone2</li><li>workFaxAreaCode1, workFax1</li><li>workSetellitePhone, WorkOtherPhone</li></ul>"
+          description: 'Specifies the primary and Secondary values for each respective type. Of all these the workMobilePhone1 is the mandatory field.<ul><li>workMobilePhone1, workMobilePhone2</li><li>workPhoneAreaCode1, workPhone1</li><li>workPhoneAreaCode2, workPhone2</li><li>workFaxAreaCode1, workFax1</li><li>workSetellitePhone, WorkOtherPhone</li></ul>'
           example: 61423456789
         workCountry:
           type: string
           example: Australia
         timezone:
           type: string
-          description: "Specifies the timezone in which the user lives in. Values in relation to GMT.<p>Supported values are:</p><ul><li>Offset from GMT in the format `+/-NN` e.g. `+10`</li><li>Worldwide Timezone Format in the format `Country/City` e.g. `Australia/Melbourne`</li></ul>"
+          description: 'Specifies the timezone in which the user lives in. Values in relation to GMT.<p>Supported values are:</p><ul><li>Offset from GMT in the format `+/-NN` e.g. `+10`</li><li>Worldwide Timezone Format in the format `Country/City` e.g. `Australia/Melbourne`</li></ul>'
           example: Australia/Melbourne
         Personal Address:
           type: string
-          description: "Specifies the primary and Secondary values for each respective type<ul><li>personalEmailAddress1, personalEmailAddress2</li><li>personalAddress1, personalAddress2</li><li>personalSuburb, personalState</li><li>personalCountry, personalPostCode</li></ul>"
+          description: 'Specifies the primary and Secondary values for each respective type<ul><li>personalEmailAddress1, personalEmailAddress2</li><li>personalAddress1, personalAddress2</li><li>personalSuburb, personalState</li><li>personalCountry, personalPostCode</li></ul>'
         Personal Phones:
           type: integer
-          description: "Specifies the primary and Secondary values for each respective type<ul><li>personalPhoneAreaCode1, personalPhone1</li><li>personalPhoneAreaCode2, personalPhone2</li><li>personalFaxAreaCode1, personalFax1</li><li>otherPhoneAreaCode1, otherPhone1</li><li>otherMobile</li></ul>"
+          description: 'Specifies the primary and Secondary values for each respective type<ul><li>personalPhoneAreaCode1, personalPhone1</li><li>personalPhoneAreaCode2, personalPhone2</li><li>personalFaxAreaCode1, personalFax1</li><li>otherPhoneAreaCode1, otherPhone1</li><li>otherMobile</li></ul>'
           example: 61423456789
         Alias Fields:
           type: string
-          description: "The other (alias) name and title fields<ul><li>otherFirstName, otherLastName, otherTitle</li></ul>"
+          description: 'The other (alias) name and title fields<ul><li>otherFirstName, otherLastName, otherTitle</li></ul>'
       xml:
         name: user
         prefix: ns2
@@ -5223,7 +5243,7 @@ components:
           example: 2701095 - Outage of Local Systems in Sydney
         status:
           type: string
-          description: "Specifies the status of the event. The status can be one of <ul><li>Active</li><li>Resolved<l></ul>Note:The default status is Open."
+          description: 'Specifies the status of the event. The status can be one of <ul><li>Active</li><li>Resolved<l></ul>Note:The default status is Open.'
           example: Open
         summary:
           type: string
@@ -5232,28 +5252,28 @@ components:
         description:
           type: string
           description: Specifies the detailed description of the event
-          example: "ATMs are non responsive, teams to be sent to investigate"
+          example: 'ATMs are non responsive, teams to be sent to investigate'
         location:
           type: string
-          description: "Specifies the latitude, longitude values of the event location. This helps to show the event location on Whispir’s geo-map feature set and coordinated communication based on the geo location of the event."
-          example: "0.0,0.0"
+          description: 'Specifies the latitude, longitude values of the event location. This helps to show the event location on Whispir’s geo-map feature set and coordinated communication based on the geo location of the event.'
+          example: '0.0,0.0'
         startDate:
           type: string
-          description: "Specifies the startdate of the event. This is a mandatory value.The date should be in the format of DD/MM/YYYY HH:MI:SS in 24hrs format. e.g 11/09/2015 17:21:00 for 11th September 2015 5.21 PM."
-          example: "11/09/2015 17:41:00"
+          description: 'Specifies the startdate of the event. This is a mandatory value.The date should be in the format of DD/MM/YYYY HH:MI:SS in 24hrs format. e.g 11/09/2015 17:21:00 for 11th September 2015 5.21 PM.'
+          example: '11/09/2015 17:41:00'
         endDate:
           type: string
-          description: "Specifies the endDate of the event.The date should be in the format of DD/MM/YYYY HH:MI:SS in 24hrs format. e.g. 11/09/2015 19:26:00 for 11th September 2015 7.26 PM."
+          description: 'Specifies the endDate of the event.The date should be in the format of DD/MM/YYYY HH:MI:SS in 24hrs format. e.g. 11/09/2015 19:26:00 for 11th September 2015 7.26 PM.'
         severity:
           type: string
-          description: "Specifies the severity of the event. While this can change from company to company, the standard value set to be chosen from is <ul><li>Severity 5 - Routine Maintenance Tasks</li><li>Severity 4 - Scheduled System Changes</li><li>Severity SL3 - Minor Outage (Some Service Degradation)</li><li>Severity SL2 - Moderate Outage (Service Degradation)</li><li>Severity SL1 - Major Outage (Significant Service Unavailablity)</li><ul>"
+          description: 'Specifies the severity of the event. While this can change from company to company, the standard value set to be chosen from is <ul><li>Severity 5 - Routine Maintenance Tasks</li><li>Severity 4 - Scheduled System Changes</li><li>Severity SL3 - Minor Outage (Some Service Degradation)</li><li>Severity SL2 - Moderate Outage (Service Degradation)</li><li>Severity SL1 - Major Outage (Significant Service Unavailablity)</li><ul>'
           example: Severity 3 - Minor Outage (Some Service Degradation)
         Priority:
           type: string
-          description: "Specifies the priority of the event. While this can change from company to company, the standard value set to be chosen from is <ul><li>Priority 5 - No Set Resolution Period</li><li>Priority 4 - <1 week Resolution</li><li>Priority 3 - <3 day Resolution</li><li>Priority 2 - <1 day Resolution</li><li>Priority 1 - <2hr Resolution</li></ul>"
+          description: 'Specifies the priority of the event. While this can change from company to company, the standard value set to be chosen from is <ul><li>Priority 5 - No Set Resolution Period</li><li>Priority 4 - <1 week Resolution</li><li>Priority 3 - <3 day Resolution</li><li>Priority 2 - <1 day Resolution</li><li>Priority 1 - <2hr Resolution</li></ul>'
         duration:
           type: string
-          description: "The duration of the event in HH:MI:SS. e.g. 02:05:00 This can be substituted in the place of end date if required. Or a subset of the time between the start and end Dates."
+          description: 'The duration of the event in HH:MI:SS. e.g. 02:05:00 This can be substituted in the place of end date if required. Or a subset of the time between the start and end Dates.'
         category:
           type: string
           description: Specifies the category of event. The default values to choose from are <ul><li>Internal Systems</li><li>External Systems</li><li>Infrasturcture</li></ul>
@@ -5290,10 +5310,10 @@ components:
           description: Specifies the impact location of this event to the Organization’s operational geographies. These values can be configured via custom lists as these can be very specific to the company.
         multiple key value sets:
           type: string
-          description: "Specifies the set of individual actions to be taken during this event.Each action consists of - <ul><li>actionDate - the start date of this action in dd/mm/yyyy HH:MI:SS 24hr format </li><li>actionOwner - the individual (contact) responsible for this action’s execution</li><li>actionDetails - the detail description of this action</li></ul><p>An event can have a maximum of 10 action. So the action values are numbered. actionDate1, actionOwner1, actionDetails1, actionDate2, actionOwner2, actionDetails2 …actionDate10, actionOwner10, actionDetails10"
+          description: 'Specifies the set of individual actions to be taken during this event.Each action consists of - <ul><li>actionDate - the start date of this action in dd/mm/yyyy HH:MI:SS 24hr format </li><li>actionOwner - the individual (contact) responsible for this action’s execution</li><li>actionDetails - the detail description of this action</li></ul><p>An event can have a maximum of 10 action. So the action values are numbered. actionDate1, actionOwner1, actionDetails1, actionDate2, actionOwner2, actionDetails2 …actionDate10, actionOwner10, actionDetails10'
         Alias Fields:
           type: string
-          description: "The other (alias) name and title fields 1) otherFirstName, otherLastName, otherTitle"
+          description: 'The other (alias) name and title fields 1) otherFirstName, otherLastName, otherTitle'
       xml:
         name: event
         prefix: ns3
@@ -5310,14 +5330,14 @@ components:
       properties:
         resourceId:
           type: string
-          description: "The resource identifier returned from the POST to /resources. Resource referred to must be a valid CSV, XML, or JSON file."
+          description: 'The resource identifier returned from the POST to /resources. Resource referred to must be a valid CSV, XML, or JSON file.'
           example: 4FBBC384BCE3DAABFE3
         importType:
           type: string
           description: This defines the resource that will be created through this import process.
           example: contact
         importOptions:
-          $ref: "#/components/schemas/fieldMapping"
+          $ref: '#/components/schemas/fieldMapping'
         importMode:
           type: string
           description: The type of contact import that is occurring.
@@ -5375,7 +5395,7 @@ components:
       properties:
         attachmentName:
           type: string
-          description: "The name of the attachment, including the extension."
+          description: 'The name of the attachment, including the extension.'
           example: photo.jpeg
         derefUri:
           type: string
@@ -5401,7 +5421,7 @@ components:
       in: path
       schema:
         type: string
-        pattern: "^[A-F0-9]+"
+        pattern: '^[A-F0-9]+'
         example: 9A4C5521FFC7B15B
       description: The identifier for the workspace.
       required: true
@@ -5422,7 +5442,13 @@ components:
         type: number
         default: 0
       description: The record number to start returning from.
-  responses: {}
+  responses:
+    callbacks:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/callback'
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.
@@ -5430,7 +5456,7 @@ components:
       schema:
         type: string
         enum:
-          - "*"
+          - '*'
     Content-Length:
       description: Length of the response content.
       required: true

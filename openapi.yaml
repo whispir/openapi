@@ -4926,7 +4926,7 @@ components:
           maxLength: 50
         url:
           type: string
-          description: Specifies the service URL that API Callbacks should be forwarded to.
+          description: The destination url on your servers that Whispir should reach out to.
           example: 'https://example.com/callback'
           format: uri
         auth:
@@ -4962,12 +4962,12 @@ components:
             - json
             - xml
         removeHTML:
-          type: string
+          type: boolean
           description: Specifies whether HTML should be stripped from responses.
           enum:
             - enabled
             - disabled
-          default: disabled
+          default: false
         retriesEnabled:
           type: boolean
           description: Specifies whether Whispir should perform retries in the event there is a failure accessing the callback service.
@@ -4981,6 +4981,7 @@ components:
             The email will contain the details of the callback content.
           example: me@example.com
           maxLength: 64
+          pattern: '/^[a-zA-Z0-9.! #$%&''*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/.'
         callbacks:
           type: object
           description: The object to specify which events callbacks should be enabled for.
@@ -4989,17 +4990,19 @@ components:
             - undeliverable
           properties:
             reply:
-              type: string
+              type: boolean
               enum:
                 - enabled
                 - disabled
               description: A boolean flag specifying whether message reply callbacks are enabled.
+              default: false
             undeliverable:
-              type: string
+              type: boolean
               enum:
                 - enabled
                 - disabled
               description: A boolean flag specifying whether undeliverable message callbacks are enabled.
+              default: false
         links:
           $ref: '#/components/schemas/links'
       required:

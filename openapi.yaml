@@ -5693,10 +5693,6 @@ components:
                 type: string
                 minLength: 1
                 example: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
-            required:
-              - errorSummary
-              - errorText
-              - errorDetail
           examples:
             example-1:
               value:
@@ -5721,7 +5717,7 @@ components:
               errorSummary:
                 type: string
                 minLength: 1
-                example: '"Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
+                example: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
               errorText:
                 type: string
                 minLength: 1

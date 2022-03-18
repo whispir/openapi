@@ -4932,6 +4932,9 @@ components:
         auth:
           type: object
           description: The authentication object to specify how to authenticate against the callback `url`.
+          required:
+            - type
+            - key
           properties:
             type:
               type: string
@@ -4981,6 +4984,9 @@ components:
         callbacks:
           type: object
           description: The object to specify which events callbacks should be enabled for.
+          required:
+            - reply
+            - undeliverable
           properties:
             reply:
               type: string
@@ -4996,6 +5002,17 @@ components:
               description: A boolean flag specifying whether undeliverable message callbacks are enabled.
         links:
           $ref: '#/components/schemas/links'
+      required:
+        - id
+        - name
+        - url
+        - auth
+        - contentType
+        - removeHTML
+        - retriesEnabled
+        - email
+        - callbacks
+        - links
     workspace:
       type: object
       properties:

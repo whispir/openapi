@@ -2571,6 +2571,21 @@ paths:
           application/vnd.whispir.api-callback-v1+json:
             schema:
               $ref: '#/components/schemas/callback'
+            examples:
+              Create a callback Example:
+                value:
+                  name: CallbackForReplies
+                  url: 'https://www.mycallbackwebsite.com/callbackHandler'
+                  auth:
+                    type: basicauth
+                    key: dXNlcm5hbWU6cGFzc3dvcmQ=
+                  contentType: json
+                  removeHTML: enabled
+                  retriesEnabled: 'true'
+                  email: notify@example.com
+                  callbacks:
+                    reply: enabled
+                    undeliverable: disabled
           application/vnd.whispir.api-callback-v1+xml:
             schema:
               $ref: '#/components/schemas/callback'
@@ -2624,6 +2639,9 @@ paths:
       requestBody:
         content:
           application/json:
+            schema:
+              $ref: '#/components/schemas/callback'
+          application/xml:
             schema:
               $ref: '#/components/schemas/callback'
   '/callbacks/{callbackId}/calls':
@@ -3928,6 +3946,11 @@ components:
           schema:
             $ref: '#/components/schemas/event'
       description: events object that needs to be create events
+    callback:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/callback'
   securitySchemes:
     BasicAuth:
       type: http

@@ -4953,31 +4953,7 @@ components:
           example: 'https://example.com/callback'
           format: uri
         auth:
-          type: object
-          description: The authentication object to specify how to authenticate against the callback `url`.
-          required:
-            - type
-            - key
-          properties:
-            type:
-              type: string
-              enum:
-                - httpheader
-                - querystring
-              description: |-
-                Specifies how to authenticate the request made to the callback server.
-
-                The values available for this parameter are:
-
-                - `httpheader` - token provided as a custom HTTP header, namely X-Whispir-Callback-Key. This is our recommended approach because of a higher level of security
-                - `querystring` - token provided by the auth query parameter appended to the endpoint URL
-            key:
-              type: string
-              example: MY_AUTH_KEY
-              description: |-
-                Specifies the value to be passed to authenticate that the request has originated from Whispir.
-
-                When added to this payload, Whispir will include the token in every request made to the listening application.
+          $ref: '#/components/schemas/callbackAuth'
         contentType:
           type: string
           description: Specifies the content type that should be sent to this endpoint.
@@ -5064,6 +5040,71 @@ components:
       x-tags:
         - Workspaces
       title: Workspace
+    callbackAuth:
+      title: callbackAuth
+      type: object
+      description: |-
+        The authentication model details. You will receive - 
+
+        For `queryparam`
+        - `?Auth={{KeyValue}}`
+
+        For `httpheader`
+        - `X-Whispir-Callback-Key: {{KeyValue}}`
+
+        For `basicauth`
+        - `Authorization: Basic {{KeyValue}}`
+
+        For `bearertoken`
+        - `Authorization: Bearer {{KeyValue}}`
+      properties:
+        type:
+          type: string
+          enum:
+            - queryparam
+            - httpheader
+            - basicauth
+            - bearertoken
+          default: queryparam
+          description: The type of authentication allowed by Whispir at the Destination URL
+        key:
+          type: string
+          description: The value that will be passed with the authentication key
+          maxLength: 128
+      required:
+        - type
+        - key
+    links:
+      type: object
+      title: callbackLinks
+      description: |-
+        Object with fixed keys - uri, rel, method, host, port.
+
+        Is included in the payload as part of HATEOAS.
+      properties:
+        uri:
+          type: string
+        rel:
+          type: string
+        method:
+          type: string
+          default: GET
+          example: GET
+        host:
+          type: string
+          default: api.ap1.whispir.com
+        port:
+          type:
+            - string
+            - number
+          default: -1
+      required:
+        - uri
+        - rel
+        - method
+        - host
+        - port
+      readOnly: true
     locations:
       description: The locations for the contact.
       type: array
@@ -5454,37 +5495,6 @@ components:
       required:
         - attachmentName
         - derefUri
-    links:
-      type: object
-      title: callbackLinks
-      description: |-
-        Object with fixed keys - uri, rel, method, host, port.
-
-        Is included in the payload as part of HATEOAS.
-      properties:
-        uri:
-          type: string
-        rel:
-          type: string
-        method:
-          type: string
-          default: GET
-          example: GET
-        host:
-          type: string
-          default: api.ap1.whispir.com
-        port:
-          type:
-            - string
-            - number
-          default: -1
-      required:
-        - uri
-        - rel
-        - method
-        - host
-        - port
-      readOnly: true
   parameters:
     X-Api-Key:
       name: X-Api-Key

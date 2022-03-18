@@ -672,151 +672,7 @@ paths:
                     status: '1 to 1 of 1    '
                     link: []
               schema:
-                description: ''
-                type: object
-                x-examples:
-                  example-1:
-                    messageStatuses:
-                      - link:
-                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
-                            rel: self
-                            method: GET
-                            host: api.au.whispir.com
-                            port: -1
-                        categories:
-                          - name: Sent
-                            recipientCount: 0
-                            percentageTotal: 0.0%
-                          - name: Pending
-                            recipientCount: 0
-                            percentageTotal: 0.0%
-                          - name: Received
-                            recipientCount: 1
-                            percentageTotal: 100.0%
-                          - name: Acknowledged
-                            recipientCount: 0
-                            percentageTotal: 0.0%
-                          - name: Undeliverable
-                            recipientCount: 0
-                            percentageTotal: 0.0%
-                    link: []
-                properties:
-                  messageStatuses:
-                    type: array
-                    uniqueItems: true
-                    items:
-                      type: object
-                      properties:
-                        link:
-                          type: array
-                          uniqueItems: true
-                          minItems: 1
-                          items:
-                            type: object
-                            properties:
-                              uri:
-                                type: string
-                                example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
-                              rel:
-                                type: string
-                                example: self
-                              method:
-                                type: string
-                                example: GET
-                              host:
-                                type: string
-                                example: api.au.whispir.com
-                              port:
-                                type: number
-                                enum:
-                                  - -1
-                            required:
-                              - uri
-                              - rel
-                              - method
-                              - host
-                              - port
-                        categories:
-                          type: array
-                          uniqueItems: true
-                          minItems: 5
-                          maxItems: 5
-                          description: Present when `view` is `summary`.
-                          items:
-                            type: object
-                            additionalProperties: false
-                            properties:
-                              name:
-                                type: string
-                                enum:
-                                  - Sent
-                                  - Pending
-                                  - Received
-                                  - Acknowledged
-                                  - Undeliverable
-                              recipientCount:
-                                type: number
-                                example: 1
-                              percentageTotal:
-                                type: string
-                                example: 100.0%
-                            required:
-                              - name
-                              - recipientCount
-                              - percentageTotal
-                        name:
-                          type: string
-                          example: '61400400400'
-                          description: Present when `view` is `detailed`.
-                        info:
-                          type: string
-                          example: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
-                          description: Present when `view` is `detailed`.
-                        status:
-                          type: array
-                          description: Present when `view` is `detailed`.
-                          items:
-                            properties:
-                              type:
-                                type: string
-                                enum:
-                                  - sms
-                                  - email
-                                  - voice
-                              status:
-                                type: string
-                                enum:
-                                  - ''
-                                  - PENDING
-                                  - SENT
-                                  - DELIVRD
-                                  - READ
-                                  - FAILED
-                              destination:
-                                type: string
-                                example: '61400400400'
-                              sentTimestamp:
-                                type: number
-                                example: 1647466923000
-                              receivedTimestamp:
-                                type: number
-                                example: 1647466931000
-                            required:
-                              - type
-                              - status
-                              - destination
-                      required:
-                        - link
-                  link:
-                    type: array
-                    items: {}
-                  status:
-                    type: string
-                    example: '1 to 1 of 1    '
-                    description: Present when `view` is `detailed`.
-                required:
-                  - messageStatuses
-                  - link
+                $ref: '#/components/schemas/messageStatus'
       tags:
         - Messages
     parameters:
@@ -931,7 +787,6 @@ paths:
             application/vnd.whispir.message-v1+json:
               schema:
                 description: ''
-                type: object
                 x-examples:
                   example-1:
                     messageresponses:
@@ -947,117 +802,9 @@ paths:
                       - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
                         rel: self
                         method: GET
-                properties:
-                  messageresponses:
-                    type: array
-                    uniqueItems: false
-                    items:
-                      oneOf:
-                        - properties:
-                            percentageTotal:
-                              type: string
-                              example: 100%
-                            responseCount:
-                              type: string
-                              example: '1'
-                            link:
-                              type: array
-                              items: {}
-                            type:
-                              type: string
-                              enum:
-                                - noresponse
-                                - notmatched
-                          required:
-                            - percentageTotal
-                            - responseCount
-                            - link
-                            - type
-                        - properties:
-                            from:
-                              type: object
-                              required:
-                                - name
-                                - mri
-                                - mobile
-                                - email
-                                - voice
-                              properties:
-                                name:
-                                  type: string
-                                  example: Test User
-                                mri:
-                                  type: string
-                                  example: testUser.au@User.whispir.com
-                                mobile:
-                                  type: string
-                                  example: '61400400400'
-                                email:
-                                  type: string
-                                  example: tuser@whispir.com
-                                voice:
-                                  type: string
-                                  example: '61400400400'
-                            responseCategory:
-                              type: string
-                              enum:
-                                - noresponse
-                                - notmatched
-                            responseMessage:
-                              type: object
-                              required:
-                                - content
-                                - acknowledged
-                                - channel
-                              properties:
-                                content:
-                                  type: string
-                                  example: N/A
-                                acknowledged:
-                                  type: string
-                                  example: N/A
-                                channel:
-                                  type: string
-                                  example: N/A
-                          required:
-                            - from
-                            - responseCategory
-                            - responseMessage
-                      description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
-                      type: object
-                  link:
-                    type: array
-                    uniqueItems: true
-                    items:
-                      type: object
-                      properties:
-                        uri:
-                          type: string
-                          example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                        rel:
-                          type: string
-                          example: self
-                        method:
-                          type: string
-                          example: GET
-                        host:
-                          type: string
-                          example: api.au.whispir.com
-                        port:
-                          type: number
-                          enum:
-                            - -1
-                      required:
-                        - uri
-                        - rel
-                        - method
-                  status:
-                    type: string
-                    example: '1 to 1 of 1    '
-                    description: Present when `view` is `detailed`.
-                required:
-                  - messageresponses
-                  - link
+                oneOf:
+                  - $ref: '#/components/schemas/messageResponseDetailed'
+                  - $ref: '#/components/schemas/messageResponseSummary'
               examples:
                 Summary:
                   value:
@@ -1101,7 +848,7 @@ paths:
                         responseMessage:
                           content: 'OK, got it. Thanks.'
                           acknowledged: '28/09/12 08:48'
-                          channel: SMS
+                          channel: sms
                     link: []
       tags:
         - Messages
@@ -5284,6 +5031,318 @@ components:
           - port
       readOnly: true
       title: Link
+    messageStatus:
+      description: 'The message status object, describing the delivery of the sent message.'
+      type: object
+      properties:
+        messageStatuses:
+          description: The object defining the message delivery status.
+          type: array
+          uniqueItems: true
+          items:
+            type: object
+            properties:
+              link:
+                $ref: '#/components/schemas/link'
+              categories:
+                type: array
+                uniqueItems: true
+                minItems: 5
+                maxItems: 5
+                description: Present when `view` is `summary`.
+                items:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    name:
+                      description: The delivery status of the message.
+                      type: string
+                      enum:
+                        - Sent
+                        - Pending
+                        - Received
+                        - Acknowledged
+                        - Undeliverable
+                    recipientCount:
+                      description: The number of recipients with the given `name` status.
+                      type: number
+                      example: 1
+                    percentageTotal:
+                      description: The percentage of recipients with the given `name` status.
+                      type: string
+                      example: 100.0%
+                  required:
+                    - name
+                    - recipientCount
+                    - percentageTotal
+              name:
+                type: string
+                example: '61400400400'
+                description: Present when `view` is `detailed`.
+              info:
+                type: string
+                example: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
+                description: Present when `view` is `detailed`.
+              status:
+                type: array
+                description: Present when `view` is `detailed`.
+                items:
+                  properties:
+                    type:
+                      description: The message delivery channel.
+                      type: string
+                      enum:
+                        - sms
+                        - email
+                        - voice
+                    status:
+                      description: The message delivery status code.
+                      type: string
+                      enum:
+                        - ''
+                        - PENDING
+                        - SENT
+                        - DELIVRD
+                        - READ
+                        - FAILED
+                    destination:
+                      description: The delivery address of the message recipient.
+                      type: string
+                      example: '61400400400'
+                    sentTimestamp:
+                      description: The time the message was sent from Whispir servers.
+                      type: number
+                      example: 1647466923000
+                    receivedTimestamp:
+                      description: The time the message was received on the message recipient's device.
+                      type: number
+                      example: 1647466931000
+                  required:
+                    - type
+                    - status
+                    - destination
+            required:
+              - link
+        link:
+          $ref: '#/components/schemas/link'
+        status:
+          type: string
+          example: '1 to 1 of 1    '
+          description: Present when `view` is `detailed`.
+      required:
+        - messageStatuses
+        - link
+      x-examples:
+        Summary:
+          messageStatuses:
+            - link:
+                - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
+                  rel: self
+                  method: GET
+                  host: api.au.whispir.com
+                  port: -1
+              categories:
+                - name: Sent
+                  recipientCount: 0
+                  percentageTotal: 0.0%
+                - name: Pending
+                  recipientCount: 0
+                  percentageTotal: 0.0%
+                - name: Received
+                  recipientCount: 1
+                  percentageTotal: 100.0%
+                - name: Acknowledged
+                  recipientCount: 0
+                  percentageTotal: 0.0%
+                - name: Undeliverable
+                  recipientCount: 0
+                  percentageTotal: 0.0%
+          link: []
+        Detailed:
+          messageStatuses:
+            - name: '61400400400'
+              info: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
+              link:
+                - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed'
+                  rel: self
+                  method: GET
+                  host: api.au.whispir.com
+                  port: -1
+              status:
+                - type: email
+                  status: ''
+                  destination: ''
+                - type: sms
+                  status: DELIVRD
+                  destination: '61400400400'
+                  sentTimestamp: 1647466923000
+                  receivedTimestamp: 1647466931000
+                - type: voice
+                  status: ''
+                  destination: ''
+          status: '1 to 1 of 1    '
+          link: []
+      title: Message Status
+    messageResponseSummary:
+      title: Message Response Summary
+      description: The summary message response object.
+      type: object
+      x-examples:
+        Example:
+          messageresponses:
+            - percentageTotal: 50%
+              responseCount: '1'
+              link: []
+              type: noresponse
+            - percentageTotal: 50%
+              responseCount: '1'
+              link: []
+              type: notmatched
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
+              rel: self
+              method: GET
+      properties:
+        messageresponses:
+          description: The message response statuses.
+          type: array
+          uniqueItems: true
+          items:
+            description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
+            type: object
+            properties:
+              percentageTotal:
+                description: Details the percentage of responses received for the sent message across all channels.
+                type: string
+                example: 100%
+              responseCount:
+                description: Details the number of responses received for the sent message across all channels.
+                type: string
+                example: '1'
+              link:
+                $ref: '#/components/schemas/link'
+              type:
+                description: |-
+                  The message response category. 
+                  * `noresponse` - the message was sent but was not replied to
+                  * `notmatched` - the message was replied to and the answer didn't match any search criteria
+                type: string
+                enum:
+                  - noresponse
+                  - notmatched
+            required:
+              - percentageTotal
+              - responseCount
+              - link
+              - type
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - messageresponses
+        - link
+    messageResponseDetailed:
+      title: Message Response Detailed
+      description: The detailed message response object.
+      type: object
+      x-examples:
+        Example:
+          messageresponses:
+            - percentageTotal: 50%
+              responseCount: '1'
+              link: []
+              type: noresponse
+            - percentageTotal: 50%
+              responseCount: '1'
+              link: []
+              type: notmatched
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
+              rel: self
+              method: GET
+      properties:
+        messageresponses:
+          type: array
+          description: The message response statuses.
+          uniqueItems: true
+          items:
+            type: object
+            properties:
+              from:
+                description: The message responder object.
+                type: object
+                required:
+                  - name
+                  - mri
+                  - mobile
+                  - email
+                  - voice
+                properties:
+                  name:
+                    description: The message responder's name.
+                    type: string
+                    example: Test User
+                  mri:
+                    description: The message responder's MRI.
+                    type: string
+                    example: testUser.au@User.whispir.com
+                  mobile:
+                    description: The message responder's mobile number.
+                    type: string
+                    example: '61400400400'
+                  email:
+                    description: The message responder's email address.
+                    type: string
+                    example: tuser@whispir.com
+                  voice:
+                    description: The message responder's voice number.
+                    type: string
+                    example: '61400400400'
+              responseCategory:
+                description: |-
+                  The message response category. 
+                  * `noresponse` - the message was sent but was not replied to
+                  * `notmatched` - the message was replied to and the answer didn't match any search criteria
+                type: string
+                enum:
+                  - noresponse
+                  - notmatched
+              responseMessage:
+                description: The message response object.
+                type: object
+                required:
+                  - content
+                  - acknowledged
+                  - channel
+                properties:
+                  content:
+                    description: The message response content.
+                    type: string
+                    example: A test response from the recipient.
+                  acknowledged:
+                    description: The message response acknowledgement status.
+                    type: string
+                    example: 'true'
+                  channel:
+                    description: The message response channel.
+                    type: string
+                    enum:
+                      - N/A
+                      - sms
+                      - email
+                      - voice
+            required:
+              - from
+              - responseCategory
+              - responseMessage
+        link:
+          $ref: '#/components/schemas/link'
+        status:
+          type: string
+          example: '1 to 1 of 1    '
+          description: The message response pagination status.
+      required:
+        - messageresponses
+        - link
   parameters:
     X-Api-Key:
       name: X-Api-Key

@@ -1810,36 +1810,16 @@ paths:
       operationId: getCallbacks
       responses:
         '200':
-          description: OK
+          $ref: '#/components/responses/callback'
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
           content:
-            examples:
-              examples:
-                response:
-                  value:
-                    status: 1 to 3 of 3
-                    callbacks:
-                      - id: BCD374DABC73649B
-                        name: Sample Callback 1
-                        url: 'http://myserver.com/callback1.php'
-                        link:
-                          - uri: 'https://api.au.whispir.com/callbacks/BCD374DABC73649B'
-                            rel: self
-                            method: GET
-                      - id: AD34DBCEFD74EABC
-                        name: Sample Callback 2
-                        url: 'http://myserver.com/callback2.php'
-                        link:
-                          - uri: 'https://api.au.whispir.com/callbacks/AD34DBCEFD74EABC'
-                            rel: self
-                            method: GET
-                      - id: 73BDCEFA43DF35DB
-                        name: Sample Callback 3
-                        url: 'http://myserver.com/callback3.php'
-                        link:
-                          - uri: 'https://api.au.whispir.com/callbacks/73BDCEFA43DF35DB'
-                            rel: self
-                            method: GET
-                    link: []
+            application/json:
+              schema:
+                type: object
+                properties: {}
       parameters:
         - $ref: '#/components/parameters/x-api-key'
   '/callbacks/{callbackId}/calls':
@@ -4017,6 +3997,24 @@ components:
       xml:
         name: fieldMapping
       title: Field Mapping
+    callbackLinks:
+      title: callbackLinks
+      type: array
+      items:
+        type: object
+        properties:
+          uri:
+            type: string
+          rel:
+            type: string
+          method:
+            type: string
+          host:
+            type: string
+          port:
+            type: string
+          '':
+            type: string
   parameters:
     x-api-key:
       name: x-api-key
@@ -4034,4 +4032,68 @@ components:
         example: 9A4C5521FFC7B15B
       description: The identifier for the workspace.
       required: true
-  responses: {}
+  responses:
+    callback:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: |-
+                  The id of the callback. 
+
+                  This is the value that should be passed when referring to the callback using the API endpoints
+              name:
+                type: string
+                description: |-
+                  The name of the callback. 
+
+                  This is the value that should be passed in the message payload for triggering the callbacks
+              url:
+                type: string
+                description: The destination url on your servers that Whispir should reach out to.
+                maxLength: 256
+              auth:
+                $ref: '#/components/schemas/auth'
+              contentType:
+                type: string
+              removeHTML:
+                type: string
+              email:
+                type: string
+              callbacks:
+                $ref: '#/components/schemas/callbacks'
+              retriesEnabled:
+                type: string
+              link:
+                $ref: '#/components/schemas/callbackLinks'
+          examples:
+            example-1:
+              value:
+                id: 4452AC8359535C46
+                name: CallbackForReplies
+                url: 'https://www.mycallbackwebsite.com/callbackHandler'
+                auth:
+                  type: bearertoken
+                  key: dXNlcm5hbWU6cGFzc3dvcmQ=
+                contentType: json
+                removeHTML: enabled
+                email: notify@example.com
+                callbacks:
+                  reply: enabled
+                  undeliverable: enabled
+                retriesEnabled: true
+                link:
+                  - uri: 'https://api.<region>.whispir.com/callbacks/4452AC8359535C46'
+                    rel: self
+                    method: GET
+                    host: api.ap1.whispir.com
+                    port: -1
+                  - uri: 'https://api.<region>.whispir.com/callbacks/4452AC8359535C46/calls'
+                    rel: retrieveCallbackHistory
+                    method: GET
+                    host: api.ap1.whispir.com
+                    port: -1

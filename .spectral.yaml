@@ -58,7 +58,7 @@ rules:
   schema-examples:
     description: Schemas must have non-empty "x-examples" object.
     severity: error
-    given: $.components.schemas.*
+    given: $.components.schemas[*]
     then:
       field: x-examples
       function: schema
@@ -70,14 +70,14 @@ rules:
   schema-descriptions:
     description: Schemas must have a "description".
     severity: error
-    given: $.components.schemas.*
+    given: $.components.schemas[*]
     then:
       field: description
       function: truthy
   schema-property-descriptions: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
     description: Schema properties must have a "description".
     severity: error
-    given: $.components.schemas.*..properties.*
+    given: $.components.schemas[*]..properties[*]
     then:
       field: description
       function: truthy
@@ -85,6 +85,32 @@ rules:
     description: Schema properties must have an "example".
     severity: error
     given: $.components.schemas.[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+    then:
+      field: example
+      function: truthy
+  response-examples:
+    description: Response content must have non-empty "examples" object.
+    severity: error
+    given: $..responses[*].content[*]
+    then:
+      field: examples
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          minProperties: 1
+  response-schema-property-descriptions:
+    description: Response schema properties must have a "description".
+    severity: error
+    given: $..responses..schema[*]..properties[*]
+    then:
+      field: description
+      function: truthy
+  response-schema-property-examples:
+    description: Response schema properties must have an "example".
+    severity: error
+    given: $..responses..schema[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && !@.enum)]
     then:
       field: example
       function: truthy
@@ -98,8 +124,7 @@ overrides:
       - '**#/components/schemas/responseTemplatePattern' # Response Template Endpoint Schemas
       - '**#/components/schemas/responseRule'
       - '**#/components/schemas/contact' # Contact Endpoint Schemas
-      - '**#/components/schemas/messagingOptions'
-      - '**#/components/schemas/messagingOption'
+      - '**#/components/schemas/messagingoptions'
       - '**#/components/schemas/distributionlist' # Distribution List Endpoint Schemas
       - '**#/components/schemas/locations'
       - '**#/components/schemas/location'
@@ -111,3 +136,13 @@ overrides:
       - '**#/components/schemas/fieldMapping'
       - '**#/components/schemas/auth' # Auth Endpoint Schemas
       - '**#/components/schemas/activity' # Activity Endpoint Schemas
+  - rules:
+      response-examples: off
+      response-schema-property-descriptions: off
+      response-schema-property-examples: off
+    files:
+      - '**#/paths/~1workspaces~1{workspaceId}~1resources' # Resources Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1contacts' # Contacts Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1distributionlists' # DistributionLists Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1events' # Events Endpoint Examples
+      - '**#/paths/~1auth' # Auth Endpoint Examples

@@ -1265,47 +1265,22 @@ paths:
                           type: string
                           minLength: 1
                           description: Specifies the name of the message template
+                          example: Test Template
                           readOnly: true
                         messageTemplateDescription:
                           type: string
                           minLength: 1
                           description: 'Specifies the description of the message template, so that anyone can understand its purpose'
+                          example: The test messate template.
                           readOnly: true
                         id:
                           type: string
                           minLength: 1
                           description: Specifies the template id needed for all the API Operations
+                          example: 236EA3E3E63439DA
                           readOnly: true
                         link:
-                          type: array
-                          uniqueItems: true
-                          minItems: 1
-                          description: Provides a list of URLs that can be used to manipulate or access the message template. This following attribute may return an empty array.
-                          items:
-                            type: object
-                            properties:
-                              uri:
-                                type: string
-                                minLength: 1
-                                description: The link to access the message template
-                                readOnly: true
-                              rel:
-                                type: string
-                                minLength: 1
-                                description: The descriptor for what the link will do
-                              method:
-                                type: string
-                                minLength: 1
-                                description: The HTTP method to use with this particular link
-                              host:
-                                type: string
-                                minLength: 1
-                                description: Host of the endpoint
-                              port:
-                                type: number
-                                description: Port number
-                            readOnly: true
-                          readOnly: true
+                          $ref: '#/components/schemas/link'
                     readOnly: true
                   link:
                     type: array
@@ -3738,66 +3713,7 @@ components:
             - true
           readOnly: true
         dlr:
-          description: A fixed object structure used by for Whispir internally for tracking purposes.
-          type: object
-          readOnly: true
-          required:
-            - period
-            - rule
-            - type
-            - publishToWeb
-            - expiryDay
-            - expiryHour
-            - expiryMin
-            - feedIds
-            - bool
-          properties:
-            period:
-              description: The period of the message delivery.
-              type: string
-              enum:
-                - ''
-            rule:
-              description: The rule of the message delivery.
-              type: string
-              enum:
-                - ''
-            type:
-              description: The type of the message delivery.
-              type: string
-              enum:
-                - ''
-            publishToWeb:
-              description: Specifies whether the message was published to the web.
-              type: boolean
-              enum:
-                - false
-                - true
-            expiryDay:
-              description: Specifies the number of days before the message expires.
-              type: number
-              enum:
-                - 0
-            expiryHour:
-              description: Specifies the number of hours before the message expires.
-              type: number
-              enum:
-                - 0
-            expiryMin:
-              description: Specifies the number of minutes before the message expires.
-              type: number
-              enum:
-                - 0
-            feedIds:
-              description: The feeds identifier for the message delivery.
-              type: string
-              enum:
-                - ''
-            bool:
-              description: The bool field for the message delivery.
-              type: boolean
-              enum:
-                - false
+          $ref: '#/components/schemas/dlr'
         link:
           $ref: '#/components/schemas/link'
       required:
@@ -4148,7 +4064,7 @@ components:
       x-tags:
         - Templates
       title: Template
-      description: The shape of the template request payload when creating one
+      description: The template object.
       x-examples:
         Template:
           messageTemplateName: Sample SMS Template
@@ -4242,102 +4158,13 @@ components:
         features:
           $ref: '#/components/schemas/features'
         dlr:
-          type: object
-          description: dlr stands for "delivery receipt" which has a fixed object structure and is used for Whispir internal tracking purposes.
-          properties:
-            period:
-              type: string
-              description: period of dlr
-              example: no example
-              readOnly: true
-            publishToWeb:
-              type: string
-              default: 'false'
-              description: publish to web flag
-              example: 'false'
-              readOnly: true
-            rule:
-              type: string
-              description: dlr rule
-              example: no example
-              readOnly: true
-            expiryDay:
-              type: number
-              default: 0
-              description: expiry duration in day
-              example: 1
-              readOnly: true
-            expiryHour:
-              type: number
-              default: 0
-              description: expiry duration in hour
-              example: 1
-              readOnly: true
-            expiryMin:
-              type: number
-              default: 0
-              description: expiry duration in minutes
-              example: 1
-              readOnly: true
-            feedIds:
-              type: string
-              description: Specifies the id of the feed
-              example: no example
-              readOnly: true
-            bool:
-              type: string
-              default: 'false'
-              example: 'false'
-              description: boolean
-            type:
-              type: string
-              description: Allows the user to modify the message behaviour for replies and DLRs (delivery receipts)
-              example: no example
-              readOnly: true
-          readOnly: true
+          $ref: '#/components/schemas/dlr'
         link:
-          type: array
-          description: Provides a list of URLs that can be used to manipulate or access the message template. This following attribute may return an empty array.
-          items:
-            type: object
-            properties:
-              uri:
-                type: string
-                description: The link to access the message template
-                example: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
-                readOnly: true
-              rel:
-                type: string
-                description: The descriptor for what the link will do
-                default: self
-                example: self
-                readOnly: true
-              method:
-                type: string
-                description: The HTTP method to use with this particular link
-                enum:
-                  - GET
-                  - PUT
-                  - DELETE
-                example: GET
-                readOnly: true
-              host:
-                type: string
-                description: Host of the endpoint
-                example: api.au.whispir.com
-                readOnly: true
-              port:
-                type: number
-                description: Port number of the endpoint
-                default: -1
-                example: -1
-                readOnly: true
-            readOnly: true
-          readOnly: true
+          $ref: '#/components/schemas/link'
         tags:
           type: string
           description: Information which helps to label related message templates together
-          example: internal
+          example: campaign
           readOnly: true
         id:
           type: string
@@ -5659,6 +5486,67 @@ components:
       required:
         - messageresponses
         - link
+    dlr:
+      title: Delivery Receipt
+      description: A fixed object structure used by for Whispir internally for tracking purposes.
+      type: object
+      readOnly: true
+      required:
+        - period
+        - rule
+        - type
+        - publishToWeb
+        - expiryDay
+        - expiryHour
+        - expiryMin
+        - feedIds
+        - bool
+      properties:
+        period:
+          description: The period of the message delivery.
+          type: string
+          example: ''
+        rule:
+          description: The rule of the message delivery.
+          type: string
+          example: ''
+        type:
+          description: The type of the message delivery.
+          type: string
+          example: ''
+        publishToWeb:
+          description: Specifies whether the message was published to the web.
+          type: boolean
+        expiryDay:
+          description: Specifies the number of days before the message expires.
+          type: number
+          example: 0
+        expiryHour:
+          description: Specifies the number of hours before the message expires.
+          type: number
+          example: 0
+        expiryMin:
+          description: Specifies the number of minutes before the message expires.
+          type: number
+          example: 0
+        feedIds:
+          description: The feeds identifier for the message delivery.
+          type: string
+          example: ''
+        bool:
+          description: The bool field for the message delivery.
+          type: boolean
+      x-examples:
+        Example:
+          period: ''
+          rule: ''
+          type: ''
+          publishToWeb: false
+          expiryDay: 0
+          expiryHour: 0
+          expiryMin: 0
+          feedIds: ''
+          bool: false
   parameters:
     X-Api-Key:
       name: X-Api-Key
@@ -5741,15 +5629,15 @@ components:
                     escalationMins: '3'
                     appId: appId
                 dlr:
-                  period: no example
-                  publishToWeb: 'false'
-                  rule: no example
-                  expiryDay: 1
-                  expiryHour: 1
-                  expiryMin: 1
-                  feedIds: no example
-                  bool: 'false'
-                  type: no example
+                  period: ''
+                  rule: ''
+                  type: ''
+                  publishToWeb: false
+                  expiryDay: 0
+                  expiryHour: 0
+                  expiryMin: 0
+                  feedIds: ''
+                  bool: false
                 link:
                   - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
                     rel: self

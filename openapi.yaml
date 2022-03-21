@@ -2584,20 +2584,27 @@ paths:
             schema:
               $ref: '#/components/schemas/callback'
             examples:
-              Create a callback Example:
+              Callback object:
                 value:
-                  name: CallbackForReplies
-                  url: 'https://www.mycallbackwebsite.com/callbackHandler'
+                  id: 4452AC8359535C46
+                  name: Callback Name
+                  url: 'https://example.com/callback'
                   auth:
-                    type: basicauth
-                    key: dXNlcm5hbWU6cGFzc3dvcmQ=
+                    type: queryparam
+                    key: string
                   contentType: json
-                  removeHTML: enabled
-                  retriesEnabled: 'true'
-                  email: notify@example.com
+                  removeHTML: disabled
+                  retriesEnabled: true
+                  email: a-team@goarmy.com
                   callbacks:
-                    reply: enabled
+                    reply: disabled
                     undeliverable: disabled
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
           application/vnd.whispir.api-callback-v1+xml:
             schema:
               $ref: '#/components/schemas/callback'
@@ -2622,24 +2629,8 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - schema:
-            type: string
-            enum:
-              - application/vnd.whispir.api-callback-v1+json
-              - application/vnd.whispir.api-callback-v1+xml
-          in: header
-          name: Content-Type
-          description: Application specific mime-type
-          required: true
-        - schema:
-            type: string
-            enum:
-              - application/vnd.whispir.api-callback-v1+json
-              - application/vnd.whispir.api-callback-v1+xml
-          in: header
-          name: Accept
-          description: Application specific mime-type
-          required: true
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
     get:
       tags:
         - Callbacks
@@ -2732,7 +2723,7 @@ paths:
                   - callbacks
                   - link
               examples:
-                Callbacks Response:
+                example-1:
                   value:
                     status: 1 to 1 of 1
                     callbacks:
@@ -2744,7 +2735,14 @@ paths:
                           - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
                             rel: self
                             method: GET
-                    link: []
+                            host: api.au.whispir.com
+                            port: -1
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
           headers:
             Content-Type:
               $ref: '#/components/headers/Callback-Content-Type'
@@ -2766,24 +2764,8 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - schema:
-            type: string
-            enum:
-              - application/vnd.whispir.api-callback-v1+json
-              - application/vnd.whispir.api-callback-v1+xml
-          in: header
-          name: Content-Type
-          description: Application specific mime-type
-          required: true
-        - schema:
-            type: string
-            enum:
-              - application/vnd.whispir.api-callback-v1+json
-              - application/vnd.whispir.api-callback-v1+xml
-          in: header
-          name: Accept
-          description: Application specific mime-type
-          required: true
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
   '/callbacks/{callbackId}':
     get:
       tags:
@@ -2830,24 +2812,8 @@ paths:
             enum:
               - SUCCESS
               - FAILED
-        - schema:
-            type: string
-            enum:
-              - application/vnd.whispir.api-callback-v1+json
-              - application/vnd.whispir.api-callback-v1+xml
-          in: header
-          name: Content-Type
-          description: Application specific mime-type
-          required: true
-        - schema:
-            type: string
-            enum:
-              - application/vnd.whispir.api-callback-v1+json
-              - application/vnd.whispir.api-callback-v1+xml
-          in: header
-          name: Accept
-          description: Application specific mime-type
-          required: true
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
       responses:
         '200':
           $ref: '#/components/responses/Callback'
@@ -2902,24 +2868,8 @@ paths:
           schema:
             type: string
             example: 41048D9483C8CF2A
-        - schema:
-            type: string
-            enum:
-              - application/vnd.whispir.api-callback-v1+json
-              - application/vnd.whispir.api-callback-v1+xml
-          in: header
-          name: Content-Type
-          description: Application specific mime-type
-          required: true
-        - schema:
-            type: string
-            enum:
-              - application/vnd.whispir.api-callback-v1+json
-              - application/vnd.whispir.api-callback-v1+xml
-          in: header
-          name: Accept
-          description: Application specific mime-type
-          required: true
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
       responses:
         '204':
           description: No Content
@@ -4347,12 +4297,6 @@ paths:
         - Auth
       security:
         - BasicAuth: []
-  /demo-test:
-    get:
-      summary: demos
-      tags: []
-      responses: {}
-      operationId: get-demo-test
 externalDocs:
   description: API Documentation for Whispir Platform API
   url: 'https://developers.whispir.com'
@@ -5521,32 +5465,26 @@ components:
       title: Callback
       description: 'The callback object, used to configure the callback (also known as webhook).'
       x-examples:
-        Message Reply:
-          name: Message Reply
+        Callback object:
+          id: 4452AC8359535C46
+          name: Callback Name
           url: 'https://example.com/callback'
           auth:
-            type: httpheader
-            key: MY_AUTH_KEY
-          contentType: json
-          removeHTML: disabled
-          retriesEnabled: true
-          email: me@example.com
-          callbacks:
-            reply: enabled
-        Example:
-          name: Undeliverable Message
-          url: 'https://example.com/callback'
-          auth:
-            type: httpheader
-            key: MY_AUTH_KEY
+            type: queryparam
+            key: string
           contentType: json
           removeHTML: disabled
           retriesEnabled: false
           email: me@example.com
           callbacks:
-            reply: enabled
-            undeliverable: enabled
-          links: string
+            reply: disabled
+            undeliverable: disabled
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
       properties:
         id:
           type: string
@@ -5598,7 +5536,7 @@ components:
             The email will contain the details of the callback content.
           example: me@example.com
           maxLength: 64
-          pattern: '/^[a-zA-Z0-9.! #$%&''*+/=? ^_`{|}~-]+@[a-zA-Z0-9-]+(?:\. [a-zA-Z0-9-]+)*$/.'
+          format: email
         callbacks:
           type: object
           description: The object to specify which events callbacks should be enabled for.
@@ -5623,7 +5561,6 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
-        - id
         - name
         - url
         - auth
@@ -5685,44 +5622,19 @@ components:
             - bearertoken
           default: queryparam
           description: The type of authentication allowed by Whispir at the Destination URL
+          example: basicauth
         key:
           type: string
           description: The value that will be passed with the authentication key
           maxLength: 128
+          example: test34
       required:
         - type
         - key
-    links:
-      type: object
-      title: callbackLinks
-      description: |-
-        Object with fixed keys - uri, rel, method, host, port.
-
-        Is included in the payload as part of HATEOAS.
-      properties:
-        uri:
-          type: string
-        rel:
-          type: string
-        method:
-          type: string
-          default: GET
-          example: GET
-        host:
-          type: string
-          default: api.ap1.whispir.com
-        port:
-          type:
-            - string
-            - number
-          default: -1
-      required:
-        - uri
-        - rel
-        - method
-        - host
-        - port
-      readOnly: true
+      x-examples:
+        example-1:
+          type: queryparam
+          key: test34
     locations:
       description: The locations for the contact.
       type: array
@@ -6564,6 +6476,26 @@ components:
         type: number
         default: 0
       description: The record number to start returning from.
+    Callback-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-callback-v1+json
+          - application/vnd.whispir.api-callback-v1+xml
+      description: Callback content mime type.
+    Callback-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-callback-v1+json
+          - application/vnd.whispir.api-callback-v1+xml
+      description: Callback content mime-type
   responses:
     Template:
       description: Template endpoint response.

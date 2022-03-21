@@ -3370,6 +3370,100 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
+  '/workspaces/{workspaceId}/customlists/{customlistId}':
+    get:
+      tags:
+        - Custom Lists
+      summary: Retrieve a custom list
+      description: |
+        ### High-Level Response Elements
+
+        **id:** Number  
+        Specifies the unique id of the List.
+
+        **name:** String  
+        Specifies the name of the List.
+
+        **type:** String  
+        Specifies the type. The type can be one of:
+        *   INCIDENT
+        *   MESSAGE
+        *   CONTACT
+        *   RSS
+
+        **createdDate:** String  
+        Specifies the date of the List creation.
+
+        **sorttype:** String  
+        Specifies the sorting order. The order can be one of:
+        *   As Displayed
+        *   Ascending
+        *   Descending
+
+        **linked:** String  
+        Specifies the linked status. Linked list item values are dependent on other lists. The linked can be one of:
+        *   disabled
+        *   list id to which this is linked with
+
+        **customlabellists:** Object  
+        The `name` is the text that is shown to the user, where as the `value` is the internally passed in value.
+
+        **link:** Array  
+        Provides a list of URLs that can be used to manipulate or access the list.
+        *   uri - the link to access the list
+        *   rel - the descriptor for what the link will do
+        *   method - the HTTP method to use with this particular link
+      operationId: getCustomListsById
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - name: customlistId
+          in: path
+          required: true
+          description: Enter Id
+          schema:
+            type: string
+            example: 43E9046401B18269
+      responses:
+        '200':
+          description: OK
+          content:
+            examples:
+              examples:
+                response:
+                  value:
+                    id: 4E2101D0E5D16229
+                    name: Category
+                    type: INCIDENT
+                    createdDate: '02/08/11 14:20'
+                    sortType: As Displayed
+                    linked: disabled
+                    customlabellists:
+                      - name: Internal Systems
+                        value: Internal Systems
+                      - name: External Systems
+                        value: External Systems
+                      - name: Infrastructure
+                        value: Infrastructure
+                    link:
+                      - uri: 'https://api.au.whispir.com/customlists/40E5D16229E2101D'
+                        rel: self
+                        method: GET
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   /users:
     post:
       tags:
@@ -3493,20 +3587,84 @@ paths:
           content:
             examples:
               examples:
-                response:
+                example-1:
                   value:
-                    status: 1 to 1 of 1
-                    Users:
-                      - id: AF48A9EC3F02E43C
-                        firstName: Fred
-                        lastName: Smith
-                        companyName: Whispir Pte Ltd
-                        workEmailAddress1: fsmith@testcompany.com
-                        workMobilePhone1: '61423456789'
+                    users:
+                      - id: 4DC922649AFE370C
+                        userName: John.Wick
+                        password: string
+                        firstName: John
+                        middleName: ''
+                        lastName: Wick
+                        title: ''
+                        nickname: string
+                        status: PENDING
+                        workMobilePhone1: '61400400400'
+                        workEmailAddress1: testUser@example.com
+                        workCountry: Australia
+                        timezone: Australia/Melbourne
+                        workMobilePhone2: '61500500500'
+                        workEmailAddress2: newUser@example.com
+                        workPhoneAreaCode1: '09'
+                        workPhone1: '5006000'
+                        workPhoneAreaCode2: '09'
+                        workPhone2: '5007000'
+                        workFaxAreaCode1: '09'
+                        workFax1: '5008000'
+                        workSatellitePhone: '61600600600'
+                        workOtherPhone: '61700700700'
+                        workAddress1: Level 15
+                        workAddress2: 360 Collins St
+                        workSuburb: Melboure
+                        workState: Victoria
+                        workPostCode: '3000'
+                        workPostalAddress1: Level 15
+                        workPostalAddress2: 360 Collins St
+                        workPostalSuburb: Melboure
+                        workPostalState: Victoria
+                        workPostalPostCode: '3000'
+                        personalEmailAddress1: personalPrimaryUser@example.com
+                        personalEmailAddress2: personalSecondaryUser@example.com
+                        personalAddress1: Level 15
+                        personalAddress2: 360 Collins St
+                        personalSuburb: Melboure
+                        personalState: Victoria
+                        personalPostCode: '3000'
+                        personalCountry: Australia
+                        personalPhoneAreaCode1: '09'
+                        personalPhone1: '5006000'
+                        personalPhoneAreaCode2: '09'
+                        personalPhone2: '5007000'
+                        personalFaxAreaCode1: '09'
+                        personalFax1: '5008000'
+                        otherPhoneAreaCode1: '09'
+                        otherPhone1: '5009000'
+                        otherMobile: '61900900900'
+                        otherFirstName: Harold
+                        otherLastName: Wickman
+                        otherTitle: Mr
+                        companyName: Whispir
+                        jobTitle: Software Engineer
+                        division: Technology
+                        businessUnit: Core Platform
+                        department: Research & Development
+                        teamName1: Optimus Prime
+                        teamName2: Bumblebee
+                        role1: Administrator
+                        role2: Analyst
                         link:
-                          method: GET
-                          rel: self
-                          uri: 'http://api.whispir.com/users/AF48A9EC3F02E43C'
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/user'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3550,100 +3708,6 @@ paths:
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
-  '/workspaces/{workspaceId}/customlists/{customlistId}':
-    get:
-      tags:
-        - Custom Lists
-      summary: Retrieve a custom list
-      description: |
-        ### High-Level Response Elements
-
-        **id:** Number  
-        Specifies the unique id of the List.
-
-        **name:** String  
-        Specifies the name of the List.
-
-        **type:** String  
-        Specifies the type. The type can be one of:
-        *   INCIDENT
-        *   MESSAGE
-        *   CONTACT
-        *   RSS
-
-        **createdDate:** String  
-        Specifies the date of the List creation.
-
-        **sorttype:** String  
-        Specifies the sorting order. The order can be one of:
-        *   As Displayed
-        *   Ascending
-        *   Descending
-
-        **linked:** String  
-        Specifies the linked status. Linked list item values are dependent on other lists. The linked can be one of:
-        *   disabled
-        *   list id to which this is linked with
-
-        **customlabellists:** Object  
-        The `name` is the text that is shown to the user, where as the `value` is the internally passed in value.
-
-        **link:** Array  
-        Provides a list of URLs that can be used to manipulate or access the list.
-        *   uri - the link to access the list
-        *   rel - the descriptor for what the link will do
-        *   method - the HTTP method to use with this particular link
-      operationId: getCustomListsById
-      parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
-        - name: customlistId
-          in: path
-          required: true
-          description: Enter Id
-          schema:
-            type: string
-            example: 43E9046401B18269
-      responses:
-        '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    id: 4E2101D0E5D16229
-                    name: Category
-                    type: INCIDENT
-                    createdDate: '02/08/11 14:20'
-                    sortType: As Displayed
-                    linked: disabled
-                    customlabellists:
-                      - name: Internal Systems
-                        value: Internal Systems
-                      - name: External Systems
-                        value: External Systems
-                      - name: Infrastructure
-                        value: Infrastructure
-                    link:
-                      - uri: 'https://api.au.whispir.com/customlists/40E5D16229E2101D'
-                        rel: self
-                        method: GET
-        '400':
-          $ref: '#/components/responses/400BadRequest'
-        '401':
-          $ref: '#/components/responses/401Unauthorized'
-        '403':
-          $ref: '#/components/responses/403Forbidden'
-        '404':
-          $ref: '#/components/responses/404NotFound'
-        '415':
-          $ref: '#/components/responses/415UnsupportedMediaType'
-        '422':
-          $ref: '#/components/responses/422UnprocessibleEntity'
-        '500':
-          $ref: '#/components/responses/500InternalServerError'
-    parameters:
-      - $ref: '#/components/parameters/workspaceId'
   '/users/{userId}':
     get:
       tags:

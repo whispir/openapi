@@ -243,7 +243,7 @@ paths:
                 description: ''
                 type: object
                 x-examples:
-                  example-1:
+                  Example:
                     messages:
                       - subject: Test Message
                         repetitionCount: 0
@@ -788,7 +788,7 @@ paths:
               schema:
                 description: ''
                 x-examples:
-                  example-1:
+                  Example:
                     messageresponses:
                       - percentageTotal: 50%
                         responseCount: '1'
@@ -1233,7 +1233,7 @@ paths:
                 description: Returns a list of templates
                 type: object
                 x-examples:
-                  example-1:
+                  Example:
                     status: '1 to 1 of 1    '
                     messagetemplates:
                       - messageTemplateName: Sample SMS Template with tags
@@ -3399,7 +3399,7 @@ paths:
                 description: ''
                 type: object
                 x-examples:
-                  example-1:
+                  Example:
                     token: your-generated-bearer-token
                     link: []
                 properties:
@@ -4633,7 +4633,7 @@ components:
           email: me@example.com
           callbacks:
             reply: enabled
-        example-1:
+        Example:
           name: Undeliverable Message
           url: 'https://example.com/callback'
           auth:
@@ -5583,13 +5583,13 @@ components:
       description: The record number to start returning from.
   responses:
     Template:
-      description: Example Template response object
+      description: Template endpoint response.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/template'
           examples:
-            Template object:
+            Example:
               value:
                 messageTemplateName: Sample SMS Template
                 messageTemplateDescription: Template to provide an example on whispir.io
@@ -5660,7 +5660,7 @@ components:
             description: ''
             type: object
             x-examples:
-              example-1:
+              Example:
                 errorSummary: Your request was malformed and could not be processed by the server. Please try again
                 errorText: Bad Request
                 errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
@@ -5682,7 +5682,7 @@ components:
               - errorText
               - errorDetail
           examples:
-            example-1:
+            Example:
               value:
                 errorSummary: Your request was malformed and could not be processed by the server. Please try again
                 errorText: Bad Request
@@ -5695,14 +5695,9 @@ components:
           schema:
             description: ''
             type: object
-            x-examples:
-              example-1:
-                links: null
-                errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
-                errorText: Unauthorized
-                errorDetail: ''
             properties:
-              links: {}
+              links:
+                $ref: '#/components/schemas/link'
               errorSummary:
                 type: string
                 minLength: 1
@@ -5718,7 +5713,7 @@ components:
               - errorText
               - errorDetail
           examples:
-            example-1:
+            Example:
               value:
                 links: []
                 errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
@@ -5732,9 +5727,6 @@ components:
           schema:
             description: ''
             type: object
-            x-examples:
-              example-1:
-                message: Forbidden
             properties:
               message:
                 type: string
@@ -5743,7 +5735,7 @@ components:
             required:
               - message
           examples:
-            example-1:
+            Example:
               value:
                 message: Forbidden
       headers: {}
@@ -5754,12 +5746,6 @@ components:
           schema:
             description: ''
             type: object
-            x-examples:
-              example-1:
-                errorSummary: 'The resource that you have requested does not exist. Please check the identifier and try again '
-                errorText: Not Found
-                errorDetail: ''
-                link: []
             properties:
               errorSummary:
                 type: string
@@ -5772,11 +5758,9 @@ components:
               errorDetail:
                 type: string
               link:
-                type: array
-                items:
-                  type: object
+                $ref: '#/components/schemas/link'
           examples:
-            example-1:
+            Example:
               value:
                 errorSummary: The resource that you have requested does not exist. Please check the identifier and try again
                 errorText: Not Found
@@ -5789,11 +5773,6 @@ components:
           schema:
             description: ''
             type: object
-            x-examples:
-              example-1:
-                errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
-                errorText: Unsupported Media Type
-                errorDetail: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
             properties:
               errorSummary:
                 type: string
@@ -5808,7 +5787,7 @@ components:
                 minLength: 1
                 example: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
           examples:
-            example-1:
+            Example:
               value:
                 errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
                 errorText: Unsupported Media Type
@@ -5820,13 +5799,6 @@ components:
           schema:
             description: ''
             type: object
-            x-examples:
-              example-1:
-                errorSummary: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
-                errorText: |
-                  A Template name already exists in the current Workspace, please select another name and try again.
-                errorDetail: ''
-                link: []
             properties:
               errorSummary:
                 type: string
@@ -5839,11 +5811,9 @@ components:
               errorDetail:
                 type: string
               link:
-                type: array
-                items:
-                  type: object
+                $ref: '#/components/schemas/link'
           examples:
-            example-1:
+            Example:
               value:
                 errorSummary: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
                 errorText: |
@@ -5861,7 +5831,7 @@ components:
                 type: string
                 example: Internal Server Error
           examples:
-            example-1:
+            Example:
               value:
                 message: Internal Server Error
   headers:

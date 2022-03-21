@@ -4483,7 +4483,6 @@ components:
       type: apiKey
       in: header
   schemas:
-  
     message:
       type: object
       xml:
@@ -5836,7 +5835,7 @@ components:
         - Users
       title: User
       x-examples:
-        example-1:
+        Example:
           id: 4DC922649AFE370C
           firstName: John
           middleName: ''
@@ -6184,6 +6183,7 @@ components:
         - lastName
         - workCountry
         - timezone
+      description: The user object.
     listUsers:
       type: object
       xml:
@@ -6193,7 +6193,7 @@ components:
         - Users
       title: List Users
       x-examples:
-        example-1:
+        Example:
           id: 4DC922649AFE370C
           firstName: John
           lastName: Wick
@@ -6998,13 +6998,15 @@ components:
         application/json:
           schema:
             type: object
+            description: List users object
             properties:
               users:
                 type: array
+                description: List of retrieved users
                 items:
                   $ref: '#/components/schemas/listUsers'
           examples:
-            example-1:
+            Example:
               value:
                 users:
                   - id: 4DC922649AFE370C

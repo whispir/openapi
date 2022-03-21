@@ -5912,6 +5912,61 @@ components:
         - lastName
         - workCountry
         - timezone
+    listUsers:
+      type: object
+      xml:
+        name: user
+        prefix: ns2
+      x-tags:
+        - Users
+      title: List Users
+      x-examples:
+        example-1:
+          id: 4DC922649AFE370C
+          firstName: John
+          lastName: Wick
+          companyName: Whispir
+          workEmailAddress1: testUser@example.com
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+      properties:
+        id:
+          type: string
+          description: The ID of the user.
+          example: 4DC922649AFE370C
+          readOnly: true
+        firstName:
+          type: string
+          description: The first name of the user.
+          example: John
+          readOnly: true
+        lastName:
+          type: string
+          description: The last name of the user.
+          example: Wick
+          readOnly: true
+        companyName:
+          type: string
+          description: The company name of the user.
+          example: Whispir
+          readOnly: true
+        workEmailAddress1:
+          type: string
+          example: testUser@example.com
+          description: The primary work email address of the user.
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - id
+        - firstName
+        - lastName
+        - companyName
+        - workEmailAddress1
     event:
       type: object
       required:
@@ -6928,18 +6983,16 @@ components:
               users:
                 type: array
                 items:
-                  $ref: '#/components/schemas/user'
+                  $ref: '#/components/schemas/listUsers'
           examples:
-            Example:
+            example-1:
               value:
                 users:
                   - id: 4DC922649AFE370C
                     firstName: John
                     lastName: Wick
-                    workMobilePhone1: '61400400400'
-                    workEmailAddress1: testUser@example.com
                     companyName: Whispir
-                    role1: Administrator
+                    workEmailAddress1: testUser@example.com
                     link:
                       - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
                         rel: self

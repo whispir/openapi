@@ -3565,22 +3565,9 @@ paths:
           required: false
           schema:
             type: string
-        - name: sortOrder
-          in: query
-          description: The order in which you require the results to be returned. Either `asc` or `desc`.
-          required: false
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-        - name: sortFields
-          in: query
-          description: 'The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.'
-          required: false
-          schema:
-            type: string
-            example: 'lastName,jobTitle'
+            example: status=A
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
           description: OK

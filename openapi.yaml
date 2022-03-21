@@ -3370,100 +3370,6 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-  '/workspaces/{workspaceId}/customlists/{customlistId}':
-    get:
-      tags:
-        - Custom Lists
-      summary: Retrieve a custom list
-      description: |
-        ### High-Level Response Elements
-
-        **id:** Number  
-        Specifies the unique id of the List.
-
-        **name:** String  
-        Specifies the name of the List.
-
-        **type:** String  
-        Specifies the type. The type can be one of:
-        *   INCIDENT
-        *   MESSAGE
-        *   CONTACT
-        *   RSS
-
-        **createdDate:** String  
-        Specifies the date of the List creation.
-
-        **sorttype:** String  
-        Specifies the sorting order. The order can be one of:
-        *   As Displayed
-        *   Ascending
-        *   Descending
-
-        **linked:** String  
-        Specifies the linked status. Linked list item values are dependent on other lists. The linked can be one of:
-        *   disabled
-        *   list id to which this is linked with
-
-        **customlabellists:** Object  
-        The `name` is the text that is shown to the user, where as the `value` is the internally passed in value.
-
-        **link:** Array  
-        Provides a list of URLs that can be used to manipulate or access the list.
-        *   uri - the link to access the list
-        *   rel - the descriptor for what the link will do
-        *   method - the HTTP method to use with this particular link
-      operationId: getCustomListsById
-      parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
-        - name: customlistId
-          in: path
-          required: true
-          description: Enter Id
-          schema:
-            type: string
-            example: 43E9046401B18269
-      responses:
-        '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    id: 4E2101D0E5D16229
-                    name: Category
-                    type: INCIDENT
-                    createdDate: '02/08/11 14:20'
-                    sortType: As Displayed
-                    linked: disabled
-                    customlabellists:
-                      - name: Internal Systems
-                        value: Internal Systems
-                      - name: External Systems
-                        value: External Systems
-                      - name: Infrastructure
-                        value: Infrastructure
-                    link:
-                      - uri: 'https://api.au.whispir.com/customlists/40E5D16229E2101D'
-                        rel: self
-                        method: GET
-        '400':
-          $ref: '#/components/responses/400BadRequest'
-        '401':
-          $ref: '#/components/responses/401Unauthorized'
-        '403':
-          $ref: '#/components/responses/403Forbidden'
-        '404':
-          $ref: '#/components/responses/404NotFound'
-        '415':
-          $ref: '#/components/responses/415UnsupportedMediaType'
-        '422':
-          $ref: '#/components/responses/422UnprocessibleEntity'
-        '500':
-          $ref: '#/components/responses/500InternalServerError'
-    parameters:
-      - $ref: '#/components/parameters/workspaceId'
   /users:
     post:
       tags:
@@ -3500,35 +3406,7 @@ paths:
         required: true
       responses:
         '201':
-          description: Created
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    userName: John.Wick
-                    password: ''
-                    status: PENDING
-                    firstName: John
-                    lastName: Wick
-                    personalEmailAddress2: ''
-                    personalCountry: Australia
-                    workEmailAddress1: jwick@testcompany.com
-                    workMobilePhone1: '61423456789'
-                    workCountry: Australia
-                    workPostalCountry: Australia
-                    timezone: Australia/Melbourne
-                    link:
-                      - uri: 'https://api.au.whispir.com/users/AF48A9EC3F02E43C'
-                        rel: self
-                        method: GET
-                      - uri: 'https://api.au.whispir.com/users/AF48A9EC3F02E43C'
-                        rel: updateUser
-                        method: PUT
-                        type: 'application/vnd.whispir.user-v1+xml,application/vnd.whispir.user-v1+json'
-                      - uri: 'https://api.au.whispir.com/users/AF48A9EC3F02E43C'
-                        rel: deleteUser
-                        method: DELETE
+          $ref: '#/components/responses/Users'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3672,6 +3550,100 @@ paths:
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+  '/workspaces/{workspaceId}/customlists/{customlistId}':
+    get:
+      tags:
+        - Custom Lists
+      summary: Retrieve a custom list
+      description: |
+        ### High-Level Response Elements
+
+        **id:** Number  
+        Specifies the unique id of the List.
+
+        **name:** String  
+        Specifies the name of the List.
+
+        **type:** String  
+        Specifies the type. The type can be one of:
+        *   INCIDENT
+        *   MESSAGE
+        *   CONTACT
+        *   RSS
+
+        **createdDate:** String  
+        Specifies the date of the List creation.
+
+        **sorttype:** String  
+        Specifies the sorting order. The order can be one of:
+        *   As Displayed
+        *   Ascending
+        *   Descending
+
+        **linked:** String  
+        Specifies the linked status. Linked list item values are dependent on other lists. The linked can be one of:
+        *   disabled
+        *   list id to which this is linked with
+
+        **customlabellists:** Object  
+        The `name` is the text that is shown to the user, where as the `value` is the internally passed in value.
+
+        **link:** Array  
+        Provides a list of URLs that can be used to manipulate or access the list.
+        *   uri - the link to access the list
+        *   rel - the descriptor for what the link will do
+        *   method - the HTTP method to use with this particular link
+      operationId: getCustomListsById
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - name: customlistId
+          in: path
+          required: true
+          description: Enter Id
+          schema:
+            type: string
+            example: 43E9046401B18269
+      responses:
+        '200':
+          description: OK
+          content:
+            examples:
+              examples:
+                response:
+                  value:
+                    id: 4E2101D0E5D16229
+                    name: Category
+                    type: INCIDENT
+                    createdDate: '02/08/11 14:20'
+                    sortType: As Displayed
+                    linked: disabled
+                    customlabellists:
+                      - name: Internal Systems
+                        value: Internal Systems
+                      - name: External Systems
+                        value: External Systems
+                      - name: Infrastructure
+                        value: Infrastructure
+                    link:
+                      - uri: 'https://api.au.whispir.com/customlists/40E5D16229E2101D'
+                        rel: self
+                        method: GET
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+    parameters:
+      - $ref: '#/components/parameters/workspaceId'
   '/users/{userId}':
     get:
       tags:
@@ -5641,6 +5613,10 @@ components:
         - Users
       title: User
       properties:
+        id:
+          type: string
+          description: The ID of the user.
+          readOnly: true
         userName:
           type: string
           description: Specifies the username for the account
@@ -5707,6 +5683,8 @@ components:
         aliasFields:
           type: string
           description: 'The other (alias) name and title fields<ul><li>otherFirstName, otherLastName, otherTitle</li></ul>'
+        link:
+          $ref: '#/components/schemas/link'
       required:
         - userName
         - password
@@ -6596,6 +6574,17 @@ components:
             Example:
               value:
                 message: Internal Server Error
+    Users:
+      description: Users endpoint response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/user'
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.

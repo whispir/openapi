@@ -5556,23 +5556,13 @@ components:
         - Users
       title: User
       x-examples:
-        Basic:
-          userName: John.Wick
-          password: string
-          firstName: John
-          lastName: Wick
-          title: ''
-          workCountry: Australia
-          timezone: Australia/Melbourne
-        Comprehensive:
+        example-1:
           id: 4DC922649AFE370C
-          userName: John.Wick
-          password: string
           firstName: John
           middleName: ''
           lastName: Wick
           title: ''
-          nickname: string
+          nickname: Babayaga
           status: PENDING
           workMobilePhone1: '61400400400'
           workEmailAddress1: testUser@example.com
@@ -5643,6 +5633,7 @@ components:
           type: string
           description: Specifies the username for the account
           example: John.Wick
+          writeOnly: true
         password:
           type: string
           description: 'Specifies the password for the account <p><b>Note:</b>The following are the rules for the password:</p><p><ul><li>Alpha Numeric [a-zA-Z0-9_]</li><li>Must have at least one uppercase and one lowercase character</li></ul></p>'

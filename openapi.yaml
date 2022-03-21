@@ -2990,29 +2990,9 @@ paths:
     get:
       tags:
         - Callbacks
-      summary: List callback calls
+      summary: Get a callback
       description: |
-        ## Callback Retries
-
-        The retriesEnabled flag can be enabled on a callback to ensure that Whispir automatically attempts to retry in the event of a failure occurring.
-
-        When a failure conditions occurs, Whispir will mark the callback server as down and log the attempted callback as Failed.
-
-        This callback will be attempted to be retried after ~5 minutes. If the server is available, the callbacks will automatically be processed through the server, the user doesn’t need to take any further action.
-
-        The following rules apply to Whispir’s automated retries for callbacks:
-        *   When a failure to make a callback occurs, Whispir will begin retries ~every 5 minutes.
-        *   Whispir will retry any callback for up to 24h.
-        *   After 24h, the callbacks will no longer be retried.
-        *   If the callback service becomes available prior to 24h, the callbacks will automatically re-process.
-        *   If the callback service takes longer than 24h, the user can access the callback information from the /callbacks/:id/calls endpoint.
-
-        An array of calls will be returned to you in the HTTP response body.
-
-        ### Retrieving the list of calls based on their Status
-        To retrieve a list of attempted API calls from the Whispir API you can execute an HTTP GET using the /calls endpoint on a specific callback.
-
-        To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL.
+        Get a callback object.
       operationId: getCallbackById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'

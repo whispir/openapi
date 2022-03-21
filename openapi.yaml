@@ -5482,13 +5482,13 @@ components:
       title: Callback
       description: 'The callback object, used to configure the callback (also known as webhook).'
       x-examples:
-        Callback object:
+        example-1:
           id: 4452AC8359535C46
           name: Callback Name
           url: 'https://example.com/callback'
           auth:
-            type: queryparam
-            key: string
+            type: basicauth
+            key: test34
           contentType: json
           removeHTML: disabled
           retriesEnabled: false
@@ -6639,7 +6639,10 @@ components:
                 errorSummary: Your request was malformed and could not be processed by the server. Please try again
                 errorText: Bad Request
                 errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
-      headers: {}
+      headers:
+        Content-Type:
+          schema:
+            type: string
     401Unauthorized:
       description: 401 Unauthorized Error
       content:

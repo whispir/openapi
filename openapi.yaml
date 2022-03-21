@@ -6585,6 +6585,8 @@ components:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
         Content-Length:
           $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/User-Content-Type'
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.
@@ -6631,3 +6633,11 @@ components:
         enum:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
+    User-Content-Type:
+      description: User content mime type.
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.user-v1+json
+          - application/vnd.whispir.user-v1+xml

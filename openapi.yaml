@@ -1352,6 +1352,8 @@ paths:
       operationId: postTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Template-Content-Type'
+        - $ref: '#/components/parameters/Template-Accept'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
@@ -1390,6 +1392,8 @@ paths:
       operationId: getTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Template-Content-Type'
+        - $ref: '#/components/parameters/Template-Accept'
       responses:
         '200':
           description: OK
@@ -1527,17 +1531,13 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
-        - schema:
-            type: string
-            default: application/vnd.whispir.template-v1+json
-          in: header
-          name: Content-Type
-          description: Indicates the resource's media type
+        - $ref: '#/components/parameters/Template-Content-Type'
         - schema:
             type: string
           in: header
           name: Content-Length
           description: 'Indicates the size of the entity body, in bytes'
+        - $ref: '#/components/parameters/Template-Accept'
       responses:
         '201':
           $ref: '#/components/responses/Template'
@@ -1571,6 +1571,8 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
+        - $ref: '#/components/parameters/Template-Content-Type'
+        - $ref: '#/components/parameters/Template-Accept'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
@@ -1614,6 +1616,8 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
+        - $ref: '#/components/parameters/Template-Content-Type'
+        - $ref: '#/components/parameters/Template-Accept'
       responses:
         '204':
           description: No Content
@@ -6389,6 +6393,26 @@ components:
         type: number
         default: 0
       description: The record number to start returning from.
+    Template-Content-Type:
+      in: header
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.template-v1+json
+          - application/vnd.whispir.template-v1+xml
+      name: Content-Type
+      description: Template content mime type.
+      required: true
+    Template-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.template-v1+json
+          - application/vnd.whispir.template-v1+xml
+      description: Template accept.
   responses:
     Template:
       description: Template endpoint response.

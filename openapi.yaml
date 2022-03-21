@@ -5634,13 +5634,12 @@ components:
       title: Activity
     user:
       type: object
-      required:
-        - userName
-        - password
-        - firstName
-        - lastName
-        - timezone
-        - workCountry
+      xml:
+        name: user
+        prefix: ns2
+      x-tags:
+        - Users
+      title: User
       properties:
         userName:
           type: string
@@ -5651,19 +5650,19 @@ components:
           description: 'Specifies the password for the account <p><b>Note:</b>The following are the rules for the password:</p><p><ul><li>Alpha Numeric [a-zA-Z0-9_]</li><li>Must have at least one uppercase and one lowercase character</li></ul></p>'
         firstName:
           type: string
-          description: Specifies the firstName of the user
+          description: The first name of the user.
           example: John
         middleName:
           type: string
-          description: Specifies the middleName of the user
+          description: The middle name of the user.
           example: ''
         lastName:
           type: string
-          description: Specifies the lastName of the user
+          description: The last name of the user.
           example: Wick
         title:
           type: string
-          description: The title of the name
+          description: The title to address the user with.
           example: ''
         nickname:
           type: string
@@ -5673,46 +5672,48 @@ components:
           description: 'Specifies the validity status of the user. The status can be one of -<ul><li>Active (A)</li><li>InActive (I)</li><li>Pending ( P)</li><li>Suspended (B)</li><li>Deleted (D)</li></ul><p><b>Note:</b>The default status is PENDING. One cannot set the status while creation of account. Read `User State Machine` again mentioned above.</p>'
         companyName:
           type: string
-          description: Specifies the company name
+          description: The company name of the user.
         jobTitle:
           type: string
-          description: Specifies the job title at the company
+          description: The job title of the user.
         division:
           type: string
-          description: Specifies the Division in the company to which this user is associated with
+          description: The division in the company to which the user is associated.
         department:
           type: string
-          description: Specifies the Department in the company to which this user is associated with
-        Work Place Address:
+          description: The department in the company to which the user is associated.
+        workAddress:
           type: string
           description: 'Specifies the primary and Secondary values for each respective type. Of all these the workEmailAddress1 is the mandatory field.<ul><li>workEmailAddress1, workEmailAddress2</li><li>workAddress1, workAddress2</li><li>workSuburb, workState</li><li>workPostCode, workCountry</li><li>workPostalAddress1, workPostalAddress2</li><li>workPostalSuburb, workPostalState</li><li>workPostalPostCode, workPostalCountry</li></ul>'
-        Work Place Phones:
+        workPhone:
           type: integer
           description: 'Specifies the primary and Secondary values for each respective type. Of all these the workMobilePhone1 is the mandatory field.<ul><li>workMobilePhone1, workMobilePhone2</li><li>workPhoneAreaCode1, workPhone1</li><li>workPhoneAreaCode2, workPhone2</li><li>workFaxAreaCode1, workFax1</li><li>workSetellitePhone, WorkOtherPhone</li></ul>'
           example: 61423456789
         workCountry:
           type: string
           example: Australia
+          description: The work country of the user.
         timezone:
           type: string
           description: 'Specifies the timezone in which the user lives in. Values in relation to GMT.<p>Supported values are:</p><ul><li>Offset from GMT in the format `+/-NN` e.g. `+10`</li><li>Worldwide Timezone Format in the format `Country/City` e.g. `Australia/Melbourne`</li></ul>'
           example: Australia/Melbourne
-        Personal Address:
+        personalAddress:
           type: string
           description: 'Specifies the primary and Secondary values for each respective type<ul><li>personalEmailAddress1, personalEmailAddress2</li><li>personalAddress1, personalAddress2</li><li>personalSuburb, personalState</li><li>personalCountry, personalPostCode</li></ul>'
-        Personal Phones:
+        personalPhone:
           type: integer
           description: 'Specifies the primary and Secondary values for each respective type<ul><li>personalPhoneAreaCode1, personalPhone1</li><li>personalPhoneAreaCode2, personalPhone2</li><li>personalFaxAreaCode1, personalFax1</li><li>otherPhoneAreaCode1, otherPhone1</li><li>otherMobile</li></ul>'
           example: 61423456789
-        Alias Fields:
+        aliasFields:
           type: string
           description: 'The other (alias) name and title fields<ul><li>otherFirstName, otherLastName, otherTitle</li></ul>'
-      xml:
-        name: user
-        prefix: ns2
-      x-tags:
-        - Users
-      title: User
+      required:
+        - userName
+        - password
+        - firstName
+        - lastName
+        - workCountry
+        - timezone
     event:
       type: object
       required:

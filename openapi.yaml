@@ -3967,6 +3967,17 @@ paths:
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/User-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4064,6 +4075,17 @@ paths:
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/User-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4105,6 +4127,17 @@ paths:
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/User-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -7244,10 +7277,16 @@ components:
                     host: api.au.whispir.com
                     port: -1
       headers:
-        Accept:
-          $ref: '#/components/headers/User-Content-Type'
         Content-Type:
           $ref: '#/components/headers/User-Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     Users:
       description: List users endpoint response
       content:
@@ -7277,14 +7316,16 @@ components:
                         host: api.au.whispir.com
                         port: -1
       headers:
-        Accept:
-          $ref: '#/components/headers/User-Content-Type'
         Content-Type:
           $ref: '#/components/headers/User-Content-Type'
-        Access-Control-Allow-Origin:
-          $ref: '#/components/headers/Access-Control-Allow-Origin'
         Content-Length:
           $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     Template:
       description: Template endpoint response.
       content:

@@ -1300,6 +1300,8 @@ paths:
       operationId: postTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
@@ -1338,6 +1340,10 @@ paths:
       operationId: getTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       responses:
         '200':
           description: OK
@@ -1475,17 +1481,8 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
-        - schema:
-            type: string
-            default: application/vnd.whispir.template-v1+json
-          in: header
-          name: Content-Type
-          description: Indicates the resource's media type
-        - schema:
-            type: string
-          in: header
-          name: Content-Length
-          description: 'Indicates the size of the entity body, in bytes'
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       responses:
         '201':
           $ref: '#/components/responses/Template'
@@ -1519,6 +1516,8 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
@@ -1532,6 +1531,13 @@ paths:
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Template-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1562,9 +1568,18 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Template-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -6498,6 +6513,26 @@ components:
           - application/vnd.whispir.api-callback-v1+json
           - application/vnd.whispir.api-callback-v1+xml
       description: Callback content mime-type
+    Templates-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.template-v1+json
+          - application/vnd.whispir.template-v1+xml
+      description: Template content mime-type
+    Templates-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.template-v1+json
+          - application/vnd.whispir.template-v1+xml
+      description: Template content mime-type
   responses:
     Template:
       description: Template endpoint response.

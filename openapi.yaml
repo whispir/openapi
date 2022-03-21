@@ -133,7 +133,7 @@ paths:
 
         Now we have the templateId(for content) with the resourceID (for recipients). Using these two key pieces of information, developers can submit an API request to kick off the Dynamic Messaging process.  
 
-        The smsMappingField should be mapped to the column or key that holds the number to which the SMS has to sent to; and the emailMappingField to the email to which the message has to be sent to.  
+        The smsMappingField should be mapped to the column or key that holds the number to which the SMS has to sent to; and the emailMappingField to the email to which the message has to be sent to.
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -216,15 +216,6 @@ paths:
                   web:
                     body: This is the content of my web publishing or Rich Push Message
                     type: text/plain
-          application/vnd.whispir.bulkmessage-v1+json:
-            schema:
-              $ref: '#/components/schemas/message'
-          application/vnd.whispir.message-v1+xml:
-            schema:
-              $ref: '#/components/schemas/message'
-          application/vnd.whispir.bulkmessage-v1+xml:
-            schema:
-              $ref: '#/components/schemas/message'
         description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web].'
         required: true
       responses:
@@ -236,6 +227,7 @@ paths:
                 type: string
                 enum:
                   - Your request has been accepted for processing
+                description: The status of the response acceptance.
               examples:
                 Response:
                   value: Your request has been accepted for processing
@@ -246,6 +238,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
             Location:
               schema:
                 type: string
@@ -259,12 +255,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Messages
@@ -306,7 +306,7 @@ paths:
           content:
             application/json:
               schema:
-                description: ''
+                description: The list messages response object.
                 type: object
                 x-examples:
                   Example:
@@ -352,16 +352,17 @@ paths:
                 properties:
                   messages:
                     type: array
+                    description: The list of retrieved messages.
                     uniqueItems: true
                     minItems: 1
                     items:
                       $ref: '#/components/schemas/message'
                   status:
+                    description: The status of the list request.
                     type: string
                     example: ''
                   link:
-                    type: array
-                    items: {}
+                    $ref: '#/components/schemas/link'
                 required:
                   - messages
                   - status
@@ -417,6 +418,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -425,12 +430,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}':
@@ -468,6 +477,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
           content:
             application/vnd.whispir.message-v1+json:
               schema:
@@ -552,12 +565,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: Content-Type
@@ -711,6 +728,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
           content:
             application/vnd.whispir.messagestatus-v1+json:
               examples:
@@ -775,12 +796,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       tags:
         - Messages
     parameters:
@@ -891,10 +916,14 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
           content:
             application/vnd.whispir.message-v1+json:
               schema:
-                description: ''
+                description: The message response object.
                 x-examples:
                   Example:
                     messageresponses:
@@ -966,12 +995,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       tags:
         - Messages
     parameters:
@@ -1045,12 +1078,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Resources
@@ -1181,12 +1218,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/resources/{resourceId}':
@@ -1236,12 +1277,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Resources
@@ -1249,7 +1294,7 @@ paths:
       description: |
         Updating a resource involves the same process as in creating a resource. The process of using one of the format (CSV, JSON, XML) for private and any format for public -> converting to base64 encoded data is the same.  
         The change is doing a PUT to the existing resource URL that needs to be updated. Please be careful that doing an update overwrites the previous resource. There is no versioning available in Whispir for the resources.  
-        Any or all of the 4 values can be changed. i.e, name, scope, mimeType, derefUri, but all 4 are mandatory values to be sent.  
+        Any or all of the 4 values can be changed. i.e, name, scope, mimeType, derefUri, but all 4 are mandatory values to be sent.
       operationId: putResourcesById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -1300,12 +1345,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Resources
@@ -1335,12 +1384,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates':
@@ -1352,14 +1405,11 @@ paths:
       operationId: postTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/Template-Content-Type'
-        - $ref: '#/components/parameters/Template-Accept'
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
-            schema:
-              $ref: '#/components/schemas/template'
-          application/vnd.whispir.template-v1+xml:
             schema:
               $ref: '#/components/schemas/template'
         description: Templates object that needs to be create Templates
@@ -1375,12 +1425,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Templates
@@ -1392,8 +1446,10 @@ paths:
       operationId: getTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/Template-Content-Type'
-        - $ref: '#/components/parameters/Template-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       responses:
         '200':
           description: OK
@@ -1507,12 +1563,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates/{templateId}':
@@ -1531,13 +1591,8 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
-        - $ref: '#/components/parameters/Template-Content-Type'
-        - schema:
-            type: string
-          in: header
-          name: Content-Length
-          description: 'Indicates the size of the entity body, in bytes'
-        - $ref: '#/components/parameters/Template-Accept'
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       responses:
         '201':
           $ref: '#/components/responses/Template'
@@ -1549,12 +1604,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Templates
@@ -1571,14 +1630,11 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
-        - $ref: '#/components/parameters/Template-Content-Type'
-        - $ref: '#/components/parameters/Template-Accept'
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
-            schema:
-              $ref: '#/components/schemas/template'
-          application/vnd.whispir.template-v1+xml:
             schema:
               $ref: '#/components/schemas/template'
         description: Templates object that needs to be update Templates
@@ -1586,6 +1642,13 @@ paths:
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Template-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1594,12 +1657,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Templates
@@ -1616,11 +1683,18 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
-        - $ref: '#/components/parameters/Template-Content-Type'
-        - $ref: '#/components/parameters/Template-Accept'
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Template-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1629,12 +1703,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules':
@@ -1660,9 +1738,6 @@ paths:
           application/vnd.whispir.responserule-v1+json:
             schema:
               $ref: '#/components/schemas/responseRule'
-          application/vnd.whispir.responserule-v1+xml:
-            schema:
-              $ref: '#/components/schemas/responseRule'
         description: ''
         required: true
       responses:
@@ -1676,12 +1751,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Response Rules
@@ -1701,12 +1780,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules/{responseRuleId}':
@@ -1736,12 +1819,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Response Rules
@@ -1762,9 +1849,6 @@ paths:
           application/vnd.whispir.responserule-v1+json:
             schema:
               $ref: '#/components/schemas/responseRule'
-          application/vnd.whispir.responserule-v1+xml:
-            schema:
-              $ref: '#/components/schemas/responseRule'
         description: Response Rules object used to update Response Rules
         required: true
       responses:
@@ -1778,12 +1862,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Response Rules
@@ -1810,12 +1898,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/contacts':
@@ -1856,12 +1948,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Contacts
@@ -1920,12 +2016,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/contacts/{contactId}':
@@ -1970,12 +2070,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Contacts
@@ -2023,12 +2127,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Contacts
@@ -2058,12 +2166,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/distributionlists':
@@ -2121,12 +2233,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Distribution Lists
@@ -2195,12 +2311,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/distributionlists/{distributionlistId}':
@@ -2254,12 +2374,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Distribution Lists
@@ -2313,12 +2437,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Distribution Lists
@@ -2346,12 +2474,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/scenarios':
@@ -2369,9 +2501,6 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
-          application/vnd.whispir.scenario-v1+xml:
-            schema:
-              $ref: '#/components/schemas/scenario'
         description: Scenario list object that needs to be create Scenario
         required: true
       responses:
@@ -2385,12 +2514,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Scenarios
@@ -2410,12 +2543,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/scenarios/{scenarioId}':
@@ -2478,12 +2615,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     post:
       tags:
         - Scenarios
@@ -2520,12 +2661,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Scenarios
@@ -2546,9 +2691,6 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
-          application/vnd.whispir.scenario-v1+xml:
-            schema:
-              $ref: '#/components/schemas/scenario'
         description: Scenarios object that needs to be update Scenarios
         required: true
       responses:
@@ -2562,12 +2704,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Scenarios
@@ -2594,12 +2740,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /callbacks:
@@ -2639,14 +2789,26 @@ paths:
           application/vnd.whispir.api-callback-v1+json:
             schema:
               $ref: '#/components/schemas/callback'
-          application/vnd.whispir.api-callback-v1+xml:
-            schema:
-              $ref: '#/components/schemas/callback'
+            examples:
+              Callback object:
+                value:
+                  name: NEW callback tester 2
+                  url: 'https://www.google.com/'
+                  auth:
+                    type: queryparam
+                    key: abcd1234
+                  retriesEnabled: false
+                  contentType: json
+                  email: user002@testmail.whispir.com
+                  removeHTML: enabled
+                  callbacks:
+                    reply: enabled
+                    undeliverable: enabled
         description: Callbacks list object that needs to be create Callbacks
         required: true
       responses:
         '201':
-          description: Created
+          $ref: '#/components/responses/Callback'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2655,68 +2817,139 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
     get:
       tags:
         - Callbacks
       summary: List callbacks
       description: |
-        ### Response Elements
-
-        **id:** String  
-        The unique ID of the callback within Whispir.
-
-        **name:** String  
-        The name given to the Callback at creation time. Also the ID that is used in the `/messages` endpoint.
-
-        **url:** String  
-        The application URL that was given to the Callback at creation time. Also the endpoint that will be used when supplying callback information.
-
-        **link:** Array  
-        Provides a list of URLs that can be used to manipulate or access the callback.
-        *   uri - the link to access the specific callback
-        *   rel - the descriptor for what the link will do
-        *   method - the HTTP method to use with this particular link
+        List callbacks
       operationId: getCallbacks
       responses:
         '200':
           description: OK
           content:
-            examples:
-              examples:
-                response:
-                  value:
-                    status: 1 to 3 of 3
+            application/json:
+              schema:
+                description: 'The callback object.'
+                type: object
+                x-examples:
+                  example-1:
+                    status: '1 to 1 of 1    '
                     callbacks:
-                      - id: BCD374DABC73649B
-                        name: Sample Callback 1
-                        url: 'http://myserver.com/callback1.php'
+                      - id: D7D2295E2A08388C
+                        name: callback1
+                        url: 'https://e05237bf.ngrok.io/'
+                        retriesEnabled: false
                         link:
-                          - uri: 'https://api.au.whispir.com/callbacks/BCD374DABC73649B'
+                          - uri: 'https://stage-ap-southeast-2.whispirdev.com/callbacks/D7D2295E2A08388C'
                             rel: self
                             method: GET
-                      - id: AD34DBCEFD74EABC
-                        name: Sample Callback 2
-                        url: 'http://myserver.com/callback2.php'
-                        link:
-                          - uri: 'https://api.au.whispir.com/callbacks/AD34DBCEFD74EABC'
-                            rel: self
-                            method: GET
-                      - id: 73BDCEFA43DF35DB
-                        name: Sample Callback 3
-                        url: 'http://myserver.com/callback3.php'
-                        link:
-                          - uri: 'https://api.au.whispir.com/callbacks/73BDCEFA43DF35DB'
-                            rel: self
-                            method: GET
+                            host: stage-ap-southeast-2.whispirdev.com
+                            port: -1
                     link: []
+                properties:
+                  status:
+                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.  
+                    type: string
+                    minLength: 1
+                    example: 1 to 1 of 1
+                    readOnly: true
+                  callbacks:
+                    description: A list of callbacks
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          minLength: 1
+                          description: |-
+                            The id of the callback. 
+
+                            This is the value that should be passed when referring to the callback using the API endpoints
+                          example: D7D2295E2A08388C
+                          readOnly: true
+                        name:
+                          type: string
+                          minLength: 1
+                          description: |-
+                            The name of the callback. 
+
+                            This is the value that should be passed in the message payload for triggering the callbacks
+                          example: callback1
+                          readOnly: true
+                        url:
+                          type: string
+                          minLength: 1
+                          description: The destination url on your servers that Whispir should reach out to.
+                          example: 'https://e05237bf.ngrol.io/'
+                          readOnly: true
+                        retriesEnabled:
+                          type: boolean
+                          default: false
+                          description: |-
+                            If retriesEnabled is false, then Whispir will only try once and when a failure (non 200 OK response code) happens, it will not retry again
+
+                            When true, it will try every 5 mins for a maximum of 10 times.
+
+                            Refer to callback calls for more details on retrieving the SUCCESS and FAIL logs
+                          readOnly: true
+                        link:
+                          $ref: '#/components/schemas/link'
+                      required:
+                        - id
+                        - name
+                        - url
+                        - retriesEnabled
+                    readOnly: true
+                  link:
+                    $ref: '#/components/schemas/link'
+                required:
+                  - status
+                  - callbacks
+                  - link
+              examples:
+                example-1:
+                  value:
+                    status: 1 to 1 of 1
+                    callbacks:
+                      - id: D7D2295E2A08388C
+                        name: callback1
+                        url: 'https://e05237bf.ngrol.io/'
+                        retriesEnabled: false
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Callback-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2725,15 +2958,23 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-  '/callbacks/{callbackId}/calls':
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+  '/callbacks/{callbackId}':
     get:
       tags:
         - Callbacks
@@ -2760,7 +3001,7 @@ paths:
         To retrieve a list of attempted API calls from the Whispir API you can execute an HTTP GET using the /calls endpoint on a specific callback.
 
         To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL.
-      operationId: getCallbacksCallsById
+      operationId: getCallbackById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
@@ -2779,45 +3020,11 @@ paths:
             enum:
               - SUCCESS
               - FAILED
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
       responses:
         '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    status: 1 to 1 of 1
-                    calls:
-                      - id: B3EDFE83DF389DFE
-                        messageId: ABC4857BCCF484575FCA
-                        messageLocation: 'https://api.au.whispir.com/messages/ABC4857BCCF484575FCA'
-                        status: FAILED
-                        from:
-                          name: Fred Waters
-                          mri: Fred_Waters.528798.Sandbox@Contact.whispir.com
-                          mobile: '+1000000000'
-                          email: ''
-                          voice: ''
-                        responseMessage:
-                          channel: SMS
-                          acknowledged: '09/01/13 13:22'
-                          content: 'Yes, I accept. Will I need to bring steel cap boots?'
-                        callback:
-                          id: B384FD38DCBADE38
-                          name: My Callback Server
-                          url: 'https://www.myapplication.com/myapp'
-                          attemptedDate: '09/01/13 13:22'
-                          statusCode: 500
-                          statusMessage: Internal Server Error
-                        link:
-                          - rel: updateCall
-                            uri: /callbacks/B384FD38DCBADE38/calls/B3EDFE83DF389DFE
-                            method: PUT
-                    link:
-                      - rel: next
-                        uri: /callbacks/B384FD38DCBADE38/calls?limit=20&offset=20
-                        method: GET
+          $ref: '#/components/responses/Callback'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2826,16 +3033,20 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Callbacks
-      summary: Update a callback call
+      summary: Update a callback
       description: |
         As every call to a callback endpoint is now stored within the calls endpoint, it’s possible that when failed calls are successfully processed through a manual exercise, that these calls will then need to be updated to reflect the current status.
 
@@ -2859,28 +3070,57 @@ paths:
         This ensures that all callbacks that have been processed can be updated in a single API call, rather than having to make a single API call per callback attempt.
 
         The PUT request takes a single API parameter in the body
-      operationId: putCallbacksCallsById
+      operationId: putCallbackById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
           in: path
-          description: Enter Scenarios id.
+          description: Enter Callback id.
           required: true
           schema:
             type: string
             example: 41048D9483C8CF2A
-        - name: status
-          in: query
-          required: true
-          description: The status to update the attempted calls
-          schema:
-            type: string
-            enum:
-              - SUCCESS
-              - FAILED
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Callback-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+      requestBody:
+        $ref: '#/components/requestBodies/callback'
+    delete:
+      summary: Delete a callback
+      operationId: deleteCallbackById
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Callback-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2890,11 +3130,25 @@ paths:
         '404':
           $ref: '#/components/responses/404NotFound'
         '415':
-          $ref: '#/components/responses/415UnsupportedMediaType'
+          $ref: '#/components/responses/422UnprocessibleEntity'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+      description: Delete a callback object
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - name: callbackId
+          in: path
+          description: Enter Callback id.
+          required: true
+          schema:
+            type: string
+            example: 41048D9483C8CF2A
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
+      tags:
+        - Callbacks
   /workspaces:
     post:
       tags:
@@ -2906,9 +3160,6 @@ paths:
       requestBody:
         content:
           application/vnd.whispir.workspace-v1+json:
-            schema:
-              $ref: '#/components/schemas/workspace'
-          application/vnd.whispir.workspace-v1+xml:
             schema:
               $ref: '#/components/schemas/workspace'
         description: Workspaces list object that needs to be create Workspaces
@@ -2924,12 +3175,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
     get:
@@ -2987,12 +3242,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
   '/workspaces/{workspaceId}':
@@ -3015,12 +3274,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /activities:
@@ -3036,9 +3299,6 @@ paths:
           application/vnd.whispir.activity-v1+json:
             schema:
               $ref: '#/components/schemas/activity'
-          application/vnd.whispir.activity-v1+xml:
-            schema:
-              $ref: '#/components/schemas/activity'
         description: activity list object that needs to be create activity
         required: true
       responses:
@@ -3052,12 +3312,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
     get:
@@ -3243,12 +3507,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
   '/workspaces/{workspaceId}/activities':
     get:
       tags:
@@ -3271,12 +3539,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/customlists':
@@ -3418,12 +3690,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/customlists/{customlistId}':
@@ -3512,12 +3788,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /users:
@@ -3544,47 +3824,18 @@ paths:
       operationId: postUsers
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
       requestBody:
         content:
           application/vnd.whispir.user-v1+json:
-            schema:
-              $ref: '#/components/schemas/user'
-          application/vnd.whispir.user-v1+xml:
             schema:
               $ref: '#/components/schemas/user'
         description: Users list object that needs to be create Users
         required: true
       responses:
         '201':
-          description: Created
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    userName: John.Wick
-                    password: ''
-                    status: PENDING
-                    firstName: John
-                    lastName: Wick
-                    personalEmailAddress2: ''
-                    personalCountry: Australia
-                    workEmailAddress1: jwick@testcompany.com
-                    workMobilePhone1: '61423456789'
-                    workCountry: Australia
-                    workPostalCountry: Australia
-                    timezone: Australia/Melbourne
-                    link:
-                      - uri: 'https://api.au.whispir.com/users/AF48A9EC3F02E43C'
-                        rel: self
-                        method: GET
-                      - uri: 'https://api.au.whispir.com/users/AF48A9EC3F02E43C'
-                        rel: updateUser
-                        method: PUT
-                        type: 'application/vnd.whispir.user-v1+xml,application/vnd.whispir.user-v1+json'
-                      - uri: 'https://api.au.whispir.com/users/AF48A9EC3F02E43C'
-                        rel: deleteUser
-                        method: DELETE
+          $ref: '#/components/responses/Users'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3593,12 +3844,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Users
@@ -3649,42 +3904,16 @@ paths:
           required: false
           schema:
             type: string
-        - name: sortOrder
-          in: query
-          description: The order in which you require the results to be returned. Either `asc` or `desc`.
-          required: false
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-        - name: sortFields
-          in: query
-          description: 'The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.'
-          required: false
-          schema:
-            type: string
-            example: 'lastName,jobTitle'
+            example: status=A
+        - $ref: '#/components/parameters/User-Accept'
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
       responses:
         '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    status: 1 to 1 of 1
-                    Users:
-                      - id: AF48A9EC3F02E43C
-                        firstName: Fred
-                        lastName: Smith
-                        companyName: Whispir Pte Ltd
-                        workEmailAddress1: fsmith@testcompany.com
-                        workMobilePhone1: '61423456789'
-                        link:
-                          method: GET
-                          rel: self
-                          uri: 'http://api.whispir.com/users/AF48A9EC3F02E43C'
+          $ref: '#/components/responses/Users'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3693,12 +3922,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       x-internal: false
     delete:
       tags:
@@ -3711,6 +3944,8 @@ paths:
       operationId: deleteUsers
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
       responses:
         '204':
           description: No Content
@@ -3722,12 +3957,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
   '/users/{userId}':
     get:
       tags:
@@ -3744,22 +3983,11 @@ paths:
           schema:
             type: string
             example: 4821DCC420494A3A
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
       responses:
         '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    id: AF48A9EC3F02E43C
-                    firstName: Fred
-                    lastName: Smith
-                    status: ACTIVE
-                    link:
-                      method: GET
-                      rel: self
-                      uri: 'http://api.whispir.com/users/AF48A9EC3F02E43C'
+          $ref: '#/components/responses/User'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3768,12 +3996,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Users
@@ -3802,19 +4034,18 @@ paths:
           schema:
             type: string
             example: 4821DCC420494A3A
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
       requestBody:
         content:
           application/vnd.whispir.user-v1+json:
-            schema:
-              $ref: '#/components/schemas/user'
-          application/vnd.whispir.user-v1+xml:
             schema:
               $ref: '#/components/schemas/user'
         description: Users object that needs to be update Users
         required: true
       responses:
         '204':
-          description: Created
+          description: No Content
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3823,12 +4054,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Users
@@ -3847,6 +4082,8 @@ paths:
           schema:
             type: string
             example: 4821DCC420494A3A
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
       responses:
         '204':
           description: No Content
@@ -3858,12 +4095,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
   '/workspaces/{workspaceId}/users':
     get:
       tags:
@@ -3873,39 +4114,15 @@ paths:
       operationId: getWorkspaceUsers
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
       responses:
         '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    users:
-                      - id: AF48A9EC3F02E43C
-                        firstName: Fred
-                        lastName: Smith
-                        companyName: Whispir Pte Ltd
-                        workEmailAddress1: fsmith@whispir.com
-                        workMobilePhone1: 6512348765
-                        link:
-                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/AF48A9EC3F02E43C'
-                            rel: self
-                            method: GET
-                      - id: DFC878BCB2EF9258
-                        firstName: John
-                        lastName: Wick
-                        companyName: ''
-                        workEmailAddress1: jwick@whispir.com
-                        link:
-                          - uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/DFC878BCB2EF9258'
-                            rel: self
-                            method: GET
-                      - status: 1 to 20 of 28
-                        link:
-                          uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/?offset=10&limit=10'
-                          rel: next
-                          method: GET
+          $ref: '#/components/responses/Users'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3914,12 +4131,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/events':
@@ -3949,12 +4170,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     post:
       tags:
         - Events
@@ -4101,12 +4326,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/imports':
@@ -4151,9 +4380,6 @@ paths:
           application/vnd.whispir.import-v1+json:
             schema:
               $ref: '#/components/schemas/import'
-          application/vnd.whispir.import-v1+xml:
-            schema:
-              $ref: '#/components/schemas/import'
         description: import object that needs to be create import
       responses:
         '201':
@@ -4166,12 +4392,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /auth:
@@ -4185,7 +4415,7 @@ paths:
           content:
             application/json:
               schema:
-                description: ''
+                description: The create auth response object.
                 type: object
                 x-examples:
                   Example:
@@ -4194,11 +4424,10 @@ paths:
                 properties:
                   token:
                     type: string
-                    example: '"your-generated-token-string"'
+                    description: The JWT token.
+                    example: your-generated-token-string
                   link:
-                    type: array
-                    items:
-                      type: object
+                    $ref: '#/components/schemas/link'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4207,12 +4436,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       description: Create a JWT authentication token
       parameters:
         - schema:
@@ -4287,12 +4520,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       summary: Verify an auth token
       tags:
         - Auth
@@ -4326,10 +4563,29 @@ components:
         application/vnd.whispir.event-v1+json:
           schema:
             $ref: '#/components/schemas/event'
-        application/vnd.whispir.event-v1+xml:
-          schema:
-            $ref: '#/components/schemas/event'
       description: events object that needs to be create events
+    callback:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/callback'
+          examples:
+            Callback Object:
+              value:
+                id: 4452AC8359535C46
+                name: Callback Name
+                url: 'https://example.com/callback'
+                auth:
+                  type: queryparam
+                  key: string
+                contentType: json
+                removeHTML: disabled
+                retriesEnabled: true
+                email: me@example.com
+                callbacks:
+                  reply: disabled
+                  undeliverable: disabled
+      description: The Callback Object
   securitySchemes:
     BasicAuth:
       type: http
@@ -4370,7 +4626,6 @@ components:
       properties:
         to:
           type: string
-          example: '61987654321'
           description: |
             Allows a combination of phone numbers, email address, Whispir Contact MRIs, User MRI, Distribution List MRI, separated by `,`.
 
@@ -4381,6 +4636,7 @@ components:
 
             When used for bulk messages, this field is optional, as bulk messages has another model to specify the `to` field recipients.
           maxLength: 10000
+          example: '61400400400'
         subject:
           type: string
           example: Test Message
@@ -5468,63 +5724,51 @@ components:
       title: Callback
       description: 'The callback object, used to configure the callback (also known as webhook).'
       x-examples:
-        Message Reply:
-          name: Message Reply
+        Callback object example:
+          id: 4452AC8359535C46
+          name: Callback Name
           url: 'https://example.com/callback'
           auth:
-            type: httpheader
-            key: MY_AUTH_KEY
+            type: basicauth
+            key: test34
           contentType: json
           removeHTML: disabled
-          retriesEnabled: true
+          retriesEnabled: false
           email: me@example.com
           callbacks:
-            reply: enabled
-        Example:
-          name: Undeliverable Message
-          url: 'https://example.com/callback'
-          auth:
-            type: httpheader
-            key: MY_AUTH_KEY
-          contentType: json
-          removeHTML: disabled
-          retriesEnabled: true
-          email: me@example.com
-          callbacks:
+            reply: disabled
             undeliverable: disabled
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
       properties:
+        id:
+          type: string
+          maxLength: 32
+          description: |-
+            The id of the callback. 
+
+            This is the value that should be passed when referring to the callback using the API endpoints
+          example: 4452AC8359535C46
+          readOnly: true
         name:
           type: string
-          description: Specifies the name (ID) of the callback to be used within message requests.
+          description: |-
+            The name of the callback. 
+
+            This is the value that should be passed in the message payload for triggering the callbacks
           example: Callback Name
+          maxLength: 50
         url:
           type: string
-          description: Specifies the service URL that API Callbacks should be forwarded to.
+          description: The destination url on your servers that Whispir should reach out to.
           example: 'https://example.com/callback'
           format: uri
         auth:
-          type: object
-          description: The authentication object to specify how to authenticate against the callback `url`.
-          properties:
-            type:
-              type: string
-              enum:
-                - httpheader
-                - querystring
-              description: |-
-                Specifies how to authenticate the request made to the callback server.
-
-                The values available for this parameter are:
-
-                - `httpheader` - token provided as a custom HTTP header, namely X-Whispir-Callback-Key. This is our recommended approach because of a higher level of security
-                - `querystring` - token provided by the auth query parameter appended to the endpoint URL
-            key:
-              type: string
-              example: MY_AUTH_KEY
-              description: |-
-                Specifies the value to be passed to authenticate that the request has originated from Whispir.
-
-                When added to this payload, Whispir will include the token in every request made to the listening application.
+          $ref: '#/components/schemas/callbackAuth'
         contentType:
           type: string
           description: Specifies the content type that should be sent to this endpoint.
@@ -5542,13 +5786,22 @@ components:
           type: boolean
           description: Specifies whether Whispir should perform retries in the event there is a failure accessing the callback service.
           example: true
+          default: false
         email:
           type: string
-          description: Specifies the email address where failure notifications should be sent.
+          description: |-
+            Whispir notify this email address that a callback has failed (only when retries are disabled). 
+
+            The email will contain the details of the callback content.
           example: me@example.com
+          maxLength: 64
+          format: email
         callbacks:
           type: object
           description: The object to specify which events callbacks should be enabled for.
+          required:
+            - reply
+            - undeliverable
           properties:
             reply:
               type: string
@@ -5556,12 +5809,25 @@ components:
                 - enabled
                 - disabled
               description: A boolean flag specifying whether message reply callbacks are enabled.
+              default: disabled
             undeliverable:
               type: string
               enum:
                 - enabled
                 - disabled
               description: A boolean flag specifying whether undeliverable message callbacks are enabled.
+              default: disabled
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - name
+        - url
+        - auth
+        - contentType
+        - removeHTML
+        - retriesEnabled
+        - email
+        - callbacks
     workspace:
       type: object
       properties:
@@ -5587,6 +5853,46 @@ components:
       x-tags:
         - Workspaces
       title: Workspace
+    callbackAuth:
+      title: callbackAuth
+      type: object
+      description: |-
+        The authentication model details. You will receive - 
+
+        For `queryparam`
+        - `?Auth={{KeyValue}}`
+
+        For `httpheader`
+        - `X-Whispir-Callback-Key: {{KeyValue}}`
+
+        For `basicauth`
+        - `Authorization: Basic {{KeyValue}}`
+
+        For `bearertoken`
+        - `Authorization: Bearer {{KeyValue}}`
+      properties:
+        type:
+          type: string
+          enum:
+            - queryparam
+            - httpheader
+            - basicauth
+            - bearertoken
+          default: queryparam
+          description: The type of authentication allowed by Whispir at the Destination URL
+          example: basicauth
+        key:
+          type: string
+          description: The value that will be passed with the authentication key
+          maxLength: 128
+          example: test34
+      required:
+        - type
+        - key
+      x-examples:
+        example-1:
+          type: queryparam
+          key: test34
     locations:
       description: The locations for the contact.
       type: array
@@ -5720,85 +6026,418 @@ components:
       title: Activity
     user:
       type: object
-      required:
-        - userName
-        - password
-        - firstName
-        - lastName
-        - timezone
-        - workCountry
-      properties:
-        userName:
-          type: string
-          description: Specifies the username for the account
-          example: John.Wick
-        password:
-          type: string
-          description: 'Specifies the password for the account <p><b>Note:</b>The following are the rules for the password:</p><p><ul><li>Alpha Numeric [a-zA-Z0-9_]</li><li>Must have at least one uppercase and one lowercase character</li></ul></p>'
-        firstName:
-          type: string
-          description: Specifies the firstName of the user
-          example: John
-        middleName:
-          type: string
-          description: Specifies the middleName of the user
-          example: ''
-        lastName:
-          type: string
-          description: Specifies the lastName of the user
-          example: Wick
-        title:
-          type: string
-          description: The title of the name
-          example: ''
-        nickname:
-          type: string
-          description: Preferred name to be shown in the platfom interface
-        status:
-          type: string
-          description: 'Specifies the validity status of the user. The status can be one of -<ul><li>Active (A)</li><li>InActive (I)</li><li>Pending ( P)</li><li>Suspended (B)</li><li>Deleted (D)</li></ul><p><b>Note:</b>The default status is PENDING. One cannot set the status while creation of account. Read `User State Machine` again mentioned above.</p>'
-        companyName:
-          type: string
-          description: Specifies the company name
-        jobTitle:
-          type: string
-          description: Specifies the job title at the company
-        division:
-          type: string
-          description: Specifies the Division in the company to which this user is associated with
-        department:
-          type: string
-          description: Specifies the Department in the company to which this user is associated with
-        Work Place Address:
-          type: string
-          description: 'Specifies the primary and Secondary values for each respective type. Of all these the workEmailAddress1 is the mandatory field.<ul><li>workEmailAddress1, workEmailAddress2</li><li>workAddress1, workAddress2</li><li>workSuburb, workState</li><li>workPostCode, workCountry</li><li>workPostalAddress1, workPostalAddress2</li><li>workPostalSuburb, workPostalState</li><li>workPostalPostCode, workPostalCountry</li></ul>'
-        Work Place Phones:
-          type: integer
-          description: 'Specifies the primary and Secondary values for each respective type. Of all these the workMobilePhone1 is the mandatory field.<ul><li>workMobilePhone1, workMobilePhone2</li><li>workPhoneAreaCode1, workPhone1</li><li>workPhoneAreaCode2, workPhone2</li><li>workFaxAreaCode1, workFax1</li><li>workSetellitePhone, WorkOtherPhone</li></ul>'
-          example: 61423456789
-        workCountry:
-          type: string
-          example: Australia
-        timezone:
-          type: string
-          description: 'Specifies the timezone in which the user lives in. Values in relation to GMT.<p>Supported values are:</p><ul><li>Offset from GMT in the format `+/-NN` e.g. `+10`</li><li>Worldwide Timezone Format in the format `Country/City` e.g. `Australia/Melbourne`</li></ul>'
-          example: Australia/Melbourne
-        Personal Address:
-          type: string
-          description: 'Specifies the primary and Secondary values for each respective type<ul><li>personalEmailAddress1, personalEmailAddress2</li><li>personalAddress1, personalAddress2</li><li>personalSuburb, personalState</li><li>personalCountry, personalPostCode</li></ul>'
-        Personal Phones:
-          type: integer
-          description: 'Specifies the primary and Secondary values for each respective type<ul><li>personalPhoneAreaCode1, personalPhone1</li><li>personalPhoneAreaCode2, personalPhone2</li><li>personalFaxAreaCode1, personalFax1</li><li>otherPhoneAreaCode1, otherPhone1</li><li>otherMobile</li></ul>'
-          example: 61423456789
-        Alias Fields:
-          type: string
-          description: 'The other (alias) name and title fields<ul><li>otherFirstName, otherLastName, otherTitle</li></ul>'
       xml:
         name: user
         prefix: ns2
       x-tags:
         - Users
       title: User
+      x-examples:
+        Example:
+          id: 4DC922649AFE370C
+          firstName: John
+          middleName: ''
+          lastName: Wick
+          title: ''
+          nickname: Babayaga
+          status: PENDING
+          workMobilePhone1: '61400400400'
+          workEmailAddress1: testUser@example.com
+          workCountry: Australia
+          timezone: Australia/Melbourne
+          workMobilePhone2: '61500500500'
+          workEmailAddress2: newUser@example.com
+          workPhoneAreaCode1: '09'
+          workPhone1: '5006000'
+          workPhoneAreaCode2: '09'
+          workPhone2: '5007000'
+          workFaxAreaCode1: '09'
+          workFax1: '5008000'
+          workSatellitePhone: '61600600600'
+          workOtherPhone: '61700700700'
+          workAddress1: Level 15
+          workAddress2: 360 Collins St
+          workSuburb: Melboure
+          workState: Victoria
+          workPostCode: '3000'
+          workPostalAddress1: Level 15
+          workPostalAddress2: 360 Collins St
+          workPostalSuburb: Melboure
+          workPostalState: Victoria
+          workPostalPostCode: '3000'
+          personalEmailAddress1: personalPrimaryUser@example.com
+          personalEmailAddress2: personalSecondaryUser@example.com
+          personalAddress1: Level 15
+          personalAddress2: 360 Collins St
+          personalSuburb: Melboure
+          personalState: Victoria
+          personalPostCode: '3000'
+          personalCountry: Australia
+          personalPhoneAreaCode1: '09'
+          personalPhone1: '5006000'
+          personalPhoneAreaCode2: '09'
+          personalPhone2: '5007000'
+          personalFaxAreaCode1: '09'
+          personalFax1: '5008000'
+          otherPhoneAreaCode1: '09'
+          otherPhone1: '5009000'
+          otherMobile: '61900900900'
+          otherFirstName: Harold
+          otherLastName: Wickman
+          otherTitle: Mr
+          companyName: Whispir
+          jobTitle: Software Engineer
+          division: Technology
+          businessUnit: Core Platform
+          department: Research & Development
+          teamName1: Optimus Prime
+          teamName2: Bumblebee
+          role1: Administrator
+          role2: Analyst
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+      properties:
+        id:
+          type: string
+          description: The ID of the user.
+          example: 4DC922649AFE370C
+          readOnly: true
+        userName:
+          type: string
+          description: Specifies the username for the account
+          example: John.Wick
+          writeOnly: true
+        password:
+          type: string
+          description: 'Specifies the password for the account <p><b>Note:</b>The following are the rules for the password:</p><p><ul><li>Alpha Numeric [a-zA-Z0-9_]</li><li>Must have at least one uppercase and one lowercase character</li></ul></p>'
+          example: string
+          writeOnly: true
+        firstName:
+          type: string
+          description: The first name of the user.
+          example: John
+        middleName:
+          type: string
+          description: The middle name of the user.
+          example: ''
+        lastName:
+          type: string
+          description: The last name of the user.
+          example: Wick
+        title:
+          type: string
+          description: The title to address the user with.
+          example: ''
+        nickname:
+          type: string
+          description: Preferred name to be shown in the platfom interface
+          example: Babayaga
+        status:
+          type: string
+          description: Specifies the validity status of the user. The default status is PENDING. One cannot set the status while creation of account. Read `User State Machine` again mentioned above.</p>
+          default: PENDING
+          example: PENDING
+          enum:
+            - ACTIVE
+            - A
+            - INACTIVE
+            - I
+            - PENDING
+            - P
+            - SUSPENDED
+            - B
+            - DELETED
+            - D
+        workMobilePhone1:
+          type: string
+          example: '61400400400'
+          description: The primary work mobile number of the user.
+        workEmailAddress1:
+          type: string
+          example: testUser@example.com
+          description: The primary work email address of the user.
+        workCountry:
+          type: string
+          example: Australia
+          description: The work country of the user.
+        timezone:
+          type: string
+          example: Australia/Melbourne
+          description: |-
+            The time zone in which the user lives in. Values are relative to GMT.
+
+            Supported values are:
+
+            * Offset from GMT in the format `+/-NN`. For example, `+10`.
+            * Worldwide time zone in the format `Country/City`. For example, `Australia/Melbourne`
+
+            See the list of [worldwide time zones](https://en.wikipedia.org/wiki/List_of_time_zones_by_country).
+        workMobilePhone2:
+          type: string
+          example: '61500500500'
+          description: The secondary work mobile number of the user.
+        workEmailAddress2:
+          type: string
+          example: newUser@example.com
+          description: The secondary work email address of the user.
+        workPhoneAreaCode1:
+          type: string
+          example: '09'
+          description: The primary work phone number area code of the user.
+        workPhone1:
+          type: string
+          example: '5006000'
+          description: The primary work phone number of the user.
+        workPhoneAreaCode2:
+          type: string
+          example: '09'
+          description: The secondary work phone number area code of the user.
+        workPhone2:
+          type: string
+          example: '5007000'
+          description: The secondary work phone number of the user.
+        workFaxAreaCode1:
+          type: string
+          example: '09'
+          description: The work fax number area code of the user.
+        workFax1:
+          type: string
+          example: '5008000'
+          description: The work fax number of the user.
+        workSatellitePhone:
+          type: string
+          example: '61600600600'
+          description: The work satellite phone number of the user.
+        workOtherPhone:
+          type: string
+          example: '61700700700'
+          description: The work other phone number of the user.
+        workAddress1:
+          type: string
+          example: Level 15
+          description: The first work address line of the user.
+        workAddress2:
+          type: string
+          example: 360 Collins St
+          description: The second work address line of the user.
+        workSuburb:
+          type: string
+          example: Melboure
+          description: The work address suburb of the user.
+        workState:
+          type: string
+          example: Victoria
+          description: The work address state of the user.
+        workPostCode:
+          type: string
+          example: '3000'
+          description: The work address post code of the user.
+        workPostalAddress1:
+          type: string
+          example: Level 15
+          description: The first work postal address line of the user.
+        workPostalAddress2:
+          type: string
+          example: 360 Collins St
+          description: The second work postal address line of the user.
+        workPostalSuburb:
+          type: string
+          example: Melboure
+          description: The work postal address suburb of the user.
+        workPostalState:
+          type: string
+          example: Victoria
+          description: The work postal address state of the user.
+        workPostalPostCode:
+          type: string
+          example: '3000'
+          description: The work postal address post code of the user.
+        personalEmailAddress1:
+          type: string
+          example: personalPrimaryUser@example.com
+          description: The primary personal email address of the user.
+        personalEmailAddress2:
+          type: string
+          example: personalSecondaryUser@example.com
+          description: The secondary personal email address of the user.
+        personalAddress1:
+          type: string
+          example: Level 15
+          description: The first personal address line of the user.
+        personalAddress2:
+          type: string
+          example: 360 Collins St
+          description: The second personal address line of the user.
+        personalSuburb:
+          type: string
+          example: Melboure
+          description: The personal address suburb of the user.
+        personalState:
+          type: string
+          example: Victoria
+          description: The personal address state of the user.
+        personalPostCode:
+          type: string
+          example: '3000'
+          description: The personal address post code of the user.
+        personalCountry:
+          type: string
+          example: Australia
+          description: The personal address country of the user.
+        personalPhoneAreaCode1:
+          type: string
+          example: '09'
+          description: The primary personal phone number area code of the user.
+        personalPhone1:
+          type: string
+          example: '5006000'
+          description: The primary personal phone number of the user.
+        personalPhoneAreaCode2:
+          type: string
+          example: '09'
+          description: The secondary personal phone number area code of the user.
+        personalPhone2:
+          type: string
+          example: '5007000'
+          description: The secondary personal phone number of the user.
+        personalFaxAreaCode1:
+          type: string
+          example: '09'
+          description: The personal fax number area code of the user.
+        personalFax1:
+          type: string
+          example: '5008000'
+          description: The personal fax number of the user.
+        otherPhoneAreaCode1:
+          type: string
+          example: '09'
+          description: The other phone number area code of the user.
+        otherPhone1:
+          type: string
+          example: '5009000'
+          description: The other phone number of the user.
+        otherMobile:
+          type: string
+          example: '61900900900'
+          description: The other mobile number of the user.
+        otherFirstName:
+          type: string
+          example: Harold
+          description: The other first name of the user.
+        otherLastName:
+          type: string
+          example: Wickman
+          description: The other last name of the user.
+        otherTitle:
+          type: string
+          example: Mr
+          description: The other title to address the user with.
+        companyName:
+          type: string
+          description: The company name of the user.
+          example: Whispir
+        jobTitle:
+          type: string
+          description: The job title of the user.
+          example: Software Engineer
+        division:
+          type: string
+          description: The division in the company to which the user is associated.
+          example: Technology
+        businessUnit:
+          type: string
+          description: The business unit in the company to which the user is associated.
+          example: Core Platform
+        department:
+          type: string
+          description: The department in the company to which the user is associated.
+          example: Research & Development
+        teamName1:
+          type: string
+          description: The primary team name of the user.
+          example: Optimus Prime
+        teamName2:
+          type: string
+          description: The secondary team name of the user.
+          example: Bumblebee
+        role1:
+          type: string
+          description: The primary role of the user.
+          example: Administrator
+        role2:
+          type: string
+          description: The secondary role of the user.
+          example: Analyst
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - userName
+        - password
+        - firstName
+        - lastName
+        - workCountry
+        - timezone
+      description: The user object.
+    listUsers:
+      type: object
+      xml:
+        name: user
+        prefix: ns2
+      x-tags:
+        - Users
+      title: List Users
+      x-examples:
+        Example:
+          id: 4DC922649AFE370C
+          firstName: John
+          lastName: Wick
+          companyName: Whispir
+          workEmailAddress1: testUser@example.com
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+      properties:
+        id:
+          type: string
+          description: The ID of the user.
+          example: 4DC922649AFE370C
+          readOnly: true
+        firstName:
+          type: string
+          description: The first name of the user.
+          example: John
+          readOnly: true
+        lastName:
+          type: string
+          description: The last name of the user.
+          example: Wick
+          readOnly: true
+        companyName:
+          type: string
+          description: The company name of the user.
+          example: Whispir
+          readOnly: true
+        workEmailAddress1:
+          type: string
+          example: testUser@example.com
+          description: The primary work email address of the user.
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - id
+        - firstName
+        - lastName
+        - companyName
+        - workEmailAddress1
+      description: List users response object
     event:
       type: object
       required:
@@ -5889,6 +6528,8 @@ components:
       x-tags:
         - Events
       title: Event
+      description: The event object.
+      x-examples: {}
     import:
       type: object
       required:
@@ -6430,15 +7071,34 @@ components:
       description: The record number to start returning from.
     Template-Content-Type:
       in: header
+      required: true
       schema:
         type: string
         enum:
-          - application/vnd.whispir.template-v1+json
-          - application/vnd.whispir.template-v1+xml
+          - application/vnd.whispir.api-callback-v1+json
+          - application/vnd.whispir.api-callback-v1+xml
+      description: Callback content mime type.
+    Callback-Content-Type:
       name: Content-Type
-      description: Template content mime type.
+      in: header
       required: true
-    Template-Accept:
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-callback-v1+json
+          - application/vnd.whispir.api-callback-v1+xml
+      description: Callback content mime type.
+    Callback-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-callback-v1+json
+          - application/vnd.whispir.api-callback-v1+xml
+      description: Callback content mime-type
+    Templates-Accept:
       name: Accept
       in: header
       required: true
@@ -6447,8 +7107,165 @@ components:
         enum:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
-      description: Template accept.
+      description: Template content mime-type
+    sortOrder:
+      name: sortOrder
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - asc
+          - desc
+      description: The order in which you require the results to be returned. Either ‘asc’ or ‘desc’
+    sortFields:
+      name: sortFields
+      in: query
+      required: false
+      schema:
+        type: string
+        example: 'lastName,jobTitle'
+      description: 'The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.'
+    User-Content-Type:
+      in: header
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.user-v1+json
+          - application/vnd.whispir.user-v1+xml
+      name: Content-Type
+      description: User content mime type.
+      required: true
+    User-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.user-v1+json
+          - application/vnd.whispir.user-v1+xml
+      description: User accept.
   responses:
+    User:
+      description: User endpoint response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/user'
+          examples:
+            Example:
+              value:
+                id: 4DC922649AFE370C
+                userName: John.Wick
+                password: string
+                firstName: John
+                middleName: ''
+                lastName: Wick
+                title: ''
+                nickname: string
+                status: P
+                workMobilePhone1: '61400400400'
+                workEmailAddress1: testUser@example.com
+                workCountry: Australia
+                timezone: Australia/Melbourne
+                workMobilePhone2: '61500500500'
+                workEmailAddress2: newUser@example.com
+                workPhoneAreaCode1: '09'
+                workPhone1: '5006000'
+                workPhoneAreaCode2: '09'
+                workPhone2: '5007000'
+                workFaxAreaCode1: '09'
+                workFax1: '5008000'
+                workSatellitePhone: '61600600600'
+                workOtherPhone: '61700700700'
+                workAddress1: Level 15
+                workAddress2: 360 Collins St
+                workSuburb: Melboure
+                workState: Victoria
+                workPostCode: '3000'
+                workPostalAddress1: Level 15
+                workPostalAddress2: 360 Collins St
+                workPostalSuburb: Melboure
+                workPostalState: Victoria
+                workPostalPostCode: '3000'
+                personalEmailAddress1: personalPrimaryUser@example.com
+                personalEmailAddress2: personalSecondaryUser@example.com
+                personalAddress1: Level 15
+                personalAddress2: 360 Collins St
+                personalSuburb: Melboure
+                personalState: Victoria
+                personalPostCode: '3000'
+                personalCountry: Australia
+                personalPhoneAreaCode1: '09'
+                personalPhone1: '5006000'
+                personalPhoneAreaCode2: '09'
+                personalPhone2: '5007000'
+                personalFaxAreaCode1: '09'
+                personalFax1: '5008000'
+                otherPhoneAreaCode1: '09'
+                otherPhone1: '5009000'
+                otherMobile: '61900900900'
+                otherFirstName: Harold
+                otherLastName: Wickman
+                otherTitle: Mr
+                companyName: Whispir
+                jobTitle: Software Engineer
+                division: Technology
+                businessUnit: Core Platform
+                department: Research & Development
+                teamName1: Optimus Prime
+                teamName2: Bumblebee
+                role1: Administrator
+                role2: Analyst
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+      headers:
+        Accept:
+          $ref: '#/components/headers/User-Content-Type'
+        Content-Type:
+          $ref: '#/components/headers/User-Content-Type'
+    Users:
+      description: List users endpoint response
+      content:
+        application/json:
+          schema:
+            type: object
+            description: List users object
+            properties:
+              users:
+                type: array
+                description: List of retrieved users
+                items:
+                  $ref: '#/components/schemas/listUsers'
+          examples:
+            Example:
+              value:
+                users:
+                  - id: 4DC922649AFE370C
+                    firstName: John
+                    lastName: Wick
+                    companyName: Whispir
+                    workEmailAddress1: testUser@example.com
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+      headers:
+        Accept:
+          $ref: '#/components/headers/User-Content-Type'
+        Content-Type:
+          $ref: '#/components/headers/User-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
     Template:
       description: Template endpoint response.
       content:
@@ -6515,11 +7332,16 @@ components:
         Content-Length:
           $ref: '#/components/headers/Content-Length'
     400BadRequest:
-      description: 400 Bad Request Error
+      description: |-
+        Invalid or missing request parameters.
+
+        Inspect the request parameters and ensure that all required parameters are supplied.
+
+        Note the error text in the response and update the request accordingly.
       content:
         application/json:
           schema:
-            description: ''
+            description: The bad request response object.
             type: object
             x-examples:
               Example:
@@ -6529,14 +7351,17 @@ components:
             properties:
               errorSummary:
                 type: string
+                description: The summary of the error encountered.
                 minLength: 1
                 example: Your request was malformed and could not be processed by the server. Please try again
               errorText:
                 type: string
+                description: The detailed description of the error encountered.
                 minLength: 1
                 example: Bad Request
               errorDetail:
                 type: string
+                description: The additional details describing the error.
                 minLength: 1
                 example: '"java.io.EOFException: No content to map to Object due to end of inpu'
             required:
@@ -6549,27 +7374,44 @@ components:
                 errorSummary: Your request was malformed and could not be processed by the server. Please try again
                 errorText: Bad Request
                 errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
-      headers: {}
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     401Unauthorized:
-      description: 401 Unauthorized Error
+      description: |-
+        Invalid or no credentials passed in the request.
+
+        Inspect the authorisation header and ensure that a valid authentication has been provided.
       content:
         application/json:
           schema:
-            description: ''
+            description: The unauthorised response object.
             type: object
             properties:
               links:
                 $ref: '#/components/schemas/link'
               errorSummary:
                 type: string
+                description: The summary of the error encountered.
                 minLength: 1
                 example: Your username and password combination was incorrect. Please check your authentication details and try again
               errorText:
                 type: string
+                description: The detailed description of the error encountered.
                 minLength: 1
                 example: Unauthorised
               errorDetail:
                 type: string
+                description: The additional details describing the error.
+                example: An exception occurred.
             required:
               - errorSummary
               - errorText
@@ -6581,18 +7423,34 @@ components:
                 errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
                 errorText: Unauthorized
                 errorDetail: ''
-      headers: {}
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     403Forbidden:
-      description: 403 Forbidden Error
+      description: |-
+        Authorisation credentials passed and accepted but the account doesn't have permission.
+
+        * Inspect the authorisation header and ensure that a valid authentication has been provided.
+        * Returned when HTTP is used instead of HTTPS.
+        * Returned when invalid API key is used.
+        * Returned when you have tried to make more API calls than your allowed quota (QPS). Refer to API rate limits.
       content:
         application/json:
           schema:
-            description: ''
+            description: The forbidden response object.
             type: object
             properties:
               message:
                 type: string
-                minLength: 1
+                description: The error message.
                 example: Forbidden
             required:
               - message
@@ -6600,25 +7458,44 @@ components:
             Example:
               value:
                 message: Forbidden
-      headers: {}
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     404NotFound:
-      description: 404 Not found Error
+      description: |-
+        The requested URL doesn't exist.
+
+        The requested resource was not found. Inspect the ID in the URL that was used and ensure that it's valid.
+
+        Also, inspect the Accept and Content-Type headers that are being used to make sure they’re correct for the URL that is being requested.
       content:
         application/json:
           schema:
-            description: ''
+            description: The not found response object.
             type: object
             properties:
               errorSummary:
                 type: string
+                description: The summary of the error encountered.
                 minLength: 1
                 example: The resource that you have requested does not exist. Please check the identifier and try again
               errorText:
                 type: string
+                description: The detailed description of the error encountered.
                 minLength: 1
                 example: Not Found
               errorDetail:
                 type: string
+                description: The additional details describing the error.
+                example: An exception occurred.
               link:
                 $ref: '#/components/schemas/link'
           examples:
@@ -6628,24 +7505,43 @@ components:
                 errorText: Not Found
                 errorDetail: ''
                 link: []
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     415UnsupportedMediaType:
-      description: 415 Unsupported Media Type Error
+      description: |-
+        The request was unsuccessful because the requested content type is not supported by the API.
+
+        The application client can use this response to determine if it's asking for a supported version of a resource. On receiving this response, the client can query the developer documentation to determine the appropriate version for the requested resource.
+
+        In most cases, this is due to the user not supplying the correct Accept or Content-Type header for the requested URL.
       content:
         application/json:
           schema:
-            description: ''
+            description: The unsupported media type response object.
             type: object
             properties:
               errorSummary:
                 type: string
+                description: The summary of the error encountered.
                 minLength: 1
                 example: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
               errorText:
                 type: string
+                description: The detailed description of the error encountered.
                 minLength: 1
                 example: Unsupported Media Type
               errorDetail:
                 type: string
+                description: The additional details describing the error.
                 minLength: 1
                 example: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
           examples:
@@ -6654,24 +7550,42 @@ components:
                 errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
                 errorText: Unsupported Media Type
                 errorDetail: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     422UnprocessibleEntity:
-      description: 422 Unprocessible Entity Error
+      description: |-
+        The request is formed correctly but due to some condition it can’t be processed. For example, email is required and it's not provided in the request.
+
+        The request did not contain all the information required to perform this method. Check your request for the required fields to be passed in and try again. The offending fields will be specified in the error text of the response.
       content:
         application/json:
           schema:
-            description: ''
+            description: The unprocessable entity response object.
             type: object
             properties:
               errorSummary:
                 type: string
+                description: The summary of the error encountered.
                 minLength: 1
                 example: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
               errorText:
                 type: string
+                description: The detailed description of the error encountered.
                 minLength: 1
                 example: 'A Template name already exists in the current Workspace, please select another name and try again.'
               errorDetail:
                 type: string
+                description: The additional details describing the error.
+                example: An exception occurred.
               link:
                 $ref: '#/components/schemas/link'
           examples:
@@ -6682,20 +7596,161 @@ components:
                   A Template name already exists in the current Workspace, please select another name and try again.
                 errorDetail: ''
                 link: []
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     500InternalServerError:
-      description: 500 Internal Server Error
+      description: |-
+        An internal error occurred when processing the request.
+
+        Attempt the request again and if the HTTP 500 error re-occurs contact the Whispir Support Team.
       content:
         application/json:
           schema:
+            description: The internal server response object.
             type: object
             properties:
               message:
                 type: string
+                description: The error message.
                 example: Internal Server Error
           examples:
             Example:
               value:
                 message: Internal Server Error
+    Callback:
+      description: The Callback object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/callback'
+          examples:
+            Callback object:
+              value:
+                id: 4452AC8359535C46
+                name: Callback Name
+                url: 'https://example.com/callback'
+                auth:
+                  type: queryparam
+                  key: string
+                contentType: json
+                removeHTML: disabled
+                retriesEnabled: true
+                email: me@example.com
+                callbacks:
+                  reply: disabled
+                  undeliverable: disabled
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+    501MethodNotImplemented:
+      description: |-
+        The HTTP method being used has not yet been implemented for the requested resource.
+
+        The method being used is not implemented for this resource. Check the documentation for the specific resource type.
+      content:
+        application/json:
+          schema:
+            description: The method not implemented response object.
+            type: object
+            properties:
+              errorSummary:
+                type: string
+                description: The summary of the error encountered.
+                example: 'The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com'
+                minLength: 1
+              errorText:
+                type: string
+                description: The detailed description of the error encountered.
+                example: Not Implemented
+                minLength: 1
+              errorDetail:
+                type: string
+                description: The additional details describing the error.
+                example: An exception occurred.
+              link:
+                $ref: '#/components/schemas/link'
+            required:
+              - errorSummary
+              - errorText
+              - errorDetail
+              - link
+          examples:
+            Example:
+              value:
+                errorSummary: 'The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com'
+                errorText: Not Implemented
+                errorDetail: ''
+                link: []
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+    405MethodNotAllowed:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            description: The method not allowed response object.
+            type: object
+            properties:
+              errorSummary:
+                type: string
+                description: The summary of the error encountered.
+                example: The method that you have tried to use is not allowed for this resource
+                minLength: 1
+              errorText:
+                type: string
+                description: The detailed description of the error encountered.
+                example: Method Not Allowed
+                minLength: 1
+              errorDetail:
+                type: string
+                description: The additional details describing the error.
+                example: An exception occurred.
+              link:
+                $ref: '#/components/schemas/link'
+            required:
+              - errorSummary
+              - errorText
+              - errorDetail
+              - link
+          examples:
+            Example:
+              value:
+                errorSummary: The method that you have tried to use is not allowed for this resource
+                errorText: Method Not Allowed
+                errorDetail: ''
+                link: []
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.
@@ -6710,6 +7765,24 @@ components:
       example: 4111
       schema:
         type: number
+    Content-Type:
+      description: The content type of the request header.
+      required: true
+      example: application/vnd.whispir.message-v1+json
+      schema:
+        type: string
+    Cache-Control:
+      description: 'The directives that control caching in browsers and shared caches (e.g. Proxies, CDNs).'
+      required: true
+      example: max-age=0
+      schema:
+        type: string
+    Expires:
+      description: The date/time after which the response is considered expired.
+      required: true
+      example: 'Mon, 21 Mar 2022 03:18:32 GMT'
+      schema:
+        type: string
     Message-Content-Type:
       description: Message content mime type.
       required: true
@@ -6742,3 +7815,19 @@ components:
         enum:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
+    User-Content-Type:
+      description: User content mime type.
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.user-v1+json
+          - application/vnd.whispir.user-v1+xml
+    Callback-Content-Type:
+      description: Callback response mime type.
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-callback-v1+json
+          - application/vnd.whispir.api-callback-v1+xml

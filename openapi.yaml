@@ -5648,43 +5648,226 @@ components:
           type: string
           description: 'Specifies the validity status of the user. The status can be one of -<ul><li>Active (A)</li><li>InActive (I)</li><li>Pending ( P)</li><li>Suspended (B)</li><li>Deleted (D)</li></ul><p><b>Note:</b>The default status is PENDING. One cannot set the status while creation of account. Read `User State Machine` again mentioned above.</p>'
           example: PENDING
-        companyName:
+        workMobilePhone1:
           type: string
-          description: The company name of the user.
-        jobTitle:
+          example: '61400400400'
+          description: The primary work mobile number of the user.
+        workEmailAddress1:
           type: string
-          description: The job title of the user.
-        division:
-          type: string
-          description: The division in the company to which the user is associated.
-        department:
-          type: string
-          description: The department in the company to which the user is associated.
-        workAddress:
-          type: string
-          description: 'Specifies the primary and Secondary values for each respective type. Of all these the workEmailAddress1 is the mandatory field.<ul><li>workEmailAddress1, workEmailAddress2</li><li>workAddress1, workAddress2</li><li>workSuburb, workState</li><li>workPostCode, workCountry</li><li>workPostalAddress1, workPostalAddress2</li><li>workPostalSuburb, workPostalState</li><li>workPostalPostCode, workPostalCountry</li></ul>'
-        workPhone:
-          type: integer
-          description: 'Specifies the primary and Secondary values for each respective type. Of all these the workMobilePhone1 is the mandatory field.<ul><li>workMobilePhone1, workMobilePhone2</li><li>workPhoneAreaCode1, workPhone1</li><li>workPhoneAreaCode2, workPhone2</li><li>workFaxAreaCode1, workFax1</li><li>workSetellitePhone, WorkOtherPhone</li></ul>'
-          example: 61423456789
+          example: testUser@example.com
+          description: The primary work email address of the user.
         workCountry:
           type: string
           example: Australia
           description: The work country of the user.
         timezone:
           type: string
-          description: 'Specifies the timezone in which the user lives in. Values in relation to GMT.<p>Supported values are:</p><ul><li>Offset from GMT in the format `+/-NN` e.g. `+10`</li><li>Worldwide Timezone Format in the format `Country/City` e.g. `Australia/Melbourne`</li></ul>'
           example: Australia/Melbourne
-        personalAddress:
+          description: |-
+            The time zone in which the user lives in. Values are relative to GMT.
+
+            Supported values are:
+
+            * Offset from GMT in the format `+/-NN`. For example, `+10`.
+            * Worldwide time zone in the format `Country/City`. For example, `Australia/Melbourne`
+
+            See the list of [worldwide time zones](https://en.wikipedia.org/wiki/List_of_time_zones_by_country).
+        workMobilePhone2:
           type: string
-          description: 'Specifies the primary and Secondary values for each respective type<ul><li>personalEmailAddress1, personalEmailAddress2</li><li>personalAddress1, personalAddress2</li><li>personalSuburb, personalState</li><li>personalCountry, personalPostCode</li></ul>'
-        personalPhone:
-          type: integer
-          description: 'Specifies the primary and Secondary values for each respective type<ul><li>personalPhoneAreaCode1, personalPhone1</li><li>personalPhoneAreaCode2, personalPhone2</li><li>personalFaxAreaCode1, personalFax1</li><li>otherPhoneAreaCode1, otherPhone1</li><li>otherMobile</li></ul>'
-          example: 61423456789
-        aliasFields:
+          example: '61500500500'
+          description: The secondary work mobile number of the user.
+        workEmailAddress2:
           type: string
-          description: 'The other (alias) name and title fields<ul><li>otherFirstName, otherLastName, otherTitle</li></ul>'
+          example: newUser@example.com
+          description: The secondary work email address of the user.
+        workPhoneAreaCode1:
+          type: string
+          example: '09'
+          description: The primary work phone number area code of the user.
+        workPhone1:
+          type: string
+          example: '5006000'
+          description: The primary work phone number of the user.
+        workPhoneAreaCode2:
+          type: string
+          example: '09'
+          description: The secondary work phone number area code of the user.
+        workPhone2:
+          type: string
+          example: '5007000'
+          description: The secondary work phone number of the user.
+        workFaxAreaCode1:
+          type: string
+          example: '09'
+          description: The work fax number area code of the user.
+        workFax1:
+          type: string
+          example: '5008000'
+          description: The work fax number of the user.
+        workSatellitePhone:
+          type: string
+          example: '61600600600'
+          description: The work satellite phone number of the user.
+        workOtherPhone:
+          type: string
+          example: '61700700700'
+          description: The work other phone number of the user.
+        workAddress1:
+          type: string
+          example: Level 15
+          description: The first work address line of the user.
+        workAddress2:
+          type: string
+          example: 360 Collins St
+          description: The second work address line of the user.
+        workSuburb:
+          type: string
+          example: Melboure
+          description: The work address suburb of the user.
+        workState:
+          type: string
+          example: Victoria
+          description: The work address state of the user.
+        workPostCode:
+          type: string
+          example: '3000'
+          description: The work address post code of the user.
+        workPostalAddress1:
+          type: string
+          example: Level 15
+          description: The first work postal address line of the user.
+        workPostalAddress2:
+          type: string
+          example: 360 Collins St
+          description: The second work postal address line of the user.
+        workPostalSuburb:
+          type: string
+          example: Melboure
+          description: The work postal address suburb of the user.
+        workPostalState:
+          type: string
+          example: Victoria
+          description: The work postal address state of the user.
+        workPostalPostCode:
+          type: string
+          example: '3000'
+          description: The work postal address post code of the user.
+        personalEmailAddress1:
+          type: string
+          example: personalPrimaryUser@example.com
+          description: The primary personal email address of the user.
+        personalEmailAddress2:
+          type: string
+          example: personalSecondaryUser@example.com
+          description: The secondary personal email address of the user.
+        personalAddress1:
+          type: string
+          example: Level 15
+          description: The first personal address line of the user.
+        personalAddress2:
+          type: string
+          example: 360 Collins St
+          description: The second personal address line of the user.
+        personalSuburb:
+          type: string
+          example: Melboure
+          description: The personal address suburb of the user.
+        personalState:
+          type: string
+          example: Victoria
+          description: The personal address state of the user.
+        personalPostCode:
+          type: string
+          example: '3000'
+          description: The personal address post code of the user.
+        personalCountry:
+          type: string
+          example: Australia
+          description: The personal address country of the user.
+        personalPhoneAreaCode1:
+          type: string
+          example: '09'
+          description: The primary personal phone number area code of the user.
+        personalPhone1:
+          type: string
+          example: '5006000'
+          description: The primary personal phone number of the user.
+        personalPhoneAreaCode2:
+          type: string
+          example: '09'
+          description: The secondary personal phone number area code of the user.
+        personalPhone2:
+          type: string
+          example: '5007000'
+          description: The secondary personal phone number of the user.
+        personalFaxAreaCode1:
+          type: string
+          example: '09'
+          description: The personal fax number area code of the user.
+        personalFax1:
+          type: string
+          example: '5008000'
+          description: The personal fax number of the user.
+        otherPhoneAreaCode1:
+          type: string
+          example: '09'
+          description: The other phone number area code of the user.
+        otherPhone1:
+          type: string
+          example: '5009000'
+          description: The other phone number of the user.
+        otherMobile:
+          type: string
+          example: '61900900900'
+          description: The other mobile number of the user.
+        otherFirstName:
+          type: string
+          example: Harold
+          description: The other first name of the user.
+        otherLastName:
+          type: string
+          example: Wickman
+          description: The other last name of the user.
+        otherTitle:
+          type: string
+          example: Mr
+          description: The other title to address the user with.
+        companyName:
+          type: string
+          description: The company name of the user.
+          example: Whispir
+        jobTitle:
+          type: string
+          description: The job title of the user.
+          example: Software Engineer
+        division:
+          type: string
+          description: The division in the company to which the user is associated.
+          example: Technology
+        businessUnit:
+          type: string
+          description: The business unit in the company to which the user is associated.
+          example: Core Platform
+        department:
+          type: string
+          description: The department in the company to which the user is associated.
+          example: Research & Development
+        teamName1:
+          type: string
+          description: The primary team name of the user.
+          example: Optimus Prime
+        teamName2:
+          type: string
+          description: The secondary team name of the user.
+          example: Bumblebee
+        role1:
+          type: string
+          description: The primary role of the user.
+          example: Administrator
+        role2:
+          type: string
+          description: The secondary role of the user.
+          example: Analyst
         link:
           $ref: '#/components/schemas/link'
       required:
@@ -5694,6 +5877,84 @@ components:
         - lastName
         - workCountry
         - timezone
+      x-examples:
+        Basic:
+          userName: John.Wick
+          password: string
+          firstName: John
+          lastName: Wick
+          title: ''
+          workCountry: Australia
+          timezone: Australia/Melbourne
+        Comprehensive:
+          id: 4DC922649AFE370C
+          userName: John.Wick
+          password: string
+          firstName: John
+          middleName: ''
+          lastName: Wick
+          title: ''
+          nickname: string
+          status: PENDING
+          workMobilePhone1: '61400400400'
+          workEmailAddress1: testUser@example.com
+          workCountry: Australia
+          timezone: Australia/Melbourne
+          workMobilePhone2: '61500500500'
+          workEmailAddress2: newUser@example.com
+          workPhoneAreaCode1: '09'
+          workPhone1: '5006000'
+          workPhoneAreaCode2: '09'
+          workPhone2: '5007000'
+          workFaxAreaCode1: '09'
+          workFax1: '5008000'
+          workSatellitePhone: '61600600600'
+          workOtherPhone: '61700700700'
+          workAddress1: Level 15
+          workAddress2: 360 Collins St
+          workSuburb: Melboure
+          workState: Victoria
+          workPostCode: '3000'
+          workPostalAddress1: Level 15
+          workPostalAddress2: 360 Collins St
+          workPostalSuburb: Melboure
+          workPostalState: Victoria
+          workPostalPostCode: '3000'
+          personalEmailAddress1: personalPrimaryUser@example.com
+          personalEmailAddress2: personalSecondaryUser@example.com
+          personalAddress1: Level 15
+          personalAddress2: 360 Collins St
+          personalSuburb: Melboure
+          personalState: Victoria
+          personalPostCode: '3000'
+          personalCountry: Australia
+          personalPhoneAreaCode1: '09'
+          personalPhone1: '5006000'
+          personalPhoneAreaCode2: '09'
+          personalPhone2: '5007000'
+          personalFaxAreaCode1: '09'
+          personalFax1: '5008000'
+          otherPhoneAreaCode1: '09'
+          otherPhone1: '5009000'
+          otherMobile: '61900900900'
+          otherFirstName: Harold
+          otherLastName: Wickman
+          otherTitle: Mr
+          companyName: Whispir
+          jobTitle: Software Engineer
+          division: Technology
+          businessUnit: Core Platform
+          department: Research & Development
+          teamName1: Optimus Prime
+          teamName2: Bumblebee
+          role1: Administrator
+          role2: Analyst
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
     event:
       type: object
       required:
@@ -6583,7 +6844,7 @@ components:
           schema:
             $ref: '#/components/schemas/user'
           examples:
-            example-1:
+            Example:
               value:
                 id: 4DC922649AFE370C
                 userName: John.Wick
@@ -6594,17 +6855,59 @@ components:
                 title: ''
                 nickname: string
                 status: PENDING
-                companyName: string
-                jobTitle: string
-                division: string
-                department: string
-                workAddress: string
-                workPhone: 61423456789
+                workMobilePhone1: '61400400400'
+                workEmailAddress1: testUser@example.com
                 workCountry: Australia
                 timezone: Australia/Melbourne
-                personalAddress: string
-                personalPhone: 61423456789
-                aliasFields: string
+                workMobilePhone2: '61500500500'
+                workEmailAddress2: newUser@example.com
+                workPhoneAreaCode1: '09'
+                workPhone1: '5006000'
+                workPhoneAreaCode2: '09'
+                workPhone2: '5007000'
+                workFaxAreaCode1: '09'
+                workFax1: '5008000'
+                workSatellitePhone: '61600600600'
+                workOtherPhone: '61700700700'
+                workAddress1: Level 15
+                workAddress2: 360 Collins St
+                workSuburb: Melboure
+                workState: Victoria
+                workPostCode: '3000'
+                workPostalAddress1: Level 15
+                workPostalAddress2: 360 Collins St
+                workPostalSuburb: Melboure
+                workPostalState: Victoria
+                workPostalPostCode: '3000'
+                personalEmailAddress1: personalPrimaryUser@example.com
+                personalEmailAddress2: personalSecondaryUser@example.com
+                personalAddress1: Level 15
+                personalAddress2: 360 Collins St
+                personalSuburb: Melboure
+                personalState: Victoria
+                personalPostCode: '3000'
+                personalCountry: Australia
+                personalPhoneAreaCode1: '09'
+                personalPhone1: '5006000'
+                personalPhoneAreaCode2: '09'
+                personalPhone2: '5007000'
+                personalFaxAreaCode1: '09'
+                personalFax1: '5008000'
+                otherPhoneAreaCode1: '09'
+                otherPhone1: '5009000'
+                otherMobile: '61900900900'
+                otherFirstName: Harold
+                otherLastName: Wickman
+                otherTitle: Mr
+                companyName: Whispir
+                jobTitle: Software Engineer
+                division: Technology
+                businessUnit: Core Platform
+                department: Research & Development
+                teamName1: Optimus Prime
+                teamName2: Bumblebee
+                role1: Administrator
+                role2: Analyst
                 link:
                   - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
                     rel: self

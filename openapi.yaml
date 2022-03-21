@@ -2855,7 +2855,7 @@ paths:
         To retrieve a list of attempted API calls from the Whispir API you can execute an HTTP GET using the /calls endpoint on a specific callback.
 
         To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL.
-      operationId: getCallbacksCallsById
+      operationId: getCallbackById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
@@ -2920,7 +2920,7 @@ paths:
         This ensures that all callbacks that have been processed can be updated in a single API call, rather than having to make a single API call per callback attempt.
 
         The PUT request takes a single API parameter in the body
-      operationId: putCallbacksCallsById
+      operationId: putCallbackById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
@@ -2956,6 +2956,38 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
       requestBody:
         $ref: '#/components/requestBodies/callback'
+    delete:
+      summary: ''
+      operationId: deleteCallbackById
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Callback-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+      description: Delete a callback object
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
   /workspaces:
     post:
       tags:
@@ -4412,12 +4444,6 @@ components:
                 callbacks:
                   reply: disabled
                   undeliverable: disabled
-                link:
-                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                    rel: self
-                    method: GET
-                    host: api.au.whispir.com
-                    port: -1
       description: The Callback Object
   securitySchemes:
     BasicAuth:

@@ -3488,6 +3488,8 @@ paths:
       operationId: postUsers
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
       requestBody:
         content:
           application/vnd.whispir.user-v1+json:
@@ -3568,6 +3570,8 @@ paths:
             example: status=A
         - $ref: '#/components/parameters/sortOrder'
         - $ref: '#/components/parameters/sortFields'
+        - $ref: '#/components/parameters/User-Accept'
+        - $ref: '#/components/parameters/User-Content-Type'
       responses:
         '200':
           description: OK
@@ -3681,6 +3685,8 @@ paths:
       operationId: deleteUsers
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
       responses:
         '204':
           description: No Content
@@ -3714,6 +3720,8 @@ paths:
           schema:
             type: string
             example: 4821DCC420494A3A
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
       responses:
         '200':
           $ref: '#/components/responses/Users'
@@ -3759,6 +3767,8 @@ paths:
           schema:
             type: string
             example: 4821DCC420494A3A
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
       requestBody:
         content:
           application/vnd.whispir.user-v1+json:
@@ -3804,6 +3814,8 @@ paths:
           schema:
             type: string
             example: 4821DCC420494A3A
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
       responses:
         '204':
           description: No Content
@@ -6656,6 +6668,26 @@ components:
         type: string
         example: 'lastName,jobTitle'
       description: 'The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.'
+    User-Content-Type:
+      in: header
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.user-v1+json
+          - application/vnd.whispir.user-v1+xml
+      name: Content-Type
+      description: User content mime type.
+      required: true
+    User-Accept:
+      name: Accept
+      in: header
+      required: false
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.user-v1+json
+          - application/vnd.whispir.user-v1+xml
+      description: User accept.
   responses:
     Template:
       description: Template endpoint response.

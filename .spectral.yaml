@@ -135,6 +135,7 @@ overrides:
       - '**#/components/schemas/fieldMapping'
       - '**#/components/schemas/auth' # Auth Endpoint Schemas
       - '**#/components/schemas/activity' # Activity Endpoint Schemas
+      - '**#/components/requestBodies/event'
   - rules:
       request-response-examples: off
     files:

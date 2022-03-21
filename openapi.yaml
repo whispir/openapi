@@ -6078,6 +6078,8 @@ components:
       x-tags:
         - Events
       title: Event
+      description: The event object.
+      x-examples: {}
     import:
       type: object
       required:

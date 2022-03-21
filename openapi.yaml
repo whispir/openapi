@@ -5650,6 +5650,84 @@ components:
       x-tags:
         - Users
       title: User
+      x-examples:
+        Basic:
+          userName: John.Wick
+          password: string
+          firstName: John
+          lastName: Wick
+          title: ''
+          workCountry: Australia
+          timezone: Australia/Melbourne
+        Comprehensive:
+          id: 4DC922649AFE370C
+          userName: John.Wick
+          password: string
+          firstName: John
+          middleName: ''
+          lastName: Wick
+          title: ''
+          nickname: string
+          status: PENDING
+          workMobilePhone1: '61400400400'
+          workEmailAddress1: testUser@example.com
+          workCountry: Australia
+          timezone: Australia/Melbourne
+          workMobilePhone2: '61500500500'
+          workEmailAddress2: newUser@example.com
+          workPhoneAreaCode1: '09'
+          workPhone1: '5006000'
+          workPhoneAreaCode2: '09'
+          workPhone2: '5007000'
+          workFaxAreaCode1: '09'
+          workFax1: '5008000'
+          workSatellitePhone: '61600600600'
+          workOtherPhone: '61700700700'
+          workAddress1: Level 15
+          workAddress2: 360 Collins St
+          workSuburb: Melboure
+          workState: Victoria
+          workPostCode: '3000'
+          workPostalAddress1: Level 15
+          workPostalAddress2: 360 Collins St
+          workPostalSuburb: Melboure
+          workPostalState: Victoria
+          workPostalPostCode: '3000'
+          personalEmailAddress1: personalPrimaryUser@example.com
+          personalEmailAddress2: personalSecondaryUser@example.com
+          personalAddress1: Level 15
+          personalAddress2: 360 Collins St
+          personalSuburb: Melboure
+          personalState: Victoria
+          personalPostCode: '3000'
+          personalCountry: Australia
+          personalPhoneAreaCode1: '09'
+          personalPhone1: '5006000'
+          personalPhoneAreaCode2: '09'
+          personalPhone2: '5007000'
+          personalFaxAreaCode1: '09'
+          personalFax1: '5008000'
+          otherPhoneAreaCode1: '09'
+          otherPhone1: '5009000'
+          otherMobile: '61900900900'
+          otherFirstName: Harold
+          otherLastName: Wickman
+          otherTitle: Mr
+          companyName: Whispir
+          jobTitle: Software Engineer
+          division: Technology
+          businessUnit: Core Platform
+          department: Research & Development
+          teamName1: Optimus Prime
+          teamName2: Bumblebee
+          role1: Administrator
+          role2: Analyst
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
       properties:
         id:
           type: string
@@ -5663,6 +5741,7 @@ components:
         password:
           type: string
           description: 'Specifies the password for the account <p><b>Note:</b>The following are the rules for the password:</p><p><ul><li>Alpha Numeric [a-zA-Z0-9_]</li><li>Must have at least one uppercase and one lowercase character</li></ul></p>'
+          example: string
         firstName:
           type: string
           description: The first name of the user.
@@ -5682,6 +5761,7 @@ components:
         nickname:
           type: string
           description: Preferred name to be shown in the platfom interface
+          example: Babayaga
         status:
           type: string
           description: 'Specifies the validity status of the user. The status can be one of -<ul><li>Active (A)</li><li>InActive (I)</li><li>Pending ( P)</li><li>Suspended (B)</li><li>Deleted (D)</li></ul><p><b>Note:</b>The default status is PENDING. One cannot set the status while creation of account. Read `User State Machine` again mentioned above.</p>'
@@ -5915,84 +5995,6 @@ components:
         - lastName
         - workCountry
         - timezone
-      x-examples:
-        Basic:
-          userName: John.Wick
-          password: string
-          firstName: John
-          lastName: Wick
-          title: ''
-          workCountry: Australia
-          timezone: Australia/Melbourne
-        Comprehensive:
-          id: 4DC922649AFE370C
-          userName: John.Wick
-          password: string
-          firstName: John
-          middleName: ''
-          lastName: Wick
-          title: ''
-          nickname: string
-          status: PENDING
-          workMobilePhone1: '61400400400'
-          workEmailAddress1: testUser@example.com
-          workCountry: Australia
-          timezone: Australia/Melbourne
-          workMobilePhone2: '61500500500'
-          workEmailAddress2: newUser@example.com
-          workPhoneAreaCode1: '09'
-          workPhone1: '5006000'
-          workPhoneAreaCode2: '09'
-          workPhone2: '5007000'
-          workFaxAreaCode1: '09'
-          workFax1: '5008000'
-          workSatellitePhone: '61600600600'
-          workOtherPhone: '61700700700'
-          workAddress1: Level 15
-          workAddress2: 360 Collins St
-          workSuburb: Melboure
-          workState: Victoria
-          workPostCode: '3000'
-          workPostalAddress1: Level 15
-          workPostalAddress2: 360 Collins St
-          workPostalSuburb: Melboure
-          workPostalState: Victoria
-          workPostalPostCode: '3000'
-          personalEmailAddress1: personalPrimaryUser@example.com
-          personalEmailAddress2: personalSecondaryUser@example.com
-          personalAddress1: Level 15
-          personalAddress2: 360 Collins St
-          personalSuburb: Melboure
-          personalState: Victoria
-          personalPostCode: '3000'
-          personalCountry: Australia
-          personalPhoneAreaCode1: '09'
-          personalPhone1: '5006000'
-          personalPhoneAreaCode2: '09'
-          personalPhone2: '5007000'
-          personalFaxAreaCode1: '09'
-          personalFax1: '5008000'
-          otherPhoneAreaCode1: '09'
-          otherPhone1: '5009000'
-          otherMobile: '61900900900'
-          otherFirstName: Harold
-          otherLastName: Wickman
-          otherTitle: Mr
-          companyName: Whispir
-          jobTitle: Software Engineer
-          division: Technology
-          businessUnit: Core Platform
-          department: Research & Development
-          teamName1: Optimus Prime
-          teamName2: Bumblebee
-          role1: Administrator
-          role2: Analyst
-          link:
-            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-              rel: self
-              method: GET
-              host: api.au.whispir.com
-              port: -1
     event:
       type: object
       required:

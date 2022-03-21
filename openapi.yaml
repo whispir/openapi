@@ -3713,20 +3713,7 @@ paths:
             example: 4821DCC420494A3A
       responses:
         '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    id: AF48A9EC3F02E43C
-                    firstName: Fred
-                    lastName: Smith
-                    status: ACTIVE
-                    link:
-                      method: GET
-                      rel: self
-                      uri: 'http://api.whispir.com/users/AF48A9EC3F02E43C'
+          $ref: '#/components/responses/Users'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3781,7 +3768,7 @@ paths:
         required: true
       responses:
         '204':
-          description: Created
+          $ref: '#/components/responses/Users'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':

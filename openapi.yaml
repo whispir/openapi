@@ -199,6 +199,20 @@ paths:
                 type: string
               example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     get:
       tags:
         - Messages
@@ -243,7 +257,7 @@ paths:
                 description: ''
                 type: object
                 x-examples:
-                  example-1:
+                  Example:
                     messages:
                       - subject: Test Message
                         repetitionCount: 0
@@ -351,6 +365,20 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}':
@@ -464,6 +492,20 @@ paths:
                     validBody: true
                     validSubject: true
                     whatsappValidMessage: true
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: Content-Type
@@ -673,6 +715,20 @@ paths:
                     link: []
               schema:
                 $ref: '#/components/schemas/messageStatus'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
       tags:
         - Messages
     parameters:
@@ -788,7 +844,7 @@ paths:
               schema:
                 description: ''
                 x-examples:
-                  example-1:
+                  Example:
                     messageresponses:
                       - percentageTotal: 50%
                         responseCount: '1'
@@ -850,6 +906,20 @@ paths:
                           acknowledged: '28/09/12 08:48'
                           channel: sms
                     link: []
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
       tags:
         - Messages
     parameters:
@@ -915,6 +985,20 @@ paths:
             application/vnd.whispir.resource-v1+xml:
               schema:
                 $ref: '#/components/schemas/resource'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     get:
       tags:
         - Resources
@@ -1037,6 +1121,20 @@ paths:
                             method: GET
                     status: '1 to 7 of 7    '
                     link: []
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/resources/{resourceId}':
@@ -1078,6 +1176,20 @@ paths:
                       - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
                         rel: deleteResource
                         method: DELETE
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     put:
       tags:
         - Resources
@@ -1128,6 +1240,20 @@ paths:
                         social:
                           - id: socialType
                             body: text/plain
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     delete:
       tags:
         - Resources
@@ -1149,8 +1275,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates':
@@ -1174,30 +1312,29 @@ paths:
         required: true
       responses:
         '201':
-          description: Created
+          $ref: '#/components/responses/Template'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     get:
       tags:
         - Templates
       summary: List templates
       description: |
-        ## Response Elements
+        List all message templates for the workspace.
 
-        **messageTemplateName:** String
-
-        Specifies the name of the message template to be used within message requests.
-
-        **messageTemplateDescription:** String  
-        Specifies the description of the message template for others to understand it’s purpose.
-
-        **id:** String  
-        Specifies the ID of the template that can be used for message sending.
-
-        **link:** array  
-        Provides a list of URLs that can be used to manipulate or access the message template.
-
-        *   uri - the link to access the message template
-        *   rel - the descriptor for what the link will do
-        *   method - the HTTP method to use with this particular link
+        Pagination is available.
       operationId: getTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -1207,39 +1344,119 @@ paths:
           content:
             examples:
               examples:
-                response:
+                A list of templates:
                   value:
-                    status: '1 to 4 of 4    '
+                    status: '1 to 2 of 2    '
                     messagetemplates:
-                      - messageTemplateName: Appointment Reminder
-                        messageTemplateDescription: ''
-                        id: F0547F6F2E4839F8
+                      - messageTemplateName: Sample SMS Template 2
+                        messageTemplateDescription: Template to provide an example on whispir.io no.1
+                        id: 236EA3E3E63439DA
                         link:
-                          - uri: 'https://api.au.whispir.com/templates/F0547F6F2E4839F8'
+                          - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/236EA3E3E63439DA'
                             rel: self
                             method: GET
-                      - messageTemplateName: Customer Survey
-                        messageTemplateDescription: ''
-                        id: DDE10AC13FB0E457
+                            host: api.au.whispir.com
+                            port: -1
+                      - messageTemplateName: Sample SMS Template with tags
+                        messageTemplateDescription: Template to provide an example on whispir.io no.1
+                        id: D09B63AD6BD1A503
                         link:
-                          - uri: 'https://api.au.whispir.com/templates/DDE10AC13FB0E457'
+                          - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/D09B63AD6BD1A503'
                             rel: self
                             method: GET
-                      - messageTemplateName: Service announcement
-                        messageTemplateDescription: ''
-                        id: 900972D1C916FE84
-                        link:
-                          - uri: 'https://api.au.whispir.com/templates/900972D1C916FE84'
-                            rel: self
-                            method: GET
-                      - messageTemplateName: Shift Opportunity
-                        messageTemplateDescription: ''
-                        id: 9CB9BE20B885542D
-                        link:
-                          - uri: 'https://api.au.whispir.com/templates/9CB9BE20B885542D'
-                            rel: self
-                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
                     link: []
+              schema:
+                description: Returns a list of templates
+                type: object
+                x-examples:
+                  Example:
+                    status: '1 to 1 of 1    '
+                    messagetemplates:
+                      - messageTemplateName: Sample SMS Template with tags
+                        messageTemplateDescription: Template to provide an example on whispir.io no.1
+                        id: 3148356543415EE7
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                    link: []
+                properties:
+                  status:
+                    type: string
+                    minLength: 1
+                    example: 1 to 1 of 1
+                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no message templates available.
+                    readOnly: true
+                  messagetemplates:
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    description: Specifies the name of the message template
+                    items:
+                      type: object
+                      properties:
+                        messageTemplateName:
+                          type: string
+                          minLength: 1
+                          description: Specifies the name of the message template
+                          example: Test Template
+                          readOnly: true
+                        messageTemplateDescription:
+                          type: string
+                          minLength: 1
+                          description: 'Specifies the description of the message template, so that anyone can understand its purpose'
+                          example: The test messate template.
+                          readOnly: true
+                        id:
+                          type: string
+                          minLength: 1
+                          description: Specifies the template id needed for all the API Operations
+                          example: 236EA3E3E63439DA
+                          readOnly: true
+                        link:
+                          $ref: '#/components/schemas/link'
+                    readOnly: true
+                  link:
+                    type: array
+                    description: Provides a list of URLs that can be used to manipulate or access the message template. This following attribute may return an empty array.
+                    items:
+                      type: object
+                    readOnly: true
+                required:
+                  - status
+                  - messagetemplates
+                  - link
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                default: application/vnd.whispir.template-v1+xml
+                enum:
+                  - application/vnd.whispir.template-v1+xml
+                  - application/vnd.whispir.template-v1+json
+              description: Indicates the resource's media type
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates/{templateId}':
@@ -1247,7 +1464,7 @@ paths:
       tags:
         - Templates
       summary: Retrieve a template
-      description: Retrieves a Template object.
+      description: Retrieves a message template
       operationId: getTemplatesById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -1258,9 +1475,34 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
+        - schema:
+            type: string
+            default: application/vnd.whispir.template-v1+json
+          in: header
+          name: Content-Type
+          description: Indicates the resource's media type
+        - schema:
+            type: string
+          in: header
+          name: Content-Length
+          description: 'Indicates the size of the entity body, in bytes'
       responses:
-        '200':
-          description: OK
+        '201':
+          $ref: '#/components/responses/Template'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     put:
       tags:
         - Templates
@@ -1290,6 +1532,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     delete:
       tags:
         - Templates
@@ -1309,6 +1565,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules':
@@ -1342,6 +1612,20 @@ paths:
       responses:
         '201':
           description: Created
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     get:
       tags:
         - Response Rules
@@ -1353,6 +1637,20 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules/{responseRuleId}':
@@ -1374,6 +1672,20 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     put:
       tags:
         - Response Rules
@@ -1402,6 +1714,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     delete:
       tags:
         - Response Rules
@@ -1420,6 +1746,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/contacts':
@@ -1452,6 +1792,20 @@ paths:
             application/vnd.whispir.contact-v1+xml:
               schema:
                 $ref: '#/components/schemas/contact'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     get:
       tags:
         - Contacts
@@ -1502,6 +1856,20 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/contacts/{contactId}':
@@ -1538,6 +1906,20 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     put:
       tags:
         - Contacts
@@ -1577,6 +1959,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     delete:
       tags:
         - Contacts
@@ -1598,6 +1994,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/distributionlists':
@@ -1647,6 +2057,20 @@ paths:
                       longitude: -122.3493552
                       latitude: 47.6204232
                       type: CurrentLocation
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     get:
       tags:
         - Distribution Lists
@@ -1707,6 +2131,20 @@ paths:
                             method: GET
                     status: '1 to 2 of 2    '
                     link: []
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/distributionlists/{distributionlistId}':
@@ -1752,6 +2190,20 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     put:
       tags:
         - Distribution Lists
@@ -1797,6 +2249,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     delete:
       tags:
         - Distribution Lists
@@ -1816,6 +2282,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/scenarios':
@@ -1841,6 +2321,20 @@ paths:
       responses:
         '201':
           description: Created
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     get:
       tags:
         - Scenarios
@@ -1852,6 +2346,20 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/scenarios/{scenarioId}':
@@ -1906,6 +2414,20 @@ paths:
                         rel: deleteScenario
                         method: DELETE
                         type: 'application/vnd.whispir.scenario-v1+json,application/vnd.whispir.scenario-v1+xml'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     post:
       tags:
         - Scenarios
@@ -1934,6 +2456,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     put:
       tags:
         - Scenarios
@@ -1962,6 +2498,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     delete:
       tags:
         - Scenarios
@@ -1980,6 +2530,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /callbacks:
@@ -2042,6 +2606,21 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/callback'
+          description: Created
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - schema:
@@ -2166,41 +2745,21 @@ paths:
                           - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
                             rel: self
                             method: GET
-                            host: api.au.whispir.com
-                            port: -1
-                    link:
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                        rel: self
-                        method: GET
-                        host: api.au.whispir.com
-                        port: -1
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Callback-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
+                    link: []
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
+          $ref: '#/components/responses/400BadRequest'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/callback'
+          $ref: '#/components/responses/401Unauthorized'
         '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - schema:
@@ -2287,9 +2846,57 @@ paths:
           required: true
       responses:
         '200':
-          $ref: '#/components/responses/callback'
-        '':
-          $ref: '#/components/responses/callback'
+          description: OK
+          content:
+            examples:
+              examples:
+                response:
+                  value:
+                    status: 1 to 1 of 1
+                    calls:
+                      - id: B3EDFE83DF389DFE
+                        messageId: ABC4857BCCF484575FCA
+                        messageLocation: 'https://api.au.whispir.com/messages/ABC4857BCCF484575FCA'
+                        status: FAILED
+                        from:
+                          name: Fred Waters
+                          mri: Fred_Waters.528798.Sandbox@Contact.whispir.com
+                          mobile: '+1000000000'
+                          email: ''
+                          voice: ''
+                        responseMessage:
+                          channel: SMS
+                          acknowledged: '09/01/13 13:22'
+                          content: 'Yes, I accept. Will I need to bring steel cap boots?'
+                        callback:
+                          id: B384FD38DCBADE38
+                          name: My Callback Server
+                          url: 'https://www.myapplication.com/myapp'
+                          attemptedDate: '09/01/13 13:22'
+                          statusCode: 500
+                          statusMessage: Internal Server Error
+                        link:
+                          - rel: updateCall
+                            uri: /callbacks/B384FD38DCBADE38/calls/B3EDFE83DF389DFE
+                            method: PUT
+                    link:
+                      - rel: next
+                        uri: /callbacks/B384FD38DCBADE38/calls?limit=20&offset=20
+                        method: GET
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     put:
       tags:
         - Callbacks
@@ -2348,14 +2955,20 @@ paths:
       responses:
         '204':
           description: No Content
-      requestBody:
-        $ref: '#/components/requestBodies/callback'
-    parameters:
-      - schema:
-          type: string
-        name: callbackId
-        in: path
-        required: true
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
   /workspaces:
     post:
       tags:
@@ -2377,6 +2990,20 @@ paths:
       responses:
         '201':
           description: Created
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
     get:
@@ -2426,6 +3053,20 @@ paths:
                           - uri: 'https://api.au.whispir.com/workspaces/B7BFEF555F0F7F81'
                             rel: self
                             method: GET
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
   '/workspaces/{workspaceId}':
@@ -2440,6 +3081,20 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /activities:
@@ -2463,6 +3118,20 @@ paths:
       responses:
         '201':
           description: Created
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
     get:
@@ -2640,8 +3309,20 @@ paths:
                             rel: self
                             method: GET
                     link: []
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
   '/workspaces/{workspaceId}/activities':
     get:
       tags:
@@ -2656,6 +3337,20 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/customlists':
@@ -2789,8 +3484,20 @@ paths:
                             rel: self
                             method: GET
                     link: []
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/customlists/{customlistId}':
@@ -2871,8 +3578,20 @@ paths:
                       - uri: 'https://api.au.whispir.com/customlists/40E5D16229E2101D'
                         rel: self
                         method: GET
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /users:
@@ -2940,6 +3659,20 @@ paths:
                       - uri: 'https://api.au.whispir.com/users/AF48A9EC3F02E43C'
                         rel: deleteUser
                         method: DELETE
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     get:
       tags:
         - Users
@@ -3026,7 +3759,20 @@ paths:
                           method: GET
                           rel: self
                           uri: 'http://api.whispir.com/users/AF48A9EC3F02E43C'
-                      - ...
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
       x-internal: false
     delete:
       tags:
@@ -3042,6 +3788,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
   '/users/{userId}':
     get:
       tags:
@@ -3074,6 +3834,20 @@ paths:
                       method: GET
                       rel: self
                       uri: 'http://api.whispir.com/users/AF48A9EC3F02E43C'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     put:
       tags:
         - Users
@@ -3115,6 +3889,20 @@ paths:
       responses:
         '204':
           description: Created
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     delete:
       tags:
         - Users
@@ -3136,6 +3924,20 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
   '/workspaces/{workspaceId}/users':
     get:
       tags:
@@ -3178,6 +3980,20 @@ paths:
                           uri: 'https://api.au.whispir.com/workspaces/C727BCE3A813E2B1/users/?offset=10&limit=10'
                           rel: next
                           method: GET
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/events':
@@ -3199,6 +4015,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/event'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     post:
       tags:
         - Events
@@ -3337,6 +4167,20 @@ paths:
                       - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/messages?label=2701095%20-%20Outage%20of%20Local%20Systems%20in%20Sydney'
                         rel: retrieveEventMessages
                         method: GET
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/imports':
@@ -3388,6 +4232,20 @@ paths:
       responses:
         '201':
           description: Created
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /auth:
@@ -3404,7 +4262,7 @@ paths:
                 description: ''
                 type: object
                 x-examples:
-                  example-1:
+                  Example:
                     token: your-generated-bearer-token
                     link: []
                 properties:
@@ -3415,6 +4273,20 @@ paths:
                     type: array
                     items:
                       type: object
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
       description: Create a JWT authentication token
       parameters:
         - schema:
@@ -3481,6 +4353,20 @@ paths:
       responses:
         '200':
           description: OK
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
       summary: Verify an auth token
       tags:
         - Auth
@@ -3752,66 +4638,7 @@ components:
             - true
           readOnly: true
         dlr:
-          description: A fixed object structure used by for Whispir internally for tracking purposes.
-          type: object
-          readOnly: true
-          required:
-            - period
-            - rule
-            - type
-            - publishToWeb
-            - expiryDay
-            - expiryHour
-            - expiryMin
-            - feedIds
-            - bool
-          properties:
-            period:
-              description: The period of the message delivery.
-              type: string
-              enum:
-                - ''
-            rule:
-              description: The rule of the message delivery.
-              type: string
-              enum:
-                - ''
-            type:
-              description: The type of the message delivery.
-              type: string
-              enum:
-                - ''
-            publishToWeb:
-              description: Specifies whether the message was published to the web.
-              type: boolean
-              enum:
-                - false
-                - true
-            expiryDay:
-              description: Specifies the number of days before the message expires.
-              type: number
-              enum:
-                - 0
-            expiryHour:
-              description: Specifies the number of hours before the message expires.
-              type: number
-              enum:
-                - 0
-            expiryMin:
-              description: Specifies the number of minutes before the message expires.
-              type: number
-              enum:
-                - 0
-            feedIds:
-              description: The feeds identifier for the message delivery.
-              type: string
-              enum:
-                - ''
-            bool:
-              description: The bool field for the message delivery.
-              type: boolean
-              enum:
-                - false
+          $ref: '#/components/schemas/dlr'
         link:
           $ref: '#/components/schemas/link'
       required:
@@ -4156,18 +4983,75 @@ components:
           derefUri: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
     template:
       type: object
-      required:
-        - messageTemplateName
-        - subject
-        - body
-        - email
-        - voice
-        - web
+      xml:
+        name: template
+        prefix: ns3
+      x-tags:
+        - Templates
+      title: Template
+      description: The template object.
+      x-examples:
+        Template:
+          messageTemplateName: Sample SMS Template
+          messageTemplateDescription: Template to provide an example on whispir.io
+          responseTemplateId: responseTemplateId
+          subject: Test SMS Message
+          body: This is the body of my test SMS message
+          email:
+            body: This is the body of my email message.
+            footer: This is the footer of my message.
+            type: text/plain
+            resources:
+              attachments:
+                - attachmentName: photo.jpeg
+                  derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                  attachmentDesc: My photo
+          voice:
+            header: 'This is the introduction, read out to the recipient prior to any key press.'
+            body: 'This is the body of the voice call, read out after the key press'
+            type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+            resources:
+              attachment:
+                - attachmentName: photo.jpeg
+                  derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                  attachmentDesc: My photo
+          web:
+            body: This is the content of my web publishing or Rich Push Message
+            type: text/plain
+          social:
+            social:
+              - id: social
+                body: Facebook Content
+                type: text/plain
+          type: defaultNoReply
+          features:
+            pushOptions:
+              notifications: enabled
+              escalationMins: '3'
+              appId: appId
+          dlr:
+            period: string
+            publishToWeb: false
+            rule: string
+            expiryDay: 0
+            expiryHour: 0
+            expiryMin: 0
+            feedIds: string
+            bool: false
+            type: string
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+          tags: string
       properties:
         messageTemplateName:
           type: string
           description: Specifies the name of the message template to be used within message requests.
           example: Sample SMS Template
+          readOnly: true
         messageTemplateDescription:
           type: string
           description: Specifies the description of the message template for others to understand its purpose.
@@ -4198,12 +5082,25 @@ components:
           example: defaultNoReply
         features:
           $ref: '#/components/schemas/features'
-      xml:
-        name: template
-        prefix: ns3
-      x-tags:
-        - Templates
-      title: Template
+        dlr:
+          $ref: '#/components/schemas/dlr'
+        link:
+          $ref: '#/components/schemas/link'
+        tags:
+          type: string
+          description: Information which helps to label related message templates together
+          example: campaign
+          readOnly: true
+        id:
+          type: string
+          example: 7DB65E1D8853D1C8
+          description: specifies the id of the message template
+          default: 7DB65E1D8853D1C8
+          readOnly: true
+      required:
+        - messageTemplateName
+        - subject
+        - body
     responseTemplatePattern:
       type: object
       properties:
@@ -4661,9 +5558,8 @@ components:
           email: me@example.com
           callbacks:
             reply: enabled
-        example-1:
-          id: string
-          name: Callback Name
+        Example:
+          name: Undeliverable Message
           url: 'https://example.com/callback'
           auth:
             type: httpheader
@@ -5598,6 +6494,67 @@ components:
       required:
         - messageresponses
         - link
+    dlr:
+      title: Delivery Receipt
+      description: A fixed object structure used by for Whispir internally for tracking purposes.
+      type: object
+      readOnly: true
+      required:
+        - period
+        - rule
+        - type
+        - publishToWeb
+        - expiryDay
+        - expiryHour
+        - expiryMin
+        - feedIds
+        - bool
+      properties:
+        period:
+          description: The period of the message delivery.
+          type: string
+          example: ''
+        rule:
+          description: The rule of the message delivery.
+          type: string
+          example: ''
+        type:
+          description: The type of the message delivery.
+          type: string
+          example: ''
+        publishToWeb:
+          description: Specifies whether the message was published to the web.
+          type: boolean
+        expiryDay:
+          description: Specifies the number of days before the message expires.
+          type: number
+          example: 0
+        expiryHour:
+          description: Specifies the number of hours before the message expires.
+          type: number
+          example: 0
+        expiryMin:
+          description: Specifies the number of minutes before the message expires.
+          type: number
+          example: 0
+        feedIds:
+          description: The feeds identifier for the message delivery.
+          type: string
+          example: ''
+        bool:
+          description: The bool field for the message delivery.
+          type: boolean
+      x-examples:
+        Example:
+          period: ''
+          rule: ''
+          type: ''
+          publishToWeb: false
+          expiryDay: 0
+          expiryHour: 0
+          expiryMin: 0
+          feedIds: ''
+          bool: false
   parameters:
     X-Api-Key:
       name: X-Api-Key
@@ -5633,41 +6590,258 @@ components:
         default: 0
       description: The record number to start returning from.
   responses:
-    callback:
-      description: Callback Example response
+    Template:
+      description: Template endpoint response.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/callback'
+            $ref: '#/components/schemas/template'
           examples:
-            Callback:
+            Example:
               value:
-                id: 4452AC8359535C46
-                name: Callback Name
-                url: 'https://example.com/callback'
-                auth:
-                  type: queryparam
-                  key: string
-                contentType: json
-                removeHTML: disabled
-                retriesEnabled: true
-                email: me@example.com
-                callbacks:
-                  reply: disabled
-                  undeliverable: disabled
+                messageTemplateName: Sample SMS Template
+                messageTemplateDescription: Template to provide an example on whispir.io
+                responseTemplateId: responseTemplateId
+                subject: Test SMS Message
+                body: This is the body of my test SMS message
+                email:
+                  body: This is the body of my email message.
+                  footer: This is the footer of my message.
+                  type: text/plain
+                  resources:
+                    attachments:
+                      - attachmentName: photo.jpeg
+                        derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                        attachmentDesc: My photo
+                voice:
+                  header: 'This is the introduction, read out to the recipient prior to any key press.'
+                  body: 'This is the body of the voice call, read out after the key press'
+                  type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                  resources:
+                    attachment:
+                      - attachmentName: photo.jpeg
+                        derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                        attachmentDesc: My photo
+                web:
+                  body: This is the content of my web publishing or Rich Push Message
+                  type: text/plain
+                social:
+                  social:
+                    - id: social
+                      body: Facebook Content
+                      type: text/plain
+                type: defaultNoReply
+                features:
+                  pushOptions:
+                    notifications: enabled
+                    escalationMins: '3'
+                    appId: appId
+                dlr:
+                  period: ''
+                  rule: ''
+                  type: ''
+                  publishToWeb: false
+                  expiryDay: 0
+                  expiryHour: 0
+                  expiryMin: 0
+                  feedIds: ''
+                  bool: false
                 link:
-                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                  - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
                     rel: self
                     method: GET
                     host: api.au.whispir.com
                     port: -1
+                tags: internal
       headers:
         Content-Type:
-          $ref: '#/components/headers/Callback-Content-Type'
-        Content-Length:
-          $ref: '#/components/headers/Content-Length'
+          $ref: '#/components/headers/Template-Content-Type'
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+    400BadRequest:
+      description: 400 Bad Request Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            x-examples:
+              Example:
+                errorSummary: Your request was malformed and could not be processed by the server. Please try again
+                errorText: Bad Request
+                errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+                example: Your request was malformed and could not be processed by the server. Please try again
+              errorText:
+                type: string
+                minLength: 1
+                example: Bad Request
+              errorDetail:
+                type: string
+                minLength: 1
+                example: '"java.io.EOFException: No content to map to Object due to end of inpu'
+            required:
+              - errorSummary
+              - errorText
+              - errorDetail
+          examples:
+            Example:
+              value:
+                errorSummary: Your request was malformed and could not be processed by the server. Please try again
+                errorText: Bad Request
+                errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
+      headers: {}
+    401Unauthorized:
+      description: 401 Unauthorized Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              links:
+                $ref: '#/components/schemas/link'
+              errorSummary:
+                type: string
+                minLength: 1
+                example: Your username and password combination was incorrect. Please check your authentication details and try again
+              errorText:
+                type: string
+                minLength: 1
+                example: Unauthorised
+              errorDetail:
+                type: string
+            required:
+              - errorSummary
+              - errorText
+              - errorDetail
+          examples:
+            Example:
+              value:
+                links: []
+                errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
+                errorText: Unauthorized
+                errorDetail: ''
+      headers: {}
+    403Forbidden:
+      description: 403 Forbidden Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              message:
+                type: string
+                minLength: 1
+                example: Forbidden
+            required:
+              - message
+          examples:
+            Example:
+              value:
+                message: Forbidden
+      headers: {}
+    404NotFound:
+      description: 404 Not found Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+                example: The resource that you have requested does not exist. Please check the identifier and try again
+              errorText:
+                type: string
+                minLength: 1
+                example: Not Found
+              errorDetail:
+                type: string
+              link:
+                $ref: '#/components/schemas/link'
+          examples:
+            Example:
+              value:
+                errorSummary: The resource that you have requested does not exist. Please check the identifier and try again
+                errorText: Not Found
+                errorDetail: ''
+                link: []
+    415UnsupportedMediaType:
+      description: 415 Unsupported Media Type Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+                example: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
+              errorText:
+                type: string
+                minLength: 1
+                example: Unsupported Media Type
+              errorDetail:
+                type: string
+                minLength: 1
+                example: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
+          examples:
+            Example:
+              value:
+                errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
+                errorText: Unsupported Media Type
+                errorDetail: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
+    422UnprocessibleEntity:
+      description: 422 Unprocessible Entity Error
+      content:
+        application/json:
+          schema:
+            description: ''
+            type: object
+            properties:
+              errorSummary:
+                type: string
+                minLength: 1
+                example: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
+              errorText:
+                type: string
+                minLength: 1
+                example: 'A Template name already exists in the current Workspace, please select another name and try again.'
+              errorDetail:
+                type: string
+              link:
+                $ref: '#/components/schemas/link'
+          examples:
+            Example:
+              value:
+                errorSummary: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
+                errorText: |
+                  A Template name already exists in the current Workspace, please select another name and try again.
+                errorDetail: ''
+                link: []
+    500InternalServerError:
+      description: 500 Internal Server Error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Internal Server Error
+          examples:
+            Example:
+              value:
+                message: Internal Server Error
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.
@@ -5706,6 +6880,14 @@ components:
         enum:
           - application/vnd.whispir.messageresponse-v1+json
           - application/vnd.whispir.messageresponse-v1+xml
+    Template-Content-Type:
+      description: Template content mime type.
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.template-v1+json
+          - application/vnd.whispir.template-v1+xml
     Callback-Content-Type:
       description: Callback response mime type.
       required: true

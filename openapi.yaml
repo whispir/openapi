@@ -164,6 +164,58 @@ paths:
           application/vnd.whispir.message-v1+json:
             schema:
               $ref: '#/components/schemas/message'
+            examples:
+              SMS:
+                value:
+                  to: '61400400400'
+                  subject: Test Message
+                  body: This is the body of my test SMS message
+              Email:
+                value:
+                  to: test@test.com
+                  subject: Test Message
+                  email:
+                    body: This is the body of my test Email message
+                    footer: This is the footer of my message
+                    type: text/plain
+              Email with attachment:
+                value:
+                  to: test@test.com
+                  subject: Test Message
+                  email:
+                    body: This is the body of my test Email message
+                    footer: This is the footer of my message
+                    type: text/plain
+                    resources:
+                      attachments:
+                        - attachmentName: My Awesome Photo.jpg
+                          attachmentDesc: This is an awesome photo of me
+                          derefUri: The base64 string value of `My Awesome Photo.jpg` file content
+              Voice:
+                value:
+                  to: '61400400400'
+                  subject: Test Message
+                  voice:
+                    header: 'This is the introduction, read out to the recipient prior to any key press.'
+                    body: 'This is the body of the voice call, read out after the key press'
+                    type: 'Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:'
+              SMS & Email:
+                value:
+                  to: '61400400400'
+                  subject: Test Message
+                  body: This is the body of my test SMS message
+                  email:
+                    body: This is the body of my test Email message
+                    footer: This is the footer of my message
+                    type: text/plain
+              SMS & Web Page:
+                value:
+                  to: '61400400400'
+                  subject: Test Message
+                  body: This is the body of my test SMS message. @@web_link@@
+                  web:
+                    body: This is the content of my web publishing or Rich Push Message
+                    type: text/plain
           application/vnd.whispir.bulkmessage-v1+json:
             schema:
               $ref: '#/components/schemas/message'

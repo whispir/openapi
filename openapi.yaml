@@ -133,7 +133,7 @@ paths:
 
         Now we have the templateId(for content) with the resourceID (for recipients). Using these two key pieces of information, developers can submit an API request to kick off the Dynamic Messaging process.  
 
-        The smsMappingField should be mapped to the column or key that holds the number to which the SMS has to sent to; and the emailMappingField to the email to which the message has to be sent to.  
+        The smsMappingField should be mapped to the column or key that holds the number to which the SMS has to sent to; and the emailMappingField to the email to which the message has to be sent to.
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -1294,7 +1294,7 @@ paths:
       description: |
         Updating a resource involves the same process as in creating a resource. The process of using one of the format (CSV, JSON, XML) for private and any format for public -> converting to base64 encoded data is the same.  
         The change is doing a PUT to the existing resource URL that needs to be updated. Please be careful that doing an update overwrites the previous resource. There is no versioning available in Whispir for the resources.  
-        Any or all of the 4 values can be changed. i.e, name, scope, mimeType, derefUri, but all 4 are mandatory values to be sent.  
+        Any or all of the 4 values can be changed. i.e, name, scope, mimeType, derefUri, but all 4 are mandatory values to be sent.
       operationId: putResourcesById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -1405,6 +1405,8 @@ paths:
       operationId: postTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
@@ -1444,6 +1446,10 @@ paths:
       operationId: getTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       responses:
         '200':
           description: OK
@@ -1585,17 +1591,8 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
-        - schema:
-            type: string
-            default: application/vnd.whispir.template-v1+json
-          in: header
-          name: Content-Type
-          description: Indicates the resource's media type
-        - schema:
-            type: string
-          in: header
-          name: Content-Length
-          description: 'Indicates the size of the entity body, in bytes'
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       responses:
         '201':
           $ref: '#/components/responses/Template'
@@ -1633,6 +1630,8 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
@@ -1643,6 +1642,13 @@ paths:
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Template-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1677,9 +1683,18 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
+        - $ref: '#/components/parameters/Templates-Content-Type'
+        - $ref: '#/components/parameters/Templates-Accept'
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Template-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2775,17 +2790,17 @@ paths:
             schema:
               $ref: '#/components/schemas/callback'
             examples:
-              Example:
+              Callback object:
                 value:
-                  name: Callback Name
-                  url: 'https://example.com/callback'
+                  name: NEW callback tester 2
+                  url: 'https://www.google.com/'
                   auth:
-                    type: httpheader
-                    key: MY_AUTH_KEY
+                    type: queryparam
+                    key: abcd1234
+                  retriesEnabled: false
                   contentType: json
-                  removeHTML: disabled
-                  retriesEnabled: true
-                  email: me@example.com
+                  email: user002@testmail.whispir.com
+                  removeHTML: enabled
                   callbacks:
                     reply: enabled
                     undeliverable: enabled
@@ -2793,7 +2808,7 @@ paths:
         required: true
       responses:
         '201':
-          description: Created
+          $ref: '#/components/responses/Callback'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2814,60 +2829,127 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
     get:
       tags:
         - Callbacks
       summary: List callbacks
       description: |
-        ### Response Elements
-
-        **id:** String  
-        The unique ID of the callback within Whispir.
-
-        **name:** String  
-        The name given to the Callback at creation time. Also the ID that is used in the `/messages` endpoint.
-
-        **url:** String  
-        The application URL that was given to the Callback at creation time. Also the endpoint that will be used when supplying callback information.
-
-        **link:** Array  
-        Provides a list of URLs that can be used to manipulate or access the callback.
-        *   uri - the link to access the specific callback
-        *   rel - the descriptor for what the link will do
-        *   method - the HTTP method to use with this particular link
+        List callbacks
       operationId: getCallbacks
       responses:
         '200':
           description: OK
           content:
-            examples:
-              examples:
-                response:
-                  value:
-                    status: 1 to 3 of 3
+            application/json:
+              schema:
+                description: 'The callback object.'
+                type: object
+                x-examples:
+                  example-1:
+                    status: '1 to 1 of 1    '
                     callbacks:
-                      - id: BCD374DABC73649B
-                        name: Sample Callback 1
-                        url: 'http://myserver.com/callback1.php'
+                      - id: D7D2295E2A08388C
+                        name: callback1
+                        url: 'https://e05237bf.ngrok.io/'
+                        retriesEnabled: false
                         link:
-                          - uri: 'https://api.au.whispir.com/callbacks/BCD374DABC73649B'
+                          - uri: 'https://stage-ap-southeast-2.whispirdev.com/callbacks/D7D2295E2A08388C'
                             rel: self
                             method: GET
-                      - id: AD34DBCEFD74EABC
-                        name: Sample Callback 2
-                        url: 'http://myserver.com/callback2.php'
-                        link:
-                          - uri: 'https://api.au.whispir.com/callbacks/AD34DBCEFD74EABC'
-                            rel: self
-                            method: GET
-                      - id: 73BDCEFA43DF35DB
-                        name: Sample Callback 3
-                        url: 'http://myserver.com/callback3.php'
-                        link:
-                          - uri: 'https://api.au.whispir.com/callbacks/73BDCEFA43DF35DB'
-                            rel: self
-                            method: GET
+                            host: stage-ap-southeast-2.whispirdev.com
+                            port: -1
                     link: []
+                properties:
+                  status:
+                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.  
+                    type: string
+                    minLength: 1
+                    example: 1 to 1 of 1
+                    readOnly: true
+                  callbacks:
+                    description: A list of callbacks
+                    type: array
+                    uniqueItems: true
+                    minItems: 1
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          minLength: 1
+                          description: |-
+                            The id of the callback. 
+
+                            This is the value that should be passed when referring to the callback using the API endpoints
+                          example: D7D2295E2A08388C
+                          readOnly: true
+                        name:
+                          type: string
+                          minLength: 1
+                          description: |-
+                            The name of the callback. 
+
+                            This is the value that should be passed in the message payload for triggering the callbacks
+                          example: callback1
+                          readOnly: true
+                        url:
+                          type: string
+                          minLength: 1
+                          description: The destination url on your servers that Whispir should reach out to.
+                          example: 'https://e05237bf.ngrol.io/'
+                          readOnly: true
+                        retriesEnabled:
+                          type: boolean
+                          default: false
+                          description: |-
+                            If retriesEnabled is false, then Whispir will only try once and when a failure (non 200 OK response code) happens, it will not retry again
+
+                            When true, it will try every 5 mins for a maximum of 10 times.
+
+                            Refer to callback calls for more details on retrieving the SUCCESS and FAIL logs
+                          readOnly: true
+                        link:
+                          $ref: '#/components/schemas/link'
+                      required:
+                        - id
+                        - name
+                        - url
+                        - retriesEnabled
+                    readOnly: true
+                  link:
+                    $ref: '#/components/schemas/link'
+                required:
+                  - status
+                  - callbacks
+                  - link
+              examples:
+                example-1:
+                  value:
+                    status: 1 to 1 of 1
+                    callbacks:
+                      - id: D7D2295E2A08388C
+                        name: callback1
+                        url: 'https://e05237bf.ngrol.io/'
+                        retriesEnabled: false
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Callback-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2888,7 +2970,11 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-  '/callbacks/{callbackId}/calls':
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+  '/callbacks/{callbackId}':
     get:
       tags:
         - Callbacks
@@ -2915,7 +3001,7 @@ paths:
         To retrieve a list of attempted API calls from the Whispir API you can execute an HTTP GET using the /calls endpoint on a specific callback.
 
         To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL.
-      operationId: getCallbacksCallsById
+      operationId: getCallbackById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
@@ -2934,45 +3020,11 @@ paths:
             enum:
               - SUCCESS
               - FAILED
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
       responses:
         '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    status: 1 to 1 of 1
-                    calls:
-                      - id: B3EDFE83DF389DFE
-                        messageId: ABC4857BCCF484575FCA
-                        messageLocation: 'https://api.au.whispir.com/messages/ABC4857BCCF484575FCA'
-                        status: FAILED
-                        from:
-                          name: Fred Waters
-                          mri: Fred_Waters.528798.Sandbox@Contact.whispir.com
-                          mobile: '+1000000000'
-                          email: ''
-                          voice: ''
-                        responseMessage:
-                          channel: SMS
-                          acknowledged: '09/01/13 13:22'
-                          content: 'Yes, I accept. Will I need to bring steel cap boots?'
-                        callback:
-                          id: B384FD38DCBADE38
-                          name: My Callback Server
-                          url: 'https://www.myapplication.com/myapp'
-                          attemptedDate: '09/01/13 13:22'
-                          statusCode: 500
-                          statusMessage: Internal Server Error
-                        link:
-                          - rel: updateCall
-                            uri: /callbacks/B384FD38DCBADE38/calls/B3EDFE83DF389DFE
-                            method: PUT
-                    link:
-                      - rel: next
-                        uri: /callbacks/B384FD38DCBADE38/calls?limit=20&offset=20
-                        method: GET
+          $ref: '#/components/responses/Callback'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2994,7 +3046,7 @@ paths:
     put:
       tags:
         - Callbacks
-      summary: Update a callback call
+      summary: Update a callback
       description: |
         As every call to a callback endpoint is now stored within the calls endpoint, it’s possible that when failed calls are successfully processed through a manual exercise, that these calls will then need to be updated to reflect the current status.
 
@@ -3018,28 +3070,26 @@ paths:
         This ensures that all callbacks that have been processed can be updated in a single API call, rather than having to make a single API call per callback attempt.
 
         The PUT request takes a single API parameter in the body
-      operationId: putCallbacksCallsById
+      operationId: putCallbackById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
           in: path
-          description: Enter Scenarios id.
+          description: Enter Callback id.
           required: true
           schema:
             type: string
             example: 41048D9483C8CF2A
-        - name: status
-          in: query
-          required: true
-          description: The status to update the attempted calls
-          schema:
-            type: string
-            enum:
-              - SUCCESS
-              - FAILED
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Callback-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3056,8 +3106,49 @@ paths:
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
-        '501':
-          $ref: '#/components/responses/501MethodNotImplemented'
+      requestBody:
+        $ref: '#/components/requestBodies/callback'
+    delete:
+      summary: Delete a callback
+      operationId: deleteCallbackById
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Callback-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '415':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+      description: Delete a callback object
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - name: callbackId
+          in: path
+          description: Enter Callback id.
+          required: true
+          schema:
+            type: string
+            example: 41048D9483C8CF2A
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
+      tags:
+        - Callbacks
   /workspaces:
     post:
       tags:
@@ -4473,6 +4564,28 @@ components:
           schema:
             $ref: '#/components/schemas/event'
       description: events object that needs to be create events
+    callback:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/callback'
+          examples:
+            Callback Object:
+              value:
+                id: 4452AC8359535C46
+                name: Callback Name
+                url: 'https://example.com/callback'
+                auth:
+                  type: queryparam
+                  key: string
+                contentType: json
+                removeHTML: disabled
+                retriesEnabled: true
+                email: me@example.com
+                callbacks:
+                  reply: disabled
+                  undeliverable: disabled
+      description: The Callback Object
   securitySchemes:
     BasicAuth:
       type: http
@@ -5576,63 +5689,51 @@ components:
       title: Callback
       description: 'The callback object, used to configure the callback (also known as webhook).'
       x-examples:
-        Message Reply:
-          name: Message Reply
+        Callback object example:
+          id: 4452AC8359535C46
+          name: Callback Name
           url: 'https://example.com/callback'
           auth:
-            type: httpheader
-            key: MY_AUTH_KEY
+            type: basicauth
+            key: test34
           contentType: json
           removeHTML: disabled
-          retriesEnabled: true
+          retriesEnabled: false
           email: me@example.com
           callbacks:
-            reply: enabled
-        Example:
-          name: Undeliverable Message
-          url: 'https://example.com/callback'
-          auth:
-            type: httpheader
-            key: MY_AUTH_KEY
-          contentType: json
-          removeHTML: disabled
-          retriesEnabled: true
-          email: me@example.com
-          callbacks:
+            reply: disabled
             undeliverable: disabled
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
       properties:
+        id:
+          type: string
+          maxLength: 32
+          description: |-
+            The id of the callback. 
+
+            This is the value that should be passed when referring to the callback using the API endpoints
+          example: 4452AC8359535C46
+          readOnly: true
         name:
           type: string
-          description: Specifies the name (ID) of the callback to be used within message requests.
+          description: |-
+            The name of the callback. 
+
+            This is the value that should be passed in the message payload for triggering the callbacks
           example: Callback Name
+          maxLength: 50
         url:
           type: string
-          description: Specifies the service URL that API Callbacks should be forwarded to.
+          description: The destination url on your servers that Whispir should reach out to.
           example: 'https://example.com/callback'
           format: uri
         auth:
-          type: object
-          description: The authentication object to specify how to authenticate against the callback `url`.
-          properties:
-            type:
-              type: string
-              enum:
-                - httpheader
-                - querystring
-              description: |-
-                Specifies how to authenticate the request made to the callback server.
-
-                The values available for this parameter are:
-
-                - `httpheader` - token provided as a custom HTTP header, namely X-Whispir-Callback-Key. This is our recommended approach because of a higher level of security
-                - `querystring` - token provided by the auth query parameter appended to the endpoint URL
-            key:
-              type: string
-              example: MY_AUTH_KEY
-              description: |-
-                Specifies the value to be passed to authenticate that the request has originated from Whispir.
-
-                When added to this payload, Whispir will include the token in every request made to the listening application.
+          $ref: '#/components/schemas/callbackAuth'
         contentType:
           type: string
           description: Specifies the content type that should be sent to this endpoint.
@@ -5650,13 +5751,22 @@ components:
           type: boolean
           description: Specifies whether Whispir should perform retries in the event there is a failure accessing the callback service.
           example: true
+          default: false
         email:
           type: string
-          description: Specifies the email address where failure notifications should be sent.
+          description: |-
+            Whispir notify this email address that a callback has failed (only when retries are disabled). 
+
+            The email will contain the details of the callback content.
           example: me@example.com
+          maxLength: 64
+          format: email
         callbacks:
           type: object
           description: The object to specify which events callbacks should be enabled for.
+          required:
+            - reply
+            - undeliverable
           properties:
             reply:
               type: string
@@ -5664,12 +5774,25 @@ components:
                 - enabled
                 - disabled
               description: A boolean flag specifying whether message reply callbacks are enabled.
+              default: disabled
             undeliverable:
               type: string
               enum:
                 - enabled
                 - disabled
               description: A boolean flag specifying whether undeliverable message callbacks are enabled.
+              default: disabled
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - name
+        - url
+        - auth
+        - contentType
+        - removeHTML
+        - retriesEnabled
+        - email
+        - callbacks
     workspace:
       type: object
       properties:
@@ -5695,6 +5818,46 @@ components:
       x-tags:
         - Workspaces
       title: Workspace
+    callbackAuth:
+      title: callbackAuth
+      type: object
+      description: |-
+        The authentication model details. You will receive - 
+
+        For `queryparam`
+        - `?Auth={{KeyValue}}`
+
+        For `httpheader`
+        - `X-Whispir-Callback-Key: {{KeyValue}}`
+
+        For `basicauth`
+        - `Authorization: Basic {{KeyValue}}`
+
+        For `bearertoken`
+        - `Authorization: Bearer {{KeyValue}}`
+      properties:
+        type:
+          type: string
+          enum:
+            - queryparam
+            - httpheader
+            - basicauth
+            - bearertoken
+          default: queryparam
+          description: The type of authentication allowed by Whispir at the Destination URL
+          example: basicauth
+        key:
+          type: string
+          description: The value that will be passed with the authentication key
+          maxLength: 128
+          example: test34
+      required:
+        - type
+        - key
+      x-examples:
+        example-1:
+          type: queryparam
+          key: test34
     locations:
       description: The locations for the contact.
       type: array
@@ -6871,6 +7034,46 @@ components:
         type: number
         default: 0
       description: The record number to start returning from.
+    Callback-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-callback-v1+json
+          - application/vnd.whispir.api-callback-v1+xml
+      description: Callback content mime type.
+    Callback-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-callback-v1+json
+          - application/vnd.whispir.api-callback-v1+xml
+      description: Callback content mime-type
+    Templates-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.template-v1+json
+          - application/vnd.whispir.template-v1+xml
+      description: Template content mime-type
+    Templates-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.template-v1+json
+          - application/vnd.whispir.template-v1+xml
+      description: Template content mime-type
     sortOrder:
       name: sortOrder
       in: query
@@ -7389,6 +7592,34 @@ components:
             Example:
               value:
                 message: Internal Server Error
+    Callback:
+      description: The Callback object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/callback'
+          examples:
+            Callback object:
+              value:
+                id: 4452AC8359535C46
+                name: Callback Name
+                url: 'https://example.com/callback'
+                auth:
+                  type: queryparam
+                  key: string
+                contentType: json
+                removeHTML: disabled
+                retriesEnabled: true
+                email: me@example.com
+                callbacks:
+                  reply: disabled
+                  undeliverable: disabled
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
       headers:
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
@@ -7558,3 +7789,11 @@ components:
         enum:
           - application/vnd.whispir.user-v1+json
           - application/vnd.whispir.user-v1+xml
+    Callback-Content-Type:
+      description: Callback response mime type.
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-callback-v1+json
+          - application/vnd.whispir.api-callback-v1+xml

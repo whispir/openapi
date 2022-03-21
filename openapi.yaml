@@ -5765,18 +5765,18 @@ components:
         status:
           type: string
           description: 'Specifies the validity status of the user. The status can be one of -<ul><li>Active (A)</li><li>InActive (I)</li><li>Pending ( P)</li><li>Suspended (B)</li><li>Deleted (D)</li></ul><p><b>Note:</b>The default status is PENDING. One cannot set the status while creation of account. Read `User State Machine` again mentioned above.</p>'
-          example: Active
           enum:
-            - Active
             - A
-            - InActive
             - I
-            - Pending
             - P
-            - Suspended
             - B
-            - Deleted
             - D
+            - ACTIVE
+            - INACTIVE
+            - PENDING
+            - SUSPENDED
+          default: PENDING
+          example: PENDING
         workMobilePhone1:
           type: string
           example: '61400400400'

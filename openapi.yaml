@@ -2844,7 +2844,7 @@ paths:
           content:
             application/json:
               schema:
-                description: ''
+                description: 'The callback object.'
                 type: object
                 x-examples:
                   example-1:
@@ -2863,11 +2863,13 @@ paths:
                     link: []
                 properties:
                   status:
+                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.  
                     type: string
                     minLength: 1
                     example: 1 to 1 of 1
                     readOnly: true
                   callbacks:
+                    description: A list of callbacks
                     type: array
                     uniqueItems: true
                     minItems: 1

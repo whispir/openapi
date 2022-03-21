@@ -5616,6 +5616,7 @@ components:
         id:
           type: string
           description: The ID of the user.
+          example: 4DC922649AFE370C
           readOnly: true
         userName:
           type: string
@@ -5646,6 +5647,7 @@ components:
         status:
           type: string
           description: 'Specifies the validity status of the user. The status can be one of -<ul><li>Active (A)</li><li>InActive (I)</li><li>Pending ( P)</li><li>Suspended (B)</li><li>Deleted (D)</li></ul><p><b>Note:</b>The default status is PENDING. One cannot set the status while creation of account. Read `User State Machine` again mentioned above.</p>'
+          example: PENDING
         companyName:
           type: string
           description: The company name of the user.
@@ -6580,6 +6582,35 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/user'
+          examples:
+            example-1:
+              value:
+                id: 4DC922649AFE370C
+                userName: John.Wick
+                password: string
+                firstName: John
+                middleName: ''
+                lastName: Wick
+                title: ''
+                nickname: string
+                status: PENDING
+                companyName: string
+                jobTitle: string
+                division: string
+                department: string
+                workAddress: string
+                workPhone: 61423456789
+                workCountry: Australia
+                timezone: Australia/Melbourne
+                personalAddress: string
+                personalPhone: 61423456789
+                aliasFields: string
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
       headers:
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'

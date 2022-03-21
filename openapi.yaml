@@ -3659,6 +3659,12 @@ paths:
           headers:
             Accept:
               $ref: '#/components/headers/User-Content-Type'
+            Content-Type:
+              $ref: '#/components/headers/User-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -7021,6 +7027,12 @@ components:
       headers:
         Accept:
           $ref: '#/components/headers/User-Content-Type'
+        Content-Type:
+          $ref: '#/components/headers/User-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.

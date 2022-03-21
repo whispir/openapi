@@ -5963,6 +5963,7 @@ components:
         - lastName
         - companyName
         - workEmailAddress1
+      description: List users response object
     event:
       type: object
       required:
@@ -6623,7 +6624,7 @@ components:
     User-Accept:
       name: Accept
       in: header
-      required: false
+      required: true
       schema:
         type: string
         enum:

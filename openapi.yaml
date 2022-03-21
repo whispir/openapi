@@ -6648,6 +6648,24 @@ components:
         type: number
         default: 0
       description: The record number to start returning from.
+    sortOrder:
+      name: sortOrder
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - asc
+          - desc
+      description: The order in which you require the results to be returned. Either ‘asc’ or ‘desc’
+    sortFields:
+      name: sortFields
+      in: query
+      required: false
+      schema:
+        type: string
+        example: 'lastName,jobTitle'
+      description: 'The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.'
   responses:
     Template:
       description: Template endpoint response.

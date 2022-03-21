@@ -6943,17 +6943,21 @@ components:
       in: header
       description: Template accept.
       required: true
-      enum:
-        - application/vnd.whispir.template-v1+json
-        - application/vnd.whispir.template-v1+xml
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.template-v1+json
+          - application/vnd.whispir.template-v1+xml
     User-Content-Type:
       name: Content-Type
       in: header
       description: User content mime type.
       required: true
-      enum:
-        - application/vnd.whispir.user-v1+json
-        - application/vnd.whispir.user-v1+xml
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.user-v1+json
+          - application/vnd.whispir.user-v1+xml
     User-Accept:
       name: Accept
       in: header

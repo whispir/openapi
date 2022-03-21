@@ -142,7 +142,6 @@ overrides:
       response-schema-property-descriptions: off
       response-schema-property-examples: off
     files:
-      - '**#/paths/~1workspaces~1{workspaceId}~1messages' # Messages Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1resources' # Resources Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1contacts' # Contacts Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1distributionlists' # DistributionLists Endpoint Examples

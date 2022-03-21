@@ -2653,25 +2653,18 @@ paths:
             examples:
               Callback object:
                 value:
-                  id: 4452AC8359535C46
-                  name: Callback Name
-                  url: 'https://example.com/callback'
+                  name: NEW callback tester 2
+                  url: 'https://www.google.com/'
                   auth:
                     type: queryparam
-                    key: string
+                    key: abcd1234
+                  retriesEnabled: false
                   contentType: json
-                  removeHTML: disabled
-                  retriesEnabled: true
-                  email: a-team@goarmy.com
+                  email: user002@testmail.whispir.com
+                  removeHTML: enabled
                   callbacks:
-                    reply: disabled
-                    undeliverable: disabled
-                  link:
-                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                      rel: self
-                      method: GET
-                      host: api.au.whispir.com
-                      port: -1
+                    reply: enabled
+                    undeliverable: enabled
           application/vnd.whispir.api-callback-v1+xml:
             schema:
               $ref: '#/components/schemas/callback'
@@ -5529,7 +5522,7 @@ components:
       title: Callback
       description: 'The callback object, used to configure the callback (also known as webhook).'
       x-examples:
-        example-1:
+        Callback object example:
           id: 4452AC8359535C46
           name: Callback Name
           url: 'https://example.com/callback'
@@ -5633,7 +5626,6 @@ components:
         - retriesEnabled
         - email
         - callbacks
-        - link
     workspace:
       type: object
       properties:

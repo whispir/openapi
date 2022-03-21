@@ -2766,6 +2766,8 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Callback-Content-Type'
         - $ref: '#/components/parameters/Callback-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
   '/callbacks/{callbackId}':
     get:
       tags:

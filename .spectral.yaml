@@ -70,21 +70,21 @@ rules:
   schema-descriptions:
     description: Schemas must have a "description".
     severity: error
-    given: $.components.schemas[*]
+    given: $..schemas[*]
     then:
       field: description
       function: truthy
   schema-property-descriptions: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
     description: Schema properties must have a "description".
     severity: error
-    given: $.components.schemas[*]..properties[*]
+    given: $..schema[*]..properties[*]
     then:
       field: description
       function: truthy
   schema-property-examples: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
     description: Schema properties must have an "example".
     severity: error
-    given: $.components.schemas.[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+    given: $..schema[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
     then:
       field: example
       function: defined
@@ -100,20 +100,6 @@ rules:
         schema:
           type: object
           minProperties: 1
-  response-schema-property-descriptions:
-    description: Response schema properties must have a "description".
-    severity: error
-    given: $..responses..schema[*]..properties[*]
-    then:
-      field: description
-      function: truthy
-  response-schema-property-examples:
-    description: Response schema properties must have an "example".
-    severity: error
-    given: $..responses..schema[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
-    then:
-      field: example
-      function: defined
 overrides:
   - rules:
       schema-examples: off

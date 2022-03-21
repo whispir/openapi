@@ -2990,29 +2990,8 @@ paths:
     get:
       tags:
         - Callbacks
-      summary: List callback calls
-      description: |
-        ## Callback Retries
-
-        The retriesEnabled flag can be enabled on a callback to ensure that Whispir automatically attempts to retry in the event of a failure occurring.
-
-        When a failure conditions occurs, Whispir will mark the callback server as down and log the attempted callback as Failed.
-
-        This callback will be attempted to be retried after ~5 minutes. If the server is available, the callbacks will automatically be processed through the server, the user doesn’t need to take any further action.
-
-        The following rules apply to Whispir’s automated retries for callbacks:
-        *   When a failure to make a callback occurs, Whispir will begin retries ~every 5 minutes.
-        *   Whispir will retry any callback for up to 24h.
-        *   After 24h, the callbacks will no longer be retried.
-        *   If the callback service becomes available prior to 24h, the callbacks will automatically re-process.
-        *   If the callback service takes longer than 24h, the user can access the callback information from the /callbacks/:id/calls endpoint.
-
-        An array of calls will be returned to you in the HTTP response body.
-
-        ### Retrieving the list of calls based on their Status
-        To retrieve a list of attempted API calls from the Whispir API you can execute an HTTP GET using the /calls endpoint on a specific callback.
-
-        To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL.
+      summary: Get a callback
+      description: Get a callback object
       operationId: getCallbackById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -3023,15 +3002,6 @@ paths:
           schema:
             type: string
             example: F98A1DD47C3CA1F5
-        - name: status
-          in: query
-          required: false
-          description: 'To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL.'
-          schema:
-            type: string
-            enum:
-              - SUCCESS
-              - FAILED
         - $ref: '#/components/parameters/Callback-Content-Type'
         - $ref: '#/components/parameters/Callback-Accept'
       responses:
@@ -3059,29 +3029,7 @@ paths:
       tags:
         - Callbacks
       summary: Update a callback
-      description: |
-        As every call to a callback endpoint is now stored within the calls endpoint, it’s possible that when failed calls are successfully processed through a manual exercise, that these calls will then need to be updated to reflect the current status.
-
-        Take the following example:
-        1.  Callback server becomes unavailable
-        2.  A message is sent via Whispir with callbacks enabled.
-        3.  The Message gets a response, and this triggers the callback
-        4.  The callback server is unavailable, so the response is stored with a status of 'FAILED’
-        5.  After 24h, the callback server becomes available again. Retries have stopped, so this information will not automatically flow into the callback server.
-        6.  The customer writes a script to GET all of the calls stored in the /calls endpoint and process them.
-        7.  Once successfully processed, the customer’s script should update the contents of the /calls endpoint to reflect the current status of 'SUCCESS’.
-
-        This process can be facilitated with the use of a PUT request to the /calls endpoint in Whispir.
-
-        To update a list of attempted API calls from the Whispir API you can execute an HTTP PUT using the /calls endpoint on a specific callback.
-
-        Users can specify multiple IDs to be updated using the following notation:
-
-        `/callbacks/:id/calls?id=ID1&id=ID2&id=ID3...`
-
-        This ensures that all callbacks that have been processed can be updated in a single API call, rather than having to make a single API call per callback attempt.
-
-        The PUT request takes a single API parameter in the body
+      description: Update a callback object
       operationId: putCallbackById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -3167,6 +3115,153 @@ paths:
         - $ref: '#/components/parameters/Callback-Accept'
       tags:
         - Callbacks
+  '/callbacks/{callbackId}/calls':
+    get:
+      tags:
+        - Callbacks
+      summary: List callback instances
+      description: Get a list of callbacks instances
+      operationId: getCallbackInstances
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - name: callbackId
+          in: path
+          required: true
+          description: Enter Callbacks Id
+          schema:
+            type: string
+            example: F98A1DD47C3CA1F5
+        - name: status
+          in: query
+          description: 'To specifically retrieve the FAILED/SUCCESS calls, one can pass a status query param in the URL.'
+          schema:
+            type: string
+            enum:
+              - SUCCESS
+              - FAILED
+        - $ref: '#/components/parameters/CallbackInstance-Content-Type'
+        - $ref: '#/components/parameters/CallbackInstance-Accept'
+      responses:
+        '200':
+          $ref: '#/components/responses/CallbackInstances'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+    put:
+      tags:
+        - Callbacks
+      summary: Update a callback instance status
+      description: |
+        As every call to a callback endpoint is now stored within the calls endpoint, it’s possible that when failed calls are successfully processed through a manual exercise, that these calls will then need to be updated to reflect the current status.
+
+        Take the following example:
+        1.  Callback server becomes unavailable
+        2.  A message is sent via Whispir with callbacks enabled.
+        3.  The Message gets a response, and this triggers the callback
+        4.  The callback server is unavailable, so the response is stored with a status of 'FAILED’
+        5.  After 24h, the callback server becomes available again. Retries have stopped, so this information will not automatically flow into the callback server.
+        6.  The customer writes a script to GET all of the calls stored in the /calls endpoint and process them.
+        7.  Once successfully processed, the customer’s script should update the contents of the /calls endpoint to reflect the current status of 'SUCCESS’.
+
+        This process can be facilitated with the use of a PUT request to the /calls endpoint in Whispir.
+
+        To update a list of attempted API calls from the Whispir API you can execute an HTTP PUT using the /calls endpoint on a specific callback.
+
+        Users can specify multiple IDs to be updated using the following notation:
+
+        `/callbacks/:id/calls?id=ID1&id=ID2&id=ID3...`
+
+        This ensures that all callbacks that have been processed can be updated in a single API call, rather than having to make a single API call per callback attempt.
+
+        The PUT request takes a single API parameter in the body
+      operationId: putCallbackInstanceStatus
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - name: callbackId
+          in: path
+          description: Enter Callback id.
+          required: true
+          schema:
+            type: string
+            example: 41048D9483C8CF2A
+        - $ref: '#/components/parameters/CallbackInstance-Content-Type'
+        - $ref: '#/components/parameters/CallbackInstance-Accept'
+        - schema:
+            type: string
+            maxLength: 32
+            example: C96962B74DC57EF30F00E7097AC81A45
+          in: query
+          name: id
+          required: true
+          description: The unique ID of the specific call within Whispir
+      responses:
+        '204':
+          description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/CallbackInstance-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: The status of this particular callback attempt.
+              properties:
+                status:
+                  type: string
+                  enum:
+                    - FAILED
+                    - SUCCESS
+                  description: The status of this particular callback attempt.
+              required:
+                - status
+            examples:
+              Example:
+                value:
+                  status: FAILED
+        description: 'The Status can be either of SUCCESS or FAILED only, and you can update the status to a singular value for upto 100 ids in a single call by passing the IDs in the URL'
+    parameters:
+      - schema:
+          type: string
+        name: callbackId
+        in: path
+        description: Callback Id
+        required: true
   /workspaces:
     post:
       tags:
@@ -7086,6 +7181,165 @@ components:
           expiryMin: 0
           feedIds: ''
           bool: false
+    callbackInstance:
+      description: A callback instance object
+      type: object
+      x-examples:
+        Example:
+          id: 6AB8FF0111C32F1271E1165F3344AD73
+          messageId: 2E585D7FA580335D5C1809F6DD2DFF0B
+          status: SUCCESS
+          messageLocation: 'https://api.au.whispir.com/messages/F4651CB151ACF0504FF09CB4D57922A5'
+          from:
+            name: Cynthia Pushie
+            mobile: '61430430306'
+            email: cren@whispir.com
+            voice: '61430430306'
+          responseMessage:
+            channel: SMS
+            acknowledged: '22/10/20 10:28'
+            content: 'Delivered successfully to 61430430306 at 22/10/20 09:28'
+          callback:
+            id: 93528522590CDF9A
+            name: PVTcallback
+            url: 'https://0cfae5ba271e4b1e3f6f6e3767c50b21.m.pipedream.net'
+            attemptedDate: '2022-03-21T09:26:11.327Z'
+            statusCode: '200'
+            statusMessage: OK
+          link:
+            - uri: 'https://api.au.whispir.com/callbacks/93528522590CDF9A/calls/6AB8FF0111C32F1271E1165F3344AD73'
+              rel: updateCallbackHistory
+              method: PUT
+              type: 'application/vnd.whispir.api-call-v1+xml,application/vnd.whispir.api-call-v1+json'
+              host: api.au.whispir.com
+              port: -1
+            - uri: 'https://api.au.whispir.com/callbacks/93528522590CDF9A/calls/6AB8FF0111C32F1271E1165F3344AD73'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+      title: callbackInstance
+      properties:
+        id:
+          type: string
+          description: The unique ID of the specific call within Whispir
+          maxLength: 32
+          example: C96962B74DC57EF30F00E7097AC81A45
+          readOnly: true
+        messageId:
+          type: string
+          minLength: 1
+          description: The unique ID of the message within Whispir
+          maxLength: 32
+          example: 8D12688BFCC21BD51174C833F9BC9B9D
+          readOnly: true
+        status:
+          type: string
+          minLength: 1
+          description: The status of this particular callback attempt.
+          enum:
+            - SUCCESS
+            - FAILED
+          readOnly: true
+        messageLocation:
+          example: 'https://api.au.whispir.com/messages/F4651CB151ACF0504FF09CB4D57922A5'
+          type: string
+          minLength: 1
+          description: The fully qualified URL to the original message within Whispir
+          maxLength: 256
+          readOnly: true
+        from:
+          type: object
+          description: The details about this particular message sender/responder
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the sender of this message
+              example: John Wick
+            mri:
+              example: support@whispir.com
+              type: string
+              description: The unique identifier for this contact within Whispir
+            mobile:
+              example: '61400400400'
+              type: string
+              minLength: 1
+              description: The mobile phone number associated with this sender
+            voice:
+              example: '61400400400'
+              type: string
+              minLength: 1
+              description: The phone number associated with the voice channel for this sender
+            email:
+              example: support@whispir.com
+              type: string
+              description: The email address associated with the email channel for this sender
+        responseMessage:
+          type: object
+          description: |-
+            The details about this particular message that have been sent to the callback
+
+            IMPORTANT: Depending on the flow, you may only see  one of the acknowledged or undeliverable keys with timestamps as their value
+          properties:
+            channel:
+              type: string
+              minLength: 1
+              description: 'The channel that this message was sent on. Either SMS, email or voice'
+              enum:
+                - sms
+                - email
+                - voice
+                - N/A
+            acknowledged:
+              example: '22/10/20 10:29'
+              type: string
+              minLength: 1
+              description: The date/time that this message was acknowledged
+            undeliverable:
+              example: '22/10/20 10:29'
+              type: string
+              description: The date/time that this message was marked as undeliverable
+            content:
+              type: string
+              minLength: 1
+              description: The content of the message
+              example: 'Delivered successfully to 61430430306 at 22/10/20 09:28'
+        callback:
+          type: object
+          description: The details about this particular callback attempt
+          properties:
+            id:
+              example: 93528522590CDF9A
+              type: string
+              minLength: 1
+              description: The ID of the callback attempting to be invoked
+            name:
+              example: test callback
+              type: string
+              minLength: 1
+              description: The name of the callback server attempting to be invoked
+            url:
+              example: 'https://google.com'
+              type: string
+              minLength: 1
+              description: The URL of the callback server attempting to be invoked
+            attemptedDate:
+              example: '22/10/20 09:28'
+              type: string
+              minLength: 1
+              description: The date/time that the callback server was attempted to be invoked
+            statusCode:
+              example: 200
+              type: integer
+              description: The statuscode that was returned from the callback service
+            statusMessage:
+              example: OK
+              type: string
+              minLength: 1
+              description: The status message that was returned from the callback service
+        link:
+          $ref: '#/components/schemas/link'
   parameters:
     X-Api-Key:
       name: X-Api-Key
@@ -7198,6 +7452,26 @@ components:
         enum:
           - application/vnd.whispir.user-v1+json
           - application/vnd.whispir.user-v1+xml
+    CallbackInstance-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-call-v1+json
+          - application/vnd.whispir.api-call-v1+xml
+      description: Callback Instance content mime-type
+    CallbackInstance-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-call-v1+json
+          - application/vnd.whispir.api-call-v1+xml
+      description: Callback Instance content mime-type
   responses:
     User:
       description: User endpoint response
@@ -7811,6 +8085,71 @@ components:
                 errorText: Method Not Allowed
                 errorDetail: ''
                 link: []
+    CallbackInstances:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            description: A list of callback instances
+            properties:
+              calls:
+                type: array
+                description: A list of callback instances
+                items:
+                  $ref: '#/components/schemas/callbackInstance'
+              status:
+                type: string
+                example: 1 to 8 of 8
+                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+              link:
+                $ref: '#/components/schemas/link'
+          examples:
+            Example:
+              value:
+                calls:
+                  - id: C96962B74DC57EF30F00E7097AC81A45
+                    messageId: 8D12688BFCC21BD51174C833F9BC9B9D
+                    status: SUCCESS
+                    messageLocation: string
+                    from:
+                      name: John Wick
+                      mri: support@whispir.com
+                      mobile: '6140099499'
+                      voice: string
+                      email: string
+                    responseMessage:
+                      channel: sms
+                      acknowledged: string
+                      undeliverable: string
+                      content: string
+                    callback:
+                      id: string
+                      name: string
+                      url: string
+                      attemptedDate: string
+                      statusCode: 200
+                      statusMessage: string
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                status: 1 to 8 of 8
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/CallbackInstance-Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.
@@ -7891,3 +8230,11 @@ components:
         enum:
           - application/vnd.whispir.api-callback-v1+json
           - application/vnd.whispir.api-callback-v1+xml
+    CallbackInstance-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-call-v1+json
+          - application/vnd.whispir.api-call-v1+xml
+      description: Callback Instance content mime-type

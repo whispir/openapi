@@ -73,6 +73,7 @@ rules:
     given:
       - $..schemas[*]
       - $..responses[*].content[*]..schema
+      - $..requestBody.content[*]..schema
     then:
       field: description
       function: truthy
@@ -82,6 +83,7 @@ rules:
     given:
       - $..schema[*]..properties[*]
       - $..responses[*].content[*]..schema..properties[*]
+      - $..requestBody.content[*]..schema..properties[*]
       - $..headers[*]
     then:
       field: description
@@ -92,6 +94,7 @@ rules:
     given:
       - $..schema[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
       - $..responses[*].content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+      - $..requestBody.content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
       - $..headers[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
     then:
       field: example

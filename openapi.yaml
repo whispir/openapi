@@ -3118,6 +3118,8 @@ paths:
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       requestBody:
         $ref: '#/components/requestBodies/callback'
     delete:
@@ -3851,7 +3853,7 @@ paths:
         required: true
       responses:
         '201':
-          $ref: '#/components/responses/Users'
+          $ref: '#/components/responses/User'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':

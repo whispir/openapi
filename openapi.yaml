@@ -1590,7 +1590,7 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
           in: path
-          description: Enter Templates id.
+          description: The identifier for the template.
           required: true
           schema:
             type: string
@@ -1629,7 +1629,7 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
           in: path
-          description: Enter Templates id.
+          description: The identifier for the template.
           required: true
           schema:
             type: string
@@ -1686,7 +1686,7 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
           in: path
-          description: The id of the Templates to be deleted
+          description: The identifier for the template.
           required: true
           schema:
             type: string

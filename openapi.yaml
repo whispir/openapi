@@ -2605,8 +2605,7 @@ paths:
         required: true
       responses:
         '201':
-          $ref: '#/components/responses/callback'
-          description: Created
+          $ref: '#/components/responses/Callback'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2746,6 +2745,11 @@ paths:
                             rel: self
                             method: GET
                     link: []
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Callback-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2846,43 +2850,7 @@ paths:
           required: true
       responses:
         '200':
-          description: OK
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    status: 1 to 1 of 1
-                    calls:
-                      - id: B3EDFE83DF389DFE
-                        messageId: ABC4857BCCF484575FCA
-                        messageLocation: 'https://api.au.whispir.com/messages/ABC4857BCCF484575FCA'
-                        status: FAILED
-                        from:
-                          name: Fred Waters
-                          mri: Fred_Waters.528798.Sandbox@Contact.whispir.com
-                          mobile: '+1000000000'
-                          email: ''
-                          voice: ''
-                        responseMessage:
-                          channel: SMS
-                          acknowledged: '09/01/13 13:22'
-                          content: 'Yes, I accept. Will I need to bring steel cap boots?'
-                        callback:
-                          id: B384FD38DCBADE38
-                          name: My Callback Server
-                          url: 'https://www.myapplication.com/myapp'
-                          attemptedDate: '09/01/13 13:22'
-                          statusCode: 500
-                          statusMessage: Internal Server Error
-                        link:
-                          - rel: updateCall
-                            uri: /callbacks/B384FD38DCBADE38/calls/B3EDFE83DF389DFE
-                            method: PUT
-                    link:
-                      - rel: next
-                        uri: /callbacks/B384FD38DCBADE38/calls?limit=20&offset=20
-                        method: GET
+          $ref: '#/components/responses/Callback'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2955,6 +2923,11 @@ paths:
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Callback-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2969,6 +2942,8 @@ paths:
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+      requestBody:
+        $ref: '#/components/requestBodies/callback'
   /workspaces:
     post:
       tags:
@@ -6842,6 +6817,41 @@ components:
             Example:
               value:
                 message: Internal Server Error
+    Callback:
+      description: The Callback object
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/callback'
+          examples:
+            Callback object:
+              value:
+                id: 4452AC8359535C46
+                name: Callback Name
+                url: 'https://example.com/callback'
+                auth:
+                  type: queryparam
+                  key: string
+                contentType: json
+                removeHTML: disabled
+                retriesEnabled: true
+                email: me@example.com
+                callbacks:
+                  reply: disabled
+                  undeliverable: disabled
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Callback-Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.

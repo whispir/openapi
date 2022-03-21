@@ -923,7 +923,7 @@ paths:
           content:
             application/vnd.whispir.message-v1+json:
               schema:
-                description: 'The message response object.'
+                description: The message response object.
                 x-examples:
                   Example:
                     messageresponses:
@@ -2774,6 +2774,21 @@ paths:
           application/vnd.whispir.api-callback-v1+json:
             schema:
               $ref: '#/components/schemas/callback'
+            examples:
+              Example:
+                value:
+                  name: Callback Name
+                  url: 'https://example.com/callback'
+                  auth:
+                    type: httpheader
+                    key: MY_AUTH_KEY
+                  contentType: json
+                  removeHTML: disabled
+                  retriesEnabled: true
+                  email: me@example.com
+                  callbacks:
+                    reply: enabled
+                    undeliverable: enabled
         description: Callbacks list object that needs to be create Callbacks
         required: true
       responses:
@@ -4390,7 +4405,7 @@ paths:
           content:
             application/json:
               schema:
-                description: 'The create auth response object.'
+                description: The create auth response object.
                 type: object
                 x-examples:
                   Example:
@@ -6678,7 +6693,7 @@ components:
       content:
         application/json:
           schema:
-            description: 'The bad request response object.'
+            description: The bad request response object.
             type: object
             x-examples:
               Example:
@@ -6730,7 +6745,7 @@ components:
       content:
         application/json:
           schema:
-            description: 'The unauthorised response object.'
+            description: The unauthorised response object.
             type: object
             properties:
               links:
@@ -6782,7 +6797,7 @@ components:
       content:
         application/json:
           schema:
-            description: 'The forbidden response object.'
+            description: The forbidden response object.
             type: object
             properties:
               message:
@@ -6816,7 +6831,7 @@ components:
       content:
         application/json:
           schema:
-            description: 'The not found response object.'
+            description: The not found response object.
             type: object
             properties:
               errorSummary:
@@ -6863,7 +6878,7 @@ components:
       content:
         application/json:
           schema:
-            description: 'The unsupported media type response object.'
+            description: The unsupported media type response object.
             type: object
             properties:
               errorSummary:
@@ -6906,7 +6921,7 @@ components:
       content:
         application/json:
           schema:
-            description: 'The unprocessable entity response object.'
+            description: The unprocessable entity response object.
             type: object
             properties:
               errorSummary:
@@ -6982,13 +6997,13 @@ components:
       content:
         application/json:
           schema:
-            description: 'The method not implemented response object.'
+            description: The method not implemented response object.
             type: object
             properties:
               errorSummary:
                 type: string
                 description: The summary of the error encountered.
-                example: The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com
+                example: 'The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com'
                 minLength: 1
               errorText:
                 type: string
@@ -7009,7 +7024,7 @@ components:
           examples:
             Example:
               value:
-                errorSummary: The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com
+                errorSummary: 'The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com'
                 errorText: Not Implemented
                 errorDetail: ''
                 link: []
@@ -7029,7 +7044,7 @@ components:
       content:
         application/json:
           schema:
-            description: 'The method not allowed response object.'
+            description: The method not allowed response object.
             type: object
             properties:
               errorSummary:

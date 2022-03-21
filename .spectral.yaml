@@ -142,8 +142,6 @@ overrides:
       - '**#/components/requestBodies/event'
       - '**#/paths/~1workspaces~1{workspaceId}~1responserules' # responserules Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1scenario' # scenario Endpoint Examples
-      - '**#/paths/~1workspaces~1{workspaceId}~1template' # template Endpoint Examples
-      - '**#/paths/~1callbacks' # callback Endpoint Examples
       - '**#/paths/~1workspaces' # workspace Endpoint Examples
       - '**#/paths/~1activities' # activity Endpoint Examples
       - '**#/paths/~1users' # user Endpoint Examples

@@ -70,28 +70,41 @@ rules:
   schema-descriptions:
     description: Schemas must have a "description".
     severity: error
-    given: $..schemas[*]
+    given:
+      - $..schemas[*]
+      - $..responses[*].content[*]..schema
+      - $..requestBody.content[*]..schema
     then:
       field: description
       function: truthy
   schema-property-descriptions: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
     description: Schema properties must have a "description".
     severity: error
-    given: $..schema[*]..properties[*]
+    given:
+      - $..schema[*]..properties[*]
+      - $..responses[*].content[*]..schema..properties[*]
+      - $..requestBody.content[*]..schema..properties[*]
+      - $..headers[*]
     then:
       field: description
       function: truthy
   schema-property-examples: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
     description: Schema properties must have an "example".
     severity: error
-    given: $..schema[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+    given:
+      - $..schema[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+      - $..responses[*].content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+      - $..requestBody.content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+      - $..headers[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
     then:
       field: example
       function: defined
-  response-examples:
-    description: Response content must have non-empty "examples" object.
+  request-response-examples:
+    description: Request/Response content must have non-empty "examples" object.
     severity: error
-    given: $..responses[*].content[*]
+    given:
+      - $..responses[*].content[*]
+      - $..requestBody.content[*]
     then:
       field: examples
       function: schema
@@ -122,13 +135,19 @@ overrides:
       - '**#/components/schemas/fieldMapping'
       - '**#/components/schemas/auth' # Auth Endpoint Schemas
       - '**#/components/schemas/activity' # Activity Endpoint Schemas
+      - '**#/components/requestBodies/event'
   - rules:
-      response-examples: off
-      response-schema-property-descriptions: off
-      response-schema-property-examples: off
+      request-response-examples: off
     files:
       - '**#/paths/~1workspaces~1{workspaceId}~1resources' # Resources Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1contacts' # Contacts Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1distributionlists' # DistributionLists Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1events' # Events Endpoint Examples
+      - '**#/components/requestBodies/event'
+      - '**#/paths/~1workspaces~1{workspaceId}~1responserules' # responserules Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1scenario' # scenario Endpoint Examples
+      - '**#/paths/~1workspaces' # workspace Endpoint Examples
+      - '**#/paths/~1activities' # activity Endpoint Examples
+      - '**#/paths/~1users' # user Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1import' # import Endpoint Examples
       - '**#/paths/~1auth' # Auth Endpoint Examples

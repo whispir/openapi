@@ -216,15 +216,6 @@ paths:
                   web:
                     body: This is the content of my web publishing or Rich Push Message
                     type: text/plain
-          application/vnd.whispir.bulkmessage-v1+json:
-            schema:
-              $ref: '#/components/schemas/message'
-          application/vnd.whispir.message-v1+xml:
-            schema:
-              $ref: '#/components/schemas/message'
-          application/vnd.whispir.bulkmessage-v1+xml:
-            schema:
-              $ref: '#/components/schemas/message'
         description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web].'
         required: true
       responses:
@@ -236,6 +227,7 @@ paths:
                 type: string
                 enum:
                   - Your request has been accepted for processing
+                description: The status of the response acceptance.
               examples:
                 Response:
                   value: Your request has been accepted for processing
@@ -246,6 +238,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
             Location:
               schema:
                 type: string
@@ -259,12 +255,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Messages
@@ -306,7 +306,7 @@ paths:
           content:
             application/json:
               schema:
-                description: ''
+                description: The list messages response object.
                 type: object
                 x-examples:
                   Example:
@@ -352,16 +352,17 @@ paths:
                 properties:
                   messages:
                     type: array
+                    description: The list of retrieved messages.
                     uniqueItems: true
                     minItems: 1
                     items:
                       $ref: '#/components/schemas/message'
                   status:
+                    description: The status of the list request.
                     type: string
                     example: ''
                   link:
-                    type: array
-                    items: {}
+                    $ref: '#/components/schemas/link'
                 required:
                   - messages
                   - status
@@ -417,6 +418,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -425,12 +430,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}':
@@ -468,6 +477,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
           content:
             application/vnd.whispir.message-v1+json:
               schema:
@@ -552,12 +565,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: Content-Type
@@ -711,6 +728,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
           content:
             application/vnd.whispir.messagestatus-v1+json:
               examples:
@@ -775,12 +796,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       tags:
         - Messages
     parameters:
@@ -891,10 +916,14 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
           content:
             application/vnd.whispir.message-v1+json:
               schema:
-                description: ''
+                description: The message response object.
                 x-examples:
                   Example:
                     messageresponses:
@@ -966,12 +995,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       tags:
         - Messages
     parameters:
@@ -1045,12 +1078,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Resources
@@ -1181,12 +1218,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/resources/{resourceId}':
@@ -1236,12 +1277,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Resources
@@ -1300,12 +1345,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Resources
@@ -1335,12 +1384,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates':
@@ -1357,9 +1410,6 @@ paths:
           application/vnd.whispir.template-v1+json:
             schema:
               $ref: '#/components/schemas/template'
-          application/vnd.whispir.template-v1+xml:
-            schema:
-              $ref: '#/components/schemas/template'
         description: Templates object that needs to be create Templates
         required: true
       responses:
@@ -1373,12 +1423,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Templates
@@ -1503,12 +1557,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/templates/{templateId}':
@@ -1549,12 +1607,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Templates
@@ -1576,9 +1638,6 @@ paths:
           application/vnd.whispir.template-v1+json:
             schema:
               $ref: '#/components/schemas/template'
-          application/vnd.whispir.template-v1+xml:
-            schema:
-              $ref: '#/components/schemas/template'
         description: Templates object that needs to be update Templates
         required: true
       responses:
@@ -1592,12 +1651,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Templates
@@ -1625,12 +1688,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules':
@@ -1656,9 +1723,6 @@ paths:
           application/vnd.whispir.responserule-v1+json:
             schema:
               $ref: '#/components/schemas/responseRule'
-          application/vnd.whispir.responserule-v1+xml:
-            schema:
-              $ref: '#/components/schemas/responseRule'
         description: ''
         required: true
       responses:
@@ -1672,12 +1736,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Response Rules
@@ -1697,12 +1765,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/responserules/{responseRuleId}':
@@ -1732,12 +1804,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Response Rules
@@ -1758,9 +1834,6 @@ paths:
           application/vnd.whispir.responserule-v1+json:
             schema:
               $ref: '#/components/schemas/responseRule'
-          application/vnd.whispir.responserule-v1+xml:
-            schema:
-              $ref: '#/components/schemas/responseRule'
         description: Response Rules object used to update Response Rules
         required: true
       responses:
@@ -1774,12 +1847,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Response Rules
@@ -1806,12 +1883,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/contacts':
@@ -1852,12 +1933,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Contacts
@@ -1916,12 +2001,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/contacts/{contactId}':
@@ -1966,12 +2055,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Contacts
@@ -2019,12 +2112,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Contacts
@@ -2054,12 +2151,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/distributionlists':
@@ -2117,12 +2218,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Distribution Lists
@@ -2191,12 +2296,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/distributionlists/{distributionlistId}':
@@ -2250,12 +2359,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Distribution Lists
@@ -2309,12 +2422,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Distribution Lists
@@ -2342,12 +2459,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/scenarios':
@@ -2365,9 +2486,6 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
-          application/vnd.whispir.scenario-v1+xml:
-            schema:
-              $ref: '#/components/schemas/scenario'
         description: Scenario list object that needs to be create Scenario
         required: true
       responses:
@@ -2381,12 +2499,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Scenarios
@@ -2406,12 +2528,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/scenarios/{scenarioId}':
@@ -2474,12 +2600,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     post:
       tags:
         - Scenarios
@@ -2516,12 +2646,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Scenarios
@@ -2542,9 +2676,6 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
-          application/vnd.whispir.scenario-v1+xml:
-            schema:
-              $ref: '#/components/schemas/scenario'
         description: Scenarios object that needs to be update Scenarios
         required: true
       responses:
@@ -2558,12 +2689,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Scenarios
@@ -2590,12 +2725,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /callbacks:
@@ -2635,9 +2774,21 @@ paths:
           application/vnd.whispir.api-callback-v1+json:
             schema:
               $ref: '#/components/schemas/callback'
-          application/vnd.whispir.api-callback-v1+xml:
-            schema:
-              $ref: '#/components/schemas/callback'
+            examples:
+              Example:
+                value:
+                  name: Callback Name
+                  url: 'https://example.com/callback'
+                  auth:
+                    type: httpheader
+                    key: MY_AUTH_KEY
+                  contentType: json
+                  removeHTML: disabled
+                  retriesEnabled: true
+                  email: me@example.com
+                  callbacks:
+                    reply: enabled
+                    undeliverable: enabled
         description: Callbacks list object that needs to be create Callbacks
         required: true
       responses:
@@ -2651,12 +2802,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
     get:
@@ -2721,12 +2876,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
   '/callbacks/{callbackId}/calls':
@@ -2822,12 +2981,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Callbacks
@@ -2885,12 +3048,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
   /workspaces:
     post:
       tags:
@@ -2902,9 +3069,6 @@ paths:
       requestBody:
         content:
           application/vnd.whispir.workspace-v1+json:
-            schema:
-              $ref: '#/components/schemas/workspace'
-          application/vnd.whispir.workspace-v1+xml:
             schema:
               $ref: '#/components/schemas/workspace'
         description: Workspaces list object that needs to be create Workspaces
@@ -2920,12 +3084,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
     get:
@@ -2983,12 +3151,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
   '/workspaces/{workspaceId}':
@@ -3011,12 +3183,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /activities:
@@ -3032,9 +3208,6 @@ paths:
           application/vnd.whispir.activity-v1+json:
             schema:
               $ref: '#/components/schemas/activity'
-          application/vnd.whispir.activity-v1+xml:
-            schema:
-              $ref: '#/components/schemas/activity'
         description: activity list object that needs to be create activity
         required: true
       responses:
@@ -3048,12 +3221,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
     get:
@@ -3239,12 +3416,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
   '/workspaces/{workspaceId}/activities':
     get:
       tags:
@@ -3267,12 +3448,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/customlists':
@@ -3414,12 +3599,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/customlists/{customlistId}':
@@ -3508,12 +3697,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /users:
@@ -3543,9 +3736,6 @@ paths:
       requestBody:
         content:
           application/vnd.whispir.user-v1+json:
-            schema:
-              $ref: '#/components/schemas/user'
-          application/vnd.whispir.user-v1+xml:
             schema:
               $ref: '#/components/schemas/user'
         description: Users list object that needs to be create Users
@@ -3589,12 +3779,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     get:
       tags:
         - Users
@@ -3689,12 +3883,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       x-internal: false
     delete:
       tags:
@@ -3718,12 +3916,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
   '/users/{userId}':
     get:
       tags:
@@ -3764,12 +3966,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     put:
       tags:
         - Users
@@ -3803,9 +4009,6 @@ paths:
           application/vnd.whispir.user-v1+json:
             schema:
               $ref: '#/components/schemas/user'
-          application/vnd.whispir.user-v1+xml:
-            schema:
-              $ref: '#/components/schemas/user'
         description: Users object that needs to be update Users
         required: true
       responses:
@@ -3819,12 +4022,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     delete:
       tags:
         - Users
@@ -3854,12 +4061,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
   '/workspaces/{workspaceId}/users':
     get:
       tags:
@@ -3910,12 +4121,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/events':
@@ -3945,12 +4160,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     post:
       tags:
         - Events
@@ -4097,12 +4316,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/imports':
@@ -4147,9 +4370,6 @@ paths:
           application/vnd.whispir.import-v1+json:
             schema:
               $ref: '#/components/schemas/import'
-          application/vnd.whispir.import-v1+xml:
-            schema:
-              $ref: '#/components/schemas/import'
         description: import object that needs to be create import
       responses:
         '201':
@@ -4162,12 +4382,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
   /auth:
@@ -4181,7 +4405,7 @@ paths:
           content:
             application/json:
               schema:
-                description: ''
+                description: The create auth response object.
                 type: object
                 x-examples:
                   Example:
@@ -4190,11 +4414,10 @@ paths:
                 properties:
                   token:
                     type: string
-                    example: '"your-generated-token-string"'
+                    description: The JWT token.
+                    example: your-generated-token-string
                   link:
-                    type: array
-                    items:
-                      type: object
+                    $ref: '#/components/schemas/link'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4203,12 +4426,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       description: Create a JWT authentication token
       parameters:
         - schema:
@@ -4283,12 +4510,16 @@ paths:
           $ref: '#/components/responses/403Forbidden'
         '404':
           $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       summary: Verify an auth token
       tags:
         - Auth
@@ -4320,9 +4551,6 @@ components:
     event:
       content:
         application/vnd.whispir.event-v1+json:
-          schema:
-            $ref: '#/components/schemas/event'
-        application/vnd.whispir.event-v1+xml:
           schema:
             $ref: '#/components/schemas/event'
       description: events object that needs to be create events
@@ -4366,7 +4594,6 @@ components:
       properties:
         to:
           type: string
-          example: '61987654321'
           description: |
             Allows a combination of phone numbers, email address, Whispir Contact MRIs, User MRI, Distribution List MRI, separated by `,`.
 
@@ -4377,6 +4604,7 @@ components:
 
             When used for bulk messages, this field is optional, as bulk messages has another model to specify the `to` field recipients.
           maxLength: 10000
+          example: '61400400400'
         subject:
           type: string
           example: Test Message
@@ -5850,6 +6078,8 @@ components:
       x-tags:
         - Events
       title: Event
+      description: The event object.
+      x-examples: {}
     import:
       type: object
       required:
@@ -6456,11 +6686,16 @@ components:
         Content-Length:
           $ref: '#/components/headers/Content-Length'
     400BadRequest:
-      description: 400 Bad Request Error
+      description: |-
+        Invalid or missing request parameters.
+
+        Inspect the request parameters and ensure that all required parameters are supplied.
+
+        Note the error text in the response and update the request accordingly.
       content:
         application/json:
           schema:
-            description: ''
+            description: The bad request response object.
             type: object
             x-examples:
               Example:
@@ -6470,14 +6705,17 @@ components:
             properties:
               errorSummary:
                 type: string
+                description: The summary of the error encountered.
                 minLength: 1
                 example: Your request was malformed and could not be processed by the server. Please try again
               errorText:
                 type: string
+                description: The detailed description of the error encountered.
                 minLength: 1
                 example: Bad Request
               errorDetail:
                 type: string
+                description: The additional details describing the error.
                 minLength: 1
                 example: '"java.io.EOFException: No content to map to Object due to end of inpu'
             required:
@@ -6490,27 +6728,44 @@ components:
                 errorSummary: Your request was malformed and could not be processed by the server. Please try again
                 errorText: Bad Request
                 errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
-      headers: {}
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     401Unauthorized:
-      description: 401 Unauthorized Error
+      description: |-
+        Invalid or no credentials passed in the request.
+
+        Inspect the authorisation header and ensure that a valid authentication has been provided.
       content:
         application/json:
           schema:
-            description: ''
+            description: The unauthorised response object.
             type: object
             properties:
               links:
                 $ref: '#/components/schemas/link'
               errorSummary:
                 type: string
+                description: The summary of the error encountered.
                 minLength: 1
                 example: Your username and password combination was incorrect. Please check your authentication details and try again
               errorText:
                 type: string
+                description: The detailed description of the error encountered.
                 minLength: 1
                 example: Unauthorised
               errorDetail:
                 type: string
+                description: The additional details describing the error.
+                example: An exception occurred.
             required:
               - errorSummary
               - errorText
@@ -6522,18 +6777,34 @@ components:
                 errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
                 errorText: Unauthorized
                 errorDetail: ''
-      headers: {}
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     403Forbidden:
-      description: 403 Forbidden Error
+      description: |-
+        Authorisation credentials passed and accepted but the account doesn't have permission.
+
+        * Inspect the authorisation header and ensure that a valid authentication has been provided.
+        * Returned when HTTP is used instead of HTTPS.
+        * Returned when invalid API key is used.
+        * Returned when you have tried to make more API calls than your allowed quota (QPS). Refer to API rate limits.
       content:
         application/json:
           schema:
-            description: ''
+            description: The forbidden response object.
             type: object
             properties:
               message:
                 type: string
-                minLength: 1
+                description: The error message.
                 example: Forbidden
             required:
               - message
@@ -6541,25 +6812,44 @@ components:
             Example:
               value:
                 message: Forbidden
-      headers: {}
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     404NotFound:
-      description: 404 Not found Error
+      description: |-
+        The requested URL doesn't exist.
+
+        The requested resource was not found. Inspect the ID in the URL that was used and ensure that it's valid.
+
+        Also, inspect the Accept and Content-Type headers that are being used to make sure they’re correct for the URL that is being requested.
       content:
         application/json:
           schema:
-            description: ''
+            description: The not found response object.
             type: object
             properties:
               errorSummary:
                 type: string
+                description: The summary of the error encountered.
                 minLength: 1
                 example: The resource that you have requested does not exist. Please check the identifier and try again
               errorText:
                 type: string
+                description: The detailed description of the error encountered.
                 minLength: 1
                 example: Not Found
               errorDetail:
                 type: string
+                description: The additional details describing the error.
+                example: An exception occurred.
               link:
                 $ref: '#/components/schemas/link'
           examples:
@@ -6569,24 +6859,43 @@ components:
                 errorText: Not Found
                 errorDetail: ''
                 link: []
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     415UnsupportedMediaType:
-      description: 415 Unsupported Media Type Error
+      description: |-
+        The request was unsuccessful because the requested content type is not supported by the API.
+
+        The application client can use this response to determine if it's asking for a supported version of a resource. On receiving this response, the client can query the developer documentation to determine the appropriate version for the requested resource.
+
+        In most cases, this is due to the user not supplying the correct Accept or Content-Type header for the requested URL.
       content:
         application/json:
           schema:
-            description: ''
+            description: The unsupported media type response object.
             type: object
             properties:
               errorSummary:
                 type: string
+                description: The summary of the error encountered.
                 minLength: 1
                 example: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
               errorText:
                 type: string
+                description: The detailed description of the error encountered.
                 minLength: 1
                 example: Unsupported Media Type
               errorDetail:
                 type: string
+                description: The additional details describing the error.
                 minLength: 1
                 example: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
           examples:
@@ -6595,24 +6904,42 @@ components:
                 errorSummary: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
                 errorText: Unsupported Media Type
                 errorDetail: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     422UnprocessibleEntity:
-      description: 422 Unprocessible Entity Error
+      description: |-
+        The request is formed correctly but due to some condition it can’t be processed. For example, email is required and it's not provided in the request.
+
+        The request did not contain all the information required to perform this method. Check your request for the required fields to be passed in and try again. The offending fields will be specified in the error text of the response.
       content:
         application/json:
           schema:
-            description: ''
+            description: The unprocessable entity response object.
             type: object
             properties:
               errorSummary:
                 type: string
+                description: The summary of the error encountered.
                 minLength: 1
                 example: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
               errorText:
                 type: string
+                description: The detailed description of the error encountered.
                 minLength: 1
                 example: 'A Template name already exists in the current Workspace, please select another name and try again.'
               errorDetail:
                 type: string
+                description: The additional details describing the error.
+                example: An exception occurred.
               link:
                 $ref: '#/components/schemas/link'
           examples:
@@ -6623,20 +6950,133 @@ components:
                   A Template name already exists in the current Workspace, please select another name and try again.
                 errorDetail: ''
                 link: []
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     500InternalServerError:
-      description: 500 Internal Server Error
+      description: |-
+        An internal error occurred when processing the request.
+
+        Attempt the request again and if the HTTP 500 error re-occurs contact the Whispir Support Team.
       content:
         application/json:
           schema:
+            description: The internal server response object.
             type: object
             properties:
               message:
                 type: string
+                description: The error message.
                 example: Internal Server Error
           examples:
             Example:
               value:
                 message: Internal Server Error
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+    501MethodNotImplemented:
+      description: |-
+        The HTTP method being used has not yet been implemented for the requested resource.
+
+        The method being used is not implemented for this resource. Check the documentation for the specific resource type.
+      content:
+        application/json:
+          schema:
+            description: The method not implemented response object.
+            type: object
+            properties:
+              errorSummary:
+                type: string
+                description: The summary of the error encountered.
+                example: 'The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com'
+                minLength: 1
+              errorText:
+                type: string
+                description: The detailed description of the error encountered.
+                example: Not Implemented
+                minLength: 1
+              errorDetail:
+                type: string
+                description: The additional details describing the error.
+                example: An exception occurred.
+              link:
+                $ref: '#/components/schemas/link'
+            required:
+              - errorSummary
+              - errorText
+              - errorDetail
+              - link
+          examples:
+            Example:
+              value:
+                errorSummary: 'The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com'
+                errorText: Not Implemented
+                errorDetail: ''
+                link: []
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+    405MethodNotAllowed:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            description: The method not allowed response object.
+            type: object
+            properties:
+              errorSummary:
+                type: string
+                description: The summary of the error encountered.
+                example: The method that you have tried to use is not allowed for this resource
+                minLength: 1
+              errorText:
+                type: string
+                description: The detailed description of the error encountered.
+                example: Method Not Allowed
+                minLength: 1
+              errorDetail:
+                type: string
+                description: The additional details describing the error.
+                example: An exception occurred.
+              link:
+                $ref: '#/components/schemas/link'
+            required:
+              - errorSummary
+              - errorText
+              - errorDetail
+              - link
+          examples:
+            Example:
+              value:
+                errorSummary: The method that you have tried to use is not allowed for this resource
+                errorText: Method Not Allowed
+                errorDetail: ''
+                link: []
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.
@@ -6651,6 +7091,24 @@ components:
       example: 4111
       schema:
         type: number
+    Content-Type:
+      description: The content type of the request header.
+      required: true
+      example: application/vnd.whispir.message-v1+json
+      schema:
+        type: string
+    Cache-Control:
+      description: 'The directives that control caching in browsers and shared caches (e.g. Proxies, CDNs).'
+      required: true
+      example: max-age=0
+      schema:
+        type: string
+    Expires:
+      description: The date/time after which the response is considered expired.
+      required: true
+      example: 'Mon, 21 Mar 2022 03:18:32 GMT'
+      schema:
+        type: string
     Message-Content-Type:
       description: Message content mime type.
       required: true

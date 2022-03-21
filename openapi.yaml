@@ -4934,7 +4934,7 @@ components:
               host: api.au.whispir.com
               port: -1
           tags: string
-        example-1:
+        Example-Email-only:
           messageTemplateName: Sample SMS Template
           messageTemplateDescription: Template to provide an example on whispir.io
           responseTemplateId: responseTemplateId

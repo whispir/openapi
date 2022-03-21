@@ -4559,6 +4559,8 @@ components:
               - attachmentName: TestIcon.png
                 attachmentDesc: MyPhoto
                 derefUri: iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMvSURBVDhPTVT5S1RhFD3fezOOOePTXHKriWgjsogWC1TSMuuHIFqoX0KsIIgSWwiq/6FFU8MKK6KyXYSKpkUKR4QMSSpCLQpyxHHUZpztzdu63xub5vKWj/fu+c6599z3mMfjSU9P13UdZoiCaLfZYQWiUGKq1WrBLEBDOBpWNTWeQyEIwvT0NAsEAgROPKXFxceNbQOtv4ShkKCkaZZ5kYU1Sw6dqT0NMTkLBIbf7zf+xaOuJzgG4RmyPyP/Kwq/oWAYeT+R6gYOofnmlUQmLQjI6JQkifasu368KdCQWwFEwBiYQOIgiDBETDFIORh/iZ0De55cehgXQJIphce9d/ebJhuyV0P3QY9Cj/HDUKhseIPomP/CW2QYB42nSx+db76YUM9IusPhYHVM2g5Bpo5xNuIkZibCF8On0oGVjhWabmR8EBx5GDuHaItsy0zhzA6bo/H5ZSyDMQ1d4YQa0Sqc1hdAe3E7IYkqp9tiUcHGkXIQZ8+fm+k5uXK3/46YAV3mMMLEt/BHUJ1Vua9oH+WV9ayLyLpVhRYFkT8d4mUzRuI0DAcHmQngSLrGoBJ/GC/L31JSy/cm91ifXTcboYDJGLX+1kI6WS3AQFSRCUDvwhGEwubiD1yVLkLKWuxoT50kzGwab6Ru6HIsahpiwTybkwTLU9iUU1Ezf394CmuyV20p2kLg8mcbRHLLxGimLlWFFMpMc6TRFlx29aJqePBgx4M3u7tubb1dMXfjw6rHhOwb+/jhV3+qNtMFKspQEZnA+oxSPr9UdjgUllV59pHZhSUFI/We5AnMv5o7bvhsFu5f3DlmR7ATr/a+rtq2mVulqEqmlFlbUuv5MbqudW0C7PrhGpvwidRhIoyXqiHoRam/tGrT5n9Wmfcb9TfmBOf0DXy80H0h/uKU6yQRcqlmk+mji0RhbbN2XOpAygzF/9nmfp4oc4+4y6vLqRnuUTdsfNqYFRop/4JFw4t723qz52YlZpvPd/K30vm+03nAie1ADXAYOADsgHOXs/laix7RkzMJyJJ/BjQ09lQ7me8f9/cP9nsnvemzpOIFy3PzclkK0wyNgvDEHP8Z/AXQ58rAz69IBAAAAABJRU5ErkJggg==
+      x-tags:
+        - Messages
       properties:
         body:
           type: string
@@ -4585,10 +4587,9 @@ components:
               uniqueItems: false
               items:
                 $ref: '#/components/schemas/attachment'
+          writeOnly: true
       required:
         - body
-      x-tags:
-        - Messages
     voice:
       type: object
       xml:
@@ -4933,6 +4934,40 @@ components:
               host: api.au.whispir.com
               port: -1
           tags: string
+        example-1:
+          messageTemplateName: Sample SMS Template
+          messageTemplateDescription: Template to provide an example on whispir.io
+          responseTemplateId: responseTemplateId
+          subject: Test SMS Message
+          body: This is the body of my test SMS message
+          email:
+            body: This is the body of my email message.
+            footer: This is the footer of my message.
+            type: text/plain
+            resources:
+              attachments:
+                - attachmentName: TestIcon.png
+                  derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                  attachmentDesc: My photo
+          type: defaultNoReply
+          dlr:
+            period: ''
+            rule: ''
+            type: ''
+            publishToWeb: true
+            expiryDay: 0
+            expiryHour: 0
+            expiryMin: 0
+            feedIds: ''
+            bool: true
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+          tags: campaign
+          id: 7DB65E1D8853D1C8
       properties:
         messageTemplateName:
           type: string

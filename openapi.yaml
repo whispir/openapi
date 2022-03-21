@@ -2896,7 +2896,7 @@ paths:
     put:
       tags:
         - Callbacks
-      summary: Update a callback call
+      summary: Update a callback
       description: |
         As every call to a callback endpoint is now stored within the calls endpoint, it’s possible that when failed calls are successfully processed through a manual exercise, that these calls will then need to be updated to reflect the current status.
 
@@ -2925,7 +2925,7 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
           in: path
-          description: Enter Scenarios id.
+          description: Enter Callback id.
           required: true
           schema:
             type: string
@@ -2957,7 +2957,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/callback'
     delete:
-      summary: ''
+      summary: Delete a callback
       operationId: deleteCallbackById
       responses:
         '200':
@@ -2986,8 +2986,17 @@ paths:
       description: Delete a callback object
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - name: callbackId
+          in: path
+          description: Enter Callback id.
+          required: true
+          schema:
+            type: string
+            example: 41048D9483C8CF2A
         - $ref: '#/components/parameters/Callback-Content-Type'
         - $ref: '#/components/parameters/Callback-Accept'
+      tags:
+        - Callbacks
   /workspaces:
     post:
       tags:

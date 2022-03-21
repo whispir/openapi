@@ -1405,8 +1405,8 @@ paths:
       operationId: postTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/Templates-Content-Type'
-        - $ref: '#/components/parameters/Templates-Accept'
+        - $ref: '#/components/parameters/Template-Content-Type'
+        - $ref: '#/components/parameters/Template-Accept'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
@@ -1448,8 +1448,8 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
-        - $ref: '#/components/parameters/Templates-Content-Type'
-        - $ref: '#/components/parameters/Templates-Accept'
+        - $ref: '#/components/parameters/Template-Content-Type'
+        - $ref: '#/components/parameters/Template-Accept'
       responses:
         '200':
           description: OK
@@ -1555,6 +1555,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1586,13 +1590,13 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
           in: path
-          description: Enter Templates id.
+          description: The identifier for the template.
           required: true
           schema:
             type: string
             example: 321D8505157C5F27
-        - $ref: '#/components/parameters/Templates-Content-Type'
-        - $ref: '#/components/parameters/Templates-Accept'
+        - $ref: '#/components/parameters/Template-Content-Type'
+        - $ref: '#/components/parameters/Template-Accept'
       responses:
         '201':
           $ref: '#/components/responses/Template'
@@ -1625,13 +1629,13 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
           in: path
-          description: Enter Templates id.
+          description: The identifier for the template.
           required: true
           schema:
             type: string
             example: 321D8505157C5F27
-        - $ref: '#/components/parameters/Templates-Content-Type'
-        - $ref: '#/components/parameters/Templates-Accept'
+        - $ref: '#/components/parameters/Template-Content-Type'
+        - $ref: '#/components/parameters/Template-Accept'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
@@ -1649,6 +1653,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1678,13 +1686,13 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
           in: path
-          description: The id of the Templates to be deleted
+          description: The identifier for the template.
           required: true
           schema:
             type: string
             example: 321D8505157C5F27
-        - $ref: '#/components/parameters/Templates-Content-Type'
-        - $ref: '#/components/parameters/Templates-Accept'
+        - $ref: '#/components/parameters/Template-Content-Type'
+        - $ref: '#/components/parameters/Template-Accept'
       responses:
         '204':
           description: No Content
@@ -1695,6 +1703,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2844,7 +2856,7 @@ paths:
           content:
             application/json:
               schema:
-                description: 'The callback object.'
+                description: The callback object.
                 type: object
                 x-examples:
                   example-1:
@@ -2863,7 +2875,7 @@ paths:
                     link: []
                 properties:
                   status:
-                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.  
+                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
                     type: string
                     minLength: 1
                     example: 1 to 1 of 1
@@ -3106,6 +3118,8 @@ paths:
           $ref: '#/components/responses/422UnprocessibleEntity'
         '500':
           $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
       requestBody:
         $ref: '#/components/requestBodies/callback'
     delete:
@@ -3121,6 +3135,10 @@ paths:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3835,7 +3853,7 @@ paths:
         required: true
       responses:
         '201':
-          $ref: '#/components/responses/Users'
+          $ref: '#/components/responses/User'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3949,6 +3967,17 @@ paths:
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/User-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4046,6 +4075,17 @@ paths:
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/User-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4087,6 +4127,17 @@ paths:
       responses:
         '204':
           description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/User-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4815,6 +4866,8 @@ components:
               - attachmentName: TestIcon.png
                 attachmentDesc: MyPhoto
                 derefUri: iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMvSURBVDhPTVT5S1RhFD3fezOOOePTXHKriWgjsogWC1TSMuuHIFqoX0KsIIgSWwiq/6FFU8MKK6KyXYSKpkUKR4QMSSpCLQpyxHHUZpztzdu63xub5vKWj/fu+c6599z3mMfjSU9P13UdZoiCaLfZYQWiUGKq1WrBLEBDOBpWNTWeQyEIwvT0NAsEAgROPKXFxceNbQOtv4ShkKCkaZZ5kYU1Sw6dqT0NMTkLBIbf7zf+xaOuJzgG4RmyPyP/Kwq/oWAYeT+R6gYOofnmlUQmLQjI6JQkifasu368KdCQWwFEwBiYQOIgiDBETDFIORh/iZ0De55cehgXQJIphce9d/ebJhuyV0P3QY9Cj/HDUKhseIPomP/CW2QYB42nSx+db76YUM9IusPhYHVM2g5Bpo5xNuIkZibCF8On0oGVjhWabmR8EBx5GDuHaItsy0zhzA6bo/H5ZSyDMQ1d4YQa0Sqc1hdAe3E7IYkqp9tiUcHGkXIQZ8+fm+k5uXK3/46YAV3mMMLEt/BHUJ1Vua9oH+WV9ayLyLpVhRYFkT8d4mUzRuI0DAcHmQngSLrGoBJ/GC/L31JSy/cm91ifXTcboYDJGLX+1kI6WS3AQFSRCUDvwhGEwubiD1yVLkLKWuxoT50kzGwab6Ru6HIsahpiwTybkwTLU9iUU1Ezf394CmuyV20p2kLg8mcbRHLLxGimLlWFFMpMc6TRFlx29aJqePBgx4M3u7tubb1dMXfjw6rHhOwb+/jhV3+qNtMFKspQEZnA+oxSPr9UdjgUllV59pHZhSUFI/We5AnMv5o7bvhsFu5f3DlmR7ATr/a+rtq2mVulqEqmlFlbUuv5MbqudW0C7PrhGpvwidRhIoyXqiHoRam/tGrT5n9Wmfcb9TfmBOf0DXy80H0h/uKU6yQRcqlmk+mji0RhbbN2XOpAygzF/9nmfp4oc4+4y6vLqRnuUTdsfNqYFRop/4JFw4t723qz52YlZpvPd/K30vm+03nAie1ADXAYOADsgHOXs/laix7RkzMJyJJ/BjQ09lQ7me8f9/cP9nsnvemzpOIFy3PzclkK0wyNgvDEHP8Z/AXQ58rAz69IBAAAAABJRU5ErkJggg==
+      x-tags:
+        - Messages
       properties:
         body:
           type: string
@@ -4841,10 +4894,9 @@ components:
               uniqueItems: false
               items:
                 $ref: '#/components/schemas/attachment'
+          writeOnly: true
       required:
         - body
-      x-tags:
-        - Messages
     voice:
       type: object
       xml:
@@ -5189,6 +5241,40 @@ components:
               host: api.au.whispir.com
               port: -1
           tags: string
+        Example-Email-only:
+          messageTemplateName: Sample SMS Template
+          messageTemplateDescription: Template to provide an example on whispir.io
+          responseTemplateId: responseTemplateId
+          subject: Test SMS Message
+          body: This is the body of my test SMS message
+          email:
+            body: This is the body of my email message.
+            footer: This is the footer of my message.
+            type: text/plain
+            resources:
+              attachments:
+                - attachmentName: TestIcon.png
+                  derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                  attachmentDesc: My photo
+          type: defaultNoReply
+          dlr:
+            period: ''
+            rule: ''
+            type: ''
+            publishToWeb: true
+            expiryDay: 0
+            expiryHour: 0
+            expiryMin: 0
+            feedIds: ''
+            bool: true
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+          tags: campaign
+          id: 7DB65E1D8853D1C8
       properties:
         messageTemplateName:
           type: string
@@ -5729,7 +5815,7 @@ components:
           maxLength: 50
         url:
           type: string
-          description: The destination url on your servers that Whispir should reach out to.
+          description: Specifies the service URL that API Callbacks should be forwarded to.
           example: 'https://example.com/callback'
           format: uri
         auth:
@@ -7034,6 +7120,16 @@ components:
         type: number
         default: 0
       description: The record number to start returning from.
+    Template-Content-Type:
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.template-v1+json
+          - application/vnd.whispir.template-v1+xml
+      description: Callback content mime type.
+      name: Content-Type
     Callback-Content-Type:
       name: Content-Type
       in: header
@@ -7054,18 +7150,8 @@ components:
           - application/vnd.whispir.api-callback-v1+json
           - application/vnd.whispir.api-callback-v1+xml
       description: Callback content mime-type
-    Templates-Accept:
+    Template-Accept:
       name: Accept
-      in: header
-      required: true
-      schema:
-        type: string
-        enum:
-          - application/vnd.whispir.template-v1+json
-          - application/vnd.whispir.template-v1+xml
-      description: Template content mime-type
-    Templates-Content-Type:
-      name: Content-Type
       in: header
       required: true
       schema:
@@ -7093,25 +7179,25 @@ components:
         example: 'lastName,jobTitle'
       description: 'The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.'
     User-Content-Type:
+      name: Content-Type
       in: header
+      description: User content mime type.
+      required: true
       schema:
         type: string
         enum:
           - application/vnd.whispir.user-v1+json
           - application/vnd.whispir.user-v1+xml
-      name: Content-Type
-      description: User content mime type.
-      required: true
     User-Accept:
       name: Accept
       in: header
+      description: User accept.
       required: true
       schema:
         type: string
         enum:
           - application/vnd.whispir.user-v1+json
           - application/vnd.whispir.user-v1+xml
-      description: User accept.
   responses:
     User:
       description: User endpoint response
@@ -7191,10 +7277,16 @@ components:
                     host: api.au.whispir.com
                     port: -1
       headers:
-        Accept:
-          $ref: '#/components/headers/User-Content-Type'
         Content-Type:
           $ref: '#/components/headers/User-Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     Users:
       description: List users endpoint response
       content:
@@ -7224,14 +7316,16 @@ components:
                         host: api.au.whispir.com
                         port: -1
       headers:
-        Accept:
-          $ref: '#/components/headers/User-Content-Type'
         Content-Type:
           $ref: '#/components/headers/User-Content-Type'
-        Access-Control-Allow-Origin:
-          $ref: '#/components/headers/Access-Control-Allow-Origin'
         Content-Length:
           $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     Template:
       description: Template endpoint response.
       content:

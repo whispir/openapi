@@ -3652,6 +3652,9 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/user'
+          headers:
+            Accept:
+              $ref: '#/components/headers/User-Content-Type'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -6984,11 +6987,7 @@ components:
                     host: api.au.whispir.com
                     port: -1
       headers:
-        Access-Control-Allow-Origin:
-          $ref: '#/components/headers/Access-Control-Allow-Origin'
-        Content-Length:
-          $ref: '#/components/headers/Content-Length'
-        Content-Type:
+        Accept:
           $ref: '#/components/headers/User-Content-Type'
   headers:
     Access-Control-Allow-Origin:

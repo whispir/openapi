@@ -1,118 +1,17 @@
-formats:
-  - oas3
-  - oas3.0
-  - oas3.1
-extends:
-  - - 'spectral:oas'
-    - all
+extends: './.spectral.base.yaml'
 rules:
-  openapi-tags-alphabetical: off
-  operation-success-response: error
-  oas2-operation-formData-consume-check: error
-  operation-parameters: error
-  operation-tag-defined: error
-  contact-properties: error
-  duplicated-entry-in-enum: error
-  info-contact: error
-  info-description: error
-  info-license: error
-  license-url: error
-  no-eval-in-markdown: error
-  no-script-tags-in-markdown: error
-  openapi-tags: error
-  operation-description: error
-  operation-operationId: error
-  operation-operationId-valid-in-url: error
-  operation-singular-tag: error
-  operation-tags: error
-  path-declarations-must-exist: error
-  path-keys-no-trailing-slash: error
-  path-not-include-query: error
-  tag-description: error
-  typed-enum: error
-  oas2-api-host: error
-  oas2-api-schemes: error
-  oas2-host-not-example: error
-  oas2-host-trailing-slash: error
-  oas2-parameter-description: error
-  oas2-operation-security-defined: error
-  oas2-anyOf: error
-  oas2-oneOf: error
-  oas2-unused-definition: error
-  oas3-api-servers: error
-  oas3-examples-value-or-externalValue: error
-  oas3-operation-security-defined: error
-  oas3-parameter-description: error
-  oas3-server-not-example.com: error
-  oas3-server-trailing-slash: error
-  oas3-unused-component: error
-  info-matches-whispir:
-    description: The title field must contain Whispir.
+  required-response-headers:
+    description: 'Responses must have the following "headers": "Content-Type", "Content-Length", "Access-Control-Allow-Origin", "Expires", "Cache-Control".'
     severity: error
-    given: $.info
+    given: $..responses[*]
     then:
-      field: title
-      function: pattern
-      functionOptions:
-        match: Whispir
-  schema-examples:
-    description: Schemas must have non-empty "x-examples" object.
-    severity: error
-    given: $.components.schemas[*]
-    then:
-      field: x-examples
+      field: headers
       function: schema
       functionOptions:
         dialect: draft7
         schema:
           type: object
-          minProperties: 1
-  schema-descriptions:
-    description: Schemas must have a "description".
-    severity: error
-    given:
-      - $..schemas[*]
-      - $..responses[*].content[*]..schema
-      - $..requestBody.content[*]..schema
-    then:
-      field: description
-      function: truthy
-  schema-property-descriptions: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
-    description: Schema properties must have a "description".
-    severity: error
-    given:
-      - $..schema[*]..properties[*]
-      - $..responses[*].content[*]..schema..properties[*]
-      - $..requestBody.content[*]..schema..properties[*]
-      - $..headers[*]
-    then:
-      field: description
-      function: truthy
-  schema-property-examples: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
-    description: Schema properties must have an "example".
-    severity: error
-    given:
-      - $..schema[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
-      - $..responses[*].content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
-      - $..requestBody.content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
-      - $..headers[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
-    then:
-      field: example
-      function: defined
-  request-response-examples:
-    description: Request/Response content must have non-empty "examples" object.
-    severity: error
-    given:
-      - $..responses[*].content[*]
-      - $..requestBody.content[*]
-    then:
-      field: examples
-      function: schema
-      functionOptions:
-        dialect: draft7
-        schema:
-          type: object
-          minProperties: 1
+          required: ["Content-Type", "Content-Length", "Access-Control-Allow-Origin", "Expires", "Cache-Control"]
 overrides:
   - rules:
       schema-examples: off
@@ -137,7 +36,7 @@ overrides:
       - '**#/components/schemas/activity' # Activity Endpoint Schemas
       - '**#/components/requestBodies/event'
   - rules:
-      request-response-examples: off
+      payload-examples: off
     files:
       - '**#/paths/~1workspaces~1{workspaceId}~1resources' # Resources Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1contacts' # Contacts Endpoint Examples

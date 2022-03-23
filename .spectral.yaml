@@ -1,7 +1,70 @@
 extends: './.spectral.base.yaml'
 rules:
-  required-response-headers:
-    description: 'Responses must have the following "headers": "Content-Type", "Content-Length", "Access-Control-Allow-Origin", "Expires", "Cache-Control".'
+  required-all-request-headers:
+    description: 'All requests must have the following headers "parameters": "X-Api-Key".'
+    severity: error
+    given: $.paths[*][get,put,post,delete,options,head,patch,trace]
+    then:
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^X-Api-Key$"
+  required-read-request-headers:
+    description: 'Read requests must have the following headers "parameters": "Accept".'
+    severity: error
+    given: $.paths[*][get]
+    then:
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^Accept$"
+  required-write-request-headers:
+    description: 'Write requests must have the following headers "parameters": "Content-Type", "Accept".'
+    severity: error
+    given: $.paths[*][put,post]
+    then:
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^Content-Type$"
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^Accept$"
+  required-all-response-headers:
+    description: 'All responses must have the following "headers": "Access-Control-Allow-Origin", "Expires", "Cache-Control".'
     severity: error
     given: $..responses[*]
     then:
@@ -11,7 +74,19 @@ rules:
         dialect: draft7
         schema:
           type: object
-          required: ["Content-Type", "Content-Length", "Access-Control-Allow-Origin", "Expires", "Cache-Control"]
+          required: ["Access-Control-Allow-Origin", "Expires", "Cache-Control"]
+  required-content-response-headers:
+    description: 'Responses with content must have the following "headers": "Content-Type", "Content-Length".'
+    severity: error
+    given: $.paths[*]..responses[?(@property != 204)]
+    then:
+      field: headers
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          required: ["Content-Type", "Content-Length"]
 overrides:
   - rules:
       schema-examples: off

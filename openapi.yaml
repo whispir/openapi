@@ -137,28 +137,8 @@ paths:
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - name: Content-Type
-          in: header
-          required: true
-          description: Application specific mime-type
-          schema:
-            type: string
-            enum:
-              - application/vnd.whispir.message-v1+json
-              - application/vnd.whispir.bulkmessage-v1+json
-              - application/vnd.whispir.message-v1+xml
-              - application/vnd.whispir.bulkmessage-v1+xml
-        - name: Accept
-          in: header
-          required: true
-          description: Application specific mime-type
-          schema:
-            type: string
-            enum:
-              - application/vnd.whispir.message-v1+json
-              - application/vnd.whispir.bulkmessage-v1+json
-              - application/vnd.whispir.message-v1+xml
-              - application/vnd.whispir.bulkmessage-v1+xml
+        - $ref: '#/components/parameters/Message-Content-Type'
+        - $ref: '#/components/parameters/Message-Accept'
       requestBody:
         content:
           application/vnd.whispir.message-v1+json:
@@ -276,28 +256,7 @@ paths:
       operationId: getMessages
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - name: Content-Type
-          in: header
-          required: true
-          description: Application specific mime-type
-          schema:
-            type: string
-            enum:
-              - application/vnd.whispir.message-v1+json
-              - application/vnd.whispir.bulkmessage-v1+json
-              - application/vnd.whispir.message-v1+xml
-              - application/vnd.whispir.bulkmessage-v1+xml
-        - name: Accept
-          in: header
-          required: true
-          description: Application specific mime-type
-          schema:
-            type: string
-            enum:
-              - application/vnd.whispir.message-v1+json
-              - application/vnd.whispir.bulkmessage-v1+json
-              - application/vnd.whispir.message-v1+xml
-              - application/vnd.whispir.bulkmessage-v1+xml
+        - $ref: '#/components/parameters/Message-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
       responses:
@@ -577,28 +536,7 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - name: Content-Type
-          in: header
-          required: true
-          description: Application specific mime-type
-          schema:
-            type: string
-            enum:
-              - application/vnd.whispir.message-v1+json
-              - application/vnd.whispir.bulkmessage-v1+json
-              - application/vnd.whispir.message-v1+xml
-              - application/vnd.whispir.bulkmessage-v1+xml
-        - name: Accept
-          in: header
-          required: true
-          description: Application specific mime-type
-          schema:
-            type: string
-            enum:
-              - application/vnd.whispir.message-v1+json
-              - application/vnd.whispir.bulkmessage-v1+json
-              - application/vnd.whispir.message-v1+xml
-              - application/vnd.whispir.bulkmessage-v1+xml
+        - $ref: '#/components/parameters/Message-Accept'
         - schema:
             type: string
             pattern: '^[A-F0-9]+'
@@ -674,6 +612,7 @@ paths:
       operationId: getMessageStatus
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/MessageStatus-Accept'
         - name: messageId
           in: path
           description: Enter message id
@@ -681,24 +620,6 @@ paths:
           schema:
             type: string
             example: 44F4DA8F04755430BEC5A0E1E2154EBA
-        - name: Accept
-          in: header
-          required: true
-          description: Application specific mime-type
-          schema:
-            type: string
-            enum:
-              - application/vnd.whispir.messagestatus-v1+json
-              - application/vnd.whispir.messagestatus-v1+xml
-        - name: Content-Type
-          in: header
-          required: true
-          description: Application specific mime-type
-          schema:
-            type: string
-            enum:
-              - application/vnd.whispir.messagestatus-v1+json
-              - application/vnd.whispir.messagestatus-v1+xml
         - name: view
           in: query
           required: false
@@ -723,7 +644,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Message-Status-Content-Type'
+              $ref: '#/components/headers/MessageStatus-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -861,6 +782,7 @@ paths:
       operationId: getMessageResponsesById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/MessageResponse-Accept'
         - name: messageId
           in: path
           description: Enter message id
@@ -868,24 +790,6 @@ paths:
           schema:
             type: string
             example: 44F4DA8F04755430BEC5A0E1E2154EBA
-        - name: Accept
-          in: header
-          required: true
-          description: Application specific mime-type
-          schema:
-            type: string
-            enum:
-              - application/vnd.whispir.messageresponse-v1+json
-              - application/vnd.whispir.messageresponse-v1+xml
-        - name: Content-Type
-          in: header
-          required: true
-          description: Application specific mime-type
-          schema:
-            type: string
-            enum:
-              - application/vnd.whispir.messageresponse-v1+json
-              - application/vnd.whispir.messageresponse-v1+xml
         - name: view
           in: query
           required: false
@@ -911,7 +815,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Message-Response-Content-Type'
+              $ref: '#/components/headers/MessageResponse-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -1050,6 +954,8 @@ paths:
       operationId: postResources
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Resource-Content-Type'
+        - $ref: '#/components/parameters/Resource-Accept'
       requestBody:
         content:
           application/vnd.whispir.resource-v1+json:
@@ -1069,7 +975,7 @@ paths:
                 $ref: '#/components/schemas/resource'
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Resource-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -1141,6 +1047,7 @@ paths:
       operationId: getResources
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Resource-Accept'
         - name: scope
           description: A filter parameter for the visibility of the resource.
           in: query
@@ -1162,7 +1069,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Resource-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -1259,6 +1166,7 @@ paths:
       operationId: getResourcesById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Resource-Accept'
         - name: resourceId
           description: The identifier for the resource.
           in: path
@@ -1271,7 +1179,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Resource-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -1328,6 +1236,8 @@ paths:
       operationId: putResourcesById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Resource-Content-Type'
+        - $ref: '#/components/parameters/Resource-Accept'
         - name: resourceId
           in: path
           description: Enter resources id.
@@ -1349,10 +1259,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -1418,10 +1324,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -1500,7 +1402,6 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
-        - $ref: '#/components/parameters/Template-Content-Type'
         - $ref: '#/components/parameters/Template-Accept'
       responses:
         '200':
@@ -1647,7 +1548,6 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
-        - $ref: '#/components/parameters/Template-Content-Type'
         - $ref: '#/components/parameters/Template-Accept'
       responses:
         '201':
@@ -1699,10 +1599,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Template-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -1749,10 +1645,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Template-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -1797,6 +1689,8 @@ paths:
       operationId: postResponseRules
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/ResponseRule-Content-Type'
+        - $ref: '#/components/parameters/ResponseRule-Accept'
       requestBody:
         content:
           application/vnd.whispir.responserule-v1+json:
@@ -1809,7 +1703,7 @@ paths:
           description: Created
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/ResponseRule-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -1844,12 +1738,13 @@ paths:
       operationId: getResponseRules
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/ResponseRule-Accept'
       responses:
         '200':
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/ResponseRule-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -1887,6 +1782,7 @@ paths:
       operationId: getResponseRulesById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/ResponseRule-Accept'
         - name: responseRuleId
           in: path
           required: true
@@ -1899,7 +1795,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/ResponseRule-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -1934,6 +1830,8 @@ paths:
       operationId: putResponseRulesById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/ResponseRule-Content-Type'
+        - $ref: '#/components/parameters/ResponseRule-Accept'
         - name: responseRuleId
           in: path
           required: true
@@ -1952,10 +1850,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -1999,10 +1893,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -2038,11 +1928,91 @@ paths:
       operationId: postContacts
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Contact-Accept'
+        - $ref: '#/components/parameters/Contact-Content-Type'
       requestBody:
         content:
           application/vnd.whispir.contact-v1+json:
             schema:
               $ref: '#/components/schemas/contact'
+            examples:
+              Basic:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+              Comprehensive:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+                  title: Dr
+                  workMobilePhone2: '61500500500'
+                  workEmailAddress2: newUser@example.com
+                  workPhoneAreaCode1: '09'
+                  workPhone1: '5006000'
+                  workPhoneAreaCode2: '09'
+                  workPhone2: '5007000'
+                  workFaxAreaCode1: '09'
+                  workFax1: '5008000'
+                  workSatellitePhone: '61600600600'
+                  workOtherPhone: '61700700700'
+                  workAddress1: Level 15
+                  workAddress2: 360 Collins St
+                  workSuburb: Melboure
+                  workState: Victoria
+                  workPostCode: '3000'
+                  workPostalAddress1: Level 15
+                  workPostalAddress2: 360 Collins St
+                  workPostalSuburb: Melboure
+                  workPostalState: Victoria
+                  workPostalPostCode: '3000'
+                  personalEmailAddress1: personalPrimaryUser@example.com
+                  personalEmailAddress2: personalSecondaryUser@example.com
+                  personalAddress1: Level 15
+                  personalAddress2: 360 Collins St
+                  personalSuburb: Melboure
+                  personalState: Victoria
+                  personalPostCode: '3000'
+                  personalCountry: Australia
+                  personalPhoneAreaCode1: '09'
+                  personalPhone1: '5006000'
+                  personalPhoneAreaCode2: '09'
+                  personalPhone2: '5007000'
+                  personalFaxAreaCode1: '09'
+                  personalFax1: '5008000'
+                  otherPhoneAreaCode1: '09'
+                  otherPhone1: '5009000'
+                  otherMobile: '61900900900'
+                  otherFirstName: Harold
+                  otherLastName: Wickman
+                  otherTitle: Mr
+                  status: A
+                  companyName: Whispir
+                  jobTitle: Software Engineer
+                  division: Technology
+                  businessUnit: Core Platform
+                  department: Research & Development
+                  teamName1: Optimus Prime
+                  teamName2: Bumblebee
+                  role1: Administrator
+                  role2: Analyst
+                  locations:
+                    - latitude: 41.9028
+                      longitude: -12.4964
+                      type: CurrentLocation
+                  messagingoptions:
+                    - channel: sms
+                      enabled: true
+                      primary: WorkMobilePhone1
+                      secondary: WorkMobilePhone1
+                      tertiary: WorkMobilePhone1
           application/vnd.whispir.contact-v1+xml:
             schema:
               $ref: '#/components/schemas/contact'
@@ -2053,7 +2023,7 @@ paths:
           description: Created
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Contact-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -2132,12 +2102,13 @@ paths:
           required: false
           schema:
             type: boolean
+        - $ref: '#/components/parameters/Contact-Accept'
       responses:
         '200':
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Contact-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -2197,12 +2168,13 @@ paths:
           required: false
           schema:
             type: boolean
+        - $ref: '#/components/parameters/Contact-Accept'
       responses:
         '200':
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Contact-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -2255,11 +2227,91 @@ paths:
           schema:
             type: string
             example: 5130D4DDDED0AD4D69D33C3E64419A51
+        - $ref: '#/components/parameters/Contact-Accept'
+        - $ref: '#/components/parameters/Contact-Content-Type'
       requestBody:
         content:
           application/vnd.whispir.contact-v1+json:
             schema:
               $ref: '#/components/schemas/contact'
+            examples:
+              Basic:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+              Comprehensive:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+                  title: Dr
+                  workMobilePhone2: '61500500500'
+                  workEmailAddress2: newUser@example.com
+                  workPhoneAreaCode1: '09'
+                  workPhone1: '5006000'
+                  workPhoneAreaCode2: '09'
+                  workPhone2: '5007000'
+                  workFaxAreaCode1: '09'
+                  workFax1: '5008000'
+                  workSatellitePhone: '61600600600'
+                  workOtherPhone: '61700700700'
+                  workAddress1: Level 15
+                  workAddress2: 360 Collins St
+                  workSuburb: Melboure
+                  workState: Victoria
+                  workPostCode: '3000'
+                  workPostalAddress1: Level 15
+                  workPostalAddress2: 360 Collins St
+                  workPostalSuburb: Melboure
+                  workPostalState: Victoria
+                  workPostalPostCode: '3000'
+                  personalEmailAddress1: personalPrimaryUser@example.com
+                  personalEmailAddress2: personalSecondaryUser@example.com
+                  personalAddress1: Level 15
+                  personalAddress2: 360 Collins St
+                  personalSuburb: Melboure
+                  personalState: Victoria
+                  personalPostCode: '3000'
+                  personalCountry: Australia
+                  personalPhoneAreaCode1: '09'
+                  personalPhone1: '5006000'
+                  personalPhoneAreaCode2: '09'
+                  personalPhone2: '5007000'
+                  personalFaxAreaCode1: '09'
+                  personalFax1: '5008000'
+                  otherPhoneAreaCode1: '09'
+                  otherPhone1: '5009000'
+                  otherMobile: '61900900900'
+                  otherFirstName: Harold
+                  otherLastName: Wickman
+                  otherTitle: Mr
+                  status: A
+                  companyName: Whispir
+                  jobTitle: Software Engineer
+                  division: Technology
+                  businessUnit: Core Platform
+                  department: Research & Development
+                  teamName1: Optimus Prime
+                  teamName2: Bumblebee
+                  role1: Administrator
+                  role2: Analyst
+                  locations:
+                    - latitude: 41.9028
+                      longitude: -12.4964
+                      type: CurrentLocation
+                  messagingoptions:
+                    - channel: sms
+                      enabled: true
+                      primary: WorkMobilePhone1
+                      secondary: WorkMobilePhone1
+                      tertiary: WorkMobilePhone1
           application/vnd.whispir.contact-v1+xml:
             schema:
               $ref: '#/components/schemas/contact'
@@ -2269,10 +2321,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -2319,10 +2367,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -2361,6 +2405,8 @@ paths:
       operationId: postDistributionLists
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/DistributionList-Content-Type'
+        - $ref: '#/components/parameters/DistributionList-Accept'
       requestBody:
         content:
           application/vnd.whispir.distributionlist-v1+json:
@@ -2376,7 +2422,7 @@ paths:
           description: Created
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/DistributionList-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -2438,6 +2484,7 @@ paths:
       operationId: getDistributionLists
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/DistributionList-Accept'
         - name: name
           in: query
           required: false
@@ -2457,7 +2504,7 @@ paths:
           description: Ok
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/DistributionList-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -2549,6 +2596,7 @@ paths:
       operationId: getDistributionListsById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/DistributionList-Accept'
         - name: distributionlistId
           in: path
           description: Enter Distribution id.
@@ -2561,7 +2609,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/DistributionList-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -2613,6 +2661,8 @@ paths:
       operationId: putDistributionListsById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/DistributionList-Content-Type'
+        - $ref: '#/components/parameters/DistributionList-Accept'
         - name: distributionlistId
           in: path
           description: Enter Distribution id.
@@ -2634,10 +2684,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -2682,10 +2728,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -2722,6 +2764,8 @@ paths:
       operationId: postScenarios
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Scenario-Content-Type'
+        - $ref: '#/components/parameters/Scenario-Accept'
       requestBody:
         content:
           application/vnd.whispir.scenario-v1+json:
@@ -2734,7 +2778,7 @@ paths:
           description: Created
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Scenario-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -2769,12 +2813,13 @@ paths:
       operationId: getScenarios
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Scenario-Accept'
       responses:
         '200':
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Scenario-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -2812,6 +2857,7 @@ paths:
       operationId: getScenariosById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Scenario-Accept'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2824,7 +2870,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Scenario-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -2898,10 +2944,12 @@ paths:
         2. Pick the required scenario’s link attribute
         3. Make a /POST call
 
-        Now invoking this scenario is just making a /POST call. There is no need for a Content-type header as the payload is empty.
+        Now invoking this scenario is just making a /POST call.
       operationId: postScenariosById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Scenario-Content-Type'
+        - $ref: '#/components/parameters/Scenario-Accept'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2913,10 +2961,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -2949,6 +2993,8 @@ paths:
       operationId: putScenariosById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Scenario-Content-Type'
+        - $ref: '#/components/parameters/Scenario-Accept'
         - name: scenarioId
           in: path
           description: Enter Scenarios id.
@@ -2967,10 +3013,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -3014,10 +3056,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -3268,7 +3306,6 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/Callback-Content-Type'
         - $ref: '#/components/parameters/Callback-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -3288,7 +3325,6 @@ paths:
           schema:
             type: string
             example: F98A1DD47C3CA1F5
-        - $ref: '#/components/parameters/Callback-Content-Type'
         - $ref: '#/components/parameters/Callback-Accept'
       responses:
         '200':
@@ -3332,10 +3368,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/Callback-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -3431,7 +3463,6 @@ paths:
             enum:
               - SUCCESS
               - FAILED
-        - $ref: '#/components/parameters/CallbackInstance-Content-Type'
         - $ref: '#/components/parameters/CallbackInstance-Accept'
       responses:
         '200':
@@ -3505,10 +3536,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/CallbackInstance-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -3568,6 +3595,10 @@ paths:
       description: |
         Note: There is no limit to the amount of workspaces each API user can create.
       operationId: postWorkspaces
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Workspace-Content-Type'
+        - $ref: '#/components/parameters/Workspace-Accept'
       requestBody:
         content:
           application/vnd.whispir.workspace-v1+json:
@@ -3580,7 +3611,7 @@ paths:
           description: Created
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Workspace-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -3607,20 +3638,21 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
-      parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
     get:
       tags:
         - Workspaces
       summary: List workspaces
       description: Returns a list of your workspaces.
       operationId: getWorkspaces
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Workspace-Accept'
       responses:
         '200':
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Workspace-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -3685,8 +3717,6 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
-      parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
   '/workspaces/{workspaceId}':
     get:
       tags:
@@ -3696,12 +3726,13 @@ paths:
       operationId: getWorkspacesById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Workspace-Accept'
       responses:
         '200':
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Workspace-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -3738,6 +3769,10 @@ paths:
       description: |
         Note: There is no limit to the amount of activities that can be created.
       operationId: postActivities
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Activity-Content-Type'
+        - $ref: '#/components/parameters/Activity-Accept'
       requestBody:
         content:
           application/vnd.whispir.activity-v1+json:
@@ -3750,7 +3785,7 @@ paths:
           description: Created
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Activity-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -3777,8 +3812,6 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
-      parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
     get:
       tags:
         - Activities
@@ -3793,6 +3826,7 @@ paths:
       operationId: getActivities
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Activity-Accept'
         - name: action
           in: query
           required: false
@@ -3895,7 +3929,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Activity-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -3994,12 +4028,13 @@ paths:
       operationId: getWorkspaceActivities
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Activity-Accept'
       responses:
         '200':
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Activity-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -4080,6 +4115,7 @@ paths:
       operationId: getCustomLists
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/CustomList-Accept'
         - name: name
           in: query
           required: false
@@ -4103,7 +4139,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/CustomList-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -4236,6 +4272,7 @@ paths:
       operationId: getCustomListsById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/CustomList-Accept'
         - name: customlistId
           in: path
           required: true
@@ -4248,7 +4285,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/CustomList-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -4405,7 +4442,6 @@ paths:
             type: string
             example: status=A
         - $ref: '#/components/parameters/User-Accept'
-        - $ref: '#/components/parameters/User-Content-Type'
         - $ref: '#/components/parameters/sortOrder'
         - $ref: '#/components/parameters/sortFields'
         - $ref: '#/components/parameters/limit'
@@ -4449,10 +4485,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/User-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -4493,7 +4525,6 @@ paths:
           schema:
             type: string
             example: 4821DCC420494A3A
-        - $ref: '#/components/parameters/User-Content-Type'
         - $ref: '#/components/parameters/User-Accept'
       responses:
         '200':
@@ -4557,10 +4588,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/User-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -4609,10 +4636,6 @@ paths:
         '204':
           description: No Content
           headers:
-            Content-Type:
-              $ref: '#/components/headers/User-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
             Cache-Control:
@@ -4646,7 +4669,6 @@ paths:
       operationId: getWorkspaceUsers
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/User-Content-Type'
         - $ref: '#/components/parameters/User-Accept'
         - $ref: '#/components/parameters/sortOrder'
         - $ref: '#/components/parameters/sortFields'
@@ -4684,12 +4706,13 @@ paths:
       operationId: getEvents
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Event-Accept'
       responses:
         '200':
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Event-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -4740,6 +4763,8 @@ paths:
       operationId: postEvents
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Event-Content-Type'
+        - $ref: '#/components/parameters/Event-Accept'
       requestBody:
         $ref: '#/components/requestBodies/event'
       responses:
@@ -4747,7 +4772,7 @@ paths:
           description: Created
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Event-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -4929,9 +4954,11 @@ paths:
       operationId: postImports
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Import-Content-Type'
+        - $ref: '#/components/parameters/Import-Accept'
       requestBody:
         content:
-          application/vnd.whispir.import-v1+json:
+          application/vnd.whispir.importcontact-v1+json:
             schema:
               $ref: '#/components/schemas/import'
         description: import object that needs to be create import
@@ -4940,7 +4967,7 @@ paths:
           description: Created
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Import-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -4979,7 +5006,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Auth-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -5024,32 +5051,9 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
       description: Create a JWT authentication token
       parameters:
-        - schema:
-            type: string
-            default: application/vnd.whispir.auth-v1+json
-            enum:
-              - application/vnd.whispir.auth-v1+json
-              - application/vnd.whispir.auth-v1+xml
-          description: Application specific mime-type
-          in: header
-          name: Content-Type
-          required: true
-        - schema:
-            type: string
-            default: application/vnd.whispir.auth-v1+json
-            enum:
-              - application/vnd.whispir.auth-v1+json
-              - application/vnd.whispir.auth-v1+xml
-          description: Application specific mime-type
-          in: header
-          name: Accept
-          required: true
-        - schema:
-            type: string
-          in: header
-          name: X-Api-Key
-          required: true
-          description: The API key for authentication
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Auth-Content-Type'
+        - $ref: '#/components/parameters/Auth-Accept'
       tags:
         - Auth
       security:
@@ -5057,32 +5061,8 @@ paths:
   /auth/verify:
     get:
       parameters:
-        - schema:
-            type: string
-            default: application/vnd.whispir.auth-v1+json
-            enum:
-              - application/vnd.whispir.auth-v1+json
-              - application/vnd.whispir.auth-v1+xml
-          description: Application specific mime-type
-          in: header
-          name: Content-Type
-          required: true
-        - schema:
-            type: string
-            default: application/vnd.whispir.auth-v1+json
-            enum:
-              - application/vnd.whispir.auth-v1+json
-              - application/vnd.whispir.auth-v1+xml
-          description: Application specific mime-type
-          in: header
-          name: Accept
-          required: true
-        - schema:
-            type: string
-          in: header
-          name: X-Api-Key
-          required: true
-          description: The API key for authentication
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Auth-Accept'
       description: Verify a JWT authentication token
       operationId: getAuthVerification
       responses:
@@ -5090,7 +5070,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Content-Type'
+              $ref: '#/components/headers/Auth-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -5179,7 +5159,7 @@ components:
       scheme: basic
       description: ''
     ApiKeyAuth:
-      name: API Key
+      name: Api-Key
       type: apiKey
       in: header
   schemas:
@@ -5923,6 +5903,7 @@ components:
           workMobilePhone1: '61400400400'
           workEmailAddress1: testUser@example.com
           workCountry: Australia
+          timezone: Australia/Melbourne
         Comprehensive:
           firstName: John
           lastName: Wick
@@ -5988,9 +5969,9 @@ components:
           messagingoptions:
             - channel: sms
               enabled: true
-              primary: workMobilePhone1
-              secondary: workMobilePhone1
-              tertiary: workMobilePhone1
+              primary: WorkMobilePhone1
+              secondary: WorkMobilePhone1
+              tertiary: WorkMobilePhone1
       properties:
         firstName:
           type: string
@@ -6548,32 +6529,32 @@ components:
             type: string
             description: The primary contact address for the `channel`.
             enum:
-              - workMobilePhone1
-              - workMobilePhone2
-              - workEmailAddress1
-              - workEmailAddress2
-              - personalMobilePhone1
-              - personalEmailAddress1
+              - WorkMobilePhone1
+              - WorkMobilePhone2
+              - WorkEmailAddress1
+              - WorkEmailAddress2
+              - PersonalMobilePhone1
+              - PersonalEmailAddress1
           secondary:
             type: string
             description: The secondary contact address for the `channel`.
             enum:
-              - workMobilePhone1
-              - workMobilePhone2
-              - workEmailAddress1
-              - workEmailAddress2
-              - personalMobilePhone1
-              - personalEmailAddress1
+              - WorkMobilePhone1
+              - WorkMobilePhone2
+              - WorkEmailAddress1
+              - WorkEmailAddress2
+              - PersonalMobilePhone1
+              - PersonalEmailAddress1
           tertiary:
             type: string
             description: The tertiary contact address for the `channel`.
             enum:
-              - workMobilePhone1
-              - workMobilePhone2
-              - workEmailAddress1
-              - workEmailAddress2
-              - personalMobilePhone1
-              - personalEmailAddress1
+              - WorkMobilePhone1
+              - WorkMobilePhone2
+              - WorkEmailAddress1
+              - WorkEmailAddress2
+              - PersonalMobilePhone1
+              - PersonalEmailAddress1
     activity:
       type: object
       required:
@@ -7823,28 +7804,8 @@ components:
         enum:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
-      description: Callback content mime type.
+      description: Application specific mime-type.
       name: Content-Type
-    Callback-Content-Type:
-      name: Content-Type
-      in: header
-      required: true
-      schema:
-        type: string
-        enum:
-          - application/vnd.whispir.api-callback-v1+json
-          - application/vnd.whispir.api-callback-v1+xml
-      description: Callback content mime type.
-    Callback-Accept:
-      name: Accept
-      in: header
-      required: true
-      schema:
-        type: string
-        enum:
-          - application/vnd.whispir.api-callback-v1+json
-          - application/vnd.whispir.api-callback-v1+xml
-      description: Callback content mime-type
     Template-Accept:
       name: Accept
       in: header
@@ -7854,7 +7815,281 @@ components:
         enum:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
-      description: Template content mime-type
+      description: Application specific mime-type.
+    Callback-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-callback-v1+json
+          - application/vnd.whispir.api-callback-v1+xml
+      description: Application specific mime-type.
+    Callback-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.api-callback-v1+json
+          - application/vnd.whispir.api-callback-v1+xml
+      description: Application specific mime-type.
+    Contact-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.contact-v1+json
+          - application/vnd.whispir.contact-v1+xml
+      description: Application specific mime-type.
+    Contact-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.contact-v1+json
+          - application/vnd.whispir.contact-v1+xml
+      description: Application specific mime-type.
+    Resource-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.resource-v1+json
+          - application/vnd.whispir.resource-v1+xml
+      description: Application specific mime-type.
+    Resource-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.resource-v1+json
+          - application/vnd.whispir.resource-v1+xml
+      description: Application specific mime-type.
+    ResponseRule-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.responserule-v1+json
+          - application/vnd.whispir.responserule-v1+xml
+      description: Application specific mime-type.
+    ResponseRule-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.responserule-v1+json
+          - application/vnd.whispir.responserule-v1+xml
+      description: Application specific mime-type.
+    Workspace-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.workspace-v1+json
+          - application/vnd.whispir.workspace-v1+xml
+      description: Application specific mime-type.
+    Workspace-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.workspace-v1+json
+          - application/vnd.whispir.workspace-v1+xml
+      description: Application specific mime-type.
+    DistributionList-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.distributionlist-v1+json
+          - application/vnd.whispir.distributionlist-v1+xml
+      description: Application specific mime-type.
+    DistributionList-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.distributionlist-v1+json
+          - application/vnd.whispir.distributionlist-v1+xml
+      description: Application specific mime-type.
+    Scenario-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.scenario-v1+json
+          - application/vnd.whispir.scenario-v1+xml
+      description: Application specific mime-type.
+    Scenario-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.scenario-v1+json
+          - application/vnd.whispir.scenario-v1+xml
+      description: Application specific mime-type.
+    Event-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.event-v1+json
+          - application/vnd.whispir.event-v1+xml
+      description: Application specific mime-type.
+    Event-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.event-v1+json
+          - application/vnd.whispir.event-v1+xml
+      description: Application specific mime-type.
+    CustomList-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.customlist-v1+json
+          - application/vnd.whispir.customlist-v1+xml
+      description: Application specific mime-type.
+    Import-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.importcontact-v1+json
+          - application/vnd.whispir.importcontact-v1+xml
+      description: Application specific mime-type.
+    Import-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.importcontact-v1+json
+          - application/vnd.whispir.importcontact-v1+xml
+      description: Application specific mime-type.
+    Message-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.message-v1+json
+          - application/vnd.whispir.bulkmessage-v1+json
+          - application/vnd.whispir.message-v1+xml
+          - application/vnd.whispir.bulkmessage-v1+xml
+      description: Application specific mime-type.
+    Message-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.message-v1+json
+          - application/vnd.whispir.bulkmessage-v1+json
+          - application/vnd.whispir.message-v1+xml
+          - application/vnd.whispir.bulkmessage-v1+xml
+      description: Application specific mime-type.
+    MessageStatus-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.messagestatus-v1+json
+          - application/vnd.whispir.messagestatus-v1+xml
+      description: Application specific mime-type.
+    MessageResponse-Accept:
+      name: Accept
+      in: header
+      required: true
+      description: Application specific mime-type.
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.messageresponse-v1+json
+          - application/vnd.whispir.messageresponse-v1+xml
+    Auth-Accept:   
+      name: Accept 
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.auth-v1+json
+          - application/vnd.whispir.auth-v1+xml
+      description: Application specific mime-type
+    Auth-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      description: Application specific mime-type
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.auth-v1+json
+          - application/vnd.whispir.auth-v1+xml
+    Activity-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.activity-v1+json
+          - application/vnd.whispir.activity-v1+xml
+      description: Application specific mime-type.
+    Activity-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.activity-v1+json
+          - application/vnd.whispir.activity-v1+xml
+      description: Application specific mime-type.
     sortOrder:
       name: sortOrder
       in: query
@@ -7876,7 +8111,7 @@ components:
     User-Content-Type:
       name: Content-Type
       in: header
-      description: User content mime type.
+      description: Application specific mime-type.
       required: true
       schema:
         type: string
@@ -7902,7 +8137,7 @@ components:
         enum:
           - application/vnd.whispir.api-call-v1+json
           - application/vnd.whispir.api-call-v1+xml
-      description: Callback Instance content mime-type
+      description: Application specific mime-type.
     CallbackInstance-Accept:
       name: Accept
       in: header
@@ -7912,7 +8147,7 @@ components:
         enum:
           - application/vnd.whispir.api-call-v1+json
           - application/vnd.whispir.api-call-v1+xml
-      description: Callback Instance content mime-type
+      description: Application specific mime-type.
   responses:
     User:
       description: User endpoint response
@@ -8654,23 +8889,23 @@ components:
       schema:
         type: string
     Message-Content-Type:
-      description: Message content mime type.
+      description: Application specific mime-type.
       required: true
       schema:
         type: string
         enum:
           - application/vnd.whispir.message-v1+json
           - application/vnd.whispir.message-v1+xml
-    Message-Status-Content-Type:
-      description: Message status content mime type.
+    MessageStatus-Content-Type:
+      description: Application specific mime-type.
       required: true
       schema:
         type: string
         enum:
           - application/vnd.whispir.messagestatus-v1+json
           - application/vnd.whispir.messagestatus-v1+xml
-    Message-Response-Content-Type:
-      description: Message response content mime type.
+    MessageResponse-Content-Type:
+      description: Application specific mime-type.
       required: true
       schema:
         type: string
@@ -8678,7 +8913,7 @@ components:
           - application/vnd.whispir.messageresponse-v1+json
           - application/vnd.whispir.messageresponse-v1+xml
     Template-Content-Type:
-      description: Template content mime type.
+      description: Application specific mime-type.
       required: true
       schema:
         type: string
@@ -8686,7 +8921,7 @@ components:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
     User-Content-Type:
-      description: User content mime type.
+      description: Application specific mime-type.
       required: true
       schema:
         type: string
@@ -8694,7 +8929,7 @@ components:
           - application/vnd.whispir.user-v1+json
           - application/vnd.whispir.user-v1+xml
     Callback-Content-Type:
-      description: Callback response mime type.
+      description: Application specific mime-type.
       required: true
       schema:
         type: string
@@ -8708,4 +8943,93 @@ components:
         enum:
           - application/vnd.whispir.api-call-v1+json
           - application/vnd.whispir.api-call-v1+xml
-      description: Callback Instance content mime-type
+      description: Application specific mime-type.
+    Resource-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.resource-v1+json
+          - application/vnd.whispir.resource-v1+xml
+      description: Application specific mime-type.
+    Contact-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.contact-v1+json
+          - application/vnd.whispir.contact-v1+xml
+      description: Application specific mime-type.
+    Event-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.event-v1+json
+          - application/vnd.whispir.event-v1+xml
+      description: Application specific mime-type.
+    Activity-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.activity-v1+json
+          - application/vnd.whispir.activity-v1+xml
+      description: Application specific mime-type.
+    ResponseRule-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.responserule-v1+json
+          - application/vnd.whispir.responserule-v1+xml
+      description: Application specific mime-type.
+    Scenario-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.scenario-v1+json
+          - application/vnd.whispir.scenario-v1+xml
+      description: Application specific mime-type.
+    DistributionList-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.distributionlist-v1+json
+          - application/vnd.whispir.distributionlist-v1+xml
+      description: Application specific mime-type.
+    Workspace-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.workspace-v1+json
+          - application/vnd.whispir.workspace-v1+xml
+      description: Application specific mime-type.
+    CustomList-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.customlist-v1+json
+          - application/vnd.whispir.customlist-v1+xml
+      description: Application specific mime-type.
+    Import-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.importcontact-v1+json
+          - application/vnd.whispir.importcontact-v1+xml
+      description: Application specific mime-type.
+    Auth-Content-Type:
+      required: true
+      schema:
+        type: string
+        enum:
+          - application/vnd.whispir.auth-v1+json
+          - application/vnd.whispir.auth-v1+xml
+      description: Application specific mime-type.
+

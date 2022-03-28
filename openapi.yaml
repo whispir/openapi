@@ -2089,18 +2089,7 @@ paths:
         - $ref: '#/components/parameters/Contact-Accept'
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Contact-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
+          $ref: '#/components/responses/Contacts'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -6217,7 +6206,7 @@ components:
         devices:
           type: array
           description: Specifies the devices associated to this contact. See Contact Devices for more details about it
-          example: '61400400400'
+          example: []
           items: {}
           readOnly: true
         link:
@@ -8955,6 +8944,7 @@ components:
         application/json:
           schema:
             type: object
+            description: List contacts object
             properties:
               status:
                 type: string

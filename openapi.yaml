@@ -165,12 +165,12 @@ paths:
                   email:
                     body: This is the body of my test Email message
                     footer: This is the footer of my message
-                    type: text/plain
+                    type: text/html
                     resources:
                       attachments:
-                        - attachmentName: TestIcon.png
-                          attachmentDesc: MyPhoto
-                          derefUri: iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMvSURBVDhPTVT5S1RhFD3fezOOOePTXHKriWgjsogWC1TSMuuHIFqoX0KsIIgSWwiq/6FFU8MKK6KyXYSKpkUKR4QMSSpCLQpyxHHUZpztzdu63xub5vKWj/fu+c6599z3mMfjSU9P13UdZoiCaLfZYQWiUGKq1WrBLEBDOBpWNTWeQyEIwvT0NAsEAgROPKXFxceNbQOtv4ShkKCkaZZ5kYU1Sw6dqT0NMTkLBIbf7zf+xaOuJzgG4RmyPyP/Kwq/oWAYeT+R6gYOofnmlUQmLQjI6JQkifasu368KdCQWwFEwBiYQOIgiDBETDFIORh/iZ0De55cehgXQJIphce9d/ebJhuyV0P3QY9Cj/HDUKhseIPomP/CW2QYB42nSx+db76YUM9IusPhYHVM2g5Bpo5xNuIkZibCF8On0oGVjhWabmR8EBx5GDuHaItsy0zhzA6bo/H5ZSyDMQ1d4YQa0Sqc1hdAe3E7IYkqp9tiUcHGkXIQZ8+fm+k5uXK3/46YAV3mMMLEt/BHUJ1Vua9oH+WV9ayLyLpVhRYFkT8d4mUzRuI0DAcHmQngSLrGoBJ/GC/L31JSy/cm91ifXTcboYDJGLX+1kI6WS3AQFSRCUDvwhGEwubiD1yVLkLKWuxoT50kzGwab6Ru6HIsahpiwTybkwTLU9iUU1Ezf394CmuyV20p2kLg8mcbRHLLxGimLlWFFMpMc6TRFlx29aJqePBgx4M3u7tubb1dMXfjw6rHhOwb+/jhV3+qNtMFKspQEZnA+oxSPr9UdjgUllV59pHZhSUFI/We5AnMv5o7bvhsFu5f3DlmR7ATr/a+rtq2mVulqEqmlFlbUuv5MbqudW0C7PrhGpvwidRhIoyXqiHoRam/tGrT5n9Wmfcb9TfmBOf0DXy80H0h/uKU6yQRcqlmk+mji0RhbbN2XOpAygzF/9nmfp4oc4+4y6vLqRnuUTdsfNqYFRop/4JFw4t723qz52YlZpvPd/K30vm+03nAie1ADXAYOADsgHOXs/laix7RkzMJyJJ/BjQ09lQ7me8f9/cP9nsnvemzpOIFy3PzclkK0wyNgvDEHP8Z/AXQ58rAz69IBAAAAABJRU5ErkJggg==
+                        - attachmentName: sample.json
+                          attachmentDesc: Sample
+                          derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
               Voice:
                 value:
                   to: '61400400400'
@@ -961,6 +961,13 @@ paths:
           application/vnd.whispir.resource-v1+json:
             schema:
               $ref: '#/components/schemas/resource'
+            examples:
+              Example:
+                value:
+                  name: sample.json
+                  scope: private
+                  mimeType: application/json
+                  derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
           application/vnd.whispir.resource-v1+xml:
             schema:
               $ref: '#/components/schemas/resource'
@@ -973,6 +980,31 @@ paths:
             application/vnd.whispir.resource-v1+json:
               schema:
                 $ref: '#/components/schemas/resource'
+              examples:
+                Example:
+                  value:
+                    id: 9B9E2425AAFEEE49E9D9112B6BAC22A9
+                    name: sample.json
+                    scope: private
+                    mimeType: application/json
+                    derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
+                        rel: updateResource
+                        method: PUT
+                        type: 'application/vnd.whispir.resource-v1+json,application/vnd.whispir.resource-v1+xml'
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
+                        rel: deleteResource
+                        method: DELETE
+                        host: api.au.whispir.com
+                        port: -1
           headers:
             Content-Type:
               $ref: '#/components/headers/Resource-Content-Type'
@@ -984,6 +1016,11 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/FF339D872B6A938BB35E46B04A2CA875'
+              description: The URI to fetch details of the resource.
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1189,24 +1226,34 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            examples:
+            application/vnd.whispir.resource-v1+jsonapplication/vnd.whispir.resource-v1+json:
               examples:
-                response:
+                Example:
                   value:
-                    name: australia.json
+                    id: 9B9E2425AAFEEE49E9D9112B6BAC22A9
+                    name: sample.json
                     scope: private
                     mimeType: application/json
+                    derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
                     link:
-                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
                         rel: self
                         method: GET
-                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
                         rel: updateResource
                         method: PUT
                         type: 'application/vnd.whispir.resource-v1+json,application/vnd.whispir.resource-v1+xml'
-                      - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
                         rel: deleteResource
                         method: DELETE
+                        host: api.au.whispir.com
+                        port: -1
+              schema:
+                $ref: '#/components/schemas/resource'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1250,14 +1297,21 @@ paths:
           application/vnd.whispir.resource-v1+json:
             schema:
               $ref: '#/components/schemas/resource'
+            examples:
+              Example:
+                value:
+                  name: sample.json
+                  scope: private
+                  mimeType: application/json
+                  derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
           application/vnd.whispir.resource-v1+xml:
             schema:
               $ref: '#/components/schemas/resource'
         description: resources object that needs to be update resources
         required: true
       responses:
-        '204':
-          description: No Content
+        '200':
+          description: OK
           headers:
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
@@ -1265,25 +1319,39 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Content-Type:
+              $ref: '#/components/headers/Resource-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
           content:
-            examples:
+            application/vnd.whispir.resource-v1+json:
               examples:
-                response:
+                Example:
                   value:
-                    title: Emergency Comms - Fire
-                    description: Scenario to use during fire evacuation
-                    allowedUsers: EVERYONE
-                    message:
-                      to: '+1000000000'
-                      subject: Scenario Emergency Comms - Fire
-                      body: Evacuate the building Immediately. Do not use the lifts.
-                      label: ''
-                      voice: {}
-                      from: joe.bloggs.company@Contact.Melbourne.whispir.au
-                      social:
-                        social:
-                          - id: socialType
-                            body: text/plain
+                    id: 9B9E2425AAFEEE49E9D9112B6BAC22A9
+                    name: sample.json
+                    scope: private
+                    mimeType: application/json
+                    derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
+                        rel: updateResource
+                        method: PUT
+                        type: 'application/vnd.whispir.resource-v1+json,application/vnd.whispir.resource-v1+xml'
+                        host: api.au.whispir.com
+                        port: -1
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
+                        rel: deleteResource
+                        method: DELETE
+                        host: api.au.whispir.com
+                        port: -1
+              schema:
+                $ref: '#/components/schemas/resource'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5376,12 +5444,12 @@ components:
         Email with attachment:
           body: This is the body of my test Email message
           footer: This is the footer of my message
-          type: text/plain
+          type: text/html
           resources:
             attachments:
-              - attachmentName: TestIcon.png
-                attachmentDesc: MyPhoto
-                derefUri: iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMvSURBVDhPTVT5S1RhFD3fezOOOePTXHKriWgjsogWC1TSMuuHIFqoX0KsIIgSWwiq/6FFU8MKK6KyXYSKpkUKR4QMSSpCLQpyxHHUZpztzdu63xub5vKWj/fu+c6599z3mMfjSU9P13UdZoiCaLfZYQWiUGKq1WrBLEBDOBpWNTWeQyEIwvT0NAsEAgROPKXFxceNbQOtv4ShkKCkaZZ5kYU1Sw6dqT0NMTkLBIbf7zf+xaOuJzgG4RmyPyP/Kwq/oWAYeT+R6gYOofnmlUQmLQjI6JQkifasu368KdCQWwFEwBiYQOIgiDBETDFIORh/iZ0De55cehgXQJIphce9d/ebJhuyV0P3QY9Cj/HDUKhseIPomP/CW2QYB42nSx+db76YUM9IusPhYHVM2g5Bpo5xNuIkZibCF8On0oGVjhWabmR8EBx5GDuHaItsy0zhzA6bo/H5ZSyDMQ1d4YQa0Sqc1hdAe3E7IYkqp9tiUcHGkXIQZ8+fm+k5uXK3/46YAV3mMMLEt/BHUJ1Vua9oH+WV9ayLyLpVhRYFkT8d4mUzRuI0DAcHmQngSLrGoBJ/GC/L31JSy/cm91ifXTcboYDJGLX+1kI6WS3AQFSRCUDvwhGEwubiD1yVLkLKWuxoT50kzGwab6Ru6HIsahpiwTybkwTLU9iUU1Ezf394CmuyV20p2kLg8mcbRHLLxGimLlWFFMpMc6TRFlx29aJqePBgx4M3u7tubb1dMXfjw6rHhOwb+/jhV3+qNtMFKspQEZnA+oxSPr9UdjgUllV59pHZhSUFI/We5AnMv5o7bvhsFu5f3DlmR7ATr/a+rtq2mVulqEqmlFlbUuv5MbqudW0C7PrhGpvwidRhIoyXqiHoRam/tGrT5n9Wmfcb9TfmBOf0DXy80H0h/uKU6yQRcqlmk+mji0RhbbN2XOpAygzF/9nmfp4oc4+4y6vLqRnuUTdsfNqYFRop/4JFw4t723qz52YlZpvPd/K30vm+03nAie1ADXAYOADsgHOXs/laix7RkzMJyJJ/BjQ09lQ7me8f9/cP9nsnvemzpOIFy3PzclkK0wyNgvDEHP8Z/AXQ58rAz69IBAAAAABJRU5ErkJggg==
+              - attachmentName: sample.json
+                attachmentDesc: Sample
+                derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
       x-tags:
         - Messages
       properties:
@@ -5659,7 +5727,18 @@ components:
         - Maximum of 10 MB per file being uploaded
         - Transactions have an enforced timeout
         - Resources are available in the Whispir platform for a limited time [90 days]. After this time they are automatically cleaned. This is a configurable setting for Whispir Administrators
+      x-examples:
+        JSON:
+          name: sample.json
+          scope: private
+          mimeType: application/json
+          derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
       properties:
+        id:
+          type: string
+          example: 9B9E2425AAFEEE49E9D9112B6BAC22A9
+          description: The identifier for the resource.
+          readOnly: true
         name:
           type: string
           description: Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name.
@@ -5685,18 +5764,14 @@ components:
         derefUri:
           type: string
           description: The base64 representation of the file being submitted.
-          example: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
+          example: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+        link:
+          $ref: '#/components/schemas/link'
       required:
         - name
         - scope
         - mimeType
         - derefUri
-      x-examples:
-        JSON:
-          name: sample.json
-          scope: private
-          mimeType: application/json
-          derefUri: W3sNCiAiZnVsbG5hbWUiOiAiRnJhbmNvIEhpbWJvbGkiLA0KICJlbWFpbCI6ICJmdHJpbWJvbGlAZ21haWwuY29tIiwNCiAibW9iaWxlIjogIjA0MTA1MDkwMDEiLA0KICJzdHJlZXRhZGRyZXNzIjogIjEyMyBBdWJ1cm4gUmQiLA0KICJzdWJ1cmIiOiAiSGF3dGhvcm4iLA0KICJSZWZlcmVuY2UiOiAiWHByZXNzIE1haWwiLA0KICJNc2dEYXRhIiA6IHsgDQoJIlBPQkRldGFpbCI6IHsNCgkJIkRhdGVBbmRUaW1lIiA6ICIwOS1TZXAtMjAxNSAxMjoxNSBQTSIsDQoJCSJNZXNzYWdlIiA6ICJQbGVhc2UgbGV0IHVzIGtub3cgaWYgdGhlIHRpbWUgc2xvdCBpcyBhY2NlcHRhYmxlLiBSZXNwb25kIHdpdGggYSAnTm8nIHRvIGdldCBhbHRlcm5hdGl2ZSB0aW1lIHNsb3QiDQoJfQ0KICB9DQp9LA0Kew0KICJmdWxsbmFtZSI6ICJKb3JkYW4gV2luZHNvciIsDQogImVtYWlsIjogImp3aW5kc29yQHlhaG9vLmNvbSIsDQogIm1vYmlsZSI6ICIwNDEwNTA5MDAyIiwNCiAic3RyZWV0YWRkcmVzcyI6ICIzNjAgV2Fsc2ggUmQiLA0KICJzdWJ1cmIiOiAiTm9ydGggTWVsYm91cm5lIiwNCiAiUmVmZXJlbmNlIjogIlhwcmVzcyBNYWlsIiwNCiAiTXNnRGF0YSIgOiB7IA0KCSJQT0JEZXRhaWwiOiB7DQoJCSJEYXRlQW5kVGltZSIgOiAiMDktU2VwLTIwMTUgMTI6MzAgUE0iLA0KCQkiTWVzc2FnZSIgOiAiUGxlYXNlIGxldCB1cyBrbm93IGlmIHRoZSB0aW1lIHNsb3QgaXMgYWNjZXB0YWJsZS4gUmVzcG9uZCB3aXRoIGEgJ05vJyB0byBnZXQgYWx0ZXJuYXRpdmUgdGltZSBzbG90Ig0KCX0NCiAgfQ0KfV0
     template:
       type: object
       xml:
@@ -7165,10 +7240,10 @@ components:
 
         Attachments must be provided in the payload of the message. URLs can be referenced in the email but will not be added as message attachments.
       x-examples:
-        Example:
-          attachmentName: TestIcon.png
-          attachmentDesc: MyPhoto
-          derefUri: iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMvSURBVDhPTVT5S1RhFD3fezOOOePTXHKriWgjsogWC1TSMuuHIFqoX0KsIIgSWwiq/6FFU8MKK6KyXYSKpkUKR4QMSSpCLQpyxHHUZpztzdu63xub5vKWj/fu+c6599z3mMfjSU9P13UdZoiCaLfZYQWiUGKq1WrBLEBDOBpWNTWeQyEIwvT0NAsEAgROPKXFxceNbQOtv4ShkKCkaZZ5kYU1Sw6dqT0NMTkLBIbf7zf+xaOuJzgG4RmyPyP/Kwq/oWAYeT+R6gYOofnmlUQmLQjI6JQkifasu368KdCQWwFEwBiYQOIgiDBETDFIORh/iZ0De55cehgXQJIphce9d/ebJhuyV0P3QY9Cj/HDUKhseIPomP/CW2QYB42nSx+db76YUM9IusPhYHVM2g5Bpo5xNuIkZibCF8On0oGVjhWabmR8EBx5GDuHaItsy0zhzA6bo/H5ZSyDMQ1d4YQa0Sqc1hdAe3E7IYkqp9tiUcHGkXIQZ8+fm+k5uXK3/46YAV3mMMLEt/BHUJ1Vua9oH+WV9ayLyLpVhRYFkT8d4mUzRuI0DAcHmQngSLrGoBJ/GC/L31JSy/cm91ifXTcboYDJGLX+1kI6WS3AQFSRCUDvwhGEwubiD1yVLkLKWuxoT50kzGwab6Ru6HIsahpiwTybkwTLU9iUU1Ezf394CmuyV20p2kLg8mcbRHLLxGimLlWFFMpMc6TRFlx29aJqePBgx4M3u7tubb1dMXfjw6rHhOwb+/jhV3+qNtMFKspQEZnA+oxSPr9UdjgUllV59pHZhSUFI/We5AnMv5o7bvhsFu5f3DlmR7ATr/a+rtq2mVulqEqmlFlbUuv5MbqudW0C7PrhGpvwidRhIoyXqiHoRam/tGrT5n9Wmfcb9TfmBOf0DXy80H0h/uKU6yQRcqlmk+mji0RhbbN2XOpAygzF/9nmfp4oc4+4y6vLqRnuUTdsfNqYFRop/4JFw4t723qz52YlZpvPd/K30vm+03nAie1ADXAYOADsgHOXs/laix7RkzMJyJJ/BjQ09lQ7me8f9/cP9nsnvemzpOIFy3PzclkK0wyNgvDEHP8Z/AXQ58rAz69IBAAAAABJRU5ErkJggg==
+        JSON:
+          attachmentName: sample.json
+          attachmentDesc: Sample
+          derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
       title: Attachment
       properties:
         attachmentName:
@@ -7190,12 +7265,12 @@ components:
       type: array
       description: 'A [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) link object, describing all discoverable resources in relation to the original request.'
       x-examples:
-        Link:
-          uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=responserule'
-          rel: detailedResponsesWithResponseRule
-          method: GET
-          host: api.au.whispir.com
-          port: -1
+        Example:
+          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=responserule'
+            rel: detailedResponsesWithResponseRule
+            method: GET
+            host: api.au.whispir.com
+            port: -1
       items:
         type: object
         description: The HATEOAS link object.
@@ -8050,8 +8125,8 @@ components:
         enum:
           - application/vnd.whispir.messageresponse-v1+json
           - application/vnd.whispir.messageresponse-v1+xml
-    Auth-Accept:   
-      name: Accept 
+    Auth-Accept:
+      name: Accept
       in: header
       required: true
       schema:
@@ -9032,4 +9107,3 @@ components:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml
       description: Application specific mime-type.
-

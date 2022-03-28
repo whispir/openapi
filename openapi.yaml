@@ -2020,23 +2020,7 @@ paths:
         required: true
       responses:
         '201':
-          description: Created
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Contact-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-          content:
-            application/vnd.whispir.contact-v1+json:
-              schema:
-                $ref: '#/components/schemas/contact'
-              examples: {}
+          $ref: '#/components/responses/Contact'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5972,6 +5956,7 @@ components:
               primary: WorkMobilePhone1
               secondary: WorkMobilePhone1
               tertiary: WorkMobilePhone1
+      description: The contact object.
       properties:
         firstName:
           type: string
@@ -6215,6 +6200,28 @@ components:
           $ref: '#/components/schemas/locations'
         messagingoptions:
           $ref: '#/components/schemas/messagingoptions'
+        type:
+          type: string
+          enum:
+            - PROJECT
+            - COMPANY
+          description: |-
+            - PROJECT - for Contacts stored in a User-defined workspace
+            - COMPANY - for Contacts stored in the default workspace
+          readOnly: true
+        mri:
+          type: string
+          description: Specifies the Message Resource Identifier of the Contact in Whispir
+          example: '61400400400'
+          readOnly: true
+        devices:
+          type: array
+          description: Specifies the devices associated to this contact. See Contact Devices for more details about it
+          example: '61400400400'
+          items: {}
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/link'
       required:
         - firstName
         - lastName
@@ -6222,7 +6229,6 @@ components:
         - workEmailAddress1
         - workCountry
         - timezone
-      description: The contact object.
     distributionlist:
       type: object
       required:
@@ -8050,8 +8056,8 @@ components:
         enum:
           - application/vnd.whispir.messageresponse-v1+json
           - application/vnd.whispir.messageresponse-v1+xml
-    Auth-Accept:   
-      name: Accept 
+    Auth-Accept:
+      name: Accept
       in: header
       required: true
       schema:
@@ -8856,6 +8862,201 @@ components:
           $ref: '#/components/headers/Cache-Control'
         Expires:
           $ref: '#/components/headers/Expires'
+    Contact:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/contact'
+          examples:
+            Example:
+              value:
+                firstName: John
+                lastName: Wick
+                workMobilePhone1: '61400400400'
+                workEmailAddress1: testUser@example.com
+                workCountry: Australia
+                timezone: Australia/Melbourne
+                title: Dr
+                workMobilePhone2: '61500500500'
+                workEmailAddress2: newUser@example.com
+                workPhoneAreaCode1: '09'
+                workPhone1: '5006000'
+                workPhoneAreaCode2: '09'
+                workPhone2: '5007000'
+                workFaxAreaCode1: '09'
+                workFax1: '5008000'
+                workSatellitePhone: '61600600600'
+                workOtherPhone: '61700700700'
+                workAddress1: Level 15
+                workAddress2: 360 Collins St
+                workSuburb: Melboure
+                workState: Victoria
+                workPostCode: '3000'
+                workPostalAddress1: Level 15
+                workPostalAddress2: 360 Collins St
+                workPostalSuburb: Melboure
+                workPostalState: Victoria
+                workPostalPostCode: '3000'
+                personalEmailAddress1: personalPrimaryUser@example.com
+                personalEmailAddress2: personalSecondaryUser@example.com
+                personalAddress1: Level 15
+                personalAddress2: 360 Collins St
+                personalSuburb: Melboure
+                personalState: Victoria
+                personalPostCode: '3000'
+                personalCountry: Australia
+                personalPhoneAreaCode1: '09'
+                personalPhone1: '5006000'
+                personalPhoneAreaCode2: '09'
+                personalPhone2: '5007000'
+                personalFaxAreaCode1: '09'
+                personalFax1: '5008000'
+                otherPhoneAreaCode1: '09'
+                otherPhone1: '5009000'
+                otherMobile: '61900900900'
+                otherFirstName: Harold
+                otherLastName: Wickman
+                otherTitle: Mr
+                status: A
+                companyName: Whispir
+                jobTitle: Software Engineer
+                division: Technology
+                businessUnit: Core Platform
+                department: Research & Development
+                teamName1: Optimus Prime
+                teamName2: Bumblebee
+                role1: Administrator
+                role2: Analyst
+                locations:
+                  - latitude: 41.9028
+                    longitude: -12.4964
+                    type: CurrentLocation
+                messagingoptions:
+                  - channel: sms
+                    enabled: true
+                    primary: WorkMobilePhone1
+                    secondary: WorkMobilePhone1
+                    tertiary: WorkMobilePhone1
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Template-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+    Contacts:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: 1 to 8 of 8
+                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+              contacts:
+                type: array
+                description: list of contacts
+                items:
+                  $ref: '#/components/schemas/contact'
+          examples:
+            Example:
+              value:
+                status: 1 to 8 of 8
+                contacts:
+                  - firstName: John
+                    lastName: Wick
+                    workMobilePhone1: '61400400400'
+                    workEmailAddress1: testUser@example.com
+                    workCountry: Australia
+                    timezone: Australia/Melbourne
+                    title: Dr
+                    workMobilePhone2: '61500500500'
+                    workEmailAddress2: newUser@example.com
+                    workPhoneAreaCode1: '09'
+                    workPhone1: '5006000'
+                    workPhoneAreaCode2: '09'
+                    workPhone2: '5007000'
+                    workFaxAreaCode1: '09'
+                    workFax1: '5008000'
+                    workSatellitePhone: '61600600600'
+                    workOtherPhone: '61700700700'
+                    workAddress1: Level 15
+                    workAddress2: 360 Collins St
+                    workSuburb: Melboure
+                    workState: Victoria
+                    workPostCode: '3000'
+                    workPostalAddress1: Level 15
+                    workPostalAddress2: 360 Collins St
+                    workPostalSuburb: Melboure
+                    workPostalState: Victoria
+                    workPostalPostCode: '3000'
+                    personalEmailAddress1: personalPrimaryUser@example.com
+                    personalEmailAddress2: personalSecondaryUser@example.com
+                    personalAddress1: Level 15
+                    personalAddress2: 360 Collins St
+                    personalSuburb: Melboure
+                    personalState: Victoria
+                    personalPostCode: '3000'
+                    personalCountry: Australia
+                    personalPhoneAreaCode1: '09'
+                    personalPhone1: '5006000'
+                    personalPhoneAreaCode2: '09'
+                    personalPhone2: '5007000'
+                    personalFaxAreaCode1: '09'
+                    personalFax1: '5008000'
+                    otherPhoneAreaCode1: '09'
+                    otherPhone1: '5009000'
+                    otherMobile: '61900900900'
+                    otherFirstName: Harold
+                    otherLastName: Wickman
+                    otherTitle: Mr
+                    status: A
+                    companyName: Whispir
+                    jobTitle: Software Engineer
+                    division: Technology
+                    businessUnit: Core Platform
+                    department: Research & Development
+                    teamName1: Optimus Prime
+                    teamName2: Bumblebee
+                    role1: Administrator
+                    role2: Analyst
+                    locations:
+                      - latitude: 41.9028
+                        longitude: -12.4964
+                        type: CurrentLocation
+                    messagingoptions:
+                      - channel: sms
+                        enabled: true
+                        primary: WorkMobilePhone1
+                        secondary: WorkMobilePhone1
+                        tertiary: WorkMobilePhone1
+                    type: PROJECT
+                    mri: '61400400400'
+                    devices: '61400400400'
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Template-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
   headers:
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.
@@ -9032,4 +9233,3 @@ components:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml
       description: Application specific mime-type.
-

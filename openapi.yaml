@@ -2065,21 +2065,8 @@ paths:
             Example: `http://api.whispir.com/contacts?firstName=Sam`
           schema:
             type: string
-        - name: sortOrder
-          in: query
-          description: The order in which you require the results to be returned. Either `asc` or `desc`.
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-        - name: sortFields
-          in: query
-          description: |
-            The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.
-            Example: `http://api.whispir.com/contacts?firstName=Sam&sortFields=lastName,jobTitle`
-          schema:
-            type: string
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
         - name: customFields
           in: query
           description: Custom Fields
@@ -2135,13 +2122,16 @@ paths:
           schema:
             type: string
             example: 5130D4DDDED0AD4D69D33C3E64419A51
-        - name: customFields
+        - name: fields
           in: query
-          description: Custom Fields
+          description: 'NOTE: once again, the equal sign must be intended as "contains" rather than "equals". So if we search the people whose firstName equals Sam we might be given back e.g. Sam, Samantha, Samuel. Similarly for numbers: if we search Contacts with staffId equal to 1234 we will given back e.g. the contact with staffID equal to 1234 but also e.g. a contact with staffID equal to 98123456. If you need to narrow down please consider applying additional filters'
           required: false
           schema:
-            type: boolean
+            type: string
+            example: 'workEmailAddress1,workMobilePhone1&firstname=Sam'
         - $ref: '#/components/parameters/Contact-Accept'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
           description: OK
@@ -2336,6 +2326,13 @@ paths:
           schema:
             type: string
             example: 5130D4DDDED0AD4D69D33C3E64419A51
+        - schema:
+            type: string
+            enum:
+              - deleteAll
+          in: query
+          name: action
+          description: 'The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it''s triggered. **Use the action only when you''re definitely sure you want to delete the contact from all workspaces**'
       responses:
         '204':
           description: No Content

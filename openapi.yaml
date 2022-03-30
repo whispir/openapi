@@ -8941,7 +8941,7 @@ components:
                 lastModifiedTime: '2022-03-29T16:30:18+11:00'
       headers:
         Content-Type:
-          $ref: '#/components/headers/Template-Content-Type'
+          $ref: '#/components/headers/Contact-Content-Type'
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
         Content-Length:
@@ -9050,7 +9050,7 @@ components:
                         port: -1
       headers:
         Content-Type:
-          $ref: '#/components/headers/Template-Content-Type'
+          $ref: '#/components/headers/Contact-Content-Type'
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
         Content-Length:

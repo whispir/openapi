@@ -96,7 +96,6 @@ overrides:
     files:
       - '**#/components/schemas/responseTemplatePattern' # Response Template Endpoint Schemas
       - '**#/components/schemas/responseRule'
-      - '**#/components/schemas/contact' # Contact Endpoint Schemas
       - '**#/components/schemas/messagingoptions'
       - '**#/components/schemas/distributionlist' # Distribution List Endpoint Schemas
       - '**#/components/schemas/locations'
@@ -113,7 +112,7 @@ overrides:
   - rules:
       payload-examples: off
     files:
-      - '**#/paths/~1workspaces~1{workspaceId}~1contacts' # Contacts Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1resources' # Resources Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1distributionlists' # DistributionLists Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1events' # Events Endpoint Examples
       - '**#/components/requestBodies/event'

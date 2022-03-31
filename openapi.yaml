@@ -2088,23 +2088,7 @@ paths:
         required: true
       responses:
         '201':
-          description: Created
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Contact-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-          content:
-            application/vnd.whispir.contact-v1+json:
-              schema:
-                $ref: '#/components/schemas/contact'
-              examples: {}
+          $ref: '#/components/responses/Contact'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2149,21 +2133,8 @@ paths:
             Example: `http://api.whispir.com/contacts?firstName=Sam`
           schema:
             type: string
-        - name: sortOrder
-          in: query
-          description: The order in which you require the results to be returned. Either `asc` or `desc`.
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-        - name: sortFields
-          in: query
-          description: |
-            The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.
-            Example: `http://api.whispir.com/contacts?firstName=Sam&sortFields=lastName,jobTitle`
-          schema:
-            type: string
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
         - name: customFields
           in: query
           description: Custom Fields
@@ -2173,18 +2144,7 @@ paths:
         - $ref: '#/components/parameters/Contact-Accept'
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Contact-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
+          $ref: '#/components/responses/Contacts'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2230,13 +2190,16 @@ paths:
           schema:
             type: string
             example: 5130D4DDDED0AD4D69D33C3E64419A51
-        - name: customFields
+        - name: fields
           in: query
-          description: Custom Fields
+          description: 'NOTE: once again, the equal sign must be intended as "contains" rather than "equals". So if we search the people whose firstName equals Sam we might be given back e.g. Sam, Samantha, Samuel. Similarly for numbers: if we search Contacts with staffId equal to 1234 we will given back e.g. the contact with staffID equal to 1234 but also e.g. a contact with staffID equal to 98123456. If you need to narrow down please consider applying additional filters'
           required: false
           schema:
-            type: boolean
+            type: string
+            example: 'workEmailAddress1,workMobilePhone1&firstname=Sam'
         - $ref: '#/components/parameters/Contact-Accept'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
           description: OK
@@ -2431,6 +2394,13 @@ paths:
           schema:
             type: string
             example: 5130D4DDDED0AD4D69D33C3E64419A51
+        - schema:
+            type: string
+            enum:
+              - deleteAll
+          in: query
+          name: action
+          description: 'The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it''s triggered. **Use the action only when you''re definitely sure you want to delete the contact from all workspaces**'
       responses:
         '204':
           description: No Content
@@ -6047,6 +6017,7 @@ components:
               primary: WorkMobilePhone1
               secondary: WorkMobilePhone1
               tertiary: WorkMobilePhone1
+      description: The contact object.
       properties:
         firstName:
           type: string
@@ -6290,6 +6261,33 @@ components:
           $ref: '#/components/schemas/locations'
         messagingoptions:
           $ref: '#/components/schemas/messagingoptions'
+        type:
+          type: string
+          enum:
+            - PROJECT
+            - COMPANY
+          description: |-
+            - PROJECT - for Contacts stored in a User-defined workspace
+            - COMPANY - for Contacts stored in the default workspace
+          readOnly: true
+        mri:
+          type: string
+          description: Specifies the Message Resource Identifier of the Contact in Whispir
+          example: '61400400400'
+          readOnly: true
+        devices:
+          type: array
+          description: Specifies the devices associated to this contact. See Contact Devices for more details about it
+          example: []
+          items: {}
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/link'
+        lastModifiedTime:
+          type: string
+          example: '2022-03-29T16:30:18+11:00'
+          description: Last Modified data and time
+          readOnly: true
       required:
         - firstName
         - lastName
@@ -6297,7 +6295,6 @@ components:
         - workEmailAddress1
         - workCountry
         - timezone
-      description: The contact object.
     distributionlist:
       type: object
       required:
@@ -8927,6 +8924,212 @@ components:
           $ref: '#/components/headers/Content-Length'
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+    Contact:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/contact'
+          examples:
+            Example:
+              value:
+                firstName: John
+                lastName: Wick
+                workMobilePhone1: '61400400400'
+                workEmailAddress1: testUser@example.com
+                workCountry: Australia
+                timezone: Australia/Melbourne
+                title: Dr
+                workMobilePhone2: '61500500500'
+                workEmailAddress2: newUser@example.com
+                workPhoneAreaCode1: '09'
+                workPhone1: '5006000'
+                workPhoneAreaCode2: '09'
+                workPhone2: '5007000'
+                workFaxAreaCode1: '09'
+                workFax1: '5008000'
+                workSatellitePhone: '61600600600'
+                workOtherPhone: '61700700700'
+                workAddress1: Level 15
+                workAddress2: 360 Collins St
+                workSuburb: Melboure
+                workState: Victoria
+                workPostCode: '3000'
+                workPostalAddress1: Level 15
+                workPostalAddress2: 360 Collins St
+                workPostalSuburb: Melboure
+                workPostalState: Victoria
+                workPostalPostCode: '3000'
+                personalEmailAddress1: personalPrimaryUser@example.com
+                personalEmailAddress2: personalSecondaryUser@example.com
+                personalAddress1: Level 15
+                personalAddress2: 360 Collins St
+                personalSuburb: Melboure
+                personalState: Victoria
+                personalPostCode: '3000'
+                personalCountry: Australia
+                personalPhoneAreaCode1: '09'
+                personalPhone1: '5006000'
+                personalPhoneAreaCode2: '09'
+                personalPhone2: '5007000'
+                personalFaxAreaCode1: '09'
+                personalFax1: '5008000'
+                otherPhoneAreaCode1: '09'
+                otherPhone1: '5009000'
+                otherMobile: '61900900900'
+                otherFirstName: Harold
+                otherLastName: Wickman
+                otherTitle: Mr
+                status: A
+                companyName: Whispir
+                jobTitle: Software Engineer
+                division: Technology
+                businessUnit: Core Platform
+                department: Research & Development
+                teamName1: Optimus Prime
+                teamName2: Bumblebee
+                role1: Administrator
+                role2: Analyst
+                locations:
+                  - latitude: 41.9028
+                    longitude: -12.4964
+                    type: CurrentLocation
+                messagingoptions:
+                  - channel: sms
+                    enabled: true
+                    primary: WorkMobilePhone1
+                    secondary: WorkMobilePhone1
+                    tertiary: WorkMobilePhone1
+                type: PROJECT
+                mri: '61400400400'
+                devices: []
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/673A8E38D34BBF0C/contacts/47F08A08482A5AA40F5A99CE69FB0C16'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+                lastModifiedTime: '2022-03-29T16:30:18+11:00'
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Contact-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+    Contacts:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            description: List contacts object
+            properties:
+              status:
+                type: string
+                example: 1 to 8 of 8
+                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+              contacts:
+                type: array
+                description: list of contacts
+                items:
+                  $ref: '#/components/schemas/contact'
+          examples:
+            Example:
+              value:
+                status: 1 to 8 of 8
+                contacts:
+                  - firstName: John
+                    lastName: Wick
+                    workMobilePhone1: '61400400400'
+                    workEmailAddress1: testUser@example.com
+                    workCountry: Australia
+                    timezone: Australia/Melbourne
+                    title: Dr
+                    workMobilePhone2: '61500500500'
+                    workEmailAddress2: newUser@example.com
+                    workPhoneAreaCode1: '09'
+                    workPhone1: '5006000'
+                    workPhoneAreaCode2: '09'
+                    workPhone2: '5007000'
+                    workFaxAreaCode1: '09'
+                    workFax1: '5008000'
+                    workSatellitePhone: '61600600600'
+                    workOtherPhone: '61700700700'
+                    workAddress1: Level 15
+                    workAddress2: 360 Collins St
+                    workSuburb: Melboure
+                    workState: Victoria
+                    workPostCode: '3000'
+                    workPostalAddress1: Level 15
+                    workPostalAddress2: 360 Collins St
+                    workPostalSuburb: Melboure
+                    workPostalState: Victoria
+                    workPostalPostCode: '3000'
+                    personalEmailAddress1: personalPrimaryUser@example.com
+                    personalEmailAddress2: personalSecondaryUser@example.com
+                    personalAddress1: Level 15
+                    personalAddress2: 360 Collins St
+                    personalSuburb: Melboure
+                    personalState: Victoria
+                    personalPostCode: '3000'
+                    personalCountry: Australia
+                    personalPhoneAreaCode1: '09'
+                    personalPhone1: '5006000'
+                    personalPhoneAreaCode2: '09'
+                    personalPhone2: '5007000'
+                    personalFaxAreaCode1: '09'
+                    personalFax1: '5008000'
+                    otherPhoneAreaCode1: '09'
+                    otherPhone1: '5009000'
+                    otherMobile: '61900900900'
+                    otherFirstName: Harold
+                    otherLastName: Wickman
+                    otherTitle: Mr
+                    status: A
+                    companyName: Whispir
+                    jobTitle: Software Engineer
+                    division: Technology
+                    businessUnit: Core Platform
+                    department: Research & Development
+                    teamName1: Optimus Prime
+                    teamName2: Bumblebee
+                    role1: Administrator
+                    role2: Analyst
+                    locations:
+                      - latitude: 41.9028
+                        longitude: -12.4964
+                        type: CurrentLocation
+                    messagingoptions:
+                      - channel: sms
+                        enabled: true
+                        primary: WorkMobilePhone1
+                        secondary: WorkMobilePhone1
+                        tertiary: WorkMobilePhone1
+                    type: PROJECT
+                    mri: '61400400400'
+                    devices: []
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/673A8E38D34BBF0C/contacts/47F08A08482A5AA40F5A99CE69FB0C16'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Contact-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
         Expires:

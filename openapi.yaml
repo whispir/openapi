@@ -519,6 +519,26 @@ paths:
                   web:
                     body: This is the content of my web publishing or Rich Push Message
                     type: text/plain
+              SMS - Single Scheduled Message:
+                value:
+                  to: '61400400400'
+                  subject: Single Scheduled Message
+                  body: This is a single scheduled SMS message.
+                  messageType: SCHEDULED
+                  scheduleType: ONCE
+                  scheduleDate: '14/02/2019 15:55'
+              SMS - Repeated Scheduled Message:
+                value:
+                  to: '61400400400'
+                  subject: Repeated Scheduled Message
+                  body: This is a repeated scheduled SMS message.
+                  messageType: SCHEDULED
+                  scheduleType: REPEAT
+                  scheduleDate: '14/02/2019 15:55'
+                  repetitionCount: '10'
+                  repeatDays: '0'
+                  repeatHrs: '1'
+                  repeatMin: '0'
         description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web].'
         required: true
       responses:

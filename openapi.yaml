@@ -497,6 +497,11 @@ paths:
                     header: 'This is the introduction, read out to the recipient prior to any key press.'
                     body: 'This is the body of the voice call, read out after the key press'
                     type: 'Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:'
+              SMS with Message Variables:
+                value:
+                  to: John_Wick.1143139@Contact.whispir.au
+                  subject: Test Message
+                  body: Hi @@first_name@@. The current day is @@day@@.
               SMS & Email:
                 value:
                   to: '61400400400,test@test.com'

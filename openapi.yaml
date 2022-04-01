@@ -535,10 +535,10 @@ paths:
                   messageType: SCHEDULED
                   scheduleType: REPEAT
                   scheduleDate: '14/02/2019 15:55'
-                  repetitionCount: '10'
-                  repeatDays: '0'
-                  repeatHrs: '1'
-                  repeatMin: '0'
+                  repetitionCount: 10
+                  repeatDays: 0
+                  repeatHrs: 1
+                  repeatMin: 0
         description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web].'
         required: true
       responses:

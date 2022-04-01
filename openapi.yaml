@@ -365,7 +365,7 @@ paths:
         * * *
 
         ### Scheduled Messages
-        
+
         #### Timezone - Scheduling rules
 
         Using the Whispir API you can schedule messages to be sent later, both once or repeatedly with the possibility to specify the interval between the sessions. The service is available for SMS, email, voice, rich messages 
@@ -470,7 +470,6 @@ paths:
           application/vnd.whispir.bulkmessage-v1+xml:
             schema:
               $ref: '#/components/schemas/message'
-        description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice, web or whatsapp].'
             examples:
               SMS:
                 value:
@@ -7588,7 +7587,7 @@ components:
       description: A structured WhatsApp channel payload.
       type: object
       x-examples:
-        hello-world:
+        Example:
           type: icebreaker
           name: igniteagain
           content:
@@ -7675,17 +7674,13 @@ components:
           description: A location for the header.
           properties:
             longitude:
-              type: integer
               example: -122.425332
               description: Location longitude.
-              minimum: -180
-              maximum: 180
+              type: number
             latitude:
-              type: integer
+              type: number
               example: 37.758056
               description: Location latitude.
-              minimum: -90
-              maximum: 90
             name:
               type: string
               example: Facebook HQ

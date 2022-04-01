@@ -365,7 +365,9 @@ paths:
         * * *
 
         ### Scheduled Messages
+        
         #### Timezone - Scheduling rules
+
         Using the Whispir API you can schedule messages to be sent later, both once or repeatedly with the possibility to specify the interval between the sessions. The service is available for SMS, email, voice, rich messages 
         A message is scheduled according to the timezone set in the Whispir account of the user who initiates the message request. This setting can be found in the Whispir Portal under "Settings"->"User Manager"->"View/Edit". Whispir DOES NOT honor the timezone where the sender or the message recipient are currently located in
         For example if the user’s time zone is set to UTC in their Whispir profile then messages are scheduled to be sent as per UTC, even if the user triggers the message while sitting in Singapore (+8). So please ensure that any scheduled communication is sent at the appropriate/preferred time

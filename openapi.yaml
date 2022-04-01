@@ -363,7 +363,7 @@ paths:
 
         * * *
 
-        ### Scheduled message delivery
+        ### Scheduled Messages
 
         #### Timezone - Scheduling rules
 
@@ -5611,7 +5611,7 @@ components:
         messageTemplateId:
           type: string
           example: BACEB8D46BEF5315
-          description: The identifier for the Messsage Template.
+          description: 'The identifier for the Message Template. Specification of this attribute is preferred over the `messageTemplateName`, to provide an absolute and non-changing reference to the Message Template.'
         messageTemplateName:
           type: string
           example: Sample SMS Template

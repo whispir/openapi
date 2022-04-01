@@ -367,12 +367,19 @@ paths:
         ### Scheduled Messages
 
         #### Timezone - Scheduling rules
+        
+        Using the Whispir API you can schedule messages to be sent later, both once or repeatedly with the possibility to specify the interval between the sessions. The service is available for SMS, email, voice, rich messages 
+        A message is scheduled according to the timezone set in the Whispir account of the user who initiates the message request. This setting can be found in the Whispir Portal under "Settings"->"User Manager"->"View/Edit". Whispir DOES NOT honor the timezone where the sender or the message recipient are currently located in
+        For example if the user’s time zone is set to UTC in their Whispir profile then messages are scheduled to be sent as per UTC, even if the user triggers the message while sitting in Singapore (+8). So please ensure that any scheduled communication is sent at the appropriate/preferred time
+        Also, changing the user's timezone setting after the message is triggered DOES NOT change the original scheduled time.
+        #### Sending messages at a later date
+        ```JSON
+        POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
         x-api-key: your_api_key
         Content-Type: application/vnd.whispir.message-v1+json
         Accept: application/vnd.whispir.message-v1+json
-
         ONCE
         In this sample we will schedule a single message to be delivered at 3:55pm on 14 February 2019
         {
@@ -386,7 +393,6 @@ paths:
             "scheduleType" : "ONCE",
             "scheduleDate" : "14/02/2019 15:55"
         }
-
         REPEAT
         In this sample we will will schedule 10 messages to be delivered every hour starting from 3:55pm on 14 February 2019
         {
@@ -415,7 +421,6 @@ paths:
 
         ONCE
         In this sample we will schedule a single message to be delivered at 3:55pm on 14 February 2019
-
         <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
         <ns2:message xmlns:ns2="http://schemas.api.whispir.com" xmlns:ns3="http://schemas.api.whispir.com/dap">
             <to>john.smith@test.com</to>
@@ -428,7 +433,6 @@ paths:
             <scheduleType>ONCE</scheduleType>
             <scheduleDate>14/02/2019 15:55</scheduleDate>
         </ns2:message>
-
         REPEAT
         In this sample we will will schedule 10 messages to be delivered every hour starting from 3:55pm on 14 February 2019
         <?xml version="1.0" encoding="UTF-8" standalone="yes"?>

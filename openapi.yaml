@@ -257,7 +257,7 @@ paths:
 
         ```JSON
         Step 1 - Creating a Template including the attributes
-        POST http://api.<region>.whispir.com/templates
+        POST http://api.<region>.whispir.com/workspaces/{workspaceId}/templates
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
         x-api-key: your_api_key

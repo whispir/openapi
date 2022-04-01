@@ -78,7 +78,7 @@ paths:
       tags:
         - Messages
       summary: Send a message
-      description: |
+      description: |-
         Communications are the core of what the Whispir Platform API offers as a service to customers.    
         Whispir has the ability to send communications across 7 different channels in a single API request:  
         - **SMS** - up to 1600 characters per message, premium routes, delivery receipts  
@@ -89,35 +89,30 @@ paths:
         - **Facebook** - simplify the process of publishing to multiple facebook accounts instantaneously  
         - **RSS** - easily generate RSS feeds for consumption by other services
 
-        All communications are driven from the /messages endpoint within the API. This endpoint allows a user to perform the following tasks:
-        1.  Create and Send a new message
+        All communications are driven from the Messages endpoint resources within the API. This endpoint allows a user to perform the following tasks:
+        1.  Create and send a new message
         2.  Retrieve a list of previously sent messages  
 
-        These are described in more detail below:  
-        As message resources can exist in the default (My Company) workspace or other workspace, messages have two access URLs:
-        - /messages - for My Company Workspace messages  
-        - /workspaces/{workspaceId}/messages - for other Workspace messages  
-
-        If your application does not require separate workspaces, you can simply send all messages from the default My Company workspace.
         * * *
 
-        **Using Templates**  
-        Messages can simply specify the Message Template ID in the messages request, instead of specifying the entire content payload.  
+        ### Using Templates
+        Messages can simply specify the `messageTemplateId` in the messages request, instead of specifying the entire content payload.
+
         The message template can then easily be changed (using either another API request or by logging in to the Whispir Platform) and the part of the application sending the messages does not need to be altered.  
 
         * * *
 
-        **Callback Parameters**
+        ### Callback Parameters
 
-        The callback API allows you to pass in any values (parameters), which you want to be returned as is - included in the callback response.
+        The callback API allows you to pass in any values (parameters), which you want to be returned as is, included in the callback response.
 
         * * *
 
-        **Sending Messages using event data**  
+        ### Using Events
 
-        Once you have completed creating your event data into the Whispir Platform, the next logical step is to be able to deliver a notification about the event.
+        Once you have created an [Event](./openapi.yaml/paths/~1workspaces~1{workspaceId}~1events/post) in the Whispir Platform, the next logical step is to be able to deliver a notification about the event.
 
-        ```
+        ```json
         {
           "to": "+1000000000",
           "subject": "Event Notification",
@@ -128,12 +123,335 @@ paths:
 
         * * *
 
-        **Sending Messages using template and resources**  
-        Assuming there is a template that has already been created with stencil as -  
+        ### Message Variables
 
-        Now we have the templateId(for content) with the resourceID (for recipients). Using these two key pieces of information, developers can submit an API request to kick off the Dynamic Messaging process.  
+        Whispir allows the use of message variables to dynamically customise the content in a message. Available variables include [Native Tags](#native-tags), [System Tags](#system-tags), and [Custom Tags](#custom-tags). Each of these variables are described in the following sections.
 
-        The smsMappingField should be mapped to the column or key that holds the number to which the SMS has to sent to; and the emailMappingField to the email to which the message has to be sent to.
+        #### Native Tags
+
+        When sending messages using the Whispir API you can automatically customise your communications including recipients information as part of the message. This is facilitated by the Whispir's native message variables [or native tags] that will be resolved against the recipients MRIs.
+        > **IMPORTANT**: the following tags can be included in any SMS, email or voice message. They are NOT meant to be used in rich messages. In this case recipient-specific fields can be populated using the Whispir JavaScript API.
+
+        Contact Tag | Description
+        ---------|----------
+         @@first_name@@ | Recipient’s first name.  <br/> For example, John. 
+         @@last_name@@ | Recipient’s last name. <br/> For example, Smith.
+         @@recipient_email@@ | Recipient’s primary email address.<br/>For example, jsmith@email.com 
+         @@recipient_sms@@ | Recipient’s primary mobile phone number. <br/><br/>For example, 61400400400. 
+         @@recipient_voice@@ | Recipient’s primary phone number for voice calls.<br/><br/> For example, 61400400400. 
+         @@pin@@ | Whispir message retrieval service call back PIN (only populated when voice is used). <br/><br/> For example, 1234. 
+         @@recipient_role@@ | Resolves to the recipient’s ‘Role’ field.<br/><br/> For example, Manager. 
+         @@recipient_additionalrole@@ | Resolves to the recipient’s ‘Additional Role’ field. <br/><br/>For example, Team Leader. 
+         @@team_name1@@ | Resolves to the recipient’s ‘Team Name’ field.<br/><br/> For example, Red Team. 
+         @@messagelabel@@| Resolves to the label field of the sent message. <br/><br/>For example, Incident #1234. 
+         @@messagecategories@@ | Resolves to the list of categories used in the message, separated with commas. <br/><br/>For example, Product Update. 
+         
+        ``` JSON
+        POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+json
+        Accept: application/vnd.whispir.message-v1+json
+         
+        {
+           "to" : "John_Wick.1143139@Contact.whispir.sg",
+           "subject" : "Test SMS Message with tags",
+           "body" : "Hi @@first_name@@. This is your message."
+        }
+        ```
+        ``` XML
+        POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+xml
+        Accept: application/vnd.whispir.message-v1+xml
+         
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <ns2:message xmlns:ns2="http://schemas.api.whispir.com">
+            <to>John_Wick.1143139@Contact.whispir.sg</to>
+            <subject>Test SMS Message with tags</subject>
+            <body>Hi @@first_name@@. This is your message.</body>
+        </ns2:message>
+        ```
+         
+        The main difference with the examples seen so far is given here by the `to` field of the payloads, where a Contact MRI is specified. This reference allows the Whispir platform to inspect the Contact to retrieve the Contact tags.
+
+        * * *
+
+        #### System Tags
+
+        When sending messages using the Whispir API, you can automatically include system-generated information via system variables. Each of them will resolve to the value obtained when you send the message. Unlike the preceding ones, they don't depend from the Contacts information stored in Whispir, so they can be included also in messages where the recipients are not represented by their MRI.
+
+        System Tag | Description|
+        ---------|----------
+        @@dd@@| Current day with leading zero. <br/> For example, 08.
+        @@mm@@ | Current month with leading zero. <br/> For example, 06.
+        @@yy@@| Current year, short form.<br/>For example, 22.
+        @@yyyy@@| Current year, long form. <br/><br/>For example, 2022.
+        @@day@@ | Day in spoken form.<br/><br/> For example, Wednesday. 
+        @@month@@| Month in spoken form. <br/><br/> For example, January. 
+        @@hrs@@| Current hour with leading zero, in 24 hour format.<br/><br/> For example, 16. 
+        @@min@@ | Current minute with leading zero.<br/><br/> For example, 45. 
+        @@date@ | Current date in format (yyyy-mm-dd)<br/><br/> For example, 2022-02-02.
+        @@time@@| Current time in 24-hour format. <br/><br/>For example, 16:37. 
+         
+        * * *
+
+        #### Custom Tags
+
+        Using message attributes and message Templates allows developers to cleanly separate these responsibilities. This is done by combining the message channels being used for the message and the data driving the message.
+        Under the operational point of view this solution is achieved with two steps:
+        1. Creating a Template including attributes
+        2. Using the Template and replacing the values for the attributes
+
+        Whispir’s API customers can simplify their requests by using the message attributes directly from the API.
+        Using message attributes allows to achieve flexibility in the communications. With this solution, Developers just need to take care of the data behind a message while the Marketing team can focus on the presentation or messaging channels within the message.
+        > Unlike native tags, user-defined attributes require Whispir administrative assistance to enable and are configured at the account level. Please contact your Whispir account manager or the [Whispir Support Team](mailto='support@whispir.com') if interested in using them. Whispir’s API only accepts message attributes containing alpha-numeric ASCII characters.
+        We are about to see a full example where an initial fixed message has been adapted to be reusable.
+
+        **Without Custom Tags**
+
+        ```JSON
+        POST http://api.<region>.whispir.com/workspaces/{workspaceId}/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+json
+        Accept: application/vnd.whispir.message-v1+json
+         
+        {
+           "to" : "jsmith@test.com", 
+           "subject" : "Reminder", 
+           "body" : "Your invitation to the Acme Event will expire on 13/06/2019 at 23:59:59", 
+           "email" : { 
+              "type" : "text/plain", 
+              "body" : "Your invitation to the Acme Event will expire on 13/06/2019 at 23:59:59" 
+           }
+        }
+        ```
+        ```XML
+        POST http://api.<region>.whispir.com/workspaces/{workspaceId}/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+xml
+        Accept: application/vnd.whispir.message-v1+xml
+         
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <ns2:message xmlns:ns2="http://schemas.api.whispir.com">
+            <to>jsmith@test.com</to>
+            <subject>Reminder</subject>
+            <body>Your invitation to the Acme Event will expire on 13/06/2019 at 23:59:59</body>
+            <email>
+                <type>text/plain</type>
+                <body>Your invitation to the Acme Event will expire on 13/06/2019 at 23:59:59</body>
+            </email>
+        </ns2:message>
+        ```
+
+        **With Custom Tags**
+
+        #### Using Message Variables in Templates
+
+        ```JSON
+        Step 1 - Creating a Template including the attributes
+        POST http://api.<region>.whispir.com/workspaces/{workspaceId}/templates
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.template-v1+json
+        Accept: application/vnd.whispir.template-v1+json 
+         
+        { 
+           "messageTemplateName" : "Event Reminder", 
+           "subject" : "Reminder:", 
+           "body" : "Your invitation to the Acme Event will expire on @@event_expiry@@ at @@event_expiry_time@@", 
+           "email" : { 
+              "type" : "text/plain", 
+              "body" : "Your invitation to the Acme Event will expire on @@event_expiry@@." 
+           }
+        }
+        Response - template created
+        201 - Created
+        Location: http://api.<region>.whispir.com/workspaces/{workspaceId}/templates/DACADB02209CC93C
+        { 
+           ...
+           "id": "DACADB02209CC93C", 
+           ...
+        }
+        Step 2 - Using Template including attributes to send the message
+        POST http://api.<region>.whispir.com/workspaces/{workspaceId}/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+json
+        Accept: application/vnd.whispir.message-v1+json
+         
+        { 
+           "to" : "jsmith@test.com", 
+           "messageTemplateId" : "DACADB02209CC93C", 
+           "messageattributes" : {
+              "attribute" : [{
+                 "name" : "event_expiry",     
+                 "value" : "13/06/2019"   
+              },{
+                 "name" : "event_expiry_time",     
+                 "value" : "23:59:59"   
+              }]
+           } 
+        }
+        ```
+        ```XML
+        Step 1 - Creating a Template including attributes
+        POST http://api.<region>.whispir.com/workspaces/{workspaceId}/templates
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.template-v1+xml
+        Accept: application/vnd.whispir.template-v1+xml
+         
+        <?xml version="1.0" encoding="UTF-8"?>
+        <ns3:template xmlns:ns3="http://schemas.api.whispir.com" 
+                      xmlns:ns2="http://schemas.api.whispir.com/dap">
+          <messageTemplateName>Event Reminder</messageTemplateName>
+          <subject>Reminder</subject>
+          <body>Your invitation to the Acme Event will expire on @@event_expiry@@ at @@event_expiry_time@@</body>
+          <email>
+             <type>text/plain</type>
+             <body>Your invitation to the Acme Event will expire on @@event_expiry@@ at @@event_expiry_time@@</body>
+          </email>
+        </ns3:template>
+        Response - template created
+        201 - Created
+        Location: http://api.<region>.whispir.com/workspaces/{workspaceId}/templates/DACADB02209CC93C
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <ns3:template xmlns:ns2="http://schemas.api.whispir.com/dap" xmlns:ns3="http://schemas.api.whispir.com">
+            ...
+            <id>DACADB02209CC93C</id>
+            ...
+        <ns3:template>
+        Step 2 - Using Template including attributes to send the message
+        POST http://api.<region>.whispir.com/workspaces/{workspaceId}/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+xml
+        Accept: application/vnd.whispir.message-v1+xml
+         
+        <?xml version="1.0" encoding="UTF-8"?>
+        <ns3:template xmlns:ns3="http://schemas.api.whispir.com" 
+                      xmlns:ns2="http://schemas.api.whispir.com/dap">
+           <to>jsmith@test.com</to>
+           <messageTemplateId>DACADB02209CC93C</messageTemplateId>
+           <messageattributes>
+              <attribute>
+                 <element>
+                    <name>@@event_expiry@@</name>
+                    <value>13/06/2019</value>
+                 </element>
+                 <element>
+                    <name>@@event_expiry_time@@</name>
+                    <value>23:59:59</value>
+                 </element>
+              </attribute>
+           </messageattributes>
+        <ns3:template>
+        ```
+        Using this message template ID and now using the message attribute @@event_expiry@@, the updated code example (combining the message template and message attribute) is far simpler to implement and is more efficient.
+
+        * * *
+
+        ### Scheduled Messages
+
+        #### Timezone - Scheduling rules
+
+        Using the Whispir API you can schedule messages to be sent later, both once or repeatedly with the possibility to specify the interval between the sessions. The service is available for SMS, email, voice, rich messages 
+        A message is scheduled according to the timezone set in the Whispir account of the user who initiates the message request. This setting can be found in the Whispir Portal under "Settings"->"User Manager"->"View/Edit". Whispir DOES NOT honor the timezone where the sender or the message recipient are currently located in
+        For example if the user’s time zone is set to UTC in their Whispir profile then messages are scheduled to be sent as per UTC, even if the user triggers the message while sitting in Singapore (+8). So please ensure that any scheduled communication is sent at the appropriate/preferred time
+        Also, changing the user's timezone setting after the message is triggered DOES NOT change the original scheduled time.
+
+        #### Sending messages at a later date
+
+        ```JSON
+        POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+json
+        Accept: application/vnd.whispir.message-v1+json
+        ONCE
+        In this sample we will schedule a single message to be delivered at 3:55pm on 14 February 2019
+        {
+            "to" : "jsmith@test.com",
+            "subject" : "Test scheduled email message",
+            "email" : {
+                "body" : "This is my scheduled content",
+                "type" : "text/plain"
+            },
+            "messageType" : "SCHEDULED",
+            "scheduleType" : "ONCE",
+            "scheduleDate" : "14/02/2019 15:55"
+        }
+        REPEAT
+        In this sample we will will schedule 10 messages to be delivered every hour starting from 3:55pm on 14 February 2019
+        {
+            "to" : "jsmith@test.com",
+            "subject" : "Test scheduled email message",
+            "email" : {
+                "body" : "This is my scheduled content",
+                "type" : "text/plain"
+            },
+            "messageType" : "SCHEDULED",
+            "scheduleType" : "REPEAT",
+            "scheduleDate" : "14/02/2019 15:55",
+            "repetitionCount" : "10",
+            "repeatDays" : "0",
+            "repeatHrs" : "1",
+            "repeatMin" : "0"
+        }
+        ```
+        ```XML
+        POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+json
+        Accept: application/vnd.whispir.message-v1+json
+        ONCE
+        In this sample we will schedule a single message to be delivered at 3:55pm on 14 February 2019
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <ns2:message xmlns:ns2="http://schemas.api.whispir.com" xmlns:ns3="http://schemas.api.whispir.com/dap">
+            <to>john.smith@test.com</to>
+            <subject>Test scheduled email message</subject>
+            <email>
+                <body>This is my scheduled content</body>
+                <type>text/plain</type>
+            </email>
+            <messageType>SCHEDULED</messageType>
+            <scheduleType>ONCE</scheduleType>
+            <scheduleDate>14/02/2019 15:55</scheduleDate>
+        </ns2:message>
+        REPEAT
+        In this sample we will will schedule 10 messages to be delivered every hour starting from 3:55pm on 14 February 2019
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <ns2:message xmlns:ns2="http://schemas.api.whispir.com" xmlns:ns3="http://schemas.api.whispir.com/dap">
+            <to>john.smith@test.com</to>
+            <subject>Test scheduled email message</subject>
+            <email>
+                <body>This is my scheduled content</body>
+                <type>text/plain</type>
+            </email>
+            <messageType>SCHEDULED</messageType>
+            <scheduleType>REPEAT</scheduleType>
+            <scheduleDate>14/02/2019 15:55</scheduleDate>
+            <repetitionCount>10</repetitionCount>
+            <repeatDays>0</repeatDays>
+            <repeatHrs>1</repeatHrs>
+            <repeatMin>0</repeatMin>
+        </ns2:message>
+        ```
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -179,6 +497,11 @@ paths:
                     header: 'This is the introduction, read out to the recipient prior to any key press.'
                     body: 'This is the body of the voice call, read out after the key press'
                     type: 'Pin:,ConfCall:,ConfAccountNo:,ConfPinNo:,ConfModPinNo:'
+              SMS with Message Variables:
+                value:
+                  to: John_Wick.1143139@Contact.whispir.au
+                  subject: Test Message
+                  body: Hi @@first_name@@. The current day is @@day@@.
               SMS & Email:
                 value:
                   to: '61400400400,test@test.com'
@@ -196,6 +519,26 @@ paths:
                   web:
                     body: This is the content of my web publishing or Rich Push Message
                     type: text/plain
+              SMS - Single Scheduled Message:
+                value:
+                  to: '61400400400'
+                  subject: Single Scheduled Message
+                  body: This is a single scheduled SMS message.
+                  messageType: SCHEDULED
+                  scheduleType: ONCE
+                  scheduleDate: '14/02/2019 15:55'
+              SMS - Repeated Scheduled Message:
+                value:
+                  to: '61400400400'
+                  subject: Repeated Scheduled Message
+                  body: This is a repeated scheduled SMS message.
+                  messageType: SCHEDULED
+                  scheduleType: REPEAT
+                  scheduleDate: '14/02/2019 15:55'
+                  repetitionCount: 10
+                  repeatDays: 0
+                  repeatHrs: 1
+                  repeatMin: 0
         description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web].'
         required: true
       responses:
@@ -5293,7 +5636,7 @@ components:
         messageTemplateId:
           type: string
           example: BACEB8D46BEF5315
-          description: The identifier for the Messsage Template.
+          description: 'The identifier for the Message Template. Specification of this attribute is preferred over the `messageTemplateName`, to provide an absolute and non-changing reference to the Message Template.'
         messageTemplateName:
           type: string
           example: Sample SMS Template

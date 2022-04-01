@@ -1,0 +1,125 @@
+extends: './.spectral.base.yaml'
+rules:
+  required-all-request-headers:
+    description: 'All requests must have the following headers "parameters": "X-Api-Key".'
+    severity: error
+    given: $.paths[*][get,put,post,delete,options,head,patch,trace]
+    then:
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^X-Api-Key$"
+  required-read-request-headers:
+    description: 'Read requests must have the following headers "parameters": "Accept".'
+    severity: error
+    given: $.paths[*][get]
+    then:
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^Accept$"
+  required-write-request-headers:
+    description: 'Write requests must have the following headers "parameters": "Content-Type", "Accept".'
+    severity: error
+    given: $.paths[*][put,post]
+    then:
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^Content-Type$"
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^Accept$"
+  required-all-response-headers:
+    description: 'All responses must have the following "headers": "Access-Control-Allow-Origin", "Expires", "Cache-Control".'
+    severity: error
+    given: $..responses[*]
+    then:
+      field: headers
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          required: ["Access-Control-Allow-Origin", "Expires", "Cache-Control"]
+  required-content-response-headers:
+    description: 'Responses with content must have the following "headers": "Content-Type", "Content-Length".'
+    severity: error
+    given: $.paths[*]..responses[?(@property != 204)]
+    then:
+      field: headers
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          required: ["Content-Type", "Content-Length"]
+overrides:
+  - rules:
+      schema-examples: off
+      schema-descriptions: off
+      schema-property-descriptions: off
+      schema-property-examples: off
+    files:
+      - '**#/components/schemas/responseTemplatePattern' # Response Template Endpoint Schemas
+      - '**#/components/schemas/responseRule'
+      - '**#/components/schemas/messagingoptions'
+      - '**#/components/schemas/distributionlist' # Distribution List Endpoint Schemas
+      - '**#/components/schemas/locations'
+      - '**#/components/schemas/location'
+      - '**#/components/schemas/scenario' # Scenario Endpoint Schemas
+      - '**#/components/schemas/workspace' # Workspace Endpoint Schemas
+      - '**#/components/schemas/user' # User Endpoint Schemas
+      - '**#/components/schemas/event' # Event Endpoint Schemas
+      - '**#/components/schemas/import' # Import Endpoint Schemas
+      - '**#/components/schemas/fieldMapping'
+      - '**#/components/schemas/auth' # Auth Endpoint Schemas
+      - '**#/components/schemas/activity' # Activity Endpoint Schemas
+      - '**#/components/requestBodies/event'
+  - rules:
+      payload-examples: off
+    files:
+      - '**#/paths/~1workspaces~1{workspaceId}~1resources' # Resources Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1distributionlists' # DistributionLists Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1events' # Events Endpoint Examples
+      - '**#/components/requestBodies/event'
+      - '**#/paths/~1workspaces~1{workspaceId}~1responserules' # responserules Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1scenario' # scenario Endpoint Examples
+      - '**#/paths/~1workspaces' # workspace Endpoint Examples
+      - '**#/paths/~1activities' # activity Endpoint Examples
+      - '**#/paths/~1users' # user Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1import' # import Endpoint Examples
+      - '**#/paths/~1auth' # Auth Endpoint Examples

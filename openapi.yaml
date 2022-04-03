@@ -543,7 +543,7 @@ paths:
         required: true
       responses:
         '200':
-          description: The response code for a message that is successfully scheduled.
+          description: The response code for a message that is accepted for scheduled delivery.
           content:
             application/vnd.whispir.message-v1+json:
               schema:
@@ -587,7 +587,7 @@ paths:
               example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
         '202':
-          description: The response code for a message that is successfully accepted for immediate processing.
+          description: The response code for a message that is accepted for immediate delivery.
           content:
             application/vnd.whispir.message-v1+json:
               schema:

@@ -87,6 +87,18 @@ rules:
         schema:
           type: object
           required: ["Content-Type", "Content-Length"]
+  required-post-response-headers:
+    description: 'Successful post endpoint responses must have the following "headers": "Location".'
+    severity: error
+    given: $.paths[*][post]..responses[?(@property != 204 && @property >= 200 && @property < 300)]
+    then:
+      field: headers
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          required: ["Location"]
 overrides:
   - rules:
       schema-examples: off
@@ -122,4 +134,4 @@ overrides:
       - '**#/paths/~1activities' # activity Endpoint Examples
       - '**#/paths/~1users' # user Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1import' # import Endpoint Examples
-      - '**#/paths/~1auth' # Auth Endpoint Examples
+      - '**#/paths/~1auth' # Auth Endpoint Exampleses

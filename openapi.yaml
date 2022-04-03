@@ -5485,10 +5485,6 @@ paths:
               schema:
                 description: The create auth response object.
                 type: object
-                x-examples:
-                  Example:
-                    token: your-generated-bearer-token
-                    link: []
                 properties:
                   token:
                     type: string
@@ -5496,6 +5492,11 @@ paths:
                     example: your-generated-token-string
                   link:
                     $ref: '#/components/schemas/link'
+              examples:
+                Example:
+                  value:
+                    token: your-generated-token-string
+                    link: []
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':

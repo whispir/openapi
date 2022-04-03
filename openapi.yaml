@@ -9256,7 +9256,10 @@ components:
         Expires:
           $ref: '#/components/headers/Expires'
     405MethodNotAllowed:
-      description: Example response
+      description: |-
+        The requested resource doesn't support the supplied verb.
+
+        Inspect the HTTP method that was used in the request and ensure that it's valid for the resource being requested.
       headers:
         Content-Type:
           $ref: '#/components/headers/Content-Type'

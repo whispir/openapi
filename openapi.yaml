@@ -542,8 +542,52 @@ paths:
         description: 'Message object needed to create message. At least one of the Body fields must be populated [SMS, email, voice or web].'
         required: true
       responses:
+        '200':
+          description: The response code for a message that is successfully scheduled.
+          content:
+            application/vnd.whispir.message-v1+json:
+              schema:
+                $ref: '#/components/schemas/message'
+              examples:
+                Response:
+                  value:
+                    to: '61400400400'
+                    subject: Repeated Scheduled Message
+                    body: This is a repeated scheduled SMS message.
+                    messageType: SCHEDULED
+                    scheduleDate: '01/04/2022 13:40'
+                    scheduleType: REPEAT
+                    repetitionCount: 10
+                    repeatDays: 0
+                    repeatHrs: 0
+                    repeatMin: 1
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/89518B11A0458848AC3926AEAA48BA14'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                    validBody: true
+                    validSubject: true
+                    whatsappValidMessage: true
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Message-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
+              description: The URI to fetch details of the resource.
         '202':
-          description: Accepted
+          description: The response code for a message that is successfully accepted for immediate processing.
           content:
             application/vnd.whispir.message-v1+json:
               schema:

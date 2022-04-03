@@ -2167,6 +2167,11 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/responserules/747AB7E716C1802B6476784AEB5C9BB8'
+              description: The URI to fetch details of the resource.
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2856,6 +2861,11 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/distributionlists/747AB7E716C1802B6476784AEB5C9BB8'
+              description: The URI to fetch details of the resource.
           content:
             application/vnd.whispir.distributionlist-v1+json:
               schema:
@@ -3212,6 +3222,11 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/scenarios/747AB7E716C1802B6476784AEB5C9BB8'
+              description: The URI to fetch details of the resource.
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4045,6 +4060,11 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/workspaces/747AB7E716C1802B6476784AEB5C9BB8'
+              description: The URI to fetch details of the resource.
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4219,6 +4239,11 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              example: 'https://api.au.whispir.com/activities/747AB7E716C1802B6476784AEB5C9BB8'
+              description: The URI to fetch details of the resource.
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5206,6 +5231,11 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/events/747AB7E716C1802B6476784AEB5C9BB8'
+              description: The URI to fetch details of the resource.
           content:
             examples:
               examples:
@@ -5401,6 +5431,11 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/imports/747AB7E716C1802B6476784AEB5C9BB8'
+              description: The URI to fetch details of the resource.
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5440,6 +5475,11 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              example: 'https://api.au.whispir.com/auth/747AB7E716C1802B6476784AEB5C9BB8'
+              description: The URI to fetch details of the resource.
           content:
             application/json:
               schema:
@@ -8696,6 +8736,11 @@ components:
           $ref: '#/components/headers/Cache-Control'
         Expires:
           $ref: '#/components/headers/Expires'
+        Location:
+          schema:
+            type: string
+          example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/users/747AB7E716C1802B6476784AEB5C9BB8'
+          description: The URI to fetch details of the resource.
     Users:
       description: List users endpoint response
       content:
@@ -8804,6 +8849,11 @@ components:
           $ref: '#/components/headers/Cache-Control'
         Expires:
           $ref: '#/components/headers/Expires'
+        Location:
+          schema:
+            type: string
+          example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/templates/747AB7E716C1802B6476784AEB5C9BB8'
+          description: The URI to fetch details of the resource.
     400BadRequest:
       description: |-
         Invalid or missing request parameters.
@@ -9149,6 +9199,11 @@ components:
           $ref: '#/components/headers/Cache-Control'
         Expires:
           $ref: '#/components/headers/Expires'
+        Location:
+          schema:
+            type: string
+          example: 'https://api.au.whispir.com/callbacks/747AB7E716C1802B6476784AEB5C9BB8'
+          description: The URI to fetch details of the resource.
     501MethodNotImplemented:
       description: |-
         The HTTP method being used has not yet been implemented for the requested resource.
@@ -9412,6 +9467,11 @@ components:
           $ref: '#/components/headers/Cache-Control'
         Expires:
           $ref: '#/components/headers/Expires'
+        Location:
+          schema:
+            type: string
+          example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/contacts/747AB7E716C1802B6476784AEB5C9BB8'
+          description: The URI to fetch details of the resource.
     Contacts:
       description: Example response
       content:

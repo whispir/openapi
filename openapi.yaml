@@ -4817,7 +4817,7 @@ paths:
           application/vnd.whispir.user-v1+json:
             schema:
               $ref: '#/components/schemas/user'
-        description: Users list object that needs to be create Users
+        description: The User object to create.
         required: true
       responses:
         '201':

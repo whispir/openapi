@@ -646,6 +646,8 @@ paths:
         - $ref: '#/components/parameters/Message-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
           description: OK
@@ -1000,6 +1002,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/MessageStatus-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
         - name: messageId
           in: path
           description: Enter message id
@@ -1170,6 +1176,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/MessageResponse-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
         - name: messageId
           in: path
           description: Enter message id
@@ -1472,6 +1482,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Resource-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
         - name: scope
           description: A filter parameter for the visibility of the resource.
           in: query
@@ -1855,9 +1869,11 @@ paths:
       operationId: getTemplates
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Template-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
-        - $ref: '#/components/parameters/Template-Accept'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
           description: OK
@@ -2199,6 +2215,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/ResponseRule-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
           description: OK
@@ -2518,15 +2538,17 @@ paths:
       operationId: getContacts
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
         - name: fieldname
           in: query
           description: |
-            String Specifies the field name of the contact object. The field name could be any thing as long as it is a valid contact object.  
+            String Specifies the field name of the contact object. The field name could be any thing as long as it is a valid contact attribute.  
             Example: `http://api.whispir.com/contacts?firstName=Sam`
           schema:
             type: string
-        - $ref: '#/components/parameters/sortOrder'
-        - $ref: '#/components/parameters/sortFields'
         - name: customFields
           in: query
           description: Custom Fields
@@ -2920,6 +2942,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/DistributionList-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
         - name: name
           in: query
           required: false
@@ -3254,6 +3280,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Scenario-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
           description: OK
@@ -3749,6 +3779,8 @@ paths:
         - $ref: '#/components/parameters/Callback-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
   '/callbacks/{callbackId}':
     get:
       tags:
@@ -3888,6 +3920,10 @@ paths:
       operationId: getCallbackInstances
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
         - name: callbackId
           in: path
           required: true
@@ -4092,6 +4128,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
           description: OK
@@ -4277,6 +4317,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Activity-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
         - name: action
           in: query
           required: false
@@ -4479,6 +4523,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Activity-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
           description: OK
@@ -4566,6 +4614,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/CustomList-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
         - name: name
           in: query
           required: false
@@ -5157,6 +5209,10 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Event-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
           description: OK

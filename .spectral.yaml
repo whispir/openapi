@@ -63,6 +63,60 @@ rules:
                 name:
                   type: string
                   pattern: "^Accept$"
+  required-list-pagination-request-query-parameters:
+    description: 'Read list requests must have the following query "parameters": "limit", "offset", "sortOrder", "sortFields".'
+    severity: error
+    # Tests for the lack of presence of '{<resource>Id}' at the end of the path with 'get' verb, indicating a List <resource>'s endpoint
+    given: $.paths[?(!/{.*Id}$/i.test(@property))]['get']
+    then:
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^limit$"
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^offset$"
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^sortOrder$"
+      - field: parameters
+        function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^sortFields$"
   required-all-response-headers:
     description: 'All responses must have the following "headers": "Access-Control-Allow-Origin", "Expires", "Cache-Control".'
     severity: error
@@ -135,3 +189,7 @@ overrides:
       - '**#/paths/~1users' # user Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1import' # import Endpoint Examples
       - '**#/paths/~1auth' # Auth Endpoint Exampleses
+  - rules:
+      required-list-pagination-request-query-parameters: off
+    files:
+      - '**#/paths/~1auth~1verify/get' # Doesn't adhere to RESTful API standards

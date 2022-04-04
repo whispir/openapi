@@ -63,10 +63,10 @@ rules:
                 name:
                   type: string
                   pattern: "^Accept$"
-  required-read-list-request-headers:
+  required-list-pagination-request-query-parameters:
     description: 'Read list requests must have the following query "parameters": "limit", "offset", "sortOrder", "sortFields".'
     severity: error
-    # Tests for the lack of presence of '{<resource>Id}' at the end of the path with 'get' verb, indicating a List of <resource>'s
+    # Tests for the lack of presence of '{<resource>Id}' at the end of the path with 'get' verb, indicating a List <resource>'s endpoint
     given: $.paths[?(!/{.*Id}$/i.test(@property))]['get']
     then:
       - field: parameters
@@ -190,6 +190,6 @@ overrides:
       - '**#/paths/~1workspaces~1{workspaceId}~1import' # import Endpoint Examples
       - '**#/paths/~1auth' # Auth Endpoint Exampleses
   - rules:
-      required-read-list-request-headers: off
+      required-list-pagination-request-query-parameters: off
     files:
       - '**#/paths/~1auth~1verify/get' # Doesn't adhere to RESTful API standards

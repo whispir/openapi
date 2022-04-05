@@ -6031,6 +6031,18 @@ components:
             | ConfAccountNo | The teleconference account or room number that is used in the voice call. <br><br> For example, `098711234`. <br><br> It is possible to reference this value in other channels using the **@@teleconf_account@@** custom variable. |
             | ConfPinNo     | The teleconference room PIN that is used in the voice call. <br><br> For example, `8181`. <br><br> It is possible to reference this value in other channels using the **@@teleconf_pin@@** custom variable. |
             | ConfModPinNo  | The teleconference moderator PIN that is used in the voice call. <br><br> For example, `4242`. <br><br> It is possible to reference this value in other channels using the **@@teleconf_mod_pin@@** custom variable. |
+        footer:
+          type: string
+          description: Read-only property returned from the Whispir Platform. This property has no meaning to the API consumer.
+          enum:
+            - ''
+          readOnly: true
+        other:
+          type: string
+          description: Read-only property returned from the Whispir Platform. This property has no meaning to the API consumer.
+          enum:
+            - ''
+          readOnly: true
         resources:
           type: object
           description: Provides a configuration object for specifying custom audio for the voice header and body.

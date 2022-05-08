@@ -5782,6 +5782,7 @@ components:
           type: string
           example: Sample SMS Template
           description: A human-readable name for the Message Template.
+          minLength: 1
         callbackId:
           type: string
           example: myCallbackName

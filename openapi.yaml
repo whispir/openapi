@@ -624,6 +624,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -780,6 +782,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -915,6 +919,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -1112,6 +1118,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -1298,6 +1306,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -1428,6 +1438,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -1584,6 +1596,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -1665,6 +1679,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -1763,6 +1779,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -1809,6 +1827,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -1850,6 +1870,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -1993,6 +2015,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2033,6 +2057,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2086,6 +2112,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2132,6 +2160,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2198,6 +2228,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2243,6 +2275,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2294,6 +2328,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2346,6 +2382,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2389,6 +2427,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2511,6 +2551,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2569,6 +2611,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2638,6 +2682,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2782,6 +2828,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2835,6 +2883,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -2920,6 +2970,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3014,6 +3066,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3089,6 +3143,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3161,6 +3217,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3205,6 +3263,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3263,6 +3323,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3308,6 +3370,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3392,6 +3456,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3447,6 +3513,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3499,6 +3567,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3542,6 +3612,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3619,6 +3691,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3766,6 +3840,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3811,6 +3887,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3856,6 +3934,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -3953,6 +4033,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -4028,6 +4110,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -4111,6 +4195,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -4194,6 +4280,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -4236,6 +4324,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -4294,6 +4384,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -4503,6 +4595,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -4551,6 +4645,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -4718,6 +4814,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -4828,6 +4926,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -4884,6 +4984,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -4961,6 +5063,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -5003,6 +5107,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -5041,6 +5147,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -5106,6 +5214,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -5154,6 +5264,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -5189,6 +5301,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -5244,6 +5358,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -5418,6 +5534,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -5502,6 +5620,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -5563,6 +5683,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -5611,6 +5733,8 @@ paths:
           $ref: '#/components/responses/404NotFound'
         '405':
           $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
         '415':
           $ref: '#/components/responses/415UnsupportedMediaType'
         '422':
@@ -9373,6 +9497,32 @@ components:
                 errorText: Method Not Allowed
                 errorDetail: ''
                 link: []
+    413EntityTooLarge:
+      description: |-
+        The request payload was too large.
+
+        The maximum allowable request size is 10MB (10485760 bytes).
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+      content:
+        application/json:
+          schema:
+            type: string
+            description: The method not allowed response object.
+            enum:
+              - HTTP content length exceeded 10485760 bytes.
+          examples:
+            Example:
+              value: HTTP content length exceeded 10485760 bytes.
     CallbackInstances:
       description: Example response
       content:

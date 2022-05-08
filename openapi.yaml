@@ -9517,7 +9517,7 @@ components:
         application/json:
           schema:
             type: string
-            description: The method not allowed response object.
+            description: The request length error message.
             enum:
               - HTTP content length exceeded 10485760 bytes.
           examples:

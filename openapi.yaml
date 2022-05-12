@@ -1340,8 +1340,8 @@ paths:
 
         **mimeType:** String  
         The mime type of the file that is being uploaded. The type is dependent on the scope of the resource.
-          *   **Public -** Public files can be of any mimetype. text/html; text/csv
-          *   **Private -** Private files are restricted to CSV, JSON, and XML
+          *   **Public -** Public files can be of any mimetype. `text/html`; `text/csv`
+          *   **Private -** Private files are restricted to `CSV`, `JSON`, and `XML`
 
         **derefUri:** The base64 representation of the file being submitted.
 
@@ -1355,7 +1355,7 @@ paths:
         To upload a file to Whispir’s API, users will make an API call to the /resources endpoint.  
         Applications can use this endpoint to store the source files for dynamic messages. This endpoint can also be used to store any file based data (e.g. images, pdf documents, spreadsheets) for an unlimited amount of time.  
 
-        **Note:** The types of files allowed are - CSV, JSON, XML, Images [JPEG, PNG], and WAV.  
+        **Note:** The types of files allowed are - `CSV`, `JSON`, `XML`, Images [`JPEG`, `PNG`], and `WAV`.  
 
         Information about the resources endpoint is documented in the Resources section of the documentation.
       operationId: postResources
@@ -1516,76 +1516,7 @@ paths:
             example: recipients.json
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Resource-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    resources:
-                      - name: singapore.csv
-                        scope: private
-                        mimeType: application/json
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/D9A8DC34EDRSD7E4'
-                            rel: self
-                            method: GET
-                      - name: australia.json
-                        scope: private
-                        mimeType: application/json
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/D3E2XCDF3WS4859'
-                            rel: self
-                            method: GET
-                      - name: usa.csv
-                        scope: private
-                        mimeType: text/csv
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/3E2F6E72642F949'
-                            rel: self
-                            method: GET
-                      - name: users.json
-                        scope: public
-                        mimeType: application/json
-                        url: 'https://cdn-ap.whispir.com/public/resources/2163b29d4edf1bd77d71a36210d472360cd.json'
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/F1212CF334EDR68'
-                            rel: self
-                            method: GET
-                      - name: whispir-example-bulk-message-1.csv
-                        scope: private
-                        mimeType: text/csv
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/32SDF43ED6829B2'
-                            rel: self
-                            method: GET
-                      - name: whispir-example-bulk-message-2.csv
-                        scope: private
-                        mimeType: text/csv
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/C708D712EDRB0'
-                            rel: self
-                            method: GET
-                      - name: whispir-example-bulk-message-3.csv
-                        scope: private
-                        mimeType: text/csv
-                        link:
-                          - uri: 'https://api.au.whispir.com/resources/2FEED897U46E2'
-                            rel: self
-                            method: GET
-                    status: '1 to 7 of 7    '
-                    link: []
+          $ref: '#/components/responses/Resources'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -9796,6 +9727,86 @@ components:
       headers:
         Content-Type:
           $ref: '#/components/headers/Contact-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+    Resources:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            description: List of resources object
+            properties:
+              status:
+                type: string
+                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+                example: 1 to 2 of 2
+                readOnly: true
+              resources:
+                type: array
+                description: List of resources
+                items:
+                  $ref: '#/components/schemas/resource'
+          examples:
+            example-1:
+              value:
+                status: 1 to 2 of 2
+                resources:
+                  - id: 9B9E2425AAFEEE49E9D9112B6BAC22A9
+                    name: sample.json
+                    scope: private
+                    mimeType: application/json
+                    derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+        application/xml:
+          schema:
+            type: object
+            properties: {}
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Resource-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+    Resource:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/resource'
+          examples:
+            example-1:
+              value:
+                id: 9B9E2425AAFEEE49E9D9112B6BAC22A9
+                name: sample.json
+                scope: private
+                mimeType: application/json
+                derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Resource-Content-Type'
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
         Content-Length:

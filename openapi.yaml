@@ -5679,6 +5679,39 @@ paths:
         - Auth
       security:
         - BasicAuth: []
+  '/resources/{resourceId}':
+    parameters:
+      - schema:
+          type: string
+        name: resourceId
+        in: path
+        required: true
+    get:
+      summary: List default resources
+      tags:
+        - Resources
+      responses:
+        '200':
+          $ref: '#/components/responses/Resources'
+      operationId: getDefaultResources
+      description: Retrieve the list of Resources in the default workspace
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Resource-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
+        - schema:
+            type: string
+          in: query
+          name: scope
+          description: A filter parameter for the visibility of the resource.
+        - schema:
+            type: string
+          in: query
+          name: name
+          description: A filter parameter for the name of the resource.
 externalDocs:
   description: API Documentation for Whispir Platform API
   url: 'https://developers.whispir.com'

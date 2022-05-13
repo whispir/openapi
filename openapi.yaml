@@ -1382,52 +1382,7 @@ paths:
         required: true
       responses:
         '201':
-          description: Created
-          content:
-            application/vnd.whispir.resource-v1+json:
-              schema:
-                $ref: '#/components/schemas/resource'
-              examples:
-                Example:
-                  value:
-                    id: 9B9E2425AAFEEE49E9D9112B6BAC22A9
-                    name: sample.json
-                    scope: private
-                    mimeType: application/json
-                    derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
-                    link:
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
-                        rel: self
-                        method: GET
-                        host: api.au.whispir.com
-                        port: -1
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
-                        rel: updateResource
-                        method: PUT
-                        type: 'application/vnd.whispir.resource-v1+json,application/vnd.whispir.resource-v1+xml'
-                        host: api.au.whispir.com
-                        port: -1
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
-                        rel: deleteResource
-                        method: DELETE
-                        host: api.au.whispir.com
-                        port: -1
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Resource-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-            Location:
-              schema:
-                type: string
-              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/FF339D872B6A938BB35E46B04A2CA875'
-              description: The URI to fetch details of the resource.
+          $ref: '#/components/responses/Resource'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1475,6 +1430,10 @@ paths:
           - method - the HTTP method to use with this particular link
 
         ## Filtering search results
+
+        **Note:** when it comes to searching by name, the equal sign must be intended as `contains` rather than `equals`. So, if we search resources with the value equals to `in` we might be given back
+         
+        **Eg** (`India.csv` and `Indonesia.json` but also `Argentina.csv`)
 
         ### Filtering By scope
 
@@ -1539,6 +1498,112 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
+  /resources:
+    post:
+      tags:
+        - Resources
+      summary: Create a default resource
+      description: |
+        Create a resource in the default workspace
+      operationId: postDefaultResources
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Resource-Content-Type'
+        - $ref: '#/components/parameters/Resource-Accept'
+      requestBody:
+        content:
+          application/vnd.whispir.resource-v1+json:
+            schema:
+              $ref: '#/components/schemas/resource'
+            examples:
+              Example:
+                value:
+                  name: sample.json
+                  scope: private
+                  mimeType: application/json
+                  derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+          application/vnd.whispir.resource-v1+xml:
+            schema:
+              $ref: '#/components/schemas/resource'
+        description: resources object that needs to be create resources
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Resource'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+    get:
+      tags:
+        - Resources
+      summary: List default resources
+      description: |
+        Retrieve a resource from the default workspace
+      operationId: getDefaultResources
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Resource-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
+        - name: scope
+          description: A filter parameter for the visibility of the resource.
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - private
+              - public
+        - name: name
+          description: A filter parameter for the name of the resource.
+          in: query
+          required: false
+          schema:
+            type: string
+            example: recipients.json
+      responses:
+        '200':
+          $ref: '#/components/responses/Resources'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+    parameters: []
   '/workspaces/{workspaceId}/resources/{resourceId}':
     get:
       tags:
@@ -1559,47 +1624,7 @@ paths:
             example: 2C32F4AA38917318D52A279D1946BDE8
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Resource-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-          content:
-            application/vnd.whispir.resource-v1+jsonapplication/vnd.whispir.resource-v1+json:
-              examples:
-                Example:
-                  value:
-                    id: 9B9E2425AAFEEE49E9D9112B6BAC22A9
-                    name: sample.json
-                    scope: private
-                    mimeType: application/json
-                    derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
-                    link:
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
-                        rel: self
-                        method: GET
-                        host: api.au.whispir.com
-                        port: -1
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
-                        rel: updateResource
-                        method: PUT
-                        type: 'application/vnd.whispir.resource-v1+json,application/vnd.whispir.resource-v1+xml'
-                        host: api.au.whispir.com
-                        port: -1
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
-                        rel: deleteResource
-                        method: DELETE
-                        host: api.au.whispir.com
-                        port: -1
-              schema:
-                $ref: '#/components/schemas/resource'
+          $ref: '#/components/responses/Resource'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1659,47 +1684,7 @@ paths:
         required: true
       responses:
         '200':
-          description: OK
-          headers:
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-            Content-Type:
-              $ref: '#/components/headers/Resource-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-          content:
-            application/vnd.whispir.resource-v1+json:
-              examples:
-                Example:
-                  value:
-                    id: 9B9E2425AAFEEE49E9D9112B6BAC22A9
-                    name: sample.json
-                    scope: private
-                    mimeType: application/json
-                    derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
-                    link:
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
-                        rel: self
-                        method: GET
-                        host: api.au.whispir.com
-                        port: -1
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
-                        rel: updateResource
-                        method: PUT
-                        type: 'application/vnd.whispir.resource-v1+json,application/vnd.whispir.resource-v1+xml'
-                        host: api.au.whispir.com
-                        port: -1
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/resources/9B9E2425AAFEEE49E9D9112B6BAC22A9'
-                        rel: deleteResource
-                        method: DELETE
-                        host: api.au.whispir.com
-                        port: -1
-              schema:
-                $ref: '#/components/schemas/resource'
+          $ref: '#/components/responses/Resource'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1770,6 +1755,166 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
+  '/resources/{resourceId}':
+    get:
+      tags:
+        - Resources
+      summary: Retrieve a default resource
+      description: |-
+        Retrive a resource from the default workspace
+         
+        A single resource (public|private) can be retrieved from the available resource by using the 
+        resource’s specific link uri
+      operationId: getDefaultResourcesById
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Resource-Accept'
+        - name: resourceId
+          description: The identifier for the resource.
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2C32F4AA38917318D52A279D1946BDE8
+      responses:
+        '200':
+          $ref: '#/components/responses/Resource'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+    put:
+      tags:
+        - Resources
+      summary: Update a resource
+      description: |
+        Update a resource in the default workspace
+
+        Updating a resource involves the same process as in creating a resource. The process of using one of the format (CSV, JSON, XML) for private and any format for public -> converting to base64 encoded data is the same.  
+        The change is doing a PUT to the existing resource URL that needs to be updated. Please be careful that doing an update overwrites the previous resource. There is no versioning available in Whispir for the resources.  
+        Any or all of the 4 values can be changed. i.e, name, scope, mimeType, derefUri, but all 4 are mandatory values to be sent.
+      operationId: putDefaultResourcesById
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Resource-Content-Type'
+        - $ref: '#/components/parameters/Resource-Accept'
+        - name: resourceId
+          in: path
+          description: Enter resources id.
+          required: true
+          schema:
+            type: string
+            example: 2C32F4AA38917318D52A279D1946BDE8
+      requestBody:
+        content:
+          application/vnd.whispir.resource-v1+json:
+            schema:
+              $ref: '#/components/schemas/resource'
+            examples:
+              Example:
+                value:
+                  name: sample.json
+                  scope: private
+                  mimeType: application/json
+                  derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+          application/vnd.whispir.resource-v1+xml:
+            schema:
+              $ref: '#/components/schemas/resource'
+        description: resources object that needs to be update resources
+        required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/Resource'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+    delete:
+      tags:
+        - Resources
+      summary: Delete a resource
+      description: |
+        Resources can be deleted after use. These can be both public and private in scope.  
+
+        **Note:** Deleting a public resource may result in 404 File Not Found error for any sites or material referencing to it. So, ensure that DELETE is only executed when the reference to all material is removed or the content has to be removed for other purposes immediately.
+      operationId: deleteDefaultResourcesById
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - name: resourceId
+          in: path
+          description: The id of the resources to be deleted
+          required: true
+          schema:
+            type: string
+            example: 2C32F4AA38917318D52A279D1946BDE8
+      responses:
+        '204':
+          description: No Content
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+    parameters:
+      - schema:
+          type: string
+        name: resourceId
+        in: path
+        required: true
   '/workspaces/{workspaceId}/templates':
     post:
       tags:
@@ -5679,39 +5824,6 @@ paths:
         - Auth
       security:
         - BasicAuth: []
-  '/resources/{resourceId}':
-    parameters:
-      - schema:
-          type: string
-        name: resourceId
-        in: path
-        required: true
-    get:
-      summary: List default resources
-      tags:
-        - Resources
-      responses:
-        '200':
-          $ref: '#/components/responses/Resources'
-      operationId: getDefaultResources
-      description: Retrieve the list of Resources in the default workspace
-      parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/Resource-Accept'
-        - $ref: '#/components/parameters/limit'
-        - $ref: '#/components/parameters/offset'
-        - $ref: '#/components/parameters/sortOrder'
-        - $ref: '#/components/parameters/sortFields'
-        - schema:
-            type: string
-          in: query
-          name: scope
-          description: A filter parameter for the visibility of the resource.
-        - schema:
-            type: string
-          in: query
-          name: name
-          description: A filter parameter for the name of the resource.
 externalDocs:
   description: API Documentation for Whispir Platform API
   url: 'https://developers.whispir.com'
@@ -9848,7 +9960,15 @@ components:
           $ref: '#/components/headers/Cache-Control'
         Expires:
           $ref: '#/components/headers/Expires'
+        Location:
+          $ref: '#/components/headers/Location'
   headers:
+    Location:
+      description: The URI to fetch details of the resource.
+      required: true
+      schema:
+        type: string
+      example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.
       required: true

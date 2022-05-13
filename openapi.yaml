@@ -9881,7 +9881,7 @@ components:
         Expires:
           $ref: '#/components/headers/Expires'
     Resources:
-      description: Example response
+      description: Resources endpoint response
       content:
         application/json:
           schema:
@@ -9930,7 +9930,7 @@ components:
         Expires:
           $ref: '#/components/headers/Expires'
     Resource:
-      description: Example response
+      description: Resource endpoint response
       content:
         application/json:
           schema:

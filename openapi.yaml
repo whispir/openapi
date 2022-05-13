@@ -1498,112 +1498,6 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-  /resources:
-    post:
-      tags:
-        - Resources
-      summary: Create a default resource
-      description: |
-        Create a resource in the default workspace
-      operationId: postDefaultResources
-      parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/Resource-Content-Type'
-        - $ref: '#/components/parameters/Resource-Accept'
-      requestBody:
-        content:
-          application/vnd.whispir.resource-v1+json:
-            schema:
-              $ref: '#/components/schemas/resource'
-            examples:
-              Example:
-                value:
-                  name: sample.json
-                  scope: private
-                  mimeType: application/json
-                  derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
-          application/vnd.whispir.resource-v1+xml:
-            schema:
-              $ref: '#/components/schemas/resource'
-        description: resources object that needs to be create resources
-        required: true
-      responses:
-        '201':
-          $ref: '#/components/responses/Resource'
-        '400':
-          $ref: '#/components/responses/400BadRequest'
-        '401':
-          $ref: '#/components/responses/401Unauthorized'
-        '403':
-          $ref: '#/components/responses/403Forbidden'
-        '404':
-          $ref: '#/components/responses/404NotFound'
-        '405':
-          $ref: '#/components/responses/405MethodNotAllowed'
-        '413':
-          $ref: '#/components/responses/413EntityTooLarge'
-        '415':
-          $ref: '#/components/responses/415UnsupportedMediaType'
-        '422':
-          $ref: '#/components/responses/422UnprocessibleEntity'
-        '500':
-          $ref: '#/components/responses/500InternalServerError'
-        '501':
-          $ref: '#/components/responses/501MethodNotImplemented'
-    get:
-      tags:
-        - Resources
-      summary: List default resources
-      description: |
-        Retrieve a resource from the default workspace
-      operationId: getDefaultResources
-      parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/Resource-Accept'
-        - $ref: '#/components/parameters/limit'
-        - $ref: '#/components/parameters/offset'
-        - $ref: '#/components/parameters/sortOrder'
-        - $ref: '#/components/parameters/sortFields'
-        - name: scope
-          description: A filter parameter for the visibility of the resource.
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - private
-              - public
-        - name: name
-          description: A filter parameter for the name of the resource.
-          in: query
-          required: false
-          schema:
-            type: string
-            example: recipients.json
-      responses:
-        '200':
-          $ref: '#/components/responses/Resources'
-        '400':
-          $ref: '#/components/responses/400BadRequest'
-        '401':
-          $ref: '#/components/responses/401Unauthorized'
-        '403':
-          $ref: '#/components/responses/403Forbidden'
-        '404':
-          $ref: '#/components/responses/404NotFound'
-        '405':
-          $ref: '#/components/responses/405MethodNotAllowed'
-        '413':
-          $ref: '#/components/responses/413EntityTooLarge'
-        '415':
-          $ref: '#/components/responses/415UnsupportedMediaType'
-        '422':
-          $ref: '#/components/responses/422UnprocessibleEntity'
-        '500':
-          $ref: '#/components/responses/500InternalServerError'
-        '501':
-          $ref: '#/components/responses/501MethodNotImplemented'
-    parameters: []
   '/workspaces/{workspaceId}/resources/{resourceId}':
     get:
       tags:
@@ -1755,6 +1649,112 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
+  /resources:
+    post:
+      tags:
+        - Resources
+      summary: Create a default resource
+      description: |
+        Create a resource in the default workspace
+      operationId: postDefaultResources
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Resource-Content-Type'
+        - $ref: '#/components/parameters/Resource-Accept'
+      requestBody:
+        content:
+          application/vnd.whispir.resource-v1+json:
+            schema:
+              $ref: '#/components/schemas/resource'
+            examples:
+              Example:
+                value:
+                  name: sample.json
+                  scope: private
+                  mimeType: application/json
+                  derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+          application/vnd.whispir.resource-v1+xml:
+            schema:
+              $ref: '#/components/schemas/resource'
+        description: resources object that needs to be create resources
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Resource'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+    get:
+      tags:
+        - Resources
+      summary: List default resources
+      description: |
+        Retrieve a resource from the default workspace
+      operationId: getDefaultResources
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Resource-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
+        - name: scope
+          description: A filter parameter for the visibility of the resource.
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - private
+              - public
+        - name: name
+          description: A filter parameter for the name of the resource.
+          in: query
+          required: false
+          schema:
+            type: string
+            example: recipients.json
+      responses:
+        '200':
+          $ref: '#/components/responses/Resources'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+    parameters: []
   '/resources/{resourceId}':
     get:
       tags:

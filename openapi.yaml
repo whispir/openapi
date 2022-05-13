@@ -1802,7 +1802,7 @@ paths:
     put:
       tags:
         - Resources
-      summary: Update a resource
+      summary: Update a default resource
       description: |
         Update a resource in the default workspace
 
@@ -1864,7 +1864,7 @@ paths:
     delete:
       tags:
         - Resources
-      summary: Delete a resource
+      summary: Delete a default resource
       description: |
         Resources can be deleted after use. These can be both public and private in scope.  
 

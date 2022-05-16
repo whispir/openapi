@@ -4297,6 +4297,7 @@ paths:
             schema:
               $ref: '#/components/schemas/workspace'
         description: ''
+      x-internal: false
   /activities:
     post:
       tags:

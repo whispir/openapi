@@ -4164,7 +4164,21 @@ paths:
           application/vnd.whispir.workspace-v1+json:
             schema:
               $ref: '#/components/schemas/workspace'
-        description: Workspaces list object that needs to be create Workspaces
+            examples:
+              example-1:
+                value:
+                  id: 70F2492146292826
+                  projectName: A Space Odessey
+                  projectNumber: '2001'
+                  status: A
+                  billingcostcentre: Hollywood
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
+        description: Create a workspace
         required: true
       responses:
         '201':
@@ -4296,7 +4310,21 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/workspace'
-        description: ''
+            examples:
+              example-1:
+                value:
+                  id: 70F2492146292826
+                  projectName: A Space Odessey
+                  projectNumber: '2001'
+                  status: A
+                  billingcostcentre: Hollywood
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
+        description: Update a workspace
       x-internal: false
       tags:
         - Workspaces
@@ -4317,6 +4345,7 @@ paths:
           application/vnd.whispir.activity-v1+json:
             schema:
               $ref: '#/components/schemas/activity'
+            examples: {}
         description: activity list object that needs to be create activity
         required: true
       responses:
@@ -7094,6 +7123,19 @@ components:
         Each of these work areas provides different functionalities - such as creating messages, executing scenarios or viewing distribution lists - and can be governed by user permissions. Users can be assigned access to these workspaces to restrict the control of information as needed.
 
         Every account on creation is given a default workspace called "My Company" but it is possible to create multiple workspaces suited for each application need. There is no limit on the number of workspaces.
+      x-examples:
+        example-1:
+          id: 70F2492146292826
+          projectName: A Space Odessey
+          projectNumber: '2001'
+          status: A
+          billingcostcentre: Hollywood
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
     callbackAuth:
       title: callbackAuth
       type: object

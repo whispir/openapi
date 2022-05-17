@@ -1,5 +1,4 @@
-extends: 
-  - './.spectral.oas.yaml'
+extends: './.spectral.oas.yaml'
 formats:
   - oas3
   - oas3.0

@@ -28,7 +28,7 @@ Copy the cURL code into the command line interface of your choice, or use a web-
 
 An alternate way to test Whispir API is to install Postman or any other API Client.
 
-See our page on the [Whispir Postman Collection](Test-your-API-connection.md) for instructions on running Whispir API calls with Postman.
+See our page on the [Whispir Postman Collection](Whispir-API-Postman-Collection.md) for instructions on running Whispir API calls with Postman.
 
 ## Successful connection
 

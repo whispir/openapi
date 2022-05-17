@@ -4168,7 +4168,23 @@ paths:
         required: true
       responses:
         '201':
-          $ref: '#/components/responses/Workspace'
+          description: Created
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Workspace-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/workspaces/747AB7E716C1802B6476784AEB5C9BB8'
+              description: The URI to fetch details of the resource.
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4204,7 +4220,56 @@ paths:
         - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
-          $ref: '#/components/responses/Workspaces'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Workspace-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
+          content:
+            examples:
+              examples:
+                response:
+                  value:
+                    workspaces:
+                      - projectName: Sales Lead Notifications
+                        projectNumber: ''
+                        status: A
+                        billingcostcentre: '0'
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/7311ABEB701E7C60'
+                            rel: self
+                            method: GET
+                      - projectName: Product Release Management
+                        projectNumber: ''
+                        status: A
+                        billingcostcentre: '0'
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/26B1A09C1FEC20A2'
+                            rel: self
+                            method: GET
+                      - projectName: Business Working Group
+                        projectNumber: ''
+                        status: A
+                        billingcostcentre: CLSA
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/A358845BF004C113'
+                            rel: self
+                            method: GET
+                      - projectName: Critical Incident Management
+                        projectNumber: ''
+                        status: A
+                        billingcostcentre: ''
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/B7BFEF555F0F7F81'
+                            rel: self
+                            method: GET
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4237,7 +4302,18 @@ paths:
         - $ref: '#/components/parameters/Workspace-Accept'
       responses:
         '200':
-          $ref: '#/components/responses/Workspace'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Workspace-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -7015,18 +7091,7 @@ components:
         - callbacks
     workspace:
       type: object
-      xml:
-        name: workspace
-        prefix: ns3
-      x-tags:
-        - Workspaces
-      title: Workspace
       properties:
-        id:
-          type: string
-          example: 70F2492146292826
-          description: Specifies the ID for the workspace that has been created
-          readOnly: true
         projectName:
           type: string
           description: Specifies the name of the Workspace to be created.
@@ -7043,17 +7108,12 @@ components:
           type: string
           description: Only applicable to customers with the Billing Cost Centre Module enabled. Allows the user to set a billing cost centre for the Workspace.
           example: Hollywood
-        link:
-          $ref: '#/components/schemas/link'
-      required:
-        - projectName
-        - status
-      description: |-
-        Workspaces allow application developers to create new work areas for the varying use cases of their application. For example they can be associated to the different business units of a company, so to silo the data of the different departments. In fact, the information, assets, contacts and actions performed in a workspace can’t be accessed from another one. This allows the applications to be independent and audited effectively with proper permissions and keys.
-
-        Each of these work areas provides different functionalities - such as creating messages, executing scenarios or viewing distribution lists - and can be governed by user permissions. Users can be assigned access to these workspaces to restrict the control of information as needed.
-
-        Every account on creation is given a default workspace called "My Company" but it is possible to create multiple workspaces suited for each application need. There is no limit on the number of workspaces.
+      xml:
+        name: workspace
+        prefix: ns3
+      x-tags:
+        - Workspaces
+      title: Workspace
     callbackAuth:
       title: callbackAuth
       type: object
@@ -7829,7 +7889,6 @@ components:
             method: GET
             host: api.au.whispir.com
             port: -1
-      title: Link
       items:
         type: object
         description: The HATEOAS link object.
@@ -7863,6 +7922,7 @@ components:
           - host
           - port
       readOnly: true
+      title: Link
     messageStatus:
       description: 'The message status object, describing the delivery of the sent message.'
       type: object
@@ -9740,85 +9800,6 @@ components:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
         Content-Length:
           $ref: '#/components/headers/Content-Length'
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-        Expires:
-          $ref: '#/components/headers/Expires'
-    Workspace:
-      description: Example workspace object response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/workspace'
-          examples:
-            example-1:
-              value:
-                id: 70F2492146292826
-                projectName: A Space Odessey
-                projectNumber: '2001'
-                status: A
-                billingcostcentre: Hollywood
-                link:
-                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                    rel: self
-                    method: GET
-                    host: api.au.whispir.com
-                    port: -1
-      headers:
-        Content-Type:
-          $ref: '#/components/headers/Workspace-Content-Type'
-        Content-Length:
-          $ref: '#/components/headers/Content-Length'
-        Access-Control-Allow-Origin:
-          $ref: '#/components/headers/Access-Control-Allow-Origin'
-        Cache-Control:
-          $ref: '#/components/headers/Cache-Control'
-        Expires:
-          $ref: '#/components/headers/Expires'
-    Workspaces:
-      description: Example of a list of workspaces response
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              workspaces:
-                type: array
-                description: List of workspaces
-                items:
-                  $ref: '#/components/schemas/workspace'
-                readOnly: true
-              status:
-                type: string
-                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
-                example: 'status: 1 to 1 of 1'
-                readOnly: true
-            required:
-              - workspaces
-              - status
-          examples:
-            example-1:
-              value:
-                workspaces:
-                  - id: 70F2492146292826
-                    projectName: A Space Odessey
-                    projectNumber: '2001'
-                    status: A
-                    billingcostcentre: Hollywood
-                    link:
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                        rel: self
-                        method: GET
-                        host: api.au.whispir.com
-                        port: -1
-                status: 'status: 1 to 1 of 1'
-      headers:
-        Content-Type:
-          $ref: '#/components/headers/Workspace-Content-Type'
-        Content-Length:
-          $ref: '#/components/headers/Content-Length'
-        Access-Control-Allow-Origin:
-          $ref: '#/components/headers/Access-Control-Allow-Origin'
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
         Expires:

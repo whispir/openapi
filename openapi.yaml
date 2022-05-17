@@ -9815,12 +9815,15 @@ components:
           $ref: '#/components/headers/Cache-Control'
         Expires:
           $ref: '#/components/headers/Expires'
+        Location:
+          $ref: '#/components/headers/Location'
     Workspaces:
       description: Example of a list of workspaces response
       content:
         application/json:
           schema:
             type: object
+            description: List of workspaces
             properties:
               workspaces:
                 type: array
@@ -10039,3 +10042,8 @@ components:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml
       description: Application specific mime-type.
+    Location:
+      required: true
+      schema:
+        type: string
+      description: The URI to fetch details of the resource.

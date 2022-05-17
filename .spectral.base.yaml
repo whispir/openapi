@@ -1,10 +1,8 @@
+extends: './.spectral.oas.yaml'
 formats:
   - oas3
   - oas3.0
   - oas3.1
-extends:
-  - - 'spectral:oas'
-    - all
 rules:
   openapi-tags-alphabetical: off
   operation-success-response: error

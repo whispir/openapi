@@ -319,7 +319,7 @@ rules:
   contact-url:
     given:
     - "#API_Contact"
-    severity: warn
+    severity: error
     then:
       function: truthy
       field: url
@@ -328,7 +328,7 @@ rules:
   contact-email:
     given:
     - "#API_Contact"
-    severity: warn
+    severity: error
     then:
       function: truthy
       field: email
@@ -337,7 +337,7 @@ rules:
   info-contact:
     given:
     - "#API_Document"
-    severity: warn
+    severity: error
     then:
       function: truthy
       field: info.contact
@@ -346,7 +346,7 @@ rules:
   info-description:
     given:
     - "#API_Document"
-    severity: warn
+    severity: error
     then:
       function: truthy
       field: info.description
@@ -355,7 +355,7 @@ rules:
   info-license:
     given:
     - "#API_Document"
-    severity: warn
+    severity: error
     then:
       function: truthy
       field: info.license
@@ -364,7 +364,7 @@ rules:
   license-url:
     given:
     - "#API_License"
-    severity: warn
+    severity: error
     then:
       function: truthy
       field: url
@@ -373,7 +373,7 @@ rules:
   no-eval-in-markdown:
     given:
     - "#All_Markdown"
-    severity: warn
+    severity: error
     then:
       function: pattern
       functionOptions:
@@ -383,7 +383,7 @@ rules:
   no-script-tags-in-markdown:
     given:
     - "#All_Markdown"
-    severity: warn
+    severity: error
     then:
       function: pattern
       functionOptions:
@@ -393,7 +393,7 @@ rules:
   openapi-tags-alphabetical:
     given:
     - "#API_Tags"
-    severity: warn
+    severity: off
     then:
       function: alphabetical
       functionOptions:
@@ -403,7 +403,7 @@ rules:
   openapi-tags:
     given:
     - "#API_Tags"
-    severity: warn
+    severity: error
     then:
       function: schema
       functionOptions:
@@ -415,7 +415,7 @@ rules:
   operation-description:
     given:
     - "#Operation_Object"
-    severity: warn
+    severity: error
     then:
       function: truthy
       field: description
@@ -424,7 +424,7 @@ rules:
   operation-operationId:
     given:
     - "#Operation_Object"
-    severity: warn
+    severity: error
     then:
       function: truthy
       field: operationId
@@ -455,7 +455,7 @@ rules:
   operation-tags:
     given:
     - "#Operation_Object"
-    severity: warn
+    severity: error
     then:
       function: length
       functionOptions:
@@ -479,7 +479,7 @@ rules:
   contact-name:
     given:
     - "#API_Contact"
-    severity: warn
+    severity: error
     then:
       function: truthy
       field: name
@@ -488,7 +488,7 @@ rules:
   path-keys-no-trailing-slash:
     given:
     - "#Path_Object"
-    severity: warn
+    severity: error
     then:
       function: pattern
       functionOptions:
@@ -499,7 +499,7 @@ rules:
   path-not-include-query:
     given:
     - "#Path_Object"
-    severity: warn
+    severity: error
     then:
       function: pattern
       functionOptions:
@@ -510,7 +510,7 @@ rules:
   tag-description:
     given:
     - "#API_Tags_Item"
-    severity: warn
+    severity: error
     then:
       function: truthy
       field: description
@@ -519,7 +519,7 @@ rules:
   api-servers:
     given:
     - "#API_Server"
-    severity: warn
+    severity: error
     then:
       function: schema
       functionOptions:
@@ -540,7 +540,7 @@ rules:
   server-trailing-slash:
     given:
     - "#API_Server_URL"
-    severity: warn
+    severity: error
     then:
       function: pattern
       functionOptions:
@@ -550,7 +550,7 @@ rules:
   operation-success-response:
     given:
     - "#Operation_Object"
-    severity: warn
+    severity: error
     then:
       function: oasOpSuccessResponse
       field: responses
@@ -567,7 +567,7 @@ rules:
   operation-parameters:
     given:
     - "#Operation_Object"
-    severity: warn
+    severity: error
     then:
       function: oasOpParams
       field: parameters
@@ -576,7 +576,7 @@ rules:
   typed-enum:
     given:
     - "#All_Enum"
-    severity: warn
+    severity: error
     then:
       function: typedEnum
     description: Enum values should respect the specified type.
@@ -604,7 +604,7 @@ rules:
   oas3-unused-component:
     given:
     - "#API_Document"
-    severity: warn
+    severity: error
     then:
       function: oasUnusedComponent
     description: Validate structure of OpenAPI v3 specification.
@@ -634,7 +634,7 @@ rules:
   operation-tag-defined:
     given:
     - "#API_Document"
-    severity: warn
+    severity: error
     then:
       function: oasTagDefined
     description: Operation tags must be defined in global tags.
@@ -653,7 +653,7 @@ rules:
   oas2-operation-security-defined:
     given:
     - "#API_Document"
-    severity: warn
+    severity: error
     then:
       function: oasOpSecurityDefined
       functionOptions:
@@ -667,7 +667,7 @@ rules:
   oas3-operation-security-defined:
     given:
     - "#API_Document"
-    severity: warn
+    severity: error
     then:
       function: oasOpSecurityDefined
       functionOptions:
@@ -682,7 +682,7 @@ rules:
   duplicated-entry-in-enum:
     given:
     - "#All_Enum"
-    severity: warn
+    severity: error
     then:
       function: oasSchema
       functionOptions:
@@ -724,7 +724,7 @@ rules:
   server-not-example:
     given:
     - "#API_Server_URL"
-    severity: warn
+    severity: error
     then:
       function: pattern
       functionOptions:
@@ -733,7 +733,7 @@ rules:
   parameter-description:
     given:
     - "#Request_Parameter_All"
-    severity: warn
+    severity: error
     then:
       function: truthy
       field: description
@@ -741,7 +741,7 @@ rules:
   oas2-anyOf:
     given:
     - "#API_Document_RecursiveSearch"
-    severity: warn
+    severity: error
     then:
       function: undefined
       field: anyOf
@@ -752,7 +752,7 @@ rules:
   oas2-oneOf:
     given:
     - "#API_Document_RecursiveSearch"
-    severity: warn
+    severity: error
     then:
       function: undefined
       field: oneOf
@@ -763,7 +763,7 @@ rules:
   oas3-examples-value-or-externalValue:
     given:
     - "#All_Example"
-    severity: warn
+    severity: error
     then:
       function: xor
       functionOptions:

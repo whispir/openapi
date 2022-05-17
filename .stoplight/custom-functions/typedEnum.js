@@ -78,7 +78,7 @@ export const typedEnum = createRulesetFunction(
         return;
       }
 
-      results ??= [];
+      results = results ?? [];
       results.push({
         message: `Enum value ${printValue(enumValues[i])} must be "${String(type)}".`,
         path: [...context.path, 'enum', i],

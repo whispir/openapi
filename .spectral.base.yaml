@@ -1,49 +1,10 @@
-extends: './.spectral.oas.yaml'
+extends: 
+  - './.spectral.oas.yaml'
 formats:
   - oas3
   - oas3.0
   - oas3.1
 rules:
-  openapi-tags-alphabetical: off
-  operation-success-response: error
-  oas2-operation-formData-consume-check: error
-  operation-parameters: error
-  operation-tag-defined: error
-  contact-properties: error
-  duplicated-entry-in-enum: error
-  info-contact: error
-  info-description: error
-  info-license: error
-  license-url: error
-  no-eval-in-markdown: error
-  no-script-tags-in-markdown: error
-  openapi-tags: error
-  operation-description: error
-  operation-operationId: error
-  operation-operationId-valid-in-url: error
-  operation-singular-tag: error
-  operation-tags: error
-  path-declarations-must-exist: error
-  path-keys-no-trailing-slash: error
-  path-not-include-query: error
-  tag-description: error
-  typed-enum: error
-  oas2-api-host: error
-  oas2-api-schemes: error
-  oas2-host-not-example: error
-  oas2-host-trailing-slash: error
-  oas2-parameter-description: error
-  oas2-operation-security-defined: error
-  oas2-anyOf: error
-  oas2-oneOf: error
-  oas2-unused-definition: error
-  oas3-api-servers: error
-  oas3-examples-value-or-externalValue: error
-  oas3-operation-security-defined: error
-  oas3-parameter-description: error
-  oas3-server-not-example.com: error
-  oas3-server-trailing-slash: error
-  oas3-unused-component: error
   info-matches-whispir:
     description: The title field must contain Whispir.
     severity: error

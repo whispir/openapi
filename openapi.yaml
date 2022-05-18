@@ -9648,10 +9648,6 @@ components:
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-        application/xml:
-          schema:
-            type: object
-            properties: {}
       headers:
         Content-Type:
           $ref: '#/components/headers/Resource-Content-Type'

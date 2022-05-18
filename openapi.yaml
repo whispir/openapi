@@ -1855,61 +1855,6 @@ paths:
           application/vnd.whispir.template-v1+json:
             schema:
               $ref: '#/components/schemas/template'
-            examples:
-              example-1:
-                value:
-                  messageTemplateName: Sample SMS Template
-                  messageTemplateDescription: Template to provide an example on whispir.io
-                  responseTemplateId: responseTemplateId
-                  subject: Test SMS Message
-                  body: This is the body of my test SMS message
-                  email:
-                    body: This is the body of my email message.
-                    footer: This is the footer of my message.
-                    type: text/plain
-                  voice:
-                    header: 'This is the introduction, read out to the recipient prior to any key press.'
-                    body: 'This is the body of the voice call, read out after the key press'
-                    type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
-                    footer: ''
-                    other: ''
-                    resources:
-                      attachment:
-                        - attachmentName: TestIcon.png
-                          derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
-                          attachmentDesc: My photo
-                  web:
-                    body: This is the content of my web publishing or Rich Push Message
-                    type: text/plain
-                  social:
-                    social:
-                      - id: social
-                        body: Facebook Content
-                        type: text/plain
-                  type: defaultNoReply
-                  features:
-                    pushOptions:
-                      notifications: enabled
-                      escalationMins: '3'
-                      appId: appId
-                  dlr:
-                    period: ''
-                    rule: ''
-                    type: ''
-                    publishToWeb: true
-                    expiryDay: 0
-                    expiryHour: 0
-                    expiryMin: 0
-                    feedIds: ''
-                    bool: true
-                  link:
-                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                      rel: self
-                      method: GET
-                      host: api.au.whispir.com
-                      port: -1
-                  tags: campaign
-                  id: 7DB65E1D8853D1C8
         description: Templates object that needs to be create Templates
         required: true
       responses:
@@ -2145,61 +2090,6 @@ paths:
           application/vnd.whispir.template-v1+json:
             schema:
               $ref: '#/components/schemas/template'
-            examples:
-              example-1:
-                value:
-                  messageTemplateName: Sample SMS Template
-                  messageTemplateDescription: Template to provide an example on whispir.io
-                  responseTemplateId: responseTemplateId
-                  subject: Test SMS Message
-                  body: This is the body of my test SMS message
-                  email:
-                    body: This is the body of my email message.
-                    footer: This is the footer of my message.
-                    type: text/plain
-                  voice:
-                    header: 'This is the introduction, read out to the recipient prior to any key press.'
-                    body: 'This is the body of the voice call, read out after the key press'
-                    type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
-                    footer: ''
-                    other: ''
-                    resources:
-                      attachment:
-                        - attachmentName: TestIcon.png
-                          derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
-                          attachmentDesc: My photo
-                  web:
-                    body: This is the content of my web publishing or Rich Push Message
-                    type: text/plain
-                  social:
-                    social:
-                      - id: social
-                        body: Facebook Content
-                        type: text/plain
-                  type: defaultNoReply
-                  features:
-                    pushOptions:
-                      notifications: enabled
-                      escalationMins: '3'
-                      appId: appId
-                  dlr:
-                    period: ''
-                    rule: ''
-                    type: ''
-                    publishToWeb: true
-                    expiryDay: 0
-                    expiryHour: 0
-                    expiryMin: 0
-                    feedIds: ''
-                    bool: true
-                  link:
-                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                      rel: self
-                      method: GET
-                      host: api.au.whispir.com
-                      port: -1
-                  tags: campaign
-                  id: 7DB65E1D8853D1C8
         description: Templates object that needs to be update Templates
         required: true
       responses:
@@ -2643,6 +2533,9 @@ paths:
                       primary: WorkMobilePhone1
                       secondary: WorkMobilePhone1
                       tertiary: WorkMobilePhone1
+          application/vnd.whispir.contact-v1+xml:
+            schema:
+              $ref: '#/components/schemas/contact'
         description: Contact object to be created
         required: true
       responses:
@@ -2767,7 +2660,18 @@ paths:
         - $ref: '#/components/parameters/sortFields'
       responses:
         '200':
-          $ref: '#/components/responses/Contact'
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Contact-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2899,11 +2803,21 @@ paths:
                       primary: WorkMobilePhone1
                       secondary: WorkMobilePhone1
                       tertiary: WorkMobilePhone1
+          application/vnd.whispir.contact-v1+xml:
+            schema:
+              $ref: '#/components/schemas/contact'
         description: contact object that needs to be update contact
         required: true
       responses:
         '204':
-          $ref: '#/components/responses/Contact'
+          description: No Content
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':

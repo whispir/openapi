@@ -9751,6 +9751,51 @@ components:
           $ref: '#/components/headers/Expires'
         Location:
           $ref: '#/components/headers/Location'
+    Resources:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            description: List of resources object
+            properties:
+              status:
+                type: string
+                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+                example: 1 to 2 of 2
+                readOnly: true
+              resources:
+                type: array
+                description: List of resources
+                items:
+                  $ref: '#/components/schemas/resource'
+          examples:
+            example-1:
+              value:
+                status: 1 to 2 of 2
+                resources:
+                  - id: 9B9E2425AAFEEE49E9D9112B6BAC22A9
+                    name: sample.json
+                    scope: private
+                    mimeType: application/json
+                    derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Resource-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'         
   headers:
     Location:
       description: The URI to fetch details of the resource.

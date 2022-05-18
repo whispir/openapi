@@ -1375,9 +1375,6 @@ paths:
                   scope: private
                   mimeType: application/json
                   derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
-          application/vnd.whispir.resource-v1+xml:
-            schema:
-              $ref: '#/components/schemas/resource'
         description: resources object that needs to be create resources
         required: true
       responses:
@@ -1571,9 +1568,6 @@ paths:
                   scope: private
                   mimeType: application/json
                   derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
-          application/vnd.whispir.resource-v1+xml:
-            schema:
-              $ref: '#/components/schemas/resource'
         description: resources object that needs to be update resources
         required: true
       responses:
@@ -9752,7 +9746,7 @@ components:
         Location:
           $ref: '#/components/headers/Location'
     Resources:
-      description: Example response
+      description: List of resources
       content:
         application/json:
           schema:
@@ -9795,7 +9789,7 @@ components:
         Cache-Control:
           $ref: '#/components/headers/Cache-Control'
         Expires:
-          $ref: '#/components/headers/Expires'         
+          $ref: '#/components/headers/Expires'
   headers:
     Location:
       description: The URI to fetch details of the resource.

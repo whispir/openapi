@@ -187,6 +187,8 @@ overrides:
       - '**#/paths/~1users' # user Endpoint Examples
       - '**#/paths/~1workspaces~1{workspaceId}~1import' # import Endpoint Examples
       - '**#/paths/~1auth' # Auth Endpoint Exampleses
+      - '**#/paths/~1workspaces~1{workspaceId}~1contacts' # Contacts Endpoint Examples
+      - '**#/paths/~1workspaces~1{workspaceId}~1templates' # Templates Endpoint Examples
   - rules:
       required-list-pagination-request-query-parameters: off
     files:

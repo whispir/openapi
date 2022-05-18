@@ -6153,6 +6153,7 @@ components:
           type: string
           description: The base64 representation of the file being submitted.
           example: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+          writeOnly: true
         link:
           $ref: '#/components/schemas/link'
       required:

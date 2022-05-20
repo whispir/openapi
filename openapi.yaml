@@ -3452,6 +3452,9 @@ paths:
         The following diagram explains the entire high-level process:
         ![API diagram](https://github.com/whispir/openapi/blob/main/assets/images/Whispir_API_diagram.png?raw=true)
 
+        ## Callback endpoint validation
+        During callback creation, Whispir makes a `GET` request to ensure the callback `url` provided is valid and available. The HTTP response code returned by the callback endpoint for this request must be `200`. Any other code is considered a failure and the callback creation will fail. This is the only time a `GET` request is made. Subsequent requests (callbacks) will all be `POST` requests.
+
         ## Configuration tips
 
         - Always use a domain name for the callback. Do not use an IP.

@@ -6719,34 +6719,70 @@ components:
         - timezone
     distributionlist:
       type: object
-      required:
-        - name
-        - access
-        - visibility
-      properties:
-        name:
-          type: string
-          example: My Distribution List
-        description:
-          type: string
-        access:
-          type: string
-          example: Open
-        visibility:
-          type: string
-          example: Public
-        contactIds:
-          type: string
-        userIds:
-          type: string
-        distListIds:
-          type: string
       xml:
         name: distributionlists
         prefix: ns1
       x-tags:
         - Distribution Lists
       title: Distribution List
+      properties:
+        name:
+          type: string
+          example: My Distribution List
+          description: 'Specifies the name of the distribution list. This has to be unique, and should not contain any special characters (except spaces) in it'
+        description:
+          type: string
+          description: Specifies a description for other users to see what this distribution list should be used for.
+        access:
+          type: string
+          example: Open
+          description: |-
+            Allows you to specify the access type for this DL
+
+            - Open: anyone can subscribe to this distribution list via the Whispir Contact Portal
+            - ByApproval: anyone can subscribe using the Whispir Contact Portal. However, they are not officially on the list until their access is approved
+            - Restricted: the distribution list is not visible in the Whispir Contact Portal
+        visibility:
+          type: string
+          example: Public
+          description: |-
+            Allows you to specify the visibility for this DL
+
+            - Public: Any user or active contact in any workspace can map themselves to this DL in the Whispir Contact Portal
+            - Private: Only users or active contacts in the current workspace can map themselves to this DL
+        contactIds:
+          type: string
+          description: Comma separated list of Contacts to be associated to this DL. This information can be provided at the time of the DL creation or updated later via a PUT request
+        userIds:
+          type: string
+          description: Comma separated list of userIds who can manage this DL. This information can be provided at the time of the DL creation or also later updated via a PUT request
+        distListIds:
+          type: string
+          description: Comma separated list of Distribution List IDs that can be nested under this DL. This information can be provided at the time of the DL creation or later updated via a PUT request
+        type:
+          type: string
+          description: |-
+            Allows you to specify the type for this DL
+
+            - Static: The contacts on the list don’t change unless you manually add or remove them (unlike a dynamic DL)
+
+            NOTE: "static" is also the default value for this parameter when this field is omitted
+          example: static
+          default: static
+      required:
+        - name
+        - access
+        - visibility
+      x-examples:
+        example-1:
+          name: My Distribution List
+          description: ''
+          access: Open
+          visibility: Public
+          contactIds: ''
+          userIds: ''
+          distListIds: ''
+          type: static
     scenario:
       type: object
       required:

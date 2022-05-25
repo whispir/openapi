@@ -6724,7 +6724,7 @@ components:
         prefix: ns1
       x-tags:
         - Distribution Lists
-      title: Distribution List
+      title: Static Distribution List
       properties:
         name:
           type: string
@@ -6783,6 +6783,74 @@ components:
           userIds: ''
           distListIds: ''
           type: static
+      description: 'Static Distribution Lists are manually managed and maintained. They can include Contacts, Users and other Distribution Lists'
+    dynamicdistributionlist:
+      type: object
+      xml:
+        name: dynamicdistributionlist
+        prefix: ns1
+      x-tags:
+        - Distribution Lists
+      title: Dynamic Distribution List
+      x-examples:
+        example-1:
+          name: My Distribution List
+          description: ''
+          access: Open
+          visibility: Public
+          contactIds: ''
+          userIds: ''
+          distListIds: ''
+          type: static
+      properties:
+        name:
+          type: string
+          example: My Distribution List
+          description: 'Specifies the name of the distribution list. This has to be unique, and should not contain any special characters (except spaces) in it'
+        access:
+          type: string
+          example: Open
+          description: |-
+            Allows you to specify the access type for this DL
+
+            - Open: anyone can subscribe to this distribution list via the Whispir Contact Portal
+            - ByApproval: anyone can subscribe using the Whispir Contact Portal. However, they are not officially on the list until their access is approved
+            - Restricted: the distribution list is not visible in the Whispir Contact Portal
+        visibility:
+          type: string
+          example: Public
+          description: |-
+            Allows you to specify the visibility for this DL
+
+            - Public: Any user or active contact in any workspace can map themselves to this DL in the Whispir Contact Portal
+            - Private: Only users or active contacts in the current workspace can map themselves to this DL
+        type:
+          type: string
+          description: |-
+            Allows you to specify the type for this DL
+
+            - Static: The contacts on the list don’t change unless you manually add or remove them (unlike a dynamic DL)
+
+            NOTE: "static" is also the default value for this parameter when this field is omitted
+          example: static
+          default: static
+        entityType:
+          type: string
+        rules:
+          type: string
+        description:
+          type: string
+          description: Specifies a description for other users to see what this distribution list should be used for.
+        '':
+          type: string
+      required:
+        - name
+        - access
+        - visibility
+        - type
+        - entityType
+        - rules
+      description: 'Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don''t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List'
     scenario:
       type: object
       required:

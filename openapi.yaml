@@ -6802,11 +6802,12 @@ components:
           userIds: ''
           distListIds: ''
           type: static
+      description: 'Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don''t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List'
       properties:
         name:
-          type: string
           example: My Distribution List
           description: 'Specifies the name of the distribution list. This has to be unique, and should not contain any special characters (except spaces) in it'
+          type: string
         access:
           type: string
           example: Open
@@ -6836,8 +6837,18 @@ components:
           default: static
         entityType:
           type: string
+          description: The value is currently strictly limited to "contact"
         rules:
           type: string
+          description: |-
+            The array that specify the rules that should be applied on the entityType values to pick the appropriate contacts at the moment of usage [not creation]
+
+            Each rule is an object with 3 keys in it. At least one rule must be specified when creating a Dynamic Distribution List
+
+            - ruleFilter: contains any of the contact profile elements that are available for searching. For example, division, department, role. More details on the values for this field can be found below [required]
+            - ruleFilterActualName: Contains the matching string to be compared for the DL. More details on the the values for this field can be found below [required]
+            - ruleContent: Contains the matching string to be compared with the contact element for being a part of the DL [required]
+          example: '[{"ruleFilter" : "division", "ruleFilterActualName" : "Division", "ruleContent" : "sales"}]'
         description:
           type: string
           description: Specifies a description for other users to see what this distribution list should be used for.
@@ -6850,7 +6861,6 @@ components:
         - type
         - entityType
         - rules
-      description: 'Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don''t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List'
     scenario:
       type: object
       required:

@@ -2718,6 +2718,17 @@ paths:
           application/vnd.whispir.distributionlist-v1+json:
             schema:
               $ref: '#/components/schemas/distributionlist'
+            examples:
+              Example:
+                value:
+                  name: My Distribution List
+                  description: string
+                  access: Open
+                  visibility: Public
+                  contactIds: string
+                  userIds: string
+                  distListIds: string
+                  type: static
           application/vnd.whispir.distributionlist-v1+xml:
             schema:
               $ref: '#/components/schemas/distributionlist'
@@ -2818,48 +2829,9 @@ paths:
             example: Sample Distribution List
       responses:
         '200':
-          description: Ok
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/DistributionList-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    distributionLists:
-                      - id: CF5AF1AE49ED07A6
-                        name: DL 1
-                        mri: dl1.company_name@list.company.whispir.sg
-                        description: test distribution list for company
-                        memberCount: '4'
-                        access: ByApproval
-                        visibility: Private
-                        link:
-                          - uri: 'https://api.au.whispir.com/distributionlists/CF5AF1AE49ED07A6'
-                            rel: self
-                            method: GET
-                      - id: 9FF7C2B470CCEC1E
-                        name: Docs Distribution List
-                        mri: Docs_Distribution_List.company@list.company.whispir.sg
-                        description: A Distribution List created while writing the docs
-                        memberCount: '2'
-                        access: Open
-                        visibility: Public
-                        link:
-                          - uri: 'https://api.au.whispir.com/distributionlists/9FF7C2B470CCEC1E'
-                            rel: self
-                            method: GET
-                    status: '1 to 2 of 2    '
-                    link: []
+          $ref: '#/components/responses/DistributionLists'
+        '201':
+          $ref: '#/components/responses/DistributionLists'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2925,18 +2897,7 @@ paths:
             example: 5EFBA89462693D7B
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/DistributionList-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
+          $ref: '#/components/responses/DistributionList'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -6774,14 +6735,14 @@ components:
         - access
         - visibility
       x-examples:
-        example-1:
+        Example:
           name: My Distribution List
-          description: ''
+          description: string
           access: Open
           visibility: Public
-          contactIds: ''
-          userIds: ''
-          distListIds: ''
+          contactIds: string
+          userIds: string
+          distListIds: string
           type: static
       description: 'Static Distribution Lists are manually managed and maintained. They can include Contacts, Users and other Distribution Lists'
     dynamicdistributionlist:
@@ -9908,6 +9869,69 @@ components:
           $ref: '#/components/headers/Cache-Control'
         Expires:
           $ref: '#/components/headers/Expires'
+    DistributionList:
+      description: Example workspace object response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/distributionlist'
+          examples:
+            Example:
+              value:
+                name: My Distribution List
+                description: string
+                access: Open
+                visibility: Public
+                contactIds: string
+                userIds: string
+                distListIds: string
+                type: static
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Workspace-Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Location:
+          $ref: '#/components/headers/Location'
+    DistributionLists:
+      description: Example workspace object response
+      content:
+        application/json:
+          schema:
+            type: array
+            description: list of distribution lists
+            items:
+              $ref: '#/components/schemas/distributionlist'
+          examples:
+            Example:
+              value:
+                - name: My Distribution List
+                  description: string
+                  access: Open
+                  visibility: Public
+                  contactIds: string
+                  userIds: string
+                  distListIds: string
+                  type: static
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Workspace-Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Location:
+          $ref: '#/components/headers/Location'
   headers:
     Location:
       description: The URI to fetch details of the resource.

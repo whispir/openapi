@@ -2957,6 +2957,7 @@ paths:
           application/vnd.whispir.distributionlist-v1+json:
             schema:
               $ref: '#/components/schemas/distributionlist'
+            examples: {}
           application/vnd.whispir.distributionlist-v1+xml:
             schema:
               $ref: '#/components/schemas/distributionlist'
@@ -6746,7 +6747,6 @@ components:
           type: static
       description: 'Static Distribution Lists are manually managed and maintained. They can include Contacts, Users and other Distribution Lists'
     dynamicdistributionlist:
-      type: object
       xml:
         name: dynamicdistributionlist
         prefix: ns1
@@ -6754,7 +6754,7 @@ components:
         - Distribution Lists
       title: Dynamic Distribution List
       x-examples:
-        example-1:
+        Example:
           name: My Distribution List
           description: ''
           access: Open
@@ -6764,6 +6764,7 @@ components:
           distListIds: ''
           type: static
       description: 'Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don''t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List'
+      type: object
       properties:
         name:
           example: My Distribution List
@@ -9874,9 +9875,11 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/distributionlist'
+            oneOf:
+              - $ref: '#/components/schemas/distributionlist'
+              - $ref: '#/components/schemas/dynamicdistributionlist'
           examples:
-            Example:
+            Example Static DL:
               value:
                 name: My Distribution List
                 description: string
@@ -9885,6 +9888,16 @@ components:
                 contactIds: string
                 userIds: string
                 distListIds: string
+                type: static
+            Example Dyanmic DL:
+              value:
+                name: My Distribution List
+                description: ''
+                access: Open
+                visibility: Public
+                contactIds: ''
+                userIds: ''
+                distListIds: ''
                 type: static
       headers:
         Content-Type:
@@ -9907,7 +9920,9 @@ components:
             type: array
             description: list of distribution lists
             items:
-              $ref: '#/components/schemas/distributionlist'
+              anyOf:
+                - $ref: '#/components/schemas/distributionlist'
+                - $ref: '#/components/schemas/dynamicdistributionlist'
           examples:
             Example:
               value:

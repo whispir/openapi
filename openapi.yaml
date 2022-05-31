@@ -9924,7 +9924,7 @@ components:
                 - $ref: '#/components/schemas/distributionlist'
                 - $ref: '#/components/schemas/dynamicdistributionlist'
           examples:
-            Example:
+            Example Static DLs:
               value:
                 - name: My Distribution List
                   description: string
@@ -9933,6 +9933,16 @@ components:
                   contactIds: string
                   userIds: string
                   distListIds: string
+                  type: static
+            Example Dynamic DLs:
+              value:
+                - name: My Distribution List
+                  description: ''
+                  access: Open
+                  visibility: Public
+                  contactIds: ''
+                  userIds: ''
+                  distListIds: ''
                   type: static
       headers:
         Content-Type:

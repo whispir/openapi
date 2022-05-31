@@ -6800,6 +6800,7 @@ components:
         entityType:
           type: string
           description: The value is currently strictly limited to "contact"
+          example: Contact
         rules:
           type: string
           description: |-
@@ -6814,8 +6815,7 @@ components:
         description:
           type: string
           description: Specifies a description for other users to see what this distribution list should be used for.
-        '':
-          type: string
+          example: My Distribution list
       required:
         - name
         - access
@@ -9875,9 +9875,10 @@ components:
       content:
         application/json:
           schema:
-            oneOf:
+            anyOf:
               - $ref: '#/components/schemas/distributionlist'
               - $ref: '#/components/schemas/dynamicdistributionlist'
+            description: Either a static or dynamic distribution list
           examples:
             Example Static DL:
               value:

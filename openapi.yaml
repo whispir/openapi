@@ -2717,7 +2717,9 @@ paths:
         content:
           application/vnd.whispir.distributionlist-v1+json:
             schema:
-              $ref: '#/components/schemas/distributionlist'
+              oneOf:
+                - $ref: '#/components/schemas/distributionlist'
+                - $ref: '#/components/schemas/dynamicdistributionlist'
             examples:
               Example:
                 value:
@@ -2956,7 +2958,9 @@ paths:
         content:
           application/vnd.whispir.distributionlist-v1+json:
             schema:
-              $ref: '#/components/schemas/distributionlist'
+              oneOf:
+                - $ref: '#/components/schemas/distributionlist'
+                - $ref: '#/components/schemas/dynamicdistributionlist'
             examples: {}
           application/vnd.whispir.distributionlist-v1+xml:
             schema:

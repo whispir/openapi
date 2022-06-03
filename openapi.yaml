@@ -2720,6 +2720,7 @@ paths:
               oneOf:
                 - $ref: '#/components/schemas/distributionlist'
                 - $ref: '#/components/schemas/dynamicdistributionlist'
+              description: Either a static or dynamic distribution list
             examples:
               Example:
                 value:
@@ -2961,6 +2962,7 @@ paths:
               oneOf:
                 - $ref: '#/components/schemas/distributionlist'
                 - $ref: '#/components/schemas/dynamicdistributionlist'
+              description: Either a static or dynamic distribution list
             examples: {}
           application/vnd.whispir.distributionlist-v1+xml:
             schema:
@@ -6735,6 +6737,7 @@ components:
         description:
           type: string
           description: Specifies a description for other users to see what this distribution list should be used for.
+          example: My Distribution list
         memberCount:
           type: string
           example: '4'
@@ -6761,14 +6764,17 @@ components:
         contactIds:
           type: string
           description: Comma separated list of Contacts to be associated to this DL. This information can be provided at the time of the DL creation or updated later via a PUT request
+          example: 3A21DCC420494A48
           writeOnly: true
         userIds:
           type: string
           description: Comma separated list of userIds who can manage this DL. This information can be provided at the time of the DL creation or also later updated via a PUT request
+          example: 3A21DCC420494A48
           writeOnly: true
         distListIds:
           type: string
           description: Comma separated list of Distribution List IDs that can be nested under this DL. This information can be provided at the time of the DL creation or later updated via a PUT request
+          example: '3A21DCC420494A48, 07172DC9AC3E97A75B5A41536C132CA0'
         type:
           type: string
           description: |-
@@ -6895,7 +6901,7 @@ components:
             - ruleContent: Contains the matching string to be compared with the contact element for being a part of the DL [required]
           example: '[{"ruleFilter" : "division", "ruleFilterActualName" : "Division", "ruleContent" : "sales"}]'
         link:
-          $ref: ''
+          $ref: '#/components/schemas/link'
       required:
         - name
         - access
@@ -10005,6 +10011,7 @@ components:
                 oneOf:
                   - $ref: '#/components/schemas/distributionlist'
                   - $ref: '#/components/schemas/dynamicdistributionlist'
+                description: Either a static or dynamic distribution list
               status:
                 type: string
                 example: 1 to 1 of 1
@@ -10017,16 +10024,33 @@ components:
               - status
               - link
           examples:
-            Example Static Distribution List:
+            Example Dynamic Distribution List:
               value:
                 distributionLists:
+                  id: 5AFEB61102963D7
                   name: My Distribution List
+                  mri: My_Distribution_List.company_name@list.company.whispir.sg
                   description: string
+                  memberCount: '4'
                   access: Open
                   visibility: Public
-                  contactIds: string
-                  userIds: string
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
                   distListIds: string
+                  distlistdetails:
+                    - id: 123ADAB420493B83
+                      name: John Smith
+                      type: User
+                      link:
+                        - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                          rel: self
+                          method: GET
+                          host: api.au.whispir.com
+                          port: -1
                 status: 1 to 1 of 1
                 link:
                   - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'

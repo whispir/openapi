@@ -6315,46 +6315,95 @@ components:
         - body
     responseTemplatePattern:
       type: object
-      properties:
-        name:
-          type: string
-          example: Yes Rule
-        pattern:
-          type: string
-          example: startswith
-        textPrompt:
-          type: string
-          example: 'YES'
-        voicePrompt:
-          type: string
-          example: '1'
-        spokenVoicePrompt:
-          type: string
-          example: to select YES
-        colour:
-          type: string
-          example: '#00947d'
       xml:
         name: responseTemplatePattern
       x-tags:
         - Response Rules
       title: Response Template Pattern
-    responseRule:
-      type: object
+      description: 'This object contains the responseTemplatePattern array, which contains each of the response rule elements. More details on the configuration of this object can be found below'
       properties:
         name:
           type: string
-          example: Response Rule 1
-        description:
+          example: Yes Rule
+          description: The name of the response category. The same key is called `matchedCategory` when placed inside the `customParameters` of Callbacks payload
+        pattern:
           type: string
-        responseTemplatePatterns:
-          $ref: '#/components/schemas/responseTemplatePattern'
+          example: startswith
+          description: |-
+            Specifies the mechanism for matching the textPrompt
+
+            The following options are available:
+            - startsWith
+            - contains
+            - exactmatch
+
+            NOTE: none of them is case sensitive, so in the example above replying "YES" or "yes" or "Yes" makes no difference
+        textPrompt:
+          type: string
+          example: 'YES'
+          description: 'Specifies the textual string that should be matched using the pattern (specified above) within the email, SMS or web response'
+        voicePrompt:
+          type: string
+          example: '1'
+          description: |-
+            The character (2–9, * or #) that the recipient of the voice call should enter to select a response option
+
+            **IMPORTANT**: please do NOT use the key "1" because this is already reserved to repeat the message
+        spokenVoicePrompt:
+          type: string
+          example: to select YES
+          description: The text-to-speech content that is dynamically read out when describing to the user what a particular response option is
+        colour:
+          type: string
+          example: '#00947d'
+          description: The hexadecimal colour code that is used in the Message Response Report to differentiate the groups of responses
+      required:
+        - name
+        - pattern
+        - textPrompt
+        - voicePrompt
+        - spokenVoicePrompt
+        - colour
+      x-examples:
+        Example:
+          name: Yes Rule
+          pattern: startswith
+          textPrompt: 'YES'
+          voicePrompt: '1'
+          spokenVoicePrompt: to select YES
+          colour: '#00947d'
+    responseRule:
+      type: object
       xml:
         name: responserule
         prefix: ns3
       x-tags:
         - Response Rules
       title: Response Rule
+      properties:
+        name:
+          type: string
+          example: Response Rule 1
+          description: Specifies the name of the response rule
+        description:
+          type: string
+          description: Specifies the description of the response rule for others to understand its purpose
+        responseTemplatePatterns:
+          $ref: '#/components/schemas/responseTemplatePattern'
+      required:
+        - name
+        - responseTemplatePatterns
+      x-examples:
+        Example:
+          name: Response Rule 1
+          description: string
+          responseTemplatePatterns:
+            name: Yes Rule
+            pattern: startswith
+            textPrompt: 'YES'
+            voicePrompt: '1'
+            spokenVoicePrompt: to select YES
+            colour: '#00947d'
     contact:
       type: object
       xml:

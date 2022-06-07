@@ -3,7 +3,7 @@ formats:
   - oas3.0
   - oas3.1
 extends:
-  - - 'spectral:oas'
+  - - "spectral:oas"
     - all
 rules:
   openapi-tags-alphabetical: off

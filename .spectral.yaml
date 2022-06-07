@@ -160,8 +160,6 @@ overrides:
       schema-property-descriptions: off
       schema-property-examples: off
     files:
-      - "**#/components/schemas/responseTemplatePattern" # Response Template Endpoint Schemas
-      - "**#/components/schemas/responseRule"
       - "**#/components/schemas/messagingoptions"
       - "**#/components/schemas/locations"
       - "**#/components/schemas/location"
@@ -178,7 +176,6 @@ overrides:
     files:
       - "**#/paths/~1workspaces~1{workspaceId}~1events" # Events Endpoint Examples
       - "**#/components/requestBodies/event"
-      - "**#/paths/~1workspaces~1{workspaceId}~1responserules" # responserules Endpoint Examples
       - "**#/paths/~1workspaces~1{workspaceId}~1scenario" # scenario Endpoint Examples
       - "**#/paths/~1activities" # activity Endpoint Examples
       - "**#/paths/~1users" # user Endpoint Examples

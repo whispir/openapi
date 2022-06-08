@@ -84,7 +84,8 @@ paths:
         - **SMS** - up to 1600 characters per message, premium routes, delivery receipts  
         - **Email** - free email messaging with HTML and Plain Text support 
         - **Voice** - high quality outbound voice calls delivered to mobiles and landlines within seconds  
-        - **Rich Messages** - personalised, targeted rich messaging to drive conversations  
+        - **Rich Messages** - personalised, targeted rich messaging to drive conversations
+        - **WhatsApp** - customised WhatsApp messages featuring mutliple content types (__presently only available in AP1 region__)
         - **Twitter** - support for instant publishing to multiple twitter accounts  
         - **Facebook** - simplify the process of publishing to multiple facebook accounts instantaneously  
         - **RSS** - easily generate RSS feeds for consumption by other services
@@ -371,9 +372,7 @@ paths:
         A message is scheduled according to the timezone set in the Whispir account of the user who initiates the message request. This setting can be found in the Whispir Portal under "Settings"->"User Manager"->"View/Edit". Whispir DOES NOT honor the timezone where the sender or the message recipient are currently located in
         For example if the user’s time zone is set to UTC in their Whispir profile then messages are scheduled to be sent as per UTC, even if the user triggers the message while sitting in Singapore (+8). So please ensure that any scheduled communication is sent at the appropriate/preferred time
         Also, changing the user's timezone setting after the message is triggered DOES NOT change the original scheduled time.
-
         #### Sending messages at a later date
-
         ```JSON
         POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
          
@@ -460,6 +459,15 @@ paths:
       requestBody:
         content:
           application/vnd.whispir.message-v1+json:
+            schema:
+              $ref: '#/components/schemas/message'
+          application/vnd.whispir.bulkmessage-v1+json:
+            schema:
+              $ref: '#/components/schemas/message'
+          application/vnd.whispir.message-v1+xml:
+            schema:
+              $ref: '#/components/schemas/message'
+          application/vnd.whispir.bulkmessage-v1+xml:
             schema:
               $ref: '#/components/schemas/message'
             examples:
@@ -5672,6 +5680,8 @@ components:
           $ref: '#/components/schemas/web'
         social:
           $ref: '#/components/schemas/social'
+        whatsapp:
+          $ref: '#/components/schemas/whatsapp'
         type:
           type: string
           enum:
@@ -7919,6 +7929,149 @@ components:
       xml:
         name: fieldMapping
       title: Field Mapping
+    whatsapp:
+      description: A structured WhatsApp channel payload.
+      type: object
+      x-examples:
+        Example:
+          type: icebreaker
+          name: igniteagain
+          content:
+            body:
+              - text: hello
+              - text: world
+      title: WhatsApp
+      properties:
+        type:
+          type: string
+          description: The type of WhatsApp message to be sent.
+          enum:
+            - template
+        name:
+          type: string
+          description: The name of the template to be sent (must be the same as how it appears in your WhatsApp Business Manager).
+        content:
+          type: object
+          description: The WhatsApp message payload.
+          required:
+            - body
+          properties:
+            header:
+              $ref: '#/components/schemas/whatsapp_header'
+            body:
+              type: array
+              description: Message body is an array of text objects.
+              items:
+                type: object
+                minProperties: 1
+                properties:
+                  text:
+                    type: string
+                    description: Text objects in the array are inserted into variable fields in the WhatsApp template.
+                required:
+                  - text
+            buttons:
+              type: array
+              description: An array of whatsapp_button objects. Each object represents one button in the WhatsApp message.
+              items:
+                $ref: '#/components/schemas/whatsapp_button'
+      required:
+        - type
+        - name
+        - content
+    whatsapp_header:
+      title: whatsapp_header
+      type: object
+      x-examples:
+        image-example:
+          image:
+            link: 'http://placekitten.com/200/300'
+        video-example:
+          video:
+            link: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'
+        document-example:
+          document:
+            link: 'https://s3-eu-west-1.amazonaws.com/hughhopkins.co.uk/sample_media/Sf+flight+itinerary.pdf'
+        location-example:
+          location:
+            longitude: -122.425332
+            latitude: 37.758056
+            name: Facebook HQ
+            address: '1 Hacker Way, Menlo Park, CA 94025'
+      description: Optional header for a Whatsapp message.
+      properties:
+        image:
+          type: string
+          description: Link to image location.
+          format: uri
+          example: 'http://placekitten.com/200/300'
+        video:
+          type: string
+          description: Link to video location.
+          format: uri
+          example: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'
+        document:
+          type: string
+          description: Link to document location.
+          format: uri
+          example: 'https://s3-eu-west-1.amazonaws.com/hughhopkins.co.uk/sample_media/Sf+flight+itinerary.pdf'
+        location:
+          type: object
+          description: A location for the header.
+          properties:
+            longitude:
+              example: -122.425332
+              description: Location longitude.
+              type: number
+            latitude:
+              type: number
+              example: 37.758056
+              description: Location latitude.
+            name:
+              type: string
+              example: Facebook HQ
+              description: Location name.
+            address:
+              type: string
+              example: '1 Hacker Way, Menlo Park, CA 94025'
+              description: Location street address.
+          required:
+            - longitude
+            - latitude
+            - name
+            - address
+    whatsapp_button:
+      title: whatsapp_button
+      type: object
+      description: Button object for a WhatsApp message.
+      x-examples:
+        quick-reply-example:
+          index: '0'
+          sub_type: quick_reply
+          payload: Yes-Button-Payload
+        url-example:
+          index: '0'
+          sub_type: url
+          text: 'https://www.google.com/search?q=Whispir'
+      properties:
+        index:
+          type: string
+          description: The index of the object in the array.
+        sub_type:
+          type: string
+          description: The type of dynamic button.
+          enum:
+            - quick reply
+            - url
+        text:
+          type: string
+          description: The url destination when the button is clicked. Required if sub_type = url.
+        payload:
+          type: string
+          description: 'Name of the quick reply buttons configured within your WhatsApp Business Manager account. Required if sub_type = quick reply. '
+      required:
+        - index
+        - sub_type
     attachment:
       type: object
       description: |-

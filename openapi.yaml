@@ -81,7 +81,7 @@ paths:
       description: |-
         Communications are the core of what the Whispir Platform API offers as a service to customers.    
         Whispir has the ability to send communications across 7 different channels in a single API request:  
-        - **SMS** - up to 1600 characters per message, premium routes, delivery receipts  
+        - **SMS** - up to 160 characters per message, premium routes, delivery receipts  
         - **Email** - free email messaging with HTML and Plain Text support 
         - **Voice** - high quality outbound voice calls delivered to mobiles and landlines within seconds  
         - **Rich Messages** - personalised, targeted rich messaging to drive conversations  

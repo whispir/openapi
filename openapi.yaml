@@ -5629,15 +5629,6 @@ components:
       properties:
         to:
           type: string
-          description: |
-            Allows a combination of phone numbers, email address, Whispir Contact MRIs, User MRI, Distribution List MRI, separated by `,`.
-
-            Whispir will pick the relevant recipients based on the channels provided in the request payload 
-            (including template information).
-
-            The maximum payload size rule applies.
-
-            When used for bulk messages, this field is optional, as bulk messages has another model to specify the `to` field recipients.
           maxLength: 10000
           example: '61400400400'
         subject:

@@ -3086,6 +3086,17 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
+            examples:
+              example-1:
+                value:
+                  name: Fire Evacuation Block A
+                  description: Fire evacuation notification for A block residents
+                  allowedUsers: string
+                  allowedUserIds: string
+                  message:
+                    to: '61400400400'
+                    subject: Test Message
+                    body: This is the body of my test SMS message
         description: Scenario list object that needs to be create Scenario
         required: true
       responses:
@@ -3154,6 +3165,15 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scenarios:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/scenario'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -6987,10 +7007,12 @@ components:
         - rules
     scenario:
       type: object
-      required:
-        - name
-        - description
-        - message
+      xml:
+        name: scenario
+        prefix: ns2
+      x-tags:
+        - Scenarios
+      title: Scenario
       properties:
         name:
           type: string
@@ -7008,12 +7030,29 @@ components:
           description: Specifies the comma separated list of users who can run this scenario.Only contains value when the allowedUsers is set to `SELECTEDUSERS`
         message:
           $ref: '#/components/schemas/message'
-      xml:
-        name: scenario
-        prefix: ns2
-      x-tags:
-        - Scenarios
-      title: Scenario
+        to:
+          type: string
+          description: Specifies the phone number or MRI or distribution list to which the message has to be sent
+        subject:
+          type: string
+          description: Specifies the subject of the message
+        label:
+          type: string
+          description: Specifies the label for the message (to view during reporting)
+        email:
+          $ref: '#/components/schemas/email'
+        voice:
+          $ref: '#/components/schemas/voice'
+        web:
+          $ref: '#/components/schemas/web'
+        social:
+          $ref: '#/components/schemas/social'
+        '':
+          type: string
+      required:
+        - name
+        - description
+        - message
     callback:
       type: object
       xml:

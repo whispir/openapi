@@ -3172,6 +3172,7 @@ paths:
                 properties:
                   scenarios:
                     type: array
+                    description: List of retrieved scenarios
                     items:
                       $ref: '#/components/schemas/scenario'
         '400':
@@ -3325,6 +3326,18 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              description: The URI to fetch details of the scenario.
+            Content-Type:
+              schema:
+                type: string
+              description: Application specific mime-type.
+            Content-Length:
+              schema:
+                type: string
+              description: Length of the response content.
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':

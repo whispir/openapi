@@ -3169,10 +3169,11 @@ paths:
             application/json:
               schema:
                 type: object
+                description: List of retrieved scenarios
                 properties:
                   scenarios:
                     type: array
-                    description: List of retrieved scenarios
+                    description: Scenario object
                     items:
                       $ref: '#/components/schemas/scenario'
         '400':

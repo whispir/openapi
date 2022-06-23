@@ -3316,8 +3316,8 @@ paths:
             type: string
             example: 41048D9483C8CF2A
       responses:
-        '204':
-          description: No Content
+        '202':
+          description: Accepted
           headers:
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
@@ -3367,7 +3367,7 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
-        description: Scenarios object that needs to be update Scenarios
+        description: Modifying a scenario obeys the same requirements seen at the moment of their creation
         required: true
       responses:
         '204':

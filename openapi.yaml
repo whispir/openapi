@@ -3091,7 +3091,7 @@ paths:
                 value:
                   name: Fire Evacuation Block A
                   description: Fire evacuation notification for A block residents
-                  allowedUsers: string
+                  allowedUsers: SELECTEDUSERS
                   allowedUserIds: string
                   message:
                     to: '61400400400'
@@ -3176,6 +3176,44 @@ paths:
                     description: Scenario object
                     items:
                       $ref: '#/components/schemas/scenario'
+              examples:
+                example-1:
+                  value:
+                    scenarios:
+                      - name: Fire Evacuation Block A
+                        description: Fire evacuation notification for A block residents
+                        allowedUsers: SELECTEDUSERS
+                        allowedUserIds: 4DC922649AFE370C
+                        message:
+                          to: '61400400400'
+                          subject: Test Message
+                          body: This is the body of my test SMS message
+                        to: '61400400400'
+                        subject: Fire Evacuation
+                        label: fire-evacuation
+                        email:
+                          body: This is the body of my email message.
+                          footer: This is the footer of my message.
+                          type: text/plain
+                        voice:
+                          header: 'This is the introduction, read out to the recipient prior to any key press.'
+                          body: 'This is the body of the voice call, read out after the key press'
+                          type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                          footer: ''
+                          other: ''
+                          resources:
+                            attachment:
+                              - attachmentName: TestIcon.png
+                                derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                                attachmentDesc: My photo
+                        web:
+                          body: This is the content of my web publishing or Rich Push Message
+                          type: text/plain
+                        social:
+                          social:
+                            - id: social
+                              body: Facebook Content
+                              type: text/plain
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3238,7 +3276,7 @@ paths:
                   value:
                     name: Fire Evacuation Block A
                     description: Fire evacuation notification for A block residents
-                    allowedUsers: string
+                    allowedUsers: SELECTEDUSERS
                     allowedUserIds: string
                     message:
                       to: '61400400400'
@@ -3381,6 +3419,43 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
+            examples:
+              example-1:
+                value:
+                  name: Fire Evacuation Block A
+                  description: Fire evacuation notification for A block residents
+                  allowedUsers: SELECTEDUSERS
+                  allowedUserIds: 4DC922649AFE370C
+                  message:
+                    to: '61400400400'
+                    subject: Test Message
+                    body: This is the body of my test SMS message
+                  to: '61400400400'
+                  subject: Fire Evacuation
+                  label: fire-evacuation
+                  email:
+                    body: This is the body of my email message.
+                    footer: This is the footer of my message.
+                    type: text/plain
+                  voice:
+                    header: 'This is the introduction, read out to the recipient prior to any key press.'
+                    body: 'This is the body of the voice call, read out after the key press'
+                    type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                    footer: ''
+                    other: ''
+                    resources:
+                      attachment:
+                        - attachmentName: TestIcon.png
+                          derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                          attachmentDesc: My photo
+                  web:
+                    body: This is the content of my web publishing or Rich Push Message
+                    type: text/plain
+                  social:
+                    social:
+                      - id: social
+                        body: Facebook Content
+                        type: text/plain
         description: Modifying a scenario obeys the same requirements seen at the moment of their creation
         required: true
       responses:
@@ -7035,6 +7110,7 @@ components:
       x-tags:
         - Scenarios
       title: Scenario
+      description: 'Scenarios allows you to simplify the message delivery process through automated, one-click communications.'
       properties:
         name:
           type: string
@@ -7047,20 +7123,28 @@ components:
         allowedUsers:
           type: string
           description: 'Specifies the usage permission - 1)EVERYONE 2)SELECTEDUSERS When SELECTEDUSERS is provided, then `allowedUserIds` shall contain the userID of the allowed users.'
+          enum:
+            - EVERYONE
+            - SELECTEDUSERS
+          example: SELECTEDUSERS
         allowedUserIds:
           type: string
           description: Specifies the comma separated list of users who can run this scenario.Only contains value when the allowedUsers is set to `SELECTEDUSERS`
+          example: 4DC922649AFE370C
         message:
           $ref: '#/components/schemas/message'
         to:
           type: string
           description: Specifies the phone number or MRI or distribution list to which the message has to be sent
+          example: '61400400400'
         subject:
           type: string
           description: Specifies the subject of the message
+          example: Fire Evacuation
         label:
           type: string
           description: Specifies the label for the message (to view during reporting)
+          example: fire-evacuation
         email:
           $ref: '#/components/schemas/email'
         voice:
@@ -7073,6 +7157,42 @@ components:
         - name
         - description
         - message
+      x-examples:
+        example-1:
+          name: Fire Evacuation Block A
+          description: Fire evacuation notification for A block residents
+          allowedUsers: EVERYONE
+          allowedUserIds: 4DC922649AFE370C
+          message:
+            to: '61400400400'
+            subject: Test Message
+            body: This is the body of my test SMS message
+          to: '61400400400'
+          subject: Fire Evacuation
+          label: fire-evacuation
+          email:
+            body: This is the body of my email message.
+            footer: This is the footer of my message.
+            type: text/plain
+          voice:
+            header: 'This is the introduction, read out to the recipient prior to any key press.'
+            body: 'This is the body of the voice call, read out after the key press'
+            type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+            footer: ''
+            other: ''
+            resources:
+              attachment:
+                - attachmentName: TestIcon.png
+                  derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                  attachmentDesc: My photo
+          web:
+            body: This is the content of my web publishing or Rich Push Message
+            type: text/plain
+          social:
+            social:
+              - id: social
+                body: Facebook Content
+                type: text/plain
     callback:
       type: object
       xml:

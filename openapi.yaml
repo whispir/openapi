@@ -3086,6 +3086,17 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
+            examples:
+              example-1:
+                value:
+                  name: Fire Evacuation Block A
+                  description: Fire evacuation notification for A block residents
+                  allowedUsers: SELECTEDUSERS
+                  allowedUserIds: string
+                  message:
+                    to: '61400400400'
+                    subject: Test Message
+                    body: This is the body of my test SMS message
         description: Scenario list object that needs to be create Scenario
         required: true
       responses:
@@ -3154,6 +3165,55 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+          content:
+            application/json:
+              schema:
+                type: object
+                description: List of retrieved scenarios
+                properties:
+                  scenarios:
+                    type: array
+                    description: Scenario object
+                    items:
+                      $ref: '#/components/schemas/scenario'
+              examples:
+                example-1:
+                  value:
+                    scenarios:
+                      - name: Fire Evacuation Block A
+                        description: Fire evacuation notification for A block residents
+                        allowedUsers: SELECTEDUSERS
+                        allowedUserIds: 4DC922649AFE370C
+                        message:
+                          to: '61400400400'
+                          subject: Test Message
+                          body: This is the body of my test SMS message
+                        to: '61400400400'
+                        subject: Fire Evacuation
+                        label: fire-evacuation
+                        email:
+                          body: This is the body of my email message.
+                          footer: This is the footer of my message.
+                          type: text/plain
+                        voice:
+                          header: 'This is the introduction, read out to the recipient prior to any key press.'
+                          body: 'This is the body of the voice call, read out after the key press'
+                          type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                          footer: ''
+                          other: ''
+                          resources:
+                            attachment:
+                              - attachmentName: TestIcon.png
+                                derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                                attachmentDesc: My photo
+                        web:
+                          body: This is the content of my web publishing or Rich Push Message
+                          type: text/plain
+                        social:
+                          social:
+                            - id: social
+                              body: Facebook Content
+                              type: text/plain
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3208,38 +3268,46 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            examples:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scenario'
               examples:
-                response:
+                example:
                   value:
-                    title: Emergency Comms - Fire
-                    description: Scenario to use during fire evacuation
-                    createdTime: 1437383938000
-                    allowedUsers: EVERYONE
+                    name: Fire Evacuation Block A
+                    description: Fire evacuation notification for A block residents
+                    allowedUsers: SELECTEDUSERS
+                    allowedUserIds: string
                     message:
-                      to: '+1000000000'
-                      subject: Scenario Emergency Comms - Fire
-                      body: sms test
-                      label: ''
-                      voice: {}
-                      from: joe.bloggs.company@Contact.Melbourne.whispir.au
+                      to: '61400400400'
+                      subject: Test Message
+                      body: This is the body of my test SMS message
+                    to: string
+                    subject: string
+                    label: string
+                    email:
+                      body: This is the body of my email message.
+                      footer: This is the footer of my message.
+                      type: text/plain
+                    voice:
+                      header: 'This is the introduction, read out to the recipient prior to any key press.'
+                      body: 'This is the body of the voice call, read out after the key press'
+                      type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                      footer: ''
+                      other: ''
+                      resources:
+                        attachment:
+                          - attachmentName: TestIcon.png
+                            derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                            attachmentDesc: My photo
+                    web:
+                      body: This is the content of my web publishing or Rich Push Message
+                      type: text/plain
+                    social:
                       social:
-                        social:
-                          - id: socialType
-                            body: text/plain
-                      createdTime: 1437569311000
-                    link:
-                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
-                        rel: self
-                        method: GET
-                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
-                        rel: updateScenario
-                        method: PUT
-                        type: 'application/vnd.whispir.scenario-v1+json,application/vnd.whispir.scenario-v1+xml'
-                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
-                        rel: deleteScenario
-                        method: DELETE
-                        type: 'application/vnd.whispir.scenario-v1+json,application/vnd.whispir.scenario-v1+xml'
+                        - id: social
+                          body: Facebook Content
+                          type: text/plain
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3288,8 +3356,8 @@ paths:
             type: string
             example: 41048D9483C8CF2A
       responses:
-        '204':
-          description: No Content
+        '202':
+          description: Accepted
           headers:
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
@@ -3297,6 +3365,18 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              description: The URI to fetch details of the scenario.
+            Content-Type:
+              schema:
+                type: string
+              description: Application specific mime-type.
+            Content-Length:
+              schema:
+                type: string
+              description: Length of the response content.
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3339,7 +3419,44 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
-        description: Scenarios object that needs to be update Scenarios
+            examples:
+              example-1:
+                value:
+                  name: Fire Evacuation Block A
+                  description: Fire evacuation notification for A block residents
+                  allowedUsers: SELECTEDUSERS
+                  allowedUserIds: 4DC922649AFE370C
+                  message:
+                    to: '61400400400'
+                    subject: Test Message
+                    body: This is the body of my test SMS message
+                  to: '61400400400'
+                  subject: Fire Evacuation
+                  label: fire-evacuation
+                  email:
+                    body: This is the body of my email message.
+                    footer: This is the footer of my message.
+                    type: text/plain
+                  voice:
+                    header: 'This is the introduction, read out to the recipient prior to any key press.'
+                    body: 'This is the body of the voice call, read out after the key press'
+                    type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                    footer: ''
+                    other: ''
+                    resources:
+                      attachment:
+                        - attachmentName: TestIcon.png
+                          derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                          attachmentDesc: My photo
+                  web:
+                    body: This is the content of my web publishing or Rich Push Message
+                    type: text/plain
+                  social:
+                    social:
+                      - id: social
+                        body: Facebook Content
+                        type: text/plain
+        description: Modifying a scenario obeys the same requirements seen at the moment of their creation
         required: true
       responses:
         '204':
@@ -6987,10 +7104,13 @@ components:
         - rules
     scenario:
       type: object
-      required:
-        - name
-        - description
-        - message
+      xml:
+        name: scenario
+        prefix: ns2
+      x-tags:
+        - Scenarios
+      title: Scenario
+      description: 'Scenarios allows you to simplify the message delivery process through automated, one-click communications.'
       properties:
         name:
           type: string
@@ -7003,17 +7123,76 @@ components:
         allowedUsers:
           type: string
           description: 'Specifies the usage permission - 1)EVERYONE 2)SELECTEDUSERS When SELECTEDUSERS is provided, then `allowedUserIds` shall contain the userID of the allowed users.'
+          enum:
+            - EVERYONE
+            - SELECTEDUSERS
+          example: SELECTEDUSERS
         allowedUserIds:
           type: string
           description: Specifies the comma separated list of users who can run this scenario.Only contains value when the allowedUsers is set to `SELECTEDUSERS`
+          example: 4DC922649AFE370C
         message:
           $ref: '#/components/schemas/message'
-      xml:
-        name: scenario
-        prefix: ns2
-      x-tags:
-        - Scenarios
-      title: Scenario
+        to:
+          type: string
+          description: Specifies the phone number or MRI or distribution list to which the message has to be sent
+          example: '61400400400'
+        subject:
+          type: string
+          description: Specifies the subject of the message
+          example: Fire Evacuation
+        label:
+          type: string
+          description: Specifies the label for the message (to view during reporting)
+          example: fire-evacuation
+        email:
+          $ref: '#/components/schemas/email'
+        voice:
+          $ref: '#/components/schemas/voice'
+        web:
+          $ref: '#/components/schemas/web'
+        social:
+          $ref: '#/components/schemas/social'
+      required:
+        - name
+        - description
+        - message
+      x-examples:
+        example-1:
+          name: Fire Evacuation Block A
+          description: Fire evacuation notification for A block residents
+          allowedUsers: EVERYONE
+          allowedUserIds: 4DC922649AFE370C
+          message:
+            to: '61400400400'
+            subject: Test Message
+            body: This is the body of my test SMS message
+          to: '61400400400'
+          subject: Fire Evacuation
+          label: fire-evacuation
+          email:
+            body: This is the body of my email message.
+            footer: This is the footer of my message.
+            type: text/plain
+          voice:
+            header: 'This is the introduction, read out to the recipient prior to any key press.'
+            body: 'This is the body of the voice call, read out after the key press'
+            type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+            footer: ''
+            other: ''
+            resources:
+              attachment:
+                - attachmentName: TestIcon.png
+                  derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                  attachmentDesc: My photo
+          web:
+            body: This is the content of my web publishing or Rich Push Message
+            type: text/plain
+          social:
+            social:
+              - id: social
+                body: Facebook Content
+                type: text/plain
     callback:
       type: object
       xml:

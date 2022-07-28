@@ -8126,12 +8126,12 @@ components:
       title: Field Mapping
       description: Mapping the data column in your resource file to the contact field value
       x-examples:
-        Field Mapping example:
+        example-1:
           firstName: firstName
-          lastName: lastname
-          workMobilePhone1: '6147222222'
-          workCountry: Australia
-          timezone: Australia/Sydney
+          lastName: lastName
+          workMobilePhone1: workMobilePhone1
+          workCountry: workCountry
+          timezone: timeZone
       properties:
         firstName:
           type: string

@@ -10369,6 +10369,10 @@ components:
                 items:
                   $ref: '#/components/schemas/customList'
                 readOnly: true
+            required:
+              - status
+              - customlabels
+            readOnly: true
           examples:
             custom lists response example:
               value:
@@ -10388,7 +10392,7 @@ components:
                         port: -1
       headers:
         Content-Type:
-          $ref: '#/components/headers/Content-Type'
+          $ref: '#/components/headers/CustomList-Content-Type'
         Content-Length:
           $ref: '#/components/headers/Content-Length'
         Access-Control-Allow-Origin:
@@ -10400,7 +10404,7 @@ components:
         Location:
           $ref: '#/components/headers/Location'
     CustomList:
-      description: Example response
+      description: Example responses
       content:
         application/json:
           schema:
@@ -10429,7 +10433,7 @@ components:
                     port: -1
       headers:
         Content-Type:
-          $ref: '#/components/headers/Content-Type'
+          $ref: '#/components/headers/CustomList-Content-Type'
         Content-Length:
           $ref: '#/components/headers/Content-Length'
         Access-Control-Allow-Origin:

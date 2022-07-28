@@ -92,10 +92,10 @@ rules:
     description: Schema properties must have an "example".
     severity: error
     given:
-      - $..schema[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum && !@.oneOf)]
-      - $..responses[*].content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum && !@.oneOf)]
-      - $..requestBody.content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum && !@.oneOf)]
-      - $..headers[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum && !@.oneOf)]
+      - $..schema[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+      - $..responses[*].content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+      - $..requestBody.content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+      - $..headers[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
     then:
       field: example
       function: defined

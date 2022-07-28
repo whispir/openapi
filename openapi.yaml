@@ -2001,6 +2001,18 @@ paths:
           application/vnd.whispir.responserule-v1+json:
             schema:
               $ref: '#/components/schemas/responseRule'
+            examples:
+              Example:
+                value:
+                  name: Response Rule 1
+                  description: string
+                  responseTemplatePatterns:
+                    name: Yes Rule
+                    pattern: startswith
+                    textPrompt: 'YES'
+                    voicePrompt: '1'
+                    spokenVoicePrompt: to select YES
+                    colour: '#00947d'
         description: ''
         required: true
       responses:
@@ -2164,6 +2176,18 @@ paths:
           application/vnd.whispir.responserule-v1+json:
             schema:
               $ref: '#/components/schemas/responseRule'
+            examples:
+              Example:
+                value:
+                  name: Response Rule 1
+                  description: string
+                  responseTemplatePatterns:
+                    name: Yes Rule
+                    pattern: startswith
+                    textPrompt: 'YES'
+                    voicePrompt: '1'
+                    spokenVoicePrompt: to select YES
+                    colour: '#00947d'
         description: Response Rules object used to update Response Rules
         required: true
       responses:
@@ -2724,60 +2748,35 @@ paths:
             examples:
               Example:
                 value:
+                  id: 5AFEB61102963D7
                   name: My Distribution List
-                  description: string
+                  mri: My_Distribution_List.company_name@list.company.whispir.sg
+                  description: My Distribution list
+                  memberCount: '4'
                   access: Open
                   visibility: Public
-                  contactIds: string
-                  userIds: string
-                  distListIds: string
-                  type: static
-          application/vnd.whispir.distributionlist-v1+xml:
-            schema:
-              $ref: '#/components/schemas/distributionlist'
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
+                  distListIds: '3A21DCC420494A48, 07172DC9AC3E97A75B5A41536C132CA0'
+                  distlistdetails:
+                    - id: 123ADAB420493B83
+                      name: John Smith
+                      type: User
+                      link:
+                        - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                          rel: self
+                          method: GET
+                          host: api.au.whispir.com
+                          port: -1
         description: Distribution list object that needs to be create Distribution list
         required: true
       responses:
         '201':
-          description: Created
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/DistributionList-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-            Location:
-              schema:
-                type: string
-              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/distributionlists/747AB7E716C1802B6476784AEB5C9BB8'
-              description: The URI to fetch details of the resource.
-          content:
-            application/vnd.whispir.distributionlist-v1+json:
-              schema:
-                $ref: '#/components/schemas/distributionlist'
-            application/vnd.whispir.distributionlist-v1+xml:
-              schema:
-                $ref: '#/components/schemas/distributionlist'
-            examples:
-              examples:
-                response:
-                  value:
-                    name: My Distribution List
-                    description: ''
-                    access: Open
-                    visibility: Public
-                    contactIds: ''
-                    userIds: ''
-                    distListIds: ''
-                    locations:
-                      longitude: -122.3493552
-                      latitude: 47.6204232
-                      type: CurrentLocation
+          $ref: '#/components/responses/DistributionList'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2963,10 +2962,33 @@ paths:
                 - $ref: '#/components/schemas/distributionlist'
                 - $ref: '#/components/schemas/dynamicdistributionlist'
               description: Either a static or dynamic distribution list
-            examples: {}
-          application/vnd.whispir.distributionlist-v1+xml:
-            schema:
-              $ref: '#/components/schemas/distributionlist'
+            examples:
+              Example:
+                value:
+                  id: 5AFEB61102963D7
+                  name: My Distribution List
+                  mri: My_Distribution_List.company_name@list.company.whispir.sg
+                  description: My Distribution list
+                  memberCount: '4'
+                  access: Open
+                  visibility: Public
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
+                  distListIds: '3A21DCC420494A48, 07172DC9AC3E97A75B5A41536C132CA0'
+                  distlistdetails:
+                    - id: 123ADAB420493B83
+                      name: John Smith
+                      type: User
+                      link:
+                        - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                          rel: self
+                          method: GET
+                          host: api.au.whispir.com
+                          port: -1
         description: Distribution list object that needs to be update Distribution list
         required: true
       responses:
@@ -3064,6 +3086,17 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
+            examples:
+              example-1:
+                value:
+                  name: Fire Evacuation Block A
+                  description: Fire evacuation notification for A block residents
+                  allowedUsers: SELECTEDUSERS
+                  allowedUserIds: string
+                  message:
+                    to: '61400400400'
+                    subject: Test Message
+                    body: This is the body of my test SMS message
         description: Scenario list object that needs to be create Scenario
         required: true
       responses:
@@ -3132,6 +3165,55 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+          content:
+            application/json:
+              schema:
+                type: object
+                description: List of retrieved scenarios
+                properties:
+                  scenarios:
+                    type: array
+                    description: Scenario object
+                    items:
+                      $ref: '#/components/schemas/scenario'
+              examples:
+                example-1:
+                  value:
+                    scenarios:
+                      - name: Fire Evacuation Block A
+                        description: Fire evacuation notification for A block residents
+                        allowedUsers: SELECTEDUSERS
+                        allowedUserIds: 4DC922649AFE370C
+                        message:
+                          to: '61400400400'
+                          subject: Test Message
+                          body: This is the body of my test SMS message
+                        to: '61400400400'
+                        subject: Fire Evacuation
+                        label: fire-evacuation
+                        email:
+                          body: This is the body of my email message.
+                          footer: This is the footer of my message.
+                          type: text/plain
+                        voice:
+                          header: 'This is the introduction, read out to the recipient prior to any key press.'
+                          body: 'This is the body of the voice call, read out after the key press'
+                          type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                          footer: ''
+                          other: ''
+                          resources:
+                            attachment:
+                              - attachmentName: TestIcon.png
+                                derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                                attachmentDesc: My photo
+                        web:
+                          body: This is the content of my web publishing or Rich Push Message
+                          type: text/plain
+                        social:
+                          social:
+                            - id: social
+                              body: Facebook Content
+                              type: text/plain
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3186,38 +3268,46 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            examples:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scenario'
               examples:
-                response:
+                example:
                   value:
-                    title: Emergency Comms - Fire
-                    description: Scenario to use during fire evacuation
-                    createdTime: 1437383938000
-                    allowedUsers: EVERYONE
+                    name: Fire Evacuation Block A
+                    description: Fire evacuation notification for A block residents
+                    allowedUsers: SELECTEDUSERS
+                    allowedUserIds: string
                     message:
-                      to: '+1000000000'
-                      subject: Scenario Emergency Comms - Fire
-                      body: sms test
-                      label: ''
-                      voice: {}
-                      from: joe.bloggs.company@Contact.Melbourne.whispir.au
+                      to: '61400400400'
+                      subject: Test Message
+                      body: This is the body of my test SMS message
+                    to: string
+                    subject: string
+                    label: string
+                    email:
+                      body: This is the body of my email message.
+                      footer: This is the footer of my message.
+                      type: text/plain
+                    voice:
+                      header: 'This is the introduction, read out to the recipient prior to any key press.'
+                      body: 'This is the body of the voice call, read out after the key press'
+                      type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                      footer: ''
+                      other: ''
+                      resources:
+                        attachment:
+                          - attachmentName: TestIcon.png
+                            derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                            attachmentDesc: My photo
+                    web:
+                      body: This is the content of my web publishing or Rich Push Message
+                      type: text/plain
+                    social:
                       social:
-                        social:
-                          - id: socialType
-                            body: text/plain
-                      createdTime: 1437569311000
-                    link:
-                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
-                        rel: self
-                        method: GET
-                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
-                        rel: updateScenario
-                        method: PUT
-                        type: 'application/vnd.whispir.scenario-v1+json,application/vnd.whispir.scenario-v1+xml'
-                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
-                        rel: deleteScenario
-                        method: DELETE
-                        type: 'application/vnd.whispir.scenario-v1+json,application/vnd.whispir.scenario-v1+xml'
+                        - id: social
+                          body: Facebook Content
+                          type: text/plain
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3266,8 +3356,8 @@ paths:
             type: string
             example: 41048D9483C8CF2A
       responses:
-        '204':
-          description: No Content
+        '202':
+          description: Accepted
           headers:
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
@@ -3275,6 +3365,18 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              description: The URI to fetch details of the scenario.
+            Content-Type:
+              schema:
+                type: string
+              description: Application specific mime-type.
+            Content-Length:
+              schema:
+                type: string
+              description: Length of the response content.
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3317,7 +3419,44 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
-        description: Scenarios object that needs to be update Scenarios
+            examples:
+              example-1:
+                value:
+                  name: Fire Evacuation Block A
+                  description: Fire evacuation notification for A block residents
+                  allowedUsers: SELECTEDUSERS
+                  allowedUserIds: 4DC922649AFE370C
+                  message:
+                    to: '61400400400'
+                    subject: Test Message
+                    body: This is the body of my test SMS message
+                  to: '61400400400'
+                  subject: Fire Evacuation
+                  label: fire-evacuation
+                  email:
+                    body: This is the body of my email message.
+                    footer: This is the footer of my message.
+                    type: text/plain
+                  voice:
+                    header: 'This is the introduction, read out to the recipient prior to any key press.'
+                    body: 'This is the body of the voice call, read out after the key press'
+                    type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                    footer: ''
+                    other: ''
+                    resources:
+                      attachment:
+                        - attachmentName: TestIcon.png
+                          derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                          attachmentDesc: My photo
+                  web:
+                    body: This is the content of my web publishing or Rich Push Message
+                    type: text/plain
+                  social:
+                    social:
+                      - id: social
+                        body: Facebook Content
+                        type: text/plain
+        description: Modifying a scenario obeys the same requirements seen at the moment of their creation
         required: true
       responses:
         '204':
@@ -6052,9 +6191,20 @@ components:
       x-tags:
         - Messages
       description: |-
+        ### Push Messaging
+
         Whispir allows you to send push notifications to any iOS and Android-based apps
 
         Setting up the platform to handle push notifications involves some one-time steps and some periodically repeated steps (updating push tokens). See Apps to get a clear understanding of the related steps and endpoints. Whispir doesn't support sending push notifications to device tokens directly. Read more in Contact devices about how to register the device tokens under contacts.
+
+        ### Message Aliasing
+
+        The Whispir UI allows you to configure a sender alias from which messages are sent. Instructions for alias creation can be found in [Configure message aliases](https://au.whispir.com/onlinehelp/Content/Topics-whispir-ua/administration/alias-manager/config-message-aliases.htm) within Whispir documentation.
+
+        The message alias can be attached to a message to template, to configure the the sender for the following channels:
+        * SMS - a custom mobile number, e.g. +61 123 456 789
+        * Email - a custom email address, e.g. marketing@example.com
+        * Voice - a custom mobile number, e.g. +61 123 456 789
       x-examples:
         Push Message:
           pushOptions:
@@ -6065,6 +6215,9 @@ components:
         Notifications:
           pushOptions:
             notifications: enabled
+        Message Alias:
+          aliasOption:
+            aliasName: Marketing
       properties:
         pushOptions:
           type: object
@@ -6084,6 +6237,14 @@ components:
               type: string
               description: The identifier for the registered application.
               example: appId
+        aliasOption:
+          type: object
+          description: The object defining options for message sender aliasing.
+          properties:
+            aliasName:
+              type: string
+              description: The name of the alias configured to modify the message sender.
+              example: Marketing
     resource:
       type: object
       xml:
@@ -6295,46 +6456,100 @@ components:
         - body
     responseTemplatePattern:
       type: object
-      properties:
-        name:
-          type: string
-          example: Yes Rule
-        pattern:
-          type: string
-          example: startswith
-        textPrompt:
-          type: string
-          example: 'YES'
-        voicePrompt:
-          type: string
-          example: '1'
-        spokenVoicePrompt:
-          type: string
-          example: to select YES
-        colour:
-          type: string
-          example: '#00947d'
       xml:
         name: responseTemplatePattern
       x-tags:
         - Response Rules
       title: Response Template Pattern
-    responseRule:
-      type: object
+      description: 'This object contains the responseTemplatePattern array, which contains each of the response rule elements. More details on the configuration of this object can be found below'
       properties:
         name:
           type: string
-          example: Response Rule 1
-        description:
+          example: Yes Rule
+          description: The name of the response category. The same key is called `matchedCategory` when placed inside the `customParameters` of Callbacks payload
+        pattern:
           type: string
-        responseTemplatePatterns:
-          $ref: '#/components/schemas/responseTemplatePattern'
+          example: startswith
+          description: |-
+            Specifies the mechanism for matching the textPrompt
+
+            The following options are available:
+            - startsWith
+            - contains
+            - exactmatch
+
+            NOTE: none of them is case sensitive, so in the example above replying "YES" or "yes" or "Yes" makes no difference
+        textPrompt:
+          type: string
+          example: 'YES'
+          description: 'Specifies the textual string that should be matched using the pattern (specified above) within the email, SMS or web response'
+        voicePrompt:
+          type: string
+          example: '1'
+          description: |-
+            The character (2–9, * or #) that the recipient of the voice call should enter to select a response option
+
+            **IMPORTANT**: please do NOT use the key "1" because this is already reserved to repeat the message
+        spokenVoicePrompt:
+          type: string
+          example: to select YES
+          description: The text-to-speech content that is dynamically read out when describing to the user what a particular response option is
+        colour:
+          type: string
+          example: '#00947d'
+          description: The hexadecimal colour code that is used in the Message Response Report to differentiate the groups of responses
+      required:
+        - name
+        - pattern
+        - textPrompt
+        - voicePrompt
+        - spokenVoicePrompt
+        - colour
+      x-examples:
+        Example:
+          name: Yes Rule
+          pattern: startswith
+          textPrompt: 'YES'
+          voicePrompt: '1'
+          spokenVoicePrompt: to select YES
+          colour: '#00947d'
+    responseRule:
+      type: object
       xml:
         name: responserule
         prefix: ns3
       x-tags:
         - Response Rules
       title: Response Rule
+      x-examples:
+        Example:
+          name: Response Rule 1
+          description: My Response Rule
+          responseTemplatePatterns:
+            name: Yes Rule
+            pattern: startswith
+            textPrompt: 'YES'
+            voicePrompt: '1'
+            spokenVoicePrompt: to select YES
+            colour: '#00947d'
+      description: |-
+        Response Rules are useful when your Templates require the end-users to select among known responses [for example, Yes/No, Accept/Decline or ranking something from 1 to 5]
+
+        Using Response Rules in combination with Templates allows you to automatically categorise any response to these messages into different response groups for reporting purposes
+      properties:
+        name:
+          type: string
+          example: Response Rule 1
+          description: Specifies the name of the response rule
+        description:
+          type: string
+          description: Specifies the description of the response rule for others to understand its purpose
+          example: My Response Rule
+        responseTemplatePatterns:
+          $ref: '#/components/schemas/responseTemplatePattern'
+      required:
+        - name
+        - responseTemplatePatterns
     contact:
       type: object
       xml:
@@ -6749,7 +6964,7 @@ components:
         description:
           type: string
           description: Specifies a description for other users to see what this distribution list should be used for.
-          example: My list
+          example: My Distribution list
         memberCount:
           type: string
           example: '4'
@@ -6776,17 +6991,17 @@ components:
         contactIds:
           type: string
           description: Comma separated list of Contacts to be associated to this DL. This information can be provided at the time of the DL creation or updated later via a PUT request
-          example: '123'
+          example: 3A21DCC420494A48
           writeOnly: true
         userIds:
           type: string
           description: Comma separated list of userIds who can manage this DL. This information can be provided at the time of the DL creation or also later updated via a PUT request
-          example: '123'
+          example: 3A21DCC420494A48
           writeOnly: true
         distListIds:
           type: string
           description: Comma separated list of Distribution List IDs that can be nested under this DL. This information can be provided at the time of the DL creation or later updated via a PUT request
-          example: '123'
+          example: '3A21DCC420494A48, 07172DC9AC3E97A75B5A41536C132CA0'
         type:
           type: string
           description: |-
@@ -6923,10 +7138,13 @@ components:
         - rules
     scenario:
       type: object
-      required:
-        - name
-        - description
-        - message
+      xml:
+        name: scenario
+        prefix: ns2
+      x-tags:
+        - Scenarios
+      title: Scenario
+      description: 'Scenarios allows you to simplify the message delivery process through automated, one-click communications.'
       properties:
         name:
           type: string
@@ -6939,17 +7157,76 @@ components:
         allowedUsers:
           type: string
           description: 'Specifies the usage permission - 1)EVERYONE 2)SELECTEDUSERS When SELECTEDUSERS is provided, then `allowedUserIds` shall contain the userID of the allowed users.'
+          enum:
+            - EVERYONE
+            - SELECTEDUSERS
+          example: SELECTEDUSERS
         allowedUserIds:
           type: string
           description: Specifies the comma separated list of users who can run this scenario.Only contains value when the allowedUsers is set to `SELECTEDUSERS`
+          example: 4DC922649AFE370C
         message:
           $ref: '#/components/schemas/message'
-      xml:
-        name: scenario
-        prefix: ns2
-      x-tags:
-        - Scenarios
-      title: Scenario
+        to:
+          type: string
+          description: Specifies the phone number or MRI or distribution list to which the message has to be sent
+          example: '61400400400'
+        subject:
+          type: string
+          description: Specifies the subject of the message
+          example: Fire Evacuation
+        label:
+          type: string
+          description: Specifies the label for the message (to view during reporting)
+          example: fire-evacuation
+        email:
+          $ref: '#/components/schemas/email'
+        voice:
+          $ref: '#/components/schemas/voice'
+        web:
+          $ref: '#/components/schemas/web'
+        social:
+          $ref: '#/components/schemas/social'
+      required:
+        - name
+        - description
+        - message
+      x-examples:
+        example-1:
+          name: Fire Evacuation Block A
+          description: Fire evacuation notification for A block residents
+          allowedUsers: EVERYONE
+          allowedUserIds: 4DC922649AFE370C
+          message:
+            to: '61400400400'
+            subject: Test Message
+            body: This is the body of my test SMS message
+          to: '61400400400'
+          subject: Fire Evacuation
+          label: fire-evacuation
+          email:
+            body: This is the body of my email message.
+            footer: This is the footer of my message.
+            type: text/plain
+          voice:
+            header: 'This is the introduction, read out to the recipient prior to any key press.'
+            body: 'This is the body of the voice call, read out after the key press'
+            type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+            footer: ''
+            other: ''
+            resources:
+              attachment:
+                - attachmentName: TestIcon.png
+                  derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                  attachmentDesc: My photo
+          web:
+            body: This is the content of my web publishing or Rich Push Message
+            type: text/plain
+          social:
+            social:
+              - id: social
+                body: Facebook Content
+                type: text/plain
     callback:
       type: object
       xml:
@@ -10029,7 +10306,7 @@ components:
         Content-Type:
           $ref: '#/components/headers/Workspace-Content-Type'
         Content-Length:
-          $ref: '#/components/headers/Content-Length'
+          $ref: '#/components/headers/DistributionList-Content-Type'
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
         Cache-Control:
@@ -10101,7 +10378,7 @@ components:
         Content-Type:
           $ref: '#/components/headers/Workspace-Content-Type'
         Content-Length:
-          $ref: '#/components/headers/Content-Length'
+          $ref: '#/components/headers/DistributionList-Content-Type'
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
         Cache-Control:

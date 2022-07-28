@@ -8709,10 +8709,12 @@ components:
               name:
                 type: string
                 description: Specifies the text that is show to the user
+                example: Internal Systems
                 readOnly: true
               value:
                 type: string
                 description: Specifies the value that is passed internally
+                example: Internal Systems
                 readOnly: true
             readOnly: true
           readOnly: true
@@ -10357,6 +10359,7 @@ components:
         application/json:
           schema:
             type: object
+            description: List of custom lists
             properties:
               status:
                 type: string

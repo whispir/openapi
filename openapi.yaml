@@ -5497,10 +5497,22 @@ paths:
           application/vnd.whispir.importcontact-v1+json:
             schema:
               $ref: '#/components/schemas/import'
+            examples:
+              example-1:
+                value:
+                  resourceId: 4FBBC384BCE3DAABFE3
+                  importType: contact
+                  importOptions:
+                    firstName: firstName
+                    lastName: lastName
+                    workMobilePhone1: workMobilePhone1
+                    workCountry: workCountry
+                    timezone: timeZone
+                  importMode: replace
         description: import object that needs to be create import
       responses:
-        '201':
-          description: Created
+        '202':
+          description: Accepted
           headers:
             Content-Type:
               $ref: '#/components/headers/Import-Content-Type'
@@ -8062,11 +8074,13 @@ components:
       x-examples: {}
     import:
       type: object
-      required:
-        - resourceId
-        - importType
-        - importOptions
-        - importMode
+      xml:
+        name: import
+        prefix: ns2
+      x-tags:
+        - Imports
+      title: Import
+      description: Import model object
       properties:
         resourceId:
           type: string
@@ -8074,7 +8088,10 @@ components:
           example: 4FBBC384BCE3DAABFE3
         importType:
           type: string
-          description: This defines the resource that will be created through this import process.
+          description: |-
+            This defines the resource that will be created through this import process. 
+
+            *'contact'* is the only supported *importType* at this stage.
           example: contact
         importOptions:
           $ref: '#/components/schemas/fieldMapping'
@@ -8082,20 +8099,39 @@ components:
           type: string
           description: The type of contact import that is occurring.
           example: replace
-      xml:
-        name: import
-        prefix: ns2
-      x-tags:
-        - Imports
-      title: Import
+          enum:
+            - replace
+            - duplicate
+            - ignore
+      required:
+        - resourceId
+        - importType
+        - importOptions
+        - importMode
+      x-examples:
+        Import resource example:
+          resourceId: 4FBBC384BCE3DAABFE3
+          importType: contact
+          importOptions:
+            firstName: firstName
+            lastName: lastName
+            workMobilePhone1: workMobilePhone1
+            workCountry: workCountry
+            timezone: timeZone
+          importMode: replace
     fieldMapping:
       type: object
-      required:
-        - firstName
-        - lastName
-        - workMobilePhone1
-        - workCountry
-        - timezone
+      xml:
+        name: fieldMapping
+      title: Field Mapping
+      description: Mapping the data column in your resource file to the contact field value
+      x-examples:
+        example-1:
+          firstName: firstName
+          lastName: lastName
+          workMobilePhone1: workMobilePhone1
+          workCountry: workCountry
+          timezone: timeZone
       properties:
         firstName:
           type: string
@@ -8104,11 +8140,11 @@ components:
         lastName:
           type: string
           description: Last Name of the Contact. Value of this field is used to map the field within the resource.
-          example: lastname
+          example: lastName
         workMobilePhone1:
           type: string
           description: The mobile phone number of the Contact. Value of this field is used to map the field within the newly created resource.
-          example: Mobile
+          example: workMobilePhone1
         workCountry:
           type: string
           description: The country field of the contact. The value of this field is used to map to the field within the newly created contact.
@@ -8116,10 +8152,13 @@ components:
         timezone:
           type: string
           description: The timezone field of the contact. The value of this field is used to map to the timezone field within the newly created contact.
-          example: timezone
-      xml:
-        name: fieldMapping
-      title: Field Mapping
+          example: timeZone
+      required:
+        - firstName
+        - lastName
+        - workMobilePhone1
+        - workCountry
+        - timezone
     attachment:
       type: object
       description: |-
@@ -8951,13 +8990,13 @@ components:
     Import-Content-Type:
       name: Content-Type
       in: header
-      required: true
       schema:
         type: string
         enum:
           - application/vnd.whispir.importcontact-v1+json
           - application/vnd.whispir.importcontact-v1+xml
       description: Application specific mime-type.
+      required: true
     Import-Accept:
       name: Accept
       in: header

@@ -8114,10 +8114,10 @@ components:
           importType: contact
           importOptions:
             firstName: firstName
-            lastName: lastname
-            workMobilePhone1: '6147222222'
-            workCountry: Australia
-            timezone: Australia/Sydney
+            lastName: lastName
+            workMobilePhone1: workMobilePhone1
+            workCountry: workCountry
+            timezone: timeZone
           importMode: replace
     fieldMapping:
       type: object

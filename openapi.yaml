@@ -4662,8 +4662,6 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
-        '':
-          $ref: '#/components/responses/CustomLists'
     parameters: []
   '/customlists/{customlistId}':
     get:
@@ -10375,7 +10373,6 @@ components:
             required:
               - status
               - customlabels
-            readOnly: true
           examples:
             custom lists response example:
               value:

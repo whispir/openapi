@@ -4564,7 +4564,7 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-  '/workspaces/{workspaceId}/customlists':
+  /customlists:
     get:
       tags:
         - Custom Lists
@@ -4641,76 +4641,7 @@ paths:
               - RSS
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/CustomList-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    status: 1 to 5 of 5
-                    customlabels:
-                      - id: 4E2101D0E5D16229
-                        name: Category
-                        type: INCIDENT
-                        createdDate: '02/08/11 14:20'
-                        sortType: As Displayed
-                        linked: disabled
-                        link:
-                          - uri: 'https://api.au.whispir.com/customlists/40E5D16229E2101D'
-                            rel: self
-                            method: GET
-                      - id: 0CA7B9E2B21A3B1A
-                        name: Day of Month
-                        type: MESSAGE
-                        createdDate: '13/10/14 16:30'
-                        sortType: As Displayed
-                        linked: disabled
-                        link:
-                          - uri: 'https://api.au.whispir.com/customlists/0CA7B9E2B21A3B1A'
-                            rel: self
-                            method: GET
-                      - id: 87F23964C25ECF22
-                        name: Day of Week
-                        type: MESSAGE
-                        createdDate: '07/01/14 09:51'
-                        sortType: As Displayed
-                        linked: disabled
-                        link:
-                          - uri: 'https://api.au.whispir.com/customlists/87F23964C25ECF22'
-                            rel: self
-                            method: GET
-                      - id: F0771B97F1EF770B
-                        name: External Vendor
-                        type: INCIDENT
-                        createdDate: '02/08/11 14:20'
-                        sortType: As Displayed
-                        linked: disabled
-                        link:
-                          - uri: 'https://api.au.whispir.com/customlists/F0771B97F1EF770B'
-                            rel: self
-                            method: GET
-                      - id: 768E4ACA5DA7500C
-                        name: Finish Time
-                        type: MESSAGE
-                        createdDate: '01/08/11 12:38'
-                        sortType: As Displayed
-                        linked: disabled
-                        link:
-                          - uri: 'https://api.au.whispir.com/customlists/768E4ACA5DA7500C'
-                            rel: self
-                            method: GET
-                    link: []
+          $ref: '#/components/responses/CustomLists'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4731,9 +4662,8 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
-    parameters:
-      - $ref: '#/components/parameters/workspaceId'
-  '/workspaces/{workspaceId}/customlists/{customlistId}':
+    parameters: []
+  '/customlists/{customlistId}':
     get:
       tags:
         - Custom Lists
@@ -4789,40 +4719,7 @@ paths:
             example: 43E9046401B18269
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/CustomList-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    id: 4E2101D0E5D16229
-                    name: Category
-                    type: INCIDENT
-                    createdDate: '02/08/11 14:20'
-                    sortType: As Displayed
-                    linked: disabled
-                    customlabellists:
-                      - name: Internal Systems
-                        value: Internal Systems
-                      - name: External Systems
-                        value: External Systems
-                      - name: Infrastructure
-                        value: Infrastructure
-                    link:
-                      - uri: 'https://api.au.whispir.com/customlists/40E5D16229E2101D'
-                        rel: self
-                        method: GET
+          $ref: '#/components/responses/CustomList'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4844,7 +4741,12 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
-      - $ref: '#/components/parameters/workspaceId'
+      - schema:
+          type: string
+        name: customlistId
+        in: path
+        required: true
+        description: Specifies the ID of the custom list resource
   /users:
     post:
       tags:
@@ -8763,6 +8665,107 @@ components:
               description: The status message that was returned from the callback service
         link:
           $ref: '#/components/schemas/link'
+    customList:
+      type: object
+      x-examples:
+        Custom List example:
+          id: 4B4625BAEB7E4D58
+          name: Day of Week
+          type: INCIDENT
+          createdDate: '09/06/15 10:18'
+          sortType: As Displayed
+          linked: disabled
+          customlabellists:
+            - name: Internal Systems
+              value: Internal Systems
+            - name: External Systems
+              value: External Systems
+            - name: Infrastructure
+              value: Infrastructure
+          link:
+            - uri: 'https://api.au.whispir.com/customlists/4B4625BAEB7E4D58'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+      description: 'A custom list is a predefined list of options that can be inserted into a message or template. A list might be made up of capital city names, days of the week, incident types, business phone numbers and so on. Custom lists make it easy to add information quickly and consistently to your message content.'
+      properties:
+        id:
+          type: string
+          example: 4B4625BAEB7E4D58
+          description: Specifies the unique ID of the list
+          readOnly: true
+        name:
+          type: string
+          example: Day of Week
+          description: Specifies the name of the list
+          readOnly: true
+        type:
+          type: string
+          enum:
+            - INCIDENT
+            - MESSAGE
+            - CONTACT
+            - RSS
+          example: MESSAGE
+          description: Specifies the type
+          readOnly: true
+        createdDate:
+          type: string
+          example: '09/06/15 10:18'
+          description: Specifies the creation date of the list
+          readOnly: true
+        sortType:
+          type: string
+          example: As Displayed
+          enum:
+            - As Displayed
+            - Ascending
+            - Descending
+          description: Specifies the sorting order
+          readOnly: true
+        linked:
+          type: string
+          enum:
+            - disabled
+            - enabled
+          example: enabled
+          description: Specifies the linked status. When enabled the value selected for one channel is automatically applied on the other channels.
+          readOnly: true
+        customlabellists:
+          type: array
+          description: Contains the individual items that make up this list
+          items:
+            type: object
+            description: |-
+              Contains the individual items that make up this list
+
+              The ‘name’ is the text that is shown to the user
+              The ‘value’ is the internally passed in value
+            properties:
+              name:
+                type: string
+                description: Specifies the text that is show to the user
+                example: Internal Systems
+                readOnly: true
+              value:
+                type: string
+                description: Specifies the value that is passed internally
+                example: Internal Systems
+                readOnly: true
+            readOnly: true
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - id
+        - name
+        - type
+        - createdDate
+        - sortType
+        - linked
+        - link
+      readOnly: true
   parameters:
     X-Api-Key:
       name: X-Api-Key
@@ -10379,6 +10382,99 @@ components:
           $ref: '#/components/headers/Workspace-Content-Type'
         Content-Length:
           $ref: '#/components/headers/DistributionList-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Location:
+          $ref: '#/components/headers/Location'
+    CustomLists:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            description: List of custom lists
+            properties:
+              status:
+                type: string
+                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+                example: 1 to 1 of 1
+                readOnly: true
+              customlabels:
+                type: array
+                description: A list of custom lists
+                items:
+                  $ref: '#/components/schemas/customList'
+                readOnly: true
+            required:
+              - status
+              - customlabels
+          examples:
+            custom lists response example:
+              value:
+                status: string
+                customlabels:
+                  - id: 4B4625BAEB7E4D58
+                    name: Day of Week
+                    type: MESSAGE
+                    createdDate: '09/06/15 10:18'
+                    sortType: As Displayed
+                    linked: enabled
+                    link:
+                      - uri: 'https://api.au.whispir.com/customlists/4B4625BAEB7E4D58'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/CustomList-Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Location:
+          $ref: '#/components/headers/Location'
+    CustomList:
+      description: Example responses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/customList'
+          examples:
+            custom list response example:
+              value:
+                id: 4B4625BAEB7E4D58
+                name: Day of Week
+                type: MESSAGE
+                createdDate: '09/06/15 10:18'
+                sortType: As Displayed
+                linked: enabled
+                customlabellists:
+                  - name: Internal Systems
+                    value: Internal Systems
+                  - name: External Systems
+                    value: External Systems
+                  - name: Infrastructure
+                    value: Infrastructure
+                link:
+                  - uri: 'https://api.au.whispir.com/customlists/4B4625BAEB7E4D58'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/CustomList-Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
         Cache-Control:

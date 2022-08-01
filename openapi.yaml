@@ -4247,8 +4247,21 @@ paths:
       tags:
         - Activities
       summary: Create an activity
-      description: |
-        Note: There is no limit to the amount of activities that can be created.
+      description: |-
+        Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace. Each activity log entry contains information about the workspace, the module (message, email, IVR ...), the user who performed the activity, time stamps, description of the activity, its status (success, fail) and so on.
+
+        All of these help meet auditing and standards compliance and also change tracking. For example:
+        * As a Whispir API user (Voice module), you want to be able to update the Whispir activity log as a call progresses through the IVR to ensure that the auditing shows exactly what information a caller heard.
+
+        * As a Whispir API user (SMS module), you want to able to retrieve information from the activity log about all the messages sent by a specific user.
+        As activity information is sensitive, stricter permission rules apply to the data served by these endpoints.
+
+        * If the user is a *Company Administrator* or *Company Leader*, retrieving the activity will produce a **_200 OK_** with the valid response
+        * If the user is a *Company Member* or *Company Guest*, they will receive instead a **_403 Forbidden_** response advising that they don’t have permission to access this resource
+        * A *Company Administrator* or *Company Leader* can also create content within the activity stream. They do this through a POST of data to either the _/activities_ endpoint or to the specific activity ID
+        * They must specify a valid _‘Action’_, _‘Description’_ and _‘Status’_ within their request
+        * Posting to the _/activities_ endpoint will create a new activity
+        * Posting to the _/activities/{ID}_ endpoint will append the content to the detail of the specified activity
       operationId: postActivities
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -7566,6 +7579,7 @@ components:
       x-tags:
         - Activities
       title: Activity
+      description: ''
     user:
       type: object
       xml:

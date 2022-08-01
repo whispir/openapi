@@ -5181,16 +5181,76 @@ paths:
       tags:
         - Events
       summary: Create an event
-      description: |
-        As Whispir works with each organisation to build out the requirements of the events module, the required fields are minimal. The bulk of the event information is from fields that are generic, and only applicable to the customer that is using the module.
+      description: |-
+        The event module captures information specific to an `Event` and it can be used as part of messaging within the duration specified. In addition, it is also customizable to accept `Events` and relevant information from external systems.
 
-        Events have sub sections under them called as ‘actions’ (maximum of 10). When an Event occurs/is triggered, the related actions are to be performed. Each action has an owner, a set time, and details associated with it. The owner or responsible person for the event could be a /contacts in the system. This ensures that proper communication is sent to the individual based on their preferred channel (message, email, voice) automatically without having to key in the phone, email, and other communication information again.
+        The bulk of the `Event` metadata is from fields that are generic, and only applicable to the customer that is using the module.
 
-        The Events module captures information specific to an event so the information can be used in as part of messaging for the duration of the event. The Events module can be customized to accept events and associated information from external systems or to capture more complex information around an event.
+        `Events` have sub sections under them called as ‘actions’ (maximum of 10). When an `Event` occurs/is triggered, the related actions are to be performed. Each action has an owner, a set time, and details associated with it. 
 
-        Events are created within a workspace. As they are custom built the information to be captured will depend on your organisations specific requirements. Generally at a minimum an event will have a label, start date, and a status.
+        <!-- theme: warning -->
+        > #### Things to note
+        > Fields described below on the `Event` are defined through `name/value` pairs fashion as part of `eventFieldList`
+
+        Each action consists of the following:
+
+        ```schema json_schema
+        {
+          "title": "Action",
+          "type": "object",
+          "properties": {
+            "actionDate": {
+              "type": "string"
+              "description: "The start date of this action in dd/mm/yyyy HH:MI:SS 24 hour format",
+              "example": "11/09/2019 17:41:00"
+            },
+            "actionOwner": {
+              "type": "string",
+              "description": "The individual (contact) responsible for this action’s execution",
+              "example": "John Wick"
+            },
+            "actionDetails": {
+              "type": "string",
+              "description": "The detail description of this action",
+              "example":"investigation to take place asap."
+            }
+          },
+        }
+        ```
+        ``` example
+        [
+          {
+            "name": "actionDate1",
+            "value": "11/09/2019 17:41:00"
+          },
+          {
+            "name": "actionOwner1",
+            "value": "John Wick"
+          },
+          {  
+            "name": "actionDetails1",
+            "value": "investigation to take place asap."
+          }
+        ]
+        ```
+        The owner or responsible person for the event could be a `/contacts` in the system. This ensures that proper communication is sent to the individual based on their preferred channel (`message`, `email`, `voice`) automatically without having to key in the phone, email, and other communication information again.
 
         Most importantly, to create an event, one must have the create access for Incident row in the Roles & Permission section of the account settings.
+
+        <h2>Sending messages using event data</h2>
+
+        Once you’ve finished creating your event data in the Whispir platform, the next logical step is to deliver a notification about the event. This action can be performed using the existing `/messages` endpoint, with the `eventId` as an attribute of the message.
+
+        * Including this `eventId` links the message to the event, and allow you to use any attribute of the event within your message payload.
+        * Any event fields populated on the event are automatically populated within the message.
+        * Any attributes that are supplied within the message take priority over any attributes that are from the event.
+        * The user should not be required to enter any `attributes` as these will be retrieved from the linked event.
+        * The event fields automatically populate the attributes in the message body (based on the relationships set in the <b> Admin > Settings > Attributes > Message Event Attribute Map</b>).
+
+        <!-- theme: warning -->
+        > #### Things to note
+        > * If the `Event` doesn't contain an event field, and there is no relevant attribute field supplied > in the message payload, the `@@` tag will not be resolved.
+        > * If you don't supply an attribute in the message payload, and this has also not been supplied from the event, the field simply will not be resolved within the message.
       operationId: postEvents
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'

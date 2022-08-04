@@ -3643,10 +3643,10 @@ paths:
                         url: 'https://e05237bf.ngrok.io/'
                         retriesEnabled: false
                         link:
-                          - uri: 'https://stage-ap-southeast-2.whispirdev.com/callbacks/D7D2295E2A08388C'
+                          - uri: 'https://api.au.whispir.com/callbacks/D7D2295E2A08388C'
                             rel: self
                             method: GET
-                            host: stage-ap-southeast-2.whispirdev.com
+                            host: api.au.whispir.com
                             port: -1
                     link: []
                 properties:
@@ -4272,8 +4272,17 @@ paths:
           application/vnd.whispir.activity-v1+json:
             schema:
               $ref: '#/components/schemas/activity'
-            examples: {}
-        description: activity list object that needs to be create activity
+            examples:
+              example-1:
+                value:
+                  action: Logout
+                  module: System
+                  workspace: Company
+                  user: string
+                  status: Successful
+                  description: Logged out
+                  time: '04/08/22 11:19'
+        description: ''
         required: true
       responses:
         '201':
@@ -4294,6 +4303,26 @@ paths:
                 type: string
               example: 'https://api.au.whispir.com/activities/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/activity'
+              examples:
+                example-1:
+                  value:
+                    user: user
+                    time: '04/08/22 11:24'
+                    action: Logout
+                    description: Logged out
+                    status: Successful
+                    module: System
+                    workspaceName: Company
+                    link:
+                      - uri: 'https://api.au.whispir.com/activities/2652A4034A27E271'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4505,6 +4534,44 @@ paths:
                             rel: self
                             method: GET
                     link: []
+              schema:
+                description: Example
+                type: object
+                x-examples:
+                  example-1:
+                    activities:
+                      - user: cadmin
+                        time: '04/08/22 11:19'
+                        action: Logout
+                        description: Logged out
+                        status: Successful
+                        module: System
+                        workspaceName: Company
+                        fullname: IUX Admin
+                        link:
+                          - uri: 'https://api.au.whispir.com/activities/726E75D22E359A8C'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                          - uri: 'https://api.au.whispir.com/activities/726E75D22E359A8C'
+                            rel: addActivityDetail
+                            method: POST
+                            type: 'application/vnd.whispir.activity-v1+json,application/vnd.whispir.activity-v1+xml'
+                            host: api.au.whispir.com
+                            port: -1
+                    link: []
+                properties:
+                  activities:
+                    description: List of activities
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/activity'
+                  link:
+                    description: Link to activity
+                    type: array
+                    items:
+                      type: object
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -7544,42 +7611,69 @@ components:
               - PersonalEmailAddress1
     activity:
       type: object
-      required:
-        - module
-        - action
-        - status
+      x-examples:
+        example-1:
+          user: user
+          time: '03/08/22 23:04'
+          action: Logout
+          description: Logged out
+          status: Successful
+          module: System
+          workspaceName: Company
+          fullname: Whispir Admin
+          link:
+            - uri: 'https://api.au.whispir.com/activities/0A398CFDB9DAB7FC'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+            - uri: 'https://api.au.whispir.com/activities/0A398CFDB9DAB7FC'
+              rel: addActivityDetail
+              method: POST
+              type: 'application/vnd.whispir.activity-v1+json,application/vnd.whispir.activity-v1+xml'
+              host: api.au.whispir.com
+              port: -1
       properties:
-        action:
-          type: string
-          description: Specifies the action performed during this activity. The following are the list of actions that can be performed <ul><li>Create</li><li>Update</li><li>Move</li><li>Copy</li><li>Draft</li><li>Send</li><li>Modified </li><li>Delete</li><li>Contact Import File</li><li>Login </li><li>Approve</li><li>Reject</li><li>Dispatch</li><li>Register</li><li>Accept</li><li>Closed</li><li>Map</li><li>Un-map</li></ul>
-          example: Send
-        module:
-          type: string
-          description: Specifies the module to which this activity belongs to. The following are the list of actions that can be performed<ul><li>System</li><li>Message</li><li>Scheduled Message</li><li>User</li><li>Contact</li><li>DistributionList</li><li>Template</li><li>Workspace</li><li>Event</li><li>WebService</li><li>Settings</li> <li>Conversation</li><li>Gateway</li><li>Workspace Mapping</li><li>Folders</li><li>Team</li><li>RSS</li><li>API Mapping </li><li>Asset</li><li>Instruction</li></ul>
-        workspace:
-          type: string
-          description: The workspace in which this activity is performed. This will usually be the API user’s default workspace
         user:
           type: string
-          description: The username of the person who performed this activity. This will usually be the API user invoking the creation.
-        status:
-          type: string
-          description: Specifies the status of the activity. The status can be one of 1)Successful 2)Failed 3)Rejected
-          example: Successful
-        description:
-          type: string
-          description: The description of the activity. This is a free text that details about the activity.
-          example: Message sent via the Whispir's Java library
+          description: ' The username of the person who performed this activity. This will usually be the API user invoking the creation.'
         time:
           type: string
           description: 'The date and time of the activity in the format:dd/mm/yy hh:mm. This will be defaulted to the time at which this activity is created.'
-      xml:
-        name: activity
-        prefix: ns3
-      x-tags:
-        - Activities
-      title: Activity
-      description: ''
+        action:
+          type: string
+          description: Specifies the action performed during this activity.
+        description:
+          type: string
+          description: The description of the activity. This is a free text that details about the activity.
+        status:
+          type: string
+          description: Specifies the status of the activity.
+        module:
+          type: string
+          description: Specifies the module to which this activity belongs to.
+        workspaceName:
+          type: string
+          description: The workspace in which this activity is performed. This will usually be the API user’s default workspace
+        fullname:
+          type: string
+        link:
+          type: array
+          items:
+            type: object
+            properties:
+              uri:
+                type: string
+              rel:
+                type: string
+              method:
+                type: string
+              host:
+                type: string
+              port:
+                type: integer
+              type:
+                type: string
     user:
       type: object
       xml:

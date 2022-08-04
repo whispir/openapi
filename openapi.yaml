@@ -5525,6 +5525,12 @@ paths:
               $ref: '#/components/headers/Event-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Expires:
+              $ref: '#/components/headers/Expires'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -10821,8 +10827,19 @@ components:
                         host: api.au.whispir.com
                         port: -1
                 status: 1 to 2 of 2
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
     Event:
-      description: Example response
+      description: Example Event response
       content:
         application/json:
           schema:
@@ -10872,7 +10889,20 @@ components:
                     host: 'https://api.au.whispir.com'
                     port: -1
                     rel: retrieveEventMessages
-                    method: GET              
+                    method: GET
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Location:
+          $ref: '#/components/headers/Location'
   headers:
     Location:
       description: The URI to fetch details of the resource.

@@ -5508,6 +5508,8 @@ paths:
         in: path
         required: true
     put:
+      tags:
+        - Events
       summary: Update an event
       operationId: putEventById
       description: Update an event object
@@ -8239,6 +8241,7 @@ components:
           type: string
           description: Id of the event
           readOnly: true
+          example: 888E0A343770A7D1
         eventLabel:
           type: string
           description: Specifies the name of the label used for the messages sent under this event. This needs to match with the name of the event templates available
@@ -8273,9 +8276,11 @@ components:
                     name:
                       type: string
                       description: Specifies the name of the event field
+                      example: actionOwner1
                     value:
                       type: string
                       description: Specifies the value of a given field
+                      example: John Wick
         link:
           $ref: '#/components/schemas/link'
       required:
@@ -10796,6 +10801,7 @@ components:
         application/json:
           schema:
             type: object
+            description: List of events
             properties:
               status:
                 type: string

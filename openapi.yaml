@@ -4476,7 +4476,7 @@ paths:
           content:
             examples:
               examples:
-                response:
+                example-1:
                   value:
                     activities:
                       - user: james.cameron
@@ -4490,6 +4490,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/9B26BCE6A7C1997D3E3C04D4C0B62165'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: james.cameron
                         time: '17/08/15 12:56'
                         action: Create
@@ -4500,6 +4502,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/CF8F388F18FDDA7CA40F42E888EC8E67'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: james.cameron
                         time: '17/08/15 12:26'
                         action: Draft
@@ -4511,6 +4515,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/19F603F21E8A7D536D577A6B4DBCFE3F'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: markm
                         time: '22/12/14 11:37'
                         action: Logout
@@ -4522,6 +4528,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/0DEB48AB3D3B6069D7DA1A808F5A5DE4'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: markm
                         time: '22/12/14 11:20'
                         action: Login
@@ -4533,6 +4541,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/0CEC8009230B3B92F5B548A22B55C407'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                     link: []
               schema:
                 description: Example
@@ -4568,10 +4578,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/activity'
                   link:
-                    description: Link to activity
-                    type: array
-                    items:
-                      type: object
+                    $ref: '#/components/schemas/link'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -7610,6 +7617,7 @@ components:
               - PersonalMobilePhone1
               - PersonalEmailAddress1
     activity:
+      description: 'Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace.'
       type: object
       x-examples:
         example-1:
@@ -7637,43 +7645,78 @@ components:
         user:
           type: string
           description: ' The username of the person who performed this activity. This will usually be the API user invoking the creation.'
+          example: whispir user
         time:
           type: string
           description: 'The date and time of the activity in the format:dd/mm/yy hh:mm. This will be defaulted to the time at which this activity is created.'
+          example: '03/08/22 15:17'
         action:
           type: string
           description: Specifies the action performed during this activity.
+          enum:
+            - Create
+            - Update
+            - Move
+            - Copy
+            - Draft
+            - Send
+            - Modified
+            - Delete
+            - Contact Import File
+            - Login
+            - Approve
+            - Reject
+            - Dispatch
+            - Register
+            - Accept
+            - Closed
+            - Map
+            - Un-map
+            - Logout
+          example: Create
         description:
           type: string
           description: The description of the activity. This is a free text that details about the activity.
+          example: Logged out
         status:
           type: string
           description: Specifies the status of the activity.
+          example: Successful
         module:
           type: string
           description: Specifies the module to which this activity belongs to.
+          enum:
+            - System
+            - Message
+            - Scheduled Message
+            - User
+            - Contact
+            - Distribution List
+            - Template
+            - Workspace
+            - Event
+            - WebService
+            - Settings
+            - Conversation
+            - Gateway
+            - Workspace Mapping
+            - Folders
+            - Team
+            - RSS
+            - API Mapping
+            - Asset
+            - Instruction
+          example: Conversation
         workspaceName:
           type: string
           description: The workspace in which this activity is performed. This will usually be the API user’s default workspace
+          example: Company
         fullname:
           type: string
+          example: Whispir User
+          description: Fullname of the user
         link:
-          type: array
-          items:
-            type: object
-            properties:
-              uri:
-                type: string
-              rel:
-                type: string
-              method:
-                type: string
-              host:
-                type: string
-              port:
-                type: integer
-              type:
-                type: string
+          $ref: '#/components/schemas/link'
     user:
       type: object
       xml:

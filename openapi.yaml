@@ -5126,8 +5126,8 @@ paths:
     get:
       tags:
         - Events
-      summary: Retrieve an event
-      description: Retrieves an Event object.
+      summary: List events
+      description: List event objects
       operationId: getEvents
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -5136,27 +5136,15 @@ paths:
         - $ref: '#/components/parameters/offset'
         - $ref: '#/components/parameters/sortOrder'
         - $ref: '#/components/parameters/sortFields'
+        - schema:
+            type: string
+          in: header
+          name: eventType
+          description: 'The name of the event template used '
+          required: true
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Event-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/event'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/event'
+          $ref: '#/components/responses/Events'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5181,158 +5169,309 @@ paths:
       tags:
         - Events
       summary: Create an event
-      description: |
-        As Whispir works with each organisation to build out the requirements of the events module, the required fields are minimal. The bulk of the event information is from fields that are generic, and only applicable to the customer that is using the module.
+      description: |-
+        The bulk of the `Event` metadata is from fields that are generic, and only applicable to the customer that is using the module.
 
-        Events have sub sections under them called as ‘actions’ (maximum of 10). When an Event occurs/is triggered, the related actions are to be performed. Each action has an owner, a set time, and details associated with it. The owner or responsible person for the event could be a /contacts in the system. This ensures that proper communication is sent to the individual based on their preferred channel (message, email, voice) automatically without having to key in the phone, email, and other communication information again.
+        The owner or responsible person for the event could be a `/contacts` in the system. This ensures that proper communication is sent to the individual based on their preferred channel (`message`, `email`, `voice`) automatically without having to key in the phone, email, and other communication information again.
 
-        The Events module captures information specific to an event so the information can be used in as part of messaging for the duration of the event. The Events module can be customized to accept events and associated information from external systems or to capture more complex information around an event.
+        Most importantly, to create an event, one must have the create access for `Incident` row in the `Roles & Permission` section of the account settings.
 
-        Events are created within a workspace. As they are custom built the information to be captured will depend on your organisations specific requirements. Generally at a minimum an event will have a label, start date, and a status.
+        When an `Event` occurs/is triggered, the related actions are to be performed. Each action has an owner (`actionOwner`), a set time (`actionDate`), and details associated with it (`actionDetails`). 
 
-        Most importantly, to create an event, one must have the create access for Incident row in the Roles & Permission section of the account settings.
-      operationId: postEvents
+        `Events` have sub sections under them called as ‘actions’ (maximum of 10). So the action values are numbered:
+        <li> actionDate1, actionOwner1, actionDetails1 </li>
+        <li> actionDate2, actionOwner2, actionDetails2 </li>
+        <li> … </li>
+        <li> actionDate10, actionOwner10, actionDetails10 </li>
+
+        <!-- theme: warning -->
+        > #### Things to note
+        > The fields described below are defined through `name/value` pairs and to be added as part of `eventFieldList` array
+
+        ```generic_attributes json_schema
+        {
+          "title": "Event Fields",
+          "type": "object",
+          "properties": {
+            "actionDate": {
+              "type": "string"
+              "description: "The start date of this action in dd/mm/yyyy HH:MI:SS 24 hour format",
+              "example": "11/09/2019 17:41:00"
+            },
+            "actionOwner": {
+              "type": "string",
+              "description": "The individual (contact) responsible for this action’s execution",
+              "example": "John Wick",
+            },
+            "actionDetails": {
+              "type": "string",
+              "description": "The detail description of this action",
+              "example":"investigation to take place asap."
+            },
+            "summary": {
+              "type": "string",
+              "description": "Specifies the summary of the event. A single line that can be the equivalent of the subject of an email",
+              "example":"investigation to take place asap"
+            },
+            "status": {
+              "type": "string",
+              "description": "Specifies the status of the event. The status can be one of the following",
+              "enum": ["Active", "Resolved", "Open"],
+              "default":"Open",
+              "example":"Open"
+            },    
+           "description": {
+              "type": "string",
+              "description": "Specifies the detailed description of the event",
+              "example":"investigation to take place asap"
+            },
+           "location": {
+              "type": "string",
+              "description": "Specifies the latitude and longitude values of the event location. This helps to show the event location on Whispir’s geo-map feature set and coordinated communication based on the geo-location of the event",
+              "example":"0.0,0.0"
+            },
+           "startDate": {
+              "type": "string",
+              "description": "Specifies the start date of the event. The date and time should be in the format `DD/MM/YYYY HH:MI:SS` (24 hour format)",
+              "example":"23/09/2019 17:21:00"
+            },
+           "endDate": {
+              "type": "string",
+              "description": "Specifies the end date of the event. The date and time should be in the format `DD/MM/YYYY HH:MI:SS` (24 hour format)",
+              "example":"23/09/2019 17:21:00"
+            },
+            "severity" :{
+              "type": "string",
+              "description": "Specifies the severity of the event. While this can change from company to company, the standard value set to be chosen from is   
+                <li><b>Severity 5</b> – Routine Maintenance Tasks</li> 
+                <li><b>Severity 4</b> – Scheduled System Changes</li> 
+                <li><b>Severity SL3</b> – Minor Outage (some service degradation)</li> 
+                <li><b>Severity SL2</b> – Moderate Outage (service degradation)</li> 
+                <li><b>Severity SL1</b> – Major Outage (significant service unavailability)</li>
+              ",
+              "example": "Severity 5"
+            },
+            "priority" :{
+              "type": "string",
+              "description": "Specifies the priority of the event. While this can change from company to company, the standard value set to choose from is
+                <li><b>Priority 5</b> – No Set Resolution Period</li>
+                <li><b>Priority 4</b> – < 1 week Resolution</li>
+                <li><b>Priority 3</b> – < 3 day Resolution</li>
+                <li><b>Priority 2</b> – < 1 day Resolution</li>
+                <li><b>Priority 1</b> – < 2 hour Resolution</li>
+              ",
+              "enum": ["Priority 5", "Priority 4", "Priority 3", "Priority 2", "Priority 1"],
+              "example": "Severity 5"
+            },
+           "duration": {
+              "type": "string",
+              "description": "The duration of the event in `HH:MI:SS`. For example, `02:05:00`. This can be substituted in the place of end date if required. Or a subset of the time between the start and end dates.",
+              "example":"02:05:00"
+            }     
+          },
+          required: ["actionDate", "actionOwner", "actionDetails", "startDate"]
+        }
+        ```
+        ``` categorisation json_schema
+        {
+          "title": "Event Fields",
+          "type": "object",
+          "description: "",
+          "properties": {
+            "category" :{
+              "type": "string",
+              "description": "Specifies the category of event. The default values to choose from are (`Internal Systems`, `External Systems`, `Infrastructure`)",
+              "example": "Internal Systems"
+            },
+            "subcategory" :{
+              "type": "string",
+              "description": "Specifies the subcategory in the category. The default values to choose from are (`Customer Impact`, `Cust & Staff Impact`,`Staff Impact`, `Impact Unknown`)",
+              "example": "Customer Impact"
+            },
+            "type" :{
+              "type": "string",
+              "description": "Specifies the type of event. The default values to choose from are (`Multiple Issues`, `NIL`,`Network`, `Applications`, `Mobile Apps`)",
+              "example": "Customer Impact"
+            },
+            "externalVendor" :{
+              "type": "string",
+              "description": "Specifies the name/contact who is the external vendor related to this event",
+              "example": "ABC"
+            }, 
+            "lineNumber" :{
+              "type": "string",
+              "description": "Specifies the line number (production lines)",
+              "example": "ABC"
+            },
+            "externalCaseNumber" :{
+              "type": "string",
+              "description": "Specifies the number as tracked by an external party related to this event",
+              "example": "ABC"
+            },
+          }
+        }
+        ```
+        ``` affected_services json_schema
+        {
+          "title": "Event Fields",
+          "type": "object",
+          "description: "",
+          "properties": {
+            "platform" :{
+              "type": "string",
+              "description": "Specifies the platform in the company that this event is associated with",
+              "example": "ABC"
+            },
+            "services" :{
+              "type": "string",
+              "description": "Specifies the service in the company that this event is associated with",
+              "example": "ABC"
+            },
+          }
+        }
+        ```
+        ``` impact json_schema
+        {
+          "title": "Event Fields",
+          "type": "object",
+          "description: "",
+          "properties": {
+            "impactCondition" :{
+              "type": "string",
+              "description": "Specifies the impact condition of this event to the company. These values can be configured via custom lists as these can be very specific to the company. The default values to choose from are (`All services not available`, `All services degraded`, `Some services not available`, `Some services degraded`, `No Impact`, `Unknown`)",
+              "example": "Unknown"
+            },
+            "impactToOrg" :{
+              "type": "string",
+              "description": "Specifies the impact condition of this event to the company. These values can be configured via custom lists as these can be very specific to the company. The default values to choose from are (`All services not available`, `All services degraded`, `Some services not available`, `Some services degraded`, `No Impact`, `Unknown`)",
+              "example": "Unknown"
+            },
+            "locations" :{
+              "type": "string",
+              "description": "Specifies the impact location of this event to a company’s operational geographies. These values can be configured via custom lists as these can be very specific to the company",
+              "example": "0.0,0.0"
+            },
+          }
+        }
+        ```
+        ``` example
+        {
+            ...,
+            eventFieldList: [{
+                "name": "actionDate1",
+                "value": "11/09/2019 17:41:00"
+              },
+              {
+                "name": "actionOwner1",
+                "value": "John Wick"
+              },
+              {  
+                "name": "actionDetails1",
+                "value": "investigation to take place asap."
+              },
+              {
+                "name": "summary",
+                "value": "Outage of systems in Sydney"
+              },
+              {
+                "name": "status",
+                "value": "Open"
+              },
+              {
+                "name": "description",
+                "value": "ATMs are non responsive, teams to be sent to investigate."
+              },
+              {
+                "name": "category",
+                "value": "Internal"
+              },
+              {
+               "name": "startDate",
+               "value": "11/09/2019 17:41:00"
+              },
+              {
+               "name": "severity",
+               "value": "Severity 3 - Minor Outage (Some Service Degradation)"
+              },
+              ... and so on,
+          }]
+        }                  
+        ```
+        <!-- theme: info -->
+
+        > #### A thing to know
+        > On top of the list of event attributes listed above, you may introduce other (alias) name and title fields <li> e.g (`otherFirstName`, `otherLastName`, `otherTitle`) </li>
+
+        <h2>Sending messages using event data</h2>
+
+        Once you’ve finished creating your event data in the Whispir platform, the next logical step is to deliver a notification about the event. This action can be performed using the existing `/messages` endpoint, with the `eventId` as an attribute of the message.
+
+        * Including this `eventId` links the message to the event, and allow you to use any attribute of the event within your message payload.
+        * Any event fields populated on the event are automatically populated within the message.
+        * Any attributes that are supplied within the message take priority over any attributes that are from the event.
+        * The user should not be required to enter any `attributes` as these will be retrieved from the linked event.
+        * The event fields automatically populate the attributes in the message body (based on the relationships set in the <b> Admin > Settings > Attributes > Message Event Attribute Map</b>).
+
+        <!-- theme: warning -->
+        > #### Things to note
+        > * If the `Event` doesn't contain an event field, and there is no relevant attribute field supplied > in the message payload, the `@@` tag will not be resolved.
+        > * If you don't supply an attribute in the message payload, and this has also not been supplied from the event, the field simply will not be resolved within the message.
+      operationId: createEvent
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Event-Content-Type'
         - $ref: '#/components/parameters/Event-Accept'
-      requestBody:
-        $ref: '#/components/requestBodies/event'
       responses:
         '201':
-          description: Created
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Event-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-            Location:
-              schema:
-                type: string
-              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/events/747AB7E716C1802B6476784AEB5C9BB8'
-              description: The URI to fetch details of the resource.
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    id: 421FEEBA93GF53A2
-                    eventLabel: 2701095 - Outage of Local Systems in Sydney
-                    status: Active
-                    eventFormList:
-                      - formName: MetroEvent
-                        eventFieldList:
-                          - name: summary
-                            value: Outage of systems in Sydney
-                          - name: location
-                            value: '0.0,0.0'
-                          - name: endDate
-                          - name: type
-                            value: ''
-                          - name: actionDetails2
-                            value: ''
-                          - name: actionDetails3
-                            value: ''
-                          - name: actionDetails1
-                            value: investigation to take place asap.
-                          - name: priority
-                            value: ''
-                          - name: description
-                            value: 'ATMs are non responsive, teams to be sent to investigate.'
-                          - name: actionDetails8
-                            value: ''
-                          - name: actionDetails9
-                            value: ''
-                          - name: actionDetails6
-                            value: ''
-                          - name: actionDetails7
-                            value: ''
-                          - name: actionDetails4
-                            value: ''
-                          - name: actionOwner10
-                            value: ''
-                          - name: actionDetails5
-                            value: ''
-                          - name: platform
-                            value: ''
-                          - name: services
-                            value: ''
-                          - name: status
-                            value: Open
-                          - name: openedBy
-                            value: ''
-                          - name: category
-                            value: Internal
-                          - name: externalVendor
-                            value: ''
-                          - name: externalCaseNumber
-                            value: ''
-                          - name: actionOwner6
-                            value: ''
-                          - name: startDate
-                            value: '11/09/2015 00:00:00'
-                          - name: actionOwner5
-                            value: ''
-                          - name: actionOwner8
-                            value: ''
-                          - name: actionOwner7
-                            value: ''
-                          - name: actionOwner9
-                            value: ''
-                          - name: actionDate8
-                          - name: actionDate9
-                          - name: actionDetails10
-                            value: ''
-                          - name: actionDate4
-                          - name: actionOwner2
-                            value: ''
-                          - name: actionDate5
-                          - name: actionOwner1
-                            value: John Wick
-                          - name: actionDate6
-                          - name: actionOwner4
-                            value: ''
-                          - name: actionDate7
-                          - name: actionOwner3
-                            value: ''
-                          - name: actionDate1
-                            value: '11/09/2015 00:00:00'
-                          - name: actionDate3
-                          - name: actionDate2
-                          - name: locations
-                            value: ''
-                          - name: impactToOrg
-                            value: ''
-                          - name: actionDate10
-                          - name: locationDisplay
-                            value: ''
-                          - name: subCategory
-                            value: ''
-                          - name: severity
-                            value: Severity 3 - Minor Outage (Some Service Degradation)
-                          - name: duration
-                            value: ''
-                          - name: lineNumber
-                            value: ''
-                          - name: impactCondition
-                            value: ''
-                    link:
-                      - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
-                        rel: self
-                        method: GET
-                      - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
-                        rel: self
-                        method: PUT
-                        type: 'application/vnd.whispir.event-v1+xml,application/vnd.whispir.event-v1+json'
-                      - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/messages?label=2701095%20-%20Outage%20of%20Local%20Systems%20in%20Sydney'
-                        rel: retrieveEventMessages
-                        method: GET
+          $ref: '#/components/responses/Event'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+      requestBody:
+        $ref: '#/components/requestBodies/event'
+    parameters:
+      - name: workspaceId
+        in: path
+        schema:
+          type: string
+          pattern: '^[A-F0-9]+'
+          example: 9A4C5521FFC7B15B
+        description: The identifier for the workspace.
+        required: true
+  '/workspaces/{workspaceId}/events/{eventId}':
+    get:
+      tags:
+        - Events
+      summary: Retrieve an event
+      description: Get an event object
+      operationId: getEventById
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Event-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
+      responses:
+        '200':
+          $ref: '#/components/responses/Event'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5354,7 +5493,66 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
-      - $ref: '#/components/parameters/workspaceId'
+      - name: workspaceId
+        in: path
+        schema:
+          type: string
+          pattern: '^[A-F0-9]+'
+          example: 9A4C5521FFC7B15B
+        description: The identifier for the workspace.
+        required: true
+      - schema:
+          type: string
+        name: eventId
+        description: The identifier for the event.
+        in: path
+        required: true
+    put:
+      tags:
+        - Events
+      summary: Update an event
+      operationId: putEventById
+      description: Update an event object
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Event-Content-Type'
+        - $ref: '#/components/parameters/Event-Accept'
+      requestBody:
+        $ref: '#/components/requestBodies/event'
+      responses:
+        '204':
+          description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Event-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Expires:
+              $ref: '#/components/headers/Expires'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
   '/workspaces/{workspaceId}/imports':
     post:
       tags:
@@ -5597,6 +5795,108 @@ components:
         application/vnd.whispir.event-v1+json:
           schema:
             $ref: '#/components/schemas/event'
+          examples:
+            Event request body example:
+              value:
+                eventLabel: 2701095 - Outage of Local Systems in Sydney
+                status: Active
+                eventFormList:
+                  - formName: MetroEvent
+                    eventFieldList:
+                      - name: summary
+                        value: Outage of systems in Sydney
+                      - name: location
+                        value: '0.0,0.0'
+                      - name: endDate
+                      - name: type
+                        value: ''
+                      - name: actionDetails2
+                        value: ''
+                      - name: actionDetails3
+                        value: ''
+                      - name: actionDetails1
+                        value: investigation to take place asap.
+                      - name: priority
+                        value: ''
+                      - name: description
+                        value: 'ATMs are non responsive, teams to be sent to investigate.'
+                      - name: actionDetails8
+                        value: ''
+                      - name: actionDetails9
+                        value: ''
+                      - name: actionDetails6
+                        value: ''
+                      - name: actionDetails7
+                        value: ''
+                      - name: actionDetails4
+                        value: ''
+                      - name: actionOwner10
+                        value: ''
+                      - name: actionDetails5
+                        value: ''
+                      - name: platform
+                        value: ''
+                      - name: services
+                        value: ''
+                      - name: status
+                        value: Open
+                      - name: openedBy
+                        value: ''
+                      - name: category
+                        value: Internal
+                      - name: externalVendor
+                        value: ''
+                      - name: externalCaseNumber
+                        value: ''
+                      - name: actionOwner6
+                        value: ''
+                      - name: startDate
+                        value: '11/09/2019 00:00:00'
+                      - name: actionOwner5
+                        value: ''
+                      - name: actionOwner8
+                        value: ''
+                      - name: actionOwner7
+                        value: ''
+                      - name: actionOwner9
+                        value: ''
+                      - name: actionDate8
+                      - name: actionDate9
+                      - name: actionDetails10
+                        value: ''
+                      - name: actionDate4
+                      - name: actionOwner2
+                        value: ''
+                      - name: actionDate5
+                      - name: actionOwner1
+                        value: John Wick
+                      - name: actionDate6
+                      - name: actionOwner4
+                        value: ''
+                      - name: actionDate7
+                      - name: actionOwner3
+                        value: ''
+                      - name: actionDate1
+                        value: '11/09/2019 00:00:00'
+                      - name: actionDate3
+                      - name: actionDate2
+                      - name: locations
+                        value: ''
+                      - name: impactToOrg
+                        value: ''
+                      - name: actionDate10
+                      - name: locationDisplay
+                        value: ''
+                      - name: subCategory
+                        value: ''
+                      - name: severity
+                        value: Severity 3 - Minor Outage (Some Service Degradation)
+                      - name: duration
+                        value: ''
+                      - name: lineNumber
+                        value: ''
+                      - name: impactCondition
+                        value: ''
       description: events object that needs to be create events
     callback:
       content:
@@ -7884,88 +8184,6 @@ components:
       description: List users response object
     event:
       type: object
-      required:
-        - eventLabel
-        - status
-        - description
-      properties:
-        eventLabel:
-          type: string
-          description: Specifies the name of the label used for the messages sent under this event
-          example: 2701095 - Outage of Local Systems in Sydney
-        status:
-          type: string
-          description: 'Specifies the status of the event. The status can be one of <ul><li>Active</li><li>Resolved<l></ul>Note:The default status is Open.'
-          example: Open
-        summary:
-          type: string
-          description: Specifies the summary of the event. A single liner that can be equivalent to the Subject of an email.
-          example: Outage of systems in Sydney
-        description:
-          type: string
-          description: Specifies the detailed description of the event
-          example: 'ATMs are non responsive, teams to be sent to investigate'
-        location:
-          type: string
-          description: 'Specifies the latitude, longitude values of the event location. This helps to show the event location on Whispir’s geo-map feature set and coordinated communication based on the geo location of the event.'
-          example: '0.0,0.0'
-        startDate:
-          type: string
-          description: 'Specifies the startdate of the event. This is a mandatory value.The date should be in the format of DD/MM/YYYY HH:MI:SS in 24hrs format. e.g 11/09/2015 17:21:00 for 11th September 2015 5.21 PM.'
-          example: '11/09/2015 17:41:00'
-        endDate:
-          type: string
-          description: 'Specifies the endDate of the event.The date should be in the format of DD/MM/YYYY HH:MI:SS in 24hrs format. e.g. 11/09/2015 19:26:00 for 11th September 2015 7.26 PM.'
-        severity:
-          type: string
-          description: 'Specifies the severity of the event. While this can change from company to company, the standard value set to be chosen from is <ul><li>Severity 5 - Routine Maintenance Tasks</li><li>Severity 4 - Scheduled System Changes</li><li>Severity SL3 - Minor Outage (Some Service Degradation)</li><li>Severity SL2 - Moderate Outage (Service Degradation)</li><li>Severity SL1 - Major Outage (Significant Service Unavailablity)</li><ul>'
-          example: Severity 3 - Minor Outage (Some Service Degradation)
-        Priority:
-          type: string
-          description: 'Specifies the priority of the event. While this can change from company to company, the standard value set to be chosen from is <ul><li>Priority 5 - No Set Resolution Period</li><li>Priority 4 - <1 week Resolution</li><li>Priority 3 - <3 day Resolution</li><li>Priority 2 - <1 day Resolution</li><li>Priority 1 - <2hr Resolution</li></ul>'
-        duration:
-          type: string
-          description: 'The duration of the event in HH:MI:SS. e.g. 02:05:00 This can be substituted in the place of end date if required. Or a subset of the time between the start and end Dates.'
-        category:
-          type: string
-          description: Specifies the category of event. The default values to choose from are <ul><li>Internal Systems</li><li>External Systems</li><li>Infrasturcture</li></ul>
-          example: Internal
-        subcategory:
-          type: string
-          description: Specifies the subcategory in the category. The default values to choose from are <ul><li>Customer Impact</li><li>Cust & Staff Impact</li><li>Staff Impact</li><li>Impact Unknown</li></ul>
-        type:
-          type: string
-          description: Specifies the type of event. The default values to choose from are <ul><li>Multiple Issues</li><li>NIL</li><li>Network</li><li>Applications</li><li>Mobile Apps</li></ul>
-        externalVendor:
-          type: string
-          description: Specifies the name/contact who is the external vendor related to this event
-        lineNumber:
-          type: string
-          description: Specifies the line Number (production lines)
-        externalCaseNumber:
-          type: string
-          description: Specifies the number as tracked by an external party realted to this event
-        platform:
-          type: string
-          description: Specifies the platform in the company to which this event is associated with
-        services:
-          type: string
-          description: Specifies the service in the company to which this event is associated with
-        impactCondition:
-          type: string
-          description: Specifies the impact condition of this event to the company. These values can be configured via custom lists as these can be very specific to the company. The default list to choose from are - <ul><li>All services not available</li><li>All services degraded</li><li>Some services not available</li><li>Some services degraded</li><li>No Impact</li><li>Unknown</li></ul>
-        impactToOrg:
-          type: string
-          description: Specifies the impact of this event to the Organization. These values can be configured via custom lists as these can be very specific to the company. The default list to choose from are - <ul><li>Global</li><li>National</li><li>Local</li></ul>
-        locations:
-          type: string
-          description: Specifies the impact location of this event to the Organization’s operational geographies. These values can be configured via custom lists as these can be very specific to the company.
-        multiple key value sets:
-          type: string
-          description: 'Specifies the set of individual actions to be taken during this event.Each action consists of - <ul><li>actionDate - the start date of this action in dd/mm/yyyy HH:MI:SS 24hr format </li><li>actionOwner - the individual (contact) responsible for this action’s execution</li><li>actionDetails - the detail description of this action</li></ul><p>An event can have a maximum of 10 action. So the action values are numbered. actionDate1, actionOwner1, actionDetails1, actionDate2, actionOwner2, actionDetails2 …actionDate10, actionOwner10, actionDetails10'
-        Alias Fields:
-          type: string
-          description: 'The other (alias) name and title fields 1) otherFirstName, otherLastName, otherTitle'
       xml:
         name: event
         prefix: ns3
@@ -7973,7 +8191,101 @@ components:
         - Events
       title: Event
       description: The event object.
-      x-examples: {}
+      x-examples:
+        Event object example:
+          id: 421FEEBA93GF53A2
+          eventLabel: 2701095 - Outage of Local Systems in Sydney
+          status: Active
+          eventFormList:
+            - formName: MetroEvent
+              eventFieldList:
+                - name: summary
+                  value: Outage of systems in Sydney
+                - name: location
+                  value: '0.0,0.0'
+                - name: description
+                  value: 'ATMs are non responsive, teams to be sent to investigate.'
+                - name: status
+                  value: Open
+                - name: category
+                  value: Internal
+                - name: startDate
+                  value: '11/09/2019 00:00:00'
+                - name: actionOwner1
+                  value: John Wick
+                - name: actionDetails1
+                  value: investigation to take place asap.
+                - name: actionDate1
+                  value: '11/09/2019 00:00:00'
+                - name: severity
+                  value: Severity 3 - Minor Outage (Some Service Degradation)
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
+              host: 'https://api.au.whispir.com'
+              port: -1
+              rel: self
+              method: GET
+            - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
+              host: 'https://api.au.whispir.com'
+              port: -1
+              rel: self
+              method: PUT
+              type: 'application/vnd.whispir.event-v1+xml,application/vnd.whispir.event-v1+json'
+            - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/messages?label=2701095%20-%20Outage%20of%20Local%20Systems%20in%20Sydney'
+              host: 'https://api.au.whispir.com'
+              port: -1
+              rel: retrieveEventMessages
+              method: GET
+      properties:
+        id:
+          type: string
+          description: Id of the event
+          readOnly: true
+          example: 888E0A343770A7D1
+        eventLabel:
+          type: string
+          description: Specifies the name of the label used for the messages sent under this event. This needs to match with the name of the event templates available
+          example: 2701095 - Outage of Local Systems in Sydney
+        status:
+          type: string
+          description: 'Specifies the status of the event. The status can be one of <ul><li>Active</li><li>Resolved<l></ul>Note:The default status is Open.'
+          example: Open
+          enum:
+            - Open
+            - Active
+            - Resolved
+          default: Open
+        eventFormList:
+          type: array
+          description: Event form list
+          items:
+            type: object
+            description: Constitutes the name of the form and its fields
+            properties:
+              formName:
+                type: string
+                example: Metro Event
+                description: Specifies the name of the event form
+              eventFieldList:
+                type: array
+                description: 'Contains a list of event fields, see create /POST event endpoint to learn more about the available fields'
+                items:
+                  type: object
+                  description: A key-value pair of name and its value
+                  properties:
+                    name:
+                      type: string
+                      description: Specifies the name of the event field
+                      example: actionOwner1
+                    value:
+                      type: string
+                      description: Specifies the value of a given field
+                      example: John Wick
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - eventLabel
+        - status
     import:
       type: object
       xml:
@@ -10481,6 +10793,120 @@ components:
           $ref: '#/components/headers/Cache-Control'
         Expires:
           $ref: '#/components/headers/Expires'
+        Location:
+          $ref: '#/components/headers/Location'
+    Events:
+      description: List of events response example
+      content:
+        application/json:
+          schema:
+            type: object
+            description: List of events
+            properties:
+              status:
+                type: string
+                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no events available.
+                example: 1 to 2 of 2
+                readOnly: true
+              events:
+                type: array
+                description: List of events
+                items:
+                  $ref: '#/components/schemas/event'
+                readOnly: true
+          examples:
+            Events response example:
+              value:
+                events:
+                  - id: string
+                    eventLabel: 2701095 - Outage of Local Systems in Sydney
+                    status: Open
+                    eventFormList:
+                      - formName: Metro Event
+                        eventFieldList:
+                          - name: string
+                            value: string
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                status: 1 to 2 of 2
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+    Event:
+      description: Example Event response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/event'
+          examples:
+            example-1:
+              value:
+                id: 421FEEBA93GF53A2
+                eventLabel: 2701095 - Outage of Local Systems in Sydney
+                status: Active
+                eventFormList:
+                  - formName: MetroEvent
+                    eventFieldList:
+                      - name: summary
+                        value: Outage of systems in Sydney
+                      - name: location
+                        value: '0.0,0.0'
+                      - name: description
+                        value: 'ATMs are non responsive, teams to be sent to investigate.'
+                      - name: status
+                        value: Open
+                      - name: category
+                        value: Internal
+                      - name: startDate
+                        value: '11/09/2019 00:00:00'
+                      - name: actionOwner1
+                        value: John Wick
+                      - name: actionDetails1
+                        value: investigation to take place asap.
+                      - name: actionDate1
+                        value: '11/09/2019 00:00:00'
+                      - name: severity
+                        value: Severity 3 - Minor Outage (Some Service Degradation)
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
+                    host: 'https://api.au.whispir.com'
+                    port: -1
+                    rel: self
+                    method: GET
+                  - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
+                    host: 'https://api.au.whispir.com'
+                    port: -1
+                    rel: self
+                    method: PUT
+                    type: 'application/vnd.whispir.event-v1+xml,application/vnd.whispir.event-v1+json'
+                  - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/messages?label=2701095%20-%20Outage%20of%20Local%20Systems%20in%20Sydney'
+                    host: 'https://api.au.whispir.com'
+                    port: -1
+                    rel: retrieveEventMessages
+                    method: GET
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
         Location:
           $ref: '#/components/headers/Location'
   headers:

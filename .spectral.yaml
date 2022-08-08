@@ -164,7 +164,6 @@ overrides:
       - "**#/components/schemas/locations"
       - "**#/components/schemas/location"
       - "**#/components/schemas/user" # User Endpoint Schemas
-      - "**#/components/schemas/event" # Event Endpoint Schemas
       - "**#/components/schemas/fieldMapping"
       - "**#/components/schemas/auth" # Auth Endpoint Schemas
       - "**#/components/requestBodies/event"
@@ -173,6 +172,11 @@ overrides:
     files:
       - "**#/paths/~1workspaces~1{workspaceId}~1events" # Events Endpoint Examples
       - "**#/components/requestBodies/event"
+      - "**#/components/schemas/activity" # Activity Endpoint Schemas
+  - rules:
+      payload-examples: off
+    files:
+      - "**#/paths/~1activities" # activity Endpoint Examples
       - "**#/paths/~1users" # user Endpoint Examples
       - "**#/paths/~1auth" # Auth Endpoint Exampleses
       - "**#/paths/~1workspaces~1{workspaceId}~1contacts" # Contacts Endpoint Examples

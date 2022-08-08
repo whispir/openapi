@@ -3643,10 +3643,10 @@ paths:
                         url: 'https://e05237bf.ngrok.io/'
                         retriesEnabled: false
                         link:
-                          - uri: 'https://stage-ap-southeast-2.whispirdev.com/callbacks/D7D2295E2A08388C'
+                          - uri: 'https://api.au.whispir.com/callbacks/D7D2295E2A08388C'
                             rel: self
                             method: GET
-                            host: stage-ap-southeast-2.whispirdev.com
+                            host: api.au.whispir.com
                             port: -1
                     link: []
                 properties:
@@ -4247,8 +4247,21 @@ paths:
       tags:
         - Activities
       summary: Create an activity
-      description: |
-        Note: There is no limit to the amount of activities that can be created.
+      description: |-
+        Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace. Each activity log entry contains information about the workspace, the module (message, email, IVR ...), the user who performed the activity, time stamps, description of the activity, its status (success, fail) and so on.
+
+        All of these help meet auditing and standards compliance and also change tracking. For example:
+        * As a Whispir API user (Voice module), you want to be able to update the Whispir activity log as a call progresses through the IVR to ensure that the auditing shows exactly what information a caller heard.
+
+        * As a Whispir API user (SMS module), you want to able to retrieve information from the activity log about all the messages sent by a specific user.
+        As activity information is sensitive, stricter permission rules apply to the data served by these endpoints.
+
+        * If the user is a *Company Administrator* or *Company Leader*, retrieving the activity will produce a **_200 OK_** with the valid response
+        * If the user is a *Company Member* or *Company Guest*, they will receive instead a **_403 Forbidden_** response advising that they don’t have permission to access this resource
+        * A *Company Administrator* or *Company Leader* can also create content within the activity stream. They do this through a POST of data to either the _/activities_ endpoint or to the specific activity ID
+        * They must specify a valid _‘Action’_, _‘Description’_ and _‘Status’_ within their request
+        * Posting to the _/activities_ endpoint will create a new activity
+        * Posting to the _/activities/{ID}_ endpoint will append the content to the detail of the specified activity
       operationId: postActivities
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -4259,8 +4272,17 @@ paths:
           application/vnd.whispir.activity-v1+json:
             schema:
               $ref: '#/components/schemas/activity'
-            examples: {}
-        description: activity list object that needs to be create activity
+            examples:
+              example-1:
+                value:
+                  action: Logout
+                  module: System
+                  workspace: Company
+                  user: string
+                  status: Successful
+                  description: Logged out
+                  time: '04/08/22 11:19'
+        description: ''
         required: true
       responses:
         '201':
@@ -4281,6 +4303,26 @@ paths:
                 type: string
               example: 'https://api.au.whispir.com/activities/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/activity'
+              examples:
+                example-1:
+                  value:
+                    user: user
+                    time: '04/08/22 11:24'
+                    action: Logout
+                    description: Logged out
+                    status: Successful
+                    module: System
+                    workspaceName: Company
+                    link:
+                      - uri: 'https://api.au.whispir.com/activities/2652A4034A27E271'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4434,7 +4476,7 @@ paths:
           content:
             examples:
               examples:
-                response:
+                example-1:
                   value:
                     activities:
                       - user: james.cameron
@@ -4448,6 +4490,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/9B26BCE6A7C1997D3E3C04D4C0B62165'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: james.cameron
                         time: '17/08/15 12:56'
                         action: Create
@@ -4458,6 +4502,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/CF8F388F18FDDA7CA40F42E888EC8E67'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: james.cameron
                         time: '17/08/15 12:26'
                         action: Draft
@@ -4469,6 +4515,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/19F603F21E8A7D536D577A6B4DBCFE3F'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: markm
                         time: '22/12/14 11:37'
                         action: Logout
@@ -4480,6 +4528,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/0DEB48AB3D3B6069D7DA1A808F5A5DE4'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: markm
                         time: '22/12/14 11:20'
                         action: Login
@@ -4491,7 +4541,44 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/0CEC8009230B3B92F5B548A22B55C407'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                     link: []
+              schema:
+                description: Example
+                type: object
+                x-examples:
+                  example-1:
+                    activities:
+                      - user: cadmin
+                        time: '04/08/22 11:19'
+                        action: Logout
+                        description: Logged out
+                        status: Successful
+                        module: System
+                        workspaceName: Company
+                        fullname: IUX Admin
+                        link:
+                          - uri: 'https://api.au.whispir.com/activities/726E75D22E359A8C'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                          - uri: 'https://api.au.whispir.com/activities/726E75D22E359A8C'
+                            rel: addActivityDetail
+                            method: POST
+                            type: 'application/vnd.whispir.activity-v1+json,application/vnd.whispir.activity-v1+xml'
+                            host: api.au.whispir.com
+                            port: -1
+                    link: []
+                properties:
+                  activities:
+                    description: List of activities
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/activity'
+                  link:
+                    $ref: '#/components/schemas/link'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -7732,42 +7819,106 @@ components:
               - PersonalMobilePhone1
               - PersonalEmailAddress1
     activity:
+      description: 'Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace.'
       type: object
-      required:
-        - module
-        - action
-        - status
+      x-examples:
+        example-1:
+          user: user
+          time: '03/08/22 23:04'
+          action: Logout
+          description: Logged out
+          status: Successful
+          module: System
+          workspaceName: Company
+          fullname: Whispir Admin
+          link:
+            - uri: 'https://api.au.whispir.com/activities/0A398CFDB9DAB7FC'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+            - uri: 'https://api.au.whispir.com/activities/0A398CFDB9DAB7FC'
+              rel: addActivityDetail
+              method: POST
+              type: 'application/vnd.whispir.activity-v1+json,application/vnd.whispir.activity-v1+xml'
+              host: api.au.whispir.com
+              port: -1
       properties:
-        action:
-          type: string
-          description: Specifies the action performed during this activity. The following are the list of actions that can be performed <ul><li>Create</li><li>Update</li><li>Move</li><li>Copy</li><li>Draft</li><li>Send</li><li>Modified </li><li>Delete</li><li>Contact Import File</li><li>Login </li><li>Approve</li><li>Reject</li><li>Dispatch</li><li>Register</li><li>Accept</li><li>Closed</li><li>Map</li><li>Un-map</li></ul>
-          example: Send
-        module:
-          type: string
-          description: Specifies the module to which this activity belongs to. The following are the list of actions that can be performed<ul><li>System</li><li>Message</li><li>Scheduled Message</li><li>User</li><li>Contact</li><li>DistributionList</li><li>Template</li><li>Workspace</li><li>Event</li><li>WebService</li><li>Settings</li> <li>Conversation</li><li>Gateway</li><li>Workspace Mapping</li><li>Folders</li><li>Team</li><li>RSS</li><li>API Mapping </li><li>Asset</li><li>Instruction</li></ul>
-        workspace:
-          type: string
-          description: The workspace in which this activity is performed. This will usually be the API user’s default workspace
         user:
           type: string
-          description: The username of the person who performed this activity. This will usually be the API user invoking the creation.
-        status:
-          type: string
-          description: Specifies the status of the activity. The status can be one of 1)Successful 2)Failed 3)Rejected
-          example: Successful
-        description:
-          type: string
-          description: The description of the activity. This is a free text that details about the activity.
-          example: Message sent via the Whispir's Java library
+          description: ' The username of the person who performed this activity. This will usually be the API user invoking the creation.'
+          example: whispir user
         time:
           type: string
           description: 'The date and time of the activity in the format:dd/mm/yy hh:mm. This will be defaulted to the time at which this activity is created.'
-      xml:
-        name: activity
-        prefix: ns3
-      x-tags:
-        - Activities
-      title: Activity
+          example: '03/08/22 15:17'
+        action:
+          type: string
+          description: Specifies the action performed during this activity.
+          enum:
+            - Create
+            - Update
+            - Move
+            - Copy
+            - Draft
+            - Send
+            - Modified
+            - Delete
+            - Contact Import File
+            - Login
+            - Approve
+            - Reject
+            - Dispatch
+            - Register
+            - Accept
+            - Closed
+            - Map
+            - Un-map
+            - Logout
+          example: Create
+        description:
+          type: string
+          description: The description of the activity. This is a free text that details about the activity.
+          example: Logged out
+        status:
+          type: string
+          description: Specifies the status of the activity.
+          example: Successful
+        module:
+          type: string
+          description: Specifies the module to which this activity belongs to.
+          enum:
+            - System
+            - Message
+            - Scheduled Message
+            - User
+            - Contact
+            - Distribution List
+            - Template
+            - Workspace
+            - Event
+            - WebService
+            - Settings
+            - Conversation
+            - Gateway
+            - Workspace Mapping
+            - Folders
+            - Team
+            - RSS
+            - API Mapping
+            - Asset
+            - Instruction
+          example: Conversation
+        workspaceName:
+          type: string
+          description: The workspace in which this activity is performed. This will usually be the API user’s default workspace
+          example: Company
+        fullname:
+          type: string
+          example: Whispir User
+          description: Fullname of the user
+        link:
+          $ref: '#/components/schemas/link'
     user:
       type: object
       xml:

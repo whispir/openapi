@@ -6524,8 +6524,6 @@ components:
               custom-link: 'https://ad-campaign-feedback/id'
               custom-gif: 'https://ad-campaign-resources/2022/campaign.gif'
               updated-title: New Campaign Title
-          aliasOption:
-            aliasName: Marketing
       properties:
         pushOptions:
           type: object

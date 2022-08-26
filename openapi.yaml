@@ -6495,9 +6495,6 @@ components:
         * Email - a custom email address, e.g. marketing@example.com
         * Voice - a custom mobile number, e.g. +61 123 456 789
       x-examples:
-        Push Message:
-          pushOptions:
-            appId: appId
         Escalation:
           pushOptions:
             escalationMins: 3
@@ -6505,6 +6502,28 @@ components:
           pushOptions:
             notifications: enabled
         Message Alias:
+          aliasOption:
+            aliasName: Marketing
+        Push Message:
+          pushOptions:
+            notifications: enabled
+            escalationMins: '3'
+            appId: '2342345'
+            priority: NORMAL
+            fcm:
+              androidChannelId: campaign-app-push-notification-channel-1
+              sound: /res/raw/alert_sound.wav
+              action: campaign_intent
+              image: 'https://mycompany.com/sales/campaign.png'
+            apns:
+              sound: Library/Sounds/alert_sound.wav
+              action: campaign_action
+            data:
+              custom-image: 'https://mycompany.com/sales/ad.png'
+              custom-video: 'https://mycompany.com/sales/ad.mp4'
+              custom-link: 'https://ad-campaign-feedback/id'
+              custom-gif: 'https://ad-campaign-resources/2022/campaign.gif'
+              updated-title: New Campaign Title
           aliasOption:
             aliasName: Marketing
       properties:
@@ -6546,6 +6565,9 @@ components:
               properties:
                 androidChannelId:
                   type: string
+                  description: |-
+                    Translates to the <span style="color:red">*android_channel_id*</span> attribute in FCM.
+                    Note: use this attribute for devices running Android versions 8 or later.
                 sound:
                   type: string
                   description: |-

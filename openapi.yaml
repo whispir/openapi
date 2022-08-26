@@ -6546,28 +6546,27 @@ components:
               properties:
                 androidChannelId:
                   type: string
-                  description: |-
-                    Translates to the <span style="color:red">*android_channel_id*</span> in FCM. 
-
-                    Note: Recommended to configure *sound* in devices running Android versions 8.0 or later 
                 sound:
                   type: string
-                  description: |-
-                    The sound to play when the device receives the notification.
-                    The value *default* will play the system sound, otherwise this attribute must point to a sound resource bundled in the app, e.g. */res/raw/notification_sound.wav*
-
-                    Note: Recommended to configure *sound* in devices running Android versions older than 8.0
                 action:
                   type: string
-                  description: |-
-                    The action linked with a user click on the notification.
-                    Translates to the <span style="color:red">*click_action*</span> attribute in FCM.
                 image:
                   type: string
-                  description: |-
-                    The URL of an image to be downloaded and displayed in the notification. 
+            apns:
+              type: object
+              properties:
+                sound:
+                  type: string
+                action:
+                  type: string
+            data:
+              type: object
+              description: |-
+                Custom key-value pairs of the notification's payload. These values can be used by the target app for enhanced functionality provided that it has been designed to handle them (images, videos, links etc).
 
-                    Details of the Android support for images in push notifications can be found [here](https://firebase.google.com/docs/cloud-messaging/android/send-image)
+                These attributes translate to <span style="color:red">*data*</span>  in the FCM payload.
+
+                For APNS, the custom attributes of *data* are inserted as custom properties outside of the <span style="color:red">*aps*</span> payload.
         aliasOption:
           type: object
           description: The object defining options for message sender aliasing.

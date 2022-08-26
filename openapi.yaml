@@ -6526,6 +6526,32 @@ components:
               type: string
               description: The identifier for the registered application.
               example: appId
+            priority:
+              type: string
+              description: |-
+                The priority of the notification. 
+
+                NORMAL (the default value) will indicate to FCM/APNS to take into consideration the target device's battery consumption at the expense of delivering the message with a delay. 
+
+                The value NORMAL maps to priority *NORMAL* in FCM and priority *5* in APNS. 
+
+                The value HIGH maps to priority *HIGH* in FCM and *10* in APNS.
+              default: NORMAL
+              enum:
+                - NORMAL
+                - HIGH
+              example: NORMAL
+            fcm:
+              type: object
+              properties:
+                androidChannel:
+                  type: string
+                sound:
+                  type: string
+                action:
+                  type: string
+                image:
+                  type: string
         aliasOption:
           type: object
           description: The object defining options for message sender aliasing.

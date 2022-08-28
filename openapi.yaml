@@ -6560,6 +6560,7 @@ components:
               example: NORMAL
             fcm:
               type: object
+              description: The fcm object holds attributes specific to the contacts' Firebase-registered Android devices
               properties:
                 androidChannelId:
                   type: string
@@ -6586,6 +6587,7 @@ components:
                     Details of the Android support for images in push notifications can be found [here](https://firebase.google.com/docs/cloud-messaging/android/send-image)
             apns:
               type: object
+              description: The apns object holds attributes specific to the contacts' APNS-registered (Apple Push Notification Service) iOS devices
               properties:
                 sound:
                   type: string

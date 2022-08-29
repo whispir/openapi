@@ -6542,7 +6542,7 @@ components:
             appId:
               type: string
               description: The identifier for the registered application.
-              example: appId
+              example: app342983
             priority:
               type: string
               description: |-

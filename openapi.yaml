@@ -6495,9 +6495,6 @@ components:
         * Email - a custom email address, e.g. marketing@example.com
         * Voice - a custom mobile number, e.g. +61 123 456 789
       x-examples:
-        Push Message:
-          pushOptions:
-            appId: appId
         Escalation:
           pushOptions:
             escalationMins: 3
@@ -6507,6 +6504,26 @@ components:
         Message Alias:
           aliasOption:
             aliasName: Marketing
+        Push Message:
+          pushOptions:
+            notifications: enabled
+            escalationMins: '3'
+            appId: '2342345'
+            priority: NORMAL
+            fcm:
+              androidChannelId: campaign-app-push-notification-channel-1
+              sound: /res/raw/alert_sound.wav
+              action: campaign_intent
+              image: 'https://mycompany.com/sales/campaign.png'
+            apns:
+              sound: Library/Sounds/alert_sound.wav
+              action: campaign_action
+            data:
+              custom-image: 'https://mycompany.com/sales/ad.png'
+              custom-video: 'https://mycompany.com/sales/ad.mp4'
+              custom-link: 'https://ad-campaign-feedback/id'
+              custom-gif: 'https://ad-campaign-resources/2022/campaign.gif'
+              updated-title: New Campaign Title
       properties:
         pushOptions:
           type: object
@@ -6525,7 +6542,79 @@ components:
             appId:
               type: string
               description: The identifier for the registered application.
-              example: appId
+              example: app342983
+            priority:
+              type: string
+              description: |-
+                The priority of the notification. 
+
+                NORMAL (the default value) will indicate to FCM/APNS to take into consideration the target device's battery consumption at the expense of delivering the message with a delay. 
+
+                The value NORMAL maps to priority *NORMAL* in FCM and priority *5* in APNS. 
+
+                The value HIGH maps to priority *HIGH* in FCM and *10* in APNS.
+              default: NORMAL
+              enum:
+                - NORMAL
+                - HIGH
+              example: NORMAL
+            fcm:
+              type: object
+              description: The fcm object holds attributes specific to the contacts' Firebase-registered Android devices
+              properties:
+                androidChannelId:
+                  type: string
+                  description: |-
+                    Translates to the <span style="color:red">*android_channel_id*</span> attribute in FCM.
+                    Note: use this attribute for devices running Android versions 8 or later.
+                  example: my_app_notification_channel_id
+                sound:
+                  type: string
+                  description: |-
+                    The sound to play when the device receives the notification.
+                    The value *default* will play the system sound, otherwise this attribute must point to a sound resource bundled in the app, e.g. */res/raw/notification_sound.wav*
+
+                    Note: This attribute can be used for devices running Android versions older than Android 8. For versions 8+ please use the *androidChannelId*
+                  example: /res/raw/notification_sound.wav
+                action:
+                  type: string
+                  description: |-
+                    The action linked with a user click on the notification.
+                    Translates to the <span style="color:red">*click_action*</span> attribute in FCM.
+                  example: campaign_action
+                image:
+                  type: string
+                  description: |-
+                    The URL of an image to be downloaded and displayed in the notification.
+
+                    Details of the Android support for images in push notifications can be found [here](https://firebase.google.com/docs/cloud-messaging/android/send-image)
+                  example: 'https://mycompany.com/sales/campaign.png'
+            apns:
+              type: object
+              description: The apns object holds attributes specific to the contacts' APNS-registered (Apple Push Notification Service) iOS devices
+              properties:
+                sound:
+                  type: string
+                  description: |-
+                    The sound to play when the device receives the notification.
+                    The value *default* will play the system sound, otherwise this attribute must point to a sound resource in your app's main bundle or in the *Library/Sounds* folder of your app's container directory.
+                  example: Library/Sounds/alert_sound.wav
+                action:
+                  type: string
+                  description: |
+                    The action linked with a user click on the notification.
+                    Translates to the <span style="color:red">*category*</span> attribute in APNS.
+                  example: campaign_action
+            data:
+              type: object
+              description: |-
+                Custom key-value pairs of the notification's payload. These values can be used by the target app for enhanced functionality provided that it has been designed to handle them (images, videos, links etc).
+
+                These attributes translate to <span style="color:red">*data*</span>  in the FCM payload.
+
+                For APNS, the custom attributes of *data* are inserted as custom properties outside of the <span style="color:red">*aps*</span> payload.
+          required:
+            - appId
         aliasOption:
           type: object
           description: The object defining options for message sender aliasing.

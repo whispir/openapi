@@ -6607,6 +6607,8 @@ components:
                 These attributes translate to <span style="color:red">*data*</span>  in the FCM payload.
 
                 For APNS, the custom attributes of *data* are inserted as custom properties outside of the <span style="color:red">*aps*</span> payload.
+          required:
+            - appId
         aliasOption:
           type: object
           description: The object defining options for message sender aliasing.

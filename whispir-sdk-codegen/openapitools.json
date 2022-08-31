@@ -1,0 +1,33 @@
+{
+  "$schema": "../../node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "6.0.1",
+    "generators": {
+      "typescript-node": {
+        "generatorName": "typescript-node",
+        "output": "#{cwd}/../whispir-sdk-node",
+        "glob": "../openapi.yaml",
+        "additionalProperties": {
+          "npmName": "whispir-node",
+          "supportsES6": "true",
+          "npmVersion": "1.0.0"
+        }
+      },
+      "java-experimental": {
+        "generatorName": "java",
+        "output": "#{cwd}/../whispir-sdk-java",
+        "glob": "../openapi.yaml",
+        "additionalProperties": {
+          "artifactId": "whispir-java",
+          "artifactDescription": "Whispir Java SDK",
+          "artifactVersion": "1.0.0",
+          "developerName": "Richard Fontein, Mark Neri, Carl Angelo Orale",
+          "developerOrganization": "Whispir",
+          "developerOrganizationUrl": "https://www.whispir.com",
+          "invokerPackage": "whispir-sdk-java"
+        }
+      }
+    }
+  }
+}

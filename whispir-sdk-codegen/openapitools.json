@@ -6,7 +6,7 @@
     "generators": {
       "typescript-node": {
         "generatorName": "typescript-node",
-        "output": "#{cwd}/../whispir-sdk-node",
+        "output": "#{cwd}/../whispir-node",
         "glob": "../openapi.yaml",
         "additionalProperties": {
           "npmName": "whispir-node",

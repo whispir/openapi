@@ -1,9 +1,13 @@
 name: Whispir Node SDK generator
 
+# on:
+#   push:
+#     branches:
+#       - "main"
+
+# testing whether the workflow performs well
 on:
-  push:
-    branches:
-      - "main"
+  - pull_request
 
 jobs:
   Create-Release:

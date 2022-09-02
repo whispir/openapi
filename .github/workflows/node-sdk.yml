@@ -27,14 +27,13 @@ jobs:
               cd whispir-node/
               git checkout -b release/${{steps.date.outputs.date}}
       # Generate Node SDK
-      - name: generate node
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
-        run: |
+      - run: |
               cd whispir-sdk-codegen/
               yarn generate
-      # Commit Generated Node SDK        
+      # Commit Generated Node SDK
       - name: Commit changelog and manifest files
         id: make-commit
         run: |

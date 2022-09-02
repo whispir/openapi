@@ -28,7 +28,7 @@ jobs:
               git checkout -b release/${{steps.date.outputs.date}}
       # Generate Node SDK
       - name: generate node
-      - uses: actions/setup-node@v3
+        uses: actions/setup-node@v3
         with:
           node-version: 16
         run: |

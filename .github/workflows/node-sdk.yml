@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       # Clone whispir/whispir-node
       - name: Clone Whispir-Node
-      if: success()
+        if: success()
         uses: coralewh/checkout@main
         with:
           repository: coralewh/whispir-node
@@ -33,9 +33,9 @@ jobs:
         with:
           node-version: 16
       - run: |
-        cd whispir-sdk-codegen/
-        yarn add @openapitools/openapi-generator-cli
-        yarn generate
+          cd whispir-sdk-codegen/
+          yarn add @openapitools/openapi-generator-cli
+          yarn generate
 
       - name: Commit changelog and manifest files
         id: make-commit

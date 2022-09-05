@@ -7,7 +7,9 @@ name: Whispir Node SDK generator
 
 # testing whether the workflow performs well
 on:
-  - pull_request
+  push:
+    branches:
+      - "sdk-node"
 
 jobs:
   Create-Release:
@@ -19,49 +21,53 @@ jobs:
       - name: date
         run: echo ${{steps.date.outputs.date}}
       # Checkout whispir/openapi repo
-      - uses: actions/checkout@v2 
+      - uses: actions/checkout@v2
       # Clone whispir/whispir-node
       - name: Clone Whispir-Node
         if: success()
-        run: |
-              git clone https://github.com/whispir/whispir-node.git
-      # Create release branch             
+        uses: LopohutDev/checkout@main
+        with:
+          repository: LopohutDev/whispir-node
+          ref: "main"
+          path: whispir-node
+          token: ${{ secrets.GH_TOKEN }}
+      # Create release branch
       - name: Create release branch
-        run: | 
-              cd whispir-node/
-              git checkout -b release/${{steps.date.outputs.date}}
+        run: |
+          cd whispir-node/
+          git checkout -b release/${{steps.date.outputs.date}}
       # Generate Node SDK
       - uses: actions/setup-node@v3
         with:
           node-version: 16
       - run: |
-              cd whispir-sdk-codegen/
-              yarn add @openapitools/openapi-generator-cli
-              yarn generate
+          cd whispir-sdk-codegen/
+          yarn add @openapitools/openapi-generator-cli
+          yarn generate
       # Commit Generated Node SDK
       - name: Commit changelog and manifest files
         id: make-commit
         run: |
-              cd whispir-node/
-              git add -A
-              git commit --message "Prepare release ${{steps.date.outputs.date}}"
-              echo "::set-output name=commit::$(git rev-parse HEAD)"
-      # Push changes to release branch             
+          cd whispir-node/
+          git config --global user.email "lowe.sarraga@gmail.com"
+          git config --global user.name LopohutDev
+          git add -A
+          git commit --message "Prepare release ${{steps.date.outputs.date}}"
+          echo "::set-output name=commit::$(git rev-parse HEAD)"
       - name: Push new branch
         run: |
-              cd whispir-node/
-              git push origin release/${{steps.date.outputs.date}}
-      # Create PR               
+          cd whispir-node/
+          git push origin release/${{steps.date.outputs.date}}
+      # Create PR
       - name: Create pull request into main
-        uses: coralewh/create-pull-request@master
+        uses: LopohutDev/create-pull-request@master
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN  }}
           head: release/${{steps.date.outputs.date}}
-          repository: coralewh/test-auto-action-repo
-          base: master
+          repository: LopohutDev/whispir-node
+          base: main
           title: ${{steps.date.outputs.date}} into main
-          reviewers: ${{ github.event.issue.user.login }}
           body: |
             Hi!
             This PR was created in response workflow running.
-            I've updated the version name and code commit: ${{ steps.make-commit.outputs.commit }}.              
+            I've updated the version name and code commit: ${{ steps.make-commit.outputs.commit }}.

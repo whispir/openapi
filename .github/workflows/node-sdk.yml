@@ -53,7 +53,7 @@ jobs:
           git push origin release/${{steps.date.outputs.date}}
 
       - name: Create pull request into main
-        uses: corale/create-pull-request@master
+        uses: coralewh/create-pull-request@master
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           head: release/${{steps.date.outputs.date}}

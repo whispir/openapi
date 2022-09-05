@@ -3,6 +3,7 @@
 Built by developers, for developers, Whispir is the place where you can easily build communications into your app – SMS, email, push, voice, chat, web, social networks and web pages.
 
 ## REST architecture
+## FIXX
 
 The Whispir API adheres to the [REST architectural style.](https://en.wikipedia.org/wiki/Representational_state_transfer)
 

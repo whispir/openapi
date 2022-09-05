@@ -1,7 +1,9 @@
 name: Whispir Node SDK generator
 
 on:
-    - pull_request
+  push:
+    branches:
+      - "main"
 
 jobs:
   Create-Release:

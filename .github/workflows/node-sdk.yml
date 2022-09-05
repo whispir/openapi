@@ -1,11 +1,5 @@
 name: Whispir Node SDK generator
 
-# on:
-#   push:
-#     branches:
-#       - "main"
-
-# testing whether the workflow performs well
 on:
   push:
     branches:
@@ -62,7 +56,7 @@ jobs:
       - name: Create pull request into main
         uses: LopohutDev/create-pull-request@master
         with:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN  }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           head: release/${{steps.date.outputs.date}}
           repository: LopohutDev/whispir-node
           base: main

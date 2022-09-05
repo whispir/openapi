@@ -1,7 +1,9 @@
 name: Whispir Node SDK generator
 
 on:
-    - pull_request
+  push:
+    branches:
+      - sdk-node
 
 jobs:
   Create-Release:
@@ -29,6 +31,7 @@ jobs:
           cd whispir-node/
           git checkout -b release/${{steps.date.outputs.date}}
       # Generate Node SDK
+      # SDK GENERATION
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -52,7 +55,7 @@ jobs:
           git push origin release/${{steps.date.outputs.date}}
 
       - name: Create pull request into main
-        uses: corale/create-pull-request@master
+        uses: coralewh/create-pull-request@master
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           head: release/${{steps.date.outputs.date}}
@@ -62,4 +65,5 @@ jobs:
           body: |
             Hi!
             This PR was created in response workflow running.
+            Created PR
             I've updated the version name and code commit: ${{ steps.make-commit.outputs.commit }}.

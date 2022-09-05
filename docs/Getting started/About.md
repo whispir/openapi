@@ -16,7 +16,7 @@ Our REST API is built around simple-to-understand resource-oriented URLs. To use
 
 ## What can I do with the Whispir API?
 
-Whispir APIs let developers:
+The Whispir API enables developers to:
 
 - Create, send and retrieve multi-channel messages over 8 different channels.
 - Invoke scenario-based communications for quick, effective and targeted communications.

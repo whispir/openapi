@@ -21,7 +21,7 @@ jobs:
         if: success()
         uses: coralewh/checkout@main
         with:
-          repository: LopohutDev/whispir-node
+          repository: coralewh/whispir-node
           ref: "main"
           path: whispir-node
           token: ${{ secrets.GH_TOKEN }}
@@ -58,7 +58,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           head: release/${{steps.date.outputs.date}}
-          repository: LopohutDev/whispir-node
+          repository: coralewh/whispir-node
           base: main
           title: ${{steps.date.outputs.date}} into main
           body: |

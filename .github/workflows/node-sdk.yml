@@ -3,7 +3,7 @@ name: Whispir Node SDK generator
 on:
   push:
     branches:
-      - main
+      - sdk-node
 
 jobs:
   Create-Release:

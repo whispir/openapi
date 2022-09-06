@@ -19,7 +19,7 @@ jobs:
       # Clone whispir/whispir-node
       - name: Clone Whispir-Node
         if: success()
-        uses: coralewh/checkout@main
+        uses: whispir/checkout@main
         with:
           repository: whispir/${{secrets.GH_REPO}}
           ref: "main"
@@ -54,11 +54,11 @@ jobs:
           git push origin release/${{steps.date.outputs.date}}
       # Create PR
       - name: Create pull request into main
-        uses: coralewh/create-pull-request@master
+        uses: whispir/create-pull-request@master
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           head: release/${{steps.date.outputs.date}}
-          repository: coralewh/whispir-node
+          repository: whispir/whispir-node
           base: main
           title: ${{steps.date.outputs.date}} into main
           body: |

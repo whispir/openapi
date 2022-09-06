@@ -21,7 +21,7 @@ jobs:
         if: success()
         uses: coralewh/checkout@main
         with:
-          repository: whispir/whispir-node
+          repository: whispir/${{secrets.GH_REPO}}
           ref: "main"
           path: whispir-node
           token: ${{ secrets.GH_TOKEN }}

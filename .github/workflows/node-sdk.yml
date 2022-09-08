@@ -11,14 +11,14 @@ jobs:
     steps:
       - name: UUID Action
         id: uuid
-        uses: filipstefansson/uuid-action@v1.1
+        uses: whispir/uuid-action@v1.1
       # - name: Get Random Numbers
       #   id: number
       #   run: echo "::set-output name=number::$(shuf -i 1-999999999 -n 1)"
       - name: number
         run: echo ${{steps.uuid.outputs.uuid}}
       # Checkout whispir/openapi repo
-      - uses: actions/checkout@v2
+      - uses: whispir/checkout@v2
       # Clone whispir/whispir-node
       - name: Clone Whispir-Node
         if: success()
@@ -35,7 +35,7 @@ jobs:
           git checkout -b release/${{steps.uuid.outputs.uuid}}
       # Generate Node SDK
       # SDK GENERATION
-      - uses: actions/setup-node@v3
+      - uses: whispir/setup-node@v3
         with:
           node-version: 16
       - run: |

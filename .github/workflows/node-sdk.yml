@@ -9,11 +9,14 @@ jobs:
   Create-Release:
     runs-on: ubuntu-latest
     steps:
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +"%Y-%m-%dT%H-%M-%S%z")"
-      - name: date
-        run: echo ${{steps.date.outputs.date}}
+      - name: UUID Action
+        id: uuid
+        uses: filipstefansson/uuid-action@v1.1
+      # - name: Get Random Numbers
+      #   id: number
+      #   run: echo "::set-output name=number::$(shuf -i 1-999999999 -n 1)"
+      - name: number
+        run: echo ${{steps.uuid.outputs.uuid}}
       # Checkout whispir/openapi repo
       - uses: actions/checkout@v2
       # Clone whispir/whispir-node
@@ -29,7 +32,7 @@ jobs:
       - name: Create release branch
         run: |
           cd whispir-node/
-          git checkout -b release/${{steps.date.outputs.date}}
+          git checkout -b release/${{steps.uuid.outputs.uuid}}
       # Generate Node SDK
       # SDK GENERATION
       - uses: actions/setup-node@v3
@@ -43,24 +46,24 @@ jobs:
         id: make-commit
         run: |
           cd whispir-node/
-          git config --global user.email ""${{GITHUB_ACTOR}}@users.noreply.github.com"
-          git config --global user.name "${{GITHUB_ACTOR}}"
+          git config --global user.email ""${{github.actor}}@users.noreply.github.com"
+          git config --global user.name "${{github.actor}}"
           git add -A
-          git commit --message "Prepare release ${{steps.date.outputs.date}}"
+          git commit --message "Prepare release ${{steps.uuid.outputs.uuid}}"
           echo "::set-output name=commit::$(git rev-parse HEAD)"
       - name: Push new branch
         run: |
           cd whispir-node/
-          git push origin release/${{steps.date.outputs.date}}
+          git push origin release/${{steps.uuid.outputs.uuid}}
       # Create PR
       - name: Create pull request into main
         uses: whispir/create-pull-request@master
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          head: release/${{steps.date.outputs.date}}
+          head: release/${{steps.uuid.outputs.uuid}}
           repository: whispir/whispir-node
           base: main
-          title: ${{steps.date.outputs.date}} into main
+          title: ${{steps.uuid.outputs.uuid}} into main
           body: |
             Hi!
             This PR was created in response workflow running.

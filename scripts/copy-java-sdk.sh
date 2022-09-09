@@ -1,0 +1,1 @@
+cp ./whispir-sdk-java/build/libs/whispir-java-1.0.0.jar ./whispir-test-java/app/libs

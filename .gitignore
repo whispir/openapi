@@ -4,3 +4,7 @@ whispir-sdk-java/
 
 .env
 whispir-test/.env
+
+# whispir-test-java
+whispir-test-java/**/.env
+whispir-test-java/app/libs/whispir-java*

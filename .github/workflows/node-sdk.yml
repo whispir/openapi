@@ -12,9 +12,6 @@ jobs:
       - name: UUID Action
         id: uuid
         uses: whispir/uuid-action@v1.1
-      # - name: Get Random Numbers
-      #   id: number
-      #   run: echo "::set-output name=number::$(shuf -i 1-999999999 -n 1)"
       - name: number
         run: echo ${{steps.uuid.outputs.uuid}}
       # Checkout whispir/openapi repo

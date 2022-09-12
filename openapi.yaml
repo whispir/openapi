@@ -5763,7 +5763,7 @@ paths:
               example: 'https://api.au.whispir.com/auth/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
           content:
-            application/json:
+            'application/vnd.whispir.auth-v1+json':
               schema:
                 description: The create auth response object.
                 type: object
@@ -6192,20 +6192,14 @@ components:
         whatsappValidMessage:
           description: The validity of the WhatsApp channel message.
           type: boolean
-          enum:
-            - true
           readOnly: true
         validBody:
           description: The validity of the message body.
           type: boolean
-          enum:
-            - true
           readOnly: true
         validSubject:
           description: The validity of the message subject.
           type: boolean
-          enum:
-            - true
           readOnly: true
         dlr:
           $ref: '#/components/schemas/dlr'

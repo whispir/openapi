@@ -13,6 +13,21 @@
           "supportsES6": "true",
           "npmVersion": "1.0.0"
         }
+      },
+      "java": {
+        "generatorName":"java",
+        "output": "#{cwd}/../whispir-java",
+        "glob": "../openapi.yaml",
+        "apiPackage": "org.whispir.api",
+        "additionalProperties": {
+          "artifactId": "whispir-java",
+          "artifactDescription": "Whispir Java SDK",
+          "artifactVersion": "1.0.0",
+          "developerName": "Richard Fontein, Mark Neri, Carl Angelo Orale",
+          "developerOrganization": "Whispir",
+          "developerOrganizationUrl": "https://www.whispir.com",
+          "invokerPackage": "whispir-sdk-java"
+        }
       }
     }
   }

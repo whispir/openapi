@@ -14,11 +14,16 @@ public class App {
         return "Hello World!";
     }
 
+    // creates an API client
+    // setting up the API URL and Whispir username and password
     public static ApiClient createClient() {
         ApiClient client;
         client = new ApiClient();
         Dotenv dotenv = Dotenv.load();
-        client.setBasePath(dotenv.get("API_URL"));
+
+        String API_URL = dotenv.get("API_URL");
+
+        client.setBasePath(API_URL);
         client.setUsername(dotenv.get("WHISPIR_USERNAME"));
         client.setPassword(dotenv.get("WHISPIR_PASSWORD"));
         return client;
@@ -26,9 +31,11 @@ public class App {
 
     public static void generateAuthToken() {
         ApiClient client = createClient();
+        // initialize Auth API
         AuthApi authApi = new AuthApi(client);
         Dotenv dotenv = Dotenv.load();
         try {
+            // performs an Auth API post to request for token
             PostAuth200Response response = authApi.postAuth(
                 dotenv.get("API_KEY"),
                 "application/vnd.whispir.auth-v1+json",
@@ -43,14 +50,19 @@ public class App {
 
     public static void postMessage() {
         ApiClient client = createClient();
-        MessagesApi api = new MessagesApi(client);
+        // initialize Message API
+        MessagesApi messageApi = new MessagesApi(client);
         Message message = new Message();
         Dotenv dotenv = Dotenv.load();
+
+        // initialize message with params
         message.to(dotenv.get("MOBILE_NUMBER"));
         message.subject("Hi there!");
         message.body("Hello, this is a test");
+
         try {
-            Message response = api.postMessages(dotenv.get("WORKSPACE_ID"),
+            // performs a Message API call
+            Message response = messageApi.postMessages(dotenv.get("WORKSPACE_ID"),
                 dotenv.get("API_KEY"),
                 "application/vnd.whispir.message-v1+json",
                 "application/vnd.whispir.message-v1+json",
@@ -67,6 +79,6 @@ public class App {
         System.out.println(new App().getGreeting());
         Dotenv dotenv = Dotenv.load();
         generateAuthToken();
-        // postMessage();
+        postMessage();
     }
 }

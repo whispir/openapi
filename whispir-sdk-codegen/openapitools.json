@@ -16,7 +16,7 @@
       },
       "java": {
         "generatorName":"java",
-        "output": "#{cwd}/../whispir-sdk-java",
+        "output": "#{cwd}/../whispir-java",
         "glob": "../openapi.yaml",
         "apiPackage": "org.whispir.api",
         "additionalProperties": {

@@ -15,18 +15,25 @@
         }
       },
       "java": {
-        "generatorName":"java",
+        "generatorName": "java",
         "output": "#{cwd}/../whispir-java",
         "glob": "../openapi.yaml",
         "apiPackage": "org.whispir.api",
         "additionalProperties": {
+          "groupId": "com.whispir",
           "artifactId": "whispir-java",
           "artifactDescription": "Whispir Java SDK",
           "artifactVersion": "1.0.0",
-          "developerName": "Richard Fontein, Mark Neri, Carl Angelo Orale",
+          "developerName": "Whispir Developer Experience Team",
+          "developerEmail": "developerexperience@whispir.com",
           "developerOrganization": "Whispir",
           "developerOrganizationUrl": "https://www.whispir.com",
-          "invokerPackage": "whispir-sdk-java"
+          "invokerPackage": "whispir-sdk-java",
+          "scmUrl": "https://github.com/whispir/whispir-java",
+          "scmDeveloperConnection": "scm:git:git@github.com:whispir/whispir-java.git",
+          "scmConnection": "scm:git:git@github.com:whispir/whispir-java.git",
+          "licenseName": "MIT",
+          "licenseUrl": "https://opensource.org/licenses/MIT"
         }
       }
     }

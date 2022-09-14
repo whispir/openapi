@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: UUID Action
         id: uuid
-        uses: whispir/uuid-action@v1.1
+        uses: whispir/uuid-action@main
       - name: number
         run: echo ${{steps.uuid.outputs.uuid}}
       # Checkout whispir/openapi repo

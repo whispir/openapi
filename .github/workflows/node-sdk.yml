@@ -1,0 +1,67 @@
+name: Whispir Node SDK generator
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Create-Release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: UUID Action
+        id: uuid
+        uses: whispir/uuid-action@v1.1
+      - name: number
+        run: echo ${{steps.uuid.outputs.uuid}}
+      # Checkout whispir/openapi repo
+      - uses: whispir/checkout@v2
+      # Clone whispir/whispir-node
+      - name: Clone Whispir-Node
+        if: success()
+        uses: whispir/checkout@main
+        with:
+          repository: whispir/${{secrets.GH_REPO}}
+          ref: "main"
+          path: whispir-node
+          token: ${{ secrets.GH_TOKEN }}
+      # Create release branch
+      - name: Create release branch
+        run: |
+          cd whispir-node/
+          git checkout -b release/${{steps.uuid.outputs.uuid}}
+      # Generate Node SDK
+      # SDK GENERATION
+      - uses: whispir/setup-node@v3
+        with:
+          node-version: 16
+      - run: |
+          cd whispir-sdk-codegen/
+          yarn add @openapitools/openapi-generator-cli
+          yarn generate
+      - name: Commit changelog and manifest files
+        id: make-commit
+        run: |
+          cd whispir-node/
+          git config --global user.email ""${{github.actor}}@users.noreply.github.com"
+          git config --global user.name "${{github.actor}}"
+          git add -A
+          git commit --message "Prepare release ${{steps.uuid.outputs.uuid}}"
+          echo "::set-output name=commit::$(git rev-parse HEAD)"
+      - name: Push new branch
+        run: |
+          cd whispir-node/
+          git push origin release/${{steps.uuid.outputs.uuid}}
+      # Create PR
+      - name: Create pull request into main
+        uses: whispir/create-pull-request@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          head: release/${{steps.uuid.outputs.uuid}}
+          repository: whispir/whispir-node
+          base: main
+          title: ${{steps.uuid.outputs.uuid}} into main
+          body: |
+            Hi!
+            This PR was created in response workflow running.
+            I've updated the version name and code commit: ${{ steps.make-commit.outputs.commit }}.

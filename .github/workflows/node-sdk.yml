@@ -15,7 +15,7 @@ jobs:
       - name: number
         run: echo ${{steps.uuid.outputs.uuid}}
       # Checkout whispir/openapi repo
-      - uses: whispir/checkout@v2
+      - uses: whispir/checkout@main
       # Clone whispir/whispir-node
       - name: Clone Whispir-Node
         if: success()
@@ -32,7 +32,7 @@ jobs:
           git checkout -b release/${{steps.uuid.outputs.uuid}}
       # Generate Node SDK
       # SDK GENERATION
-      - uses: whispir/setup-node@v3
+      - uses: whispir/setup-node@main
         with:
           node-version: 16
       - run: |
@@ -54,7 +54,7 @@ jobs:
           git push origin release/${{steps.uuid.outputs.uuid}}
       # Create PR
       - name: Create pull request into main
-        uses: whispir/create-pull-request@master
+        uses: whispir/create-pull-request@main
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           head: release/${{steps.uuid.outputs.uuid}}

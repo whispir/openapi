@@ -22,6 +22,7 @@
         "additionalProperties": {
           "groupId": "com.whispir",
           "artifactId": "whispir-java",
+          "artifactUrl": "https://github.com/whispir/whispir-java",
           "artifactDescription": "Whispir Java SDK",
           "artifactVersion": "1.0.0",
           "developerName": "Whispir Developer Experience Team",

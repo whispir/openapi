@@ -5764,21 +5764,21 @@ paths:
               description: The URI to fetch details of the resource.
           content:
             'application/vnd.whispir.auth-v1+json':
-              schema:
-                description: The create auth response object.
-                type: object
-                properties:
-                  token:
-                    type: string
-                    description: The JWT token.
-                    example: your-generated-token-string
-                  link:
-                    $ref: '#/components/schemas/link'
-              examples:
-                Example:
-                  value:
-                    token: your-generated-token-string
-                    link: []
+                schema:
+                  description: The create auth response object.
+                  type: object
+                  properties:
+                    token:
+                      type: string
+                      description: The JWT token.
+                      example: your-generated-token-string
+                    link:
+                      $ref: '#/components/schemas/link'
+                examples:
+                  Example:
+                    value:
+                      token: your-generated-token-string
+                      link: []
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5802,12 +5802,13 @@ paths:
       description: Create a JWT authentication token
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/Auth-Content-Type'
-        - $ref: '#/components/parameters/Auth-Accept'
+        # - $ref: '#/components/parameters/Auth-Content-Type'
+        # - $ref: '#/components/parameters/Auth-Accept'
       tags:
         - Auth
       security:
         - BasicAuth: []
+        - ApiKeyAuth
   /auth/verify:
     get:
       parameters:
@@ -9603,23 +9604,26 @@ components:
     Auth-Accept:
       name: Accept
       in: header
-      required: true
+      # required: true
       schema:
         type: string
         enum:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml
+        default: application/vnd.whispir.auth-v1+json
+
       description: Application specific mime-type
     Auth-Content-Type:
       name: Content-Type
       in: header
-      required: true
+      # required: true
       description: Application specific mime-type
       schema:
-        type: string
         enum:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml
+        default: 'application/vnd.whispir.auth-v1+json'
+
     Activity-Content-Type:
       name: Content-Type
       in: header

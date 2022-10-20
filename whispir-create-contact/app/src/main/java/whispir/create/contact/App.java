@@ -6,13 +6,16 @@ package whispir.create.contact;
 import whispir_sdk_java.ApiClient;
 
 import org.whispir.api.AuthApi;
-import org.whispir.api.MessagesApi;
-import org.whispir.api.ContactsApi;
+//import org.whispir.api.MessagesApi;
+//import org.whispir.api.ContactsApi;
 import org.openapitools.client.model.PostAuth200Response;
-import org.openapitools.client.model.Message;
+//import org.openapitools.client.model.Message;
 import org.openapitools.client.model.Contact;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import org.openapitools.client.model.Message;
+import whispir_wrapped_java.ContactClient;
+import whispir_wrapped_java.MessageClient;
 
 public class App {
 
@@ -53,75 +56,100 @@ public class App {
         }
     }
 
-    public static void createContact(String firstName, String lastName, String workPhoneNumber, String workEmail, String country, String timezone) {
-        ApiClient client = createClient();
-        // initialize createContact API
-        ContactsApi contactsApi = new ContactsApi(client);
-        Contact contact = new Contact();
-        Dotenv dotenv = Dotenv.load();
-        ContactReturn contReturn = new ContactReturn();
-
-        contact.firstName(firstName);
-        contact.lastName(lastName);
-        contact.workMobilePhone1(workPhoneNumber);
-        contact.workEmailAddress1(workEmail);
-        contact.workCountry(country);
-        contact.timezone(timezone);
-
-        try {
-
-            Contact response = contactsApi.postContacts(
-                    dotenv.get("WORKSPACE_ID"),
-                    dotenv.get("API_KEY"),
-                    "application/vnd.whispir.contact-v1+json",
-                    "application/vnd.whispir.contact-v1+json",
-                    contact);
-
-            System.out.println(response);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    public static void sendMessage(String subject, String body) {
-        ApiClient client = createClient();
-
-        MessagesApi messageApi = new MessagesApi(client);
-        Message message = new Message();
-        ContactReturn contact = new ContactReturn();
-        Dotenv dotenv = Dotenv.load();
-
-        message.to(contact.getContactId());
-        message.subject(subject);
-        message.body(body);
-
-        try {
-
-            Message response = messageApi.postMessages(
-                    dotenv.get("WORKSPACE_ID"),
-                    dotenv.get("API_KEY"),
-                    "application/vnd.whispir.message-v1+json",
-                    "application/vnd.whispir.message-v1+json",
-                    message);
-
-            System.out.println(response);
-        } catch (Exception e) {
-
-            System.out.println(e);
-        }
-
-    }
+//    public static void createContact(String firstName, String lastName, String workPhoneNumber, String workEmail, String country, String timezone) {
+//        ApiClient client = createClient();
+//        // initialize createContact API
+//        ContactsApi contactsApi = new ContactsApi(client);
+//        Contact contact = new Contact();
+//        Dotenv dotenv = Dotenv.load();
+//        ContactReturn contReturn = new ContactReturn();
+//
+//        contact.firstName(firstName);
+//        contact.lastName(lastName);
+//        contact.workMobilePhone1(workPhoneNumber);
+//        contact.workEmailAddress1(workEmail);
+//        contact.workCountry(country);
+//        contact.timezone(timezone);
+//
+//        try {
+//
+//            Contact response = contactsApi.postContacts(
+//                    dotenv.get("WORKSPACE_ID"),
+//                    dotenv.get("API_KEY"),
+//                    "application/vnd.whispir.contact-v1+json",
+//                    "application/vnd.whispir.contact-v1+json",
+//                    contact);
+//
+//            System.out.println(response);
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//    }
+//
+//    public static void sendMessage(String subject, String body) {
+//        ApiClient client = createClient();
+//
+//        MessagesApi messageApi = new MessagesApi(client);
+//        Message message = new Message();
+//        ContactReturn contact = new ContactReturn();
+//        Dotenv dotenv = Dotenv.load();
+//
+//        message.to(contact.getContactId());
+//        message.subject(subject);
+//        message.body(body);
+//
+//        try {
+//
+//            Message response = messageApi.postMessages(
+//                    dotenv.get("WORKSPACE_ID"),
+//                    dotenv.get("API_KEY"),
+//                    "application/vnd.whispir.message-v1+json",
+//                    "application/vnd.whispir.message-v1+json",
+//                    message);
+//
+//            System.out.println(response);
+//        } catch (Exception e) {
+//
+//            System.out.println(e);
+//        }
+//
+//    }
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
         Dotenv dotenv = Dotenv.load();
+//        ContactClient
+        ContactClient contactClient = new ContactClient(
+                dotenv.get("WHISPIR_USERNAME"), 
+                dotenv.get("WHISPIR_PASSWORD"), 
+                dotenv.get("API_URL"),
+                dotenv.get("WORKSPACE_ID"));
+//        MessageClient
+        MessageClient messageClient = new MessageClient(
+                dotenv.get("WHISPIR_USERNAME"), 
+                dotenv.get("WHISPIR_PASSWORD"), 
+                dotenv.get("API_URL"),
+                dotenv.get("WORKSPACE_ID"));
+        
         generateAuthToken();
-        createContact(
-                "TEst",
-                "TEST123",
-                "012345678",
-                "test@email.com",
-                "Australia",
-                "Australia/Melbourne");
+//        Contact
+        Contact contact = new Contact();
+        contact.firstName( "John");
+        contact.lastName("Wick");
+        contact.workMobilePhone1("61400400400");
+        contact.workEmailAddress1("testUser@example.com");
+        contact.workCountry("Australia");
+        contact.timezone("Australia/Melbourne");
+//        Message
+        Message message = new Message();
+        message.subject("Wick");
+        message.body("61400400400");
+        
+        
+        Contact postContact = contactClient.postContact(contact, dotenv.get("API_KEY"));
+        message.to(postContact.getWorkEmailAddress1());
+        Message postMessage = messageClient.postMessage(message, dotenv.get("API_KEY"));
+        
+        System.out.println(postMessage);
     }
 }

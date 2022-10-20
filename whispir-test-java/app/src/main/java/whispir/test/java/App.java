@@ -10,10 +10,22 @@ import org.openapitools.client.model.PostAuth200Response;
 import org.openapitools.client.model.Message;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import whispir_sdk_java.utils.WrapperInit;
 
 public class App {
+
     public String getGreeting() {
         return "Hello World!";
+    }
+
+    public static WrapperInit wrapperInit() {
+        WrapperInit wrapper = new WrapperInit();
+        Dotenv dotenv = Dotenv.load();
+        wrapper.setInitValues(dotenv.get("API_KEY"), 
+                "application/vnd.whispir.auth-v1+json", 
+                "application/vnd.whispir.auth-v1+json");
+        
+        return wrapper;
     }
 
     // creates an API client
@@ -51,6 +63,7 @@ public class App {
 
     public static void postMessage() {
         ApiClient client = createClient();
+        WrapperInit wrapper = wrapperInit();
         // initialize Message API
         MessagesApi messageApi = new MessagesApi(client);
         Message message = new Message();
@@ -63,10 +76,12 @@ public class App {
 
         try {
             // performs a Message API call
-            Message response = messageApi.postMessages(dotenv.get("WORKSPACE_ID"),
-                    dotenv.get("API_KEY"),
-                    message, "", "");
-            System.out.println(response);
+             Message response = messageApi.postMessages(dotenv.get("WORKSPACE_ID"),
+             wrapper.getApiKey(),
+             wrapper.getContentType(),
+             wrapper.getAccept(), 
+             message);
+             System.out.println(response);
         } catch (Exception e) {
             // TODO: handle exception
             System.out.println(e);

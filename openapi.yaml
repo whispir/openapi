@@ -3630,7 +3630,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.whispir.api-callback-v1+json:
               schema:
                 description: The callback object.
                 type: object
@@ -5779,6 +5779,7 @@ paths:
                     value:
                       token: your-generated-token-string
                       link: []
+
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5802,8 +5803,8 @@ paths:
       description: Create a JWT authentication token
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        # - $ref: '#/components/parameters/Auth-Content-Type'
-        # - $ref: '#/components/parameters/Auth-Accept'
+        - $ref: '#/components/parameters/Auth-Content-Type'
+        - $ref: '#/components/parameters/Auth-Accept'
       tags:
         - Auth
       security:

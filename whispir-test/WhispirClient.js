@@ -1,5 +1,4 @@
-const dotenv = require('dotenv')
-dotenv.config()
+
 const {
     ActivitiesApi,
     CallbacksApi,
@@ -18,6 +17,86 @@ const {
 } = require("../whispir-node/dist/api.js");
 
 const { generateOperationTypes } = require('./openapi-parser')
+
+
+const createClientFn = (key, params, api) => {
+    const parameterize = (pathParam, request, response) => {
+        let paramName = ''
+        let isOp = true
+
+        paramName = (pathParam['$ref']) ?
+            pathParam['$ref'].split('parameters/')[1].split('-').join('') : pathParam.name
+
+        if (
+            paramName.toLowerCase().includes('workspaceid')
+            || paramName.toLowerCase().includes('xapikey')
+            || paramName.toLowerCase().includes('accept')
+            || paramName.toLowerCase().includes('contenttype')
+        ) {
+            if (paramName === 'workspaceId') {
+                paramName = 'this.workspaceId'
+            }
+            if (paramName === 'XApiKey') {
+                paramName = 'this.apiKey'
+            }
+            if (paramName.toLowerCase().includes('accept')) {
+                if (response && response.length > 0) {
+                    paramName = `'${response.shift()}'`
+                } else {
+                    paramName = `'application/json'`
+                }
+            }
+            if (paramName.toLowerCase().includes('contenttype')) {
+                if (request && request.length > 0) {
+                    paramName = `'${request.shift()}'`
+                } else {
+                    paramName = `'application/json'`
+                }
+            }
+            isOp = false
+        }
+        return { paramName, isOp }
+    }
+    const {
+        operationId,
+        pathParams,
+        operationParams,
+        request,
+        response
+    } = params
+
+    let fnParams = []
+    let passedParams = []
+
+    pathParams.forEach(pathParam => {
+        const { paramName, isOp } = parameterize(pathParam, request, response)
+        passedParams.push(paramName)
+        if (isOp) fnParams.push(paramName)
+    })
+    operationParams.forEach(operationParam => {
+        const { paramName, isOp } = parameterize(operationParam, request, response)
+        passedParams.push(paramName)
+        if (isOp) fnParams.push(paramName)
+    })
+
+    passedParams = Array.from(new Set(passedParams))
+    fnParams = Array.from(new Set(fnParams))
+
+    const fnTemplate = `
+        async (${fnParams.join(', ')}) => {
+            const messageOptions = {
+                headers: {
+                    ...this.defaultOptions.headers,
+                }
+            }
+            
+            return this.${api}['${operationId}']
+            (${passedParams.join(', ')} , messageOptions);
+        }
+    `
+    // console.log('fn', fnTemplate)
+    return fnTemplate
+}
 
 class WhispirClient {
     // private auth;
@@ -42,19 +121,19 @@ class WhispirClient {
         this.workspacesApi = new WorkspacesApi(username, password, apiUrl)
 
         this.apiList = [
-            this.activitiesApi,
-            this.callbacksApi,
-            this.contactsApi,
-            this.customListsApi,
-            this.distributionListsApi,
-            this.eventsApi,
-            this.importsApi,
-            this.messagesApi,
-            this.resourcesApi,
-            this.responseRulesApi,
-            this.scenariosApi,
-            this.templatesApi,
-            this.workspacesApi
+            // { api: this.activitiesApi, name: 'activitiesApi' },
+            { api: this.callbacksApi, name: 'callbacksApi' },
+            { api: this.contactsApi, name: 'contactsApi' },
+            { api: this.customListsApi, name: 'customListsApi' },
+            { api: this.distributionListsApi, name: 'distributionListsApi' },
+            { api: this.eventsApi, name: 'eventsApi' },
+            { api: this.importsApi, name: 'importsApi' },
+            { api: this.messagesApi, name: 'messagesApi' },
+            { api: this.resourcesApi, name: 'resourcesApi' },
+            { api: this.responseRulesApi, name: 'responseRulesApi' },
+            { api: this.scenariosApi, name: 'scenariosApi' },
+            { api: this.templatesApi, name: 'templatesApi' },
+            { api: this.workspacesApi, name: 'workspacesApi' },
         ]
         this.defaultOptions = {
             headers: {
@@ -65,73 +144,14 @@ class WhispirClient {
         }
 
         const operationTypes = generateOperationTypes()
-
         for (const key in operationTypes) {
             this.apiList.forEach(api => {
-                if (api[key]) {
-                    if (key.includes('get')) {
-                        this[key] = () => {
-                            const accept = operationTypes[key].response ?
-                                operationTypes[key].response.shift() : 'application/json'
-                            const messageOptions = {
-                                headers: {
-                                    ...this.defaultOptions.headers,
-                                    'Accept': accept.toString() || 'application/json',
-                                }
-                            }
-                            return api[key](this.apiKey, accept, messageOptions)
-                        }
-                    } else if (key.includes('post') || key.includes('put')) {
-                        this[key] = (payload) => {
-                            const accept = operationTypes[key].response ?
-                                operationTypes[key].response.shift() : 'application/json'
-                            const contentType = operationTypes[key].request
-                                ? operationTypes[key].request.shift() : 'application/json'
-
-                            const messageOptions = {
-                                headers: {
-                                    ...this.defaultOptions.headers,
-                                    'Accept': accept.toString() || 'application/json',
-                                    'Content-Type': contentType.toString() || 'application/json'
-                                }
-                            }
-                            return api[key](this.workspaceId, this.apiKey, contentType, accept, payload, messageOptions)
-                        }
-                    }
+                if (api.api[key]) {
+                    this[key] = eval(createClientFn(key, operationTypes[key], api.name))
                 }
             })
         }
     }
-
-
 }
-const { API_URL, API_KEY, WHISPIR_USERNAME, WHISPIR_PASSWORD, WORKSPACE_ID } = process.env;
-async function main() {
-    const config = {
-        username: WHISPIR_USERNAME,
-        password: WHISPIR_PASSWORD,
-        apiUrl: API_URL,
-        workspaceId: WORKSPACE_ID,
-        apiKey: API_KEY
-    }
-    const client = new WhispirClient(config)
-    console.log(client)
 
-    // return await client.getCallbacks({ test: 123 })
-
-    const sampleMessage = {
-        to: '639911234567',
-        subject: `Hi there Buddy`,
-        body: `Hi there from Whispir"`,
-    }
-    // return await client.postMessages(sampleMessage)
-
-    return await client.getMessages()
-}
-main()
-    .then(({ body, response: { headers } }) => {
-        console.log('result', body, headers)
-    })
-    .catch(error => {
-        console.error(error)
-    })
+module.exports = WhispirClient

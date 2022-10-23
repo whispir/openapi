@@ -148,8 +148,8 @@ public class App {
         
         Contact postContact = contactClient.postContact(contact, dotenv.get("API_KEY"));
         message.to(postContact.getWorkEmailAddress1());
-        Message postMessage = messageClient.postMessage(message, dotenv.get("API_KEY"));
+//        Message postMessage = messageClient.postMessage(message, dotenv.get("API_KEY"));
         
-        System.out.println(postMessage);
+        System.out.println(postContact);
     }
 }

@@ -11,6 +11,7 @@ import org.openapitools.client.model.Message;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import whispir_sdk_java.utils.WrapperInit;
+import whispir_wrapped_java.Client;
 import whispir_wrapped_java.MessageClient;
 
 public class App {
@@ -63,16 +64,19 @@ public class App {
     }
 
     public static void postMessage() {
-        ApiClient client = createClient();
-        WrapperInit wrapper = wrapperInit();
-        // initialize Message API
         Dotenv dotenv = Dotenv.load();
-        MessageClient messageClient = new MessageClient(
+        Client apiClient = new Client( dotenv.get("API_URL"),
                 dotenv.get("WHISPIR_USERNAME"),
                 dotenv.get("WHISPIR_PASSWORD"),
-                dotenv.get("API_URL"),
-                dotenv.get("WORKSPACE_ID")
-        );
+                        dotenv.get("WORKSPACE_ID"));
+        // initialize Message API
+        MessageClient clientMessage = apiClient.MessageClient();
+////        MessageClient messageClient = new MessageClient(
+////                dotenv.get("WHISPIR_USERNAME"),
+////                dotenv.get("WHISPIR_PASSWORD"),
+////                dotenv.get("API_URL"),
+////                dotenv.get("WORKSPACE_ID")
+////        );
         Message message = new Message();
         
         
@@ -85,11 +89,11 @@ public class App {
         try {
             // performs a Message API call
 //             Message response = messageApi.postMessages(dotenv.get("WORKSPACE_ID"),
-//             wrapper.getApiKey(),
+//             wrapper.getApiKey(),/Users/carlangeloorale/Documents/programming/whispir/openapi/whispir-test-java/app/.env
 //             wrapper.getContentType(),
 //             wrapper.getAccept(), 
 //             message);
-               Message response = messageClient.postMessage(message, dotenv.get("API_KEY"));
+               Message response = apiClient.MessageClient().postMessage(message, dotenv.get("API_KEY"));
              System.out.println(response);
         } catch (Exception e) {
             // TODO: handle exception

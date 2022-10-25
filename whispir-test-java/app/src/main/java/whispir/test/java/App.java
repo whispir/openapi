@@ -5,6 +5,8 @@ package whispir.test.java;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import java.math.BigDecimal;
+import org.openapitools.client.model.Contact;
+import org.openapitools.client.model.GetContacts200Response;
 import org.openapitools.client.model.GetMessageResponsesById200Response;
 import org.openapitools.client.model.GetMessages200Response;
 import org.openapitools.client.model.Message;
@@ -13,213 +15,288 @@ import org.openapitools.client.model.PostAuth200Response;
 import org.whispir.api.AuthApi;
 import whispir_sdk_java.ApiClient;
 import whispir_sdk_java.ApiException;
-import whispir_sdk_java.utils.WrapperInit;
 import whispir_wrapped_java.Client;
 
 public class App {
 
-  private static final String MESSAGE_ID = "";
-  private static final BigDecimal LIMIT = new BigDecimal("0.03");
-  private static final BigDecimal OFFSET = new BigDecimal("0.04");
-  private static final String SORT_ORDER = "body";
-  private static final String SORT_FIELDS = "asc";
-  private static final String VIEW = "summary";
-  private static final String FILTER = "default";
+    private static final String MESSAGE_ID = "1715282F3797523E";
+    private static final String CONTACT_ID = "";
+    private static final BigDecimal LIMIT = new BigDecimal(20);
+    private static final BigDecimal OFFSET = new BigDecimal(0);
+    private static final String SORT_ORDER = "asc";
+    private static final String SORT_FIELDS = "body";
+    private static final String VIEW = "summary";
+    private static final String FILTER = "default";
 
-  public String getGreeting() {
-    return "Hello World!";
-  }
-
-  public static WrapperInit wrapperInit() {
-    WrapperInit wrapper = new WrapperInit();
-    Dotenv dotenv = Dotenv.load();
-    wrapper.setInitValues(
-      dotenv.get("API_KEY"),
-      "application/vnd.whispir.auth-v1+json",
-      "application/vnd.whispir.auth-v1+json"
-    );
-
-    return wrapper;
-  }
-
-  // creates an API client
-  // setting up the API URL and Whispir username and password
-  public static ApiClient createClient() {
-    ApiClient client;
-    client = new ApiClient();
-    Dotenv dotenv = Dotenv.load();
-
-    String API_URL = dotenv.get("API_URL");
-
-    client.setBasePath(API_URL);
-    client.setUsername(dotenv.get("WHISPIR_USERNAME"));
-    client.setPassword(dotenv.get("WHISPIR_PASSWORD"));
-    return client;
-  }
-
-  public static void generateAuthToken() {
-    ApiClient client = createClient();
-    // initialize Auth API
-    AuthApi authApi = new AuthApi(client);
-    Dotenv dotenv = Dotenv.load();
-    try {
-      // performs an Auth API post to request for token
-      PostAuth200Response response = authApi.postAuth(
-        dotenv.get("API_KEY"),
-        "application/vnd.whispir.auth-v1+json",
-        "application/vnd.whispir.auth-v1+json"
-      );
-      System.out.println(response);
-    } catch (ApiException e) {
-      // TODO: handle exception
-      System.out.println(e);
+    public String getGreeting() {
+        return "Hello World!";
     }
-  }
 
-  public static void postMessage() {
-    Dotenv dotenv = Dotenv.load();
-    Client apiClient = new Client(
-      dotenv.get("API_URL"),
-      dotenv.get("WHISPIR_USERNAME"),
-      dotenv.get("WHISPIR_PASSWORD"),
-      dotenv.get("WORKSPACE_ID")
-    );
-    // initialize Message API
-    Message message = new Message();
+    // creates an API client
+    // setting up the API URL and Whispir username and password
+    public static ApiClient createClient() {
+        ApiClient client;
+        client = new ApiClient();
+        Dotenv dotenv = Dotenv.load();
 
-    // initialize message with params
-    message.to("052215685521");
-    message.subject("Hi there!");
-    message.body("Hello, this is a test");
+        String API_URL = dotenv.get("API_URL");
 
-    try {
-      // performs a Message API call
-      Message response = apiClient
-        .messageClient()
-        .postMessage(message, dotenv.get("API_KEY"));
-      System.out.println(response);
-    } catch (Exception e) {
-      // TODO: handle exception
-      System.out.println(e);
+        client.setBasePath(API_URL);
+        client.setUsername(dotenv.get("WHISPIR_USERNAME"));
+        client.setPassword(dotenv.get("WHISPIR_PASSWORD"));
+        return client;
     }
-  }
 
-  public static void listMessages() {
-    // initialize Message API
-    Dotenv dotenv = Dotenv.load();
-    Client apiClient = new Client(
-      dotenv.get("API_URL"),
-      dotenv.get("WHISPIR_USERNAME"),
-      dotenv.get("WHISPIR_PASSWORD"),
-      dotenv.get("WORKSPACE_ID")
-    );
-    try {
-      // performs a Message API call
-      GetMessages200Response response = apiClient
-        .messageClient()
-        .listMessages(
-          dotenv.get("API_KEY"),
-          LIMIT,
-          OFFSET,
-          SORT_ORDER,
-          SORT_FIELDS
+    public static void generateAuthToken() {
+        ApiClient client = createClient();
+        // initialize Auth API
+        AuthApi authApi = new AuthApi(client);
+        Dotenv dotenv = Dotenv.load();
+        try {
+            // performs an Auth API post to request for token
+            PostAuth200Response response = authApi.postAuth(
+                    dotenv.get("API_KEY"),
+                    "application/vnd.whispir.auth-v1+json",
+                    "application/vnd.whispir.auth-v1+json"
+            );
+            System.out.println(response);
+        } catch (ApiException e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
+    }
+
+    public static void postMessage() {
+        Dotenv dotenv = Dotenv.load();
+        Client apiClient = new Client(
+                dotenv.get("API_URL"),
+                dotenv.get("WHISPIR_USERNAME"),
+                dotenv.get("WHISPIR_PASSWORD"),
+                dotenv.get("WORKSPACE_ID")
         );
-      System.out.println(response);
-    } catch (Exception e) {
-      // TODO: handle exception
-      System.out.println(e);
-    }
-  }
+        // initialize Message API
+        Message message = new Message();
 
-  public static void retrieveMessage() {
-    // initialize Message API
-    Dotenv dotenv = Dotenv.load();
-    Client apiClient = new Client(
-      dotenv.get("API_URL"),
-      dotenv.get("WHISPIR_USERNAME"),
-      dotenv.get("WHISPIR_PASSWORD"),
-      dotenv.get("WORKSPACE_ID")
-    );
-    try {
-      // performs a Message API call
-      Message response = apiClient
-        .messageClient()
-        .retrieveMessage(dotenv.get("API_KEY"), MESSAGE_ID);
-      System.out.println(response);
-    } catch (Exception e) {
-      // TODO: handle exception
-      System.out.println(e);
-    }
-  }
+        // initialize message with params
+        message.to("052215685521");
+        message.subject("Hi there!");
+        message.body("Hello, this is a test");
 
-  public static void retrieveMessageStatus() {
-    // initialize Message API
-    Dotenv dotenv = Dotenv.load();
-    Client apiClient = new Client(
-      dotenv.get("API_URL"),
-      dotenv.get("WHISPIR_USERNAME"),
-      dotenv.get("WHISPIR_PASSWORD"),
-      dotenv.get("WORKSPACE_ID")
-    );
-    try {
-      // performs a Message API call
-      MessageStatus response = apiClient
-        .messageClient()
-        .retrieveMessageStatus(
-          dotenv.get("API_KEY"),
-          MESSAGE_ID,
-          LIMIT,
-          OFFSET,
-          SORT_ORDER,
-          SORT_FIELDS,
-          VIEW,
-          FILTER
+        try {
+            // performs a Message API call
+            Message response = apiClient
+                    .messageClient()
+                    .postMessage(message, dotenv.get("API_KEY"));
+            System.out.println(response);
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
+    }
+
+    public static void listMessages() {
+        // initialize Message API
+        Dotenv dotenv = Dotenv.load();
+        Client apiClient = new Client(
+                dotenv.get("API_URL"),
+                dotenv.get("WHISPIR_USERNAME"),
+                dotenv.get("WHISPIR_PASSWORD"),
+                dotenv.get("WORKSPACE_ID")
         );
-      System.out.println(response);
-    } catch (Exception e) {
-      // TODO: handle exception
-      System.out.println(e);
+        try {
+            // performs a Message API call
+            GetMessages200Response response = apiClient
+                    .messageClient()
+                    .listMessages(
+                            dotenv.get("API_KEY"),
+                            LIMIT,
+                            OFFSET,
+                            SORT_ORDER,
+                            SORT_FIELDS
+                    );
+            System.out.println(response);
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
     }
-  }
 
-  public static void retrieveMessageResponse() {
-    // initialize Message API
-    Dotenv dotenv = Dotenv.load();
-    Client apiClient = new Client(
-      dotenv.get("API_URL"),
-      dotenv.get("WHISPIR_USERNAME"),
-      dotenv.get("WHISPIR_PASSWORD"),
-      dotenv.get("WORKSPACE_ID")
-    );
-    try {
-      // performs a Message API call
-      GetMessageResponsesById200Response response = apiClient
-        .messageClient()
-        .retrieveMessageResponse(
-          dotenv.get("API_KEY"),
-          MESSAGE_ID,
-          LIMIT,
-          OFFSET,
-          SORT_ORDER,
-          SORT_FIELDS,
-          VIEW,
-          FILTER
+    public static void retrieveMessage() {
+        // initialize Message API
+        Dotenv dotenv = Dotenv.load();
+        Client apiClient = new Client(
+                dotenv.get("API_URL"),
+                dotenv.get("WHISPIR_USERNAME"),
+                dotenv.get("WHISPIR_PASSWORD"),
+                dotenv.get("WORKSPACE_ID")
         );
-      System.out.println(response);
-    } catch (Exception e) {
-      // TODO: handle exception
-      System.out.println(e);
+        try {
+            // performs a Message API call
+            Message response = apiClient
+                    .messageClient()
+                    .retrieveMessage(dotenv.get("API_KEY"), MESSAGE_ID);
+//            System.out.println(response);
+            System.out.println("response");
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
     }
-  }
 
-  public static void main(String[] args) {
-    System.out.println(new App().getGreeting());
-    generateAuthToken();
-    //        postMessage();
-    //        listMessages();
-    //        retrieveMessage();
-    //        retrieveMessageStatus();
-    //        retrieveMessageResponse();
+    public static void retrieveMessageStatus() {
+        // initialize Message API
+        Dotenv dotenv = Dotenv.load();
+        Client apiClient = new Client(
+                dotenv.get("API_URL"),
+                dotenv.get("WHISPIR_USERNAME"),
+                dotenv.get("WHISPIR_PASSWORD"),
+                dotenv.get("WORKSPACE_ID")
+        );
+        try {
+            // performs a Message API call
+            MessageStatus response = apiClient
+                    .messageClient()
+                    .retrieveMessageStatus(
+                            dotenv.get("API_KEY"),
+                            MESSAGE_ID,
+                            new BigDecimal(20),
+                            new BigDecimal(0),
+                            SORT_ORDER,
+                            SORT_FIELDS,
+                            VIEW,
+                            FILTER
+                    );
+            System.out.println(response);
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
+    }
 
-  }
+    public static void retrieveMessageResponse() {
+        // initialize Message API
+        Dotenv dotenv = Dotenv.load();
+        Client apiClient = new Client(
+                dotenv.get("API_URL"),
+                dotenv.get("WHISPIR_USERNAME"),
+                dotenv.get("WHISPIR_PASSWORD"),
+                dotenv.get("WORKSPACE_ID")
+        );
+        try {
+            // performs a Message API call
+            GetMessageResponsesById200Response response = apiClient
+                    .messageClient()
+                    .retrieveMessageResponse(
+                            dotenv.get("API_KEY"),
+                            MESSAGE_ID,
+                            LIMIT,
+                            OFFSET,
+                            SORT_ORDER,
+                            "link",
+                            VIEW,
+                            "noresponse"
+                    );
+            System.out.println(response);
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
+    }
+
+    // CONTACT CLIENT
+    public static void createContact() {
+        Dotenv dotenv = Dotenv.load();
+        Client apiClient = new Client(
+                dotenv.get("API_URL"),
+                dotenv.get("WHISPIR_USERNAME"),
+                dotenv.get("WHISPIR_PASSWORD"),
+                dotenv.get("WORKSPACE_ID")
+        );
+        // initialize Message API
+        Contact contact = new Contact();
+
+        contact.firstName("John");
+        contact.lastName("Wick");
+        contact.workMobilePhone1("61400400400");
+        contact.workEmailAddress1("testUser@example.com");
+        contact.workCountry("Australia");
+
+        contact.timezone("Australia/Melbourne");
+
+        // initialize message with params
+        try {
+            // performs a Message API call
+            Contact response = apiClient
+                    .contactClient()
+                    .createContact(contact, dotenv.get("API_KEY"));
+//            System.out.println(response);
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
+    }
+
+    public static void listContacts() {
+        // initialize Message API
+        Dotenv dotenv = Dotenv.load();
+        Client apiClient = new Client(
+                dotenv.get("API_URL"),
+                dotenv.get("WHISPIR_USERNAME"),
+                dotenv.get("WHISPIR_PASSWORD"),
+                dotenv.get("WORKSPACE_ID")
+        );
+        try {
+            // performs a Message API call
+            GetContacts200Response response = apiClient
+                    .contactClient()
+                    .listContacts(
+                            dotenv.get("API_KEY"),
+                            LIMIT,
+                            OFFSET,
+                            SORT_ORDER,
+                            "link",
+                            "",
+                            true
+                    );
+            System.out.println(response);
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
+    }
+
+    public static void retrieveContact() {
+        // initialize Message API
+        Dotenv dotenv = Dotenv.load();
+        Client apiClient = new Client(
+                dotenv.get("API_URL"),
+                dotenv.get("WHISPIR_USERNAME"),
+                dotenv.get("WHISPIR_PASSWORD"),
+                dotenv.get("WORKSPACE_ID")
+        );
+        try {
+            // performs a Message API call
+            
+            System.out.println(response);
+            System.out.println("response");
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new App().getGreeting());
+        generateAuthToken();
+//      postMessage();
+
+//      listMessages();
+//      retrieveMessage();
+//      retrieveMessageStatus();
+//      retrieveMessageResponse();
+//      createContact();
+//      listContacts();
+        retrieveContact();
+    }
 }

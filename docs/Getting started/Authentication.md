@@ -27,13 +27,6 @@ API key information is provided via the ‘headers’, using the `x-api-key` hea
 ```json
 Example - if your region is AP
 
-Previous API key sending mechanism:
-
-https://api.whispir.com?apikey=YOUR-API-KEY
-Authorization: Basic YOUR-AUTH-HEADER
-
-New API base URL based on region with API key sent via headers:
-
 https://api.ap.whispir.com
 Authorization: Basic YOUR-AUTH-HEADER
 x-api-key: YOUR-API-KEY

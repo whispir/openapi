@@ -1,19 +1,13 @@
 name: Whispir Node SDK generator
 
 on:
-  push:
-    branches:
-      - main
+  release:
+    types: [published]
 
 jobs:
   Create-Release:
     runs-on: ubuntu-latest
     steps:
-      - name: UUID Action
-        id: uuid
-        uses: whispir/uuid-action@main
-      - name: number
-        run: echo ${{steps.uuid.outputs.uuid}}
       # Checkout whispir/openapi repo
       - uses: whispir/checkout@main
       # Clone whispir/whispir-node
@@ -29,7 +23,7 @@ jobs:
       - name: Create release branch
         run: |
           cd whispir-node/
-          git checkout -b release/${{steps.uuid.outputs.uuid}}
+          git checkout -b release/${{github.ref_name}}
       # Generate Node SDK
       - uses: whispir/setup-node@main
         with:
@@ -45,21 +39,21 @@ jobs:
           git config --global user.email "${{github.actor}}@users.noreply.github.com"
           git config --global user.name "${{github.actor}}"
           git add -A
-          git commit --message "Prepare release ${{steps.uuid.outputs.uuid}}"
+          git commit --message "Prepare release ${{github.ref_name}}"
           echo "::set-output name=commit::$(git rev-parse HEAD)"
       - name: Push new branch
         run: |
           cd whispir-node/
-          git push origin release/${{steps.uuid.outputs.uuid}}
+          git push origin release/${{github.ref_name}}
       # Create PR
       - name: Create pull request into main
         uses: whispir/create-pull-request@main
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          head: release/${{steps.uuid.outputs.uuid}}
+          head: release/${{github.ref_name}}
           repository: whispir/whispir-node
           base: main
-          title: ${{steps.uuid.outputs.uuid}} into main
+          title: "chore: Release ${{github.ref_name}}"
           body: |
             Hi!
             This PR was created in response workflow running.

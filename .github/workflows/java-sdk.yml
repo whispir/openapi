@@ -35,8 +35,8 @@ jobs:
         with:
           node-version: 16
       - run: |
-          cd whispir-sdk-codegen/
-          yarn add @openapitools/openapi-generator-cli
+          cd whispir-sdk-codegen
+          yarn install
           yarn generate
       - name: Commit changelog and manifest files
         id: make-commit

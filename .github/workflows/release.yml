@@ -2,24 +2,31 @@ name: Changelog and Version
 
 on:
   push:
-    branches:
-      - 'main'
+    branches: ["*"]
 
 jobs:
   release:
-      name: Changelog and Version
-      runs-on: ubuntu-latest
-      steps:
-      - uses: TriPSs/conventional-changelog-action@v3
-        id: changelog
-        with:
-          github-token: ${{ secrets.github_token }}
-          output-file: "false"
-      - uses: actions/create-release@v1
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
-        with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          release_name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+    name: Changelog and Version
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: TriPSs/conventional-changelog-action@v3
+      id: changelog
+      with:
+        github-token: ${{ secrets.github_token }}
+    - uses: actions/create-release@v1
+      if: ${{ steps.changelog.outputs.skipped == 'false' }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.github_token }}
+      with:
+        tag_name: ${{ steps.changelog.outputs.tag }}
+        release_name: ${{ steps.changelog.outputs.tag }}
+        body: ${{ steps.changelog.outputs.clean_changelog }}
+    - name: Update values.yaml
+      uses: fjogeleit/yaml-update-action@v0.11.0
+      with:
+        valueFile: 'openapi.yaml'
+        propertyPath: 'info.version'
+        value: ${{ steps.changelog.outputs.tag }}
+        commitChange: false
+        updateFile: true

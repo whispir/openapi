@@ -53,7 +53,7 @@ jobs:
           head: release/${{github.ref_name}}
           repository: whispir/whispir-node
           base: main
-          title: "feat(release): ${{github.ref_name}} into main"
+          title: "chore: Release ${{github.ref_name}}"
           body: |
             Hi!
             This PR was created in response workflow running.

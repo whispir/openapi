@@ -16,6 +16,7 @@ jobs:
           github-token: ${{ secrets.github_token }}
           version-file: openapi.yaml
           version-path: info.version
+          release-count: 0
       - uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         env:

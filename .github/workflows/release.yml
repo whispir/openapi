@@ -1,4 +1,4 @@
-name: Changelog and Version
+name: Changelog & Version
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   release:
-    name: Changelog and Version
+    name: Changelog & Version
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

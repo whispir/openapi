@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/whispir/openapi/compare/v1.1.1...v1.1.2) (2022-10-26)
+
+
+### Bug Fixes
+
+* **release:** use github actor as committer ([237e463](https://github.com/whispir/openapi/commit/237e4634c5bd95848eec97e122cbdaa63ace2593))
+
+
+
 ## [1.1.1](https://github.com/whispir/openapi/compare/v1.1.0...v1.1.1) (2022-10-26)
 
 

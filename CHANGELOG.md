@@ -1,4 +1,13 @@
-# 1.1.0 (2022-10-26)
+## [1.1.1](https://github.com/whispir/openapi/compare/v1.1.0...v1.1.1) (2022-10-26)
+
+
+### Bug Fixes
+
+* **openapi:** spec version ([a316bb4](https://github.com/whispir/openapi/commit/a316bb4304609c13a0865afef8f7da441dac9d21))
+
+
+
+# [1.1.0](https://github.com/whispir/openapi/compare/f923b5ea442efbe8383d9cc8e48438a4a546bd65...v1.1.0) (2022-10-26)
 
 
 ### Bug Fixes

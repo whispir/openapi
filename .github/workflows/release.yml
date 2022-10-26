@@ -9,17 +9,18 @@ jobs:
     name: Changelog and Version
     runs-on: ubuntu-latest
     steps:
-    - uses: TriPSs/conventional-changelog-action@v3
-      id: changelog
-      with:
-        github-token: ${{ secrets.github_token }}
-        version-file: openapi.yaml
-        version-path: info.version
-    - uses: actions/create-release@v1
-      if: ${{ steps.changelog.outputs.skipped == 'false' }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.github_token }}
-      with:
-        tag_name: ${{ steps.changelog.outputs.tag }}
-        release_name: ${{ steps.changelog.outputs.tag }}
-        body: ${{ steps.changelog.outputs.clean_changelog }}
+      - uses: actions/checkout@v2
+      - uses: TriPSs/conventional-changelog-action@v3
+        id: changelog
+        with:
+          github-token: ${{ secrets.github_token }}
+          version-file: openapi.yaml
+          version-path: info.version
+      - uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}

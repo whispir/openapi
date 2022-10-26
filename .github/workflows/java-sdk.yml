@@ -1,4 +1,4 @@
-name: Whispir Node SDK generator
+name: Whispir Java SDK generator
 
 on:
   push:
@@ -16,21 +16,21 @@ jobs:
         run: echo ${{steps.uuid.outputs.uuid}}
       # Checkout whispir/openapi repo
       - uses: whispir/checkout@main
-      # Clone whispir/whispir-node
-      - name: Clone Whispir-Node
+      # Clone whispir/whispir-java
+      - name: Clone Whispir-Java
         if: success()
         uses: whispir/checkout@main
         with:
-          repository: whispir/${{secrets.GH_REPO}}
+          repository: whispir/${{secrets.JAVA_GH_REPO}}
           ref: "main"
-          path: whispir-node
-          token: ${{ secrets.GH_TOKEN }}
+          path: whispir-java
+          token: ${{ secrets.JAVA_GH_TOKEN }}
       # Create release branch
       - name: Create release branch
         run: |
-          cd whispir-node/
+          cd whispir-java/
           git checkout -b release/${{steps.uuid.outputs.uuid}}
-      # Generate Node SDK
+      # Generate Java SDK
       - uses: whispir/setup-node@main
         with:
           node-version: 16
@@ -41,7 +41,7 @@ jobs:
       - name: Commit changelog and manifest files
         id: make-commit
         run: |
-          cd whispir-node/
+          cd whispir-java/
           git config --global user.email "${{github.actor}}@users.noreply.github.com"
           git config --global user.name "${{github.actor}}"
           git add -A
@@ -49,7 +49,7 @@ jobs:
           echo "::set-output name=commit::$(git rev-parse HEAD)"
       - name: Push new branch
         run: |
-          cd whispir-node/
+          cd whispir-java/
           git push origin release/${{steps.uuid.outputs.uuid}}
       # Create PR
       - name: Create pull request into main
@@ -57,7 +57,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           head: release/${{steps.uuid.outputs.uuid}}
-          repository: whispir/whispir-node
+          repository: whispir/whispir-java
           base: main
           title: ${{steps.uuid.outputs.uuid}} into main
           body: |

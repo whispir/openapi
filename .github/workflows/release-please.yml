@@ -11,5 +11,6 @@ jobs:
         with:
           release-type: node
           package-name: release-please-action
+          bootstrap-sha: c45ff877b4b925ec9beef034898d5977f29c6a6c
           extra-files: |
             openapi.yaml

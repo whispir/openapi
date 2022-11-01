@@ -1,6 +1,7 @@
 name: Check PR title
 on:
-  - pull_request
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
 
 jobs:
   lint:

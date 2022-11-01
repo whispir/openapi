@@ -1,22 +1,21 @@
-name: Whispir Node SDK generator
+name: generate-node-sdk
 
 on:
   release:
-    types: [published]
 
 jobs:
-  Create-Release:
+  generate-node-sdk:
     runs-on: ubuntu-latest
     steps:
       # Checkout whispir/openapi repo
-      - uses: whispir/checkout@main
+      - uses: actions/checkout@v2
       # Clone whispir/whispir-node
       - name: Clone Whispir-Node
         if: success()
-        uses: whispir/checkout@main
+        uses: actions/checkout@v2
         with:
           repository: whispir/${{secrets.GH_REPO}}
-          ref: "main"
+          ref: 'main'
           path: whispir-node
           token: ${{ secrets.GH_TOKEN }}
       # Create release branch
@@ -25,7 +24,7 @@ jobs:
           cd whispir-node/
           git checkout -b release/${{github.ref_name}}
       # Generate Node SDK
-      - uses: whispir/setup-node@main
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
       - run: |
@@ -47,13 +46,13 @@ jobs:
           git push origin release/${{github.ref_name}}
       # Create PR
       - name: Create pull request into main
-        uses: whispir/create-pull-request@main
+        uses: peter-evans/create-pull-request@v4
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           head: release/${{github.ref_name}}
           repository: whispir/whispir-node
           base: main
-          title: "chore: Release ${{github.ref_name}}"
+          title: 'chore: Release ${{github.ref_name}}'
           body: |
             Hi!
             This PR was created in response workflow running.

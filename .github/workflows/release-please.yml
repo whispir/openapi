@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - release-please-openapi-version
+      - main
 name: release-please
 jobs:
   release-please:
@@ -11,7 +11,5 @@ jobs:
         with:
           release-type: simple
           package-name: openapi
-          bootstrap-sha: c45ff877b4b925ec9beef034898d5977f29c6a6c
-          default-branch: release-please-openapi-version
           extra-files: |
             openapi.yaml

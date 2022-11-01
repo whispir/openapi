@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: google-github-actions/release-please-action@v3
         with:
-          release-type: node
-          package-name: release-please-action
+          release-type: simple
+          package-name: openapi
           bootstrap-sha: c45ff877b4b925ec9beef034898d5977f29c6a6c
           default-branch: release-please-openapi-version

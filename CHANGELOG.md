@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/whispir/openapi/compare/v1.0.0...v1.0.1) (2022-11-01)
+
+
+### Bug Fixes
+
+* Openapi decsription ([97b5164](https://github.com/whispir/openapi/commit/97b5164a0b0bd4c9820cf41ed9058ac1e5285d5f))
+* remove unecessary config ([32ce34b](https://github.com/whispir/openapi/commit/32ce34b40ed2f0f9e5c1309d2a1f4788d059002e))
+
 ## 1.0.0 (2022-11-01)
 
 

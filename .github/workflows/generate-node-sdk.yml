@@ -24,7 +24,7 @@ jobs:
           cd whispir-node/
           git checkout -b release/${{github.ref_name}}
       # Generate Node SDK
-      - uses: whispir/setup-node@main
+      - uses: actions/setup-node@v3
         with:
           node-version: 16
       - run: |
@@ -46,7 +46,7 @@ jobs:
           git push origin release/${{github.ref_name}}
       # Create PR
       - name: Create pull request into main
-        uses: whispir/create-pull-request@main
+        uses: peter-evans/create-pull-request@v4
         with:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           head: release/${{github.ref_name}}

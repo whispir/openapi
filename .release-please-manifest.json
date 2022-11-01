@@ -1,0 +1,9 @@
+{
+    "extra-files": [
+        {
+            "type": "yaml",
+            "path": "openapi.yaml",
+            "jsonpath": "$.info.version"
+        }
+    ]
+}

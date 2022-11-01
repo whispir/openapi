@@ -11238,6 +11238,7 @@ components:
         enum:
           - application/vnd.whispir.api-call-v1+json
           - application/vnd.whispir.api-call-v1+xml
+      description: Application specific mime-type.
     Resource-Content-Type:
       required: true
       schema:

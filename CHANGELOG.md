@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/whispir/openapi/compare/v1.0.0...v1.0.1) (2022-11-02)
+
+
+### Bug Fixes
+
+* Trigger sdk PRs on publish event ([#135](https://github.com/whispir/openapi/issues/135)) ([60fbfa3](https://github.com/whispir/openapi/commit/60fbfa35edb8bad4295bdc04031c3811a1aaffb6))
+
 ## 1.0.0 (2022-11-01)
 
 

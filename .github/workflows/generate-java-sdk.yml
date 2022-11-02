@@ -2,6 +2,7 @@ name: generate-java-sdk
 
 on:
   release:
+    types: [published]
 
 jobs:
   generate-java-sdk:

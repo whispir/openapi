@@ -2,6 +2,7 @@ name: generate-node-sdk
 
 on:
   release:
+    types: [published]
 
 jobs:
   generate-node-sdk:

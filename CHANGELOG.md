@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/whispir/openapi/compare/v1.0.1...v1.0.2) (2022-11-02)
+
+
+### Bug Fixes
+
+* utilize PAT to trigger other workflows ([#137](https://github.com/whispir/openapi/issues/137)) ([85d6180](https://github.com/whispir/openapi/commit/85d6180cb2a0641f8d1f45863d12a808a77d1174))
+
 ## [1.0.1](https://github.com/whispir/openapi/compare/v1.0.0...v1.0.1) (2022-11-02)
 
 

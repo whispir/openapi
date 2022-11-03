@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/whispir/openapi/compare/v1.0.2...v1.0.3) (2022-11-03)
+
+
+### Bug Fixes
+
+* updated generate node and java sdk workflows ([#139](https://github.com/whispir/openapi/issues/139)) ([3903252](https://github.com/whispir/openapi/commit/390325219b6eeaa7ab018347e1d68c7bed374fd3))
+
 ## [1.0.2](https://github.com/whispir/openapi/compare/v1.0.1...v1.0.2) (2022-11-02)
 
 

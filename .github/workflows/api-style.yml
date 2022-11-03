@@ -1,0 +1,14 @@
+name: api-style
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited]
+
+jobs:
+  api-style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: stoplightio/spectral-action@v0.8.8
+        with:
+          file_glob: '*.yaml'

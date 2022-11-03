@@ -1,0 +1,60 @@
+name: generate-java-sdk
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  generate-java-sdk:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout whispir/openapi repo
+      - uses: actions/checkout@v2
+      # Clone whispir/whispir-java
+      - name: Clone Whispir-Java
+        if: success()
+        uses: actions/checkout@v2
+        with:
+          repository: whispir/${{secrets.JAVA_GH_REPO}}
+          ref: 'main'
+          path: whispir-java
+          token: ${{ secrets.JAVA_GH_TOKEN }}
+      # Create release branch
+      - name: Create release branch
+        run: |
+          cd whispir-java/
+          git checkout -b release/${{github.ref_name}}
+      # Generate Java SDK
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: |
+          cd whispir-sdk-codegen
+          yarn install
+          yarn generate
+      - name: Commit changelog and manifest files
+        id: make-commit
+        run: |
+          cd whispir-java/
+          git config --global user.email "${{github.actor}}@users.noreply.github.com"
+          git config --global user.name "${{github.actor}}"
+          git add -A
+          git commit --message "Prepare release ${{github.ref_name}}"
+          echo "::set-output name=commit::$(git rev-parse HEAD)"
+      - name: Push new branch
+        run: |
+          cd whispir-java/
+          git push origin release/${{github.ref_name}}
+      # Create PR
+      - name: Create pull request into main
+        uses: peter-evans/create-pull-request@v4
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          head: release/${{github.ref_name}}
+          repository: whispir/whispir-java
+          base: main
+          title: 'chore: Release ${{github.ref_name}}'
+          body: |
+            Hi!
+            This PR was created in response workflow running.
+            I've updated the version name and code commit: ${{ steps.make-commit.outputs.commit }}.

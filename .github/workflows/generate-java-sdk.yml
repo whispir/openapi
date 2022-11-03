@@ -15,10 +15,10 @@ jobs:
         if: success()
         uses: actions/checkout@v2
         with:
-          repository: whispir/${{secrets.JAVA_GH_REPO}}
+          repository: whispir/whispir-java
           ref: 'main'
           path: whispir-java
-          token: ${{ secrets.JAVA_GH_TOKEN }}
+          token: ${{ secrets.PAT }}
       # Create release branch
       - name: Create release branch
         run: |
@@ -48,8 +48,9 @@ jobs:
       # Create PR
       - name: Create pull request into main
         uses: peter-evans/create-pull-request@v4
+        uses: thomaseizinger/create-pull-request@08c462ea5f7e036ae693796541404b4297a480d6 # 1.2.2
         with:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
           head: release/${{github.ref_name}}
           repository: whispir/whispir-java
           base: main

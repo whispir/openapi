@@ -1,7 +1,9 @@
 openapi: 3.0.0
 info:
   description: 'Whispir Platform API for cross channel and multi channel communications. Documentation on each endpoint is available at https://developers.whispir.com.'
-  version: 1.0.0
+  # x-release-please-start-version
+  version: 1.0.3
+  # x-release-please-end
   title: Whispir Platform API
   termsOfService: 'https://www.whispir.com/terms-of-service'
   contact:
@@ -3086,6 +3088,17 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
+            examples:
+              example-1:
+                value:
+                  name: Fire Evacuation Block A
+                  description: Fire evacuation notification for A block residents
+                  allowedUsers: SELECTEDUSERS
+                  allowedUserIds: string
+                  message:
+                    to: '61400400400'
+                    subject: Test Message
+                    body: This is the body of my test SMS message
         description: Scenario list object that needs to be create Scenario
         required: true
       responses:
@@ -3154,6 +3167,55 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+          content:
+            application/json:
+              schema:
+                type: object
+                description: List of retrieved scenarios
+                properties:
+                  scenarios:
+                    type: array
+                    description: Scenario object
+                    items:
+                      $ref: '#/components/schemas/scenario'
+              examples:
+                example-1:
+                  value:
+                    scenarios:
+                      - name: Fire Evacuation Block A
+                        description: Fire evacuation notification for A block residents
+                        allowedUsers: SELECTEDUSERS
+                        allowedUserIds: 4DC922649AFE370C
+                        message:
+                          to: '61400400400'
+                          subject: Test Message
+                          body: This is the body of my test SMS message
+                        to: '61400400400'
+                        subject: Fire Evacuation
+                        label: fire-evacuation
+                        email:
+                          body: This is the body of my email message.
+                          footer: This is the footer of my message.
+                          type: text/plain
+                        voice:
+                          header: 'This is the introduction, read out to the recipient prior to any key press.'
+                          body: 'This is the body of the voice call, read out after the key press'
+                          type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                          footer: ''
+                          other: ''
+                          resources:
+                            attachment:
+                              - attachmentName: TestIcon.png
+                                derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                                attachmentDesc: My photo
+                        web:
+                          body: This is the content of my web publishing or Rich Push Message
+                          type: text/plain
+                        social:
+                          social:
+                            - id: social
+                              body: Facebook Content
+                              type: text/plain
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3208,38 +3270,46 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            examples:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/scenario'
               examples:
-                response:
+                example:
                   value:
-                    title: Emergency Comms - Fire
-                    description: Scenario to use during fire evacuation
-                    createdTime: 1437383938000
-                    allowedUsers: EVERYONE
+                    name: Fire Evacuation Block A
+                    description: Fire evacuation notification for A block residents
+                    allowedUsers: SELECTEDUSERS
+                    allowedUserIds: string
                     message:
-                      to: '+1000000000'
-                      subject: Scenario Emergency Comms - Fire
-                      body: sms test
-                      label: ''
-                      voice: {}
-                      from: joe.bloggs.company@Contact.Melbourne.whispir.au
+                      to: '61400400400'
+                      subject: Test Message
+                      body: This is the body of my test SMS message
+                    to: string
+                    subject: string
+                    label: string
+                    email:
+                      body: This is the body of my email message.
+                      footer: This is the footer of my message.
+                      type: text/plain
+                    voice:
+                      header: 'This is the introduction, read out to the recipient prior to any key press.'
+                      body: 'This is the body of the voice call, read out after the key press'
+                      type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                      footer: ''
+                      other: ''
+                      resources:
+                        attachment:
+                          - attachmentName: TestIcon.png
+                            derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                            attachmentDesc: My photo
+                    web:
+                      body: This is the content of my web publishing or Rich Push Message
+                      type: text/plain
+                    social:
                       social:
-                        social:
-                          - id: socialType
-                            body: text/plain
-                      createdTime: 1437569311000
-                    link:
-                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
-                        rel: self
-                        method: GET
-                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
-                        rel: updateScenario
-                        method: PUT
-                        type: 'application/vnd.whispir.scenario-v1+json,application/vnd.whispir.scenario-v1+xml'
-                      - uri: 'https://api.au.whispir.com/scenarios/F0547F6F2E4839F8'
-                        rel: deleteScenario
-                        method: DELETE
-                        type: 'application/vnd.whispir.scenario-v1+json,application/vnd.whispir.scenario-v1+xml'
+                        - id: social
+                          body: Facebook Content
+                          type: text/plain
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3288,8 +3358,8 @@ paths:
             type: string
             example: 41048D9483C8CF2A
       responses:
-        '204':
-          description: No Content
+        '202':
+          description: Accepted
           headers:
             Access-Control-Allow-Origin:
               $ref: '#/components/headers/Access-Control-Allow-Origin'
@@ -3297,6 +3367,18 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+            Location:
+              schema:
+                type: string
+              description: The URI to fetch details of the scenario.
+            Content-Type:
+              schema:
+                type: string
+              description: Application specific mime-type.
+            Content-Length:
+              schema:
+                type: string
+              description: Length of the response content.
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3339,7 +3421,44 @@ paths:
           application/vnd.whispir.scenario-v1+json:
             schema:
               $ref: '#/components/schemas/scenario'
-        description: Scenarios object that needs to be update Scenarios
+            examples:
+              example-1:
+                value:
+                  name: Fire Evacuation Block A
+                  description: Fire evacuation notification for A block residents
+                  allowedUsers: SELECTEDUSERS
+                  allowedUserIds: 4DC922649AFE370C
+                  message:
+                    to: '61400400400'
+                    subject: Test Message
+                    body: This is the body of my test SMS message
+                  to: '61400400400'
+                  subject: Fire Evacuation
+                  label: fire-evacuation
+                  email:
+                    body: This is the body of my email message.
+                    footer: This is the footer of my message.
+                    type: text/plain
+                  voice:
+                    header: 'This is the introduction, read out to the recipient prior to any key press.'
+                    body: 'This is the body of the voice call, read out after the key press'
+                    type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                    footer: ''
+                    other: ''
+                    resources:
+                      attachment:
+                        - attachmentName: TestIcon.png
+                          derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                          attachmentDesc: My photo
+                  web:
+                    body: This is the content of my web publishing or Rich Push Message
+                    type: text/plain
+                  social:
+                    social:
+                      - id: social
+                        body: Facebook Content
+                        type: text/plain
+        description: Modifying a scenario obeys the same requirements seen at the moment of their creation
         required: true
       responses:
         '204':
@@ -3526,10 +3645,10 @@ paths:
                         url: 'https://e05237bf.ngrok.io/'
                         retriesEnabled: false
                         link:
-                          - uri: 'https://stage-ap-southeast-2.whispirdev.com/callbacks/D7D2295E2A08388C'
+                          - uri: 'https://api.au.whispir.com/callbacks/D7D2295E2A08388C'
                             rel: self
                             method: GET
-                            host: stage-ap-southeast-2.whispirdev.com
+                            host: api.au.whispir.com
                             port: -1
                     link: []
                 properties:
@@ -4130,8 +4249,21 @@ paths:
       tags:
         - Activities
       summary: Create an activity
-      description: |
-        Note: There is no limit to the amount of activities that can be created.
+      description: |-
+        Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace. Each activity log entry contains information about the workspace, the module (message, email, IVR ...), the user who performed the activity, time stamps, description of the activity, its status (success, fail) and so on.
+
+        All of these help meet auditing and standards compliance and also change tracking. For example:
+        * As a Whispir API user (Voice module), you want to be able to update the Whispir activity log as a call progresses through the IVR to ensure that the auditing shows exactly what information a caller heard.
+
+        * As a Whispir API user (SMS module), you want to able to retrieve information from the activity log about all the messages sent by a specific user.
+        As activity information is sensitive, stricter permission rules apply to the data served by these endpoints.
+
+        * If the user is a *Company Administrator* or *Company Leader*, retrieving the activity will produce a **_200 OK_** with the valid response
+        * If the user is a *Company Member* or *Company Guest*, they will receive instead a **_403 Forbidden_** response advising that they don’t have permission to access this resource
+        * A *Company Administrator* or *Company Leader* can also create content within the activity stream. They do this through a POST of data to either the _/activities_ endpoint or to the specific activity ID
+        * They must specify a valid _‘Action’_, _‘Description’_ and _‘Status’_ within their request
+        * Posting to the _/activities_ endpoint will create a new activity
+        * Posting to the _/activities/{ID}_ endpoint will append the content to the detail of the specified activity
       operationId: postActivities
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -4142,8 +4274,17 @@ paths:
           application/vnd.whispir.activity-v1+json:
             schema:
               $ref: '#/components/schemas/activity'
-            examples: {}
-        description: activity list object that needs to be create activity
+            examples:
+              example-1:
+                value:
+                  action: Logout
+                  module: System
+                  workspace: Company
+                  user: string
+                  status: Successful
+                  description: Logged out
+                  time: '04/08/22 11:19'
+        description: ''
         required: true
       responses:
         '201':
@@ -4164,6 +4305,26 @@ paths:
                 type: string
               example: 'https://api.au.whispir.com/activities/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/activity'
+              examples:
+                example-1:
+                  value:
+                    user: user
+                    time: '04/08/22 11:24'
+                    action: Logout
+                    description: Logged out
+                    status: Successful
+                    module: System
+                    workspaceName: Company
+                    link:
+                      - uri: 'https://api.au.whispir.com/activities/2652A4034A27E271'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4317,7 +4478,7 @@ paths:
           content:
             examples:
               examples:
-                response:
+                example-1:
                   value:
                     activities:
                       - user: james.cameron
@@ -4331,6 +4492,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/9B26BCE6A7C1997D3E3C04D4C0B62165'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: james.cameron
                         time: '17/08/15 12:56'
                         action: Create
@@ -4341,6 +4504,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/CF8F388F18FDDA7CA40F42E888EC8E67'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: james.cameron
                         time: '17/08/15 12:26'
                         action: Draft
@@ -4352,6 +4517,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/19F603F21E8A7D536D577A6B4DBCFE3F'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: markm
                         time: '22/12/14 11:37'
                         action: Logout
@@ -4363,6 +4530,8 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/0DEB48AB3D3B6069D7DA1A808F5A5DE4'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                       - user: markm
                         time: '22/12/14 11:20'
                         action: Login
@@ -4374,7 +4543,44 @@ paths:
                           - uri: 'https://api.au.whispir.com/activities/0CEC8009230B3B92F5B548A22B55C407'
                             rel: self
                             method: GET
+                            host: api.au.whispir.com
+                            port: -1
                     link: []
+              schema:
+                description: Example
+                type: object
+                x-examples:
+                  example-1:
+                    activities:
+                      - user: cadmin
+                        time: '04/08/22 11:19'
+                        action: Logout
+                        description: Logged out
+                        status: Successful
+                        module: System
+                        workspaceName: Company
+                        fullname: IUX Admin
+                        link:
+                          - uri: 'https://api.au.whispir.com/activities/726E75D22E359A8C'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                          - uri: 'https://api.au.whispir.com/activities/726E75D22E359A8C'
+                            rel: addActivityDetail
+                            method: POST
+                            type: 'application/vnd.whispir.activity-v1+json,application/vnd.whispir.activity-v1+xml'
+                            host: api.au.whispir.com
+                            port: -1
+                    link: []
+                properties:
+                  activities:
+                    description: List of activities
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/activity'
+                  link:
+                    $ref: '#/components/schemas/link'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4447,7 +4653,7 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-  '/workspaces/{workspaceId}/customlists':
+  /customlists:
     get:
       tags:
         - Custom Lists
@@ -4524,76 +4730,7 @@ paths:
               - RSS
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/CustomList-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    status: 1 to 5 of 5
-                    customlabels:
-                      - id: 4E2101D0E5D16229
-                        name: Category
-                        type: INCIDENT
-                        createdDate: '02/08/11 14:20'
-                        sortType: As Displayed
-                        linked: disabled
-                        link:
-                          - uri: 'https://api.au.whispir.com/customlists/40E5D16229E2101D'
-                            rel: self
-                            method: GET
-                      - id: 0CA7B9E2B21A3B1A
-                        name: Day of Month
-                        type: MESSAGE
-                        createdDate: '13/10/14 16:30'
-                        sortType: As Displayed
-                        linked: disabled
-                        link:
-                          - uri: 'https://api.au.whispir.com/customlists/0CA7B9E2B21A3B1A'
-                            rel: self
-                            method: GET
-                      - id: 87F23964C25ECF22
-                        name: Day of Week
-                        type: MESSAGE
-                        createdDate: '07/01/14 09:51'
-                        sortType: As Displayed
-                        linked: disabled
-                        link:
-                          - uri: 'https://api.au.whispir.com/customlists/87F23964C25ECF22'
-                            rel: self
-                            method: GET
-                      - id: F0771B97F1EF770B
-                        name: External Vendor
-                        type: INCIDENT
-                        createdDate: '02/08/11 14:20'
-                        sortType: As Displayed
-                        linked: disabled
-                        link:
-                          - uri: 'https://api.au.whispir.com/customlists/F0771B97F1EF770B'
-                            rel: self
-                            method: GET
-                      - id: 768E4ACA5DA7500C
-                        name: Finish Time
-                        type: MESSAGE
-                        createdDate: '01/08/11 12:38'
-                        sortType: As Displayed
-                        linked: disabled
-                        link:
-                          - uri: 'https://api.au.whispir.com/customlists/768E4ACA5DA7500C'
-                            rel: self
-                            method: GET
-                    link: []
+          $ref: '#/components/responses/CustomLists'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4614,9 +4751,8 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
-    parameters:
-      - $ref: '#/components/parameters/workspaceId'
-  '/workspaces/{workspaceId}/customlists/{customlistId}':
+    parameters: []
+  '/customlists/{customlistId}':
     get:
       tags:
         - Custom Lists
@@ -4672,40 +4808,7 @@ paths:
             example: 43E9046401B18269
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/CustomList-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    id: 4E2101D0E5D16229
-                    name: Category
-                    type: INCIDENT
-                    createdDate: '02/08/11 14:20'
-                    sortType: As Displayed
-                    linked: disabled
-                    customlabellists:
-                      - name: Internal Systems
-                        value: Internal Systems
-                      - name: External Systems
-                        value: External Systems
-                      - name: Infrastructure
-                        value: Infrastructure
-                    link:
-                      - uri: 'https://api.au.whispir.com/customlists/40E5D16229E2101D'
-                        rel: self
-                        method: GET
+          $ref: '#/components/responses/CustomList'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4727,7 +4830,12 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
-      - $ref: '#/components/parameters/workspaceId'
+      - schema:
+          type: string
+        name: customlistId
+        in: path
+        required: true
+        description: Specifies the ID of the custom list resource
   /users:
     post:
       tags:
@@ -5107,8 +5215,8 @@ paths:
     get:
       tags:
         - Events
-      summary: Retrieve an event
-      description: Retrieves an Event object.
+      summary: List events
+      description: List event objects
       operationId: getEvents
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -5117,27 +5225,15 @@ paths:
         - $ref: '#/components/parameters/offset'
         - $ref: '#/components/parameters/sortOrder'
         - $ref: '#/components/parameters/sortFields'
+        - schema:
+            type: string
+          in: header
+          name: eventType
+          description: 'The name of the event template used '
+          required: true
       responses:
         '200':
-          description: OK
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Event-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/event'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/event'
+          $ref: '#/components/responses/Events'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5162,158 +5258,309 @@ paths:
       tags:
         - Events
       summary: Create an event
-      description: |
-        As Whispir works with each organisation to build out the requirements of the events module, the required fields are minimal. The bulk of the event information is from fields that are generic, and only applicable to the customer that is using the module.
+      description: |-
+        The bulk of the `Event` metadata is from fields that are generic, and only applicable to the customer that is using the module.
 
-        Events have sub sections under them called as ‘actions’ (maximum of 10). When an Event occurs/is triggered, the related actions are to be performed. Each action has an owner, a set time, and details associated with it. The owner or responsible person for the event could be a /contacts in the system. This ensures that proper communication is sent to the individual based on their preferred channel (message, email, voice) automatically without having to key in the phone, email, and other communication information again.
+        The owner or responsible person for the event could be a `/contacts` in the system. This ensures that proper communication is sent to the individual based on their preferred channel (`message`, `email`, `voice`) automatically without having to key in the phone, email, and other communication information again.
 
-        The Events module captures information specific to an event so the information can be used in as part of messaging for the duration of the event. The Events module can be customized to accept events and associated information from external systems or to capture more complex information around an event.
+        Most importantly, to create an event, one must have the create access for `Incident` row in the `Roles & Permission` section of the account settings.
 
-        Events are created within a workspace. As they are custom built the information to be captured will depend on your organisations specific requirements. Generally at a minimum an event will have a label, start date, and a status.
+        When an `Event` occurs/is triggered, the related actions are to be performed. Each action has an owner (`actionOwner`), a set time (`actionDate`), and details associated with it (`actionDetails`). 
 
-        Most importantly, to create an event, one must have the create access for Incident row in the Roles & Permission section of the account settings.
-      operationId: postEvents
+        `Events` have sub sections under them called as ‘actions’ (maximum of 10). So the action values are numbered:
+        <li> actionDate1, actionOwner1, actionDetails1 </li>
+        <li> actionDate2, actionOwner2, actionDetails2 </li>
+        <li> … </li>
+        <li> actionDate10, actionOwner10, actionDetails10 </li>
+
+        <!-- theme: warning -->
+        > #### Things to note
+        > The fields described below are defined through `name/value` pairs and to be added as part of `eventFieldList` array
+
+        ```generic_attributes json_schema
+        {
+          "title": "Event Fields",
+          "type": "object",
+          "properties": {
+            "actionDate": {
+              "type": "string"
+              "description: "The start date of this action in dd/mm/yyyy HH:MI:SS 24 hour format",
+              "example": "11/09/2019 17:41:00"
+            },
+            "actionOwner": {
+              "type": "string",
+              "description": "The individual (contact) responsible for this action’s execution",
+              "example": "John Wick",
+            },
+            "actionDetails": {
+              "type": "string",
+              "description": "The detail description of this action",
+              "example":"investigation to take place asap."
+            },
+            "summary": {
+              "type": "string",
+              "description": "Specifies the summary of the event. A single line that can be the equivalent of the subject of an email",
+              "example":"investigation to take place asap"
+            },
+            "status": {
+              "type": "string",
+              "description": "Specifies the status of the event. The status can be one of the following",
+              "enum": ["Active", "Resolved", "Open"],
+              "default":"Open",
+              "example":"Open"
+            },    
+           "description": {
+              "type": "string",
+              "description": "Specifies the detailed description of the event",
+              "example":"investigation to take place asap"
+            },
+           "location": {
+              "type": "string",
+              "description": "Specifies the latitude and longitude values of the event location. This helps to show the event location on Whispir’s geo-map feature set and coordinated communication based on the geo-location of the event",
+              "example":"0.0,0.0"
+            },
+           "startDate": {
+              "type": "string",
+              "description": "Specifies the start date of the event. The date and time should be in the format `DD/MM/YYYY HH:MI:SS` (24 hour format)",
+              "example":"23/09/2019 17:21:00"
+            },
+           "endDate": {
+              "type": "string",
+              "description": "Specifies the end date of the event. The date and time should be in the format `DD/MM/YYYY HH:MI:SS` (24 hour format)",
+              "example":"23/09/2019 17:21:00"
+            },
+            "severity" :{
+              "type": "string",
+              "description": "Specifies the severity of the event. While this can change from company to company, the standard value set to be chosen from is   
+                <li><b>Severity 5</b> – Routine Maintenance Tasks</li> 
+                <li><b>Severity 4</b> – Scheduled System Changes</li> 
+                <li><b>Severity SL3</b> – Minor Outage (some service degradation)</li> 
+                <li><b>Severity SL2</b> – Moderate Outage (service degradation)</li> 
+                <li><b>Severity SL1</b> – Major Outage (significant service unavailability)</li>
+              ",
+              "example": "Severity 5"
+            },
+            "priority" :{
+              "type": "string",
+              "description": "Specifies the priority of the event. While this can change from company to company, the standard value set to choose from is
+                <li><b>Priority 5</b> – No Set Resolution Period</li>
+                <li><b>Priority 4</b> – < 1 week Resolution</li>
+                <li><b>Priority 3</b> – < 3 day Resolution</li>
+                <li><b>Priority 2</b> – < 1 day Resolution</li>
+                <li><b>Priority 1</b> – < 2 hour Resolution</li>
+              ",
+              "enum": ["Priority 5", "Priority 4", "Priority 3", "Priority 2", "Priority 1"],
+              "example": "Severity 5"
+            },
+           "duration": {
+              "type": "string",
+              "description": "The duration of the event in `HH:MI:SS`. For example, `02:05:00`. This can be substituted in the place of end date if required. Or a subset of the time between the start and end dates.",
+              "example":"02:05:00"
+            }     
+          },
+          required: ["actionDate", "actionOwner", "actionDetails", "startDate"]
+        }
+        ```
+        ``` categorisation json_schema
+        {
+          "title": "Event Fields",
+          "type": "object",
+          "description: "",
+          "properties": {
+            "category" :{
+              "type": "string",
+              "description": "Specifies the category of event. The default values to choose from are (`Internal Systems`, `External Systems`, `Infrastructure`)",
+              "example": "Internal Systems"
+            },
+            "subcategory" :{
+              "type": "string",
+              "description": "Specifies the subcategory in the category. The default values to choose from are (`Customer Impact`, `Cust & Staff Impact`,`Staff Impact`, `Impact Unknown`)",
+              "example": "Customer Impact"
+            },
+            "type" :{
+              "type": "string",
+              "description": "Specifies the type of event. The default values to choose from are (`Multiple Issues`, `NIL`,`Network`, `Applications`, `Mobile Apps`)",
+              "example": "Customer Impact"
+            },
+            "externalVendor" :{
+              "type": "string",
+              "description": "Specifies the name/contact who is the external vendor related to this event",
+              "example": "ABC"
+            }, 
+            "lineNumber" :{
+              "type": "string",
+              "description": "Specifies the line number (production lines)",
+              "example": "ABC"
+            },
+            "externalCaseNumber" :{
+              "type": "string",
+              "description": "Specifies the number as tracked by an external party related to this event",
+              "example": "ABC"
+            },
+          }
+        }
+        ```
+        ``` affected_services json_schema
+        {
+          "title": "Event Fields",
+          "type": "object",
+          "description: "",
+          "properties": {
+            "platform" :{
+              "type": "string",
+              "description": "Specifies the platform in the company that this event is associated with",
+              "example": "ABC"
+            },
+            "services" :{
+              "type": "string",
+              "description": "Specifies the service in the company that this event is associated with",
+              "example": "ABC"
+            },
+          }
+        }
+        ```
+        ``` impact json_schema
+        {
+          "title": "Event Fields",
+          "type": "object",
+          "description: "",
+          "properties": {
+            "impactCondition" :{
+              "type": "string",
+              "description": "Specifies the impact condition of this event to the company. These values can be configured via custom lists as these can be very specific to the company. The default values to choose from are (`All services not available`, `All services degraded`, `Some services not available`, `Some services degraded`, `No Impact`, `Unknown`)",
+              "example": "Unknown"
+            },
+            "impactToOrg" :{
+              "type": "string",
+              "description": "Specifies the impact condition of this event to the company. These values can be configured via custom lists as these can be very specific to the company. The default values to choose from are (`All services not available`, `All services degraded`, `Some services not available`, `Some services degraded`, `No Impact`, `Unknown`)",
+              "example": "Unknown"
+            },
+            "locations" :{
+              "type": "string",
+              "description": "Specifies the impact location of this event to a company’s operational geographies. These values can be configured via custom lists as these can be very specific to the company",
+              "example": "0.0,0.0"
+            },
+          }
+        }
+        ```
+        ``` example
+        {
+            ...,
+            eventFieldList: [{
+                "name": "actionDate1",
+                "value": "11/09/2019 17:41:00"
+              },
+              {
+                "name": "actionOwner1",
+                "value": "John Wick"
+              },
+              {  
+                "name": "actionDetails1",
+                "value": "investigation to take place asap."
+              },
+              {
+                "name": "summary",
+                "value": "Outage of systems in Sydney"
+              },
+              {
+                "name": "status",
+                "value": "Open"
+              },
+              {
+                "name": "description",
+                "value": "ATMs are non responsive, teams to be sent to investigate."
+              },
+              {
+                "name": "category",
+                "value": "Internal"
+              },
+              {
+               "name": "startDate",
+               "value": "11/09/2019 17:41:00"
+              },
+              {
+               "name": "severity",
+               "value": "Severity 3 - Minor Outage (Some Service Degradation)"
+              },
+              ... and so on,
+          }]
+        }                  
+        ```
+        <!-- theme: info -->
+
+        > #### A thing to know
+        > On top of the list of event attributes listed above, you may introduce other (alias) name and title fields <li> e.g (`otherFirstName`, `otherLastName`, `otherTitle`) </li>
+
+        <h2>Sending messages using event data</h2>
+
+        Once you’ve finished creating your event data in the Whispir platform, the next logical step is to deliver a notification about the event. This action can be performed using the existing `/messages` endpoint, with the `eventId` as an attribute of the message.
+
+        * Including this `eventId` links the message to the event, and allow you to use any attribute of the event within your message payload.
+        * Any event fields populated on the event are automatically populated within the message.
+        * Any attributes that are supplied within the message take priority over any attributes that are from the event.
+        * The user should not be required to enter any `attributes` as these will be retrieved from the linked event.
+        * The event fields automatically populate the attributes in the message body (based on the relationships set in the <b> Admin > Settings > Attributes > Message Event Attribute Map</b>).
+
+        <!-- theme: warning -->
+        > #### Things to note
+        > * If the `Event` doesn't contain an event field, and there is no relevant attribute field supplied > in the message payload, the `@@` tag will not be resolved.
+        > * If you don't supply an attribute in the message payload, and this has also not been supplied from the event, the field simply will not be resolved within the message.
+      operationId: createEvent
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Event-Content-Type'
         - $ref: '#/components/parameters/Event-Accept'
-      requestBody:
-        $ref: '#/components/requestBodies/event'
       responses:
         '201':
-          description: Created
-          headers:
-            Content-Type:
-              $ref: '#/components/headers/Event-Content-Type'
-            Content-Length:
-              $ref: '#/components/headers/Content-Length'
-            Access-Control-Allow-Origin:
-              $ref: '#/components/headers/Access-Control-Allow-Origin'
-            Cache-Control:
-              $ref: '#/components/headers/Cache-Control'
-            Expires:
-              $ref: '#/components/headers/Expires'
-            Location:
-              schema:
-                type: string
-              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/events/747AB7E716C1802B6476784AEB5C9BB8'
-              description: The URI to fetch details of the resource.
-          content:
-            examples:
-              examples:
-                response:
-                  value:
-                    id: 421FEEBA93GF53A2
-                    eventLabel: 2701095 - Outage of Local Systems in Sydney
-                    status: Active
-                    eventFormList:
-                      - formName: MetroEvent
-                        eventFieldList:
-                          - name: summary
-                            value: Outage of systems in Sydney
-                          - name: location
-                            value: '0.0,0.0'
-                          - name: endDate
-                          - name: type
-                            value: ''
-                          - name: actionDetails2
-                            value: ''
-                          - name: actionDetails3
-                            value: ''
-                          - name: actionDetails1
-                            value: investigation to take place asap.
-                          - name: priority
-                            value: ''
-                          - name: description
-                            value: 'ATMs are non responsive, teams to be sent to investigate.'
-                          - name: actionDetails8
-                            value: ''
-                          - name: actionDetails9
-                            value: ''
-                          - name: actionDetails6
-                            value: ''
-                          - name: actionDetails7
-                            value: ''
-                          - name: actionDetails4
-                            value: ''
-                          - name: actionOwner10
-                            value: ''
-                          - name: actionDetails5
-                            value: ''
-                          - name: platform
-                            value: ''
-                          - name: services
-                            value: ''
-                          - name: status
-                            value: Open
-                          - name: openedBy
-                            value: ''
-                          - name: category
-                            value: Internal
-                          - name: externalVendor
-                            value: ''
-                          - name: externalCaseNumber
-                            value: ''
-                          - name: actionOwner6
-                            value: ''
-                          - name: startDate
-                            value: '11/09/2015 00:00:00'
-                          - name: actionOwner5
-                            value: ''
-                          - name: actionOwner8
-                            value: ''
-                          - name: actionOwner7
-                            value: ''
-                          - name: actionOwner9
-                            value: ''
-                          - name: actionDate8
-                          - name: actionDate9
-                          - name: actionDetails10
-                            value: ''
-                          - name: actionDate4
-                          - name: actionOwner2
-                            value: ''
-                          - name: actionDate5
-                          - name: actionOwner1
-                            value: John Wick
-                          - name: actionDate6
-                          - name: actionOwner4
-                            value: ''
-                          - name: actionDate7
-                          - name: actionOwner3
-                            value: ''
-                          - name: actionDate1
-                            value: '11/09/2015 00:00:00'
-                          - name: actionDate3
-                          - name: actionDate2
-                          - name: locations
-                            value: ''
-                          - name: impactToOrg
-                            value: ''
-                          - name: actionDate10
-                          - name: locationDisplay
-                            value: ''
-                          - name: subCategory
-                            value: ''
-                          - name: severity
-                            value: Severity 3 - Minor Outage (Some Service Degradation)
-                          - name: duration
-                            value: ''
-                          - name: lineNumber
-                            value: ''
-                          - name: impactCondition
-                            value: ''
-                    link:
-                      - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
-                        rel: self
-                        method: GET
-                      - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
-                        rel: self
-                        method: PUT
-                        type: 'application/vnd.whispir.event-v1+xml,application/vnd.whispir.event-v1+json'
-                      - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/messages?label=2701095%20-%20Outage%20of%20Local%20Systems%20in%20Sydney'
-                        rel: retrieveEventMessages
-                        method: GET
+          $ref: '#/components/responses/Event'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+      requestBody:
+        $ref: '#/components/requestBodies/event'
+    parameters:
+      - name: workspaceId
+        in: path
+        schema:
+          type: string
+          pattern: '^[A-F0-9]+'
+          example: 9A4C5521FFC7B15B
+        description: The identifier for the workspace.
+        required: true
+  '/workspaces/{workspaceId}/events/{eventId}':
+    get:
+      tags:
+        - Events
+      summary: Retrieve an event
+      description: Get an event object
+      operationId: getEventById
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Event-Accept'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
+      responses:
+        '200':
+          $ref: '#/components/responses/Event'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5335,7 +5582,66 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
-      - $ref: '#/components/parameters/workspaceId'
+      - name: workspaceId
+        in: path
+        schema:
+          type: string
+          pattern: '^[A-F0-9]+'
+          example: 9A4C5521FFC7B15B
+        description: The identifier for the workspace.
+        required: true
+      - schema:
+          type: string
+        name: eventId
+        description: The identifier for the event.
+        in: path
+        required: true
+    put:
+      tags:
+        - Events
+      summary: Update an event
+      operationId: putEventById
+      description: Update an event object
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Event-Content-Type'
+        - $ref: '#/components/parameters/Event-Accept'
+      requestBody:
+        $ref: '#/components/requestBodies/event'
+      responses:
+        '204':
+          description: No Content
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Event-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Expires:
+              $ref: '#/components/headers/Expires'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
   '/workspaces/{workspaceId}/imports':
     post:
       tags:
@@ -5380,10 +5686,22 @@ paths:
           application/vnd.whispir.importcontact-v1+json:
             schema:
               $ref: '#/components/schemas/import'
+            examples:
+              example-1:
+                value:
+                  resourceId: 4FBBC384BCE3DAABFE3
+                  importType: contact
+                  importOptions:
+                    firstName: firstName
+                    lastName: lastName
+                    workMobilePhone1: workMobilePhone1
+                    workCountry: workCountry
+                    timezone: timeZone
+                  importMode: replace
         description: import object that needs to be create import
       responses:
-        '201':
-          description: Created
+        '202':
+          description: Accepted
           headers:
             Content-Type:
               $ref: '#/components/headers/Import-Content-Type'
@@ -5447,7 +5765,7 @@ paths:
               example: 'https://api.au.whispir.com/auth/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
           content:
-            application/json:
+            'application/vnd.whispir.auth-v1+json':
               schema:
                 description: The create auth response object.
                 type: object
@@ -5566,6 +5884,108 @@ components:
         application/vnd.whispir.event-v1+json:
           schema:
             $ref: '#/components/schemas/event'
+          examples:
+            Event request body example:
+              value:
+                eventLabel: 2701095 - Outage of Local Systems in Sydney
+                status: Active
+                eventFormList:
+                  - formName: MetroEvent
+                    eventFieldList:
+                      - name: summary
+                        value: Outage of systems in Sydney
+                      - name: location
+                        value: '0.0,0.0'
+                      - name: endDate
+                      - name: type
+                        value: ''
+                      - name: actionDetails2
+                        value: ''
+                      - name: actionDetails3
+                        value: ''
+                      - name: actionDetails1
+                        value: investigation to take place asap.
+                      - name: priority
+                        value: ''
+                      - name: description
+                        value: 'ATMs are non responsive, teams to be sent to investigate.'
+                      - name: actionDetails8
+                        value: ''
+                      - name: actionDetails9
+                        value: ''
+                      - name: actionDetails6
+                        value: ''
+                      - name: actionDetails7
+                        value: ''
+                      - name: actionDetails4
+                        value: ''
+                      - name: actionOwner10
+                        value: ''
+                      - name: actionDetails5
+                        value: ''
+                      - name: platform
+                        value: ''
+                      - name: services
+                        value: ''
+                      - name: status
+                        value: Open
+                      - name: openedBy
+                        value: ''
+                      - name: category
+                        value: Internal
+                      - name: externalVendor
+                        value: ''
+                      - name: externalCaseNumber
+                        value: ''
+                      - name: actionOwner6
+                        value: ''
+                      - name: startDate
+                        value: '11/09/2019 00:00:00'
+                      - name: actionOwner5
+                        value: ''
+                      - name: actionOwner8
+                        value: ''
+                      - name: actionOwner7
+                        value: ''
+                      - name: actionOwner9
+                        value: ''
+                      - name: actionDate8
+                      - name: actionDate9
+                      - name: actionDetails10
+                        value: ''
+                      - name: actionDate4
+                      - name: actionOwner2
+                        value: ''
+                      - name: actionDate5
+                      - name: actionOwner1
+                        value: John Wick
+                      - name: actionDate6
+                      - name: actionOwner4
+                        value: ''
+                      - name: actionDate7
+                      - name: actionOwner3
+                        value: ''
+                      - name: actionDate1
+                        value: '11/09/2019 00:00:00'
+                      - name: actionDate3
+                      - name: actionDate2
+                      - name: locations
+                        value: ''
+                      - name: impactToOrg
+                        value: ''
+                      - name: actionDate10
+                      - name: locationDisplay
+                        value: ''
+                      - name: subCategory
+                        value: ''
+                      - name: severity
+                        value: Severity 3 - Minor Outage (Some Service Degradation)
+                      - name: duration
+                        value: ''
+                      - name: lineNumber
+                        value: ''
+                      - name: impactCondition
+                        value: ''
       description: events object that needs to be create events
     callback:
       content:
@@ -5774,20 +6194,14 @@ components:
         whatsappValidMessage:
           description: The validity of the WhatsApp channel message.
           type: boolean
-          enum:
-            - true
           readOnly: true
         validBody:
           description: The validity of the message body.
           type: boolean
-          enum:
-            - true
           readOnly: true
         validSubject:
           description: The validity of the message subject.
           type: boolean
-          enum:
-            - true
           readOnly: true
         dlr:
           $ref: '#/components/schemas/dlr'
@@ -6062,19 +6476,50 @@ components:
       x-tags:
         - Messages
       description: |-
+        ### Push Messaging
+
         Whispir allows you to send push notifications to any iOS and Android-based apps
 
         Setting up the platform to handle push notifications involves some one-time steps and some periodically repeated steps (updating push tokens). See Apps to get a clear understanding of the related steps and endpoints. Whispir doesn't support sending push notifications to device tokens directly. Read more in Contact devices about how to register the device tokens under contacts.
+
+        ### Message Aliasing
+
+        The Whispir UI allows you to configure a sender alias from which messages are sent. Instructions for alias creation can be found in [Configure message aliases](https://au.whispir.com/onlinehelp/Content/Topics-whispir-ua/administration/alias-manager/config-message-aliases.htm) within Whispir documentation.
+
+        The message alias can be attached to a message to template, to configure the the sender for the following channels:
+        * SMS - a custom mobile number, e.g. +61 123 456 789
+        * Email - a custom email address, e.g. marketing@example.com
+        * Voice - a custom mobile number, e.g. +61 123 456 789
       x-examples:
-        Push Message:
-          pushOptions:
-            appId: appId
         Escalation:
           pushOptions:
             escalationMins: 3
         Notifications:
           pushOptions:
             notifications: enabled
+        Message Alias:
+          aliasOption:
+            aliasName: Marketing
+        Push Message:
+          pushOptions:
+            notifications: enabled
+            escalationMins: '3'
+            appId: '2342345'
+            priority: NORMAL
+            fcm:
+              androidChannelId: campaign-app-push-notification-channel-1
+              sound: /res/raw/alert_sound.wav
+              action: campaign_intent
+              image: 'https://mycompany.com/sales/campaign.png'
+            apns:
+              sound: Library/Sounds/alert_sound.wav
+              action: campaign_action
+            data:
+              custom-image: 'https://mycompany.com/sales/ad.png'
+              custom-video: 'https://mycompany.com/sales/ad.mp4'
+              custom-link: 'https://ad-campaign-feedback/id'
+              custom-gif: 'https://ad-campaign-resources/2022/campaign.gif'
+              updated-title: New Campaign Title
       properties:
         pushOptions:
           type: object
@@ -6093,7 +6538,87 @@ components:
             appId:
               type: string
               description: The identifier for the registered application.
-              example: appId
+              example: app342983
+            priority:
+              type: string
+              description: |-
+                The priority of the notification. 
+
+                NORMAL (the default value) will indicate to FCM/APNS to take into consideration the target device's battery consumption at the expense of delivering the message with a delay. 
+
+                The value NORMAL maps to priority *NORMAL* in FCM and priority *5* in APNS. 
+
+                The value HIGH maps to priority *HIGH* in FCM and *10* in APNS.
+              default: NORMAL
+              enum:
+                - NORMAL
+                - HIGH
+              example: NORMAL
+            fcm:
+              type: object
+              description: The fcm object holds attributes specific to the contacts' Firebase-registered Android devices
+              properties:
+                androidChannelId:
+                  type: string
+                  description: |-
+                    Translates to the <span style="color:red">*android_channel_id*</span> attribute in FCM.
+                    Note: use this attribute for devices running Android versions 8 or later.
+                  example: my_app_notification_channel_id
+                sound:
+                  type: string
+                  description: |-
+                    The sound to play when the device receives the notification.
+                    The value *default* will play the system sound, otherwise this attribute must point to a sound resource bundled in the app, e.g. */res/raw/notification_sound.wav*
+
+                    Note: This attribute can be used for devices running Android versions older than Android 8. For versions 8+ please use the *androidChannelId*
+                  example: /res/raw/notification_sound.wav
+                action:
+                  type: string
+                  description: |-
+                    The action linked with a user click on the notification.
+                    Translates to the <span style="color:red">*click_action*</span> attribute in FCM.
+                  example: campaign_action
+                image:
+                  type: string
+                  description: |-
+                    The URL of an image to be downloaded and displayed in the notification.
+
+                    Details of the Android support for images in push notifications can be found [here](https://firebase.google.com/docs/cloud-messaging/android/send-image)
+                  example: 'https://mycompany.com/sales/campaign.png'
+            apns:
+              type: object
+              description: The apns object holds attributes specific to the contacts' APNS-registered (Apple Push Notification Service) iOS devices
+              properties:
+                sound:
+                  type: string
+                  description: |-
+                    The sound to play when the device receives the notification.
+                    The value *default* will play the system sound, otherwise this attribute must point to a sound resource in your app's main bundle or in the *Library/Sounds* folder of your app's container directory.
+                  example: Library/Sounds/alert_sound.wav
+                action:
+                  type: string
+                  description: |
+                    The action linked with a user click on the notification.
+                    Translates to the <span style="color:red">*category*</span> attribute in APNS.
+                  example: campaign_action
+            data:
+              type: object
+              description: |-
+                Custom key-value pairs of the notification's payload. These values can be used by the target app for enhanced functionality provided that it has been designed to handle them (images, videos, links etc).
+
+                These attributes translate to <span style="color:red">*data*</span>  in the FCM payload.
+
+                For APNS, the custom attributes of *data* are inserted as custom properties outside of the <span style="color:red">*aps*</span> payload.
+          required:
+            - appId
+        aliasOption:
+          type: object
+          description: The object defining options for message sender aliasing.
+          properties:
+            aliasName:
+              type: string
+              description: The name of the alias configured to modify the message sender.
+              example: Marketing
     resource:
       type: object
       xml:
@@ -6987,10 +7512,13 @@ components:
         - rules
     scenario:
       type: object
-      required:
-        - name
-        - description
-        - message
+      xml:
+        name: scenario
+        prefix: ns2
+      x-tags:
+        - Scenarios
+      title: Scenario
+      description: 'Scenarios allows you to simplify the message delivery process through automated, one-click communications.'
       properties:
         name:
           type: string
@@ -7003,17 +7531,76 @@ components:
         allowedUsers:
           type: string
           description: 'Specifies the usage permission - 1)EVERYONE 2)SELECTEDUSERS When SELECTEDUSERS is provided, then `allowedUserIds` shall contain the userID of the allowed users.'
+          enum:
+            - EVERYONE
+            - SELECTEDUSERS
+          example: SELECTEDUSERS
         allowedUserIds:
           type: string
           description: Specifies the comma separated list of users who can run this scenario.Only contains value when the allowedUsers is set to `SELECTEDUSERS`
+          example: 4DC922649AFE370C
         message:
           $ref: '#/components/schemas/message'
-      xml:
-        name: scenario
-        prefix: ns2
-      x-tags:
-        - Scenarios
-      title: Scenario
+        to:
+          type: string
+          description: Specifies the phone number or MRI or distribution list to which the message has to be sent
+          example: '61400400400'
+        subject:
+          type: string
+          description: Specifies the subject of the message
+          example: Fire Evacuation
+        label:
+          type: string
+          description: Specifies the label for the message (to view during reporting)
+          example: fire-evacuation
+        email:
+          $ref: '#/components/schemas/email'
+        voice:
+          $ref: '#/components/schemas/voice'
+        web:
+          $ref: '#/components/schemas/web'
+        social:
+          $ref: '#/components/schemas/social'
+      required:
+        - name
+        - description
+        - message
+      x-examples:
+        example-1:
+          name: Fire Evacuation Block A
+          description: Fire evacuation notification for A block residents
+          allowedUsers: EVERYONE
+          allowedUserIds: 4DC922649AFE370C
+          message:
+            to: '61400400400'
+            subject: Test Message
+            body: This is the body of my test SMS message
+          to: '61400400400'
+          subject: Fire Evacuation
+          label: fire-evacuation
+          email:
+            body: This is the body of my email message.
+            footer: This is the footer of my message.
+            type: text/plain
+          voice:
+            header: 'This is the introduction, read out to the recipient prior to any key press.'
+            body: 'This is the body of the voice call, read out after the key press'
+            type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+            footer: ''
+            other: ''
+            resources:
+              attachment:
+                - attachmentName: TestIcon.png
+                  derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                  attachmentDesc: My photo
+          web:
+            body: This is the content of my web publishing or Rich Push Message
+            type: text/plain
+          social:
+            social:
+              - id: social
+                body: Facebook Content
+                type: text/plain
     callback:
       type: object
       xml:
@@ -7317,42 +7904,106 @@ components:
               - PersonalMobilePhone1
               - PersonalEmailAddress1
     activity:
+      description: 'Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace.'
       type: object
-      required:
-        - module
-        - action
-        - status
+      x-examples:
+        example-1:
+          user: user
+          time: '03/08/22 23:04'
+          action: Logout
+          description: Logged out
+          status: Successful
+          module: System
+          workspaceName: Company
+          fullname: Whispir Admin
+          link:
+            - uri: 'https://api.au.whispir.com/activities/0A398CFDB9DAB7FC'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+            - uri: 'https://api.au.whispir.com/activities/0A398CFDB9DAB7FC'
+              rel: addActivityDetail
+              method: POST
+              type: 'application/vnd.whispir.activity-v1+json,application/vnd.whispir.activity-v1+xml'
+              host: api.au.whispir.com
+              port: -1
       properties:
-        action:
-          type: string
-          description: Specifies the action performed during this activity. The following are the list of actions that can be performed <ul><li>Create</li><li>Update</li><li>Move</li><li>Copy</li><li>Draft</li><li>Send</li><li>Modified </li><li>Delete</li><li>Contact Import File</li><li>Login </li><li>Approve</li><li>Reject</li><li>Dispatch</li><li>Register</li><li>Accept</li><li>Closed</li><li>Map</li><li>Un-map</li></ul>
-          example: Send
-        module:
-          type: string
-          description: Specifies the module to which this activity belongs to. The following are the list of actions that can be performed<ul><li>System</li><li>Message</li><li>Scheduled Message</li><li>User</li><li>Contact</li><li>DistributionList</li><li>Template</li><li>Workspace</li><li>Event</li><li>WebService</li><li>Settings</li> <li>Conversation</li><li>Gateway</li><li>Workspace Mapping</li><li>Folders</li><li>Team</li><li>RSS</li><li>API Mapping </li><li>Asset</li><li>Instruction</li></ul>
-        workspace:
-          type: string
-          description: The workspace in which this activity is performed. This will usually be the API user’s default workspace
         user:
           type: string
-          description: The username of the person who performed this activity. This will usually be the API user invoking the creation.
-        status:
-          type: string
-          description: Specifies the status of the activity. The status can be one of 1)Successful 2)Failed 3)Rejected
-          example: Successful
-        description:
-          type: string
-          description: The description of the activity. This is a free text that details about the activity.
-          example: Message sent via the Whispir's Java library
+          description: ' The username of the person who performed this activity. This will usually be the API user invoking the creation.'
+          example: whispir user
         time:
           type: string
           description: 'The date and time of the activity in the format:dd/mm/yy hh:mm. This will be defaulted to the time at which this activity is created.'
-      xml:
-        name: activity
-        prefix: ns3
-      x-tags:
-        - Activities
-      title: Activity
+          example: '03/08/22 15:17'
+        action:
+          type: string
+          description: Specifies the action performed during this activity.
+          enum:
+            - Create
+            - Update
+            - Move
+            - Copy
+            - Draft
+            - Send
+            - Modified
+            - Delete
+            - Contact Import File
+            - Login
+            - Approve
+            - Reject
+            - Dispatch
+            - Register
+            - Accept
+            - Closed
+            - Map
+            - Un-map
+            - Logout
+          example: Create
+        description:
+          type: string
+          description: The description of the activity. This is a free text that details about the activity.
+          example: Logged out
+        status:
+          type: string
+          description: Specifies the status of the activity.
+          example: Successful
+        module:
+          type: string
+          description: Specifies the module to which this activity belongs to.
+          enum:
+            - System
+            - Message
+            - Scheduled Message
+            - User
+            - Contact
+            - Distribution List
+            - Template
+            - Workspace
+            - Event
+            - WebService
+            - Settings
+            - Conversation
+            - Gateway
+            - Workspace Mapping
+            - Folders
+            - Team
+            - RSS
+            - API Mapping
+            - Asset
+            - Instruction
+          example: Conversation
+        workspaceName:
+          type: string
+          description: The workspace in which this activity is performed. This will usually be the API user’s default workspace
+          example: Company
+        fullname:
+          type: string
+          example: Whispir User
+          description: Fullname of the user
+        link:
+          $ref: '#/components/schemas/link'
     user:
       type: object
       xml:
@@ -7769,88 +8420,6 @@ components:
       description: List users response object
     event:
       type: object
-      required:
-        - eventLabel
-        - status
-        - description
-      properties:
-        eventLabel:
-          type: string
-          description: Specifies the name of the label used for the messages sent under this event
-          example: 2701095 - Outage of Local Systems in Sydney
-        status:
-          type: string
-          description: 'Specifies the status of the event. The status can be one of <ul><li>Active</li><li>Resolved<l></ul>Note:The default status is Open.'
-          example: Open
-        summary:
-          type: string
-          description: Specifies the summary of the event. A single liner that can be equivalent to the Subject of an email.
-          example: Outage of systems in Sydney
-        description:
-          type: string
-          description: Specifies the detailed description of the event
-          example: 'ATMs are non responsive, teams to be sent to investigate'
-        location:
-          type: string
-          description: 'Specifies the latitude, longitude values of the event location. This helps to show the event location on Whispir’s geo-map feature set and coordinated communication based on the geo location of the event.'
-          example: '0.0,0.0'
-        startDate:
-          type: string
-          description: 'Specifies the startdate of the event. This is a mandatory value.The date should be in the format of DD/MM/YYYY HH:MI:SS in 24hrs format. e.g 11/09/2015 17:21:00 for 11th September 2015 5.21 PM.'
-          example: '11/09/2015 17:41:00'
-        endDate:
-          type: string
-          description: 'Specifies the endDate of the event.The date should be in the format of DD/MM/YYYY HH:MI:SS in 24hrs format. e.g. 11/09/2015 19:26:00 for 11th September 2015 7.26 PM.'
-        severity:
-          type: string
-          description: 'Specifies the severity of the event. While this can change from company to company, the standard value set to be chosen from is <ul><li>Severity 5 - Routine Maintenance Tasks</li><li>Severity 4 - Scheduled System Changes</li><li>Severity SL3 - Minor Outage (Some Service Degradation)</li><li>Severity SL2 - Moderate Outage (Service Degradation)</li><li>Severity SL1 - Major Outage (Significant Service Unavailablity)</li><ul>'
-          example: Severity 3 - Minor Outage (Some Service Degradation)
-        Priority:
-          type: string
-          description: 'Specifies the priority of the event. While this can change from company to company, the standard value set to be chosen from is <ul><li>Priority 5 - No Set Resolution Period</li><li>Priority 4 - <1 week Resolution</li><li>Priority 3 - <3 day Resolution</li><li>Priority 2 - <1 day Resolution</li><li>Priority 1 - <2hr Resolution</li></ul>'
-        duration:
-          type: string
-          description: 'The duration of the event in HH:MI:SS. e.g. 02:05:00 This can be substituted in the place of end date if required. Or a subset of the time between the start and end Dates.'
-        category:
-          type: string
-          description: Specifies the category of event. The default values to choose from are <ul><li>Internal Systems</li><li>External Systems</li><li>Infrasturcture</li></ul>
-          example: Internal
-        subcategory:
-          type: string
-          description: Specifies the subcategory in the category. The default values to choose from are <ul><li>Customer Impact</li><li>Cust & Staff Impact</li><li>Staff Impact</li><li>Impact Unknown</li></ul>
-        type:
-          type: string
-          description: Specifies the type of event. The default values to choose from are <ul><li>Multiple Issues</li><li>NIL</li><li>Network</li><li>Applications</li><li>Mobile Apps</li></ul>
-        externalVendor:
-          type: string
-          description: Specifies the name/contact who is the external vendor related to this event
-        lineNumber:
-          type: string
-          description: Specifies the line Number (production lines)
-        externalCaseNumber:
-          type: string
-          description: Specifies the number as tracked by an external party realted to this event
-        platform:
-          type: string
-          description: Specifies the platform in the company to which this event is associated with
-        services:
-          type: string
-          description: Specifies the service in the company to which this event is associated with
-        impactCondition:
-          type: string
-          description: Specifies the impact condition of this event to the company. These values can be configured via custom lists as these can be very specific to the company. The default list to choose from are - <ul><li>All services not available</li><li>All services degraded</li><li>Some services not available</li><li>Some services degraded</li><li>No Impact</li><li>Unknown</li></ul>
-        impactToOrg:
-          type: string
-          description: Specifies the impact of this event to the Organization. These values can be configured via custom lists as these can be very specific to the company. The default list to choose from are - <ul><li>Global</li><li>National</li><li>Local</li></ul>
-        locations:
-          type: string
-          description: Specifies the impact location of this event to the Organization’s operational geographies. These values can be configured via custom lists as these can be very specific to the company.
-        multiple key value sets:
-          type: string
-          description: 'Specifies the set of individual actions to be taken during this event.Each action consists of - <ul><li>actionDate - the start date of this action in dd/mm/yyyy HH:MI:SS 24hr format </li><li>actionOwner - the individual (contact) responsible for this action’s execution</li><li>actionDetails - the detail description of this action</li></ul><p>An event can have a maximum of 10 action. So the action values are numbered. actionDate1, actionOwner1, actionDetails1, actionDate2, actionOwner2, actionDetails2 …actionDate10, actionOwner10, actionDetails10'
-        Alias Fields:
-          type: string
-          description: 'The other (alias) name and title fields 1) otherFirstName, otherLastName, otherTitle'
       xml:
         name: event
         prefix: ns3
@@ -7858,14 +8427,110 @@ components:
         - Events
       title: Event
       description: The event object.
-      x-examples: {}
+      x-examples:
+        Event object example:
+          id: 421FEEBA93GF53A2
+          eventLabel: 2701095 - Outage of Local Systems in Sydney
+          status: Active
+          eventFormList:
+            - formName: MetroEvent
+              eventFieldList:
+                - name: summary
+                  value: Outage of systems in Sydney
+                - name: location
+                  value: '0.0,0.0'
+                - name: description
+                  value: 'ATMs are non responsive, teams to be sent to investigate.'
+                - name: status
+                  value: Open
+                - name: category
+                  value: Internal
+                - name: startDate
+                  value: '11/09/2019 00:00:00'
+                - name: actionOwner1
+                  value: John Wick
+                - name: actionDetails1
+                  value: investigation to take place asap.
+                - name: actionDate1
+                  value: '11/09/2019 00:00:00'
+                - name: severity
+                  value: Severity 3 - Minor Outage (Some Service Degradation)
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
+              host: 'https://api.au.whispir.com'
+              port: -1
+              rel: self
+              method: GET
+            - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
+              host: 'https://api.au.whispir.com'
+              port: -1
+              rel: self
+              method: PUT
+              type: 'application/vnd.whispir.event-v1+xml,application/vnd.whispir.event-v1+json'
+            - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/messages?label=2701095%20-%20Outage%20of%20Local%20Systems%20in%20Sydney'
+              host: 'https://api.au.whispir.com'
+              port: -1
+              rel: retrieveEventMessages
+              method: GET
+      properties:
+        id:
+          type: string
+          description: Id of the event
+          readOnly: true
+          example: 888E0A343770A7D1
+        eventLabel:
+          type: string
+          description: Specifies the name of the label used for the messages sent under this event. This needs to match with the name of the event templates available
+          example: 2701095 - Outage of Local Systems in Sydney
+        status:
+          type: string
+          description: 'Specifies the status of the event. The status can be one of <ul><li>Active</li><li>Resolved<l></ul>Note:The default status is Open.'
+          example: Open
+          enum:
+            - Open
+            - Active
+            - Resolved
+          default: Open
+        eventFormList:
+          type: array
+          description: Event form list
+          items:
+            type: object
+            description: Constitutes the name of the form and its fields
+            properties:
+              formName:
+                type: string
+                example: Metro Event
+                description: Specifies the name of the event form
+              eventFieldList:
+                type: array
+                description: 'Contains a list of event fields, see create /POST event endpoint to learn more about the available fields'
+                items:
+                  type: object
+                  description: A key-value pair of name and its value
+                  properties:
+                    name:
+                      type: string
+                      description: Specifies the name of the event field
+                      example: actionOwner1
+                    value:
+                      type: string
+                      description: Specifies the value of a given field
+                      example: John Wick
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - eventLabel
+        - status
     import:
       type: object
-      required:
-        - resourceId
-        - importType
-        - importOptions
-        - importMode
+      xml:
+        name: import
+        prefix: ns2
+      x-tags:
+        - Imports
+      title: Import
+      description: Import model object
       properties:
         resourceId:
           type: string
@@ -7873,7 +8538,10 @@ components:
           example: 4FBBC384BCE3DAABFE3
         importType:
           type: string
-          description: This defines the resource that will be created through this import process.
+          description: |-
+            This defines the resource that will be created through this import process. 
+
+            *'contact'* is the only supported *importType* at this stage.
           example: contact
         importOptions:
           $ref: '#/components/schemas/fieldMapping'
@@ -7881,20 +8549,39 @@ components:
           type: string
           description: The type of contact import that is occurring.
           example: replace
-      xml:
-        name: import
-        prefix: ns2
-      x-tags:
-        - Imports
-      title: Import
+          enum:
+            - replace
+            - duplicate
+            - ignore
+      required:
+        - resourceId
+        - importType
+        - importOptions
+        - importMode
+      x-examples:
+        Import resource example:
+          resourceId: 4FBBC384BCE3DAABFE3
+          importType: contact
+          importOptions:
+            firstName: firstName
+            lastName: lastName
+            workMobilePhone1: workMobilePhone1
+            workCountry: workCountry
+            timezone: timeZone
+          importMode: replace
     fieldMapping:
       type: object
-      required:
-        - firstName
-        - lastName
-        - workMobilePhone1
-        - workCountry
-        - timezone
+      xml:
+        name: fieldMapping
+      title: Field Mapping
+      description: Mapping the data column in your resource file to the contact field value
+      x-examples:
+        example-1:
+          firstName: firstName
+          lastName: lastName
+          workMobilePhone1: workMobilePhone1
+          workCountry: workCountry
+          timezone: timeZone
       properties:
         firstName:
           type: string
@@ -7903,11 +8590,11 @@ components:
         lastName:
           type: string
           description: Last Name of the Contact. Value of this field is used to map the field within the resource.
-          example: lastname
+          example: lastName
         workMobilePhone1:
           type: string
           description: The mobile phone number of the Contact. Value of this field is used to map the field within the newly created resource.
-          example: Mobile
+          example: workMobilePhone1
         workCountry:
           type: string
           description: The country field of the contact. The value of this field is used to map to the field within the newly created contact.
@@ -7915,10 +8602,13 @@ components:
         timezone:
           type: string
           description: The timezone field of the contact. The value of this field is used to map to the timezone field within the newly created contact.
-          example: timezone
-      xml:
-        name: fieldMapping
-      title: Field Mapping
+          example: timeZone
+      required:
+        - firstName
+        - lastName
+        - workMobilePhone1
+        - workCountry
+        - timezone
     attachment:
       type: object
       description: |-
@@ -8523,6 +9213,107 @@ components:
               description: The status message that was returned from the callback service
         link:
           $ref: '#/components/schemas/link'
+    customList:
+      type: object
+      x-examples:
+        Custom List example:
+          id: 4B4625BAEB7E4D58
+          name: Day of Week
+          type: INCIDENT
+          createdDate: '09/06/15 10:18'
+          sortType: As Displayed
+          linked: disabled
+          customlabellists:
+            - name: Internal Systems
+              value: Internal Systems
+            - name: External Systems
+              value: External Systems
+            - name: Infrastructure
+              value: Infrastructure
+          link:
+            - uri: 'https://api.au.whispir.com/customlists/4B4625BAEB7E4D58'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+      description: 'A custom list is a predefined list of options that can be inserted into a message or template. A list might be made up of capital city names, days of the week, incident types, business phone numbers and so on. Custom lists make it easy to add information quickly and consistently to your message content.'
+      properties:
+        id:
+          type: string
+          example: 4B4625BAEB7E4D58
+          description: Specifies the unique ID of the list
+          readOnly: true
+        name:
+          type: string
+          example: Day of Week
+          description: Specifies the name of the list
+          readOnly: true
+        type:
+          type: string
+          enum:
+            - INCIDENT
+            - MESSAGE
+            - CONTACT
+            - RSS
+          example: MESSAGE
+          description: Specifies the type
+          readOnly: true
+        createdDate:
+          type: string
+          example: '09/06/15 10:18'
+          description: Specifies the creation date of the list
+          readOnly: true
+        sortType:
+          type: string
+          example: As Displayed
+          enum:
+            - As Displayed
+            - Ascending
+            - Descending
+          description: Specifies the sorting order
+          readOnly: true
+        linked:
+          type: string
+          enum:
+            - disabled
+            - enabled
+          example: enabled
+          description: Specifies the linked status. When enabled the value selected for one channel is automatically applied on the other channels.
+          readOnly: true
+        customlabellists:
+          type: array
+          description: Contains the individual items that make up this list
+          items:
+            type: object
+            description: |-
+              Contains the individual items that make up this list
+
+              The ‘name’ is the text that is shown to the user
+              The ‘value’ is the internally passed in value
+            properties:
+              name:
+                type: string
+                description: Specifies the text that is show to the user
+                example: Internal Systems
+                readOnly: true
+              value:
+                type: string
+                description: Specifies the value that is passed internally
+                example: Internal Systems
+                readOnly: true
+            readOnly: true
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - id
+        - name
+        - type
+        - createdDate
+        - sortType
+        - linked
+        - link
+      readOnly: true
   parameters:
     X-Api-Key:
       name: X-Api-Key
@@ -8750,13 +9541,13 @@ components:
     Import-Content-Type:
       name: Content-Type
       in: header
-      required: true
       schema:
         type: string
         enum:
           - application/vnd.whispir.importcontact-v1+json
           - application/vnd.whispir.importcontact-v1+xml
       description: Application specific mime-type.
+      required: true
     Import-Accept:
       name: Accept
       in: header
@@ -10145,6 +10936,213 @@ components:
           $ref: '#/components/headers/Cache-Control'
         Expires:
           $ref: '#/components/headers/Expires'
+        Location:
+          $ref: '#/components/headers/Location'
+    CustomLists:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: object
+            description: List of custom lists
+            properties:
+              status:
+                type: string
+                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+                example: 1 to 1 of 1
+                readOnly: true
+              customlabels:
+                type: array
+                description: A list of custom lists
+                items:
+                  $ref: '#/components/schemas/customList'
+                readOnly: true
+            required:
+              - status
+              - customlabels
+          examples:
+            custom lists response example:
+              value:
+                status: string
+                customlabels:
+                  - id: 4B4625BAEB7E4D58
+                    name: Day of Week
+                    type: MESSAGE
+                    createdDate: '09/06/15 10:18'
+                    sortType: As Displayed
+                    linked: enabled
+                    link:
+                      - uri: 'https://api.au.whispir.com/customlists/4B4625BAEB7E4D58'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/CustomList-Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Location:
+          $ref: '#/components/headers/Location'
+    CustomList:
+      description: Example responses
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/customList'
+          examples:
+            custom list response example:
+              value:
+                id: 4B4625BAEB7E4D58
+                name: Day of Week
+                type: MESSAGE
+                createdDate: '09/06/15 10:18'
+                sortType: As Displayed
+                linked: enabled
+                customlabellists:
+                  - name: Internal Systems
+                    value: Internal Systems
+                  - name: External Systems
+                    value: External Systems
+                  - name: Infrastructure
+                    value: Infrastructure
+                link:
+                  - uri: 'https://api.au.whispir.com/customlists/4B4625BAEB7E4D58'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/CustomList-Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Location:
+          $ref: '#/components/headers/Location'
+    Events:
+      description: List of events response example
+      content:
+        application/json:
+          schema:
+            type: object
+            description: List of events
+            properties:
+              status:
+                type: string
+                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no events available.
+                example: 1 to 2 of 2
+                readOnly: true
+              events:
+                type: array
+                description: List of events
+                items:
+                  $ref: '#/components/schemas/event'
+                readOnly: true
+          examples:
+            Events response example:
+              value:
+                events:
+                  - id: string
+                    eventLabel: 2701095 - Outage of Local Systems in Sydney
+                    status: Open
+                    eventFormList:
+                      - formName: Metro Event
+                        eventFieldList:
+                          - name: string
+                            value: string
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                status: 1 to 2 of 2
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+    Event:
+      description: Example Event response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/event'
+          examples:
+            example-1:
+              value:
+                id: 421FEEBA93GF53A2
+                eventLabel: 2701095 - Outage of Local Systems in Sydney
+                status: Active
+                eventFormList:
+                  - formName: MetroEvent
+                    eventFieldList:
+                      - name: summary
+                        value: Outage of systems in Sydney
+                      - name: location
+                        value: '0.0,0.0'
+                      - name: description
+                        value: 'ATMs are non responsive, teams to be sent to investigate.'
+                      - name: status
+                        value: Open
+                      - name: category
+                        value: Internal
+                      - name: startDate
+                        value: '11/09/2019 00:00:00'
+                      - name: actionOwner1
+                        value: John Wick
+                      - name: actionDetails1
+                        value: investigation to take place asap.
+                      - name: actionDate1
+                        value: '11/09/2019 00:00:00'
+                      - name: severity
+                        value: Severity 3 - Minor Outage (Some Service Degradation)
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
+                    host: 'https://api.au.whispir.com'
+                    port: -1
+                    rel: self
+                    method: GET
+                  - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/events/421FEEBA93GF53A2'
+                    host: 'https://api.au.whispir.com'
+                    port: -1
+                    rel: self
+                    method: PUT
+                    type: 'application/vnd.whispir.event-v1+xml,application/vnd.whispir.event-v1+json'
+                  - uri: 'https://api.au.whispir.com/workspaces/26C20B1A09XS3RA2/messages?label=2701095%20-%20Outage%20of%20Local%20Systems%20in%20Sydney'
+                    host: 'https://api.au.whispir.com'
+                    port: -1
+                    rel: retrieveEventMessages
+                    method: GET
+      headers:
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
         Location:
           $ref: '#/components/headers/Location'
   headers:

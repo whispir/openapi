@@ -3,9 +3,6 @@ const json = require('../openapi.json')
 
 const generateOperationTypes = () => {
     const schemas = json.components.schemas
-
-    console.log('schemas', schemas)
-    
     const paths = Object.getOwnPropertyNames(json.paths)
 
     let ret = {}
@@ -45,6 +42,19 @@ const generateOperationTypes = () => {
                 if (x.requestBody && x.requestBody.content) {
                     const y = Object.getOwnPropertyNames(x.requestBody.content)
                     ret[operationId].request = y
+
+                    const { schema } =  x.requestBody.content[y[0]]
+
+                    if (schema['$ref']) { // used by $ref
+                        const ref = schema['$ref'].split('#/components/schemas/')[1]
+                        if (schemas[ref].type === 'object') {
+                            ret[operationId].payload = true
+                        }
+                    } else if (schema['oneOf']) {
+                        ret[operationId].payload = true
+                    } else {
+                        ret[operationId].payload = true
+                    }
                 }
 
                 if (x.responses) {

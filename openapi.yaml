@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: 'Whispir Platform API for cross channel and multi channel communications. Documentation on each endpoint is available at https://developers.whispir.com.'
   # x-release-please-start-version
-  version: 1.0.1
+  version: 1.0.3
   # x-release-please-end
   title: Whispir Platform API
   termsOfService: 'https://www.whispir.com/terms-of-service'
@@ -457,6 +457,8 @@ paths:
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Message-Content-Type'
+        - $ref: '#/components/parameters/Message-Accept'
       requestBody:
         content:
           application/vnd.whispir.message-v1+json:
@@ -3630,7 +3632,7 @@ paths:
         '200':
           description: OK
           content:
-            application/vnd.whispir.api-callback-v1+json:
+            application/json:
               schema:
                 description: The callback object.
                 type: object
@@ -5764,22 +5766,21 @@ paths:
               description: The URI to fetch details of the resource.
           content:
             'application/vnd.whispir.auth-v1+json':
-                schema:
-                  description: The create auth response object.
-                  type: object
-                  properties:
-                    token:
-                      type: string
-                      description: The JWT token.
-                      example: your-generated-token-string
-                    link:
-                      $ref: '#/components/schemas/link'
-                examples:
-                  Example:
-                    value:
-                      token: your-generated-token-string
-                      link: []
-
+              schema:
+                description: The create auth response object.
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: The JWT token.
+                    example: your-generated-token-string
+                  link:
+                    $ref: '#/components/schemas/link'
+              examples:
+                Example:
+                  value:
+                    token: your-generated-token-string
+                    link: []
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5809,7 +5810,6 @@ paths:
         - Auth
       security:
         - BasicAuth: []
-        - ApiKeyAuth
   /auth/verify:
     get:
       parameters:
@@ -9605,26 +9605,23 @@ components:
     Auth-Accept:
       name: Accept
       in: header
-      # required: true
+      required: true
       schema:
         type: string
         enum:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml
-        default: application/vnd.whispir.auth-v1+json
-
       description: Application specific mime-type
     Auth-Content-Type:
       name: Content-Type
       in: header
-      # required: true
+      required: true
       description: Application specific mime-type
       schema:
+        type: string
         enum:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml
-        default: 'application/vnd.whispir.auth-v1+json'
-
     Activity-Content-Type:
       name: Content-Type
       in: header

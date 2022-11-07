@@ -8,3 +8,5 @@ whispir-test/.env
 # whispir-test-java
 whispir-test-java/**/.env
 whispir-test-java/app/libs/whispir-java*
+node_modules/
+openapi.json

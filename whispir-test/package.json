@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "yarn build --verbose --watch",
-    "test": "env-cmd node test.js"
+    "test": "env-cmd node test.js",
+    "convert": "yaml-convert -i openapi.yaml -o openapi.json"
   }
 }

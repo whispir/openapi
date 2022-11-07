@@ -8,6 +8,7 @@ jobs:
   generate-sdks:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         language: ['node', 'java']
     steps:

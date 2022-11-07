@@ -13,13 +13,13 @@ const semverConventionalcommitMap = {
     major: 'feat!',
     minor: 'feat',
     patch: 'fix',
-}
+};
 
 import('semver-diff').then((semverDiff) => {
-    const [, , previousVersion, newVersion] = process.argv
+    const [, , previousVersion, newVersion] = process.argv;
 
     const semver = semverDiff.default(previousVersion, newVersion);
     const conventionalCommitMessage = semverConventionalcommitMap[semver];
 
-    console.log(conventionalCommitMessage)
-})
+    console.log(conventionalCommitMessage);
+});

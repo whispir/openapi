@@ -1,0 +1,798 @@
+schemas {
+  message: {
+    type: 'object',
+    xml: { name: 'message', prefix: 'ns2' },
+    'x-examples': { SMS: [Object], Email: [Object] },
+    example: {
+      to: '61400400400',
+      subject: 'Test Message',
+      body: 'This is the body of my test SMS message'
+    },
+    title: 'Message',
+    'x-tags': [ 'Messages' ],
+    description: 'Whispir has a maximum API request payload size of 10MB. Whispir will reject the request if the payload is any bigger. This payload size limit should be adhered to when creatin the message payload.\n',
+    additionalProperties: false,
+    properties: {
+      to: [Object],
+      subject: [Object],
+      body: [Object],
+      email: [Object],
+      voice: [Object],
+      web: [Object],
+      social: [Object],
+      type: [Object],
+      features: [Object],
+      resource: [Object],
+      messageTemplateId: [Object],
+      messageTemplateName: [Object],
+      callbackId: [Object],
+      callbackParameters: [Object],
+      label: [Object],
+      eventId: [Object],
+      messageType: [Object],
+      scheduleType: [Object],
+      scheduleDate: [Object],
+      repetitionCount: [Object],
+      repeatDays: [Object],
+      repeatHrs: [Object],
+      repeatMin: [Object],
+      from: [Object],
+      direction: [Object],
+      responseCount: [Object],
+      createdTime: [Object],
+      whatsappValidMessage: [Object],
+      validBody: [Object],
+      validSubject: [Object],
+      dlr: [Object],
+      link: [Object]
+    },
+    required: [ 'to', 'subject' ]
+  },
+  email: {
+    type: 'object',
+    xml: { name: 'email' },
+    title: 'Email',
+    description: 'The email channel payload, used when sending an email Message.\n' +
+      '\n' +
+      'Not required when a template is provided.',
+    'x-examples': { Email: [Object], 'Email with attachment': [Object] },
+    'x-tags': [ 'Messages' ],
+    properties: {
+      body: [Object],
+      footer: [Object],
+      type: [Object],
+      resources: [Object]
+    },
+    required: [ 'body' ]
+  },
+  voice: {
+    type: 'object',
+    xml: { name: 'voice' },
+    title: 'Voice',
+    description: 'The voice channel payload, used when sending a Message.\n' +
+      '\n' +
+      'Calls are charged in 30 seconds intervals (rounded up).\n' +
+      '\n' +
+      'Text max length is 5000 characters.\n' +
+      '\n' +
+      'The maximum payload size rule applies for the body, header and type usage.\n' +
+      '\n' +
+      '<!-- theme: info -->\n' +
+      '\n' +
+      '> #### Requirements\n' +
+      '>\n' +
+      "> In order to use this functionality your account must be enabled to use the Voice module. If you're unsure whether you can use Voice, please contact the Whispir Support Team.\n" +
+      '\n' +
+      '---\n' +
+      '\n' +
+      '### Overview\n' +
+      '\n' +
+      'Whispir’s API provides you with the ability to send a voice message to any landline phone or mobile phone around the world, both via text-to-speech and custom WAV files to be played over the phone\n' +
+      '\n' +
+      'Whispir’s Voice module can easily connect all recipients to a single bridged call, simplifying your teleconferences and ensuring your message gets through\n' +
+      '\n' +
+      'Each voice call is made up of three parts:\n' +
+      '\n' +
+      '- Message introduction: Either Text-To-Speech (TTS) or a WAV file\n' +
+      '- Message acceptance: Asks the recipient to press a button or insert a PIN to hear the message\n' +
+      '- Message content: The concatenation of the message subject and message body. The latter can be either TTS or a WAV file. At the end the recipient will be given the possibility to acknowledge the message.\n' +
+      '<!-- theme: info -->\n' +
+      '\n' +
+      '> #### Adding pauses\n' +
+      '>\n' +
+      '> Pauses can be added to conference call details using the `+` character. Each `+` represents 1 second. Pauses allow some wait time to ensure the conference call service is ready to accept the account number and PIN.\n' +
+      '\n' +
+      '### WAV files requirements\n' +
+      '\n' +
+      'WAV files can be used in place of Text-To-Speech to provide a custom `header` and `body`.\n' +
+      '\n' +
+      'Before a WAV file can be used for the Voice module, it needs to conform to certain criteria:\n' +
+      '\n' +
+      '- All the WAV files combined must not exceed 10 MB in total file size\n' +
+      '- All the WAV files must be a maximum of 8 bit, 8000 Hz, 1ch, 64 kbps\n' +
+      '- If a WAV file is outside these criteria please use TTS instead',
+    'x-examples': {
+      'Text-To-Speech (TTS)': [Object],
+      'TTS with conference': [Object],
+      WAV: [Object]
+    },
+    'x-tags': [ 'Messages' ],
+    properties: {
+      header: [Object],
+      body: [Object],
+      type: [Object],
+      footer: [Object],
+      other: [Object],
+      resources: [Object]
+    },
+    required: [ 'body', 'type' ]
+  },
+  web: {
+    description: 'The web channel payload, used when attaching web content to a Message.\n' +
+      '\n' +
+      'Not required when a template is provided.',
+    type: 'object',
+    xml: { name: 'web' },
+    title: 'Web',
+    properties: { body: [Object], type: [Object] },
+    'x-tags': [ 'Messages' ],
+    'x-examples': { Web: [Object] }
+  },
+  social: {
+    type: 'object',
+    xml: { name: 'social' },
+    title: 'Social',
+    'x-tags': [ 'Messages' ],
+    'x-examples': { Twitter: [Object], Facebook: [Object] },
+    description: 'Whispir can publish content to your Twitter and Facebook walls. Other socials can be made available upon request.',
+    properties: { social: [Object] }
+  },
+  features: {
+    type: 'object',
+    xml: { name: 'features' },
+    title: 'Features',
+    'x-tags': [ 'Messages' ],
+    description: '### Push Messaging\n' +
+      '\n' +
+      'Whispir allows you to send push notifications to any iOS and Android-based apps\n' +
+      '\n' +
+      "Setting up the platform to handle push notifications involves some one-time steps and some periodically repeated steps (updating push tokens). See Apps to get a clear understanding of the related steps and endpoints. Whispir doesn't support sending push notifications to device tokens directly. Read more in Contact devices about how to register the device tokens under contacts.\n" +
+      '\n' +
+      '### Message Aliasing\n' +
+      '\n' +
+      'The Whispir UI allows you to configure a sender alias from which messages are sent. Instructions for alias creation can be found in [Configure message aliases](https://au.whispir.com/onlinehelp/Content/Topics-whispir-ua/administration/alias-manager/config-message-aliases.htm) within Whispir documentation.\n' +
+      '\n' +
+      'The message alias can be attached to a message to template, to configure the the sender for the following channels:\n' +
+      '* SMS - a custom mobile number, e.g. +61 123 456 789\n' +
+      '* Email - a custom email address, e.g. marketing@example.com\n' +
+      '* Voice - a custom mobile number, e.g. +61 123 456 789',
+    'x-examples': {
+      Escalation: [Object],
+      Notifications: [Object],
+      'Message Alias': [Object],
+      'Push Message': [Object]
+    },
+    properties: { pushOptions: [Object], aliasOption: [Object] }
+  },
+  resource: {
+    type: 'object',
+    xml: { name: 'resource', prefix: 'ns3' },
+    'x-tags': [ 'Resources' ],
+    title: 'Resource',
+    description: 'When you’re creating a resource, the following conditions apply:\n' +
+      '\n' +
+      '- Maximum of 10 MB per file being uploaded\n' +
+      '- Transactions have an enforced timeout\n' +
+      '- Resources are available in the Whispir platform for a limited time [90 days]. After this time they are automatically cleaned. This is a configurable setting for Whispir Administrators',
+    'x-examples': { JSON: [Object] },
+    properties: {
+      id: [Object],
+      name: [Object],
+      scope: [Object],
+      mimeType: [Object],
+      derefUri: [Object],
+      link: [Object]
+    },
+    required: [ 'name', 'scope', 'mimeType', 'derefUri' ]
+  },
+  template: {
+    type: 'object',
+    xml: { name: 'template', prefix: 'ns3' },
+    'x-tags': [ 'Templates' ],
+    title: 'Template',
+    description: 'The template object.',
+    'x-examples': { Template: [Object], 'Example-Email-only': [Object] },
+    properties: {
+      messageTemplateName: [Object],
+      messageTemplateDescription: [Object],
+      responseTemplateId: [Object],
+      subject: [Object],
+      body: [Object],
+      email: [Object],
+      voice: [Object],
+      web: [Object],
+      social: [Object],
+      type: [Object],
+      features: [Object],
+      dlr: [Object],
+      link: [Object],
+      tags: [Object],
+      id: [Object]
+    },
+    required: [ 'messageTemplateName', 'subject', 'body' ]
+  },
+  responseTemplatePattern: {
+    type: 'object',
+    xml: { name: 'responseTemplatePattern' },
+    'x-tags': [ 'Response Rules' ],
+    title: 'Response Template Pattern',
+    description: 'This object contains the responseTemplatePattern array, which contains each of the response rule elements. More details on the configuration of this object can be found below',
+    properties: {
+      name: [Object],
+      pattern: [Object],
+      textPrompt: [Object],
+      voicePrompt: [Object],
+      spokenVoicePrompt: [Object],
+      colour: [Object]
+    },
+    required: [
+      'name',
+      'pattern',
+      'textPrompt',
+      'voicePrompt',
+      'spokenVoicePrompt',
+      'colour'
+    ],
+    'x-examples': { Example: [Object] }
+  },
+  responseRule: {
+    type: 'object',
+    xml: { name: 'responserule', prefix: 'ns3' },
+    'x-tags': [ 'Response Rules' ],
+    title: 'Response Rule',
+    'x-examples': { Example: [Object] },
+    description: 'Response Rules are useful when your Templates require the end-users to select among known responses [for example, Yes/No, Accept/Decline or ranking something from 1 to 5]\n' +
+      '\n' +
+      'Using Response Rules in combination with Templates allows you to automatically categorise any response to these messages into different response groups for reporting purposes',
+    properties: {
+      name: [Object],
+      description: [Object],
+      responseTemplatePatterns: [Object]
+    },
+    required: [ 'name', 'responseTemplatePatterns' ]
+  },
+  contact: {
+    type: 'object',
+    xml: { name: 'contact', prefix: 'ns2' },
+    'x-tags': [ 'Contacts' ],
+    title: 'Contact',
+    'x-examples': { Basic: [Object], Comprehensive: [Object] },
+    description: 'The contact object.',
+    properties: {
+      firstName: [Object],
+      lastName: [Object],
+      workMobilePhone1: [Object],
+      workEmailAddress1: [Object],
+      workCountry: [Object],
+      timezone: [Object],
+      title: [Object],
+      workMobilePhone2: [Object],
+      workEmailAddress2: [Object],
+      workPhoneAreaCode1: [Object],
+      workPhone1: [Object],
+      workPhoneAreaCode2: [Object],
+      workPhone2: [Object],
+      workFaxAreaCode1: [Object],
+      workFax1: [Object],
+      workSatellitePhone: [Object],
+      workOtherPhone: [Object],
+      workAddress1: [Object],
+      workAddress2: [Object],
+      workSuburb: [Object],
+      workState: [Object],
+      workPostCode: [Object],
+      workPostalAddress1: [Object],
+      workPostalAddress2: [Object],
+      workPostalSuburb: [Object],
+      workPostalState: [Object],
+      workPostalPostCode: [Object],
+      personalEmailAddress1: [Object],
+      personalEmailAddress2: [Object],
+      personalAddress1: [Object],
+      personalAddress2: [Object],
+      personalSuburb: [Object],
+      personalState: [Object],
+      personalPostCode: [Object],
+      personalCountry: [Object],
+      personalPhoneAreaCode1: [Object],
+      personalPhone1: [Object],
+      personalPhoneAreaCode2: [Object],
+      personalPhone2: [Object],
+      personalFaxAreaCode1: [Object],
+      personalFax1: [Object],
+      otherPhoneAreaCode1: [Object],
+      otherPhone1: [Object],
+      otherMobile: [Object],
+      otherFirstName: [Object],
+      otherLastName: [Object],
+      otherTitle: [Object],
+      status: [Object],
+      companyName: [Object],
+      jobTitle: [Object],
+      division: [Object],
+      businessUnit: [Object],
+      department: [Object],
+      teamName1: [Object],
+      teamName2: [Object],
+      role1: [Object],
+      role2: [Object],
+      locations: [Object],
+      messagingoptions: [Object],
+      type: [Object],
+      mri: [Object],
+      devices: [Object],
+      link: [Object],
+      lastModifiedTime: [Object]
+    },
+    required: [
+      'firstName',
+      'lastName',
+      'workMobilePhone1',
+      'workEmailAddress1',
+      'workCountry',
+      'timezone'
+    ]
+  },
+  distributionlist: {
+    type: 'object',
+    xml: { name: 'distributionlists', prefix: 'ns1' },
+    'x-tags': [ 'Distribution Lists' ],
+    title: 'Static Distribution List',
+    'x-examples': { 'Example Request': [Object], 'Example Response': [Object] },
+    description: 'Static Distribution Lists are manually managed and maintained. They can include Contacts, Users and other Distribution Lists',
+    properties: {
+      id: [Object],
+      name: [Object],
+      mri: [Object],
+      description: [Object],
+      memberCount: [Object],
+      access: [Object],
+      visibility: [Object],
+      link: [Object],
+      contactIds: [Object],
+      userIds: [Object],
+      distListIds: [Object],
+      type: [Object],
+      distlistdetails: [Object]
+    },
+    required: [ 'name', 'access', 'visibility' ]
+  },
+  dynamicdistributionlist: {
+    xml: { name: 'dynamicdistributionlist', prefix: 'ns1' },
+    'x-tags': [ 'Distribution Lists' ],
+    title: 'Dynamic Distribution List',
+    'x-examples': { 'Example Request': [Object], 'Example Response': [Object] },
+    description: "Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don't need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List",
+    type: 'object',
+    properties: {
+      name: [Object],
+      description: [Object],
+      access: [Object],
+      type: [Object],
+      entityType: [Object],
+      visibility: [Object],
+      rules: [Object],
+      link: [Object]
+    },
+    required: [ 'name', 'access', 'type', 'entityType', 'visibility', 'rules' ]
+  },
+  scenario: {
+    type: 'object',
+    xml: { name: 'scenario', prefix: 'ns2' },
+    'x-tags': [ 'Scenarios' ],
+    title: 'Scenario',
+    description: 'Scenarios allows you to simplify the message delivery process through automated, one-click communications.',
+    properties: {
+      name: [Object],
+      description: [Object],
+      allowedUsers: [Object],
+      allowedUserIds: [Object],
+      message: [Object],
+      to: [Object],
+      subject: [Object],
+      label: [Object],
+      email: [Object],
+      voice: [Object],
+      web: [Object],
+      social: [Object]
+    },
+    required: [ 'name', 'description', 'message' ],
+    'x-examples': { 'example-1': [Object] }
+  },
+  callback: {
+    type: 'object',
+    xml: { name: 'companyapicallback', prefix: 'ns2' },
+    'x-tags': [ 'Callbacks' ],
+    title: 'Callback',
+    description: 'The callback object, used to configure the callback (also known as webhook).',
+    'x-examples': { 'Callback object example': [Object] },
+    properties: {
+      id: [Object],
+      name: [Object],
+      url: [Object],
+      auth: [Object],
+      contentType: [Object],
+      removeHTML: [Object],
+      retriesEnabled: [Object],
+      email: [Object],
+      callbacks: [Object],
+      link: [Object]
+    },
+    required: [
+      'name',
+      'url',
+      'auth',
+      'contentType',
+      'removeHTML',
+      'retriesEnabled',
+      'email',
+      'callbacks'
+    ]
+  },
+  workspace: {
+    type: 'object',
+    xml: { name: 'workspace', prefix: 'ns3' },
+    'x-tags': [ 'Workspaces' ],
+    title: 'Workspace',
+    properties: {
+      id: [Object],
+      projectName: [Object],
+      projectNumber: [Object],
+      status: [Object],
+      billingcostcentre: [Object],
+      link: [Object]
+    },
+    required: [ 'projectName', 'status' ],
+    description: 'Workspaces allow application developers to create new work areas for the varying use cases of their application. For example they can be associated to the different business units of a company, so to silo the data of the different departments. In fact, the information, assets, contacts and actions performed in a workspace can’t be accessed from another one. This allows the applications to be independent and audited effectively with proper permissions and keys.\n' +
+      '\n' +
+      'Each of these work areas provides different functionalities - such as creating messages, executing scenarios or viewing distribution lists - and can be governed by user permissions. Users can be assigned access to these workspaces to restrict the control of information as needed.\n' +
+      '\n' +
+      'Every account on creation is given a default workspace called "My Company" but it is possible to create multiple workspaces suited for each application need. There is no limit on the number of workspaces.',
+    'x-examples': { 'example-1': [Object] }
+  },
+  callbackAuth: {
+    title: 'callbackAuth',
+    type: 'object',
+    description: 'The authentication model details. You will receive - \n' +
+      '\n' +
+      'For `queryparam`\n' +
+      '- `?Auth={{KeyValue}}`\n' +
+      '\n' +
+      'For `httpheader`\n' +
+      '- `X-Whispir-Callback-Key: {{KeyValue}}`\n' +
+      '\n' +
+      'For `basicauth`\n' +
+      '- `Authorization: Basic {{KeyValue}}`\n' +
+      '\n' +
+      'For `bearertoken`\n' +
+      '- `Authorization: Bearer {{KeyValue}}`',
+    properties: { type: [Object], key: [Object] },
+    required: [ 'type', 'key' ],
+    'x-examples': { 'example-1': [Object] }
+  },
+  locations: {
+    description: 'The locations for the contact.',
+    type: 'array',
+    xml: { name: 'locations' },
+    title: 'Locations',
+    'x-examples': { 'One Location': [Array], 'Multiple Locations': [Array] },
+    items: {
+      type: 'object',
+      description: 'The location object.',
+      properties: [Object]
+    }
+  },
+  messagingoptions: {
+    description: 'The message channel options for the contact.',
+    type: 'array',
+    title: 'Messaging Options',
+    items: {
+      type: 'object',
+      description: 'The object to configure message channel options.',
+      properties: [Object]
+    }
+  },
+  activity: {
+    description: 'Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace.',
+    type: 'object',
+    'x-examples': { 'example-1': [Object] },
+    properties: {
+      user: [Object],
+      time: [Object],
+      action: [Object],
+      description: [Object],
+      status: [Object],
+      module: [Object],
+      workspaceName: [Object],
+      fullname: [Object],
+      link: [Object]
+    }
+  },
+  user: {
+    type: 'object',
+    xml: { name: 'user', prefix: 'ns2' },
+    'x-tags': [ 'Users' ],
+    title: 'User',
+    'x-examples': { Example: [Object] },
+    properties: {
+      id: [Object],
+      userName: [Object],
+      password: [Object],
+      firstName: [Object],
+      middleName: [Object],
+      lastName: [Object],
+      title: [Object],
+      nickname: [Object],
+      status: [Object],
+      workMobilePhone1: [Object],
+      workEmailAddress1: [Object],
+      workCountry: [Object],
+      timezone: [Object],
+      workMobilePhone2: [Object],
+      workEmailAddress2: [Object],
+      workPhoneAreaCode1: [Object],
+      workPhone1: [Object],
+      workPhoneAreaCode2: [Object],
+      workPhone2: [Object],
+      workFaxAreaCode1: [Object],
+      workFax1: [Object],
+      workSatellitePhone: [Object],
+      workOtherPhone: [Object],
+      workAddress1: [Object],
+      workAddress2: [Object],
+      workSuburb: [Object],
+      workState: [Object],
+      workPostCode: [Object],
+      workPostalAddress1: [Object],
+      workPostalAddress2: [Object],
+      workPostalSuburb: [Object],
+      workPostalState: [Object],
+      workPostalPostCode: [Object],
+      personalEmailAddress1: [Object],
+      personalEmailAddress2: [Object],
+      personalAddress1: [Object],
+      personalAddress2: [Object],
+      personalSuburb: [Object],
+      personalState: [Object],
+      personalPostCode: [Object],
+      personalCountry: [Object],
+      personalPhoneAreaCode1: [Object],
+      personalPhone1: [Object],
+      personalPhoneAreaCode2: [Object],
+      personalPhone2: [Object],
+      personalFaxAreaCode1: [Object],
+      personalFax1: [Object],
+      otherPhoneAreaCode1: [Object],
+      otherPhone1: [Object],
+      otherMobile: [Object],
+      otherFirstName: [Object],
+      otherLastName: [Object],
+      otherTitle: [Object],
+      companyName: [Object],
+      jobTitle: [Object],
+      division: [Object],
+      businessUnit: [Object],
+      department: [Object],
+      teamName1: [Object],
+      teamName2: [Object],
+      role1: [Object],
+      role2: [Object],
+      link: [Object]
+    },
+    required: [
+      'userName',
+      'password',
+      'firstName',
+      'lastName',
+      'workCountry',
+      'timezone'
+    ],
+    description: 'The user object.'
+  },
+  listUsers: {
+    type: 'object',
+    xml: { name: 'user', prefix: 'ns2' },
+    'x-tags': [ 'Users' ],
+    title: 'List Users',
+    'x-examples': { Example: [Object] },
+    properties: {
+      id: [Object],
+      firstName: [Object],
+      lastName: [Object],
+      companyName: [Object],
+      workEmailAddress1: [Object],
+      link: [Object]
+    },
+    required: [
+      'id',
+      'firstName',
+      'lastName',
+      'companyName',
+      'workEmailAddress1'
+    ],
+    description: 'List users response object'
+  },
+  event: {
+    type: 'object',
+    xml: { name: 'event', prefix: 'ns3' },
+    'x-tags': [ 'Events' ],
+    title: 'Event',
+    description: 'The event object.',
+    'x-examples': { 'Event object example': [Object] },
+    properties: {
+      id: [Object],
+      eventLabel: [Object],
+      status: [Object],
+      eventFormList: [Object],
+      link: [Object]
+    },
+    required: [ 'eventLabel', 'status' ]
+  },
+  import: {
+    type: 'object',
+    xml: { name: 'import', prefix: 'ns2' },
+    'x-tags': [ 'Imports' ],
+    title: 'Import',
+    description: 'Import model object',
+    properties: {
+      resourceId: [Object],
+      importType: [Object],
+      importOptions: [Object],
+      importMode: [Object]
+    },
+    required: [ 'resourceId', 'importType', 'importOptions', 'importMode' ],
+    'x-examples': { 'Import resource example': [Object] }
+  },
+  fieldMapping: {
+    type: 'object',
+    xml: { name: 'fieldMapping' },
+    title: 'Field Mapping',
+    description: 'Mapping the data column in your resource file to the contact field value',
+    'x-examples': { 'example-1': [Object] },
+    properties: {
+      firstName: [Object],
+      lastName: [Object],
+      workMobilePhone1: [Object],
+      workCountry: [Object],
+      timezone: [Object]
+    },
+    required: [
+      'firstName',
+      'lastName',
+      'workMobilePhone1',
+      'workCountry',
+      'timezone'
+    ]
+  },
+  attachment: {
+    type: 'object',
+    description: 'Attachments can be of any type [e.g. PDF, images and documents], and the maximum size of all attached files combined is 10 MB\n' +
+      '\n' +
+      'Attachments must be provided in the payload of the message. URLs can be referenced in the email but will not be added as message attachments.',
+    'x-examples': { JSON: [Object] },
+    title: 'Attachment',
+    properties: {
+      attachmentName: [Object],
+      derefUri: [Object],
+      attachmentDesc: [Object]
+    },
+    required: [ 'attachmentName', 'derefUri' ]
+  },
+  link: {
+    type: 'array',
+    description: 'A [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) link object, describing all discoverable resources in relation to the original request.',
+    'x-examples': { Example: [Array] },
+    title: 'Link',
+    items: {
+      type: 'object',
+      description: 'The HATEOAS link object.',
+      properties: [Object],
+      required: [Array]
+    },
+    readOnly: true
+  },
+  messageStatus: {
+    description: 'The message status object, describing the delivery of the sent message.',
+    type: 'object',
+    properties: { messageStatuses: [Object], link: [Object], status: [Object] },
+    required: [ 'messageStatuses', 'link' ],
+    'x-examples': { Summary: [Object], Detailed: [Object] },
+    title: 'Message Status'
+  },
+  messageResponseSummary: {
+    title: 'Message Response Summary',
+    description: 'The summary message response object.',
+    type: 'object',
+    'x-examples': { Example: [Object] },
+    properties: { messageresponses: [Object], link: [Object] },
+    required: [ 'messageresponses', 'link' ]
+  },
+  messageResponseDetailed: {
+    title: 'Message Response Detailed',
+    description: 'The detailed message response object.',
+    type: 'object',
+    'x-examples': { Example: [Object] },
+    properties: { messageresponses: [Object], link: [Object], status: [Object] },
+    required: [ 'messageresponses', 'link' ]
+  },
+  dlr: {
+    title: 'Delivery Receipt',
+    description: 'A fixed object structure used by for Whispir internally for tracking purposes.',
+    type: 'object',
+    readOnly: true,
+    required: [
+      'period',
+      'rule',
+      'type',
+      'publishToWeb',
+      'expiryDay',
+      'expiryHour',
+      'expiryMin',
+      'feedIds',
+      'bool'
+    ],
+    properties: {
+      period: [Object],
+      rule: [Object],
+      type: [Object],
+      publishToWeb: [Object],
+      expiryDay: [Object],
+      expiryHour: [Object],
+      expiryMin: [Object],
+      feedIds: [Object],
+      bool: [Object]
+    },
+    'x-examples': { Example: [Object] }
+  },
+  callbackInstance: {
+    description: 'A callback instance object',
+    type: 'object',
+    'x-examples': { Example: [Object] },
+    title: 'callbackInstance',
+    properties: {
+      id: [Object],
+      messageId: [Object],
+      status: [Object],
+      messageLocation: [Object],
+      from: [Object],
+      responseMessage: [Object],
+      callback: [Object],
+      link: [Object]
+    }
+  },
+  customList: {
+    type: 'object',
+    'x-examples': { 'Custom List example': [Object] },
+    description: 'A custom list is a predefined list of options that can be inserted into a message or template. A list might be made up of capital city names, days of the week, incident types, business phone numbers and so on. Custom lists make it easy to add information quickly and consistently to your message content.',
+    properties: {
+      id: [Object],
+      name: [Object],
+      type: [Object],
+      createdDate: [Object],
+      sortType: [Object],
+      linked: [Object],
+      customlabellists: [Object],
+      link: [Object]
+    },
+    required: [
+      'id',
+      'name',
+      'type',
+      'createdDate',
+      'sortType',
+      'linked',
+      'link'
+    ],
+    readOnly: true
+  }
+}

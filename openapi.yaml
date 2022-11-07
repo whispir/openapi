@@ -457,8 +457,6 @@ paths:
       operationId: postMessages
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/Message-Content-Type'
-        - $ref: '#/components/parameters/Message-Accept'
       requestBody:
         content:
           application/vnd.whispir.message-v1+json:

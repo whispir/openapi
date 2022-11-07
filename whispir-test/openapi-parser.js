@@ -1,6 +1,11 @@
 const json = require('../openapi.json')
 
+
 const generateOperationTypes = () => {
+    const schemas = json.components.schemas
+
+    console.log('schemas', schemas)
+    
     const paths = Object.getOwnPropertyNames(json.paths)
 
     let ret = {}

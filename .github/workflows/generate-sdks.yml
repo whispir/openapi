@@ -13,12 +13,13 @@ jobs:
         language: ['node', 'java']
     steps:
       # Checkout richardfontein/openapi repo
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       # Clone richardfontein/whispir-<language> repo
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
+          ref: 'main'
           repository: richardfontein/whispir-${{ matrix.language }}
           path: whispir-${{ matrix.language }}
           token: ${{ secrets.PAT }}

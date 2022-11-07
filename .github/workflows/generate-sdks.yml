@@ -64,7 +64,7 @@ jobs:
           head: release/${{ github.ref_name }}
           repository: richardfontein/whispir-${{ matrix.language }}
           base: main
-          title: '{{ steps.conventional-commit-type.outputs.commit-type }}(openapi): Release ${{ github.ref_name }}'
+          title: '${{ steps.conventional-commit-type.outputs.commit-type }}(openapi): Release ${{ github.ref_name }}'
           body: |
             This PR was automatically created in response to a new release of richardfontein/openapi.
 

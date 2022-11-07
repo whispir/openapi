@@ -14,6 +14,7 @@ const {
     TemplatesApi,
     WorkspacesApi,
     AuthApi,
+    UsersApi,
 } = require("../whispir-node/dist/api.js");
 
 const { generateOperationTypes } = require('./openapi-parser')
@@ -62,7 +63,8 @@ const createClientFn = (key, params, api) => {
         pathParams,
         operationParams,
         request,
-        response
+        response,
+        payload,
     } = params
 
     let fnParams = []
@@ -82,6 +84,11 @@ const createClientFn = (key, params, api) => {
     passedParams = Array.from(new Set(passedParams))
     fnParams = Array.from(new Set(fnParams))
 
+    if (payload) {
+        fnParams.push(`${operationId}Payload`)
+        passedParams.push(`${operationId}Payload`)
+    }
+
     const fnTemplate = `
         async (${fnParams.join(', ')}) => {
             const messageOptions = {
@@ -91,7 +98,7 @@ const createClientFn = (key, params, api) => {
             }
             
             return this.${api}['${operationId}']
-            (${passedParams.join(', ')} , messageOptions);
+            (${passedParams.join(', ')}, messageOptions);
         }
     `
     // console.log('fn', fnTemplate)
@@ -119,6 +126,7 @@ class WhispirClient {
         this.scenariosApi = new ScenariosApi(username, password, apiUrl)
         this.templatesApi = new TemplatesApi(username, password, apiUrl)
         this.workspacesApi = new WorkspacesApi(username, password, apiUrl)
+        this.usersApi = new UsersApi(username, password, apiUrl)
 
         this.apiList = [
             // { api: this.activitiesApi, name: 'activitiesApi' },
@@ -134,6 +142,7 @@ class WhispirClient {
             { api: this.scenariosApi, name: 'scenariosApi' },
             { api: this.templatesApi, name: 'templatesApi' },
             { api: this.workspacesApi, name: 'workspacesApi' },
+            { api: this.usersApi, name: 'usersApi' },
         ]
         this.defaultOptions = {
             headers: {

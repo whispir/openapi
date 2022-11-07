@@ -13,7 +13,7 @@ async function main() {
         apiKey: API_KEY
     }
     const client = new WhispirClient(config)
-    console.log(client.getCallbacks.toString())
+
 
     // return await client.getCallbacks()
 
@@ -23,7 +23,12 @@ async function main() {
         body: `Hi there from Whispir"`,
     }
     // location: 'https://stage-ap-southeast-2.whispirdev.com/workspaces/26E4E27F0360A8C9/messages/1715282F3797523E',
-    return await client.postMessages(sampleMessage)
+    //  href: 'https://stage-ap-southeast-2.whispirdev.com/api/workspaces/26E4E27F0360A8C9/messages',
+
+    console.log(client.postMessages.toString())
+    console.log(client.getMessageById.toString())
+    console.log(client.getMessages.toString())
+    // return await client.postMessages(sampleMessage)
     // return await client.getMessageById('1715282F3797523E')
 }
 main()

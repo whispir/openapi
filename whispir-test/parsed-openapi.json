@@ -6,6 +6,7 @@
     "pathParams": [{ "$ref": "#/components/parameters/workspaceId" }],
     "operationParams": [{ "$ref": "#/components/parameters/X-Api-Key" }],
     "request": ["application/vnd.whispir.message-v1+json"],
+    "payload": true,
     "response": ["application/vnd.whispir.message-v1+json"]
   },
   "getMessages": {
@@ -143,7 +144,8 @@
       { "$ref": "#/components/parameters/Resource-Content-Type" },
       { "$ref": "#/components/parameters/Resource-Accept" }
     ],
-    "request": ["application/vnd.whispir.resource-v1+json"]
+    "request": ["application/vnd.whispir.resource-v1+json"],
+    "payload": true
   },
   "getResources": {
     "operationId": "getResources",
@@ -213,7 +215,8 @@
         }
       }
     ],
-    "request": ["application/vnd.whispir.resource-v1+json"]
+    "request": ["application/vnd.whispir.resource-v1+json"],
+    "payload": true
   },
   "deleteResourcesById": {
     "operationId": "deleteResourcesById",
@@ -244,7 +247,8 @@
       { "$ref": "#/components/parameters/Template-Content-Type" },
       { "$ref": "#/components/parameters/Template-Accept" }
     ],
-    "request": ["application/vnd.whispir.template-v1+json"]
+    "request": ["application/vnd.whispir.template-v1+json"],
+    "payload": true
   },
   "getTemplates": {
     "operationId": "getTemplates",
@@ -295,7 +299,8 @@
       { "$ref": "#/components/parameters/Template-Content-Type" },
       { "$ref": "#/components/parameters/Template-Accept" }
     ],
-    "request": ["application/vnd.whispir.template-v1+json"]
+    "request": ["application/vnd.whispir.template-v1+json"],
+    "payload": true
   },
   "deleteTemplatesById": {
     "operationId": "deleteTemplatesById",
@@ -325,7 +330,8 @@
       { "$ref": "#/components/parameters/ResponseRule-Content-Type" },
       { "$ref": "#/components/parameters/ResponseRule-Accept" }
     ],
-    "request": ["application/vnd.whispir.responserule-v1+json"]
+    "request": ["application/vnd.whispir.responserule-v1+json"],
+    "payload": true
   },
   "getResponseRules": {
     "operationId": "getResponseRules",
@@ -375,7 +381,8 @@
         "schema": { "type": "string", "example": "64BC5314665B947B" }
       }
     ],
-    "request": ["application/vnd.whispir.responserule-v1+json"]
+    "request": ["application/vnd.whispir.responserule-v1+json"],
+    "payload": true
   },
   "deleteResponseRulesById": {
     "operationId": "deleteResponseRulesById",
@@ -406,7 +413,8 @@
     "request": [
       "application/vnd.whispir.contact-v1+json",
       "application/vnd.whispir.contact-v1+xml"
-    ]
+    ],
+    "payload": true
   },
   "getContacts": {
     "operationId": "getContacts",
@@ -490,7 +498,8 @@
     "request": [
       "application/vnd.whispir.contact-v1+json",
       "application/vnd.whispir.contact-v1+xml"
-    ]
+    ],
+    "payload": true
   },
   "deleteContactsById": {
     "operationId": "deleteContactsById",
@@ -527,7 +536,8 @@
       { "$ref": "#/components/parameters/DistributionList-Content-Type" },
       { "$ref": "#/components/parameters/DistributionList-Accept" }
     ],
-    "request": ["application/vnd.whispir.distributionlist-v1+json"]
+    "request": ["application/vnd.whispir.distributionlist-v1+json"],
+    "payload": true
   },
   "getDistributionLists": {
     "operationId": "getDistributionLists",
@@ -591,7 +601,8 @@
         "schema": { "type": "string", "example": "5EFBA89462693D7B" }
       }
     ],
-    "request": ["application/vnd.whispir.distributionlist-v1+json"]
+    "request": ["application/vnd.whispir.distributionlist-v1+json"],
+    "payload": true
   },
   "deleteDistributionListsById": {
     "operationId": "deleteDistributionListsById",
@@ -619,7 +630,8 @@
       { "$ref": "#/components/parameters/Scenario-Content-Type" },
       { "$ref": "#/components/parameters/Scenario-Accept" }
     ],
-    "request": ["application/vnd.whispir.scenario-v1+json"]
+    "request": ["application/vnd.whispir.scenario-v1+json"],
+    "payload": true
   },
   "getScenarios": {
     "operationId": "getScenarios",
@@ -689,7 +701,8 @@
         "schema": { "type": "string", "example": "41048D9483C8CF2A" }
       }
     ],
-    "request": ["application/vnd.whispir.scenario-v1+json"]
+    "request": ["application/vnd.whispir.scenario-v1+json"],
+    "payload": true
   },
   "deleteScenariosById": {
     "operationId": "deleteScenariosById",
@@ -717,7 +730,8 @@
       { "$ref": "#/components/parameters/Callback-Content-Type" },
       { "$ref": "#/components/parameters/Callback-Accept" }
     ],
-    "request": ["application/vnd.whispir.api-callback-v1+json"]
+    "request": ["application/vnd.whispir.api-callback-v1+json"],
+    "payload": true
   },
   "getCallbacks": {
     "operationId": "getCallbacks",
@@ -858,7 +872,8 @@
         "description": "The unique ID of the specific call within Whispir"
       }
     ],
-    "request": ["application/json"]
+    "request": ["application/json"],
+    "payload": true
   },
   "postWorkspaces": {
     "operationId": "postWorkspaces",
@@ -870,7 +885,8 @@
       { "$ref": "#/components/parameters/Workspace-Content-Type" },
       { "$ref": "#/components/parameters/Workspace-Accept" }
     ],
-    "request": ["application/vnd.whispir.workspace-v1+json"]
+    "request": ["application/vnd.whispir.workspace-v1+json"],
+    "payload": true
   },
   "getWorkspaces": {
     "operationId": "getWorkspaces",
@@ -906,7 +922,8 @@
       { "$ref": "#/components/parameters/Workspace-Content-Type" },
       { "$ref": "#/components/parameters/Workspace-Accept" }
     ],
-    "request": ["application/json"]
+    "request": ["application/json"],
+    "payload": true
   },
   "postActivities": {
     "operationId": "postActivities",
@@ -918,7 +935,8 @@
       { "$ref": "#/components/parameters/Activity-Content-Type" },
       { "$ref": "#/components/parameters/Activity-Accept" }
     ],
-    "request": ["application/vnd.whispir.activity-v1+json"]
+    "request": ["application/vnd.whispir.activity-v1+json"],
+    "payload": true
   },
   "getActivities": {
     "operationId": "getActivities",
@@ -1120,7 +1138,8 @@
       { "$ref": "#/components/parameters/User-Content-Type" },
       { "$ref": "#/components/parameters/User-Accept" }
     ],
-    "request": ["application/vnd.whispir.user-v1+json"]
+    "request": ["application/vnd.whispir.user-v1+json"],
+    "payload": true
   },
   "getUsers": {
     "operationId": "getUsers",
@@ -1188,7 +1207,8 @@
       { "$ref": "#/components/parameters/User-Content-Type" },
       { "$ref": "#/components/parameters/User-Accept" }
     ],
-    "request": ["application/vnd.whispir.user-v1+json"]
+    "request": ["application/vnd.whispir.user-v1+json"],
+    "payload": true
   },
   "deleteUsersById": {
     "operationId": "deleteUsersById",
@@ -1351,7 +1371,8 @@
       { "$ref": "#/components/parameters/Import-Content-Type" },
       { "$ref": "#/components/parameters/Import-Accept" }
     ],
-    "request": ["application/vnd.whispir.importcontact-v1+json"]
+    "request": ["application/vnd.whispir.importcontact-v1+json"],
+    "payload": true
   },
   "postAuth": {
     "operationId": "postAuth",

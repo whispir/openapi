@@ -14,6 +14,8 @@ jobs:
     steps:
       # Checkout richardfontein/openapi repo
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       # Clone richardfontein/whispir-<language> repo
       - uses: actions/checkout@v2
         with:
@@ -29,7 +31,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: |
+      - name: Generate SDK files
+        run: |
           cd whispir-sdk-codegen
           yarn install
           yarn generate

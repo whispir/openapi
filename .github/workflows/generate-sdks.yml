@@ -1,9 +1,8 @@
 name: generate-sdks
 
 on:
-  push:
-  # release:
-  #   types: [published]
+  release:
+    types: [published]
 
 jobs:
   generate-sdks:
@@ -45,7 +44,7 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git add -A
           git commit --message "chore(sdk): Release ${{ github.ref_name }}"
-          echo "::set-output name=commit::$(git rev-parse HEAD)"
+          echo "{commit}={$(git rev-parse HEAD)}" >> $GITHUB_OUTPUT
       - name: Push new branch
         run: |
           cd whispir-${{ matrix.language }}
@@ -57,7 +56,7 @@ jobs:
           PREVIOUS_TAG=$(git describe --abbrev=0 --tags $NEW_TAG^)
           NEW_VERSION=$(echo $NEW_TAG | cut -d "v" -f2)
           PREVIOUS_VERSION=$(echo $PREVIOUS_TAG | cut -d "v" -f2)
-          echo "::set-output name=commit-type::$(node whispir-sdk-codegen/version-diff.js $PREVIOUS_VERSION $NEW_VERSION)"
+          echo "{commit-type}={$(node whispir-sdk-codegen/version-diff.js $PREVIOUS_VERSION $NEW_VERSION)}" >> $GITHUB_OUTPUT
       - name: Create pull request into main
         uses: thomaseizinger/create-pull-request@08c462ea5f7e036ae693796541404b4297a480d6 # 1.2.2
         with:
@@ -65,7 +64,7 @@ jobs:
           head: release/${{ github.ref_name }}
           repository: richardfontein/whispir-${{ matrix.language }}
           base: main
-          title: 'chore: Release ${{ github.ref_name }}'
+          title: '{{ steps.conventional-commit-type.outputs.commit-type }}(openapi): Release ${{ github.ref_name }}'
           body: |
             This PR was automatically created in response to a new release of richardfontein/openapi.
 

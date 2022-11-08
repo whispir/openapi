@@ -11,5 +11,6 @@ jobs:
         with:
           release-type: simple
           package-name: openapi
+          token: ${{secrets.PAT}}
           extra-files: |
             openapi.yaml

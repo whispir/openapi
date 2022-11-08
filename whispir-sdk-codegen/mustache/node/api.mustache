@@ -1,0 +1,39 @@
+export * from './api/apis';
+export * from './model/models';
+import { VERSION } from './version';
+
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+import { {{ classname }} } from './api/{{ classFilename }}';
+{{/operations}}
+{{/apis}}
+
+type Config = {
+    username: string;
+    password: string;
+    apiKey: string;
+    baseUrl: string;
+};
+
+export const WhispirClient = ({
+    username,
+    password,
+    apiKey,
+    baseUrl,
+}: Config) => { 
+    const defaultHeaders = { 
+        'X-Api-Key': apiKey,
+        Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString("base64")}`,
+        'User-Agent':`whispir-node-${VERSION}`
+    };
+    {{#apis}}{{#operations}}
+    const {{ classFilename }} = new {{ classname }}(baseUrl);
+    {{ classFilename }}.defaultHeaders = defaultHeaders;{{/operations}}{{/apis}}
+
+    return { 
+        {{#apis}}{{#operations}}{{ classFilename }},
+        {{/operations}}{{/apis}}
+    };
+};
+{{/apiInfo}}

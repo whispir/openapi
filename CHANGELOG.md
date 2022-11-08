@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.0.4](https://github.com/whispir/openapi/compare/v1.0.3...v1.0.4) (2022-11-08)
+
+
+### Bug Fixes
+
+* SDK release workflows ([#143](https://github.com/whispir/openapi/issues/143)) ([67514ee](https://github.com/whispir/openapi/commit/67514ee4e071921ae62965e2168fbdb436cb2d21))
+
+## [1.0.3](https://github.com/whispir/openapi/compare/v1.0.2...v1.0.3) (2022-11-03)
+
+
+### Bug Fixes
+
+* updated generate node and java sdk workflows ([#139](https://github.com/whispir/openapi/issues/139)) ([3903252](https://github.com/whispir/openapi/commit/390325219b6eeaa7ab018347e1d68c7bed374fd3))
+
+## [1.0.2](https://github.com/whispir/openapi/compare/v1.0.1...v1.0.2) (2022-11-02)
+
+
+### Bug Fixes
+
+* utilize PAT to trigger other workflows ([#137](https://github.com/whispir/openapi/issues/137)) ([85d6180](https://github.com/whispir/openapi/commit/85d6180cb2a0641f8d1f45863d12a808a77d1174))
+
 ## [1.0.1](https://github.com/whispir/openapi/compare/v1.0.0...v1.0.1) (2022-11-02)
 
 

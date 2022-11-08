@@ -15,6 +15,7 @@
   "author": "OpenAPI-Generator Contributors",
   "license": "Unlicense",
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.5.1"
+    "@openapitools/openapi-generator-cli": "^2.5.1",
+    "semver-diff": "^4.0.0"
   }
 }

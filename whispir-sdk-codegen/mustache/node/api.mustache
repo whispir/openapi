@@ -1,6 +1,6 @@
-// This is the entrypoint for the package - contains custom now - demo for Mark and Carl.
 export * from './api/apis';
 export * from './model/models';
+import { VERSION } from './version';
 
 {{#apiInfo}}
 {{#apis}}
@@ -23,18 +23,17 @@ export const WhispirClient = ({
     baseUrl,
 }: Config) => { 
     const defaultHeaders = { 
-        'X-API-KEY': apiKey,
+        'X-Api-Key': apiKey,
         Authorization: `Basic ${Buffer.from(`${username}:${password}`).toString("base64")}`,
-    }
+        'User-Agent':`whispir-node-${VERSION}`
+    };
     {{#apis}}{{#operations}}
     const {{ classFilename }} = new {{ classname }}(baseUrl);
-    {{ classFilename }}.defaultHeaders(defaultHeaders);{{/operations}}{{/apis}}
+    {{ classFilename }}.defaultHeaders = defaultHeaders;{{/operations}}{{/apis}}
 
     return { 
         {{#apis}}{{#operations}}{{ classFilename }},
         {{/operations}}{{/apis}}
-    }
-}
+    };
+};
 {{/apiInfo}}
-
-

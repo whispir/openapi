@@ -1,10 +1,10 @@
 {
-  "$schema": "../../node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "$schema": "node_modules/@openapitools/openapi-generator-cli/config.schema.json",
   "spaces": 2,
   "generator-cli": {
     "version": "6.0.1",
     "generators": {
-      "typescript-node": {
+      "node": {
         "generatorName": "typescript-node",
         "output": "#{cwd}/../whispir-node",
         "glob": "../openapi.yaml",
@@ -12,7 +12,8 @@
           "npmName": "whispir-node",
           "supportsES6": "true",
           "npmVersion": "1.0.0"
-        }
+        },
+        "templateDir": "mustache/node"
       },
       "java": {
         "generatorName": "java",

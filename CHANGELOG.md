@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/whispir/openapi/compare/v1.0.3...v1.0.4) (2022-11-08)
+
+
+### Bug Fixes
+
+* SDK release workflows ([#143](https://github.com/whispir/openapi/issues/143)) ([67514ee](https://github.com/whispir/openapi/commit/67514ee4e071921ae62965e2168fbdb436cb2d21))
+
 ## [1.0.3](https://github.com/whispir/openapi/compare/v1.0.2...v1.0.3) (2022-11-03)
 
 

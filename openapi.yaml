@@ -9353,6 +9353,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.template-v1+json
         enum:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
@@ -9364,6 +9365,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.template-v1+json
         enum:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
@@ -9374,6 +9376,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.api-callback-v1+json
         enum:
           - application/vnd.whispir.api-callback-v1+json
           - application/vnd.whispir.api-callback-v1+xml
@@ -9384,6 +9387,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.api-callback-v1+json
         enum:
           - application/vnd.whispir.api-callback-v1+json
           - application/vnd.whispir.api-callback-v1+xml
@@ -9394,6 +9398,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.contact-v1+json
         enum:
           - application/vnd.whispir.contact-v1+json
           - application/vnd.whispir.contact-v1+xml
@@ -9404,6 +9409,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.contact-v1+json
         enum:
           - application/vnd.whispir.contact-v1+json
           - application/vnd.whispir.contact-v1+xml
@@ -9414,6 +9420,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.resource-v1+json
         enum:
           - application/vnd.whispir.resource-v1+json
           - application/vnd.whispir.resource-v1+xml
@@ -9424,6 +9431,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.resource-v1+json
         enum:
           - application/vnd.whispir.resource-v1+json
           - application/vnd.whispir.resource-v1+xml
@@ -9434,6 +9442,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.responserule-v1+json
         enum:
           - application/vnd.whispir.responserule-v1+json
           - application/vnd.whispir.responserule-v1+xml
@@ -9444,6 +9453,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.responserule-v1+json
         enum:
           - application/vnd.whispir.responserule-v1+json
           - application/vnd.whispir.responserule-v1+xml
@@ -9454,6 +9464,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.workspace-v1+json
         enum:
           - application/vnd.whispir.workspace-v1+json
           - application/vnd.whispir.workspace-v1+xml
@@ -9464,6 +9475,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.workspace-v1+json
         enum:
           - application/vnd.whispir.workspace-v1+json
           - application/vnd.whispir.workspace-v1+xml
@@ -9474,6 +9486,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.distributionlist-v1+json
         enum:
           - application/vnd.whispir.distributionlist-v1+json
           - application/vnd.whispir.distributionlist-v1+xml
@@ -9484,6 +9497,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.distributionlist-v1+json
         enum:
           - application/vnd.whispir.distributionlist-v1+json
           - application/vnd.whispir.distributionlist-v1+xml
@@ -9494,6 +9508,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.scenario-v1+json
         enum:
           - application/vnd.whispir.scenario-v1+json
           - application/vnd.whispir.scenario-v1+xml
@@ -9504,6 +9519,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.scenario-v1+json
         enum:
           - application/vnd.whispir.scenario-v1+json
           - application/vnd.whispir.scenario-v1+xml
@@ -9514,6 +9530,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.event-v1+json
         enum:
           - application/vnd.whispir.event-v1+json
           - application/vnd.whispir.event-v1+xml
@@ -9524,6 +9541,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.event-v1+json
         enum:
           - application/vnd.whispir.event-v1+json
           - application/vnd.whispir.event-v1+xml
@@ -9534,6 +9552,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.customlist-v1+json
         enum:
           - application/vnd.whispir.customlist-v1+json
           - application/vnd.whispir.customlist-v1+xml
@@ -9543,6 +9562,7 @@ components:
       in: header
       schema:
         type: string
+        default: application/vnd.whispir.importcontact-v1+json
         enum:
           - application/vnd.whispir.importcontact-v1+json
           - application/vnd.whispir.importcontact-v1+xml
@@ -9554,6 +9574,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.importcontact-v1+json
         enum:
           - application/vnd.whispir.importcontact-v1+json
           - application/vnd.whispir.importcontact-v1+xml
@@ -9564,6 +9585,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.message-v1+json
         enum:
           - application/vnd.whispir.message-v1+json
           - application/vnd.whispir.bulkmessage-v1+json
@@ -9576,6 +9598,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.message-v1+json
         enum:
           - application/vnd.whispir.message-v1+json
           - application/vnd.whispir.bulkmessage-v1+json
@@ -9588,6 +9611,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.messagestatus-v1+json
         enum:
           - application/vnd.whispir.messagestatus-v1+json
           - application/vnd.whispir.messagestatus-v1+xml
@@ -9599,6 +9623,7 @@ components:
       description: Application specific mime-type.
       schema:
         type: string
+        default: application/vnd.whispir.messageresponse-v1+json
         enum:
           - application/vnd.whispir.messageresponse-v1+json
           - application/vnd.whispir.messageresponse-v1+xml
@@ -9608,6 +9633,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.auth-v1+json
         enum:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml
@@ -9619,6 +9645,7 @@ components:
       description: Application specific mime-type
       schema:
         type: string
+        default: application/vnd.whispir.auth-v1+json
         enum:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml
@@ -9628,6 +9655,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.activity-v1+json
         enum:
           - application/vnd.whispir.activity-v1+json
           - application/vnd.whispir.activity-v1+xml
@@ -9638,6 +9666,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.activity-v1+json
         enum:
           - application/vnd.whispir.activity-v1+json
           - application/vnd.whispir.activity-v1+xml
@@ -9667,6 +9696,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.user-v1+json
         enum:
           - application/vnd.whispir.user-v1+json
           - application/vnd.whispir.user-v1+xml
@@ -9677,6 +9707,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.user-v1+json
         enum:
           - application/vnd.whispir.user-v1+json
           - application/vnd.whispir.user-v1+xml
@@ -9686,6 +9717,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.api-call-v1+json
         enum:
           - application/vnd.whispir.api-call-v1+json
           - application/vnd.whispir.api-call-v1+xml
@@ -9696,6 +9728,7 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.api-call-v1+json
         enum:
           - application/vnd.whispir.api-call-v1+json
           - application/vnd.whispir.api-call-v1+xml

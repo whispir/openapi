@@ -143,30 +143,30 @@ export class {{classname}} {
      * @param {{paramName}} {{description}}
      {{/allParams}}
      */
-    public async {{nickname}} ({{#allParams}}{{#isAccept}}djasljdsalk{{/isAccept}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; {{#returnType}}body: {{{.}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
+    public async {{nickname}} (
+        apiRequestParameter: {
+        {{#allParams}}
+            {{paramName}}?: {{{dataType}}},
+        {{/allParams}}
+        }, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; {{#returnType}}body: {{{.}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
+
+        {{#allParams}}
+        let {{paramName}} = apiRequestParameter.{{paramName}}
+        {{/allParams}} 
         const localVarPath = this.basePath + '{{{path}}}'{{#pathParams}}
             .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-{{#hasProduces}}
-        const produces = [{{#produces}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/produces}}];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
+{{#hasProduces}}        
+        const produces = [
+            {{#produces}}
+                '{{{mediaType}}}'{{^-last}}, {{/-last}}
+            {{/produces}}
+        ];
+        localVarHeaderParams['Accept'] = produces[0]
 {{/hasProduces}}
         let localVarFormParams: any = {};
-
 {{#allParams}}
-{{#required}}
-        // verify required parameter '{{paramName}}' is not null or undefined
-        if ({{paramName}} === null || {{paramName}} === undefined) {
-            throw new Error('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
-        }
-
-{{/required}}
 {{/allParams}}
 {{#queryParams}}
         if ({{paramName}} !== undefined) {
@@ -175,7 +175,9 @@ export class {{classname}} {
 
 {{/queryParams}}
 {{#headerParams}}
-        localVarHeaderParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
+        // defaultValue: {{defaultValue}}
+        // paramName: {{paramName}}
+        localVarHeaderParams['{{baseName}}'] = localVarHeaderParams['{{baseName}}'] || {{paramName}} ||'{{defaultValue}}'.split('&#39;')[1];
 {{/headerParams}}
         (<any>Object).assign(localVarHeaderParams, options.headers);
 

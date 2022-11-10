@@ -12,7 +12,8 @@
           "npmName": "whispir-node",
           "supportsES6": "true",
           "npmVersion": "1.0.0"
-        }
+        },
+        "templateDir": "mustache/node"
       },
       "java": {
         "generatorName": "java",

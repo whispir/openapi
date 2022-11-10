@@ -4429,7 +4429,6 @@ paths:
           description: /activities?workspace=Whispir.
           schema:
             type: string
-            default: '{{workspaceName}}'
         - name: status
           in: query
           required: false
@@ -4453,14 +4452,12 @@ paths:
           description: 'The date and time to start searching from in the format:dd/mm/yyyy hh:mm. This will search on the `time` field <p>/activities?startTime=01/01/2015%2000:00</p>'
           schema:
             type: string
-            default: '{{startTime}}'
         - name: End time
           in: query
           required: false
           description: 'The date and time to start searching from in the format:dd/mm/yyyy hh:mm <p>/activities?endTime=01/01/2015%2000:00</p>'
           schema:
             type: string
-            default: '{{endTime}}'
       responses:
         '200':
           description: OK

@@ -68,7 +68,7 @@ Various languages are supported in separately published SDK's.
       1. `licenseInfo.mustache` is always copied and the file contents MUST be empty, to ensure that OAS version updates do not result in file changes during each SDK release.
    4. Update the list in Supported languages to link to the OpenAPI generator resources, documentation, and new `whispir-<language>` repository
 3. Update the strategy matrix in [.github/workflows/generate-sdks.yml](../.github/workflows/generate-sdks.yml) to include the new `<language>`
-4. Raise a `feat` PR to add the new SDK, and merge it.
+4. Raise a `feat` PR to add the new SDK, review, and merge it.
    1. After merge, the [release-please](../.github/workflows/release-please.yml) workflow will update the release PR.
    2. Merge the release PR, the [generate-sdks](../.github/workflows/generate-sdks.yml) workflow will trigger create OAS version bump PRs in all SDK repositories.
 5. Visit the newly created `whispir-<language>` repository.
@@ -82,7 +82,7 @@ Various languages are supported in separately published SDK's.
    8. Merge the Release PR in the SDK repository. Upon merge, Release Please will create a Github release, and the `.github/workflows/publish.yml` workflow will run, publishing the SDK to the relevant artifactory.
 6. Congratulations, you've just published a new SDK for the Whispir API!
 
-### Debugging the Mustache file inputs.
+### Debugging Mustache file inputs
 
 Documentation to determine what variables are available to the Mustache files are not widely available. It can be helpful to get a list of these variables to know what the Mustache templates will be populated with. The following command will create a `dump.json` file with a listing of all attributes that are available to use in Mustache for the `typescript-node` generator. You can modify the `-g` flag to specify the required generator. It requires that yarn is already installed per [Running the generator](#running-the-generator).
 

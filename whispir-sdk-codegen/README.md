@@ -66,7 +66,7 @@ Various languages are supported in separately published SDK's.
    2. Create a new directory `mustache/<language>`, this will contain the customised Mustache files to align with the [SDK Client standards](#sdk-client-standards)
    3. Add, copy, and customise Mustache templates from the [OpenAPI Generator resources module](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources), matching the resource directory to the stable generator selected in the previous step. For example, if we had selected `typescript-node` as the base generator, visit the [openapi-generator/modules/openapi-generator/src/main/resources/typescript-node](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-node) directory and copy the appropriate Mustache files from there into the newly created `mustache/node` directory.
       1. `licenseInfo.mustache` is always copied and the file contents MUST be empty, to ensure that OAS version updates do not result in file changes during each SDK release.
-   4. Update the list in Supported languages to link to the OpenAPI generator resources, documentation, and new `whispir-<language>` repository
+   4. Update the list in [Supported languages](#supported-languages) to link to the OpenAPI generator resources, documentation, and new `whispir-<language>` repository
 3. Update the strategy matrix in [.github/workflows/generate-sdks.yml](../.github/workflows/generate-sdks.yml) to include the new `<language>`
 4. Raise a `feat` PR to add the new SDK, review, and merge it.
    1. After merge, the [release-please](../.github/workflows/release-please.yml) workflow will update the release PR.

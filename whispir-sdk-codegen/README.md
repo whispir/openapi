@@ -43,7 +43,7 @@ Various languages are supported in separately published SDK's.
             3. `Discussions`: Yes
          2. `Pull Requests`:
             1. `Allow squash merging`: Yes
-               1. Select `Default to pull request title` - this ensures that squash commits reference the conventional-commit pull request title, enabling semantic versioning via conventional commits.
+               1. Select `Default to pull request title` - this ensures that squash commits reference the conventional-commit pull request title, enabling semantic versioning via conventional commit messages.
             2. `Allow auto-merge`: Yes
             3. `Automatically delete head branches`: Yes
       2. "Branches":

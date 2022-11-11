@@ -84,7 +84,7 @@ Various languages are supported in separately published SDK's.
 
 ### Debugging Mustache file inputs
 
-Documentation to determine what variables are available to the Mustache files are not widely available. It can be helpful to get a list of these variables to know what the Mustache templates will be populated with. The following command will create a `dump.json` file with a listing of all attributes that are available to use in Mustache for the `typescript-node` generator. You can modify the `-g` flag to specify the required generator. It requires that yarn is already installed per [Running the generator](#running-the-generator).
+Documentation to determine what variables are available to the Mustache files are not widely available. It can be helpful to get a list of these variables to know what the Mustache templates will be populated with. The following command will create a `dump.json` file with a listing of all attributes that are available to use in Mustache for the `typescript-node` generator. You can modify the `-g` flag to specify the required generator. This requires that package dependencies are already installed per [Running the generator](#running-the-generator).
 
 ```bash
 $(npm bin)/openapi-generator-cli generate \

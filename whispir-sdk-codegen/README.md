@@ -33,7 +33,7 @@ Various languages are supported in separately published SDK's.
 
 ## Adding a new language
 
-1. Create a new Github repository from Whispir's [opensource-repo Git template](https://github.com/whispir/opensource-repo), with the git repository named in the format `whispir-<language>` (e.g. `whispir-node` or `whispir-go`). The opensource-repo template provides common opensource repository files such as `LICENSE`, github issue templates, and a conventional commit release workflow, which is used to semantically version and maintains a changelog for the repositories contents.
+1. Create a new Github repository from Whispir's [opensource-repo Git template](https://github.com/whispir/opensource-repo), with the git repository named in the format `whispir-<language>` (e.g. `whispir-node` or `whispir-go`). The opensource-repo template provides common opensource repository files such as `LICENSE`, Github issue templates, and a conventional commit release workflow, which is used to semantically version and maintain a changelog for the repository's contents.
    1. Ensure the repository belongs to the `whispir` Github organisation
    2. Under "Settings" in the new repository, make the following changes in each section (all other boxes should be unticked):
       1. "General":

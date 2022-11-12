@@ -33,7 +33,7 @@ Various languages are supported in separately published SDK's.
 
 ## Adding a new language
 
-1. Create a new Github repository from Whispir's [opensource-repo Git template](https://github.com/whispir/opensource-repo), with the git repository named in the format `whispir-<language>` (e.g. `whispir-node` or `whispir-go`). The opensource-repo template provides common opensource repository files such as `LICENSE`, Github issue templates, and a conventional commit release workflow, which is used to semantically version and maintain a changelog for the repository's contents.
+1. Create a new Github repository from Whispir's [opensource-repo Git template](https://github.com/whispir/opensource-repo), with the git repository named in the format `whispir-{language}` (e.g. `whispir-node` or `whispir-go`). The opensource-repo template provides common opensource repository files such as `LICENSE`, Github issue templates, and a conventional commit release workflow, which is used to semantically version and maintain a changelog for the repository's contents.
    1. Ensure the repository belongs to the `whispir` Github organisation
    2. Under "Settings" in the new repository, make the following changes in each section (all other boxes should be unticked):
       1. "General":
@@ -57,21 +57,21 @@ Various languages are supported in separately published SDK's.
             3. `Require conversation resolution before merging`: Yes
             4. `Do not allow bypassing the above settings`: Yes
 2. Visit OpenAPI Generator's [client generators section](https://openapi-generator.tech/docs/generators#client-generators), select a stable generator that matches the desired language.
-   1. Add a new key under `generators` in [openapitools.json](./openapitools.json), with the key as `<language>` (e.g. `node` or `go`)
+   1. Add a new key under `generators` in [openapitools.json](./openapitools.json), with the key as `{language}` (e.g. `node` or `go`)
       1. Add the selected generator to `generatorName`
-      2. Add `#{cwd}/../whispir-<language>` to `output`
+      2. Add `#{cwd}/../whispir-{language}` to `output`
       3. Add `../openapi.yaml` to `glob`
-      4. Add `mustache/<language>` to `templateDir`
+      4. Add `mustache/{language}` to `templateDir`
       5. Review the additional properties available to the generator from the generator's documentation page, add in appropriate values.
-   2. Create a new directory `mustache/<language>`, this will contain the customised Mustache files to align with the [SDK Client standards](#sdk-client-standards)
+   2. Create a new directory `mustache/{language}`, this will contain the customised Mustache files to align with the [SDK Client standards](#sdk-client-standards)
    3. Add, copy, and customise Mustache templates from the [OpenAPI Generator resources module](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources), matching the resource directory to the stable generator selected in the previous step. For example, if we had selected `typescript-node` as the base generator, visit the [openapi-generator/modules/openapi-generator/src/main/resources/typescript-node](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-node) directory and copy the appropriate Mustache files from there into the newly created `mustache/node` directory.
       1. `licenseInfo.mustache` is always copied and the file contents MUST be empty, to ensure that OAS version updates do not result in file changes during each SDK release.
-   4. Update the list in [Supported languages](#supported-languages) to link to the OpenAPI generator resources, documentation, and new `whispir-<language>` repository
-3. Update the strategy matrix in [.github/workflows/generate-sdks.yml](../.github/workflows/generate-sdks.yml) to include the new `<language>`
+   4. Update the list in [Supported languages](#supported-languages) to link to the OpenAPI generator resources, documentation, and new `whispir-{language}` repository
+3. Update the strategy matrix in [.github/workflows/generate-sdks.yml](../.github/workflows/generate-sdks.yml) to include the new `{language}`
 4. Raise a `feat` PR to add the new SDK, review, and merge it.
    1. After merge, the [release-please](../.github/workflows/release-please.yml) workflow will update the release PR.
    2. Merge the release PR, the [generate-sdks](../.github/workflows/generate-sdks.yml) workflow will trigger create OAS version bump PRs in all SDK repositories.
-5. Visit the newly created `whispir-<language>` repository. The following changes will be made to in the Git branch of associated with the PR created from the `generated-sdks` workflow in the `whispir-openapi` repository.
+5. Visit the newly created `whispir-{language}` repository. The following changes will be made to in the Git branch of associated with the PR created from the `generated-sdks` workflow in the `whispir-openapi` repository.
    1. Add a `version.{language-extension}` file that will be imported by the API Client to include the SDK version in the `User-Agent` header of requests made to the Whispir API, which provides metrics to Whispir on SDK usage. The file must be added separately to avoid having the version overwritten during SDK generation. For example, the Node SDK has a [`version.ts`](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/version.ts) file added.
    2. Update the `release-please` workflow in the new SDK repository to include a list of extra-files that contain a version and need to be bumped. At a minimum, the `version.{language-extension}` file will be added to this list. For example, see the [release-please.yml](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/.github/workflows/release-please.yml#L17) in `whispir-node`.
    3. For each extra-file, add the `x-release-please-start-version` and `x-release-please-end` tags as comments around the lines containing the version. The `release-please` workflow will use these tags to locate the semantic version requiring a bump. For example, see the Node SDK's' [`version.ts`](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/version.ts) for the formatting of tags. See [Updating arbitrary files](https://github.com/googleapis/release-please/blob/09ae5a2fb84e8189a9e23dce93b3d16cfdc7e228/docs/customizing.md#updating-arbitrary-files) in the Release Please documentation for more info.

@@ -68,7 +68,7 @@ export class {{classname}} {
     {{#allParams}}
         {{paramName}}?: {{{dataType}}},
     {{/allParams}}
-    }, options: { headers: {[name: string]: string}} = {headers: {}}) : Promise<{ lastResponse: http.IncomingMessage} {{#returnType}}& {{{.}}} {{/returnType}}> {
+    }, options: { headers: {[name: string]: string}} = {headers: {}}) : Promise<{ lastResponse: http.IncomingMessage, id: string } {{#returnType}}& {{{.}}}{{/returnType}}> {
               
         const localVarPath = this.basePath + '{{{path}}}'{{#pathParams}}
             .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
@@ -139,7 +139,7 @@ export class {{classname}} {
                 }
             }
 
-            return new Promise<{ lastResponse: http.IncomingMessage} {{#returnType}}& {{{.}}} {{/returnType}}>((resolve, reject) => {
+            return new Promise<{ lastResponse: http.IncomingMessage, id: string } {{#returnType}}& {{{.}}} {{/returnType}}>((resolve, reject) => {
                 localVarRequest(localVarRequestOptions, (error, response, body) => {
                     if (error) {
                         reject(error);
@@ -148,7 +148,9 @@ export class {{classname}} {
                             {{#returnType}}
                             body = ObjectSerializer.deserialize(body, "{{{.}}}");
                             {{/returnType}}
-                            resolve({ lastResponse: response.toJSON(), ...body });
+                            const checkLocation = response?.headers?.location?.match(/\/([^\/]+)\/?$/);
+                            let id = (checkLocation && checkLocation[1]) ? checkLocation[1] : undefined;
+                            resolve({ lastResponse: response.toJSON(), ...{ id }, ...body });
                         } else {
                             reject(new HttpError(response, body, response.statusCode));
                         }

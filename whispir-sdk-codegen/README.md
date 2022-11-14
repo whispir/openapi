@@ -112,16 +112,16 @@ The key words "MUST", "MUST_NOT", "REQUIRED", "SHALL", "SHALL_NOT", "SHOULD", "S
 
 To ensure that each generated SDK has a consistent, simple, and clean interface, all generated SDKs must adhere to the following standards.
 
-### Requirement
+### Interface Requirements
 
 * API Client
-  * All attributes required to operate the API MUST be provided as named parameters on a single argument to the constructor. For example, authentication, host, protocol must be specified here.
-  * Only the operations and request/response helper methods are exposed on each resource (e.g. `whispir.contact.create`), no other getters or setters are exposed - these are specified in the API Client Constructor only.
+  * All attributes required to operate the API MUST be provided as named parameters on a single argument to the constructor. Authentication, host, and protocol MUST be specified here.
+  * Only the operations and request/response helper methods SHALL be exposed on each resource (e.g. `whispir.contact.create`), other getters or setters SHALL NOT be exposed.
 * Resource Inputs
-  * All attributes required to issue a request against a resource exposed in the API Client must be provided as named parameters on a single argument to the constructor
+  * All attributes required to issue a request against a resource exposed in the API Client MUST be provided as named parameters on a single argument to the constructor
 * Resource Outputs
-  * All response attributes must be returned on the response as named pararemeters
-  * Any important attributes not exposed on the HTTP response body must be parsed and made available on the response object (e.g. `Location` header must be parsed to extract the resource ID, and be included in the response object)
+  * All response attributes MUST be returned on the response as named pararemeters
+  * Any relevant resource attributes not exposed on the HTTP response body MUST be parsed and made available on the response object (e.g. `Location` header must be parsed to extract the resource ID, and be included in the response object)
 
 ### Function Signature Standards
 

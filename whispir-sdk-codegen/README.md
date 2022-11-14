@@ -123,9 +123,9 @@ To ensure that each generated SDK has a consistent, simple, and clean interface,
   * All response attributes MUST be returned on the response as named pararemeters
   * Any relevant resource attributes not exposed on the HTTP response body MUST be parsed and made available on the response object (e.g. `Location` header must be parsed to extract the resource ID, and be included in the response object)
 
-### Function Signature Standards
+### Interface Standards
 
-Stripe's interface for SDKs has heavily influenced the design of Whispir's APIs & SDKs, with an emphasis on simple, clean interfaces to consume the underlying APIs. Whispir is heavily indebted to Stripe for it's contribution to the Open-Source community, especially in the OpenAPI Specification ecosystem.
+[Stripe's interface for SDKs](https://github.com/stripe/stripe-node/tree/7c110565c51e285e015ff6f18b32e26cbb554040#usage) has heavily influenced the design of Whispir's APIs & SDKs, with an emphasis on simple, clean interfaces to consume the underlying APIs. Whispir is heavily indebted to Stripe for it's contribution to the Open-Source community, especially in the OpenAPI Specification ecosystem.
 
 Typescript is used to express the function signature, demonstrating the API Client construction inputs, the resources available to the API Client, and various metadata and helper methods.
 

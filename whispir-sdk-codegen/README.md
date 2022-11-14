@@ -67,12 +67,11 @@ Xero's well documented process for [generating SDKs from OpenAPI Spec using Open
    3. Add, copy, and customise Mustache templates from the [OpenAPI Generator resources module](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources), matching the resource directory to the stable generator selected in the previous step. For example, if we had selected `typescript-node` as the base generator, visit the [openapi-generator/modules/openapi-generator/src/main/resources/typescript-node](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-node) directory and copy the appropriate Mustache files from there into the newly created `mustache/node` directory.
       1. `licenseInfo.mustache` is always copied and the file contents MUST be empty, to ensure that OAS version updates do not result in file changes during each SDK release.
       2. Update the API Client entry point file to import from a `version.{language-extension}` file, this will be added in later steps. This file ensures the version can be updated independently from generated files. Use the imported `VERSION` variable to construct a `User-Agent` header of the format `whispir-{language}-{VERSION}`. The `User-Agent` header is included in requests to the Whispir API, which provides metrics to Whispir on SDK usage.
-      3. The `defaultHeaders` provided to each Resource constructor must include a 
    4. Update the table in [Supported languages](#supported-languages) to link to the new `whispir-{language}` repository and OpenAPI generator documentation
 3. Update the strategy matrix in [.github/workflows/generate-sdks.yml](../.github/workflows/generate-sdks.yml) to include the new `{language}`
 4. Raise a `feat` PR to add the new SDK, review, and merge it.
    1. After merge, the [release-please](../.github/workflows/release-please.yml) workflow will update the release PR.
-   2. Merge the release PR, the [generate-sdks](../.github/workflows/generate-sdks.yml) workflow will trigger create OAS version bump PRs in all SDK repositories.
+   2. Merge the release PR, the [generate-sdks](../.github/workflows/generate-sdks.yml) workflow will create a codegen PR in all SDK repositories.
 5. Visit the newly created `whispir-{language}` repository. The following changes will be made to in the Git branch of associated with the PR created from the `generated-sdks` workflow in the `whispir-openapi` repository.
    1. Update the generated manifest files to include the following details:
       1. Package name: `whispir`
@@ -86,7 +85,7 @@ Xero's well documented process for [generating SDKs from OpenAPI Spec using Open
    4. For each extra-file, add the `x-release-please-start-version` and `x-release-please-end` tags as comments around the lines containing the version. The `release-please` workflow will use these tags to locate the semantic version requiring a bump. For example, see the Node SDK's' [`version.ts`](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/version.ts) for the formatting of tags. See [Updating arbitrary files](https://github.com/googleapis/release-please/blob/09ae5a2fb84e8189a9e23dce93b3d16cfdc7e228/docs/customizing.md#updating-arbitrary-files) in the Release Please documentation for more info.
    5. Update the `.openapi-generator-ignore` file to include the list of files that should not be automatically generated. The list of files must include all files containing the SDK semantic version. For example, the Node SDK contains the version in the automatically generated `package.json` file, so we [add that to the ignore file in the SDK repo](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/.openapi-generator-ignore#L25). See [Ignore file format](https://github.com/OpenAPITools/openapi-generator/blob/01f0763ec3b72b8a3ce0f4ad77713d876702f070/docs/customization.md#ignore-file-format) in the OpenAPI generator documentation for more info.
    6. Add a new `.github/workflows/ci.yml` Github workflow to run on new pull requests in the SDK repository. The CI workflow typically runs unit tests and checks code linting requirements before PRs can be merged. The CI workflow must run on the [`pull_request.types.[opened, reopened, synchronize, edited]`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request) workflow events.
-   7. In the repository "Settings", update the `main` branch requirements to require that the CI workflow tasks pass before a merge to main is allowed.
+   7. In the repository "Settings", update the `main` branch merge requirements to require that all tasks specified in `ci.yml` pass before a merge to main is allowed.
    8. Add a new `.github/workflows/publish.yml` Github workflow to publish the SDK contents to the artifactory appropriate to the SDK language. The publish workflow must run on the [`release`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release) workflow event. For example, see the [publish workflow](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/.github/workflows/publish.yml) in the Node SDK repository.
    9.  Review and merge the PR above. The `release-please` workflow will create a Release PR in the SDK repository.
    10. Review and merge the Release PR in the SDK repository. Upon merge, Release Please will create a Github release, and the `.github/workflows/publish.yml` workflow will run, publishing the SDK to the relevant artifactory.
@@ -127,7 +126,7 @@ To ensure that each generated SDK has a consistent, simple, and clean interface,
 
 [Stripe's interface for SDKs](https://github.com/stripe/stripe-node/tree/7c110565c51e285e015ff6f18b32e26cbb554040#usage) has heavily influenced the design of Whispir's APIs & SDKs, with an emphasis on simple, clean interfaces to consume the underlying APIs. Whispir is heavily indebted to Stripe for it's contribution to the Open-Source community, especially in the OpenAPI Specification ecosystem.
 
-Typescript is used to express the function signature, demonstrating the API Client construction inputs, the resources available to the API Client, and various metadata and helper methods.
+Typescript is used to express the interface signature, demonstrating the API Client construction inputs, the resources available to the API Client, and various metadata and helper methods.
 
 ```typescript
 // API Client
@@ -159,7 +158,7 @@ type ResourceConfig = {
 type OperationInput = PathParameters & HeaderParameters & QueryParameters & RequestBody; // the intersection type of all request parameters
 
 type OperationOutput = Promise<ResponseBody & {
-   lastResponse: HttpRequestLibraryResponse; // escape hatch to access the response
+   lastResponse: HttpRequestLibraryResponse; // escape hatch to access the response on the underlying HTTP request library
 }>;
 
 type ResourceOperation = (input: OperationInput) => OperationOutput;

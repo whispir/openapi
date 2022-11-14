@@ -5862,6 +5862,7 @@ externalDocs:
 security:
   - BasicAuth: []
     ApiKeyAuth: []
+    BearerAuth: []
 servers:
   - url: 'https://api.au.whispir.com'
     description: Australia
@@ -6017,6 +6018,10 @@ components:
     ApiKeyAuth:
       name: Api-Key
       type: apiKey
+      in: header
+    BearerAuth:
+      type: http
+      scheme: bearer
       in: header
   schemas:
     message:

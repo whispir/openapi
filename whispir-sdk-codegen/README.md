@@ -1,8 +1,10 @@
 # Whispir SDK Code-Generator
 
-This package is responsible for generating software development kits (SDK's) in various languages, using Whispir's OpenAPI Specification as the source of truth. Whispir uses [OpenAPI Generator](https://openapi-generator.tech/) with customised [Mustache templates](https://mustache.github.io/) to generate these SDK's in many languages.
+This package is responsible for generating software development kits (SDK's) in various languages, using Whispir's OpenAPI Specification as the source of truth. Whispir uses [OpenAPI Generator](https://openapi-generator.tech/) with customised [Mustache templates](https://mustache.github.io/) to generate these SDK's in many languages. Each SDK's source-code resides in a separate Git repository to decouple OpenAPI specification versioning from SDK versioning, and subsequently, decouple OAS and SDK release management. Whispir uses [semantic versioning](https://semver.org/) across all public repositories.
 
-## Running the generator
+Quality of SDK documentation and code-completion is ensured through use of the open-source Spectral project to lint and enforce design standards across our APIs. You can find Whispir's Spectral configuration under [`.spectral.json`](https://github.com/whispir/openapi/blob/main/.spectral.json). For example, we include a Spectral rule that ensures each schema attribute has a description; these descriptions flow through to each SDKs generated resource operations documentation. Whisipr runs the Spectral linter on all pull requests using a Github action workflow at [`.github/workflows/api-style.yml`](https://github.com/whispir/openapi/blob/main/.github/workflows/api-style.yml).
+
+## Running the Generator
 
 Ensure you have Java installed, it is required by the OAS generator. The easiest way to install is through Brew.
 ```bash
@@ -13,25 +15,23 @@ Ensure you have Java installed, it is required by the OAS generator. The easiest
 Run the generator with the following steps:
 
 ```bash
+> cd whispir-sdk-codegen
 > yarn # install yarn dependencies
-> yarn generate # generate SDK from the OAS file
+> yarn generate # generate SDK from the OpenAPI Specification
 ```
 
-## Supported languages
+## Supported Languages
 
 Various languages are supported in separately published SDK's.
 
-* Node
-  * 
-  * [typescript-node OpenAPI Generator Mustache files](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-node)
-  * [typescript-node OpenAPI Generator Documentation](https://openapi-generator.tech/docs/generators/typescript-node)
-  * [whispir-node Git repository](https://github.com/whispir/whispir-node)
-* Java
-  * [java OpenAPI Generator Mustache files](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/java)
-  * [java OpenAPI Generator Documentation](https://openapi-generator.tech/docs/generators/java)
-  * [whispir-java Git repository](https://github.com/whispir/whispir-java)
+| Language | Repository                                              | OpenAPI Generator                                                                 |
+| -------- | ------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Node     | [whispir-node](https://github.com/whispir/whispir-node) | [typescript-node](https://openapi-generator.tech/docs/generators/typescript-node) |
+| Java     | [whispir-java](https://github.com/whispir/whispir-java) | [java](https://openapi-generator.tech/docs/generators/java)                       |
 
-## Adding a new language
+## Adding a New Language
+
+Xero's well documented process for [generating SDKs from OpenAPI Spec using OpenAPI Generator](https://devblog.xero.com/building-sdks-for-the-future-b79ff726dfd6) was crucial in developing the release workflow for Whispir's SDKs. We wanted the release process to be as automated as possible, with the only development touch-points being review and merging of pull requests in the OpenAPI and SDK git repositories. In the spirit of open-source collaboration and continuous improvement, Whispir has open-sourced all source-code and repository configuration responsible for generating our SDKs from the OpenAPI Specification. We welcome all contributions to improve our SDKs.
 
 1. Create a new Github repository from Whispir's [opensource-repo Git template](https://github.com/whispir/opensource-repo), with the git repository named in the format `whispir-{language}` (e.g. `whispir-node` or `whispir-go`). The opensource-repo template provides common opensource repository files such as `LICENSE`, Github issue templates, and a conventional commit release workflow, which is used to semantically version and maintain a changelog for the repository's contents.
    1. Ensure the repository belongs to the `whispir` Github organisation
@@ -66,24 +66,33 @@ Various languages are supported in separately published SDK's.
    2. Create a new directory `mustache/{language}`, this will contain the customised Mustache files to align with the [SDK Client standards](#sdk-client-standards)
    3. Add, copy, and customise Mustache templates from the [OpenAPI Generator resources module](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources), matching the resource directory to the stable generator selected in the previous step. For example, if we had selected `typescript-node` as the base generator, visit the [openapi-generator/modules/openapi-generator/src/main/resources/typescript-node](https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator/src/main/resources/typescript-node) directory and copy the appropriate Mustache files from there into the newly created `mustache/node` directory.
       1. `licenseInfo.mustache` is always copied and the file contents MUST be empty, to ensure that OAS version updates do not result in file changes during each SDK release.
-   4. Update the list in [Supported languages](#supported-languages) to link to the OpenAPI generator resources, documentation, and new `whispir-{language}` repository
+      2. Update the API Client entry point file to import from a `version.{language-extension}` file, this will be added in later steps. This file ensures the version can be updated independently from generated files. Use the imported `VERSION` variable to construct a `User-Agent` header of the format `whispir-{language}-{VERSION}`. The `User-Agent` header is included in requests to the Whispir API, which provides metrics to Whispir on SDK usage.
+      3. The `defaultHeaders` provided to each Resource constructor must include a 
+   4. Update the table in [Supported languages](#supported-languages) to link to the new `whispir-{language}` repository and OpenAPI generator documentation
 3. Update the strategy matrix in [.github/workflows/generate-sdks.yml](../.github/workflows/generate-sdks.yml) to include the new `{language}`
 4. Raise a `feat` PR to add the new SDK, review, and merge it.
    1. After merge, the [release-please](../.github/workflows/release-please.yml) workflow will update the release PR.
    2. Merge the release PR, the [generate-sdks](../.github/workflows/generate-sdks.yml) workflow will trigger create OAS version bump PRs in all SDK repositories.
 5. Visit the newly created `whispir-{language}` repository. The following changes will be made to in the Git branch of associated with the PR created from the `generated-sdks` workflow in the `whispir-openapi` repository.
-   1. Add a `version.{language-extension}` file that will be imported by the API Client to include the SDK version in the `User-Agent` header of requests made to the Whispir API, which provides metrics to Whispir on SDK usage. The file must be added separately to avoid having the version overwritten during SDK generation. For example, the Node SDK has a [`version.ts`](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/version.ts) file added.
-   2. Update the `release-please` workflow in the new SDK repository to include a list of extra-files that contain a version and need to be bumped. At a minimum, the `version.{language-extension}` file will be added to this list. For example, see the [release-please.yml](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/.github/workflows/release-please.yml#L17) in `whispir-node`.
-   3. For each extra-file, add the `x-release-please-start-version` and `x-release-please-end` tags as comments around the lines containing the version. The `release-please` workflow will use these tags to locate the semantic version requiring a bump. For example, see the Node SDK's' [`version.ts`](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/version.ts) for the formatting of tags. See [Updating arbitrary files](https://github.com/googleapis/release-please/blob/09ae5a2fb84e8189a9e23dce93b3d16cfdc7e228/docs/customizing.md#updating-arbitrary-files) in the Release Please documentation for more info.
-   4. Update the `.openapi-generator-ignore` file to include the list of files that should not be automatically generated. The list of files must include all files containing the SDK semantic version. For example, the Node SDK contains the version in the automatically generated `package.json` file, so we [add that to the ignore file in the SDK repo](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/.openapi-generator-ignore#L25). See [Ignore file format](https://github.com/OpenAPITools/openapi-generator/blob/01f0763ec3b72b8a3ce0f4ad77713d876702f070/docs/customization.md#ignore-file-format) in the OpenAPI generator documentation for more info.
-   5. Add a new `.github/workflows/ci.yml` Github workflow to run on new pull requests in the SDK repository. The CI workflow typically runs unit tests and checks code linting requirements before PRs can be merged. The CI workflow must run on the [`pull_request.types.[opened, reopened, synchronize, edited]`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request) workflow events.
-   6. In the repository "Settings", update the `main` branch requirements to require that the CI workflow tasks pass before a merge to main is allowed.
-   7. Add a new `.github/workflows/publish.yml` Github workflow to publish the SDK contents to the artifactory appropriate to the SDK language. The publish workflow must run on the [`release`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release) workflow event. For example, see the [publish workflow](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/.github/workflows/publish.yml) in the Node SDK repository.
-   8. Review and merge the PR above. The `release-please` workflow will create a Release PR in the SDK repository.
-   9.  Merge the Release PR in the SDK repository. Upon merge, Release Please will create a Github release, and the `.github/workflows/publish.yml` workflow will run, publishing the SDK to the relevant artifactory.
+   1. Update the generated manifest files to include the following details:
+      1. Package name: `whispir`
+      2. Author: `Whispir <support@whispir.com> (https://whispir.com)`
+      3. Git repository: `git://github.com/whispir/whispir-{language}.git`
+      4. Bugs: `https://github.com/whispir/whispir-{language}/issues`
+      5. License: `MIT`
+      6. Version: `1.0.0` (indicating initial SDK release is stable)
+   2. Add the `version.{language-extension}` file. For example, the Node SDK has a [`version.ts`](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/version.ts) file added with a single named export `VERSION`.
+   3. Update the `release-please` workflow in the new SDK repository to include a list of extra-files that contain a version and need to be bumped. At a minimum, the `version.{language-extension}` file will be added to this list. For example, see the [release-please.yml](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/.github/workflows/release-please.yml#L17) in `whispir-node`.
+   4. For each extra-file, add the `x-release-please-start-version` and `x-release-please-end` tags as comments around the lines containing the version. The `release-please` workflow will use these tags to locate the semantic version requiring a bump. For example, see the Node SDK's' [`version.ts`](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/version.ts) for the formatting of tags. See [Updating arbitrary files](https://github.com/googleapis/release-please/blob/09ae5a2fb84e8189a9e23dce93b3d16cfdc7e228/docs/customizing.md#updating-arbitrary-files) in the Release Please documentation for more info.
+   5. Update the `.openapi-generator-ignore` file to include the list of files that should not be automatically generated. The list of files must include all files containing the SDK semantic version. For example, the Node SDK contains the version in the automatically generated `package.json` file, so we [add that to the ignore file in the SDK repo](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/.openapi-generator-ignore#L25). See [Ignore file format](https://github.com/OpenAPITools/openapi-generator/blob/01f0763ec3b72b8a3ce0f4ad77713d876702f070/docs/customization.md#ignore-file-format) in the OpenAPI generator documentation for more info.
+   6. Add a new `.github/workflows/ci.yml` Github workflow to run on new pull requests in the SDK repository. The CI workflow typically runs unit tests and checks code linting requirements before PRs can be merged. The CI workflow must run on the [`pull_request.types.[opened, reopened, synchronize, edited]`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request) workflow events.
+   7. In the repository "Settings", update the `main` branch requirements to require that the CI workflow tasks pass before a merge to main is allowed.
+   8. Add a new `.github/workflows/publish.yml` Github workflow to publish the SDK contents to the artifactory appropriate to the SDK language. The publish workflow must run on the [`release`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release) workflow event. For example, see the [publish workflow](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/.github/workflows/publish.yml) in the Node SDK repository.
+   9.  Review and merge the PR above. The `release-please` workflow will create a Release PR in the SDK repository.
+   10. Review and merge the Release PR in the SDK repository. Upon merge, Release Please will create a Github release, and the `.github/workflows/publish.yml` workflow will run, publishing the SDK to the relevant artifactory.
 6. Congratulations, you've just published a new SDK for the Whispir API!
 
-### Debugging Mustache file inputs
+### Debugging Mustache File Inputs
 
 Documentation to determine what variables are available to the Mustache files are not widely available. It can be helpful to get a list of these variables to know what the Mustache templates will be populated with. The following command will create a `dump.json` file with a listing of all attributes that are available to use in Mustache for the `typescript-node` generator. You can modify the `-g` flag to specify the required generator. This requires that package dependencies are already installed per [Running the generator](#running-the-generator).
 
@@ -97,72 +106,81 @@ $(npm bin)/openapi-generator-cli generate \
 
 ## SDK Client Standards
 
+To ensure that each generated SDK has a consistent, simple, and clean interface, all generated SDKs must adhere to the following standards.
+
 The key words "MUST", "MUST_NOT", "REQUIRED", "SHALL", "SHALL_NOT", "SHOULD", "SHOULD_NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](https://microformats.org/wiki/rfc-2119).
 
-### API Client
+To ensure that each generated SDK has a consistent, simple, and clean interface, all generated SDKs must adhere to the following standards.
 
-* All attributes required to operate the API must be provided as named parameters on a single argument to the constructor. For example, authentication, host, protocol must be specified here.
-* Only the operations are exposed on each resource (e.g. `whispir.contact.create`), no other getters or setters are exposed - these are specified in the API Client Constructor only.
+### Requirement
+
+* API Client
+  * All attributes required to operate the API MUST be provided as named parameters on a single argument to the constructor. For example, authentication, host, protocol must be specified here.
+  * Only the operations and request/response helper methods are exposed on each resource (e.g. `whispir.contact.create`), no other getters or setters are exposed - these are specified in the API Client Constructor only.
+* Resource Inputs
+  * All attributes required to issue a request against a resource exposed in the API Client must be provided as named parameters on a single argument to the constructor
+* Resource Outputs
+  * All response attributes must be returned on the response as named pararemeters
+  * Any important attributes not exposed on the HTTP response body must be parsed and made available on the response object (e.g. `Location` header must be parsed to extract the resource ID, and be included in the response object)
+
+### Function Signature Standards
+
+Stripe's interface for SDKs has heavily influenced the design of Whispir's APIs & SDKs, with an emphasis on simple, clean interfaces to consume the underlying APIs. Whispir is heavily indebted to Stripe for it's contribution to the Open-Source community, especially in the OpenAPI Specification ecosystem.
+
+Typescript is used to express the function signature, demonstrating the API Client construction inputs, the resources available to the API Client, and various metadata and helper methods.
 
 ```typescript
-import Whispir from 'whispir';
-
-type BasicAuth = {
-   username: string;
-   password: string;
-   apiKey: string;
-};
-
-type BearerAuth = {
-   accessToken: string;
-}
-
-type OAuth = {
-   clientId: string;
-   clientSecret: string;
-   redirectUris: string[];
-   scopes: string[],
-   state: string;
-}
-
-type Auth = BasicAuth | BearerAuth | OAuth;
-// OR
-type Auth = BasicAuth & BearerAuth & OAuth;
-
-type BaseConfig = {
+// API Client
+type ClientConfig = {
    host: string;
+   username?: string;
+   password?: string;
+   apiKey?: string;
+   accessToken?: string;
 };
 
-type ClientConfig = BaseConfig & {
-   auth: BasicAuth | BearerAuth | OAuth;
-}
-// OR
-type ClientConfig = BaseConfig & BasicAuth & BearerAuth & OAuth;
+type Interceptor = (request: HttpRequestLibraryResponse) => void; // intercepts outgoing requests, for custom client use-cases.
 
-const whispir = Whispir({
-   apiKey: 'sdsdasdasdsa',
-   username: 'joe.bloggs',
-   password: 'myPassword',
-});
+type Client = (config: ClientConfig) => {
+   [resourceName: string]: Resource;
+   addInterceptor: (interceptor: Interceptor) => void; // consumer can add interceptor on all Resources
+};
+
+// Resources
+type ResourceConfig = {
+   host: string;
+   defaultHeaders: {
+      Authorization: string;
+      'User-Agent': `whispir-${language}-${sdkVersion}`;
+      'X-Api-Key'?: string;
+   };
+};
+
+type OperationInput = PathParameters & HeaderParameters & QueryParameters & RequestBody; // the intersection type of all request parameters
+
+type OperationOutput = Promise<ResponseBody & {
+   lastResponse: HttpRequestLibraryResponse; // escape hatch to access the response
+}>;
+
+type ResourceOperation = (input: OperationInput) => OperationOutput;
+
+// initialised internally by API Client
+type Resource = (config: ResourceConfig) => {
+   [sdkOperation: string]: ResourceOperation;
+   addInterceptor: (interceptor: Interceptor) => void; // consumer can add interceptor on specific Resource
+};
 ```
 
-### Resource Inputs
-
-* All attributes required to issue a request against a resource exposed in the API Client must be provided as named parameters on a single argument to the constructor
-
-### Resource Outputs
-
-* All response attributes must be returned on the asynchronous API request return type as named pararemeters, any important attributes not exposed on the HTTP response body must be parsed and made available on the response object (e.g. `Location` header must be parsed to extract the resource ID, and be included in teh response object)
-
-### SDK Examples
+### API Client Example
 
 ```typescript
-import { WhispirClient } from 'whispir';
+import WhispirClient from 'whispir';
 
 const whispir = WhispirClient({
-   apiKey: 'sdsdasdasdsa',
+   host: 'https://api.au.whispir.com',
+   apiKey: '1f4a48fad169402f90100015339e70d6',
    username: 'joe.bloggs',
-   password: 'myPassword',
+   password: 'myStrongPassword',
 });
 
 (async () => {
@@ -180,7 +198,8 @@ const whispir = WhispirClient({
       subject: 'Welcome!',
       body: 'Get started now!',
    });
-   message.id // the parsed Location header's ID
+
+   console.log(message.id); // the message id for message status lookup
 })();
 ```
 
@@ -196,3 +215,4 @@ const whispir = WhispirClient({
     * Xero-OpenAPI Code Generator: https://github.com/XeroAPI/Xero-OpenAPI#code-generators
   * Spotify: https://github.com/thelinmichael/spotify-web-api-node
   * Ultimate API Publisher guide: https://medium.com/better-practices/the-ultimate-api-publishers-guide-be74a2692326
+  * Stripe SDKs: https://stripe.com/docs/libraries

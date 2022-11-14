@@ -7871,6 +7871,8 @@ components:
         example-1:
           type: queryparam
           key: test34
+      x-tags:
+        - Callbacks
     locations:
       description: The locations for the contact.
       type: array
@@ -7916,6 +7918,8 @@ components:
             description: A description for the location. At least one element of the `locations` array must have a `type` equal to `CurrentLocation`.
             type: string
             example: CurrentLocation
+      x-tags:
+        - Contacts
     messagingoptions:
       description: The message channel options for the contact.
       type: array
@@ -7965,6 +7969,8 @@ components:
               - WorkEmailAddress2
               - PersonalMobilePhone1
               - PersonalEmailAddress1
+      x-tags:
+        - Contacts
     activity:
       description: 'Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace.'
       type: object
@@ -8066,6 +8072,8 @@ components:
           description: Fullname of the user
         link:
           $ref: '#/components/schemas/link'
+      x-tags:
+        - Activities
     user:
       type: object
       xml:
@@ -8671,6 +8679,8 @@ components:
         - workMobilePhone1
         - workCountry
         - timezone
+      x-tags:
+        - Imports
     attachment:
       type: object
       description: |-
@@ -8699,6 +8709,8 @@ components:
       required:
         - attachmentName
         - derefUri
+      x-tags:
+        - Messages
     link:
       type: array
       description: 'A [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) link object, describing all discoverable resources in relation to the original request.'
@@ -8895,6 +8907,8 @@ components:
           status: '1 to 1 of 1    '
           link: []
       title: Message Status
+      x-tags:
+        - Messages
     messageResponseSummary:
       title: Message Response Summary
       description: The summary message response object.
@@ -8952,6 +8966,8 @@ components:
       required:
         - messageresponses
         - link
+      x-tags:
+        - Messages
     messageResponseDetailed:
       title: Message Response Detailed
       description: The detailed message response object.
@@ -9055,6 +9071,8 @@ components:
       required:
         - messageresponses
         - link
+      x-tags:
+        - Messages
     dlr:
       title: Delivery Receipt
       description: A fixed object structure used by for Whispir internally for tracking purposes.
@@ -9275,6 +9293,8 @@ components:
               description: The status message that was returned from the callback service
         link:
           $ref: '#/components/schemas/link'
+      x-tags:
+        - Callbacks
     customList:
       type: object
       x-examples:
@@ -9376,6 +9396,8 @@ components:
         - linked
         - link
       readOnly: true
+      x-tags:
+        - Custom Lists
   parameters:
     X-Api-Key:
       name: X-Api-Key

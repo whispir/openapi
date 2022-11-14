@@ -4650,7 +4650,7 @@ paths:
     get:
       tags:
         - Activities
-      x-sdk-operation: list
+      x-sdk-operation: listWorkspace
       summary: List workspace activities
       description: |
         ## Restricting to only a single workspace 
@@ -5230,7 +5230,7 @@ paths:
     get:
       tags:
         - Users
-      x-sdk-operation: list
+      x-sdk-operation: listWorkspace
       summary: List workspace users
       description: Returns a list of your Users.
       operationId: getWorkspaceUsers

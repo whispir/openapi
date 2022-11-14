@@ -97,7 +97,92 @@ $(npm bin)/openapi-generator-cli generate \
 
 ## SDK Client Standards
 
-TODO
+The key words "MUST", "MUST_NOT", "REQUIRED", "SHALL", "SHALL_NOT", "SHOULD", "SHOULD_NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](https://microformats.org/wiki/rfc-2119).
+
+### API Client
+
+* All attributes required to operate the API must be provided as named parameters on a single argument to the constructor. For example, authentication, host, protocol must be specified here.
+* Only the operations are exposed on each resource (e.g. `whispir.contact.create`), no other getters or setters are exposed - these are specified in the API Client Constructor only.
+
+```typescript
+import Whispir from 'whispir';
+
+type BasicAuth = {
+   username: string;
+   password: string;
+   apiKey: string;
+};
+
+type BearerAuth = {
+   accessToken: string;
+}
+
+type OAuth = {
+   clientId: string;
+   clientSecret: string;
+   redirectUris: string[];
+   scopes: string[],
+   state: string;
+}
+
+type Auth = BasicAuth | BearerAuth | OAuth;
+// OR
+type Auth = BasicAuth & BearerAuth & OAuth;
+
+type BaseConfig = {
+   host: string;
+};
+
+type ClientConfig = BaseConfig & {
+   auth: BasicAuth | BearerAuth | OAuth;
+}
+// OR
+type ClientConfig = BaseConfig & BasicAuth & BearerAuth & OAuth;
+
+const whispir = Whispir({
+   apiKey: 'sdsdasdasdsa',
+   username: 'joe.bloggs',
+   password: 'myPassword',
+});
+```
+
+### Resource Inputs
+
+* All attributes required to issue a request against a resource exposed in the API Client must be provided as named parameters on a single argument to the constructor
+
+### Resource Outputs
+
+* All response attributes must be returned on the asynchronous API request return type as named pararemeters, any important attributes not exposed on the HTTP response body must be parsed and made available on the response object (e.g. `Location` header must be parsed to extract the resource ID, and be included in teh response object)
+
+### SDK Examples
+
+```typescript
+import { WhispirClient } from 'whispir';
+
+const whispir = WhispirClient({
+   apiKey: 'sdsdasdasdsa',
+   username: 'joe.bloggs',
+   password: 'myPassword',
+});
+
+(async () => {
+   const contact = await whispir.contacts.create({
+      firstName: 'John',
+      lastName: 'Wick',
+      workMobilePhone1: '61400400400',
+      workEmailAddress1: 'testUser@example.com',
+      workCountry: 'Australia',
+      timezone: 'Australia/Melbourne',
+   });
+
+   const message = await whispir.messages.create({
+      to: contact.workMobilePhone1,
+      subject: 'Welcome!',
+      body: 'Get started now!',
+   });
+   message.id // the parsed Location header's ID
+})();
+```
 
 ## References
 

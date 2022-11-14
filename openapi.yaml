@@ -3663,8 +3663,7 @@ paths:
         - Callbacks
       x-sdk-operation: list
       summary: List callbacks
-      description: |
-        List callbacks
+      description: List callbacks
       operationId: getCallbacks
       responses:
         '200':
@@ -3952,10 +3951,10 @@ paths:
     get:
       tags:
         - Callbacks
-      x-sdk-operation: list
-      summary: List callback instances
-      description: List of callbacks instances
-      operationId: getCallbackInstances
+      x-sdk-operation: listCalls
+      summary: List callback calls
+      description: List of calls to the callback
+      operationId: getCallbackCalls
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/limit'
@@ -3977,10 +3976,10 @@ paths:
             enum:
               - SUCCESS
               - FAILED
-        - $ref: '#/components/parameters/CallbackInstance-Accept'
+        - $ref: '#/components/parameters/CallbackCall-Accept'
       responses:
         '200':
-          $ref: '#/components/responses/CallbackInstances'
+          $ref: '#/components/responses/CallbackCalls'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4004,8 +4003,8 @@ paths:
     put:
       tags:
         - Callbacks
-      x-sdk-operation: updateStatus
-      summary: Update a callback instance status
+      x-sdk-operation: updateCall
+      summary: Update a callback call status
       description: |
         As every call to a callback endpoint is now stored within the calls endpoint, it’s possible that when failed calls are successfully processed through a manual exercise, that these calls will then need to be updated to reflect the current status.
 
@@ -4029,7 +4028,7 @@ paths:
         This ensures that all callbacks that have been processed can be updated in a single API call, rather than having to make a single API call per callback attempt.
 
         The PUT request takes a single API parameter in the body
-      operationId: putCallbackInstanceStatus
+      operationId: putCallbackCallStatus
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
@@ -4039,8 +4038,8 @@ paths:
           schema:
             type: string
             example: 41048D9483C8CF2A
-        - $ref: '#/components/parameters/CallbackInstance-Content-Type'
-        - $ref: '#/components/parameters/CallbackInstance-Accept'
+        - $ref: '#/components/parameters/CallbackCall-Content-Type'
+        - $ref: '#/components/parameters/CallbackCall-Accept'
         - schema:
             type: string
             maxLength: 32
@@ -7833,7 +7832,7 @@ components:
               host: api.au.whispir.com
               port: -1
     callbackAuth:
-      title: callbackAuth
+      title: Callback Auth
       type: object
       description: |-
         The authentication model details. You will receive - 
@@ -9117,8 +9116,8 @@ components:
           expiryMin: 0
           feedIds: ''
           bool: false
-    callbackInstance:
-      description: A callback instance object
+    callbackCall:
+      description: A callback call object
       type: object
       x-examples:
         Example:
@@ -9154,7 +9153,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
-      title: callbackInstance
+      title: Callback Call
       properties:
         id:
           type: string
@@ -9743,7 +9742,7 @@ components:
         enum:
           - application/vnd.whispir.user-v1+json
           - application/vnd.whispir.user-v1+xml
-    CallbackInstance-Content-Type:
+    CallbackCall-Content-Type:
       name: Content-Type
       in: header
       required: true
@@ -9753,7 +9752,7 @@ components:
           - application/vnd.whispir.api-call-v1+json
           - application/vnd.whispir.api-call-v1+xml
       description: Application specific mime-type.
-    CallbackInstance-Accept:
+    CallbackCall-Accept:
       name: Accept
       in: header
       required: true
@@ -10446,19 +10445,19 @@ components:
           examples:
             Example:
               value: HTTP content length exceeded 10485760 bytes.
-    CallbackInstances:
+    CallbackCalls:
       description: Example response
       content:
         application/json:
           schema:
             type: object
-            description: A list of callback instances
+            description: A list of callbacks
             properties:
               calls:
                 type: array
-                description: A list of callback instances
+                description: A list of callbacks
                 items:
-                  $ref: '#/components/schemas/callbackInstance'
+                  $ref: '#/components/schemas/callbackCall'
               status:
                 type: string
                 example: 1 to 8 of 8
@@ -10506,7 +10505,7 @@ components:
                     port: -1
       headers:
         Content-Type:
-          $ref: '#/components/headers/CallbackInstance-Content-Type'
+          $ref: '#/components/headers/CallbackCall-Content-Type'
         Content-Length:
           $ref: '#/components/headers/Content-Length'
         Access-Control-Allow-Origin:
@@ -11294,7 +11293,7 @@ components:
         enum:
           - application/vnd.whispir.api-callback-v1+json
           - application/vnd.whispir.api-callback-v1+xml
-    CallbackInstance-Content-Type:
+    CallbackCall-Content-Type:
       required: true
       schema:
         type: string

@@ -5924,6 +5924,7 @@ externalDocs:
 security:
   - BasicAuth: []
     ApiKeyAuth: []
+  - BasicAuth: []
     BearerAuth: []
 servers:
   - url: 'https://api.au.whispir.com'
@@ -6076,7 +6077,6 @@ components:
     BasicAuth:
       type: http
       scheme: basic
-      description: ''
     ApiKeyAuth:
       name: Api-Key
       type: apiKey
@@ -6084,7 +6084,6 @@ components:
     BearerAuth:
       type: http
       scheme: bearer
-      in: header
   schemas:
     message:
       type: object

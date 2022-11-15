@@ -78,7 +78,7 @@ export class {{classname}} {
 
 {{/queryParams}}
 {{#headerParams}}
-        localVarHeaderParams['{{baseName}}'] = localVarHeaderParams['{{baseName}}'] || {{paramName}};
+        localVarHeaderParams['{{baseName}}'] = {{paramName}} || localVarHeaderParams['{{baseName}}'];
 {{/headerParams}}
         (<any>Object).assign(localVarHeaderParams, options.headers);
 

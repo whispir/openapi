@@ -2717,7 +2717,7 @@ paths:
               - deleteAll
           in: query
           name: action
-          description: 'The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it''s triggered. **Use the action only when you''re definitely sure you want to delete the contact from all workspaces**'
+          description: The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it's triggered. **Use the action only when you're definitely sure you want to delete the contact from all workspaces**
       responses:
         '204':
           description: No Content
@@ -7514,7 +7514,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
-      description: 'Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don''t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List'
+      description: Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don't need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List
       type: object
       properties:
         name:

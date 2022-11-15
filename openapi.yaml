@@ -5837,6 +5837,9 @@ paths:
                     example: your-generated-token-string
                   link:
                     $ref: '#/components/schemas/link'
+                required:
+                  - token
+                  - link
               examples:
                 Example:
                   value:

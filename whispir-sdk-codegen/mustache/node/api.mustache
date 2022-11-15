@@ -9,7 +9,7 @@ import { {{ classname }} } from './api/{{ classFilename }}';
 {{/operations}}
 {{/apis}}
 
-type ClientConfig = {
+export type ClientConfig = {
     host: string;
     username?: string;
     password?: string;
@@ -17,8 +17,13 @@ type ClientConfig = {
     accessToken?: string;
 };
 
+type AuthHeaders = {
+    'X-Api-Key'?: string;
+    Authorization?: string;
+};
+
 const Client = (config: ClientConfig) => {
-    let authHeaders = {};
+    let authHeaders: AuthHeaders = {};
 
     if (config.username && config.password && config.apiKey) {
         authHeaders['Authorization'] = `Basic ${Buffer.from(`${config.username}:${config.password}`).toString("base64")}`;
@@ -51,7 +56,7 @@ const Client = (config: ClientConfig) => {
         {{ pathPrefix }},
         {{/operations}}
         {{/apis}}
-    }
+    };
 
     const addInterceptor = (interceptor: Interceptor) => {
         Object.values(apis).forEach(api => {

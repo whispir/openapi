@@ -1646,6 +1646,17 @@
         "field": "headers"
       },
       "description": "Successful post endpoint responses must have the following \"headers\": \"Location\"."
+    },
+    "required-path-sdk-operation": {
+      "given": [
+        "$.paths[*][get,put,post,delete,options,head,patch,trace]"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "truthy",
+        "field": "x-sdkOperation"
+      },
+      "message": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names."
     }
   },
   "overrides": [

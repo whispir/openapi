@@ -69,8 +69,6 @@ export class {{classname}} {
         let localVarHeaderParams: any = (<any>Object).assign({}, this.defaultHeaders);
 
         let localVarFormParams: any = {};
-{{#allParams}}
-{{/allParams}}
 {{#queryParams}}
         if ({{paramName}} !== undefined) {
             localVarQueryParameters['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
@@ -140,6 +138,7 @@ export class {{classname}} {
                             {{#returnType}}
                             body = ObjectSerializer.deserialize(body, "{{{.}}}");
                             {{/returnType}}
+                            // Special case to extract the resource identifier from the `Location` header.
                             const checkLocation = response?.headers?.location?.match(/\/([^\/]+)\/?$/);
                             let id = (checkLocation && checkLocation[1]) ? checkLocation[1] : undefined;
                             resolve({ lastResponse: response.toJSON(), ...{ id }, ...body });

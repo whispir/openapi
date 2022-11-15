@@ -60,7 +60,7 @@ export class {{classname}} {
      {{/allParams}}
      */
      
-    public async {{#vendorExtensions}}{{x-sdk-operation}}{{/vendorExtensions}}({
+    public async {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}({
     {{#allParams}}
         {{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}},
     {{/allParams}}

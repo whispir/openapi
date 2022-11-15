@@ -1654,9 +1654,9 @@
       "severity": "error",
       "then": {
         "function": "truthy",
-        "field": "x-sdk-operation"
+        "field": "x-sdkOperation"
       },
-      "message": "All operations must include an \"x-sdk-operation\" vendor extension for use in human-readable SDK method names."
+      "message": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names."
     }
   },
   "overrides": [

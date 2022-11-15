@@ -59,7 +59,7 @@ export class {{classname}} {
     {{/allParams}}
     }: {
     {{#allParams}}
-        {{paramName}}{{#defaultValue}}{{/defaultValue}}?: {{{dataType}}},
+        {{paramName}}{{#defaultValue}}?{{/defaultValue}}: {{{dataType}}},
     {{/allParams}}
     }, options: RequestOptions = { headers: {} }): Promise<{ lastResponse: http.IncomingMessage, id: string }{{#returnType}} & {{{.}}}{{/returnType}}> {
               

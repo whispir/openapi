@@ -1,8 +1,8 @@
 # Whispir SDK Code-Generator
 
-This package is responsible for generating software development kits (SDK's) in various languages, using Whispir's OpenAPI Specification as the source of truth. Whispir uses [OpenAPI Generator](https://openapi-generator.tech/) with customised [Mustache templates](https://mustache.github.io/) to generate these SDK's in many languages. Each SDK's source-code resides in a separate Git repository to decouple OpenAPI specification versioning from SDK versioning, and subsequently, decouple OAS and SDK release management. Whispir uses [semantic versioning](https://semver.org/) across all public repositories.
+This package is responsible for generating software development kits (SDKs) in various languages, using Whispir's OpenAPI Specification as the source of truth. Whispir uses [OpenAPI Generator](https://openapi-generator.tech/) with customised [Mustache templates](https://mustache.github.io/) to generate these SDKs in many languages. Each SDKs source-code resides in a separate Git repository to decouple OpenAPI specification versioning from SDK versioning, and subsequently, decouple OAS and SDK release management. Whispir uses [semantic versioning](https://semver.org/) across all public repositories.
 
-Quality of SDK documentation and code-completion is ensured through use of the open-source Spectral project to lint and enforce design standards across our APIs. You can find Whispir's Spectral configuration under [`.spectral.json`](https://github.com/whispir/openapi/blob/main/.spectral.json). For example, we include a Spectral rule that ensures each schema attribute has a description; these descriptions flow through to each SDKs resource documentation. Whisipr runs the Spectral linter on all pull requests using a Github action workflow at [`.github/workflows/api-style.yml`](https://github.com/whispir/openapi/blob/main/.github/workflows/api-style.yml).
+Quality of SDK documentation and code-completion is ensured through use of the open-source [Spectral](https://docs.stoplight.io/docs/spectral) project to lint and enforce design standards across our APIs. You can find Whispir's Spectral configuration under [`.spectral.json`](https://github.com/whispir/openapi/blob/main/.spectral.json). For example, we include a Spectral rule that ensures each schema attribute has a description; these descriptions flow through to each SDKs resource documentation. Whisipr runs the Spectral linter on all pull requests using a Github action workflow at [`.github/workflows/api-style.yml`](https://github.com/whispir/openapi/blob/main/.github/workflows/api-style.yml).
 
 ## Running the Generator
 
@@ -22,7 +22,7 @@ Run the generator with the following steps:
 
 ## Supported Languages
 
-Various languages are supported in separately published SDK's.
+Various languages are supported in separately published SDKs.
 
 | Language | Repository                                              | OpenAPI Generator                                                                 |
 | -------- | ------------------------------------------------------- | --------------------------------------------------------------------------------- |
@@ -82,7 +82,7 @@ Xero's well documented process for [generating SDKs from OpenAPI Spec using Open
       6. Version: `1.0.0` (indicating initial SDK release is stable)
    2. Add the `version.{language-extension}` file. For example, the Node SDK has a [`version.ts`](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/version.ts) file added with a single named export `VERSION`.
    3. Update the `release-please` workflow in the new SDK repository to include a list of extra-files that contain a version and need to be bumped. At a minimum, the `version.{language-extension}` file will be added to this list. For example, see the [release-please.yml](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/.github/workflows/release-please.yml#L17) in `whispir-node`.
-   4. For each extra-file, add the `x-release-please-start-version` and `x-release-please-end` tags as comments around the lines containing the version. The `release-please` workflow will use these tags to locate the semantic version requiring a bump. For example, see the Node SDK's' [`version.ts`](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/version.ts) for the formatting of tags. See [Updating arbitrary files](https://github.com/googleapis/release-please/blob/09ae5a2fb84e8189a9e23dce93b3d16cfdc7e228/docs/customizing.md#updating-arbitrary-files) in the Release Please documentation for more info.
+   4. For each extra-file, add the `x-release-please-start-version` and `x-release-please-end` tags as comments around the lines containing the version. The `release-please` workflow will use these tags to locate the semantic version requiring a bump. For example, see the Node SDKs' [`version.ts`](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/version.ts) for the formatting of tags. See [Updating arbitrary files](https://github.com/googleapis/release-please/blob/09ae5a2fb84e8189a9e23dce93b3d16cfdc7e228/docs/customizing.md#updating-arbitrary-files) in the Release Please documentation for more info.
    5. Update the `.openapi-generator-ignore` file to include the list of files that should not be automatically generated. The list of files must include all files containing the SDK semantic version. For example, the Node SDK contains the version in the automatically generated `package.json` file, so we [add that to the ignore file in the SDK repo](https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/.openapi-generator-ignore#L25). See [Ignore file format](https://github.com/OpenAPITools/openapi-generator/blob/01f0763ec3b72b8a3ce0f4ad77713d876702f070/docs/customization.md#ignore-file-format) in the OpenAPI generator documentation for more info.
    6. Add a new `.github/workflows/ci.yml` Github workflow to run on new pull requests in the SDK repository. The CI workflow typically runs unit tests and checks code linting requirements before PRs can be merged. The CI workflow must run on the [`pull_request.types.[opened, reopened, synchronize, edited]`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request) workflow events.
    7. In the repository "Settings", update the `main` branch merge requirements to require that all tasks specified in `ci.yml` pass before a merge to main is allowed.
@@ -107,7 +107,7 @@ $(npm bin)/openapi-generator-cli generate \
 
 To ensure that each generated SDK has a consistent, simple, and clean interface, all generated SDKs must adhere to the following standards.
 
-The key words "MUST", "MUST_NOT", "REQUIRED", "SHALL", "SHALL_NOT", "SHOULD", "SHOULD_NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](https://microformats.org/wiki/rfc-2119).
+The key words "MUST", "MUST_NOT", "REQUIRED", "SHALL", "SHALL_NOT", "SHOULD", "SHOULD_NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](https://www.ietf.org/rfc/rfc2119.txt).
 
 To ensure that each generated SDK has a consistent, simple, and clean interface, all generated SDKs must adhere to the following standards.
 

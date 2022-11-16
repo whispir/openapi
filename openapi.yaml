@@ -5872,8 +5872,6 @@ paths:
         - $ref: '#/components/parameters/Auth-Accept'
       tags:
         - Auth
-      security:
-        - BasicAuth: []
   /auth/verify:
     get:
       parameters:
@@ -5919,8 +5917,6 @@ paths:
       summary: Verify an auth token
       tags:
         - Auth
-      security:
-        - BasicAuth: []
 externalDocs:
   description: API Documentation for Whispir Platform API
   url: 'https://developers.whispir.com'

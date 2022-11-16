@@ -5927,8 +5927,8 @@ externalDocs:
 security:
   - BasicAuth: []
     ApiKeyAuth: []
-  - BasicAuth: []
-    BearerAuth: []
+  - BearerAuth: []
+    ApiKeyAuth: []
 servers:
   - url: 'https://api.au.whispir.com'
     description: Australia

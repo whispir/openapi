@@ -9,8 +9,9 @@
   "main": "dist/api.js",
   "types": "dist/api.d.ts",
   "scripts": {
-    "download:oas": "curl -XGET 'https://raw.githubusercontent.com/whispir/openapi/main/openapi.yaml' -o openapi.yaml",
-    "generate": "openapi-generator-cli generate"
+    "debug": "openapi-generator-cli generate --log-to-stderr -g node --custom-generator ./out/node/target/node-openapi-generator-1.0.0.jar -i ../openapi.yaml --global-property debugSupportingFiles=true --dry-run > dump.json",
+    "generate": "openapi-generator-cli generate",
+    "build": "cd out/node && rm -rf target && mvn package"
   },
   "author": "OpenAPI-Generator Contributors",
   "license": "Unlicense",

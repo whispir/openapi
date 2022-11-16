@@ -128,4 +128,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# OpenAPI Generator
 *-debug.json
+out/*/out
+out/*/target/*
+!out/*/target/*.jar

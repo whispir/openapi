@@ -97,6 +97,7 @@ Documentation to determine what variables are available to the Mustache files ar
 
 ```bash
 $(npm bin)/openapi-generator-cli generate \
+    --log-to-stderr \
     -g typescript-node \
     -i ../openapi.yaml \
     --global-property debugSupportingFiles=true \

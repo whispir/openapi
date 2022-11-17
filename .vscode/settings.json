@@ -1,11 +1,11 @@
 {
     "java.project.sourcePaths": [
-        "whispir-sdk-codegen/out/node/src/main/java",
-        "whispir-sdk-codegen/out/node/src/main/java",
-        "whispir-sdk-codegen/out/node/src/main/resources",
-        "whispir-sdk-codegen/out/node/src/test/java",
-        "whispir-sdk-codegen/out/node/target/generated-sources/annotations",
-        "whispir-sdk-codegen/out/node/target/generated-test-sources/test-annotations",
+        "whispir-sdk-codegen/generators/node/src/main/java",
+        "whispir-sdk-codegen/generators/node/src/main/java",
+        "whispir-sdk-codegen/generators/node/src/main/resources",
+        "whispir-sdk-codegen/generators/node/src/test/java",
+        "whispir-sdk-codegen/generators/node/target/generated-sources/annotations",
+        "whispir-sdk-codegen/generators/node/target/generated-test-sources/test-annotations",
     ],
     "java.project.referencedLibraries": [
         "lib/**/*.jar",

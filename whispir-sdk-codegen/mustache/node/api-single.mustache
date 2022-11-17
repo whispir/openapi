@@ -3,7 +3,7 @@ import http from 'http';
 
 /* tslint:disable:no-unused-locals */
 {{#imports}}
-import { {{classname}} } from '{{filename}}';
+import { {{classname}} } from '{{import}}';
 {{/imports}}
 import { ObjectSerializer, Interceptor } from '../model/models';
 import { HttpError, RequestFile } from './apis';
@@ -61,8 +61,7 @@ export class {{classname}} {
     {{#allParams}}
         {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
     {{/allParams}}
-    }, options: RequestOptions = { headers: {} }): Promise<{ lastResponse: http.IncomingMessage, id: string }{{#returnType}} & {{{.}}}{{/returnType}}> {
-              
+    }, options: RequestOptions = { headers: {} }): Promise<{ lastResponse: http.IncomingMessage{{#isRestfulCreate}}, id: string{{/isRestfulCreate}} }{{#returnType}} & {{{.}}}{{/returnType}}> {
         const localVarPath = this.host + '{{{path}}}'{{#pathParams}}
             .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
         let localVarQueryParameters: any = {};
@@ -138,10 +137,12 @@ export class {{classname}} {
                             {{#returnType}}
                             body = ObjectSerializer.deserialize(body, "{{{.}}}");
                             {{/returnType}}
+                            {{#isRestfulCreate}}
                             // Special case to extract the resource identifier from the `Location` header.
                             const checkLocation = response?.headers?.location?.match(/\/([^\/]+)\/?$/);
                             let id = (checkLocation && checkLocation[1]) ? checkLocation[1] : undefined;
-                            resolve({ lastResponse: response.toJSON(), ...{ id }, ...body });
+                            {{/isRestfulCreate}}
+                            resolve({ lastResponse: response.toJSON(),{{#isRestfulCreate}} id,{{/isRestfulCreate}} ...body });
                         } else {
                             reject(new HttpError(response, body, response.statusCode));
                         }

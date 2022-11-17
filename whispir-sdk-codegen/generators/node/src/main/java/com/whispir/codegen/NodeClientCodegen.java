@@ -19,12 +19,6 @@ public class NodeClientCodegen extends TypeScriptNodeClientCodegen {
     }
 
     @Override
-    public void postProcessParameter(CodegenParameter parameter) {
-        // For typings, parameter only required if default value is also not provided.
-        parameter.required = parameter.required == true && parameter.defaultValue == null;
-    }
-
-    @Override
     public OperationsMap postProcessOperationsWithModels(OperationsMap operations, List<ModelMap> allModels) {
         OperationMap objs = operations.getOperations();
 

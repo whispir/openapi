@@ -55,7 +55,7 @@ export class {{classname}} {
     public async {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}(params: {
     {{#allParams}}
     {{^isBodyParam}}
-        {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
+        {{paramName}}{{#required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}?{{/defaultValue}}{{/required}}: {{{dataType}}},
     {{/isBodyParam}}
     {{/allParams}}
     }{{#bodyParam}} & {{baseType}}{{/bodyParam}}, options: RequestOptions = { headers: {} }): Promise<{ lastResponse: http.IncomingMessage{{#isRestfulCreate}}, id: string{{/isRestfulCreate}} }{{#returnType}} & {{{.}}}{{/returnType}}> {
@@ -65,7 +65,9 @@ export class {{classname}} {
             {{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}},
             {{/isBodyParam}}
             {{/allParams}}
-            {{#bodyParam}}...{{paramName}}{{/bodyParam}}
+            {{#bodyParam}}
+            ...{{paramName}}
+            {{/bodyParam}}
         } = params;
 
         const localVarPath = this.host + '{{{path}}}'{{#pathParams}}

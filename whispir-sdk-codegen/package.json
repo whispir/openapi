@@ -12,7 +12,7 @@
     "debug:typescript": "openapi-generator-cli generate --log-to-stderr -g typescript-node -i ../openapi.yaml --global-property debugSupportingFiles=true --dry-run > openapi-generator-debug.json",
     "generate": "openapi-generator-cli generate",
     "generate:node": "yarn generate --generator-key node --custom-generator ./generators/node/target/node-openapi-generator-1.0.0.jar",
-    "build": "cd out/node && rm -rf target && mvn package"
+    "build": "cd generators/node && rm -rf target && mvn package"
   },
   "author": "Whispir <support@whispir.com> (https://whispir.com)",
   "license": "MIT",

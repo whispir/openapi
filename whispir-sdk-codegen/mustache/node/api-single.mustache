@@ -52,16 +52,22 @@ export class {{classname}} {
      * @param {{paramName}} {{description}}
      {{/allParams}}
      */
-     
-    public async {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}({
+    public async {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}(params: {
     {{#allParams}}
-        {{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}},
-    {{/allParams}}
-    }: {
-    {{#allParams}}
+    {{^isBodyParam}}
         {{paramName}}{{^required}}?{{/required}}: {{{dataType}}},
+    {{/isBodyParam}}
     {{/allParams}}
-    }, options: RequestOptions = { headers: {} }): Promise<{ lastResponse: http.IncomingMessage{{#isRestfulCreate}}, id: string{{/isRestfulCreate}} }{{#returnType}} & {{{.}}}{{/returnType}}> {
+    }{{#bodyParam}} & {{baseType}}{{/bodyParam}}, options: RequestOptions = { headers: {} }): Promise<{ lastResponse: http.IncomingMessage{{#isRestfulCreate}}, id: string{{/isRestfulCreate}} }{{#returnType}} & {{{.}}}{{/returnType}}> {
+        const {
+            {{#allParams}}
+            {{^isBodyParam}}
+            {{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}},
+            {{/isBodyParam}}
+            {{/allParams}}
+            {{#bodyParam}}...{{paramName}}{{/bodyParam}}
+        } = params;
+
         const localVarPath = this.host + '{{{path}}}'{{#pathParams}}
             .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
         let localVarQueryParameters: any = {};

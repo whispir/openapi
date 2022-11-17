@@ -1,0 +1,14 @@
+{
+    "java.project.sourcePaths": [
+        "whispir-sdk-codegen/generators/node/src/main/java",
+        "whispir-sdk-codegen/generators/node/src/main/java",
+        "whispir-sdk-codegen/generators/node/src/main/resources",
+        "whispir-sdk-codegen/generators/node/src/test/java",
+        "whispir-sdk-codegen/generators/node/target/generated-sources/annotations",
+        "whispir-sdk-codegen/generators/node/target/generated-test-sources/test-annotations",
+    ],
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/richardfontein/Workspace/openapi/whispir-sdk-codegen/node_modules/@openapitools/openapi-generator-cli/versions/6.0.1.jar"
+    ]
+}

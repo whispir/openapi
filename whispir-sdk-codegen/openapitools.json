@@ -1,11 +1,11 @@
 {
-  "$schema": "node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
   "spaces": 2,
   "generator-cli": {
     "version": "6.0.1",
     "generators": {
       "node": {
-        "generatorName": "typescript-node",
+        "generatorName": "node",
         "output": "#{cwd}/../whispir-node",
         "glob": "../openapi.yaml",
         "additionalProperties": {
@@ -26,8 +26,8 @@
           "artifactUrl": "https://github.com/whispir/whispir-java",
           "artifactDescription": "Whispir Java SDK",
           "artifactVersion": "1.0.0",
-          "developerName": "Whispir Developer Experience Team",
-          "developerEmail": "developerexperience@whispir.com",
+          "developerName": "Whispir",
+          "developerEmail": "support@whispir.com",
           "developerOrganization": "Whispir",
           "developerOrganizationUrl": "https://www.whispir.com",
           "invokerPackage": "whispir-sdk-java",

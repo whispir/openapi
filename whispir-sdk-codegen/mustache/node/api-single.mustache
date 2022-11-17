@@ -58,7 +58,7 @@ export class {{classname}} {
         {{paramName}}{{#required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}?{{/defaultValue}}{{/required}}: {{{dataType}}},
     {{/isBodyParam}}
     {{/allParams}}
-    }{{#bodyParam}} & {{baseType}}{{/bodyParam}}, options: RequestOptions = { headers: {} }): Promise<{ lastResponse: http.IncomingMessage{{#isRestfulCreate}}, id: string{{/isRestfulCreate}} }{{#returnType}} & {{{.}}}{{/returnType}}> {
+    }{{#bodyParam}} & {{baseType}}{{/bodyParam}}, options?: RequestOptions): Promise<{ lastResponse: http.IncomingMessage{{#isRestfulCreate}}, id: string{{/isRestfulCreate}} }{{#returnType}} & {{{.}}}{{/returnType}}> {
         const {
             {{#allParams}}
             {{^isBodyParam}}
@@ -80,12 +80,11 @@ export class {{classname}} {
         if ({{paramName}} !== undefined) {
             localVarQueryParameters['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
         }
-
 {{/queryParams}}
 {{#headerParams}}
         localVarHeaderParams['{{baseName}}'] = {{paramName}} || localVarHeaderParams['{{baseName}}'];
 {{/headerParams}}
-        (<any>Object).assign(localVarHeaderParams, options.headers);
+        (<any>Object).assign(localVarHeaderParams, options?.headers);
 
         let localVarUseFormData = false;
 

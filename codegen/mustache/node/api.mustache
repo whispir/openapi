@@ -28,13 +28,12 @@ const Client = (config: ClientConfig) => {
     if (config.username && config.password && config.apiKey) {
         authHeaders['Authorization'] = `Basic ${Buffer.from(`${config.username}:${config.password}`).toString("base64")}`;
         authHeaders['X-Api-Key'] = config.apiKey;
-    } else if (config.accessToken && config.apiKey) {
+    } else if (config.accessToken) {
         authHeaders['Authorization'] = `Bearer ${config.accessToken}`;
-        authHeaders['X-Api-Key'] = config.apiKey;
     } else {
         throw new Error(`Unsupported authorization:
         Please provide either username, password, and apiKey combination
-        OR accessToken and apiKey combination.`);
+        OR accessToken.`);
     }
 
     const defaultHeaders = {

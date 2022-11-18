@@ -9405,6 +9405,7 @@ components:
     X-Api-Key:
       name: X-Api-Key
       in: header
+      x-isApiKey: true
       required: true
       schema:
         type: string
@@ -9447,8 +9448,10 @@ components:
           - application/vnd.whispir.template-v1+xml
       description: Application specific mime-type.
       name: Content-Type
+      x-isContentType: true
     Template-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9460,6 +9463,7 @@ components:
       description: Application specific mime-type.
     Callback-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9471,6 +9475,7 @@ components:
       description: Application specific mime-type.
     Callback-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9482,6 +9487,7 @@ components:
       description: Application specific mime-type.
     Contact-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9493,6 +9499,7 @@ components:
       description: Application specific mime-type.
     Contact-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9504,6 +9511,7 @@ components:
       description: Application specific mime-type.
     Resource-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9515,6 +9523,7 @@ components:
       description: Application specific mime-type.
     Resource-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9526,6 +9535,7 @@ components:
       description: Application specific mime-type.
     ResponseRule-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9537,6 +9547,7 @@ components:
       description: Application specific mime-type.
     ResponseRule-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9548,6 +9559,7 @@ components:
       description: Application specific mime-type.
     Workspace-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9559,6 +9571,7 @@ components:
       description: Application specific mime-type.
     Workspace-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9570,6 +9583,7 @@ components:
       description: Application specific mime-type.
     DistributionList-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9581,6 +9595,7 @@ components:
       description: Application specific mime-type.
     DistributionList-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9592,6 +9607,7 @@ components:
       description: Application specific mime-type.
     Scenario-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9603,6 +9619,7 @@ components:
       description: Application specific mime-type.
     Scenario-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9614,6 +9631,7 @@ components:
       description: Application specific mime-type.
     Event-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9625,6 +9643,7 @@ components:
       description: Application specific mime-type.
     Event-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9636,6 +9655,7 @@ components:
       description: Application specific mime-type.
     CustomList-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9647,6 +9667,7 @@ components:
       description: Application specific mime-type.
     Import-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       schema:
         type: string
@@ -9658,6 +9679,7 @@ components:
       required: true
     Import-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9669,6 +9691,7 @@ components:
       description: Application specific mime-type.
     Message-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9682,6 +9705,7 @@ components:
       description: Application specific mime-type.
     Message-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9695,6 +9719,7 @@ components:
       description: Application specific mime-type.
     MessageStatus-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9706,6 +9731,7 @@ components:
       description: Application specific mime-type.
     MessageResponse-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       description: Application specific mime-type.
@@ -9717,6 +9743,7 @@ components:
           - application/vnd.whispir.messageresponse-v1+xml
     Auth-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9728,6 +9755,7 @@ components:
       description: Application specific mime-type
     Auth-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       description: Application specific mime-type
@@ -9739,6 +9767,7 @@ components:
           - application/vnd.whispir.auth-v1+xml
     Activity-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9750,6 +9779,7 @@ components:
       description: Application specific mime-type.
     Activity-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9779,6 +9809,7 @@ components:
       description: 'The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.'
     User-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       description: Application specific mime-type.
       required: true
@@ -9790,6 +9821,7 @@ components:
           - application/vnd.whispir.user-v1+xml
     User-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       description: User accept.
       required: true
@@ -9801,6 +9833,7 @@ components:
           - application/vnd.whispir.user-v1+xml
     CallbackCall-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9812,6 +9845,7 @@ components:
       description: Application specific mime-type.
     CallbackCall-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:

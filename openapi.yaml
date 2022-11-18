@@ -9423,7 +9423,6 @@ components:
       required: true
       schema:
         type: string
-        default: ''
       description: The API key for authentication.
     workspaceId:
       name: workspaceId

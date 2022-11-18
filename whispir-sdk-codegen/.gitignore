@@ -130,6 +130,3 @@ dist
 
 # OpenAPI Generator
 *-debug.json
-generators/*/out
-generators/*/target/*
-!generators/*/target/*.jar

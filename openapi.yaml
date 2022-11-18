@@ -80,6 +80,7 @@ paths:
       tags:
         - Messages
       x-sdkOperation: create
+      x-isPost: true
       summary: Send a message
       description: |-
         Communications are the core of what the Whispir Platform API offers as a service to customers.    
@@ -1332,6 +1333,7 @@ paths:
       tags:
         - Resources
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a resource
       description: |
         ### High-Level Response Elements
@@ -1661,6 +1663,7 @@ paths:
         - Templates
       summary: Create a template
       x-sdkOperation: create
+      x-isPost: true
       description: 'Create a message template, combining multi-channel content for use with the Message resource. The message template can be reused across multiple sent messages.'
       operationId: postTemplates
       parameters:
@@ -1999,6 +2002,7 @@ paths:
         - Response Rules
       summary: Create a response rule
       x-sdkOperation: create
+      x-isPost: true
       description: |
         ## Response Template Patterns
 
@@ -2294,6 +2298,7 @@ paths:
       tags:
         - Contacts
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a contact
       description: Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.
       operationId: postContacts
@@ -2755,6 +2760,7 @@ paths:
       tags:
         - Distribution Lists
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a distribution list
       description: |
         Distribution lists can be created within the Default Workspace, or within a Specific Workspace. More information on Workspaces will be provided later in this documentation.
@@ -3106,6 +3112,7 @@ paths:
       tags:
         - Scenarios
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a scenario
       description: |
         A scenario is a combination of a message and contacts. So, its structure contains section for both message as well as contact information. API currently only supports creation of scenario with SMS as communication mode.
@@ -3578,6 +3585,7 @@ paths:
       tags:
         - Callbacks
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a callback
       description: |-
         Whispir’s callback service can be configured to send simple notifications and some associated metadata via API callbacks to an endpoint of your choice when one of the following events occurs:
@@ -4110,6 +4118,7 @@ paths:
       tags:
         - Workspaces
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a workspace
       description: |
         Note: There is no limit to the amount of workspaces each API user can create.
@@ -4295,6 +4304,7 @@ paths:
       tags:
         - Activities
       x-sdkOperation: create
+      x-isPost: true
       summary: Create an activity
       description: |-
         Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace. Each activity log entry contains information about the workspace, the module (message, email, IVR ...), the user who performed the activity, time stamps, description of the activity, its status (success, fail) and so on.
@@ -4889,6 +4899,7 @@ paths:
       tags:
         - Users
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a user
       description: |-
         Create a new user. Ensure that the necessary permissions are provided to the API account to create or modify user accounts.
@@ -5314,6 +5325,7 @@ paths:
       tags:
         - Events
       x-sdkOperation: create
+      x-isPost: true
       summary: Create an event
       description: |-
         The bulk of the `Event` metadata is from fields that are generic, and only applicable to the customer that is using the module.
@@ -5706,6 +5718,7 @@ paths:
       tags:
         - Imports
       x-sdkOperation: create
+      x-isPost: true
       summary: Create an import
       description: |
         ## Bulk contact import
@@ -5806,6 +5819,7 @@ paths:
       summary: Create an auth token
       operationId: postAuth
       x-sdkOperation: create
+      x-isPost: true
       responses:
         '200':
           description: OK

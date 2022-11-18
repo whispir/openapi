@@ -55,7 +55,7 @@ export class {{classname}} {
         {{/vendorExtensions}}
     {{/isBodyParam}}
     {{/allParams}}
-    }{{#bodyParam}} & {{baseType}}{{/bodyParam}}, options?: RequestOptions): Promise<{ lastResponse: http.IncomingMessage{{#isRestfulCreate}}, id: string{{/isRestfulCreate}} }{{#returnType}} & {{{.}}}{{/returnType}}> {
+    }{{#bodyParam}} & {{baseType}}{{/bodyParam}}, options?: RequestOptions): Promise<{ lastResponse: http.IncomingMessage{{#vendorExtensions}}{{#x-isPost}}, id: string{{/x-isPost}}{{/vendorExtensions}} }{{#returnType}} & {{{.}}}{{/returnType}}> {
         const {
             {{#allParams}}
             {{^isBodyParam}}
@@ -156,12 +156,12 @@ export class {{classname}} {
                             {{#returnType}}
                             body = ObjectSerializer.deserialize(body, "{{{.}}}");
                             {{/returnType}}
-                            {{#isRestfulCreate}}
+                            {{#vendorExtensions}}{{#x-isPost}}
                             // Special case to extract the resource identifier from the `Location` header.
                             const checkLocation = response?.headers?.location?.match(/\/([^\/]+)\/?$/);
                             let id = (checkLocation && checkLocation[1]) ? checkLocation[1] : undefined;
-                            {{/isRestfulCreate}}
-                            resolve({ lastResponse: response.toJSON(),{{#isRestfulCreate}} id,{{/isRestfulCreate}} ...body });
+                            {{/x-isPost}}{{/vendorExtensions}}
+                            resolve({ lastResponse: response.toJSON(),{{#vendorExtensions}}{{#x-isPost}} id,{{/x-isPost}}{{/vendorExtensions}} ...body });
                         } else {
                             reject(new HttpError(response, body, response.statusCode));
                         }

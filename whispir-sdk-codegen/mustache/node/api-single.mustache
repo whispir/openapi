@@ -46,14 +46,26 @@ export class {{classname}} {
     public async {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}(params: {
     {{#allParams}}
     {{^isBodyParam}}
+        {{#vendorExtensions}}
+        {{^x-isApiKey}}
+        {{^x-isContentType}}
         {{paramName}}{{#required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}?{{/defaultValue}}{{/required}}: {{{dataType}}},
+        {{/x-isContentType}}
+        {{/x-isApiKey}}
+        {{/vendorExtensions}}
     {{/isBodyParam}}
     {{/allParams}}
     }{{#bodyParam}} & {{baseType}}{{/bodyParam}}, options?: RequestOptions): Promise<{ lastResponse: http.IncomingMessage{{#isRestfulCreate}}, id: string{{/isRestfulCreate}} }{{#returnType}} & {{{.}}}{{/returnType}}> {
         const {
             {{#allParams}}
             {{^isBodyParam}}
+            {{#vendorExtensions}}
+            {{^x-isApiKey}}
+            {{^x-isContentType}}
             {{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}},
+            {{/x-isContentType}}
+            {{/x-isApiKey}}
+            {{/vendorExtensions}}
             {{/isBodyParam}}
             {{/allParams}}
             {{#bodyParam}}
@@ -73,7 +85,16 @@ export class {{classname}} {
         }
 {{/queryParams}}
 {{#headerParams}}
+        {{#vendorExtensions}}
+        {{^x-isApiKey}}
+        {{^x-isContentType}}
         localVarHeaderParams['{{baseName}}'] = {{paramName}} || localVarHeaderParams['{{baseName}}'];
+        {{/x-isContentType}}
+        {{/x-isApiKey}}
+        {{#x-isContentType}}
+        localVarHeaderParams['{{baseName}}'] = {{{defaultValue}}};
+        {{/x-isContentType}}
+        {{/vendorExtensions}}
 {{/headerParams}}
         (<any>Object).assign(localVarHeaderParams, options?.headers);
 

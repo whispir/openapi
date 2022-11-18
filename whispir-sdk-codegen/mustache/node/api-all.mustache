@@ -10,19 +10,19 @@ export * from './{{ classFilename }}Interface'
 import * as http from 'http';
 
 export class HttpError extends Error {
-    constructor (public response: http.IncomingMessage, public body: any, public statusCode?: number) {
+    constructor(public response: http.IncomingMessage, public body: any, public statusCode?: number) {
         super('HTTP request failed');
         this.name = 'HttpError';
     }
 };
 
 export type ApiConfig = {
-    defaultHeaders: {[name: string]: string};
+    defaultHeaders: { [name: string]: string };
     host: string;
 };
 
 export type RequestOptions = {
-    headers: {[name: string]: string};
+    headers: { [name: string]: string };
 };
 
 export { RequestFile } from '../model/models';

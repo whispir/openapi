@@ -43,7 +43,7 @@ export class {{classname}} {
      * @param {{paramName}} {{description}}
      {{/allParams}}
      */
-    public async {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}(params: {
+    public async {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}(params?: {
     {{#allParams}}
     {{^isBodyParam}}
         {{#vendorExtensions}}
@@ -71,7 +71,7 @@ export class {{classname}} {
             {{#bodyParam}}
             ...{{paramName}}
             {{/bodyParam}}
-        } = params;
+        } = params || {};
 
         const localVarPath = this.host + '{{{path}}}'{{#pathParams}}
             .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};

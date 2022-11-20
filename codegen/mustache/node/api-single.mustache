@@ -163,7 +163,7 @@ export class {{classname}} {
                             {{/x-isPost}}{{/vendorExtensions}}
                             resolve({ lastResponse: response.toJSON(),{{#vendorExtensions}}{{#x-isPost}} id,{{/x-isPost}}{{/vendorExtensions}} ...body });
                         } else {
-                            reject(new HttpError(response, body, response.statusCode));
+                            reject(new HttpError(body, response.statusCode));
                         }
                     }
                 });

@@ -10,8 +10,8 @@ export * from './{{ classFilename }}Interface'
 import * as http from 'http';
 
 export class HttpError extends Error {
-    constructor(public response: http.IncomingMessage, public body: any, public statusCode?: number) {
-        super('HTTP request failed');
+    constructor(public body: any, public statusCode?: number) {
+        super(body.errorText);
         this.name = 'HttpError';
     }
 };

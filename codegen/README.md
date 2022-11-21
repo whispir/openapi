@@ -29,6 +29,28 @@ Various languages are supported in separately published SDKs.
 | Node     | [whispir-node](https://github.com/whispir/whispir-node) | [typescript-node](https://openapi-generator.tech/docs/generators/typescript-node) |
 | Java     | [whispir-java](https://github.com/whispir/whispir-java) | [java](https://openapi-generator.tech/docs/generators/java)                       |
 
+## OpenAPI & SDK Generation Release Lifecycle
+
+Whispir makes use of [Github workflows](https://docs.github.com/en/actions/using-workflows) to automate as much of the SDK Generation Lifecycle as possible. The SDK Generation Lifecycle can be broken into two distinct parts:
+
+1. whispir/openapi release lifecycle
+2. SDK code generation & whispir/whispir-{language} release lifecycle
+
+The distinct parts have their release lifecycles automated through [Google's Release Please](https://github.com/google-github-actions/release-please-action) Github action, which at a high level, performs the following operations, in this order:
+
+1. On `main` branch [`push`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#push) events for standard change commits, pickup the [Conventional Commit](https://www.conventionalcommits.org/) type and commit message
+   1. If no release PR exists, create one. Determine the new semantic version and create a new changelog entry for that version
+   2. If a release PR exists, update the existing PR with the new semantic version and update the existing changelog entry for the version
+2. On `main` branch `push` events corresponding to step #1's Release PR being merged, create a [Github Release](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)
+
+Putting this altogether, we can illustrate step 1 of the release lifecycle as follows, with the "person" symbols representing the human interaction in the process. All other "circle" symbols are automated actions.
+
+![OpenAPI Release Lifecycle](docs/openapi-release-lifecycle.png)
+
+At the conclusion of the OpenAPI release lifecycle, the [`release`](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release) event triggers the SDK generation workflow to run, the SDK generation workflow can be illustrated as follows.
+
+![SDK Generation Lifecycle](docs/sdk-generation-lifecycle.png)
+
 ## Adding a New Language
 
 Xero's well documented process for [generating SDKs from OpenAPI Spec using OpenAPI Generator](https://devblog.xero.com/building-sdks-for-the-future-b79ff726dfd6) was crucial in developing the release workflow for Whispir's SDKs. We wanted the release process to be as automated as possible, with the only development touch-points being review and merging of pull requests in the OpenAPI and SDK git repositories. In the spirit of open-source collaboration and continuous improvement, Whispir has open-sourced all source-code and repository configuration responsible for generating our SDKs from the OpenAPI Specification. We welcome all contributions to improve our SDKs.

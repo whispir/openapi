@@ -15,7 +15,7 @@ Ensure you have Java installed, it is required by the OAS generator. The easiest
 Run the generator with the following steps:
 
 ```bash
-> cd whispir-sdk-codegen
+> cd codegen
 > yarn # install yarn dependencies
 > yarn generate # generate SDK from the OpenAPI Specification
 ```

@@ -161,12 +161,14 @@ type ClientConfig = {
    accessToken?: string;
 };
 
-type Interceptor = (request: HttpRequestLibraryResponse) => void; // intercepts outgoing requests, for custom client use-cases.
+type Interceptor = (request: HttpRequestLibraryRequest) => void; // intercepts outgoing requests, for custom client use-cases.
 
-type Client = (config: ClientConfig) => {
+type Client = {
    [resourceName: string]: Resource;
    addInterceptor: (interceptor: Interceptor) => void; // consumer can add interceptor on all Resources
 };
+
+type ClientConstructor = (config: ClientConfig) => Client; // initialised by developer consuming SDK
 
 // Resources
 type ResourceConfig = {
@@ -186,11 +188,12 @@ type OperationOutput = Promise<ResponseBody & {
 
 type ResourceOperation = (input: OperationInput) => OperationOutput;
 
-// initialised internally by API Client
-type Resource = (config: ResourceConfig) => {
+type Resource = {
    [sdkOperation: string]: ResourceOperation;
    addInterceptor: (interceptor: Interceptor) => void; // consumer can add interceptor on specific Resource
 };
+
+type ResourceConstructor = (config: ResourceConfig) => Resource; // initialised internally by API Client
 ```
 
 ### API Client Example

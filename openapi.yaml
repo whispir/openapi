@@ -659,7 +659,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.whispir.message-v1+json:
               schema:
                 description: The list messages response object.
                 type: object
@@ -3207,7 +3207,7 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            application/json:
+            application/vnd.whispir.scenario-v1+json:
               schema:
                 type: object
                 description: List of retrieved scenarios
@@ -3310,7 +3310,7 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            application/json:
+            application/vnd.whispir.scenario-v1+json:
               schema:
                 $ref: '#/components/schemas/scenario'
               examples:
@@ -3677,7 +3677,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.whispir.api-callback-v1+json:
               schema:
                 description: The callback object.
                 type: object
@@ -4088,7 +4088,7 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
       requestBody:
         content:
-          application/json:
+          application/vnd.whispir.api-call-v1+json:
             schema:
               type: object
               description: The status of this particular callback attempt.
@@ -4278,7 +4278,7 @@ paths:
         - $ref: '#/components/parameters/Workspace-Accept'
       requestBody:
         content:
-          application/json:
+          application/vnd.whispir.workspace-v1+json:
             schema:
               $ref: '#/components/schemas/workspace'
             examples:
@@ -4363,7 +4363,7 @@ paths:
               example: 'https://api.au.whispir.com/activities/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
           content:
-            application/json:
+            application/vnd.whispir.activity-v1+json:
               schema:
                 $ref: '#/components/schemas/activity'
               examples:
@@ -6066,7 +6066,7 @@ components:
       description: events object that needs to be create events
     callback:
       content:
-        application/json:
+        application/vnd.whispir.callback-v1+json:
           schema:
             $ref: '#/components/schemas/callback'
           examples:
@@ -9872,7 +9872,7 @@ components:
     User:
       description: User endpoint response
       content:
-        application/json:
+        application/vnd.whispir.user-v1+json:
           schema:
             $ref: '#/components/schemas/user'
           examples:
@@ -9965,7 +9965,7 @@ components:
     Users:
       description: List users endpoint response
       content:
-        application/json:
+        application/vnd.whispir.user-v1+json:
           schema:
             type: object
             description: List users object
@@ -10004,7 +10004,7 @@ components:
     Template:
       description: Template endpoint response.
       content:
-        application/json:
+        application/vnd.whispir.template-v1+json:
           schema:
             $ref: '#/components/schemas/template'
           examples:
@@ -10554,7 +10554,7 @@ components:
     CallbackCalls:
       description: Example response
       content:
-        application/json:
+        application/vnd.whispir.api-call-v1+json:
           schema:
             type: object
             description: A list of callbacks
@@ -10623,7 +10623,7 @@ components:
     Contact:
       description: Example response
       content:
-        application/json:
+        application/vnd.whispir.contact-v1+json:
           schema:
             $ref: '#/components/schemas/contact'
           examples:
@@ -10725,7 +10725,7 @@ components:
     Contacts:
       description: Example response
       content:
-        application/json:
+        application/vnd.whispir.contact-v1+json:
           schema:
             type: object
             description: List contacts object
@@ -10834,7 +10834,7 @@ components:
     Workspace:
       description: Example workspace object response
       content:
-        application/json:
+        application/vnd.whispir.workspace-v1+json:
           schema:
             $ref: '#/components/schemas/workspace'
           examples:
@@ -10867,7 +10867,7 @@ components:
     Workspaces:
       description: Example of a list of workspaces response
       content:
-        application/json:
+        application/vnd.whispir.workspace-v1+json:
           schema:
             type: object
             description: List of workspaces
@@ -10916,7 +10916,7 @@ components:
     Resource:
       description: Resource endpoint response
       content:
-        application/json:
+        application/vnd.whispir.resource-v1+json:
           schema:
             $ref: '#/components/schemas/resource'
           examples:
@@ -10949,7 +10949,7 @@ components:
     Resources:
       description: List of resources
       content:
-        application/json:
+        application/vnd.whispir.resource-v1+json:
           schema:
             type: object
             description: List of resources object
@@ -10994,7 +10994,7 @@ components:
     DistributionList:
       description: Example workspace object response
       content:
-        application/json:
+        application/vnd.whispir.distributionlist-v1+json:
           schema:
             description: Either a static or dynamic distribution list
             oneOf:
@@ -11037,7 +11037,7 @@ components:
     DistributionLists:
       description: Example workspace object response
       content:
-        application/json:
+        application/vnd.whispir.distributionlist-v1+json:
           schema:
             type: object
             description: list of distribution lists
@@ -11109,7 +11109,7 @@ components:
     CustomLists:
       description: Example response
       content:
-        application/json:
+        application/vnd.whispir.customlist-v1+json:
           schema:
             type: object
             description: List of custom lists
@@ -11161,7 +11161,7 @@ components:
     CustomList:
       description: Example responses
       content:
-        application/json:
+        application/vnd.whispir.customlist-v1+json:
           schema:
             $ref: '#/components/schemas/customList'
           examples:
@@ -11202,7 +11202,7 @@ components:
     Events:
       description: List of events response example
       content:
-        application/json:
+        application/vnd.whispir.event-v1+json:
           schema:
             type: object
             description: List of events
@@ -11251,7 +11251,7 @@ components:
     Event:
       description: Example Event response
       content:
-        application/json:
+        application/vnd.whispir.event-v1+json:
           schema:
             $ref: '#/components/schemas/event'
           examples:

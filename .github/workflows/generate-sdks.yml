@@ -32,7 +32,7 @@ jobs:
           node-version: 16
       - name: Generate SDK files
         run: |
-          cd whispir-sdk-codegen
+          cd codegen
           yarn install
           yarn generate
       - name: Commit changelog and manifest files
@@ -55,7 +55,7 @@ jobs:
           PREVIOUS_TAG=$(git describe --abbrev=0 --tags $NEW_TAG^)
           NEW_VERSION=$(echo $NEW_TAG | cut -d "v" -f2)
           PREVIOUS_VERSION=$(echo $PREVIOUS_TAG | cut -d "v" -f2)
-          echo "commit-type=$(node whispir-sdk-codegen/semver-diff-type.js $PREVIOUS_VERSION $NEW_VERSION)" >> $GITHUB_OUTPUT
+          echo "commit-type=$(node codegen/semver-diff-type.js $PREVIOUS_VERSION $NEW_VERSION)" >> $GITHUB_OUTPUT
       - name: Create pull request into main
         uses: thomaseizinger/create-pull-request@08c462ea5f7e036ae693796541404b4297a480d6 # 1.2.2
         with:

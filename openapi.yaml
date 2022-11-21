@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   description: 'Whispir Platform API for cross channel and multi channel communications. Documentation on each endpoint is available at https://developers.whispir.com.'
   # x-release-please-start-version
-  version: 1.0.4
+  version: 1.1.0
   # x-release-please-end
   title: Whispir Platform API
   termsOfService: 'https://www.whispir.com/terms-of-service'
@@ -79,6 +79,8 @@ paths:
     post:
       tags:
         - Messages
+      x-sdkOperation: create
+      x-isPost: true
       summary: Send a message
       description: |-
         Communications are the core of what the Whispir Platform API offers as a service to customers.    
@@ -639,6 +641,7 @@ paths:
     get:
       tags:
         - Messages
+      x-sdkOperation: list
       summary: List messages
       description: |-
         List all sent messages for the workspace.
@@ -800,6 +803,7 @@ paths:
     get:
       tags:
         - Messages
+      x-sdkOperation: retrieve
       summary: Retrieve a message
       description: |-
         Each of the URLs specified in the response can be accessed using the REL and appropriate METHOD to perform the specified functionality.
@@ -946,6 +950,7 @@ paths:
   '/workspaces/{workspaceId}/messages/{messageId}/messagestatus':
     get:
       summary: Retrieve a message status
+      x-sdkOperation: retrieveMessageStatus
       description: |
         Whispir will automatically monitor the status of each message after it has been sent to each recipient. Using the message status information, you are able to determine who received the message, what exact time they received it, on what message channel (SMS, Email, Voice, Web, Push Notification), whether they replied to the message, what time they replied, and on what messaging channel.  
 
@@ -1137,6 +1142,7 @@ paths:
   '/workspaces/{workspaceId}/messages/{messageId}/messageresponses':
     get:
       summary: Retrieve a message response
+      x-sdkOperation: retrieveMessageResponse
       description: |
         ## Summary Responses
 
@@ -1326,6 +1332,8 @@ paths:
     post:
       tags:
         - Resources
+      x-sdkOperation: create
+      x-isPost: true
       summary: Create a resource
       description: |
         ### High-Level Response Elements
@@ -1405,6 +1413,7 @@ paths:
     get:
       tags:
         - Resources
+      x-sdkOperation: list
       summary: List resources
       description: |
         Existing resources can be easily retrieved via the GET /resources API call. The response lists all of the existing public and private resources available in the system.
@@ -1502,6 +1511,7 @@ paths:
       tags:
         - Resources
       summary: Retrieve a resource
+      x-sdkOperation: retrieve
       description: |
         A single resource (public|private) can be retrieved from the available resource by using the resource’s specific link uri
       operationId: getResourcesById
@@ -1542,6 +1552,7 @@ paths:
       tags:
         - Resources
       summary: Update a resource
+      x-sdkOperation: update
       description: |
         Updating a resource involves the same process as in creating a resource. The process of using one of the format (CSV, JSON, XML) for private and any format for public -> converting to base64 encoded data is the same.  
         The change is doing a PUT to the existing resource URL that needs to be updated. Please be careful that doing an update overwrites the previous resource. There is no versioning available in Whispir for the resources.  
@@ -1599,6 +1610,7 @@ paths:
       tags:
         - Resources
       summary: Delete a resource
+      x-sdkOperation: delete
       description: |
         Resources can be deleted after use. These can be both public and private in scope.  
 
@@ -1650,6 +1662,8 @@ paths:
       tags:
         - Templates
       summary: Create a template
+      x-sdkOperation: create
+      x-isPost: true
       description: 'Create a message template, combining multi-channel content for use with the Message resource. The message template can be reused across multiple sent messages.'
       operationId: postTemplates
       parameters:
@@ -1690,6 +1704,7 @@ paths:
       tags:
         - Templates
       summary: List templates
+      x-sdkOperation: list
       description: |
         List all message templates for the workspace.
 
@@ -1838,6 +1853,7 @@ paths:
       tags:
         - Templates
       summary: Retrieve a template
+      x-sdkOperation: retrieve
       description: Retrieves a message template
       operationId: getTemplatesById
       parameters:
@@ -1877,6 +1893,7 @@ paths:
       tags:
         - Templates
       summary: Update a template
+      x-sdkOperation: update
       description: |
         **Note:** Currently users cannot update templates with the same name as a template that already exists in Whispir. Users can overcome this by saving the updated template with a new name, then either changing this back in a subsequent save, or retaining the updated name.
       operationId: putTemplatesById
@@ -1932,6 +1949,7 @@ paths:
       tags:
         - Templates
       summary: Delete a template
+      x-sdkOperation: delete
       description: |
         **Note:** When a template is DELETED, all the associated Scenarios, events, and references of template use in other endpoints will fail. So, ensure that the template is not used anywhere before it is deleted. Whispir **will not** do that check before it deletes the template.
       operationId: deleteTemplatesById
@@ -1983,6 +2001,8 @@ paths:
       tags:
         - Response Rules
       summary: Create a response rule
+      x-sdkOperation: create
+      x-isPost: true
       description: |
         ## Response Template Patterns
 
@@ -2059,6 +2079,7 @@ paths:
     get:
       tags:
         - Response Rules
+      x-sdkOperation: list
       summary: List response rules
       description: Returns a list of response rules.
       operationId: getResponseRules
@@ -2109,6 +2130,7 @@ paths:
     get:
       tags:
         - Response Rules
+      x-sdkOperation: retrieve
       summary: Retrieve a response rule
       description: Retrieves a response rule object.
       operationId: getResponseRulesById
@@ -2159,6 +2181,7 @@ paths:
     put:
       tags:
         - Response Rules
+      x-sdkOperation: update
       summary: Update a response rule
       description: Updates a Response Rule object.
       operationId: putResponseRulesById
@@ -2225,6 +2248,7 @@ paths:
     delete:
       tags:
         - Response Rules
+      x-sdkOperation: delete
       summary: Delete a response rule
       description: Deletes a Response Rule object.
       operationId: deleteResponseRulesById
@@ -2273,6 +2297,8 @@ paths:
     post:
       tags:
         - Contacts
+      x-sdkOperation: create
+      x-isPost: true
       summary: Create a contact
       description: Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.
       operationId: postContacts
@@ -2394,6 +2420,7 @@ paths:
     get:
       tags:
         - Contacts
+      x-sdkOperation: list
       summary: List contacts
       description: |
         **Note:** There is no global search feature available where one can search on all the workspaces present in the system (under allowed user permission). So, When no workspace is provided, the search is performed on the default workspace of the user.
@@ -2457,6 +2484,7 @@ paths:
     get:
       tags:
         - Contacts
+      x-sdkOperation: retrieve
       summary: Retrieve a contact
       description: |
         ### Showing Custom Fields
@@ -2525,6 +2553,7 @@ paths:
     put:
       tags:
         - Contacts
+      x-sdkOperation: update
       summary: Update a contact
       description: |
         The application must provide all the fields during the update request, even if they are not being updated.
@@ -2671,6 +2700,7 @@ paths:
     delete:
       tags:
         - Contacts
+      x-sdkOperation: delete
       summary: Delete a contact
       description: |
         After performing this request, the response does not contain any information other than the headers as it is not necessary.
@@ -2692,7 +2722,7 @@ paths:
               - deleteAll
           in: query
           name: action
-          description: 'The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it''s triggered. **Use the action only when you''re definitely sure you want to delete the contact from all workspaces**'
+          description: The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it's triggered. **Use the action only when you're definitely sure you want to delete the contact from all workspaces**
       responses:
         '204':
           description: No Content
@@ -2729,6 +2759,8 @@ paths:
     post:
       tags:
         - Distribution Lists
+      x-sdkOperation: create
+      x-isPost: true
       summary: Create a distribution list
       description: |
         Distribution lists can be created within the Default Workspace, or within a Specific Workspace. More information on Workspaces will be provided later in this documentation.
@@ -2802,6 +2834,7 @@ paths:
     get:
       tags:
         - Distribution Lists
+      x-sdkOperation: list
       summary: List distribution lists
       description: |-
         The distribution list is usually retrieved by its id, but one can also search or refer to the distribution list by its name. This feature has to do with the unique name requirement for the distribution list.
@@ -2862,6 +2895,7 @@ paths:
     get:
       tags:
         - Distribution Lists
+      x-sdkOperation: retrieve
       summary: Retrieve a distribution list
       description: |
         A distribution list allows you to associate the following:
@@ -2925,6 +2959,7 @@ paths:
     put:
       tags:
         - Distribution Lists
+      x-sdkOperation: update
       summary: Update a distribution list
       description: |
         Any or all three of these can be updated via the PUT method along with the DL properties (name, description, location etc).
@@ -3026,6 +3061,7 @@ paths:
     delete:
       tags:
         - Distribution Lists
+      x-sdkOperation: delete
       summary: Delete a distribution list
       description: |
         You can only delete the distribution list that you have created or a valid userId associated with the specific distribution list.
@@ -3075,6 +3111,8 @@ paths:
     post:
       tags:
         - Scenarios
+      x-sdkOperation: create
+      x-isPost: true
       summary: Create a scenario
       description: |
         A scenario is a combination of a message and contacts. So, its structure contains section for both message as well as contact information. API currently only supports creation of scenario with SMS as communication mode.
@@ -3143,6 +3181,7 @@ paths:
     get:
       tags:
         - Scenarios
+      x-sdkOperation: list
       summary: List scenarios
       description: Returns a list of your scenarios.
       operationId: getScenarios
@@ -3242,6 +3281,7 @@ paths:
     get:
       tags:
         - Scenarios
+      x-sdkOperation: retrieve
       summary: Retrieve a scenario
       description: Retrieves a Scenario object.
       operationId: getScenariosById
@@ -3333,6 +3373,7 @@ paths:
     post:
       tags:
         - Scenarios
+      x-sdkOperation: run
       summary: Run a scenario
       description: |
         Running a scenario triggers the communication to the intended recipients. The message (static or dynamic) will be sent on all the provided channels.
@@ -3402,6 +3443,7 @@ paths:
     put:
       tags:
         - Scenarios
+      x-sdkOperation: update
       summary: Update a scenario
       description: Updates a Scenario object.
       operationId: putScenariosById
@@ -3493,6 +3535,7 @@ paths:
     delete:
       tags:
         - Scenarios
+      x-sdkOperation: delete
       summary: Delete a scenario
       description: Deletes a Scenario object.
       operationId: deleteScenariosById
@@ -3541,6 +3584,8 @@ paths:
     post:
       tags:
         - Callbacks
+      x-sdkOperation: create
+      x-isPost: true
       summary: Create a callback
       description: |-
         Whispir’s callback service can be configured to send simple notifications and some associated metadata via API callbacks to an endpoint of your choice when one of the following events occurs:
@@ -3624,9 +3669,9 @@ paths:
     get:
       tags:
         - Callbacks
+      x-sdkOperation: list
       summary: List callbacks
-      description: |
-        List callbacks
+      description: List callbacks
       operationId: getCallbacks
       responses:
         '200':
@@ -3777,8 +3822,9 @@ paths:
     get:
       tags:
         - Callbacks
-      summary: Get a callback
-      description: Get a callback object
+      x-sdkOperation: retrieve
+      summary: Retrieve a callback
+      description: Retrieve a callback object
       operationId: getCallbackById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -3816,6 +3862,7 @@ paths:
     put:
       tags:
         - Callbacks
+      x-sdkOperation: update
       summary: Update a callback
       description: Update a callback object
       operationId: putCallbackById
@@ -3864,6 +3911,7 @@ paths:
         $ref: '#/components/requestBodies/callback'
     delete:
       summary: Delete a callback
+      x-sdkOperation: delete
       operationId: deleteCallbackById
       responses:
         '200':
@@ -3911,9 +3959,10 @@ paths:
     get:
       tags:
         - Callbacks
-      summary: List callback instances
-      description: Get a list of callbacks instances
-      operationId: getCallbackInstances
+      x-sdkOperation: listCalls
+      summary: List callback calls
+      description: List of calls to the callback
+      operationId: getCallbackCalls
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/limit'
@@ -3935,10 +3984,10 @@ paths:
             enum:
               - SUCCESS
               - FAILED
-        - $ref: '#/components/parameters/CallbackInstance-Accept'
+        - $ref: '#/components/parameters/CallbackCall-Accept'
       responses:
         '200':
-          $ref: '#/components/responses/CallbackInstances'
+          $ref: '#/components/responses/CallbackCalls'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -3962,7 +4011,8 @@ paths:
     put:
       tags:
         - Callbacks
-      summary: Update a callback instance status
+      x-sdkOperation: updateCall
+      summary: Update a callback call status
       description: |
         As every call to a callback endpoint is now stored within the calls endpoint, it’s possible that when failed calls are successfully processed through a manual exercise, that these calls will then need to be updated to reflect the current status.
 
@@ -3986,7 +4036,7 @@ paths:
         This ensures that all callbacks that have been processed can be updated in a single API call, rather than having to make a single API call per callback attempt.
 
         The PUT request takes a single API parameter in the body
-      operationId: putCallbackInstanceStatus
+      operationId: putCallbackCallStatus
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
@@ -3996,8 +4046,8 @@ paths:
           schema:
             type: string
             example: 41048D9483C8CF2A
-        - $ref: '#/components/parameters/CallbackInstance-Content-Type'
-        - $ref: '#/components/parameters/CallbackInstance-Accept'
+        - $ref: '#/components/parameters/CallbackCall-Content-Type'
+        - $ref: '#/components/parameters/CallbackCall-Accept'
         - schema:
             type: string
             maxLength: 32
@@ -4067,6 +4117,8 @@ paths:
     post:
       tags:
         - Workspaces
+      x-sdkOperation: create
+      x-isPost: true
       summary: Create a workspace
       description: |
         Note: There is no limit to the amount of workspaces each API user can create.
@@ -4123,6 +4175,7 @@ paths:
       tags:
         - Workspaces
       summary: List workspaces
+      x-sdkOperation: list
       description: Returns a list of your workspaces.
       operationId: getWorkspaces
       parameters:
@@ -4159,6 +4212,7 @@ paths:
     get:
       tags:
         - Workspaces
+      x-sdkOperation: retrieve
       summary: Retrieve a workspace
       description: 'Use GET on a Workspace Id to verify it is a valid Workspace ID, and see a list of all the other endpoint URIs in that workspace'
       operationId: getWorkspacesById
@@ -4192,6 +4246,7 @@ paths:
       - $ref: '#/components/parameters/workspaceId'
     put:
       summary: Update a workspace
+      x-sdkOperation: update
       operationId: putWorkspaceById
       responses:
         '204':
@@ -4248,6 +4303,8 @@ paths:
     post:
       tags:
         - Activities
+      x-sdkOperation: create
+      x-isPost: true
       summary: Create an activity
       description: |-
         Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace. Each activity log entry contains information about the workspace, the module (message, email, IVR ...), the user who performed the activity, time stamps, description of the activity, its status (success, fail) and so on.
@@ -4348,6 +4405,7 @@ paths:
     get:
       tags:
         - Activities
+      x-sdkOperation: list
       summary: List activities
       description: |
         ### Search or Filter on Activity Logs
@@ -4602,6 +4660,7 @@ paths:
     get:
       tags:
         - Activities
+      x-sdkOperation: listByWorkspace
       summary: List workspace activities
       description: |
         ## Restricting to only a single workspace 
@@ -4654,6 +4713,7 @@ paths:
     get:
       tags:
         - Custom Lists
+      x-sdkOperation: list
       summary: List custom lists
       description: |
         ### High-Level Response Elements
@@ -4753,6 +4813,7 @@ paths:
     get:
       tags:
         - Custom Lists
+      x-sdkOperation: retrieve
       summary: Retrieve a custom list
       description: |
         ### High-Level Response Elements
@@ -4837,6 +4898,8 @@ paths:
     post:
       tags:
         - Users
+      x-sdkOperation: create
+      x-isPost: true
       summary: Create a user
       description: |-
         Create a new user. Ensure that the necessary permissions are provided to the API account to create or modify user accounts.
@@ -4892,6 +4955,7 @@ paths:
     get:
       tags:
         - Users
+      x-sdkOperation: list
       summary: List users
       description: |
         Retrieve a list of users in the account. The result will only be limited to users with ACTIVE status. User’s with other status will not be listed in the results.
@@ -4972,6 +5036,7 @@ paths:
     delete:
       tags:
         - Users
+      x-sdkOperation: deleteAll
       summary: Delete all users
       description: |-
         Delete all users in the company.
@@ -5016,6 +5081,7 @@ paths:
     get:
       tags:
         - Users
+      x-sdkOperation: retrieve
       summary: Retrieve a user
       description: Retrieves a User object.
       operationId: getUsersById
@@ -5055,6 +5121,7 @@ paths:
     put:
       tags:
         - Users
+      x-sdkOperation: update
       summary: Update a user
       description: |
         The application must provide all the fields during the update request, even if they are not being updated.
@@ -5122,6 +5189,7 @@ paths:
     delete:
       tags:
         - Users
+      x-sdkOperation: delete
       summary: Delete a user
       description: |
         After performing this request, the response does not contain any information other than the headers as it is not necessary.
@@ -5173,6 +5241,7 @@ paths:
     get:
       tags:
         - Users
+      x-sdkOperation: listByWorkspace
       summary: List workspace users
       description: Returns a list of your Users.
       operationId: getWorkspaceUsers
@@ -5212,6 +5281,7 @@ paths:
     get:
       tags:
         - Events
+      x-sdkOperation: list
       summary: List events
       description: List event objects
       operationId: getEvents
@@ -5254,6 +5324,8 @@ paths:
     post:
       tags:
         - Events
+      x-sdkOperation: create
+      x-isPost: true
       summary: Create an event
       description: |-
         The bulk of the `Event` metadata is from fields that are generic, and only applicable to the customer that is using the module.
@@ -5545,8 +5617,9 @@ paths:
     get:
       tags:
         - Events
+      x-sdkOperation: retrieve
       summary: Retrieve an event
-      description: Get an event object
+      description: Retrieve an event object
       operationId: getEventById
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -5596,6 +5669,7 @@ paths:
     put:
       tags:
         - Events
+      x-sdkOperation: update
       summary: Update an event
       operationId: putEventById
       description: Update an event object
@@ -5643,6 +5717,8 @@ paths:
     post:
       tags:
         - Imports
+      x-sdkOperation: create
+      x-isPost: true
       summary: Create an import
       description: |
         ## Bulk contact import
@@ -5742,6 +5818,8 @@ paths:
     post:
       summary: Create an auth token
       operationId: postAuth
+      x-sdkOperation: create
+      x-isPost: true
       responses:
         '200':
           description: OK
@@ -5773,6 +5851,9 @@ paths:
                     example: your-generated-token-string
                   link:
                     $ref: '#/components/schemas/link'
+                required:
+                  - token
+                  - link
               examples:
                 Example:
                   value:
@@ -5805,8 +5886,6 @@ paths:
         - $ref: '#/components/parameters/Auth-Accept'
       tags:
         - Auth
-      security:
-        - BasicAuth: []
   /auth/verify:
     get:
       parameters:
@@ -5814,6 +5893,7 @@ paths:
         - $ref: '#/components/parameters/Auth-Accept'
       description: Verify a JWT authentication token
       operationId: getAuthVerification
+      x-sdkOperation: verify
       responses:
         '200':
           description: OK
@@ -5851,13 +5931,13 @@ paths:
       summary: Verify an auth token
       tags:
         - Auth
-      security:
-        - BasicAuth: []
 externalDocs:
   description: API Documentation for Whispir Platform API
   url: 'https://developers.whispir.com'
 security:
   - BasicAuth: []
+    ApiKeyAuth: []
+  - BearerAuth: []
     ApiKeyAuth: []
 servers:
   - url: 'https://api.au.whispir.com'
@@ -6010,11 +6090,13 @@ components:
     BasicAuth:
       type: http
       scheme: basic
-      description: ''
     ApiKeyAuth:
       name: Api-Key
       type: apiKey
       in: header
+    BearerAuth:
+      type: http
+      scheme: bearer
   schemas:
     message:
       type: object
@@ -7444,7 +7526,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
-      description: 'Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don''t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List'
+      description: Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don't need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List
       type: object
       properties:
         name:
@@ -7767,7 +7849,7 @@ components:
               host: api.au.whispir.com
               port: -1
     callbackAuth:
-      title: callbackAuth
+      title: Callback Auth
       type: object
       description: |-
         The authentication model details. You will receive - 
@@ -7806,6 +7888,8 @@ components:
         example-1:
           type: queryparam
           key: test34
+      x-tags:
+        - Callbacks
     locations:
       description: The locations for the contact.
       type: array
@@ -7851,6 +7935,8 @@ components:
             description: A description for the location. At least one element of the `locations` array must have a `type` equal to `CurrentLocation`.
             type: string
             example: CurrentLocation
+      x-tags:
+        - Contacts
     messagingoptions:
       description: The message channel options for the contact.
       type: array
@@ -7900,6 +7986,8 @@ components:
               - WorkEmailAddress2
               - PersonalMobilePhone1
               - PersonalEmailAddress1
+      x-tags:
+        - Contacts
     activity:
       description: 'Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace.'
       type: object
@@ -8001,6 +8089,8 @@ components:
           description: Fullname of the user
         link:
           $ref: '#/components/schemas/link'
+      x-tags:
+        - Activities
     user:
       type: object
       xml:
@@ -8606,6 +8696,8 @@ components:
         - workMobilePhone1
         - workCountry
         - timezone
+      x-tags:
+        - Imports
     attachment:
       type: object
       description: |-
@@ -8634,6 +8726,8 @@ components:
       required:
         - attachmentName
         - derefUri
+      x-tags:
+        - Messages
     link:
       type: array
       description: 'A [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) link object, describing all discoverable resources in relation to the original request.'
@@ -8830,6 +8924,8 @@ components:
           status: '1 to 1 of 1    '
           link: []
       title: Message Status
+      x-tags:
+        - Messages
     messageResponseSummary:
       title: Message Response Summary
       description: The summary message response object.
@@ -8887,6 +8983,8 @@ components:
       required:
         - messageresponses
         - link
+      x-tags:
+        - Messages
     messageResponseDetailed:
       title: Message Response Detailed
       description: The detailed message response object.
@@ -8990,6 +9088,8 @@ components:
       required:
         - messageresponses
         - link
+      x-tags:
+        - Messages
     dlr:
       title: Delivery Receipt
       description: A fixed object structure used by for Whispir internally for tracking purposes.
@@ -9051,8 +9151,8 @@ components:
           expiryMin: 0
           feedIds: ''
           bool: false
-    callbackInstance:
-      description: A callback instance object
+    callbackCall:
+      description: A callback call object
       type: object
       x-examples:
         Example:
@@ -9088,7 +9188,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
-      title: callbackInstance
+      title: Callback Call
       properties:
         id:
           type: string
@@ -9210,6 +9310,8 @@ components:
               description: The status message that was returned from the callback service
         link:
           $ref: '#/components/schemas/link'
+      x-tags:
+        - Callbacks
     customList:
       type: object
       x-examples:
@@ -9311,10 +9413,13 @@ components:
         - linked
         - link
       readOnly: true
+      x-tags:
+        - Custom Lists
   parameters:
     X-Api-Key:
       name: X-Api-Key
       in: header
+      x-isApiKey: true
       required: true
       schema:
         type: string
@@ -9350,196 +9455,236 @@ components:
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.template-v1+json
         enum:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
       description: Application specific mime-type.
       name: Content-Type
+      x-isContentType: true
     Template-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.template-v1+json
         enum:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
       description: Application specific mime-type.
     Callback-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.api-callback-v1+json
         enum:
           - application/vnd.whispir.api-callback-v1+json
           - application/vnd.whispir.api-callback-v1+xml
       description: Application specific mime-type.
     Callback-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.api-callback-v1+json
         enum:
           - application/vnd.whispir.api-callback-v1+json
           - application/vnd.whispir.api-callback-v1+xml
       description: Application specific mime-type.
     Contact-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.contact-v1+json
         enum:
           - application/vnd.whispir.contact-v1+json
           - application/vnd.whispir.contact-v1+xml
       description: Application specific mime-type.
     Contact-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.contact-v1+json
         enum:
           - application/vnd.whispir.contact-v1+json
           - application/vnd.whispir.contact-v1+xml
       description: Application specific mime-type.
     Resource-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.resource-v1+json
         enum:
           - application/vnd.whispir.resource-v1+json
           - application/vnd.whispir.resource-v1+xml
       description: Application specific mime-type.
     Resource-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.resource-v1+json
         enum:
           - application/vnd.whispir.resource-v1+json
           - application/vnd.whispir.resource-v1+xml
       description: Application specific mime-type.
     ResponseRule-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.responserule-v1+json
         enum:
           - application/vnd.whispir.responserule-v1+json
           - application/vnd.whispir.responserule-v1+xml
       description: Application specific mime-type.
     ResponseRule-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.responserule-v1+json
         enum:
           - application/vnd.whispir.responserule-v1+json
           - application/vnd.whispir.responserule-v1+xml
       description: Application specific mime-type.
     Workspace-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.workspace-v1+json
         enum:
           - application/vnd.whispir.workspace-v1+json
           - application/vnd.whispir.workspace-v1+xml
       description: Application specific mime-type.
     Workspace-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.workspace-v1+json
         enum:
           - application/vnd.whispir.workspace-v1+json
           - application/vnd.whispir.workspace-v1+xml
       description: Application specific mime-type.
     DistributionList-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.distributionlist-v1+json
         enum:
           - application/vnd.whispir.distributionlist-v1+json
           - application/vnd.whispir.distributionlist-v1+xml
       description: Application specific mime-type.
     DistributionList-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.distributionlist-v1+json
         enum:
           - application/vnd.whispir.distributionlist-v1+json
           - application/vnd.whispir.distributionlist-v1+xml
       description: Application specific mime-type.
     Scenario-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.scenario-v1+json
         enum:
           - application/vnd.whispir.scenario-v1+json
           - application/vnd.whispir.scenario-v1+xml
       description: Application specific mime-type.
     Scenario-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.scenario-v1+json
         enum:
           - application/vnd.whispir.scenario-v1+json
           - application/vnd.whispir.scenario-v1+xml
       description: Application specific mime-type.
     Event-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.event-v1+json
         enum:
           - application/vnd.whispir.event-v1+json
           - application/vnd.whispir.event-v1+xml
       description: Application specific mime-type.
     Event-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.event-v1+json
         enum:
           - application/vnd.whispir.event-v1+json
           - application/vnd.whispir.event-v1+xml
       description: Application specific mime-type.
     CustomList-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.customlist-v1+json
         enum:
           - application/vnd.whispir.customlist-v1+json
           - application/vnd.whispir.customlist-v1+xml
       description: Application specific mime-type.
     Import-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       schema:
         type: string
+        default: application/vnd.whispir.importcontact-v1+json
         enum:
           - application/vnd.whispir.importcontact-v1+json
           - application/vnd.whispir.importcontact-v1+xml
@@ -9547,20 +9692,24 @@ components:
       required: true
     Import-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.importcontact-v1+json
         enum:
           - application/vnd.whispir.importcontact-v1+json
           - application/vnd.whispir.importcontact-v1+xml
       description: Application specific mime-type.
     Message-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.message-v1+json
         enum:
           - application/vnd.whispir.message-v1+json
           - application/vnd.whispir.bulkmessage-v1+json
@@ -9569,10 +9718,12 @@ components:
       description: Application specific mime-type.
     Message-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.message-v1+json
         enum:
           - application/vnd.whispir.message-v1+json
           - application/vnd.whispir.bulkmessage-v1+json
@@ -9581,60 +9732,72 @@ components:
       description: Application specific mime-type.
     MessageStatus-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.messagestatus-v1+json
         enum:
           - application/vnd.whispir.messagestatus-v1+json
           - application/vnd.whispir.messagestatus-v1+xml
       description: Application specific mime-type.
     MessageResponse-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       description: Application specific mime-type.
       schema:
         type: string
+        default: application/vnd.whispir.messageresponse-v1+json
         enum:
           - application/vnd.whispir.messageresponse-v1+json
           - application/vnd.whispir.messageresponse-v1+xml
     Auth-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.auth-v1+json
         enum:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml
       description: Application specific mime-type
     Auth-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       description: Application specific mime-type
       schema:
         type: string
+        default: application/vnd.whispir.auth-v1+json
         enum:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml
     Activity-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.activity-v1+json
         enum:
           - application/vnd.whispir.activity-v1+json
           - application/vnd.whispir.activity-v1+xml
       description: Application specific mime-type.
     Activity-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.activity-v1+json
         enum:
           - application/vnd.whispir.activity-v1+json
           - application/vnd.whispir.activity-v1+xml
@@ -9659,40 +9822,48 @@ components:
       description: 'The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.'
     User-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       description: Application specific mime-type.
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.user-v1+json
         enum:
           - application/vnd.whispir.user-v1+json
           - application/vnd.whispir.user-v1+xml
     User-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       description: User accept.
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.user-v1+json
         enum:
           - application/vnd.whispir.user-v1+json
           - application/vnd.whispir.user-v1+xml
-    CallbackInstance-Content-Type:
+    CallbackCall-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.api-call-v1+json
         enum:
           - application/vnd.whispir.api-call-v1+json
           - application/vnd.whispir.api-call-v1+xml
       description: Application specific mime-type.
-    CallbackInstance-Accept:
+    CallbackCall-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
         type: string
+        default: application/vnd.whispir.api-call-v1+json
         enum:
           - application/vnd.whispir.api-call-v1+json
           - application/vnd.whispir.api-call-v1+xml
@@ -10380,19 +10551,19 @@ components:
           examples:
             Example:
               value: HTTP content length exceeded 10485760 bytes.
-    CallbackInstances:
+    CallbackCalls:
       description: Example response
       content:
         application/json:
           schema:
             type: object
-            description: A list of callback instances
+            description: A list of callbacks
             properties:
               calls:
                 type: array
-                description: A list of callback instances
+                description: A list of callbacks
                 items:
-                  $ref: '#/components/schemas/callbackInstance'
+                  $ref: '#/components/schemas/callbackCall'
               status:
                 type: string
                 example: 1 to 8 of 8
@@ -10440,7 +10611,7 @@ components:
                     port: -1
       headers:
         Content-Type:
-          $ref: '#/components/headers/CallbackInstance-Content-Type'
+          $ref: '#/components/headers/CallbackCall-Content-Type'
         Content-Length:
           $ref: '#/components/headers/Content-Length'
         Access-Control-Allow-Origin:
@@ -11228,7 +11399,7 @@ components:
         enum:
           - application/vnd.whispir.api-callback-v1+json
           - application/vnd.whispir.api-callback-v1+xml
-    CallbackInstance-Content-Type:
+    CallbackCall-Content-Type:
       required: true
       schema:
         type: string

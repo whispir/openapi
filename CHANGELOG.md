@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0](https://github.com/whispir/openapi/compare/v1.0.4...v1.1.0) (2022-11-21)
+
+
+### Features
+
+* Add Node SDK Client templates ([#152](https://github.com/whispir/openapi/issues/152)) ([4772ca3](https://github.com/whispir/openapi/commit/4772ca37de2c68a987e6490f66dc62acc6982208))
+* Add sdk operation extension ([#149](https://github.com/whispir/openapi/issues/149)) ([5fb2d26](https://github.com/whispir/openapi/commit/5fb2d2662cfc67a0bde4c17cc7bda8fe4a3ab395))
+
+
+### Bug Fixes
+
+* Add default value for all Content-Type and Accept headers ([#151](https://github.com/whispir/openapi/issues/151)) ([afd327a](https://github.com/whispir/openapi/commit/afd327a7e4d163a9a43e092543d7030c7bcc2bfb))
+* remove defaults from getActivities operation ([#146](https://github.com/whispir/openapi/issues/146)) ([8659db1](https://github.com/whispir/openapi/commit/8659db17a4ea8c3e33c95640a6149b9b182e1987))
+
 ## [1.0.4](https://github.com/whispir/openapi/compare/v1.0.3...v1.0.4) (2022-11-08)
 
 

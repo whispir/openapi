@@ -80,6 +80,7 @@ paths:
       tags:
         - Messages
       x-sdkOperation: create
+      x-isPost: true
       summary: Send a message
       description: |-
         Communications are the core of what the Whispir Platform API offers as a service to customers.    
@@ -1332,6 +1333,7 @@ paths:
       tags:
         - Resources
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a resource
       description: |
         ### High-Level Response Elements
@@ -1661,6 +1663,7 @@ paths:
         - Templates
       summary: Create a template
       x-sdkOperation: create
+      x-isPost: true
       description: 'Create a message template, combining multi-channel content for use with the Message resource. The message template can be reused across multiple sent messages.'
       operationId: postTemplates
       parameters:
@@ -1999,6 +2002,7 @@ paths:
         - Response Rules
       summary: Create a response rule
       x-sdkOperation: create
+      x-isPost: true
       description: |
         ## Response Template Patterns
 
@@ -2294,6 +2298,7 @@ paths:
       tags:
         - Contacts
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a contact
       description: Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.
       operationId: postContacts
@@ -2717,7 +2722,7 @@ paths:
               - deleteAll
           in: query
           name: action
-          description: 'The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it''s triggered. **Use the action only when you''re definitely sure you want to delete the contact from all workspaces**'
+          description: The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it's triggered. **Use the action only when you're definitely sure you want to delete the contact from all workspaces**
       responses:
         '204':
           description: No Content
@@ -2755,6 +2760,7 @@ paths:
       tags:
         - Distribution Lists
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a distribution list
       description: |
         Distribution lists can be created within the Default Workspace, or within a Specific Workspace. More information on Workspaces will be provided later in this documentation.
@@ -3106,6 +3112,7 @@ paths:
       tags:
         - Scenarios
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a scenario
       description: |
         A scenario is a combination of a message and contacts. So, its structure contains section for both message as well as contact information. API currently only supports creation of scenario with SMS as communication mode.
@@ -3578,6 +3585,7 @@ paths:
       tags:
         - Callbacks
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a callback
       description: |-
         Whispir’s callback service can be configured to send simple notifications and some associated metadata via API callbacks to an endpoint of your choice when one of the following events occurs:
@@ -4110,6 +4118,7 @@ paths:
       tags:
         - Workspaces
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a workspace
       description: |
         Note: There is no limit to the amount of workspaces each API user can create.
@@ -4295,6 +4304,7 @@ paths:
       tags:
         - Activities
       x-sdkOperation: create
+      x-isPost: true
       summary: Create an activity
       description: |-
         Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace. Each activity log entry contains information about the workspace, the module (message, email, IVR ...), the user who performed the activity, time stamps, description of the activity, its status (success, fail) and so on.
@@ -4889,6 +4899,7 @@ paths:
       tags:
         - Users
       x-sdkOperation: create
+      x-isPost: true
       summary: Create a user
       description: |-
         Create a new user. Ensure that the necessary permissions are provided to the API account to create or modify user accounts.
@@ -5314,6 +5325,7 @@ paths:
       tags:
         - Events
       x-sdkOperation: create
+      x-isPost: true
       summary: Create an event
       description: |-
         The bulk of the `Event` metadata is from fields that are generic, and only applicable to the customer that is using the module.
@@ -5706,6 +5718,7 @@ paths:
       tags:
         - Imports
       x-sdkOperation: create
+      x-isPost: true
       summary: Create an import
       description: |
         ## Bulk contact import
@@ -5806,6 +5819,7 @@ paths:
       summary: Create an auth token
       operationId: postAuth
       x-sdkOperation: create
+      x-isPost: true
       responses:
         '200':
           description: OK
@@ -5837,6 +5851,9 @@ paths:
                     example: your-generated-token-string
                   link:
                     $ref: '#/components/schemas/link'
+                required:
+                  - token
+                  - link
               examples:
                 Example:
                   value:
@@ -5869,8 +5886,6 @@ paths:
         - $ref: '#/components/parameters/Auth-Accept'
       tags:
         - Auth
-      security:
-        - BasicAuth: []
   /auth/verify:
     get:
       parameters:
@@ -5916,13 +5931,13 @@ paths:
       summary: Verify an auth token
       tags:
         - Auth
-      security:
-        - BasicAuth: []
 externalDocs:
   description: API Documentation for Whispir Platform API
   url: 'https://developers.whispir.com'
 security:
   - BasicAuth: []
+    ApiKeyAuth: []
+  - BearerAuth: []
     ApiKeyAuth: []
 servers:
   - url: 'https://api.au.whispir.com'
@@ -6075,11 +6090,13 @@ components:
     BasicAuth:
       type: http
       scheme: basic
-      description: ''
     ApiKeyAuth:
       name: Api-Key
       type: apiKey
       in: header
+    BearerAuth:
+      type: http
+      scheme: bearer
   schemas:
     message:
       type: object
@@ -7509,7 +7526,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
-      description: 'Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don''t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List'
+      description: Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don't need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List
       type: object
       properties:
         name:
@@ -9402,6 +9419,7 @@ components:
     X-Api-Key:
       name: X-Api-Key
       in: header
+      x-isApiKey: true
       required: true
       schema:
         type: string
@@ -9443,8 +9461,10 @@ components:
           - application/vnd.whispir.template-v1+xml
       description: Application specific mime-type.
       name: Content-Type
+      x-isContentType: true
     Template-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9456,6 +9476,7 @@ components:
       description: Application specific mime-type.
     Callback-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9467,6 +9488,7 @@ components:
       description: Application specific mime-type.
     Callback-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9478,6 +9500,7 @@ components:
       description: Application specific mime-type.
     Contact-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9489,6 +9512,7 @@ components:
       description: Application specific mime-type.
     Contact-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9500,6 +9524,7 @@ components:
       description: Application specific mime-type.
     Resource-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9511,6 +9536,7 @@ components:
       description: Application specific mime-type.
     Resource-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9522,6 +9548,7 @@ components:
       description: Application specific mime-type.
     ResponseRule-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9533,6 +9560,7 @@ components:
       description: Application specific mime-type.
     ResponseRule-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9544,6 +9572,7 @@ components:
       description: Application specific mime-type.
     Workspace-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9555,6 +9584,7 @@ components:
       description: Application specific mime-type.
     Workspace-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9566,6 +9596,7 @@ components:
       description: Application specific mime-type.
     DistributionList-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9577,6 +9608,7 @@ components:
       description: Application specific mime-type.
     DistributionList-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9588,6 +9620,7 @@ components:
       description: Application specific mime-type.
     Scenario-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9599,6 +9632,7 @@ components:
       description: Application specific mime-type.
     Scenario-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9610,6 +9644,7 @@ components:
       description: Application specific mime-type.
     Event-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9621,6 +9656,7 @@ components:
       description: Application specific mime-type.
     Event-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9632,6 +9668,7 @@ components:
       description: Application specific mime-type.
     CustomList-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9643,6 +9680,7 @@ components:
       description: Application specific mime-type.
     Import-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       schema:
         type: string
@@ -9654,6 +9692,7 @@ components:
       required: true
     Import-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9665,6 +9704,7 @@ components:
       description: Application specific mime-type.
     Message-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9678,6 +9718,7 @@ components:
       description: Application specific mime-type.
     Message-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9691,6 +9732,7 @@ components:
       description: Application specific mime-type.
     MessageStatus-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9702,6 +9744,7 @@ components:
       description: Application specific mime-type.
     MessageResponse-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       description: Application specific mime-type.
@@ -9713,6 +9756,7 @@ components:
           - application/vnd.whispir.messageresponse-v1+xml
     Auth-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9724,6 +9768,7 @@ components:
       description: Application specific mime-type
     Auth-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       description: Application specific mime-type
@@ -9735,6 +9780,7 @@ components:
           - application/vnd.whispir.auth-v1+xml
     Activity-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9746,6 +9792,7 @@ components:
       description: Application specific mime-type.
     Activity-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9775,6 +9822,7 @@ components:
       description: 'The fields that you require the ordering to be performed on. Multiple fields can be provided, separated by a comma.'
     User-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       description: Application specific mime-type.
       required: true
@@ -9786,6 +9834,7 @@ components:
           - application/vnd.whispir.user-v1+xml
     User-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       description: User accept.
       required: true
@@ -9797,6 +9846,7 @@ components:
           - application/vnd.whispir.user-v1+xml
     CallbackCall-Content-Type:
       name: Content-Type
+      x-isContentType: true
       in: header
       required: true
       schema:
@@ -9808,6 +9858,7 @@ components:
       description: Application specific mime-type.
     CallbackCall-Accept:
       name: Accept
+      x-isContentType: true
       in: header
       required: true
       schema:

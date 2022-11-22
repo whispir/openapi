@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/whispir/openapi/compare/v1.1.1...v1.1.2) (2022-11-22)
+
+
+### Bug Fixes
+
+* **node:** Fix nested array model reference ([#160](https://github.com/whispir/openapi/issues/160)) ([47f78af](https://github.com/whispir/openapi/commit/47f78afe344c5e644ab5b8c76f3113c5579ef8e1))
+
 ## [1.1.1](https://github.com/whispir/openapi/compare/v1.1.0...v1.1.1) (2022-11-22)
 
 

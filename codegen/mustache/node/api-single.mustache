@@ -3,7 +3,7 @@ import http from 'http';
 
 /* tslint:disable:no-unused-locals */
 {{#imports}}
-import { {{classname}} } from '{{import}}';
+import { {{classname}}, {{classname}}Write } from '{{import}}';
 {{/imports}}
 import { ObjectSerializer, Interceptor } from '../model/models';
 import { HttpError, RequestFile, ApiConfig, RequestOptions } from './apis';
@@ -55,7 +55,7 @@ export class {{classname}} {
         {{/vendorExtensions}}
     {{/isBodyParam}}
     {{/allParams}}
-    }{{#bodyParam}} & {{baseType}}{{/bodyParam}}, options?: RequestOptions): Promise<{ lastResponse: http.IncomingMessage{{#vendorExtensions}}{{#x-isPost}}, id: string{{/x-isPost}}{{/vendorExtensions}} }{{#returnType}} & {{{.}}}{{/returnType}}> {
+    }{{#bodyParam}} & {{baseType}}Write{{/bodyParam}}, options?: RequestOptions): Promise<{ lastResponse: http.IncomingMessage{{#vendorExtensions}}{{#x-isPost}}, id: string{{/x-isPost}}{{/vendorExtensions}} }{{#returnType}} & {{{.}}}{{/returnType}}> {
         const {
             {{#allParams}}
             {{^isBodyParam}}

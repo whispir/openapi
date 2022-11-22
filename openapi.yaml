@@ -1235,7 +1235,7 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            application/vnd.whispir.message-v1+json:
+            application/vnd.whispir.messageresponse-v1+json:
               schema:
                 description: The message response object.
                 x-examples:
@@ -8993,8 +8993,16 @@ components:
                   - noresponse
                   - notmatched
                 readOnly: true
+            required:
+              - percentageTotal
+              - responseCount
+              - link
+              - type
         link:
           $ref: '#/components/schemas/link'
+      required:
+        - messageresponses
+        - link
     messageResponseDetailed:
       title: Message Response Detailed
       description: The detailed message response object.
@@ -9029,6 +9037,12 @@ components:
                 description: The message responder object.
                 readOnly: true
                 type: object
+                required:
+                  - name
+                  - mri
+                  - mobile
+                  - email
+                  - voice
                 properties:
                   name:
                     description: The message responder's name.
@@ -9062,6 +9076,10 @@ components:
                   * `notmatched` - the message was replied to and the answer didn't match any search criteria
                 type: string
                 readOnly: true
+                required:
+                  - content
+                  - acknowledged
+                  - channel
                 enum:
                   - noresponse
                   - notmatched
@@ -9089,6 +9107,10 @@ components:
                       - sms
                       - email
                       - voice
+            required:
+              - from
+              - responseCategory
+              - responseMessage
         link:
           $ref: '#/components/schemas/link'
         status:
@@ -9096,6 +9118,9 @@ components:
           example: '1 to 1 of 1    '
           description: The message response pagination status.
           readOnly: true
+      required:
+        - messageresponses
+        - link
     dlr:
       title: Delivery Receipt
       description: A fixed object structure used by for Whispir internally for tracking purposes.

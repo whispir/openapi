@@ -20,8 +20,9 @@ The following table lists the available mime types that are accepted through Whi
 | --------------------- | ----------------------------------------------------------------------------------------------------------- |
 | **Workspace**         | **JSON:** application/vnd.whispir.workspace-v1+json <br />**XML:** application/vnd.whispir.workspace-v1+xml |
 | **Message**           | application/vnd.whispir.message-v1+json <br />application/vnd.whispir.message-v1+xml                        |
-| **Message Responses** | application/vnd.whispir.messagestatus-v1+json <br /> application/vnd.whispir.messagestatus-v1+xml           |
-| **Response Rule**     | application/vnd.whispir.messageresponse-v1+json <br />application/vnd.whispir.messageresponse-v1+xml        |
+| **Message Status** | application/vnd.whispir.messagestatus-v1+json <br /> application/vnd.whispir.messagestatus-v1+xml           |
+| **Message Responses** | application/vnd.whispir.messageresponse-v1+json <br /> application/vnd.whispir.messageresponse-v1+xml           |
+| **Response Rule**     | application/vnd.whispir.responserule-v1+json <br />application/vnd.whispir.responserule-v1+xml        |
 | **Template**          | application/vnd.whispir.template-v1+json <br />application/vnd.whispir.template-v1+xml                      |
 | **Contact**           | application/vnd.whispir.contact-v1+json <br />application/vnd.whispir.contact-v1+xml                        |
 | **Distribution List** | application/vnd.whispir.distributionlist-v1+json <br />application/vnd.whispir.distributionlist-v1+xml      |

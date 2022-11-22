@@ -1,9 +1,7 @@
 openapi: 3.0.0
 info:
   description: 'Whispir Platform API for cross channel and multi channel communications. Documentation on each endpoint is available at https://developers.whispir.com.'
-  # x-release-please-start-version
   version: 1.1.0
-  # x-release-please-end
   title: Whispir Platform API
   termsOfService: 'https://www.whispir.com/terms-of-service'
   contact:
@@ -710,12 +708,13 @@ paths:
                     description: The list of retrieved messages.
                     uniqueItems: true
                     minItems: 1
+                    readOnly: true
                     items:
                       $ref: '#/components/schemas/message'
                   status:
                     description: The status of the list request.
                     type: string
-                    example: ''
+                    readOnly: true
                   link:
                     $ref: '#/components/schemas/link'
                 required:
@@ -1798,6 +1797,11 @@ paths:
                           readOnly: true
                         link:
                           $ref: '#/components/schemas/link'
+                      required:
+                        - messageTemplateName
+                        - messageTemplateDescription
+                        - id
+                        - link
                     readOnly: true
                   link:
                     type: array
@@ -2104,6 +2108,25 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no response rules available.
+                    example: 1 to 8 of 8
+                    readOnly: true
+                  responseRules:
+                    type: array
+                    description: The list of response rules
+                    items:
+                      $ref: '#/components/schemas/responseRule'
+                    readOnly: true
+                required:
+                  - status
+                  - responseRules
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2158,6 +2181,10 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseRule'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2530,6 +2557,10 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+          content:
+            application/vnd.whispir.contact-v1+json:
+              schema:
+                $ref: '#/components/schemas/contact'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2722,7 +2753,7 @@ paths:
               - deleteAll
           in: query
           name: action
-          description: The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it's triggered. **Use the action only when you're definitely sure you want to delete the contact from all workspaces**
+          description: 'The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it''s triggered. **Use the action only when you''re definitely sure you want to delete the contact from all workspaces**'
       responses:
         '204':
           description: No Content
@@ -3625,6 +3656,7 @@ paths:
             examples:
               Callback object:
                 value:
+                  id: A8B8C829A72D92FE
                   name: NEW callback tester 2
                   url: 'https://www.google.com/'
                   auth:
@@ -3752,6 +3784,7 @@ paths:
                         - name
                         - url
                         - retriesEnabled
+                        - link
                     readOnly: true
                   link:
                     $ref: '#/components/schemas/link'
@@ -4090,17 +4123,7 @@ paths:
         content:
           application/vnd.whispir.api-call-v1+json:
             schema:
-              type: object
-              description: The status of this particular callback attempt.
-              properties:
-                status:
-                  type: string
-                  enum:
-                    - FAILED
-                    - SUCCESS
-                  description: The status of this particular callback attempt.
-              required:
-                - status
+              $ref: '#/components/schemas/callbackCall'
             examples:
               Example:
                 value:
@@ -4632,10 +4655,14 @@ paths:
                   activities:
                     description: List of activities
                     type: array
+                    readOnly: true
                     items:
                       $ref: '#/components/schemas/activity'
                   link:
                     $ref: '#/components/schemas/link'
+                required:
+                  - activities
+                  - link
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4687,6 +4714,25 @@ paths:
               $ref: '#/components/headers/Cache-Control'
             Expires:
               $ref: '#/components/headers/Expires'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  activities:
+                    type: array
+                    description: List of activities
+                    readOnly: true
+                    items:
+                      $ref: '#/components/schemas/activity'
+                  status:
+                    type: string
+                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no activities available.
+                    example: 'status: 1 to 1 of 1'
+                    readOnly: true
+                required:
+                  - activities
+                  - status
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -5840,7 +5886,7 @@ paths:
               example: 'https://api.au.whispir.com/auth/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
           content:
-            'application/vnd.whispir.auth-v1+json':
+            application/vnd.whispir.auth-v1+json:
               schema:
                 description: The create auth response object.
                 type: object
@@ -5964,6 +6010,7 @@ components:
           examples:
             Event request body example:
               value:
+                id: B27ABC9D8E98A9B
                 eventLabel: 2701095 - Outage of Local Systems in Sydney
                 status: Active
                 eventFormList:
@@ -6289,6 +6336,14 @@ components:
       required:
         - to
         - subject
+        - from
+        - direction
+        - responseCount
+        - createdTime
+        - whatsappValidMessage
+        - validBody
+        - validSubject
+        - link
     email:
       type: object
       xml:
@@ -6471,6 +6526,8 @@ components:
       required:
         - body
         - type
+        - footer
+        - other
     web:
       description: |-
         The web channel payload, used when attaching web content to a Message.
@@ -6754,10 +6811,12 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
+        - id
         - name
         - scope
         - mimeType
         - derefUri
+        - link
     template:
       type: object
       xml:
@@ -6907,6 +6966,9 @@ components:
         - messageTemplateName
         - subject
         - body
+        - link
+        - tags
+        - id
     responseTemplatePattern:
       type: object
       xml:
@@ -7348,7 +7410,6 @@ components:
         devices:
           type: array
           description: Specifies the devices associated to this contact. See Contact Devices for more details about it
-          example: []
           items: {}
           readOnly: true
         link:
@@ -7365,6 +7426,11 @@ components:
         - workEmailAddress1
         - workCountry
         - timezone
+        - type
+        - mri
+        - devices
+        - link
+        - lastModifiedTime
     distributionlist:
       type: object
       xml:
@@ -7486,13 +7552,22 @@ components:
                 type: string
                 example: User
                 description: Type of Contact
+                readOnly: true
               link:
                 $ref: '#/components/schemas/link'
+            required:
+              - id
+              - name
+              - type
+              - link
           readOnly: true
       required:
+        - id
         - name
+        - mri
         - access
         - visibility
+        - distlistdetails
     dynamicdistributionlist:
       xml:
         name: dynamicdistributionlist
@@ -7526,7 +7601,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
-      description: Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don't need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List
+      description: 'Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don''t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List'
       type: object
       properties:
         name:
@@ -7786,6 +7861,7 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
+        - id
         - name
         - url
         - auth
@@ -7794,6 +7870,7 @@ components:
         - retriesEnabled
         - email
         - callbacks
+        - link
     workspace:
       type: object
       xml:
@@ -7802,6 +7879,25 @@ components:
       x-tags:
         - Workspaces
       title: Workspace
+      description: |-
+        Workspaces allow application developers to create new work areas for the varying use cases of their application. For example they can be associated to the different business units of a company, so to silo the data of the different departments. In fact, the information, assets, contacts and actions performed in a workspace can’t be accessed from another one. This allows the applications to be independent and audited effectively with proper permissions and keys.
+
+        Each of these work areas provides different functionalities - such as creating messages, executing scenarios or viewing distribution lists - and can be governed by user permissions. Users can be assigned access to these workspaces to restrict the control of information as needed.
+
+        Every account on creation is given a default workspace called "My Company" but it is possible to create multiple workspaces suited for each application need. There is no limit on the number of workspaces.
+      x-examples:
+        example-1:
+          id: 70F2492146292826
+          projectName: A Space Odessey
+          projectNumber: '2001'
+          status: A
+          billingcostcentre: Hollywood
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
       properties:
         id:
           type: string
@@ -7827,27 +7923,12 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
+        - id
         - projectName
+        - projectNumber
         - status
-      description: |-
-        Workspaces allow application developers to create new work areas for the varying use cases of their application. For example they can be associated to the different business units of a company, so to silo the data of the different departments. In fact, the information, assets, contacts and actions performed in a workspace can’t be accessed from another one. This allows the applications to be independent and audited effectively with proper permissions and keys.
-
-        Each of these work areas provides different functionalities - such as creating messages, executing scenarios or viewing distribution lists - and can be governed by user permissions. Users can be assigned access to these workspaces to restrict the control of information as needed.
-
-        Every account on creation is given a default workspace called "My Company" but it is possible to create multiple workspaces suited for each application need. There is no limit on the number of workspaces.
-      x-examples:
-        example-1:
-          id: 70F2492146292826
-          projectName: A Space Odessey
-          projectNumber: '2001'
-          status: A
-          billingcostcentre: Hollywood
-          link:
-            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-              rel: self
-              method: GET
-              host: api.au.whispir.com
-              port: -1
+        - billingcostcentre
+        - link
     callbackAuth:
       title: Callback Auth
       type: object
@@ -8013,6 +8094,8 @@ components:
               type: 'application/vnd.whispir.activity-v1+json,application/vnd.whispir.activity-v1+xml'
               host: api.au.whispir.com
               port: -1
+      x-tags:
+        - Activities
       properties:
         user:
           type: string
@@ -8089,8 +8172,8 @@ components:
           description: Fullname of the user
         link:
           $ref: '#/components/schemas/link'
-      x-tags:
-        - Activities
+      required:
+        - link
     user:
       type: object
       xml:
@@ -8167,6 +8250,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
+      description: The user object.
       properties:
         id:
           type: string
@@ -8190,7 +8274,6 @@ components:
         middleName:
           type: string
           description: The middle name of the user.
-          example: ''
         lastName:
           type: string
           description: The last name of the user.
@@ -8198,7 +8281,6 @@ components:
         title:
           type: string
           description: The title to address the user with.
-          example: ''
         nickname:
           type: string
           description: Preferred name to be shown in the platfom interface
@@ -8442,13 +8524,13 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
+        - id
         - userName
         - password
         - firstName
         - lastName
         - workCountry
         - timezone
-      description: The user object.
     listUsers:
       type: object
       xml:
@@ -8470,6 +8552,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
+      description: List users response object
       properties:
         id:
           type: string
@@ -8504,7 +8587,7 @@ components:
         - lastName
         - companyName
         - workEmailAddress1
-      description: List users response object
+        - link
     event:
       type: object
       xml:
@@ -8563,8 +8646,8 @@ components:
         id:
           type: string
           description: Id of the event
-          readOnly: true
           example: 888E0A343770A7D1
+          readOnly: true
         eventLabel:
           type: string
           description: Specifies the name of the label used for the messages sent under this event. This needs to match with the name of the event templates available
@@ -8607,6 +8690,7 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
+        - id
         - eventLabel
         - status
     import:
@@ -8748,23 +8832,28 @@ components:
             type: string
             example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
             format: uri
+            readOnly: true
           rel:
             description: The description of the related resource.
             type: string
             example: self
+            readOnly: true
           method:
             description: 'The [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) method required to request the related resource.'
             type: string
             example: GET
+            readOnly: true
           host:
             description: The host of the related resource.
             type: string
             example: api.au.whispir.com
+            readOnly: true
           port:
             description: The port of the related resource.
             type: number
             enum:
               - -1
+            readOnly: true
         required:
           - uri
           - rel
@@ -9189,6 +9278,8 @@ components:
               host: api.au.whispir.com
               port: -1
       title: Callback Call
+      x-tags:
+        - Callbacks
       properties:
         id:
           type: string
@@ -9210,7 +9301,6 @@ components:
           enum:
             - SUCCESS
             - FAILED
-          readOnly: true
         messageLocation:
           example: 'https://api.au.whispir.com/messages/F4651CB151ACF0504FF09CB4D57922A5'
           type: string
@@ -9221,36 +9311,53 @@ components:
         from:
           type: object
           description: The details about this particular message sender/responder
+          required:
+            - name
+            - mri
+            - mobile
+            - voice
+            - email
           properties:
             name:
               type: string
               minLength: 1
               description: The name of the sender of this message
               example: John Wick
+              readOnly: true
             mri:
               example: support@whispir.com
               type: string
               description: The unique identifier for this contact within Whispir
+              readOnly: true
             mobile:
               example: '61400400400'
               type: string
               minLength: 1
               description: The mobile phone number associated with this sender
+              readOnly: true
             voice:
               example: '61400400400'
               type: string
               minLength: 1
               description: The phone number associated with the voice channel for this sender
+              readOnly: true
             email:
               example: support@whispir.com
               type: string
               description: The email address associated with the email channel for this sender
+              readOnly: true
+          readOnly: true
         responseMessage:
           type: object
           description: |-
             The details about this particular message that have been sent to the callback
 
             IMPORTANT: Depending on the flow, you may only see  one of the acknowledged or undeliverable keys with timestamps as their value
+          required:
+            - channel
+            - acknowledged
+            - undeliverable
+            - content
           properties:
             channel:
               type: string
@@ -9261,57 +9368,83 @@ components:
                 - email
                 - voice
                 - N/A
+              readOnly: true
             acknowledged:
               example: '22/10/20 10:29'
               type: string
               minLength: 1
               description: The date/time that this message was acknowledged
+              readOnly: true
             undeliverable:
               example: '22/10/20 10:29'
               type: string
               description: The date/time that this message was marked as undeliverable
+              readOnly: true
             content:
               type: string
               minLength: 1
               description: The content of the message
               example: 'Delivered successfully to 61430430306 at 22/10/20 09:28'
+              readOnly: true
+          readOnly: true
         callback:
           type: object
           description: The details about this particular callback attempt
+          required:
+            - id
+            - name
+            - url
+            - attemptedDate
+            - statusCode
+            - statusMessage
           properties:
             id:
               example: 93528522590CDF9A
               type: string
               minLength: 1
               description: The ID of the callback attempting to be invoked
+              readOnly: true
             name:
               example: test callback
               type: string
               minLength: 1
               description: The name of the callback server attempting to be invoked
+              readOnly: true
             url:
               example: 'https://google.com'
               type: string
               minLength: 1
               description: The URL of the callback server attempting to be invoked
+              readOnly: true
             attemptedDate:
               example: '22/10/20 09:28'
               type: string
               minLength: 1
               description: The date/time that the callback server was attempted to be invoked
+              readOnly: true
             statusCode:
               example: 200
               type: integer
               description: The statuscode that was returned from the callback service
+              readOnly: true
             statusMessage:
               example: OK
               type: string
               minLength: 1
               description: The status message that was returned from the callback service
+              readOnly: true
+          readOnly: true
         link:
           $ref: '#/components/schemas/link'
-      x-tags:
-        - Callbacks
+      required:
+        - id
+        - messageId
+        - status
+        - messageLocation
+        - from
+        - responseMessage
+        - callback
+        - link
     customList:
       type: object
       x-examples:
@@ -9336,6 +9469,8 @@ components:
               host: api.au.whispir.com
               port: -1
       description: 'A custom list is a predefined list of options that can be inserted into a message or template. A list might be made up of capital city names, days of the week, incident types, business phone numbers and so on. Custom lists make it easy to add information quickly and consistently to your message content.'
+      x-tags:
+        - Custom Lists
       properties:
         id:
           type: string
@@ -9400,6 +9535,9 @@ components:
                 description: Specifies the value that is passed internally
                 example: Internal Systems
                 readOnly: true
+            required:
+              - name
+              - value
             readOnly: true
           readOnly: true
         link:
@@ -9411,10 +9549,9 @@ components:
         - createdDate
         - sortType
         - linked
+        - customlabellists
         - link
       readOnly: true
-      x-tags:
-        - Custom Lists
   parameters:
     X-Api-Key:
       name: X-Api-Key
@@ -9973,8 +10110,20 @@ components:
               users:
                 type: array
                 description: List of retrieved users
+                readOnly: true
                 items:
                   $ref: '#/components/schemas/listUsers'
+              status:
+                type: string
+                example: 1 to 20 of 73
+                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no users available.
+                readOnly: true
+              link:
+                $ref: '#/components/schemas/link'
+            required:
+              - users
+              - status
+              - link
           examples:
             Example:
               value:
@@ -10010,6 +10159,7 @@ components:
           examples:
             Example:
               value:
+                id: ABD927D9E0F9A92
                 messageTemplateName: Sample SMS Template
                 messageTemplateDescription: Template to provide an example on whispir.io
                 responseTemplateId: responseTemplateId
@@ -10734,11 +10884,15 @@ components:
                 type: string
                 example: 1 to 8 of 8
                 description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+                readOnly: true
               contacts:
                 type: array
                 description: list of contacts
                 items:
                   $ref: '#/components/schemas/contact'
+            required:
+              - status
+              - contacts
           examples:
             Example:
               value:
@@ -10964,6 +11118,10 @@ components:
                 description: List of resources
                 items:
                   $ref: '#/components/schemas/resource'
+                readOnly: true
+            required:
+              - status
+              - resources
           examples:
             example-1:
               value:
@@ -11003,6 +11161,7 @@ components:
           examples:
             Example Static DL:
               value:
+                id: B27ABC9D8E98A9B
                 name: My Distribution List
                 description: string
                 access: Open
@@ -11013,6 +11172,7 @@ components:
                 type: static
             Example Dyanmic DL:
               value:
+                id: B27ABC9D8E98A9B
                 name: My Distribution List
                 description: ''
                 access: Open
@@ -11043,10 +11203,12 @@ components:
             description: list of distribution lists
             properties:
               distributionLists:
-                oneOf:
-                  - $ref: '#/components/schemas/distributionlist'
-                  - $ref: '#/components/schemas/dynamicdistributionlist'
                 description: Either a static or dynamic distribution list
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/distributionlist'
+                    - $ref: '#/components/schemas/dynamicdistributionlist'
               status:
                 type: string
                 example: 1 to 1 of 1
@@ -11218,6 +11380,9 @@ components:
                 items:
                   $ref: '#/components/schemas/event'
                 readOnly: true
+            required:
+              - status
+              - events
           examples:
             Events response example:
               value:

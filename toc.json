@@ -1,6 +1,6 @@
 {
   "items": [
-        {
+    {
       "type": "divider",
       "title": "Getting started"
     },
@@ -14,12 +14,12 @@
       "title": "Authentication",
       "uri": "docs/Getting started/Authentication.md"
     },
-       {
+    {
       "type": "item",
       "title": "Test your API connection",
       "uri": "docs/Getting started/Test-your-API-connection.md"
     },
-        {
+    {
       "type": "item",
       "title": "HTTP response codes",
       "uri": "docs/Getting started/HTTP-response-codes.md"
@@ -29,19 +29,28 @@
       "title": "Rate limits, pagination & best practices",
       "uri": "docs/Getting started/Rate-limits-pagination-and-best-practices.md"
     },
-        {
+    {
       "type": "item",
       "title": "Using JSON and XML headers",
       "uri": "docs/Getting started/JSON-and-XML-headers.md"
     },
-            {
+    {
       "type": "item",
       "title": "Domains and IP addresses",
       "uri": "docs/Getting started/Domains-and-IP-addresses.md"
     },
-     {
+    {
+      "type": "divider",
+      "title": "Developer Tools"
+    },
+    {
       "type": "item",
-      "title": "Whispir API Postman Collection",
+      "title": "SDKs",
+      "uri": "docs/Getting started/Whispir SDK.md"
+    },
+    {
+      "type": "item",
+      "title": "Postman Collection",
       "uri": "docs/Getting started/Whispir-API-Postman-Collection.md"
     },
     {

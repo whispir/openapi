@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1](https://github.com/whispir/openapi/compare/v1.1.0...v1.1.1) (2022-11-22)
+
+
+### Bug Fixes
+
+* Specify readonly attributes ([#158](https://github.com/whispir/openapi/issues/158)) ([0347f83](https://github.com/whispir/openapi/commit/0347f8343bc9978a0612c57cc2d20b44570de7de))
+* Update content example keys to match accept & content-type header ([#155](https://github.com/whispir/openapi/issues/155)) ([1521bee](https://github.com/whispir/openapi/commit/1521beec89a4e01c52d79dff7b5757fe7f3ede22))
+
 ## [1.1.0](https://github.com/whispir/openapi/compare/v1.0.4...v1.1.0) (2022-11-21)
 
 

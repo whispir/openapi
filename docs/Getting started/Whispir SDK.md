@@ -15,7 +15,7 @@ npm install whispir --save
 // Coming Soon!
 ```
 
-Looking for an language that isn't on the list? Check back, as we will be continually adding SDKs for additional languages. If you have a specific request, you can always reach out to [Whispir Support](mailto:'support@whispir.com').
+Looking for an language that isn't on the list? Check back, as we will be continually adding SDKs for additional languages. If you have a specific request, you can always reach out to [Whispir Support](mailto:support@whispir.com).
 
 ## Reference
 

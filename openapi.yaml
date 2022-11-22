@@ -1,7 +1,9 @@
 openapi: 3.0.0
 info:
   description: 'Whispir Platform API for cross channel and multi channel communications. Documentation on each endpoint is available at https://developers.whispir.com.'
+  x-release-please-start-version: true
   version: 1.1.0
+  x-release-please-end: true
   title: Whispir Platform API
   termsOfService: 'https://www.whispir.com/terms-of-service'
   contact:

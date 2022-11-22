@@ -2,8 +2,22 @@
 {{#model}}
 import { RequestFile } from './models';
 {{#tsImports}}
-import { {{classname}} } from '{{filename}}';
+import { {{classname}}, {{classname}}Write } from '{{filename}}';
 {{/tsImports}}
+
+
+export type {{classname}}Write = {
+{{#vars}}
+{{^isReadOnly}}
+{{#description}}
+    /**
+    * {{{.}}}
+    */
+{{/description}}
+    '{{name}}'{{^required}}?{{/required}}: {{#isEnum}}{{#allowableValues}}{{#values}}'{{.}}'{{^-last}} | {{/-last}}{{/values}}{{/allowableValues}}{{/isEnum}}{{^isEnum}}{{#isPrimitiveType}}{{{dataType}}}{{/isPrimitiveType}}{{^isPrimitiveType}}{{{dataType}}}Write{{/isPrimitiveType}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
+{{/isReadOnly}}
+{{/vars}}
+}
 
 {{#description}}
 /**
@@ -13,12 +27,14 @@ import { {{classname}} } from '{{filename}}';
 {{^isEnum}}
 export class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{
 {{#vars}}
+{{^isWriteOnly}}
 {{#description}}
     /**
     * {{{.}}}
     */
 {{/description}}
-    '{{name}}'{{^required}}?{{/required}}: {{#isEnum}}{{#allowableValues}}{{#values}}'{{.}}'{{^-last}} | {{/-last}}{{/values}}{{/allowableValues}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
+    '{{name}}': {{#isEnum}}{{#allowableValues}}{{#values}}'{{.}}'{{^-last}} | {{/-last}}{{/values}}{{/allowableValues}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
+{{/isWriteOnly}}
 {{/vars}}
 
     {{#discriminator}}

@@ -14,7 +14,7 @@ export type {{classname}}Write = {
     * {{{.}}}
     */
 {{/description}}
-    '{{name}}'{{^required}}?{{/required}}: {{#isEnum}}{{#allowableValues}}{{#values}}'{{.}}'{{^-last}} | {{/-last}}{{/values}}{{/allowableValues}}{{/isEnum}}{{^isEnum}}{{#isPrimitiveType}}{{{dataType}}}{{/isPrimitiveType}}{{^isPrimitiveType}}{{{dataType}}}Write{{/isPrimitiveType}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
+    '{{name}}'{{^required}}?{{/required}}: {{#isEnum}}{{#allowableValues}}{{#values}}'{{.}}'{{^-last}} | {{/-last}}{{/values}}{{/allowableValues}}{{/isEnum}}{{^isEnum}}{{#isPrimitiveType}}{{{dataType}}}{{/isPrimitiveType}}{{^isPrimitiveType}}{{#isArray}}Array<{{{complexType}}}Write>{{/isArray}}{{^isArray}}{{{dataType}}}Write{{/isArray}}{{/isPrimitiveType}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
 {{/isReadOnly}}
 {{/vars}}
 }

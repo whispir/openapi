@@ -710,19 +710,15 @@ paths:
                     description: The list of retrieved messages.
                     uniqueItems: true
                     minItems: 1
-                    readOnly: true
                     items:
                       $ref: '#/components/schemas/message'
+                    readOnly: true
                   status:
                     description: The status of the list request.
                     type: string
                     readOnly: true
                   link:
                     $ref: '#/components/schemas/link'
-                required:
-                  - messages
-                  - status
-                  - link
               examples:
                 Response:
                   value:
@@ -1799,11 +1795,6 @@ paths:
                           readOnly: true
                         link:
                           $ref: '#/components/schemas/link'
-                      required:
-                        - messageTemplateName
-                        - messageTemplateDescription
-                        - id
-                        - link
                     readOnly: true
                   link:
                     type: array
@@ -1814,7 +1805,6 @@ paths:
                 required:
                   - status
                   - messagetemplates
-                  - link
           headers:
             Content-Type:
               schema:
@@ -2111,7 +2101,7 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            application/vnd.whispir.messageresponse-v1+json:
+            application/vnd.whispir.responserule-v1+json:
               schema:
                 type: object
                 properties:
@@ -3807,19 +3797,9 @@ paths:
                           readOnly: true
                         link:
                           $ref: '#/components/schemas/link'
-                      required:
-                        - id
-                        - name
-                        - url
-                        - retriesEnabled
-                        - link
                     readOnly: true
                   link:
                     $ref: '#/components/schemas/link'
-                required:
-                  - status
-                  - callbacks
-                  - link
               examples:
                 example-1:
                   value:
@@ -4683,14 +4663,11 @@ paths:
                   activities:
                     description: List of activities
                     type: array
-                    readOnly: true
                     items:
                       $ref: '#/components/schemas/activity'
+                    readOnly: true
                   link:
                     $ref: '#/components/schemas/link'
-                required:
-                  - activities
-                  - link
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4750,17 +4727,14 @@ paths:
                   activities:
                     type: array
                     description: List of activities
-                    readOnly: true
                     items:
                       $ref: '#/components/schemas/activity'
+                    readOnly: true
                   status:
                     type: string
                     description: Provides the total number of records fetched. This attribute may return "No records found" when there are no activities available.
                     example: 'status: 1 to 1 of 1'
                     readOnly: true
-                required:
-                  - activities
-                  - status
               examples:
                 Example 1:
                   value:
@@ -5944,9 +5918,6 @@ paths:
                     example: your-generated-token-string
                   link:
                     $ref: '#/components/schemas/link'
-                required:
-                  - token
-                  - link
               examples:
                 Example:
                   value:
@@ -7001,9 +6972,6 @@ components:
         - messageTemplateName
         - subject
         - body
-        - link
-        - tags
-        - id
     responseTemplatePattern:
       type: object
       xml:
@@ -7881,7 +7849,6 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
-        - id
         - name
         - url
         - auth
@@ -7942,12 +7909,8 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
-        - id
         - projectName
-        - projectNumber
         - status
-        - billingcostcentre
-        - link
     callbackAuth:
       title: Callback Auth
       type: object
@@ -8292,6 +8255,7 @@ components:
         middleName:
           type: string
           description: The middle name of the user.
+          example: Bjork
         lastName:
           type: string
           description: The last name of the user.
@@ -8299,6 +8263,7 @@ components:
         title:
           type: string
           description: The title to address the user with.
+          example: Dr
         nickname:
           type: string
           description: Preferred name to be shown in the platfom interface
@@ -8598,13 +8563,6 @@ components:
           readOnly: true
         link:
           $ref: '#/components/schemas/link'
-      required:
-        - id
-        - firstName
-        - lastName
-        - companyName
-        - workEmailAddress1
-        - link
     event:
       type: object
       xml:
@@ -8707,7 +8665,6 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
-        - id
         - eventLabel
         - status
     import:
@@ -8871,114 +8828,10 @@ components:
             enum:
               - -1
             readOnly: true
-        required:
-          - uri
-          - rel
-          - method
-          - host
-          - port
       readOnly: true
     messageStatus:
       description: 'The message status object, describing the delivery of the sent message.'
       type: object
-      properties:
-        messageStatuses:
-          description: The object defining the message delivery status.
-          type: array
-          uniqueItems: true
-          items:
-            type: object
-            properties:
-              link:
-                $ref: '#/components/schemas/link'
-              categories:
-                type: array
-                uniqueItems: true
-                minItems: 5
-                maxItems: 5
-                description: Present when `view` is `summary`.
-                items:
-                  type: object
-                  additionalProperties: false
-                  properties:
-                    name:
-                      description: The delivery status of the message.
-                      type: string
-                      enum:
-                        - Sent
-                        - Pending
-                        - Received
-                        - Acknowledged
-                        - Undeliverable
-                    recipientCount:
-                      description: The number of recipients with the given `name` status.
-                      type: number
-                      example: 1
-                    percentageTotal:
-                      description: The percentage of recipients with the given `name` status.
-                      type: string
-                      example: 100.0%
-                  required:
-                    - name
-                    - recipientCount
-                    - percentageTotal
-              name:
-                type: string
-                example: '61400400400'
-                description: Present when `view` is `detailed`.
-              info:
-                type: string
-                example: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
-                description: Present when `view` is `detailed`.
-              status:
-                type: array
-                description: Present when `view` is `detailed`.
-                items:
-                  properties:
-                    type:
-                      description: The message delivery channel.
-                      type: string
-                      enum:
-                        - sms
-                        - email
-                        - voice
-                    status:
-                      description: The message delivery status code.
-                      type: string
-                      enum:
-                        - ''
-                        - PENDING
-                        - SENT
-                        - DELIVRD
-                        - READ
-                        - FAILED
-                    destination:
-                      description: The delivery address of the message recipient.
-                      type: string
-                      example: '61400400400'
-                    sentTimestamp:
-                      description: The time the message was sent from Whispir servers.
-                      type: number
-                      example: 1647466923000
-                    receivedTimestamp:
-                      description: The time the message was received on the message recipient's device.
-                      type: number
-                      example: 1647466931000
-                  required:
-                    - type
-                    - status
-                    - destination
-            required:
-              - link
-        link:
-          $ref: '#/components/schemas/link'
-        status:
-          type: string
-          example: '1 to 1 of 1    '
-          description: Present when `view` is `detailed`.
-      required:
-        - messageStatuses
-        - link
       x-examples:
         Summary:
           messageStatuses:
@@ -9032,6 +8885,61 @@ components:
       title: Message Status
       x-tags:
         - Messages
+      properties:
+        messageStatuses:
+          description: The object defining the message delivery status.
+          type: array
+          uniqueItems: true
+          items:
+            type: object
+            properties:
+              link:
+                $ref: '#/components/schemas/link'
+              categories:
+                type: array
+                uniqueItems: true
+                minItems: 5
+                maxItems: 5
+                description: Present when `view` is `summary`.
+                items:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    name:
+                      description: The delivery status of the message.
+                      type: string
+                      enum:
+                        - Sent
+                        - Pending
+                        - Received
+                        - Acknowledged
+                        - Undeliverable
+                    recipientCount:
+                      description: The number of recipients with the given `name` status.
+                      type: number
+                      example: 1
+                    percentageTotal:
+                      description: The percentage of recipients with the given `name` status.
+                      type: string
+                      example: 100.0%
+              name:
+                type: string
+                example: '61400400400'
+                description: Present when `view` is `detailed`.
+              info:
+                type: string
+                example: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
+                description: Present when `view` is `detailed`.
+              status:
+                type: array
+                description: Present when `view` is `detailed`.
+                items: {}
+        link:
+          $ref: '#/components/schemas/link'
+        status:
+          type: string
+          example: '1 to 1 of 1    '
+          description: Present when `view` is `detailed`.
     messageResponseSummary:
       title: Message Response Summary
       description: The summary message response object.
@@ -9051,11 +8959,14 @@ components:
             - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
               rel: self
               method: GET
+      x-tags:
+        - Messages
       properties:
         messageresponses:
           description: The message response statuses.
           type: array
           uniqueItems: true
+          readOnly: true
           items:
             description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
             type: object
@@ -9064,10 +8975,12 @@ components:
                 description: Details the percentage of responses received for the sent message across all channels.
                 type: string
                 example: 100%
+                readOnly: true
               responseCount:
                 description: Details the number of responses received for the sent message across all channels.
                 type: string
                 example: '1'
+                readOnly: true
               link:
                 $ref: '#/components/schemas/link'
               type:
@@ -9079,18 +8992,9 @@ components:
                 enum:
                   - noresponse
                   - notmatched
-            required:
-              - percentageTotal
-              - responseCount
-              - link
-              - type
+                readOnly: true
         link:
           $ref: '#/components/schemas/link'
-      required:
-        - messageresponses
-        - link
-      x-tags:
-        - Messages
     messageResponseDetailed:
       title: Message Response Detailed
       description: The detailed message response object.
@@ -9110,92 +9014,88 @@ components:
             - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
               rel: self
               method: GET
+      x-tags:
+        - Messages
       properties:
         messageresponses:
           type: array
           description: The message response statuses.
           uniqueItems: true
+          readOnly: true
           items:
             type: object
             properties:
               from:
                 description: The message responder object.
+                readOnly: true
                 type: object
-                required:
-                  - name
-                  - mri
-                  - mobile
-                  - email
-                  - voice
                 properties:
                   name:
                     description: The message responder's name.
                     type: string
                     example: Test User
+                    readOnly: true
                   mri:
                     description: The message responder's MRI.
                     type: string
                     example: testUser.au@User.whispir.com
+                    readOnly: true
                   mobile:
                     description: The message responder's mobile number.
                     type: string
                     example: '61400400400'
+                    readOnly: true
                   email:
                     description: The message responder's email address.
                     type: string
                     example: tuser@whispir.com
+                    readOnly: true
                   voice:
                     description: The message responder's voice number.
                     type: string
                     example: '61400400400'
+                    readOnly: true
               responseCategory:
                 description: |-
                   The message response category. 
                   * `noresponse` - the message was sent but was not replied to
                   * `notmatched` - the message was replied to and the answer didn't match any search criteria
                 type: string
+                readOnly: true
                 enum:
                   - noresponse
                   - notmatched
               responseMessage:
                 description: The message response object.
                 type: object
-                required:
-                  - content
-                  - acknowledged
-                  - channel
+                readOnly: true
                 properties:
                   content:
                     description: The message response content.
                     type: string
                     example: A test response from the recipient.
+                    readOnly: true
                   acknowledged:
                     description: The message response acknowledgement status.
                     type: string
                     example: 'true'
+                    readOnly: true
                   channel:
                     description: The message response channel.
                     type: string
+                    readOnly: true
                     enum:
                       - N/A
                       - sms
                       - email
                       - voice
-            required:
-              - from
-              - responseCategory
-              - responseMessage
         link:
           $ref: '#/components/schemas/link'
         status:
           type: string
           example: '1 to 1 of 1    '
           description: The message response pagination status.
-      required:
-        - messageresponses
-        - link
-      x-tags:
-        - Messages
+          readOnly: true
     dlr:
       title: Delivery Receipt
       description: A fixed object structure used by for Whispir internally for tracking purposes.
@@ -9328,12 +9228,6 @@ components:
         from:
           type: object
           description: The details about this particular message sender/responder
-          required:
-            - name
-            - mri
-            - mobile
-            - voice
-            - email
           properties:
             name:
               type: string
@@ -9370,11 +9264,6 @@ components:
             The details about this particular message that have been sent to the callback
 
             IMPORTANT: Depending on the flow, you may only see  one of the acknowledged or undeliverable keys with timestamps as their value
-          required:
-            - channel
-            - acknowledged
-            - undeliverable
-            - content
           properties:
             channel:
               type: string
@@ -9407,13 +9296,6 @@ components:
         callback:
           type: object
           description: The details about this particular callback attempt
-          required:
-            - id
-            - name
-            - url
-            - attemptedDate
-            - statusCode
-            - statusMessage
           properties:
             id:
               example: 93528522590CDF9A
@@ -10109,9 +9991,9 @@ components:
               users:
                 type: array
                 description: List of retrieved users
-                readOnly: true
                 items:
                   $ref: '#/components/schemas/listUsers'
+                readOnly: true
               status:
                 type: string
                 example: 1 to 20 of 73
@@ -10119,10 +10001,6 @@ components:
                 readOnly: true
               link:
                 $ref: '#/components/schemas/link'
-            required:
-              - users
-              - status
-              - link
           examples:
             Example:
               value:
@@ -10608,11 +10486,6 @@ components:
                 example: An exception occurred.
               link:
                 $ref: '#/components/schemas/link'
-            required:
-              - errorSummary
-              - errorText
-              - errorDetail
-              - link
           examples:
             Example:
               value:
@@ -10669,11 +10542,6 @@ components:
                 example: An exception occurred.
               link:
                 $ref: '#/components/schemas/link'
-            required:
-              - errorSummary
-              - errorText
-              - errorDetail
-              - link
           examples:
             Example:
               value:
@@ -10896,9 +10764,6 @@ components:
                 description: list of contacts
                 items:
                   $ref: '#/components/schemas/contact'
-            required:
-              - status
-              - contacts
           examples:
             Example:
               value:
@@ -11043,9 +10908,6 @@ components:
                 description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
                 example: 'status: 1 to 1 of 1'
                 readOnly: true
-            required:
-              - workspaces
-              - status
           examples:
             example-1:
               value:
@@ -11125,9 +10987,6 @@ components:
                 items:
                   $ref: '#/components/schemas/resource'
                 readOnly: true
-            required:
-              - status
-              - resources
           examples:
             example-1:
               value:
@@ -11201,7 +11060,7 @@ components:
         Location:
           $ref: '#/components/headers/Location'
     DistributionLists:
-      description: Example workspace object response
+      description: List distribution lists response
       content:
         application/vnd.whispir.distributionlist-v1+json:
           schema:
@@ -11222,10 +11081,6 @@ components:
                 readOnly: true
               link:
                 $ref: '#/components/schemas/link'
-            required:
-              - distributionLists
-              - status
-              - link
           examples:
             Example Dynamic Distribution List:
               value:
@@ -11293,9 +11148,6 @@ components:
                 items:
                   $ref: '#/components/schemas/customList'
                 readOnly: true
-            required:
-              - status
-              - customlabels
           examples:
             custom lists response example:
               value:
@@ -11386,9 +11238,6 @@ components:
                 items:
                   $ref: '#/components/schemas/event'
                 readOnly: true
-            required:
-              - status
-              - events
           examples:
             Events response example:
               value:

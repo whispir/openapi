@@ -2109,7 +2109,7 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            application/json:
+            application/vnd.whispir.messageresponse-v1+json:
               schema:
                 type: object
                 properties:
@@ -2127,6 +2127,20 @@ paths:
                 required:
                   - status
                   - responseRules
+              examples:
+                Example 1:
+                  value:
+                    status: 1 to 8 of 8
+                    responseRules:
+                      - name: Response Rule 1
+                        description: My Response Rule
+                        responseTemplatePatterns:
+                          name: Yes Rule
+                          pattern: startswith
+                          textPrompt: 'YES'
+                          voicePrompt: '1'
+                          spokenVoicePrompt: to select YES
+                          colour: '#00947d'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2182,9 +2196,21 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            application/json:
+            application/vnd.whispir.responserule-v1+json:
               schema:
                 $ref: '#/components/schemas/responseRule'
+              examples:
+                Example 1:
+                  value:
+                    name: Response Rule 1
+                    description: My Response Rule
+                    responseTemplatePatterns:
+                      name: Yes Rule
+                      pattern: startswith
+                      textPrompt: 'YES'
+                      voicePrompt: '1'
+                      spokenVoicePrompt: to select YES
+                      colour: '#00947d'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4715,7 +4741,7 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            application/json:
+            application/vnd.whispir.activity-v1+json:
               schema:
                 type: object
                 properties:
@@ -4733,6 +4759,25 @@ paths:
                 required:
                   - activities
                   - status
+              examples:
+                Example 1:
+                  value:
+                    activities:
+                      - user: whispir user
+                        time: '03/08/22 15:17'
+                        action: Create
+                        description: Logged out
+                        status: Successful
+                        module: Conversation
+                        workspaceName: Company
+                        fullname: Whispir User
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
+                    status: 'status: 1 to 1 of 1'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -6336,14 +6381,6 @@ components:
       required:
         - to
         - subject
-        - from
-        - direction
-        - responseCount
-        - createdTime
-        - whatsappValidMessage
-        - validBody
-        - validSubject
-        - link
     email:
       type: object
       xml:
@@ -6526,8 +6563,6 @@ components:
       required:
         - body
         - type
-        - footer
-        - other
     web:
       description: |-
         The web channel payload, used when attaching web content to a Message.
@@ -6811,12 +6846,10 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
-        - id
         - name
         - scope
         - mimeType
         - derefUri
-        - link
     template:
       type: object
       xml:
@@ -7426,11 +7459,6 @@ components:
         - workEmailAddress1
         - workCountry
         - timezone
-        - type
-        - mri
-        - devices
-        - link
-        - lastModifiedTime
     distributionlist:
       type: object
       xml:
@@ -7555,19 +7583,9 @@ components:
                 readOnly: true
               link:
                 $ref: '#/components/schemas/link'
-            required:
-              - id
-              - name
-              - type
-              - link
           readOnly: true
       required:
-        - id
         - name
-        - mri
-        - access
-        - visibility
-        - distlistdetails
     dynamicdistributionlist:
       xml:
         name: dynamicdistributionlist
@@ -7870,7 +7888,6 @@ components:
         - retriesEnabled
         - email
         - callbacks
-        - link
     workspace:
       type: object
       xml:
@@ -8096,6 +8113,7 @@ components:
               port: -1
       x-tags:
         - Activities
+      title: Activity
       properties:
         user:
           type: string
@@ -8172,8 +8190,6 @@ components:
           description: Fullname of the user
         link:
           $ref: '#/components/schemas/link'
-      required:
-        - link
     user:
       type: object
       xml:
@@ -8524,7 +8540,6 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
-        - id
         - userName
         - password
         - firstName
@@ -9437,14 +9452,7 @@ components:
         link:
           $ref: '#/components/schemas/link'
       required:
-        - id
-        - messageId
         - status
-        - messageLocation
-        - from
-        - responseMessage
-        - callback
-        - link
     customList:
       type: object
       x-examples:
@@ -9471,6 +9479,7 @@ components:
       description: 'A custom list is a predefined list of options that can be inserted into a message or template. A list might be made up of capital city names, days of the week, incident types, business phone numbers and so on. Custom lists make it easy to add information quickly and consistently to your message content.'
       x-tags:
         - Custom Lists
+      title: Custom List
       properties:
         id:
           type: string
@@ -9535,22 +9544,10 @@ components:
                 description: Specifies the value that is passed internally
                 example: Internal Systems
                 readOnly: true
-            required:
-              - name
-              - value
             readOnly: true
           readOnly: true
         link:
           $ref: '#/components/schemas/link'
-      required:
-        - id
-        - name
-        - type
-        - createdDate
-        - sortType
-        - linked
-        - customlabellists
-        - link
       readOnly: true
   parameters:
     X-Api-Key:
@@ -10139,6 +10136,13 @@ components:
                         method: GET
                         host: api.au.whispir.com
                         port: -1
+                status: 1 to 8 of 8
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
       headers:
         Content-Type:
           $ref: '#/components/headers/User-Content-Type'
@@ -10534,7 +10538,7 @@ components:
     Callback:
       description: The Callback object
       content:
-        application/json:
+        application/vnd.whispir.api-callback-v1+json:
           schema:
             $ref: '#/components/schemas/callback'
           examples:
@@ -11224,30 +11228,30 @@ components:
             Example Dynamic Distribution List:
               value:
                 distributionLists:
-                  id: 5AFEB61102963D7
-                  name: My Distribution List
-                  mri: My_Distribution_List.company_name@list.company.whispir.sg
-                  description: string
-                  memberCount: '4'
-                  access: Open
-                  visibility: Public
-                  link:
-                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                      rel: self
-                      method: GET
-                      host: api.au.whispir.com
-                      port: -1
-                  distListIds: string
-                  distlistdetails:
-                    - id: 123ADAB420493B83
-                      name: John Smith
-                      type: User
-                      link:
-                        - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                          rel: self
-                          method: GET
-                          host: api.au.whispir.com
-                          port: -1
+                  - id: 5AFEB61102963D7
+                    name: My Distribution List
+                    mri: My_Distribution_List.company_name@list.company.whispir.sg
+                    description: string
+                    memberCount: '4'
+                    access: Open
+                    visibility: Public
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                    distListIds: string
+                    distlistdetails:
+                      - id: 123ADAB420493B83
+                        name: John Smith
+                        type: User
+                        link:
+                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                            rel: self
+                            method: GET
+                            host: api.au.whispir.com
+                            port: -1
                 status: 1 to 1 of 1
                 link:
                   - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'

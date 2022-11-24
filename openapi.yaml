@@ -1329,7 +1329,6 @@ paths:
     post:
       tags:
         - Resources
-      x-sdkOperation: create
       x-isPost: true
       summary: Create a resource
       description: |

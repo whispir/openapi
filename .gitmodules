@@ -1,0 +1,6 @@
+[submodule "whispir-java"]
+	path = whispir-java
+	url = https://github.com/whispir/whispir-java.git
+[submodule "whispir-node"]
+	path = whispir-node
+	url = https://github.com/whispir/whispir-node.git

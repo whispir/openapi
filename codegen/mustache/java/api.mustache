@@ -229,7 +229,7 @@ public class {{classname}} {
     @Deprecated
     {{/isDeprecated}}
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
+    /*private okhttp3.Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
         {{^performBeanValidation}}
         {{#allParams}}
         {{#required}}
@@ -266,7 +266,7 @@ public class {{classname}} {
             throw new ApiException(e.getMessage());
         }
         {{/performBeanValidation}}
-    }
+    }*/
 
     {{^vendorExtensions.x-group-parameters}}
     /**
@@ -302,17 +302,12 @@ public class {{classname}} {
     }
     {{/vendorExtensions.x-streaming}}
     {{^vendorExtensions.x-streaming}}
-    public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{operationId}}(
-        {{#allParams}}{{^isBodyParam}}{{#vendorExtensions}}{{^x-isApiKey}}{{^x-isContentType}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/x-isContentType}}{{/x-isApiKey}}{{/vendorExtensions}}{{/isBodyParam}}{{/allParams}}
-        {{#bodyParam}}{{{dataType}}} {{paramName}}{{/bodyParam}}) throws ApiException {
-
-{{#headerParams}}
-        {{#vendorExtensions}}
-        {{#x-isContentType}}
-        {{dataType}} {{paramName}} = "{{defaultValue}}";
-        {{/x-isContentType}}
-        {{/vendorExtensions}}
-{{/headerParams}}
+    // operation call
+    public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{vendorExtensions.x-sdkOperation}}(Map<String, Object> params{{#bodyParam}}, {{{dataType}}} {{paramName}}{{/bodyParam}}) throws ApiException {
+{{#allParams}}{{#vendorExtensions}}{{^x-isApiKey}}{{^x-isContentType}}{{^isBodyParam}}
+        {{{dataType}}} {{paramName}} = ({{{dataType}}}) params.get("{{paramName}}");{{/isBodyParam}}{{/x-isContentType}}{{/x-isApiKey}}{{/vendorExtensions}}{{/allParams}}
+{{#headerParams}}{{#vendorExtensions}}{{#x-isContentType}}
+        {{dataType}} {{paramName}} = "{{defaultValue}}";{{/x-isContentType}}{{/vendorExtensions}}{{/headerParams}}
 
         {{#returnType}}ApiResponse<{{{.}}}> localVarResp = {{/returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{#vendorExtensions}}{{^x-isApiKey}}{{paramName}}{{^-last}}, {{/-last}}{{/x-isApiKey}}{{/vendorExtensions}}{{/allParams}});{{#returnType}}
         return localVarResp.getData();{{/returnType}}
@@ -356,7 +351,6 @@ public class {{classname}} {
         {{/x-isApiKey}}
     {{/vendorExtensions}}
     {{/allParams}}) throws ApiException {
-        // mark hugh
         okhttp3.Call localVarCall = {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}null);
         {{#returnType}}
         {{#errorObjectType}}
@@ -375,6 +369,7 @@ public class {{classname}} {
         {{/returnType}}
     }
     {{/vendorExtensions.x-streaming}}{{^vendorExtensions.x-streaming}} ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{#useBeanValidation}}{{>beanValidationQueryParams}}{{/useBeanValidation}}{{#vendorExtensions}}{{^x-isApiKey}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/x-isApiKey}}{{/vendorExtensions}}{{/allParams}}) throws ApiException {
+        // localvarcallx
         okhttp3.Call localVarCall = {{operationId}}Call({{#allParams}}{{#vendorExtensions}}{{^x-isApiKey}}{{paramName}}, {{/x-isApiKey}}{{/vendorExtensions}}{{/allParams}}null);
         {{^returnType}}
         return localVarApiClient.execute(localVarCall);
@@ -424,13 +419,13 @@ public class {{classname}} {
     {{#isDeprecated}}
     @Deprecated
     {{/isDeprecated}}
-    public{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}private{{/vendorExtensions.x-group-parameters}} okhttp3.Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws ApiException {
+    /*public{{/vendorExtensions.x-group-parameters}}{{#vendorExtensions.x-group-parameters}}private{{/vendorExtensions.x-group-parameters}} okhttp3.Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}_callback);
         {{#returnType}}Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);{{/returnType}}{{^returnType}}localVarApiClient.executeAsync(localVarCall, _callback);{{/returnType}}
         return localVarCall;
-    }
+    }*/
     {{#vendorExtensions.x-group-parameters}}
 
     public class API{{operationId}}Request {
@@ -568,9 +563,9 @@ public class {{classname}} {
         {{#isDeprecated}}
         @Deprecated
         {{/isDeprecated}}
-        public okhttp3.Call executeAsync(final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws ApiException {
+        /*public okhttp3.Call executeAsync(final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws ApiException {
             return {{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}_callback);
-        }
+        }*/
     }
 
     /**

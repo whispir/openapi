@@ -302,7 +302,7 @@ public class {{classname}} {
     }
     {{/vendorExtensions.x-streaming}}
     {{^vendorExtensions.x-streaming}}
-    // operation call
+    // operation call 
     public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{vendorExtensions.x-sdkOperation}}(Map<String, Object> params{{#bodyParam}}, {{{dataType}}} {{paramName}}{{/bodyParam}}) throws ApiException {
 {{#allParams}}{{#vendorExtensions}}{{^x-isApiKey}}{{^x-isContentType}}{{^isBodyParam}}
         {{{dataType}}} {{paramName}} = ({{{dataType}}}) params.get("{{paramName}}");{{/isBodyParam}}{{/x-isContentType}}{{/x-isApiKey}}{{/vendorExtensions}}{{/allParams}}

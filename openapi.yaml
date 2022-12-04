@@ -4633,41 +4633,7 @@ paths:
                             port: -1
                     link: []
               schema:
-                description: Example
-                type: object
-                x-examples:
-                  example-1:
-                    activities:
-                      - user: cadmin
-                        time: '04/08/22 11:19'
-                        action: Logout
-                        description: Logged out
-                        status: Successful
-                        module: System
-                        workspaceName: Company
-                        fullname: IUX Admin
-                        link:
-                          - uri: 'https://api.au.whispir.com/activities/726E75D22E359A8C'
-                            rel: self
-                            method: GET
-                            host: api.au.whispir.com
-                            port: -1
-                          - uri: 'https://api.au.whispir.com/activities/726E75D22E359A8C'
-                            rel: addActivityDetail
-                            method: POST
-                            type: 'application/vnd.whispir.activity-v1+json,application/vnd.whispir.activity-v1+xml'
-                            host: api.au.whispir.com
-                            port: -1
-                    link: []
-                properties:
-                  activities:
-                    description: List of activities
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/activity'
-                    readOnly: true
-                  link:
-                    $ref: '#/components/schemas/link'
+                $ref: '#/components/schemas/activityCollection'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4722,19 +4688,7 @@ paths:
           content:
             application/vnd.whispir.activity-v1+json:
               schema:
-                type: object
-                properties:
-                  activities:
-                    type: array
-                    description: List of activities
-                    items:
-                      $ref: '#/components/schemas/activity'
-                    readOnly: true
-                  status:
-                    type: string
-                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no activities available.
-                    example: 'status: 1 to 1 of 1'
-                    readOnly: true
+                $ref: '#/components/schemas/activityCollection'
               examples:
                 Example 1:
                   value:
@@ -8153,6 +8107,42 @@ components:
           type: string
           example: Whispir User
           description: Fullname of the user
+        link:
+          $ref: '#/components/schemas/link'
+    activityCollection:
+      description: Example
+      type: object
+      x-examples:
+        example-1:
+          activities:
+            - user: cadmin
+              time: '04/08/22 11:19'
+              action: Logout
+              description: Logged out
+              status: Successful
+              module: System
+              workspaceName: Company
+              fullname: IUX Admin
+              link:
+                - uri: 'https://api.au.whispir.com/activities/726E75D22E359A8C'
+                  rel: self
+                  method: GET
+                  host: api.au.whispir.com
+                  port: -1
+                - uri: 'https://api.au.whispir.com/activities/726E75D22E359A8C'
+                  rel: addActivityDetail
+                  method: POST
+                  type: 'application/vnd.whispir.activity-v1+json,application/vnd.whispir.activity-v1+xml'
+                  host: api.au.whispir.com
+                  port: -1
+          link: []
+      properties:
+        activities:
+          description: List of activities
+          type: array
+          items:
+            $ref: '#/components/schemas/activity'
+          readOnly: true
         link:
           $ref: '#/components/schemas/link'
     user:

@@ -1,0 +1,5 @@
+files:
+  api_request_params.mustache:
+    folder:  src/main/java/whispir_sdk_java/param
+    templateType: API
+    destinationFilename: Params.java

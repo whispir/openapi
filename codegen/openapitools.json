@@ -16,6 +16,7 @@
         "templateDir": "mustache/node"
       },
       "java": {
+        "config": "config/java/config.yaml",
         "generatorName": "java",
         "output": "#{cwd}/../whispir-java",
         "glob": "../openapi.yaml",
@@ -36,7 +37,8 @@
           "scmConnection": "scm:git:git@github.com:whispir/whispir-java.git",
           "licenseName": "MIT",
           "licenseUrl": "https://opensource.org/licenses/MIT"
-        }
+        },
+        "templateDir": "mustache/java"
       }
     }
   }

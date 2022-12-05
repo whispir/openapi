@@ -8,7 +8,7 @@
   },
   "bugs": "https://github.com/whispir/openapi/issues",
   "scripts": {
-    "debug": "openapi-generator-cli generate --log-to-stderr -g typescript-node -i ../openapi.yaml --global-property debugSupportingFiles=true --dry-run > openapi-generator-debug.json",
+    "debug": "openapi-generator-cli generate --log-to-stderr -g java -i ../openapi.yaml --global-property debugSupportingFiles=true --dry-run > openapi-generator-debug.json",
     "generate": "openapi-generator-cli generate"
   },
   "author": "Whispir <support@whispir.com> (https://whispir.com)",

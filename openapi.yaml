@@ -588,7 +588,7 @@ paths:
             Location:
               schema:
                 type: string
-              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
+                example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
         '202':
           description: The response code for a message that is accepted for immediate delivery.
@@ -616,7 +616,7 @@ paths:
             Location:
               schema:
                 type: string
-              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
+                example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
         '400':
           $ref: '#/components/responses/400BadRequest'
@@ -1672,13 +1672,7 @@ paths:
                 $ref: '#/components/schemas/templateCollection'
           headers:
             Content-Type:
-              schema:
-                type: string
-                default: application/vnd.whispir.template-v1+xml
-                enum:
-                  - application/vnd.whispir.template-v1+xml
-                  - application/vnd.whispir.template-v1+json
-              description: Indicates the resource's media type
+              $ref: '#/components/headers/Template-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -1915,7 +1909,7 @@ paths:
             Location:
               schema:
                 type: string
-              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/responserules/747AB7E716C1802B6476784AEB5C9BB8'
+                example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/responserules/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
         '400':
           $ref: '#/components/responses/400BadRequest'
@@ -3049,7 +3043,7 @@ paths:
             Location:
               schema:
                 type: string
-              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/scenarios/747AB7E716C1802B6476784AEB5C9BB8'
+                example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/scenarios/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
         '400':
           $ref: '#/components/responses/400BadRequest'
@@ -3297,15 +3291,12 @@ paths:
             Location:
               schema:
                 type: string
+                example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/scenarios/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the scenario.
             Content-Type:
-              schema:
-                type: string
-              description: Application specific mime-type.
+              $ref: '#/components/headers/Scenario-Content-Type'
             Content-Length:
-              schema:
-                type: string
-              description: Length of the response content.
+              $ref: '#/components/headers/Content-Length'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4158,7 +4149,7 @@ paths:
             Location:
               schema:
                 type: string
-              example: 'https://api.au.whispir.com/activities/747AB7E716C1802B6476784AEB5C9BB8'
+                example: 'https://api.au.whispir.com/activities/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
           content:
             application/vnd.whispir.activity-v1+json:
@@ -5577,7 +5568,7 @@ paths:
             Location:
               schema:
                 type: string
-              example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/imports/747AB7E716C1802B6476784AEB5C9BB8'
+                example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/imports/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
         '400':
           $ref: '#/components/responses/400BadRequest'
@@ -5625,7 +5616,7 @@ paths:
             Location:
               schema:
                 type: string
-              example: 'https://api.au.whispir.com/auth/747AB7E716C1802B6476784AEB5C9BB8'
+                example: 'https://api.au.whispir.com/auth/747AB7E716C1802B6476784AEB5C9BB8'
               description: The URI to fetch details of the resource.
           content:
             application/vnd.whispir.auth-v1+json:
@@ -6351,6 +6342,7 @@ components:
           type: array
           description: The list of social channel content.
           items:
+            title: Message Social Channel
             type: object
             description: The social channel object.
             properties:
@@ -6681,6 +6673,7 @@ components:
           uniqueItems: true
           items:
             type: object
+            title: Message Status Summary
             properties:
               link:
                 $ref: '#/components/schemas/link'
@@ -6692,6 +6685,7 @@ components:
                 description: Present when `view` is `summary`.
                 items:
                   type: object
+                  title: Message Status Summary Category
                   additionalProperties: false
                   properties:
                     name:
@@ -6759,6 +6753,7 @@ components:
           items:
             description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
             type: object
+            title: Message Response Summary Status
             properties:
               percentageTotal:
                 description: Details the percentage of responses received for the sent message across all channels.
@@ -6821,6 +6816,7 @@ components:
           readOnly: true
           items:
             type: object
+            title: Message Response Detailed Status
             properties:
               from:
                 description: The message responder object.
@@ -7229,6 +7225,7 @@ components:
           description: Specifies the name of the message template
           items:
             type: object
+            title: Message Template Short
             properties:
               messageTemplateName:
                 type: string
@@ -7252,11 +7249,7 @@ components:
                 $ref: '#/components/schemas/link'
           readOnly: true
         link:
-          type: array
-          description: Provides a list of URLs that can be used to manipulate or access the message template. This following attribute may return an empty array.
-          items:
-            type: object
-          readOnly: true
+          $ref: '#/components/schemas/link'
       required:
         - status
         - messagetemplates
@@ -7705,6 +7698,7 @@ components:
           title: Locations
           items:
             type: object
+            title: ContactLocation
             description: The location object.
             properties:
               latitude:
@@ -7729,6 +7723,7 @@ components:
           title: Messaging Options
           items:
             type: object
+            title: Contact Messaging Option
             description: The object to configure message channel options.
             properties:
               channel:
@@ -8088,6 +8083,7 @@ components:
           description: Details of Contacts included in the Distribution List
           items:
             type: object
+            title: Distribution List Details
             properties:
               id:
                 type: string
@@ -8501,6 +8497,7 @@ components:
           minItems: 1
           items:
             type: object
+            title: Callback Short
             properties:
               id:
                 type: string
@@ -9547,6 +9544,7 @@ components:
           description: Event form list
           items:
             type: object
+            title: Event Form
             description: Constitutes the name of the form and its fields
             properties:
               formName:
@@ -9558,6 +9556,7 @@ components:
                 description: 'Contains a list of event fields, see create /POST event endpoint to learn more about the available fields'
                 items:
                   type: object
+                  title: Event Form Field
                   description: A key-value pair of name and its value
                   properties:
                     name:
@@ -9765,6 +9764,7 @@ components:
           description: Contains the individual items that make up this list
           items:
             type: object
+            title: Custom List Item
             description: |-
               Contains the individual items that make up this list
 
@@ -9852,6 +9852,7 @@ components:
       title: Link
       items:
         type: object
+        title: Link
         description: The HATEOAS link object.
         properties:
           uri:
@@ -10457,7 +10458,7 @@ components:
         Location:
           schema:
             type: string
-          example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/users/747AB7E716C1802B6476784AEB5C9BB8'
+            example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/users/747AB7E716C1802B6476784AEB5C9BB8'
           description: The URI to fetch details of the resource.
     Users:
       description: List users endpoint response
@@ -10571,7 +10572,7 @@ components:
         Location:
           schema:
             type: string
-          example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/templates/747AB7E716C1802B6476784AEB5C9BB8'
+            example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/templates/747AB7E716C1802B6476784AEB5C9BB8'
           description: The URI to fetch details of the resource.
     400BadRequest:
       description: |-
@@ -10806,7 +10807,7 @@ components:
         Location:
           schema:
             type: string
-          example: 'https://api.au.whispir.com/callbacks/747AB7E716C1802B6476784AEB5C9BB8'
+            example: 'https://api.au.whispir.com/callbacks/747AB7E716C1802B6476784AEB5C9BB8'
           description: The URI to fetch details of the resource.
     501MethodNotImplemented:
       description: |-
@@ -11042,7 +11043,7 @@ components:
         Location:
           schema:
             type: string
-          example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/contacts/747AB7E716C1802B6476784AEB5C9BB8'
+            example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/contacts/747AB7E716C1802B6476784AEB5C9BB8'
           description: The URI to fetch details of the resource.
     Contacts:
       description: Example response
@@ -11554,7 +11555,7 @@ components:
       required: true
       schema:
         type: string
-      example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
+        example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
     Access-Control-Allow-Origin:
       description: Origins allowed to perform cross-origin requests.
       required: true
@@ -11562,35 +11563,37 @@ components:
         type: string
         enum:
           - '*'
+        example: '*'
     Content-Length:
       description: Length of the response content.
       required: true
-      example: 4111
       schema:
         type: number
+        example: 4111
     Content-Type:
       description: The content type of the request header.
       required: true
-      example: application/vnd.whispir.message-v1+json
       schema:
         type: string
+        example: application/vnd.whispir.message-v1+json
     Cache-Control:
       description: 'The directives that control caching in browsers and shared caches (e.g. Proxies, CDNs).'
       required: true
-      example: max-age=0
       schema:
         type: string
+        example: max-age=0
     Expires:
       description: The date/time after which the response is considered expired.
       required: true
-      example: 'Mon, 21 Mar 2022 03:18:32 GMT'
       schema:
         type: string
+        example: 'Mon, 21 Mar 2022 03:18:32 GMT'
     Message-Content-Type:
       description: Application specific mime-type.
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.message-v1+json
         enum:
           - application/vnd.whispir.message-v1+json
           - application/vnd.whispir.message-v1+xml
@@ -11599,6 +11602,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.messagestatus-v1+json
         enum:
           - application/vnd.whispir.messagestatus-v1+json
           - application/vnd.whispir.messagestatus-v1+xml
@@ -11607,6 +11611,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.messageresponse-v1+json
         enum:
           - application/vnd.whispir.messageresponse-v1+json
           - application/vnd.whispir.messageresponse-v1+xml
@@ -11615,6 +11620,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.template-v1+json
         enum:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
@@ -11623,6 +11629,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.user-v1+json
         enum:
           - application/vnd.whispir.user-v1+json
           - application/vnd.whispir.user-v1+xml
@@ -11631,6 +11638,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.api-callback-v1+json
         enum:
           - application/vnd.whispir.api-callback-v1+json
           - application/vnd.whispir.api-callback-v1+xml
@@ -11638,6 +11646,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.api-call-v1+json
         enum:
           - application/vnd.whispir.api-call-v1+json
           - application/vnd.whispir.api-call-v1+xml
@@ -11646,6 +11655,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.resource-v1+json
         enum:
           - application/vnd.whispir.resource-v1+json
           - application/vnd.whispir.resource-v1+xml
@@ -11654,6 +11664,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.contact-v1+json
         enum:
           - application/vnd.whispir.contact-v1+json
           - application/vnd.whispir.contact-v1+xml
@@ -11662,6 +11673,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.event-v1+json
         enum:
           - application/vnd.whispir.event-v1+json
           - application/vnd.whispir.event-v1+xml
@@ -11670,6 +11682,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.activity-v1+json
         enum:
           - application/vnd.whispir.activity-v1+json
           - application/vnd.whispir.activity-v1+xml
@@ -11678,6 +11691,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.responserule-v1+json
         enum:
           - application/vnd.whispir.responserule-v1+json
           - application/vnd.whispir.responserule-v1+xml
@@ -11686,6 +11700,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.scenario-v1+json
         enum:
           - application/vnd.whispir.scenario-v1+json
           - application/vnd.whispir.scenario-v1+xml
@@ -11694,6 +11709,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.distributionlist-v1+json
         enum:
           - application/vnd.whispir.distributionlist-v1+json
           - application/vnd.whispir.distributionlist-v1+xml
@@ -11702,6 +11718,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.workspace-v1+json
         enum:
           - application/vnd.whispir.workspace-v1+json
           - application/vnd.whispir.workspace-v1+xml
@@ -11710,6 +11727,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.customlist-v1+json
         enum:
           - application/vnd.whispir.customlist-v1+json
           - application/vnd.whispir.customlist-v1+xml
@@ -11718,6 +11736,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.importcontact-v1+json
         enum:
           - application/vnd.whispir.importcontact-v1+json
           - application/vnd.whispir.importcontact-v1+xml
@@ -11726,6 +11745,7 @@ components:
       required: true
       schema:
         type: string
+        example: application/vnd.whispir.auth-v1+json
         enum:
           - application/vnd.whispir.auth-v1+json
           - application/vnd.whispir.auth-v1+xml

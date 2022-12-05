@@ -6716,7 +6716,28 @@ components:
               status:
                 type: array
                 description: Present when `view` is `detailed`.
-                items: {}
+                minItems: 3
+                maxItems: 3
+                uniqueItems: true
+                items:
+                  type: object
+                  title: Message Status Channel
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                        - sms
+                        - email
+                        - voice
+                      description: The message channel
+                    status:
+                      type: string
+                      example: DELIVRD
+                      description: The delivery status
+                    destination:
+                      type: string
+                      description: The message destination
+                      example: '61400400400'
         link:
           $ref: '#/components/schemas/link'
         status:
@@ -8135,7 +8156,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
-      description: "Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don't need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List"
+      description: 'Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don''t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List'
       type: object
       properties:
         name:

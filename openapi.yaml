@@ -661,64 +661,7 @@ paths:
           content:
             application/vnd.whispir.message-v1+json:
               schema:
-                description: The list messages response object.
-                type: object
-                x-examples:
-                  Example:
-                    messages:
-                      - subject: Test Message
-                        repetitionCount: 0
-                        repeatDays: 0
-                        repeatHrs: 0
-                        repeatMin: 0
-                        from: Test User
-                        direction: OUTGOING
-                        responseCount: '0'
-                        createdTime: 1647467664000
-                        link:
-                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/E9F52215AD0787EBECDD691916955C1E'
-                            rel: self
-                            method: GET
-                            host: api.au.whispir.com
-                            port: -1
-                        whatsappValidMessage: true
-                        validBody: false
-                        validSubject: true
-                      - subject: Test Message
-                        repetitionCount: 0
-                        repeatDays: 0
-                        repeatHrs: 0
-                        repeatMin: 0
-                        from: Test User
-                        direction: OUTGOING
-                        responseCount: '0'
-                        createdTime: 1647466923000
-                        link:
-                          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
-                            rel: self
-                            method: GET
-                            host: api.au.whispir.com
-                            port: -1
-                        whatsappValidMessage: true
-                        validBody: false
-                        validSubject: true
-                    status: ''
-                    link: []
-                properties:
-                  messages:
-                    type: array
-                    description: The list of retrieved messages.
-                    uniqueItems: true
-                    minItems: 1
-                    items:
-                      $ref: '#/components/schemas/message'
-                    readOnly: true
-                  status:
-                    description: The status of the list request.
-                    type: string
-                    readOnly: true
-                  link:
-                    $ref: '#/components/schemas/link'
+                $ref: '#/components/schemas/messageCollection'
               examples:
                 Response:
                   value:
@@ -1237,25 +1180,7 @@ paths:
           content:
             application/vnd.whispir.messageresponse-v1+json:
               schema:
-                description: The message response object.
-                x-examples:
-                  Example:
-                    messageresponses:
-                      - percentageTotal: 50%
-                        responseCount: '1'
-                        link: []
-                        type: noresponse
-                      - percentageTotal: 50%
-                        responseCount: '1'
-                        link: []
-                        type: notmatched
-                    link:
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
-                        rel: self
-                        method: GET
-                oneOf:
-                  - $ref: '#/components/schemas/messageResponseDetailed'
-                  - $ref: '#/components/schemas/messageResponseSummary'
+                $ref: '#/components/schemas/messageResponse'
               examples:
                 Summary:
                   value:
@@ -1744,67 +1669,7 @@ paths:
                             port: -1
                     link: []
               schema:
-                description: Returns a list of templates
-                type: object
-                x-examples:
-                  Example:
-                    status: '1 to 1 of 1    '
-                    messagetemplates:
-                      - messageTemplateName: Sample SMS Template with tags
-                        messageTemplateDescription: Template to provide an example on whispir.io no.1
-                        id: 3148356543415EE7
-                        link:
-                          - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
-                            rel: self
-                            method: GET
-                            host: api.au.whispir.com
-                            port: -1
-                    link: []
-                properties:
-                  status:
-                    type: string
-                    minLength: 1
-                    example: 1 to 1 of 1
-                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no message templates available.
-                    readOnly: true
-                  messagetemplates:
-                    type: array
-                    uniqueItems: true
-                    minItems: 1
-                    description: Specifies the name of the message template
-                    items:
-                      type: object
-                      properties:
-                        messageTemplateName:
-                          type: string
-                          minLength: 1
-                          description: Specifies the name of the message template
-                          example: Test Template
-                          readOnly: true
-                        messageTemplateDescription:
-                          type: string
-                          minLength: 1
-                          description: 'Specifies the description of the message template, so that anyone can understand its purpose'
-                          example: The test messate template.
-                          readOnly: true
-                        id:
-                          type: string
-                          minLength: 1
-                          description: Specifies the template id needed for all the API Operations
-                          example: 236EA3E3E63439DA
-                          readOnly: true
-                        link:
-                          $ref: '#/components/schemas/link'
-                    readOnly: true
-                  link:
-                    type: array
-                    description: Provides a list of URLs that can be used to manipulate or access the message template. This following attribute may return an empty array.
-                    items:
-                      type: object
-                    readOnly: true
-                required:
-                  - status
-                  - messagetemplates
+                $ref: '#/components/schemas/templateCollection'
           headers:
             Content-Type:
               schema:
@@ -2103,22 +1968,7 @@ paths:
           content:
             application/vnd.whispir.responserule-v1+json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no response rules available.
-                    example: 1 to 8 of 8
-                    readOnly: true
-                  responseRules:
-                    type: array
-                    description: The list of response rules
-                    items:
-                      $ref: '#/components/schemas/responseRule'
-                    readOnly: true
-                required:
-                  - status
-                  - responseRules
+                $ref: '#/components/schemas/responseRuleCollection'
               examples:
                 Example 1:
                   value:
@@ -2824,10 +2674,7 @@ paths:
         content:
           application/vnd.whispir.distributionlist-v1+json:
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/distributionlist'
-                - $ref: '#/components/schemas/dynamicdistributionlist'
-              description: Either a static or dynamic distribution list
+              $ref: '#/components/schemas/distributionList'
             examples:
               Example:
                 value:
@@ -3045,8 +2892,8 @@ paths:
           application/vnd.whispir.distributionlist-v1+json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/distributionlist'
-                - $ref: '#/components/schemas/dynamicdistributionlist'
+                - $ref: '#/components/schemas/distributionListStatic'
+                - $ref: '#/components/schemas/distributionListDynamic'
               description: Either a static or dynamic distribution list
             examples:
               Example:
@@ -3258,14 +3105,7 @@ paths:
           content:
             application/vnd.whispir.scenario-v1+json:
               schema:
-                type: object
-                description: List of retrieved scenarios
-                properties:
-                  scenarios:
-                    type: array
-                    description: Scenario object
-                    items:
-                      $ref: '#/components/schemas/scenario'
+                $ref: '#/components/schemas/scenarioCollection'
               examples:
                 example-1:
                   value:
@@ -3729,77 +3569,7 @@ paths:
           content:
             application/vnd.whispir.api-callback-v1+json:
               schema:
-                description: The callback object.
-                type: object
-                x-examples:
-                  example-1:
-                    status: '1 to 1 of 1    '
-                    callbacks:
-                      - id: D7D2295E2A08388C
-                        name: callback1
-                        url: 'https://e05237bf.ngrok.io/'
-                        retriesEnabled: false
-                        link:
-                          - uri: 'https://api.au.whispir.com/callbacks/D7D2295E2A08388C'
-                            rel: self
-                            method: GET
-                            host: api.au.whispir.com
-                            port: -1
-                    link: []
-                properties:
-                  status:
-                    description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
-                    type: string
-                    minLength: 1
-                    example: 1 to 1 of 1
-                    readOnly: true
-                  callbacks:
-                    description: A list of callbacks
-                    type: array
-                    uniqueItems: true
-                    minItems: 1
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          minLength: 1
-                          description: |-
-                            The id of the callback. 
-
-                            This is the value that should be passed when referring to the callback using the API endpoints
-                          example: D7D2295E2A08388C
-                          readOnly: true
-                        name:
-                          type: string
-                          minLength: 1
-                          description: |-
-                            The name of the callback. 
-
-                            This is the value that should be passed in the message payload for triggering the callbacks
-                          example: callback1
-                          readOnly: true
-                        url:
-                          type: string
-                          minLength: 1
-                          description: The destination url on your servers that Whispir should reach out to.
-                          example: 'https://e05237bf.ngrol.io/'
-                          readOnly: true
-                        retriesEnabled:
-                          type: boolean
-                          default: false
-                          description: |-
-                            If retriesEnabled is false, then Whispir will only try once and when a failure (non 200 OK response code) happens, it will not retry again
-
-                            When true, it will try every 5 mins for a maximum of 10 times.
-
-                            Refer to callback calls for more details on retrieving the SUCCESS and FAIL logs
-                          readOnly: true
-                        link:
-                          $ref: '#/components/schemas/link'
-                    readOnly: true
-                  link:
-                    $ref: '#/components/schemas/link'
+                $ref: '#/components/schemas/callbackCollection'
               examples:
                 example-1:
                   value:
@@ -5863,15 +5633,7 @@ paths:
           content:
             application/vnd.whispir.auth-v1+json:
               schema:
-                description: The create auth response object.
-                type: object
-                properties:
-                  token:
-                    type: string
-                    description: The JWT token.
-                    example: your-generated-token-string
-                  link:
-                    $ref: '#/components/schemas/link'
+                $ref: '#/components/schemas/auth'
               examples:
                 Example:
                   value:
@@ -6308,6 +6070,67 @@ components:
       required:
         - to
         - subject
+    messageCollection:
+      description: The list messages response object.
+      type: object
+      x-examples:
+        Example:
+          messages:
+            - subject: Test Message
+              repetitionCount: 0
+              repeatDays: 0
+              repeatHrs: 0
+              repeatMin: 0
+              from: Test User
+              direction: OUTGOING
+              responseCount: '0'
+              createdTime: 1647467664000
+              link:
+                - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/E9F52215AD0787EBECDD691916955C1E'
+                  rel: self
+                  method: GET
+                  host: api.au.whispir.com
+                  port: -1
+              whatsappValidMessage: true
+              validBody: false
+              validSubject: true
+            - subject: Test Message
+              repetitionCount: 0
+              repeatDays: 0
+              repeatHrs: 0
+              repeatMin: 0
+              from: Test User
+              direction: OUTGOING
+              responseCount: '0'
+              createdTime: 1647466923000
+              link:
+                - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8'
+                  rel: self
+                  method: GET
+                  host: api.au.whispir.com
+                  port: -1
+              whatsappValidMessage: true
+              validBody: false
+              validSubject: true
+          status: ''
+          link: []
+      properties:
+        messages:
+          type: array
+          description: The list of retrieved messages.
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/message'
+          readOnly: true
+        status:
+          description: The status of the list request.
+          type: string
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/link'
+      x-stoplight:
+        id: 262bfb3978d86
     email:
       type: object
       xml:
@@ -6777,6 +6600,37 @@ components:
         - scope
         - mimeType
         - derefUri
+    resourceCollection:
+      type: object
+      description: List of resources object
+      properties:
+        status:
+          type: string
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+          example: 1 to 2 of 2
+          readOnly: true
+        resources:
+          type: array
+          description: List of resources
+          items:
+            $ref: '#/components/schemas/resource'
+          readOnly: true
+      x-stoplight:
+        id: 262bfb3978d86
+      x-examples:
+        status: 1 to 2 of 2
+        resources:
+          - id: 9B9E2425AAFEEE49E9D9112B6BAC22A9
+            name: sample.json
+            scope: private
+            mimeType: application/json
+            derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+            link:
+              - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                rel: self
+                method: GET
+                host: api.au.whispir.com
+                port: -1
     template:
       type: object
       xml:
@@ -6926,6 +6780,70 @@ components:
         - messageTemplateName
         - subject
         - body
+    templateCollection:
+      description: Returns a list of templates
+      type: object
+      x-examples:
+        Example:
+          status: '1 to 1 of 1    '
+          messagetemplates:
+            - messageTemplateName: Sample SMS Template with tags
+              messageTemplateDescription: Template to provide an example on whispir.io no.1
+              id: 3148356543415EE7
+              link:
+                - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
+                  rel: self
+                  method: GET
+                  host: api.au.whispir.com
+                  port: -1
+          link: []
+      properties:
+        status:
+          type: string
+          minLength: 1
+          example: 1 to 1 of 1
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no message templates available.
+          readOnly: true
+        messagetemplates:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          description: Specifies the name of the message template
+          items:
+            type: object
+            properties:
+              messageTemplateName:
+                type: string
+                minLength: 1
+                description: Specifies the name of the message template
+                example: Test Template
+                readOnly: true
+              messageTemplateDescription:
+                type: string
+                minLength: 1
+                description: 'Specifies the description of the message template, so that anyone can understand its purpose'
+                example: The test messate template.
+                readOnly: true
+              id:
+                type: string
+                minLength: 1
+                description: Specifies the template id needed for all the API Operations
+                example: 236EA3E3E63439DA
+                readOnly: true
+              link:
+                $ref: '#/components/schemas/link'
+          readOnly: true
+        link:
+          type: array
+          description: Provides a list of URLs that can be used to manipulate or access the message template. This following attribute may return an empty array.
+          items:
+            type: object
+          readOnly: true
+      required:
+        - status
+        - messagetemplates
+      x-stoplight:
+        id: 262bfb3978d86
     responseTemplatePattern:
       type: object
       xml:
@@ -7022,6 +6940,41 @@ components:
       required:
         - name
         - responseTemplatePatterns
+    responseRuleCollection:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no response rules available.
+          example: 1 to 8 of 8
+          readOnly: true
+        responseRules:
+          type: array
+          description: The list of response rules
+          items:
+            $ref: '#/components/schemas/responseRule'
+          readOnly: true
+      required:
+        - status
+        - responseRules
+      x-examples:
+        Example 1:
+          value:
+            status: 1 to 8 of 8
+            responseRules:
+              - name: Response Rule 1
+                description: My Response Rule
+                responseTemplatePatterns:
+                  name: Yes Rule
+                  pattern: startswith
+                  textPrompt: 'YES'
+                  voicePrompt: '1'
+                  spokenVoicePrompt: to select YES
+                  colour: '#00947d'
+        x-stoplight:
+          id: 21285fb34ba4f
+      x-stoplight:
+        id: 262bfb3978d86
     contact:
       type: object
       xml:
@@ -7383,7 +7336,104 @@ components:
         - workEmailAddress1
         - workCountry
         - timezone
-    distributionlist:
+    contactCollection:
+      type: object
+      description: List contacts object
+      properties:
+        status:
+          type: string
+          example: 1 to 8 of 8
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+          readOnly: true
+        contacts:
+          type: array
+          description: list of contacts
+          items:
+            $ref: '#/components/schemas/contact'
+      x-examples:
+        Example:
+          value:
+            status: 1 to 8 of 8
+            contacts:
+              - firstName: John
+                lastName: Wick
+                workMobilePhone1: '61400400400'
+                workEmailAddress1: testUser@example.com
+                workCountry: Australia
+                timezone: Australia/Melbourne
+                title: Dr
+                workMobilePhone2: '61500500500'
+                workEmailAddress2: newUser@example.com
+                workPhoneAreaCode1: '09'
+                workPhone1: '5006000'
+                workPhoneAreaCode2: '09'
+                workPhone2: '5007000'
+                workFaxAreaCode1: '09'
+                workFax1: '5008000'
+                workSatellitePhone: '61600600600'
+                workOtherPhone: '61700700700'
+                workAddress1: Level 15
+                workAddress2: 360 Collins St
+                workSuburb: Melboure
+                workState: Victoria
+                workPostCode: '3000'
+                workPostalAddress1: Level 15
+                workPostalAddress2: 360 Collins St
+                workPostalSuburb: Melboure
+                workPostalState: Victoria
+                workPostalPostCode: '3000'
+                personalEmailAddress1: personalPrimaryUser@example.com
+                personalEmailAddress2: personalSecondaryUser@example.com
+                personalAddress1: Level 15
+                personalAddress2: 360 Collins St
+                personalSuburb: Melboure
+                personalState: Victoria
+                personalPostCode: '3000'
+                personalCountry: Australia
+                personalPhoneAreaCode1: '09'
+                personalPhone1: '5006000'
+                personalPhoneAreaCode2: '09'
+                personalPhone2: '5007000'
+                personalFaxAreaCode1: '09'
+                personalFax1: '5008000'
+                otherPhoneAreaCode1: '09'
+                otherPhone1: '5009000'
+                otherMobile: '61900900900'
+                otherFirstName: Harold
+                otherLastName: Wickman
+                otherTitle: Mr
+                status: A
+                companyName: Whispir
+                jobTitle: Software Engineer
+                division: Technology
+                businessUnit: Core Platform
+                department: Research & Development
+                teamName1: Optimus Prime
+                teamName2: Bumblebee
+                role1: Administrator
+                role2: Analyst
+                locations:
+                  - latitude: 41.9028
+                    longitude: -12.4964
+                    type: CurrentLocation
+                messagingoptions:
+                  - channel: sms
+                    enabled: true
+                    primary: WorkMobilePhone1
+                    secondary: WorkMobilePhone1
+                    tertiary: WorkMobilePhone1
+                type: PROJECT
+                mri: '61400400400'
+                devices: []
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/673A8E38D34BBF0C/contacts/47F08A08482A5AA40F5A99CE69FB0C16'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+        x-stoplight:
+          id: 21285fb34ba4f
+    distributionListStatic:
       type: object
       xml:
         name: distributionlists
@@ -7510,9 +7560,11 @@ components:
           readOnly: true
       required:
         - name
-    dynamicdistributionlist:
+      x-stoplight:
+        id: 2692ece5fd8a0
+    distributionListDynamic:
       xml:
-        name: dynamicdistributionlist
+        name: distributionListDynamic
         prefix: ns1
       x-tags:
         - Distribution Lists
@@ -7606,6 +7658,90 @@ components:
         - entityType
         - visibility
         - rules
+    distributionList:
+      description: Either a static or dynamic distribution list
+      oneOf:
+        - $ref: '#/components/schemas/distributionListStatic'
+        - $ref: '#/components/schemas/distributionListDynamic'
+      x-examples:
+        Example Static DL:
+          value:
+            id: B27ABC9D8E98A9B
+            name: My Distribution List
+            description: string
+            access: Open
+            visibility: Public
+            contactIds: string
+            userIds: string
+            distListIds: string
+            type: static
+        Example Dyanmic DL:
+          value:
+            id: B27ABC9D8E98A9B
+            name: My Distribution List
+            description: ''
+            access: Open
+            visibility: Public
+            contactIds: ''
+            userIds: ''
+            distListIds: ''
+            type: static
+        x-stoplight:
+          id: 21285fb34ba4f
+      x-stoplight:
+        id: 262bfb3978d86
+    distributionListCollection:
+      type: object
+      description: list of distribution lists
+      x-examples:
+        Example Dynamic Distribution List:
+          value:
+            distributionLists:
+              - id: 5AFEB61102963D7
+                name: My Distribution List
+                mri: My_Distribution_List.company_name@list.company.whispir.sg
+                description: string
+                memberCount: '4'
+                access: Open
+                visibility: Public
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+                distListIds: string
+                distlistdetails:
+                  - id: 123ADAB420493B83
+                    name: John Smith
+                    type: User
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+            status: 1 to 1 of 1
+            link:
+              - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                rel: self
+                method: GET
+                host: api.au.whispir.com
+                port: -1
+        x-stoplight:
+          id: 21285fb34ba4f
+      x-stoplight:
+        id: 262bfb3978d86
+      properties:
+        distributionLists:
+          $ref: '#/components/schemas/distributionList'
+        status:
+          type: string
+          example: 1 to 1 of 1
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/link'
     scenario:
       type: object
       xml:
@@ -7697,6 +7833,57 @@ components:
               - id: social
                 body: Facebook Content
                 type: text/plain
+    scenarioCollection:
+      type: object
+      description: List of retrieved scenarios
+      properties:
+        scenarios:
+          type: array
+          description: Scenario object
+          items:
+            $ref: '#/components/schemas/scenario'
+      x-examples:
+        example-1:
+          value:
+            scenarios:
+              - name: Fire Evacuation Block A
+                description: Fire evacuation notification for A block residents
+                allowedUsers: SELECTEDUSERS
+                allowedUserIds: 4DC922649AFE370C
+                message:
+                  to: '61400400400'
+                  subject: Test Message
+                  body: This is the body of my test SMS message
+                to: '61400400400'
+                subject: Fire Evacuation
+                label: fire-evacuation
+                email:
+                  body: This is the body of my email message.
+                  footer: This is the footer of my message.
+                  type: text/plain
+                voice:
+                  header: 'This is the introduction, read out to the recipient prior to any key press.'
+                  body: 'This is the body of the voice call, read out after the key press'
+                  type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                  footer: ''
+                  other: ''
+                  resources:
+                    attachment:
+                      - attachmentName: TestIcon.png
+                        derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+                        attachmentDesc: My photo
+                web:
+                  body: This is the content of my web publishing or Rich Push Message
+                  type: text/plain
+                social:
+                  social:
+                    - id: social
+                      body: Facebook Content
+                      type: text/plain
+        x-stoplight:
+          id: 21285fb34ba4f
+      x-stoplight:
+        id: 262bfb3978d86
     callback:
       type: object
       xml:
@@ -7811,6 +7998,368 @@ components:
         - retriesEnabled
         - email
         - callbacks
+    callbackCollection:
+      description: The callback object.
+      type: object
+      properties:
+        status:
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+          type: string
+          minLength: 1
+          example: 1 to 1 of 1
+          readOnly: true
+        callbacks:
+          description: A list of callbacks
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength: 1
+                description: |-
+                  The id of the callback. 
+
+                  This is the value that should be passed when referring to the callback using the API endpoints
+                example: D7D2295E2A08388C
+                readOnly: true
+              name:
+                type: string
+                minLength: 1
+                description: |-
+                  The name of the callback. 
+
+                  This is the value that should be passed in the message payload for triggering the callbacks
+                example: callback1
+                readOnly: true
+              url:
+                type: string
+                minLength: 1
+                description: The destination url on your servers that Whispir should reach out to.
+                example: 'https://e05237bf.ngrol.io/'
+                readOnly: true
+              retriesEnabled:
+                type: boolean
+                default: false
+                description: |-
+                  If retriesEnabled is false, then Whispir will only try once and when a failure (non 200 OK response code) happens, it will not retry again
+
+                  When true, it will try every 5 mins for a maximum of 10 times.
+
+                  Refer to callback calls for more details on retrieving the SUCCESS and FAIL logs
+                readOnly: true
+              link:
+                $ref: '#/components/schemas/link'
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/link'
+      x-examples:
+        example-1:
+          value:
+            status: 1 to 1 of 1
+            callbacks:
+              - id: D7D2295E2A08388C
+                name: callback1
+                url: 'https://e05237bf.ngrol.io/'
+                retriesEnabled: false
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+            link:
+              - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                rel: self
+                method: GET
+                host: api.au.whispir.com
+                port: -1
+        x-stoplight:
+          id: 21285fb34ba4f
+      x-stoplight:
+        id: 262bfb3978d86
+    callbackCall:
+      description: A callback call object
+      type: object
+      x-examples:
+        Example:
+          id: 6AB8FF0111C32F1271E1165F3344AD73
+          messageId: 2E585D7FA580335D5C1809F6DD2DFF0B
+          status: SUCCESS
+          messageLocation: 'https://api.au.whispir.com/messages/F4651CB151ACF0504FF09CB4D57922A5'
+          from:
+            name: Cynthia Pushie
+            mobile: '61430430306'
+            email: cren@whispir.com
+            voice: '61430430306'
+          responseMessage:
+            channel: SMS
+            acknowledged: '22/10/20 10:28'
+            content: 'Delivered successfully to 61430430306 at 22/10/20 09:28'
+          callback:
+            id: 93528522590CDF9A
+            name: PVTcallback
+            url: 'https://0cfae5ba271e4b1e3f6f6e3767c50b21.m.pipedream.net'
+            attemptedDate: '2022-03-21T09:26:11.327Z'
+            statusCode: '200'
+            statusMessage: OK
+          link:
+            - uri: 'https://api.au.whispir.com/callbacks/93528522590CDF9A/calls/6AB8FF0111C32F1271E1165F3344AD73'
+              rel: updateCallbackHistory
+              method: PUT
+              type: 'application/vnd.whispir.api-call-v1+xml,application/vnd.whispir.api-call-v1+json'
+              host: api.au.whispir.com
+              port: -1
+            - uri: 'https://api.au.whispir.com/callbacks/93528522590CDF9A/calls/6AB8FF0111C32F1271E1165F3344AD73'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+      title: Callback Call
+      x-tags:
+        - Callbacks
+      properties:
+        id:
+          type: string
+          description: The unique ID of the specific call within Whispir
+          maxLength: 32
+          example: C96962B74DC57EF30F00E7097AC81A45
+          readOnly: true
+        messageId:
+          type: string
+          minLength: 1
+          description: The unique ID of the message within Whispir
+          maxLength: 32
+          example: 8D12688BFCC21BD51174C833F9BC9B9D
+          readOnly: true
+        status:
+          type: string
+          minLength: 1
+          description: The status of this particular callback attempt.
+          enum:
+            - SUCCESS
+            - FAILED
+        messageLocation:
+          example: 'https://api.au.whispir.com/messages/F4651CB151ACF0504FF09CB4D57922A5'
+          type: string
+          minLength: 1
+          description: The fully qualified URL to the original message within Whispir
+          maxLength: 256
+          readOnly: true
+        from:
+          type: object
+          description: The details about this particular message sender/responder
+          properties:
+            name:
+              type: string
+              minLength: 1
+              description: The name of the sender of this message
+              example: John Wick
+              readOnly: true
+            mri:
+              example: support@whispir.com
+              type: string
+              description: The unique identifier for this contact within Whispir
+              readOnly: true
+            mobile:
+              example: '61400400400'
+              type: string
+              minLength: 1
+              description: The mobile phone number associated with this sender
+              readOnly: true
+            voice:
+              example: '61400400400'
+              type: string
+              minLength: 1
+              description: The phone number associated with the voice channel for this sender
+              readOnly: true
+            email:
+              example: support@whispir.com
+              type: string
+              description: The email address associated with the email channel for this sender
+              readOnly: true
+          readOnly: true
+        responseMessage:
+          type: object
+          description: |-
+            The details about this particular message that have been sent to the callback
+
+            IMPORTANT: Depending on the flow, you may only see  one of the acknowledged or undeliverable keys with timestamps as their value
+          properties:
+            channel:
+              type: string
+              minLength: 1
+              description: 'The channel that this message was sent on. Either SMS, email or voice'
+              enum:
+                - sms
+                - email
+                - voice
+                - N/A
+              readOnly: true
+            acknowledged:
+              example: '22/10/20 10:29'
+              type: string
+              minLength: 1
+              description: The date/time that this message was acknowledged
+              readOnly: true
+            undeliverable:
+              example: '22/10/20 10:29'
+              type: string
+              description: The date/time that this message was marked as undeliverable
+              readOnly: true
+            content:
+              type: string
+              minLength: 1
+              description: The content of the message
+              example: 'Delivered successfully to 61430430306 at 22/10/20 09:28'
+              readOnly: true
+          readOnly: true
+        callback:
+          type: object
+          description: The details about this particular callback attempt
+          properties:
+            id:
+              example: 93528522590CDF9A
+              type: string
+              minLength: 1
+              description: The ID of the callback attempting to be invoked
+              readOnly: true
+            name:
+              example: test callback
+              type: string
+              minLength: 1
+              description: The name of the callback server attempting to be invoked
+              readOnly: true
+            url:
+              example: 'https://google.com'
+              type: string
+              minLength: 1
+              description: The URL of the callback server attempting to be invoked
+              readOnly: true
+            attemptedDate:
+              example: '22/10/20 09:28'
+              type: string
+              minLength: 1
+              description: The date/time that the callback server was attempted to be invoked
+              readOnly: true
+            statusCode:
+              example: 200
+              type: integer
+              description: The statuscode that was returned from the callback service
+              readOnly: true
+            statusMessage:
+              example: OK
+              type: string
+              minLength: 1
+              description: The status message that was returned from the callback service
+              readOnly: true
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - status
+    callbackCallCollection:
+      type: object
+      description: A list of callbacks
+      properties:
+        calls:
+          type: array
+          description: A list of callbacks
+          items:
+            $ref: '#/components/schemas/callbackCall'
+        status:
+          type: string
+          example: 1 to 8 of 8
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+        link:
+          $ref: '#/components/schemas/link'
+      x-examples:
+        Example:
+          value:
+            calls:
+              - id: C96962B74DC57EF30F00E7097AC81A45
+                messageId: 8D12688BFCC21BD51174C833F9BC9B9D
+                status: SUCCESS
+                messageLocation: string
+                from:
+                  name: John Wick
+                  mri: support@whispir.com
+                  mobile: '6140099499'
+                  voice: string
+                  email: string
+                responseMessage:
+                  channel: sms
+                  acknowledged: string
+                  undeliverable: string
+                  content: string
+                callback:
+                  id: string
+                  name: string
+                  url: string
+                  attemptedDate: string
+                  statusCode: 200
+                  statusMessage: string
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+            status: 1 to 8 of 8
+            link:
+              - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                rel: self
+                method: GET
+                host: api.au.whispir.com
+                port: -1
+        x-stoplight:
+          id: 21285fb34ba4f
+      x-stoplight:
+        id: 262bfb3978d86
+    callbackAuth:
+      title: Callback Auth
+      type: object
+      description: |-
+        The authentication model details. You will receive - 
+
+        For `queryparam`
+        - `?Auth={{KeyValue}}`
+
+        For `httpheader`
+        - `X-Whispir-Callback-Key: {{KeyValue}}`
+
+        For `basicauth`
+        - `Authorization: Basic {{KeyValue}}`
+
+        For `bearertoken`
+        - `Authorization: Bearer {{KeyValue}}`
+      properties:
+        type:
+          type: string
+          enum:
+            - queryparam
+            - httpheader
+            - basicauth
+            - bearertoken
+          default: queryparam
+          description: The type of authentication allowed by Whispir at the Destination URL
+          example: basicauth
+        key:
+          type: string
+          description: The value that will be passed with the authentication key
+          maxLength: 128
+          example: test34
+      required:
+        - type
+        - key
+      x-examples:
+        example-1:
+          type: queryparam
+          key: test34
+      x-tags:
+        - Callbacks
     workspace:
       type: object
       xml:
@@ -7865,48 +8414,41 @@ components:
       required:
         - projectName
         - status
-    callbackAuth:
-      title: Callback Auth
+    workspaceCollection:
       type: object
-      description: |-
-        The authentication model details. You will receive - 
-
-        For `queryparam`
-        - `?Auth={{KeyValue}}`
-
-        For `httpheader`
-        - `X-Whispir-Callback-Key: {{KeyValue}}`
-
-        For `basicauth`
-        - `Authorization: Basic {{KeyValue}}`
-
-        For `bearertoken`
-        - `Authorization: Bearer {{KeyValue}}`
+      description: List of workspaces
       properties:
-        type:
+        workspaces:
+          type: array
+          description: List of workspaces
+          items:
+            $ref: '#/components/schemas/workspace'
+          readOnly: true
+        status:
           type: string
-          enum:
-            - queryparam
-            - httpheader
-            - basicauth
-            - bearertoken
-          default: queryparam
-          description: The type of authentication allowed by Whispir at the Destination URL
-          example: basicauth
-        key:
-          type: string
-          description: The value that will be passed with the authentication key
-          maxLength: 128
-          example: test34
-      required:
-        - type
-        - key
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+          example: 'status: 1 to 1 of 1'
+          readOnly: true
       x-examples:
         example-1:
-          type: queryparam
-          key: test34
-      x-tags:
-        - Callbacks
+          value:
+            workspaces:
+              - id: 70F2492146292826
+                projectName: A Space Odessey
+                projectNumber: '2001'
+                status: A
+                billingcostcentre: Hollywood
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+            status: 'status: 1 to 1 of 1'
+        x-stoplight:
+          id: 21285fb34ba4f
+      x-stoplight:
+        id: 262bfb3978d86
     locations:
       description: The locations for the contact.
       type: array
@@ -8110,7 +8652,7 @@ components:
         link:
           $ref: '#/components/schemas/link'
     activityCollection:
-      description: Example
+      description: List activities response object
       type: object
       x-examples:
         example-1:
@@ -8145,6 +8687,7 @@ components:
           readOnly: true
         link:
           $ref: '#/components/schemas/link'
+      title: Activity Collection
     user:
       type: object
       xml:
@@ -8503,56 +9046,93 @@ components:
         - lastName
         - workCountry
         - timezone
-    listUsers:
+    userCollection:
       type: object
-      xml:
-        name: user
-        prefix: ns2
-      x-tags:
-        - Users
-      title: List Users
-      x-examples:
-        Example:
-          id: 4DC922649AFE370C
-          firstName: John
-          lastName: Wick
-          companyName: Whispir
-          workEmailAddress1: testUser@example.com
-          link:
-            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-              rel: self
-              method: GET
-              host: api.au.whispir.com
-              port: -1
-      description: List users response object
+      description: List users object
       properties:
-        id:
-          type: string
-          description: The ID of the user.
-          example: 4DC922649AFE370C
+        users:
+          type: array
+          description: List of retrieved users
+          items:
+            type: object
+            xml:
+              name: user
+              prefix: ns2
+            x-tags:
+              - Users
+            title: User Collection
+            x-examples:
+              Example:
+                id: 4DC922649AFE370C
+                firstName: John
+                lastName: Wick
+                companyName: Whispir
+                workEmailAddress1: testUser@example.com
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+            description: List users response object
+            properties:
+              id:
+                type: string
+                description: The ID of the user.
+                example: 4DC922649AFE370C
+                readOnly: true
+              firstName:
+                type: string
+                description: The first name of the user.
+                example: John
+                readOnly: true
+              lastName:
+                type: string
+                description: The last name of the user.
+                example: Wick
+                readOnly: true
+              companyName:
+                type: string
+                description: The company name of the user.
+                example: Whispir
+                readOnly: true
+              workEmailAddress1:
+                type: string
+                example: testUser@example.com
+                description: The primary work email address of the user.
+                readOnly: true
+              link:
+                $ref: '#/components/schemas/link'
           readOnly: true
-        firstName:
+        status:
           type: string
-          description: The first name of the user.
-          example: John
-          readOnly: true
-        lastName:
-          type: string
-          description: The last name of the user.
-          example: Wick
-          readOnly: true
-        companyName:
-          type: string
-          description: The company name of the user.
-          example: Whispir
-          readOnly: true
-        workEmailAddress1:
-          type: string
-          example: testUser@example.com
-          description: The primary work email address of the user.
+          example: 1 to 20 of 73
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no users available.
           readOnly: true
         link:
           $ref: '#/components/schemas/link'
+      x-examples:
+        Example:
+          value:
+            users:
+              - id: 4DC922649AFE370C
+                firstName: John
+                lastName: Wick
+                companyName: Whispir
+                workEmailAddress1: testUser@example.com
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+            status: 1 to 8 of 8
+            link:
+              - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                rel: self
+                method: GET
+                host: api.au.whispir.com
+                port: -1
     event:
       type: object
       xml:
@@ -8657,6 +9237,44 @@ components:
       required:
         - eventLabel
         - status
+    eventCollection:
+      type: object
+      description: List of events
+      properties:
+        status:
+          type: string
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no events available.
+          example: 1 to 2 of 2
+          readOnly: true
+        events:
+          type: array
+          description: List of events
+          items:
+            $ref: '#/components/schemas/event'
+          readOnly: true
+      x-examples:
+        Events response example:
+          value:
+            events:
+              - id: string
+                eventLabel: 2701095 - Outage of Local Systems in Sydney
+                status: Open
+                eventFormList:
+                  - formName: Metro Event
+                    eventFieldList:
+                      - name: string
+                        value: string
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+            status: 1 to 2 of 2
+        x-stoplight:
+          id: 21285fb34ba4f
+      x-stoplight:
+        id: 262bfb3978d86
     import:
       type: object
       xml:
@@ -8819,6 +9437,67 @@ components:
               - -1
             readOnly: true
       readOnly: true
+    dlr:
+      title: Delivery Receipt
+      description: A fixed object structure used by for Whispir internally for tracking purposes.
+      type: object
+      readOnly: true
+      required:
+        - period
+        - rule
+        - type
+        - publishToWeb
+        - expiryDay
+        - expiryHour
+        - expiryMin
+        - feedIds
+        - bool
+      properties:
+        period:
+          description: The period of the message delivery.
+          type: string
+          example: ''
+        rule:
+          description: The rule of the message delivery.
+          type: string
+          example: ''
+        type:
+          description: The type of the message delivery.
+          type: string
+          example: ''
+        publishToWeb:
+          description: Specifies whether the message was published to the web.
+          type: boolean
+        expiryDay:
+          description: Specifies the number of days before the message expires.
+          type: number
+          example: 0
+        expiryHour:
+          description: Specifies the number of hours before the message expires.
+          type: number
+          example: 0
+        expiryMin:
+          description: Specifies the number of minutes before the message expires.
+          type: number
+          example: 0
+        feedIds:
+          description: The feeds identifier for the message delivery.
+          type: string
+          example: ''
+        bool:
+          description: The bool field for the message delivery.
+          type: boolean
+      x-examples:
+        Example:
+          period: ''
+          rule: ''
+          type: ''
+          publishToWeb: false
+          expiryDay: 0
+          expiryHour: 0
+          expiryMin: 0
+          feedIds: ''
+          bool: false
     messageStatus:
       description: 'The message status object, describing the delivery of the sent message.'
       type: object
@@ -9111,247 +9790,60 @@ components:
       required:
         - messageresponses
         - link
-    dlr:
-      title: Delivery Receipt
-      description: A fixed object structure used by for Whispir internally for tracking purposes.
-      type: object
-      readOnly: true
-      required:
-        - period
-        - rule
-        - type
-        - publishToWeb
-        - expiryDay
-        - expiryHour
-        - expiryMin
-        - feedIds
-        - bool
-      properties:
-        period:
-          description: The period of the message delivery.
-          type: string
-          example: ''
-        rule:
-          description: The rule of the message delivery.
-          type: string
-          example: ''
-        type:
-          description: The type of the message delivery.
-          type: string
-          example: ''
-        publishToWeb:
-          description: Specifies whether the message was published to the web.
-          type: boolean
-        expiryDay:
-          description: Specifies the number of days before the message expires.
-          type: number
-          example: 0
-        expiryHour:
-          description: Specifies the number of hours before the message expires.
-          type: number
-          example: 0
-        expiryMin:
-          description: Specifies the number of minutes before the message expires.
-          type: number
-          example: 0
-        feedIds:
-          description: The feeds identifier for the message delivery.
-          type: string
-          example: ''
-        bool:
-          description: The bool field for the message delivery.
-          type: boolean
+    messageResponse:
+      description: The message response object.
+      oneOf:
+        - $ref: '#/components/schemas/messageResponseDetailed'
+        - $ref: '#/components/schemas/messageResponseSummary'
       x-examples:
-        Example:
-          period: ''
-          rule: ''
-          type: ''
-          publishToWeb: false
-          expiryDay: 0
-          expiryHour: 0
-          expiryMin: 0
-          feedIds: ''
-          bool: false
-    callbackCall:
-      description: A callback call object
-      type: object
-      x-examples:
-        Example:
-          id: 6AB8FF0111C32F1271E1165F3344AD73
-          messageId: 2E585D7FA580335D5C1809F6DD2DFF0B
-          status: SUCCESS
-          messageLocation: 'https://api.au.whispir.com/messages/F4651CB151ACF0504FF09CB4D57922A5'
-          from:
-            name: Cynthia Pushie
-            mobile: '61430430306'
-            email: cren@whispir.com
-            voice: '61430430306'
-          responseMessage:
-            channel: SMS
-            acknowledged: '22/10/20 10:28'
-            content: 'Delivered successfully to 61430430306 at 22/10/20 09:28'
-          callback:
-            id: 93528522590CDF9A
-            name: PVTcallback
-            url: 'https://0cfae5ba271e4b1e3f6f6e3767c50b21.m.pipedream.net'
-            attemptedDate: '2022-03-21T09:26:11.327Z'
-            statusCode: '200'
-            statusMessage: OK
-          link:
-            - uri: 'https://api.au.whispir.com/callbacks/93528522590CDF9A/calls/6AB8FF0111C32F1271E1165F3344AD73'
-              rel: updateCallbackHistory
-              method: PUT
-              type: 'application/vnd.whispir.api-call-v1+xml,application/vnd.whispir.api-call-v1+json'
-              host: api.au.whispir.com
-              port: -1
-            - uri: 'https://api.au.whispir.com/callbacks/93528522590CDF9A/calls/6AB8FF0111C32F1271E1165F3344AD73'
-              rel: self
-              method: GET
-              host: api.au.whispir.com
-              port: -1
-      title: Callback Call
-      x-tags:
-        - Callbacks
-      properties:
-        id:
-          type: string
-          description: The unique ID of the specific call within Whispir
-          maxLength: 32
-          example: C96962B74DC57EF30F00E7097AC81A45
-          readOnly: true
-        messageId:
-          type: string
-          minLength: 1
-          description: The unique ID of the message within Whispir
-          maxLength: 32
-          example: 8D12688BFCC21BD51174C833F9BC9B9D
-          readOnly: true
-        status:
-          type: string
-          minLength: 1
-          description: The status of this particular callback attempt.
-          enum:
-            - SUCCESS
-            - FAILED
-        messageLocation:
-          example: 'https://api.au.whispir.com/messages/F4651CB151ACF0504FF09CB4D57922A5'
-          type: string
-          minLength: 1
-          description: The fully qualified URL to the original message within Whispir
-          maxLength: 256
-          readOnly: true
-        from:
-          type: object
-          description: The details about this particular message sender/responder
-          properties:
-            name:
-              type: string
-              minLength: 1
-              description: The name of the sender of this message
-              example: John Wick
-              readOnly: true
-            mri:
-              example: support@whispir.com
-              type: string
-              description: The unique identifier for this contact within Whispir
-              readOnly: true
-            mobile:
-              example: '61400400400'
-              type: string
-              minLength: 1
-              description: The mobile phone number associated with this sender
-              readOnly: true
-            voice:
-              example: '61400400400'
-              type: string
-              minLength: 1
-              description: The phone number associated with the voice channel for this sender
-              readOnly: true
-            email:
-              example: support@whispir.com
-              type: string
-              description: The email address associated with the email channel for this sender
-              readOnly: true
-          readOnly: true
-        responseMessage:
-          type: object
-          description: |-
-            The details about this particular message that have been sent to the callback
-
-            IMPORTANT: Depending on the flow, you may only see  one of the acknowledged or undeliverable keys with timestamps as their value
-          properties:
-            channel:
-              type: string
-              minLength: 1
-              description: 'The channel that this message was sent on. Either SMS, email or voice'
-              enum:
-                - sms
-                - email
-                - voice
-                - N/A
-              readOnly: true
-            acknowledged:
-              example: '22/10/20 10:29'
-              type: string
-              minLength: 1
-              description: The date/time that this message was acknowledged
-              readOnly: true
-            undeliverable:
-              example: '22/10/20 10:29'
-              type: string
-              description: The date/time that this message was marked as undeliverable
-              readOnly: true
-            content:
-              type: string
-              minLength: 1
-              description: The content of the message
-              example: 'Delivered successfully to 61430430306 at 22/10/20 09:28'
-              readOnly: true
-          readOnly: true
-        callback:
-          type: object
-          description: The details about this particular callback attempt
-          properties:
-            id:
-              example: 93528522590CDF9A
-              type: string
-              minLength: 1
-              description: The ID of the callback attempting to be invoked
-              readOnly: true
-            name:
-              example: test callback
-              type: string
-              minLength: 1
-              description: The name of the callback server attempting to be invoked
-              readOnly: true
-            url:
-              example: 'https://google.com'
-              type: string
-              minLength: 1
-              description: The URL of the callback server attempting to be invoked
-              readOnly: true
-            attemptedDate:
-              example: '22/10/20 09:28'
-              type: string
-              minLength: 1
-              description: The date/time that the callback server was attempted to be invoked
-              readOnly: true
-            statusCode:
-              example: 200
-              type: integer
-              description: The statuscode that was returned from the callback service
-              readOnly: true
-            statusMessage:
-              example: OK
-              type: string
-              minLength: 1
-              description: The status message that was returned from the callback service
-              readOnly: true
-          readOnly: true
-        link:
-          $ref: '#/components/schemas/link'
-      required:
-        - status
+        Summary:
+          value:
+            messageresponses:
+              - percentageTotal: 50%
+                responseCount: '1'
+                link: []
+                type: noresponse
+              - percentageTotal: 50%
+                responseCount: '1'
+                link: []
+                type: notmatched
+            link:
+              - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                rel: self
+                method: GET
+                host: api.au.whispir.com
+                port: -1
+        Detailed:
+          value:
+            status: '1 to 2 of 2    '
+            messageresponses:
+              - from:
+                  name: John Smith
+                  mri: John_Smith.484215.Critical_Incident_Management@Contact.whispir.com
+                  mobile: '+1000000000'
+                  email: jsmith@test.com
+                  voice: '+1000000000'
+                responseCategory: noresponse
+                responseMessage:
+                  content: N/A
+                  acknowledged: N/A
+                  channel: N/A
+              - from:
+                  name: Fred Smith
+                  mri: Fred_Smith.341550.Critical_Incident_Management@Contact.whispir.com
+                  mobile: '+1000000000'
+                  email: fsmith@test.com
+                  voice: '+1000000000'
+                responseCategory: notmatched
+                responseMessage:
+                  content: 'OK, got it. Thanks.'
+                  acknowledged: '28/09/12 08:48'
+                  channel: sms
+            link: []
+        x-stoplight:
+          id: 21285fb34ba4f
+      x-stoplight:
+        id: 262bfb3978d86
     customList:
       type: object
       x-examples:
@@ -9448,6 +9940,86 @@ components:
         link:
           $ref: '#/components/schemas/link'
       readOnly: true
+    customListCollection:
+      type: object
+      description: List of custom lists
+      properties:
+        status:
+          type: string
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+          example: 1 to 1 of 1
+          readOnly: true
+        customlabels:
+          type: array
+          description: A list of custom lists
+          items:
+            $ref: '#/components/schemas/customList'
+          readOnly: true
+      x-examples:
+        custom lists response example:
+          value:
+            status: string
+            customlabels:
+              - id: 4B4625BAEB7E4D58
+                name: Day of Week
+                type: MESSAGE
+                createdDate: '09/06/15 10:18'
+                sortType: As Displayed
+                linked: enabled
+                link:
+                  - uri: 'https://api.au.whispir.com/customlists/4B4625BAEB7E4D58'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+      x-stoplight:
+        id: 262bfb3978d86
+    apiError:
+      description: The generic error object
+      type: object
+      x-examples:
+        Example:
+          errorSummary: Your request was malformed and could not be processed by the server. Please try again
+          errorText: Bad Request
+          errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
+      properties:
+        errorSummary:
+          type: string
+          description: The summary of the error encountered.
+          example: Your request was malformed and could not be processed by the server. Please try again
+          readOnly: true
+        errorText:
+          type: string
+          description: The detailed description of the error encountered.
+          minLength: 1
+          example: Bad Request
+          readOnly: true
+        errorDetail:
+          type: string
+          description: The additional details describing the error.
+          example: 'java.io.EOFException: No content to map to Object due to end of input'
+          readOnly: true
+      required:
+        - errorSummary
+        - errorText
+        - errorDetail
+      x-stoplight:
+        id: 9e4608f490ee2
+    auth:
+      description: The create auth response object.
+      type: object
+      properties:
+        token:
+          type: string
+          description: The JWT token.
+          example: your-generated-token-string
+        link:
+          $ref: '#/components/schemas/link'
+      x-examples:
+        Example:
+          value:
+            token: your-generated-token-string
+            link: []
   parameters:
     X-Api-Key:
       name: X-Api-Key
@@ -10000,22 +10572,7 @@ components:
       content:
         application/vnd.whispir.user-v1+json:
           schema:
-            type: object
-            description: List users object
-            properties:
-              users:
-                type: array
-                description: List of retrieved users
-                items:
-                  $ref: '#/components/schemas/listUsers'
-                readOnly: true
-              status:
-                type: string
-                example: 1 to 20 of 73
-                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no users available.
-                readOnly: true
-              link:
-                $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/userCollection'
           examples:
             Example:
               value:
@@ -10134,33 +10691,7 @@ components:
       content:
         application/json:
           schema:
-            description: The bad request response object.
-            type: object
-            x-examples:
-              Example:
-                errorSummary: Your request was malformed and could not be processed by the server. Please try again
-                errorText: Bad Request
-                errorDetail: 'java.io.EOFException: No content to map to Object due to end of input'
-            properties:
-              errorSummary:
-                type: string
-                description: The summary of the error encountered.
-                minLength: 1
-                example: Your request was malformed and could not be processed by the server. Please try again
-              errorText:
-                type: string
-                description: The detailed description of the error encountered.
-                minLength: 1
-                example: Bad Request
-              errorDetail:
-                type: string
-                description: The additional details describing the error.
-                minLength: 1
-                example: '"java.io.EOFException: No content to map to Object due to end of inpu'
-            required:
-              - errorSummary
-              - errorText
-              - errorDetail
+            $ref: '#/components/schemas/apiError'
           examples:
             Example:
               value:
@@ -10186,33 +10717,10 @@ components:
       content:
         application/json:
           schema:
-            description: The unauthorised response object.
-            type: object
-            properties:
-              links:
-                $ref: '#/components/schemas/link'
-              errorSummary:
-                type: string
-                description: The summary of the error encountered.
-                minLength: 1
-                example: Your username and password combination was incorrect. Please check your authentication details and try again
-              errorText:
-                type: string
-                description: The detailed description of the error encountered.
-                minLength: 1
-                example: Unauthorised
-              errorDetail:
-                type: string
-                description: The additional details describing the error.
-                example: An exception occurred.
-            required:
-              - errorSummary
-              - errorText
-              - errorDetail
+            $ref: '#/components/schemas/apiError'
           examples:
             Example:
               value:
-                links: []
                 errorSummary: Your username and password combination was incorrect. Please check your authentication details and try again
                 errorText: Unauthorized
                 errorDetail: ''
@@ -10238,19 +10746,13 @@ components:
       content:
         application/json:
           schema:
-            description: The forbidden response object.
-            type: object
-            properties:
-              message:
-                type: string
-                description: The error message.
-                example: Forbidden
-            required:
-              - message
+            $ref: '#/components/schemas/apiError'
           examples:
             Example:
               value:
-                message: Forbidden
+                errorSummary: ''
+                errorText: Forbidden
+                errorDetail: ''
       headers:
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
@@ -10272,32 +10774,13 @@ components:
       content:
         application/json:
           schema:
-            description: The not found response object.
-            type: object
-            properties:
-              errorSummary:
-                type: string
-                description: The summary of the error encountered.
-                minLength: 1
-                example: The resource that you have requested does not exist. Please check the identifier and try again
-              errorText:
-                type: string
-                description: The detailed description of the error encountered.
-                minLength: 1
-                example: Not Found
-              errorDetail:
-                type: string
-                description: The additional details describing the error.
-                example: An exception occurred.
-              link:
-                $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/apiError'
           examples:
             Example:
               value:
                 errorSummary: The resource that you have requested does not exist. Please check the identifier and try again
                 errorText: Not Found
                 errorDetail: ''
-                link: []
       headers:
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
@@ -10319,24 +10802,7 @@ components:
       content:
         application/json:
           schema:
-            description: The unsupported media type response object.
-            type: object
-            properties:
-              errorSummary:
-                type: string
-                description: The summary of the error encountered.
-                minLength: 1
-                example: 'The media type you have supplied in the request does not match any of the available on the server. Please check the documentation for the correct media-type definitions, or contact support@whispir.com to determine what media-type you should be using'
-              errorText:
-                type: string
-                description: The detailed description of the error encountered.
-                minLength: 1
-                example: Unsupported Media Type
-              errorDetail:
-                type: string
-                description: The additional details describing the error.
-                minLength: 1
-                example: 'javax.ws.rs.NotSupportedException: Cannot consume content type'
+            $ref: '#/components/schemas/apiError'
           examples:
             Example:
               value:
@@ -10362,33 +10828,13 @@ components:
       content:
         application/json:
           schema:
-            description: The unprocessable entity response object.
-            type: object
-            properties:
-              errorSummary:
-                type: string
-                description: The summary of the error encountered.
-                minLength: 1
-                example: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
-              errorText:
-                type: string
-                description: The detailed description of the error encountered.
-                minLength: 1
-                example: 'A Template name already exists in the current Workspace, please select another name and try again.'
-              errorDetail:
-                type: string
-                description: The additional details describing the error.
-                example: An exception occurred.
-              link:
-                $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/apiError'
           examples:
             Example:
               value:
                 errorSummary: 'Your request did not contain all of the information required to perform this method. Please check your request for the required fields to be passed in and try again. Alternatively, contact your administrator or support@whispir.com for more information'
-                errorText: |
-                  A Template name already exists in the current Workspace, please select another name and try again.
+                errorText: 'A Template name already exists in the current Workspace, please select another name and try again.'
                 errorDetail: ''
-                link: []
       headers:
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
@@ -10419,17 +10865,13 @@ components:
       content:
         application/json:
           schema:
-            description: The internal server response object.
-            type: object
-            properties:
-              message:
-                type: string
-                description: The error message.
-                example: Internal Server Error
+            $ref: '#/components/schemas/apiError'
           examples:
             Example:
               value:
-                message: Internal Server Error
+                errorSummary: ''
+                errorText: Internal Server Error
+                errorDetail: ''
     Callback:
       description: The Callback object
       content:
@@ -10482,32 +10924,13 @@ components:
       content:
         application/json:
           schema:
-            description: The method not implemented response object.
-            type: object
-            properties:
-              errorSummary:
-                type: string
-                description: The summary of the error encountered.
-                example: 'The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com'
-                minLength: 1
-              errorText:
-                type: string
-                description: The detailed description of the error encountered.
-                example: Not Implemented
-                minLength: 1
-              errorDetail:
-                type: string
-                description: The additional details describing the error.
-                example: An exception occurred.
-              link:
-                $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/apiError'
           examples:
             Example:
               value:
-                errorSummary: 'The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com'
+                errorSummary: The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com
                 errorText: Not Implemented
                 errorDetail: ''
-                link: []
       headers:
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
@@ -10538,32 +10961,13 @@ components:
       content:
         application/json:
           schema:
-            description: The method not allowed response object.
-            type: object
-            properties:
-              errorSummary:
-                type: string
-                description: The summary of the error encountered.
-                example: The method that you have tried to use is not allowed for this resource
-                minLength: 1
-              errorText:
-                type: string
-                description: The detailed description of the error encountered.
-                example: Method Not Allowed
-                minLength: 1
-              errorDetail:
-                type: string
-                description: The additional details describing the error.
-                example: An exception occurred.
-              link:
-                $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/apiError'
           examples:
             Example:
               value:
                 errorSummary: The method that you have tried to use is not allowed for this resource
                 errorText: Method Not Allowed
                 errorDetail: ''
-                link: []
     413EntityTooLarge:
       description: |-
         The request payload was too large.
@@ -10595,20 +10999,7 @@ components:
       content:
         application/vnd.whispir.api-call-v1+json:
           schema:
-            type: object
-            description: A list of callbacks
-            properties:
-              calls:
-                type: array
-                description: A list of callbacks
-                items:
-                  $ref: '#/components/schemas/callbackCall'
-              status:
-                type: string
-                example: 1 to 8 of 8
-                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
-              link:
-                $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/callbackCallCollection'
           examples:
             Example:
               value:
@@ -10766,19 +11157,7 @@ components:
       content:
         application/vnd.whispir.contact-v1+json:
           schema:
-            type: object
-            description: List contacts object
-            properties:
-              status:
-                type: string
-                example: 1 to 8 of 8
-                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
-                readOnly: true
-              contacts:
-                type: array
-                description: list of contacts
-                items:
-                  $ref: '#/components/schemas/contact'
+            $ref: '#/components/schemas/contactCollection'
           examples:
             Example:
               value:
@@ -10909,20 +11288,7 @@ components:
       content:
         application/vnd.whispir.workspace-v1+json:
           schema:
-            type: object
-            description: List of workspaces
-            properties:
-              workspaces:
-                type: array
-                description: List of workspaces
-                items:
-                  $ref: '#/components/schemas/workspace'
-                readOnly: true
-              status:
-                type: string
-                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
-                example: 'status: 1 to 1 of 1'
-                readOnly: true
+            $ref: '#/components/schemas/workspaceCollection'
           examples:
             example-1:
               value:
@@ -10988,20 +11354,7 @@ components:
       content:
         application/vnd.whispir.resource-v1+json:
           schema:
-            type: object
-            description: List of resources object
-            properties:
-              status:
-                type: string
-                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
-                example: 1 to 2 of 2
-                readOnly: true
-              resources:
-                type: array
-                description: List of resources
-                items:
-                  $ref: '#/components/schemas/resource'
-                readOnly: true
+            $ref: '#/components/schemas/resourceCollection'
           examples:
             example-1:
               value:
@@ -11034,10 +11387,7 @@ components:
       content:
         application/vnd.whispir.distributionlist-v1+json:
           schema:
-            description: Either a static or dynamic distribution list
-            oneOf:
-              - $ref: '#/components/schemas/distributionlist'
-              - $ref: '#/components/schemas/dynamicdistributionlist'
+            $ref: '#/components/schemas/distributionList'
           examples:
             Example Static DL:
               value:
@@ -11050,7 +11400,7 @@ components:
                 userIds: string
                 distListIds: string
                 type: static
-            Example Dyanmic DL:
+            Example Dynamic DL:
               value:
                 id: B27ABC9D8E98A9B
                 name: My Distribution List
@@ -11079,23 +11429,7 @@ components:
       content:
         application/vnd.whispir.distributionlist-v1+json:
           schema:
-            type: object
-            description: list of distribution lists
-            properties:
-              distributionLists:
-                description: Either a static or dynamic distribution list
-                type: array
-                items:
-                  oneOf:
-                    - $ref: '#/components/schemas/distributionlist'
-                    - $ref: '#/components/schemas/dynamicdistributionlist'
-              status:
-                type: string
-                example: 1 to 1 of 1
-                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
-                readOnly: true
-              link:
-                $ref: '#/components/schemas/link'
+            $ref: '#/components/schemas/distributionListCollection'
           examples:
             Example Dynamic Distribution List:
               value:
@@ -11149,20 +11483,7 @@ components:
       content:
         application/vnd.whispir.customlist-v1+json:
           schema:
-            type: object
-            description: List of custom lists
-            properties:
-              status:
-                type: string
-                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
-                example: 1 to 1 of 1
-                readOnly: true
-              customlabels:
-                type: array
-                description: A list of custom lists
-                items:
-                  $ref: '#/components/schemas/customList'
-                readOnly: true
+            $ref: '#/components/schemas/customListCollection'
           examples:
             custom lists response example:
               value:
@@ -11239,20 +11560,7 @@ components:
       content:
         application/vnd.whispir.event-v1+json:
           schema:
-            type: object
-            description: List of events
-            properties:
-              status:
-                type: string
-                description: Provides the total number of records fetched. This attribute may return "No records found" when there are no events available.
-                example: 1 to 2 of 2
-                readOnly: true
-              events:
-                type: array
-                description: List of events
-                items:
-                  $ref: '#/components/schemas/event'
-                readOnly: true
+            $ref: '#/components/schemas/eventCollection'
           examples:
             Events response example:
               value:

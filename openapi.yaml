@@ -2891,10 +2891,7 @@ paths:
         content:
           application/vnd.whispir.distributionlist-v1+json:
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/distributionListStatic'
-                - $ref: '#/components/schemas/distributionListDynamic'
-              description: Either a static or dynamic distribution list
+              $ref: '#/components/schemas/distributionList'
             examples:
               Example:
                 value:
@@ -10928,7 +10925,7 @@ components:
           examples:
             Example:
               value:
-                errorSummary: The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com
+                errorSummary: 'The method that you have tried to use is not implemented for this resource. Please check the documentation, or contact your administrator. Alternatively you can get further information by contacting support@whispir.com'
                 errorText: Not Implemented
                 errorDetail: ''
       headers:

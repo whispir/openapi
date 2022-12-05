@@ -7940,7 +7940,7 @@ components:
       x-examples:
         Example Static DL:
           value:
-            id: B27ABC9D8E98A9B
+            id: B27ABC59D8E98A9B
             name: My Distribution List
             description: string
             access: Open

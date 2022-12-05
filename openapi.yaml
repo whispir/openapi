@@ -5942,13 +5942,13 @@ components:
             The 1570 length is a combination of subject and body.
           maxLength: 1570
         email:
-          $ref: '#/components/schemas/email'
+          $ref: '#/components/schemas/messageEmail'
         voice:
-          $ref: '#/components/schemas/voice'
+          $ref: '#/components/schemas/messageVoice'
         web:
-          $ref: '#/components/schemas/web'
+          $ref: '#/components/schemas/messageWeb'
         social:
-          $ref: '#/components/schemas/social'
+          $ref: '#/components/schemas/messageSocial'
         type:
           type: string
           enum:
@@ -5962,7 +5962,7 @@ components:
             - `defaultNoReply`: Used to reject any replies to this message.
             - `noDlr`: Used to specify that DLRs should not be enabled for this message.
         features:
-          $ref: '#/components/schemas/features'
+          $ref: '#/components/schemas/messageFeatures'
         resource:
           $ref: '#/components/schemas/resource'
         messageTemplateId:
@@ -6061,7 +6061,7 @@ components:
           type: boolean
           readOnly: true
         dlr:
-          $ref: '#/components/schemas/dlr'
+          $ref: '#/components/schemas/messageDlr'
         link:
           $ref: '#/components/schemas/link'
       required:
@@ -6126,9 +6126,10 @@ components:
           readOnly: true
         link:
           $ref: '#/components/schemas/link'
-      x-stoplight:
-        id: 262bfb3978d86
-    email:
+      title: Message Collection
+      x-tags:
+        - Messages
+    messageEmail:
       type: object
       xml:
         name: email
@@ -6178,11 +6179,11 @@ components:
               type: array
               uniqueItems: false
               items:
-                $ref: '#/components/schemas/attachment'
+                $ref: '#/components/schemas/messageAttachment'
           writeOnly: true
       required:
         - body
-    voice:
+    messageVoice:
       type: object
       xml:
         name: voice
@@ -6306,11 +6307,11 @@ components:
                 | header         | `"voiceintro.wav"` |
                 | body           | `"voicebody.wav"` |
               items:
-                $ref: '#/components/schemas/attachment'
+                $ref: '#/components/schemas/messageAttachment'
       required:
         - body
         - type
-    web:
+    messageWeb:
       description: |-
         The web channel payload, used when attaching web content to a Message.
 
@@ -6337,7 +6338,7 @@ components:
         Web:
           body: This is the content of my web publishing or Rich Push Message
           type: text/plain
-    social:
+    messageSocial:
       type: object
       xml:
         name: social
@@ -6386,7 +6387,7 @@ components:
                 enum:
                   - text/plain
                   - text/html
-    features:
+    messageFeatures:
       type: object
       xml:
         name: features
@@ -6537,6 +6538,444 @@ components:
               type: string
               description: The name of the alias configured to modify the message sender.
               example: Marketing
+    messageAttachment:
+      type: object
+      description: |-
+        Attachments can be of any type [e.g. PDF, images and documents], and the maximum size of all attached files combined is 10 MB
+
+        Attachments must be provided in the payload of the message. URLs can be referenced in the email but will not be added as message attachments.
+      x-examples:
+        JSON:
+          attachmentName: sample.json
+          attachmentDesc: Sample
+          derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
+      title: Attachment
+      properties:
+        attachmentName:
+          type: string
+          description: 'The name of the attachment, including the extension.'
+          example: TestIcon.png
+        derefUri:
+          type: string
+          description: The Base64 encoded value for the email attachment.
+          example: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+        attachmentDesc:
+          type: string
+          description: A description for the attachment.
+          example: My photo
+      required:
+        - attachmentName
+        - derefUri
+      x-tags:
+        - Messages
+    messageDlr:
+      title: Delivery Receipt
+      description: A fixed object structure used by for Whispir internally for tracking purposes.
+      type: object
+      readOnly: true
+      required:
+        - period
+        - rule
+        - type
+        - publishToWeb
+        - expiryDay
+        - expiryHour
+        - expiryMin
+        - feedIds
+        - bool
+      properties:
+        period:
+          description: The period of the message delivery.
+          type: string
+          example: ''
+        rule:
+          description: The rule of the message delivery.
+          type: string
+          example: ''
+        type:
+          description: The type of the message delivery.
+          type: string
+          example: ''
+        publishToWeb:
+          description: Specifies whether the message was published to the web.
+          type: boolean
+        expiryDay:
+          description: Specifies the number of days before the message expires.
+          type: number
+          example: 0
+        expiryHour:
+          description: Specifies the number of hours before the message expires.
+          type: number
+          example: 0
+        expiryMin:
+          description: Specifies the number of minutes before the message expires.
+          type: number
+          example: 0
+        feedIds:
+          description: The feeds identifier for the message delivery.
+          type: string
+          example: ''
+        bool:
+          description: The bool field for the message delivery.
+          type: boolean
+      x-examples:
+        Example:
+          period: ''
+          rule: ''
+          type: ''
+          publishToWeb: false
+          expiryDay: 0
+          expiryHour: 0
+          expiryMin: 0
+          feedIds: ''
+          bool: false
+      x-tags:
+        - Messages
+    messageStatus:
+      description: 'The message status object, describing the delivery of the sent message.'
+      type: object
+      x-examples:
+        Summary:
+          messageStatuses:
+            - link:
+                - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
+                  rel: self
+                  method: GET
+                  host: api.au.whispir.com
+                  port: -1
+              categories:
+                - name: Sent
+                  recipientCount: 0
+                  percentageTotal: 0.0%
+                - name: Pending
+                  recipientCount: 0
+                  percentageTotal: 0.0%
+                - name: Received
+                  recipientCount: 1
+                  percentageTotal: 100.0%
+                - name: Acknowledged
+                  recipientCount: 0
+                  percentageTotal: 0.0%
+                - name: Undeliverable
+                  recipientCount: 0
+                  percentageTotal: 0.0%
+          link: []
+        Detailed:
+          messageStatuses:
+            - name: '61400400400'
+              info: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
+              link:
+                - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed'
+                  rel: self
+                  method: GET
+                  host: api.au.whispir.com
+                  port: -1
+              status:
+                - type: email
+                  status: ''
+                  destination: ''
+                - type: sms
+                  status: DELIVRD
+                  destination: '61400400400'
+                  sentTimestamp: 1647466923000
+                  receivedTimestamp: 1647466931000
+                - type: voice
+                  status: ''
+                  destination: ''
+          status: '1 to 1 of 1    '
+          link: []
+      title: Message Status
+      x-tags:
+        - Messages
+      properties:
+        messageStatuses:
+          description: The object defining the message delivery status.
+          type: array
+          uniqueItems: true
+          items:
+            type: object
+            properties:
+              link:
+                $ref: '#/components/schemas/link'
+              categories:
+                type: array
+                uniqueItems: true
+                minItems: 5
+                maxItems: 5
+                description: Present when `view` is `summary`.
+                items:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    name:
+                      description: The delivery status of the message.
+                      type: string
+                      enum:
+                        - Sent
+                        - Pending
+                        - Received
+                        - Acknowledged
+                        - Undeliverable
+                    recipientCount:
+                      description: The number of recipients with the given `name` status.
+                      type: number
+                      example: 1
+                    percentageTotal:
+                      description: The percentage of recipients with the given `name` status.
+                      type: string
+                      example: 100.0%
+              name:
+                type: string
+                example: '61400400400'
+                description: Present when `view` is `detailed`.
+              info:
+                type: string
+                example: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
+                description: Present when `view` is `detailed`.
+              status:
+                type: array
+                description: Present when `view` is `detailed`.
+                items: {}
+        link:
+          $ref: '#/components/schemas/link'
+        status:
+          type: string
+          example: '1 to 1 of 1    '
+          description: Present when `view` is `detailed`.
+    messageResponseSummary:
+      title: Message Response Summary
+      description: The summary message response object.
+      type: object
+      x-examples:
+        Example:
+          messageresponses:
+            - percentageTotal: 50%
+              responseCount: '1'
+              link: []
+              type: noresponse
+            - percentageTotal: 50%
+              responseCount: '1'
+              link: []
+              type: notmatched
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
+              rel: self
+              method: GET
+      x-tags:
+        - Messages
+      properties:
+        messageresponses:
+          description: The message response statuses.
+          type: array
+          uniqueItems: true
+          readOnly: true
+          items:
+            description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
+            type: object
+            properties:
+              percentageTotal:
+                description: Details the percentage of responses received for the sent message across all channels.
+                type: string
+                example: 100%
+                readOnly: true
+              responseCount:
+                description: Details the number of responses received for the sent message across all channels.
+                type: string
+                example: '1'
+                readOnly: true
+              link:
+                $ref: '#/components/schemas/link'
+              type:
+                description: |-
+                  The message response category. 
+                  * `noresponse` - the message was sent but was not replied to
+                  * `notmatched` - the message was replied to and the answer didn't match any search criteria
+                type: string
+                enum:
+                  - noresponse
+                  - notmatched
+                readOnly: true
+            required:
+              - percentageTotal
+              - responseCount
+              - link
+              - type
+        link:
+          $ref: '#/components/schemas/link'
+      required:
+        - messageresponses
+        - link
+    messageResponseDetailed:
+      title: Message Response Detailed
+      description: The detailed message response object.
+      type: object
+      x-examples:
+        Example:
+          messageresponses:
+            - percentageTotal: 50%
+              responseCount: '1'
+              link: []
+              type: noresponse
+            - percentageTotal: 50%
+              responseCount: '1'
+              link: []
+              type: notmatched
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
+              rel: self
+              method: GET
+      x-tags:
+        - Messages
+      properties:
+        messageresponses:
+          type: array
+          description: The message response statuses.
+          uniqueItems: true
+          readOnly: true
+          items:
+            type: object
+            properties:
+              from:
+                description: The message responder object.
+                readOnly: true
+                type: object
+                required:
+                  - name
+                  - mri
+                  - mobile
+                  - email
+                  - voice
+                properties:
+                  name:
+                    description: The message responder's name.
+                    type: string
+                    example: Test User
+                    readOnly: true
+                  mri:
+                    description: The message responder's MRI.
+                    type: string
+                    example: testUser.au@User.whispir.com
+                    readOnly: true
+                  mobile:
+                    description: The message responder's mobile number.
+                    type: string
+                    example: '61400400400'
+                    readOnly: true
+                  email:
+                    description: The message responder's email address.
+                    type: string
+                    example: tuser@whispir.com
+                    readOnly: true
+                  voice:
+                    description: The message responder's voice number.
+                    type: string
+                    example: '61400400400'
+                    readOnly: true
+              responseCategory:
+                description: |-
+                  The message response category. 
+                  * `noresponse` - the message was sent but was not replied to
+                  * `notmatched` - the message was replied to and the answer didn't match any search criteria
+                type: string
+                readOnly: true
+                required:
+                  - content
+                  - acknowledged
+                  - channel
+                enum:
+                  - noresponse
+                  - notmatched
+              responseMessage:
+                description: The message response object.
+                type: object
+                readOnly: true
+                properties:
+                  content:
+                    description: The message response content.
+                    type: string
+                    example: A test response from the recipient.
+                    readOnly: true
+                  acknowledged:
+                    description: The message response acknowledgement status.
+                    type: string
+                    example: 'true'
+                    readOnly: true
+                  channel:
+                    description: The message response channel.
+                    type: string
+                    readOnly: true
+                    enum:
+                      - N/A
+                      - sms
+                      - email
+                      - voice
+            required:
+              - from
+              - responseCategory
+              - responseMessage
+        link:
+          $ref: '#/components/schemas/link'
+        status:
+          type: string
+          example: '1 to 1 of 1    '
+          description: The message response pagination status.
+          readOnly: true
+      required:
+        - messageresponses
+        - link
+    messageResponse:
+      description: The message response object.
+      oneOf:
+        - $ref: '#/components/schemas/messageResponseDetailed'
+        - $ref: '#/components/schemas/messageResponseSummary'
+      x-examples:
+        Summary:
+          value:
+            messageresponses:
+              - percentageTotal: 50%
+                responseCount: '1'
+                link: []
+                type: noresponse
+              - percentageTotal: 50%
+                responseCount: '1'
+                link: []
+                type: notmatched
+            link:
+              - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                rel: self
+                method: GET
+                host: api.au.whispir.com
+                port: -1
+        Detailed:
+          value:
+            status: '1 to 2 of 2    '
+            messageresponses:
+              - from:
+                  name: John Smith
+                  mri: John_Smith.484215.Critical_Incident_Management@Contact.whispir.com
+                  mobile: '+1000000000'
+                  email: jsmith@test.com
+                  voice: '+1000000000'
+                responseCategory: noresponse
+                responseMessage:
+                  content: N/A
+                  acknowledged: N/A
+                  channel: N/A
+              - from:
+                  name: Fred Smith
+                  mri: Fred_Smith.341550.Critical_Incident_Management@Contact.whispir.com
+                  mobile: '+1000000000'
+                  email: fsmith@test.com
+                  voice: '+1000000000'
+                responseCategory: notmatched
+                responseMessage:
+                  content: 'OK, got it. Thanks.'
+                  acknowledged: '28/09/12 08:48'
+                  channel: sms
+            link: []
+      x-tags:
+        - Messages
+      title: Message Response
     resource:
       type: object
       xml:
@@ -6612,8 +7051,6 @@ components:
           items:
             $ref: '#/components/schemas/resource'
           readOnly: true
-      x-stoplight:
-        id: 262bfb3978d86
       x-examples:
         status: 1 to 2 of 2
         resources:
@@ -6628,6 +7065,9 @@ components:
                 method: GET
                 host: api.au.whispir.com
                 port: -1
+      x-tags:
+        - Resources
+      title: Resource Collection
     template:
       type: object
       xml:
@@ -6745,21 +7185,21 @@ components:
           description: Specifies the content of the SMS message.
           example: This is the body of my test SMS message
         email:
-          $ref: '#/components/schemas/email'
+          $ref: '#/components/schemas/messageEmail'
         voice:
-          $ref: '#/components/schemas/voice'
+          $ref: '#/components/schemas/messageVoice'
         web:
-          $ref: '#/components/schemas/web'
+          $ref: '#/components/schemas/messageWeb'
         social:
-          $ref: '#/components/schemas/social'
+          $ref: '#/components/schemas/messageSocial'
         type:
           type: string
           description: Allows the user to modify the message behaviour for replies and DLRs (delivery receipts)
           example: defaultNoReply
         features:
-          $ref: '#/components/schemas/features'
+          $ref: '#/components/schemas/messageFeatures'
         dlr:
-          $ref: '#/components/schemas/dlr'
+          $ref: '#/components/schemas/messageDlr'
         link:
           $ref: '#/components/schemas/link'
         tags:
@@ -6839,67 +7279,9 @@ components:
       required:
         - status
         - messagetemplates
-      x-stoplight:
-        id: 262bfb3978d86
-    responseTemplatePattern:
-      type: object
-      xml:
-        name: responseTemplatePattern
+      title: Template Collection
       x-tags:
-        - Response Rules
-      title: Response Template Pattern
-      description: 'This object contains the responseTemplatePattern array, which contains each of the response rule elements. More details on the configuration of this object can be found below'
-      properties:
-        name:
-          type: string
-          example: Yes Rule
-          description: The name of the response category. The same key is called `matchedCategory` when placed inside the `customParameters` of Callbacks payload
-        pattern:
-          type: string
-          example: startswith
-          description: |-
-            Specifies the mechanism for matching the textPrompt
-
-            The following options are available:
-            - startsWith
-            - contains
-            - exactmatch
-
-            NOTE: none of them is case sensitive, so in the example above replying "YES" or "yes" or "Yes" makes no difference
-        textPrompt:
-          type: string
-          example: 'YES'
-          description: 'Specifies the textual string that should be matched using the pattern (specified above) within the email, SMS or web response'
-        voicePrompt:
-          type: string
-          example: '1'
-          description: |-
-            The character (2–9, * or #) that the recipient of the voice call should enter to select a response option
-
-            **IMPORTANT**: please do NOT use the key "1" because this is already reserved to repeat the message
-        spokenVoicePrompt:
-          type: string
-          example: to select YES
-          description: The text-to-speech content that is dynamically read out when describing to the user what a particular response option is
-        colour:
-          type: string
-          example: '#00947d'
-          description: The hexadecimal colour code that is used in the Message Response Report to differentiate the groups of responses
-      required:
-        - name
-        - pattern
-        - textPrompt
-        - voicePrompt
-        - spokenVoicePrompt
-        - colour
-      x-examples:
-        Example:
-          name: Yes Rule
-          pattern: startswith
-          textPrompt: 'YES'
-          voicePrompt: '1'
-          spokenVoicePrompt: to select YES
-          colour: '#00947d'
+        - Templates
     responseRule:
       type: object
       xml:
@@ -6933,7 +7315,56 @@ components:
           description: Specifies the description of the response rule for others to understand its purpose
           example: My Response Rule
         responseTemplatePatterns:
-          $ref: '#/components/schemas/responseTemplatePattern'
+          type: object
+          xml:
+            name: responseTemplatePattern
+          x-tags:
+            - Response Rules
+          title: Response Template Pattern
+          description: 'This object contains the responseTemplatePattern array, which contains each of the response rule elements. More details on the configuration of this object can be found below'
+          properties:
+            name:
+              type: string
+              example: Yes Rule
+              description: The name of the response category. The same key is called `matchedCategory` when placed inside the `customParameters` of Callbacks payload
+            pattern:
+              type: string
+              example: startswith
+              description: |-
+                Specifies the mechanism for matching the textPrompt
+
+                The following options are available:
+                - startsWith
+                - contains
+                - exactmatch
+
+                NOTE: none of them is case sensitive, so in the example above replying "YES" or "yes" or "Yes" makes no difference
+            textPrompt:
+              type: string
+              example: 'YES'
+              description: 'Specifies the textual string that should be matched using the pattern (specified above) within the email, SMS or web response'
+            voicePrompt:
+              type: string
+              example: '1'
+              description: |-
+                The character (2–9, * or #) that the recipient of the voice call should enter to select a response option
+
+                **IMPORTANT**: please do NOT use the key "1" because this is already reserved to repeat the message
+            spokenVoicePrompt:
+              type: string
+              example: to select YES
+              description: The text-to-speech content that is dynamically read out when describing to the user what a particular response option is
+            colour:
+              type: string
+              example: '#00947d'
+              description: The hexadecimal colour code that is used in the Message Response Report to differentiate the groups of responses
+          required:
+            - name
+            - pattern
+            - textPrompt
+            - voicePrompt
+            - spokenVoicePrompt
+            - colour
       required:
         - name
         - responseTemplatePatterns
@@ -6968,10 +7399,9 @@ components:
                   voicePrompt: '1'
                   spokenVoicePrompt: to select YES
                   colour: '#00947d'
-        x-stoplight:
-          id: 21285fb34ba4f
-      x-stoplight:
-        id: 262bfb3978d86
+      title: Response Rule Collection
+      x-tags:
+        - Response Rules
     contact:
       type: object
       xml:
@@ -7297,9 +7727,80 @@ components:
           description: The secondary role of the contact.
           example: Analyst
         locations:
-          $ref: '#/components/schemas/locations'
+          description: The locations for the contact.
+          type: array
+          xml:
+            name: locations
+          title: Locations
+          items:
+            type: object
+            description: The location object.
+            properties:
+              latitude:
+                type: number
+                description: 'The measurement of distance north or south of the Equator, for the contact.'
+                example: 41.9028
+                minimum: -90
+                maximum: 90
+              longitude:
+                type: number
+                description: 'The measurement of distance east or west of the prime meridian, for the contact.'
+                example: -12.4964
+                minimum: -180
+                maximum: 180
+              type:
+                description: A description for the location. At least one element of the `locations` array must have a `type` equal to `CurrentLocation`.
+                type: string
+                example: CurrentLocation
         messagingoptions:
-          $ref: '#/components/schemas/messagingoptions'
+          description: The message channel options for the contact.
+          type: array
+          title: Messaging Options
+          items:
+            type: object
+            description: The object to configure message channel options.
+            properties:
+              channel:
+                type: string
+                description: The message channel.
+                enum:
+                  - sms
+                  - email
+                  - voice
+              enabled:
+                description: A boolean flag indicating whether messaging is enabled for the `channel`.
+                type: boolean
+                example: true
+              primary:
+                type: string
+                description: The primary contact address for the `channel`.
+                enum:
+                  - WorkMobilePhone1
+                  - WorkMobilePhone2
+                  - WorkEmailAddress1
+                  - WorkEmailAddress2
+                  - PersonalMobilePhone1
+                  - PersonalEmailAddress1
+              secondary:
+                type: string
+                description: The secondary contact address for the `channel`.
+                enum:
+                  - WorkMobilePhone1
+                  - WorkMobilePhone2
+                  - WorkEmailAddress1
+                  - WorkEmailAddress2
+                  - PersonalMobilePhone1
+                  - PersonalEmailAddress1
+              tertiary:
+                type: string
+                description: The tertiary contact address for the `channel`.
+                enum:
+                  - WorkMobilePhone1
+                  - WorkMobilePhone2
+                  - WorkEmailAddress1
+                  - WorkEmailAddress2
+                  - PersonalMobilePhone1
+                  - PersonalEmailAddress1
         type:
           type: string
           enum:
@@ -7428,8 +7929,91 @@ components:
                     method: GET
                     host: api.au.whispir.com
                     port: -1
-        x-stoplight:
-          id: 21285fb34ba4f
+      title: Contact Collection
+      x-tags:
+        - Contacts
+    distributionList:
+      description: Either a static or dynamic distribution list
+      oneOf:
+        - $ref: '#/components/schemas/distributionListStatic'
+        - $ref: '#/components/schemas/distributionListDynamic'
+      x-examples:
+        Example Static DL:
+          value:
+            id: B27ABC9D8E98A9B
+            name: My Distribution List
+            description: string
+            access: Open
+            visibility: Public
+            contactIds: string
+            userIds: string
+            distListIds: string
+            type: static
+        Example Dyanmic DL:
+          value:
+            id: B27ABC9D8E98A9B
+            name: My Distribution List
+            description: ''
+            access: Open
+            visibility: Public
+            contactIds: ''
+            userIds: ''
+            distListIds: ''
+            type: static
+      title: Distribution List
+      x-tags:
+        - Distribution Lists
+    distributionListCollection:
+      type: object
+      description: list of distribution lists
+      x-examples:
+        Example Dynamic Distribution List:
+          value:
+            distributionLists:
+              - id: 5AFEB61102963D7
+                name: My Distribution List
+                mri: My_Distribution_List.company_name@list.company.whispir.sg
+                description: string
+                memberCount: '4'
+                access: Open
+                visibility: Public
+                link:
+                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                    rel: self
+                    method: GET
+                    host: api.au.whispir.com
+                    port: -1
+                distListIds: string
+                distlistdetails:
+                  - id: 123ADAB420493B83
+                    name: John Smith
+                    type: User
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+            status: 1 to 1 of 1
+            link:
+              - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                rel: self
+                method: GET
+                host: api.au.whispir.com
+                port: -1
+      properties:
+        distributionLists:
+          $ref: '#/components/schemas/distributionList'
+        status:
+          type: string
+          example: 1 to 1 of 1
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/link'
+      title: Distribution List Collection
+      x-tags:
+        - Distribution Lists
     distributionListStatic:
       type: object
       xml:
@@ -7557,8 +8141,6 @@ components:
           readOnly: true
       required:
         - name
-      x-stoplight:
-        id: 2692ece5fd8a0
     distributionListDynamic:
       xml:
         name: distributionListDynamic
@@ -7655,90 +8237,6 @@ components:
         - entityType
         - visibility
         - rules
-    distributionList:
-      description: Either a static or dynamic distribution list
-      oneOf:
-        - $ref: '#/components/schemas/distributionListStatic'
-        - $ref: '#/components/schemas/distributionListDynamic'
-      x-examples:
-        Example Static DL:
-          value:
-            id: B27ABC9D8E98A9B
-            name: My Distribution List
-            description: string
-            access: Open
-            visibility: Public
-            contactIds: string
-            userIds: string
-            distListIds: string
-            type: static
-        Example Dyanmic DL:
-          value:
-            id: B27ABC9D8E98A9B
-            name: My Distribution List
-            description: ''
-            access: Open
-            visibility: Public
-            contactIds: ''
-            userIds: ''
-            distListIds: ''
-            type: static
-        x-stoplight:
-          id: 21285fb34ba4f
-      x-stoplight:
-        id: 262bfb3978d86
-    distributionListCollection:
-      type: object
-      description: list of distribution lists
-      x-examples:
-        Example Dynamic Distribution List:
-          value:
-            distributionLists:
-              - id: 5AFEB61102963D7
-                name: My Distribution List
-                mri: My_Distribution_List.company_name@list.company.whispir.sg
-                description: string
-                memberCount: '4'
-                access: Open
-                visibility: Public
-                link:
-                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                    rel: self
-                    method: GET
-                    host: api.au.whispir.com
-                    port: -1
-                distListIds: string
-                distlistdetails:
-                  - id: 123ADAB420493B83
-                    name: John Smith
-                    type: User
-                    link:
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                        rel: self
-                        method: GET
-                        host: api.au.whispir.com
-                        port: -1
-            status: 1 to 1 of 1
-            link:
-              - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                rel: self
-                method: GET
-                host: api.au.whispir.com
-                port: -1
-        x-stoplight:
-          id: 21285fb34ba4f
-      x-stoplight:
-        id: 262bfb3978d86
-      properties:
-        distributionLists:
-          $ref: '#/components/schemas/distributionList'
-        status:
-          type: string
-          example: 1 to 1 of 1
-          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
-          readOnly: true
-        link:
-          $ref: '#/components/schemas/link'
     scenario:
       type: object
       xml:
@@ -7783,13 +8281,13 @@ components:
           description: Specifies the label for the message (to view during reporting)
           example: fire-evacuation
         email:
-          $ref: '#/components/schemas/email'
+          $ref: '#/components/schemas/messageEmail'
         voice:
-          $ref: '#/components/schemas/voice'
+          $ref: '#/components/schemas/messageVoice'
         web:
-          $ref: '#/components/schemas/web'
+          $ref: '#/components/schemas/messageWeb'
         social:
-          $ref: '#/components/schemas/social'
+          $ref: '#/components/schemas/messageSocial'
       required:
         - name
         - description
@@ -7877,10 +8375,9 @@ components:
                     - id: social
                       body: Facebook Content
                       type: text/plain
-        x-stoplight:
-          id: 21285fb34ba4f
-      x-stoplight:
-        id: 262bfb3978d86
+      x-tags:
+        - Scenarios
+      title: Scenario Collection
     callback:
       type: object
       xml:
@@ -7935,7 +8432,40 @@ components:
           example: 'https://example.com/callback'
           format: uri
         auth:
-          $ref: '#/components/schemas/callbackAuth'
+          type: object
+          description: |-
+            The authentication model details. You will receive - 
+
+            For `queryparam`
+            - `?Auth={{KeyValue}}`
+
+            For `httpheader`
+            - `X-Whispir-Callback-Key: {{KeyValue}}`
+
+            For `basicauth`
+            - `Authorization: Basic {{KeyValue}}`
+
+            For `bearertoken`
+            - `Authorization: Bearer {{KeyValue}}`
+          properties:
+            type:
+              type: string
+              enum:
+                - queryparam
+                - httpheader
+                - basicauth
+                - bearertoken
+              default: queryparam
+              description: The type of authentication allowed by Whispir at the Destination URL
+              example: basicauth
+            key:
+              type: string
+              description: The value that will be passed with the authentication key
+              maxLength: 128
+              example: test34
+          required:
+            - type
+            - key
         contentType:
           type: string
           description: Specifies the content type that should be sent to this endpoint.
@@ -7996,7 +8526,7 @@ components:
         - email
         - callbacks
     callbackCollection:
-      description: The callback object.
+      description: List of callbacks
       type: object
       properties:
         status:
@@ -8073,10 +8603,9 @@ components:
                 method: GET
                 host: api.au.whispir.com
                 port: -1
-        x-stoplight:
-          id: 21285fb34ba4f
-      x-stoplight:
-        id: 262bfb3978d86
+      x-tags:
+        - Callbacks
+      title: Callback Collection
     callbackCall:
       description: A callback call object
       type: object
@@ -8259,7 +8788,7 @@ components:
         - status
     callbackCallCollection:
       type: object
-      description: A list of callbacks
+      description: List of callback calls
       properties:
         calls:
           type: array
@@ -8311,50 +8840,7 @@ components:
                 method: GET
                 host: api.au.whispir.com
                 port: -1
-        x-stoplight:
-          id: 21285fb34ba4f
-      x-stoplight:
-        id: 262bfb3978d86
-    callbackAuth:
-      title: Callback Auth
-      type: object
-      description: |-
-        The authentication model details. You will receive - 
-
-        For `queryparam`
-        - `?Auth={{KeyValue}}`
-
-        For `httpheader`
-        - `X-Whispir-Callback-Key: {{KeyValue}}`
-
-        For `basicauth`
-        - `Authorization: Basic {{KeyValue}}`
-
-        For `bearertoken`
-        - `Authorization: Bearer {{KeyValue}}`
-      properties:
-        type:
-          type: string
-          enum:
-            - queryparam
-            - httpheader
-            - basicauth
-            - bearertoken
-          default: queryparam
-          description: The type of authentication allowed by Whispir at the Destination URL
-          example: basicauth
-        key:
-          type: string
-          description: The value that will be passed with the authentication key
-          maxLength: 128
-          example: test34
-      required:
-        - type
-        - key
-      x-examples:
-        example-1:
-          type: queryparam
-          key: test34
+      title: Callback Call Collection
       x-tags:
         - Callbacks
     workspace:
@@ -8442,108 +8928,9 @@ components:
                     host: api.au.whispir.com
                     port: -1
             status: 'status: 1 to 1 of 1'
-        x-stoplight:
-          id: 21285fb34ba4f
-      x-stoplight:
-        id: 262bfb3978d86
-    locations:
-      description: The locations for the contact.
-      type: array
-      xml:
-        name: locations
-      title: Locations
-      x-examples:
-        One Location:
-          - location:
-              latitude: 41.9028
-              longitude: -12.4964
-              type: CurrentLocation
-        Multiple Locations:
-          - location:
-              latitude: 41.9028
-              longitude: -12.4964
-              type: CurrentLocation
-          - location:
-              latitude: 41.5825
-              longitude: -12.3842
-              type: Work
-          - location:
-              latitude: 41.7262
-              longitude: -12.4726
-              type: Home
-      items:
-        type: object
-        description: The location object.
-        properties:
-          latitude:
-            type: number
-            description: 'The measurement of distance north or south of the Equator, for the contact.'
-            example: 41.9028
-            minimum: -90
-            maximum: 90
-          longitude:
-            type: number
-            description: 'The measurement of distance east or west of the prime meridian, for the contact.'
-            example: -12.4964
-            minimum: -180
-            maximum: 180
-          type:
-            description: A description for the location. At least one element of the `locations` array must have a `type` equal to `CurrentLocation`.
-            type: string
-            example: CurrentLocation
+      title: Workspace Collection
       x-tags:
-        - Contacts
-    messagingoptions:
-      description: The message channel options for the contact.
-      type: array
-      title: Messaging Options
-      items:
-        type: object
-        description: The object to configure message channel options.
-        properties:
-          channel:
-            type: string
-            description: The message channel.
-            enum:
-              - sms
-              - email
-              - voice
-          enabled:
-            description: A boolean flag indicating whether messaging is enabled for the `channel`.
-            type: boolean
-            example: true
-          primary:
-            type: string
-            description: The primary contact address for the `channel`.
-            enum:
-              - WorkMobilePhone1
-              - WorkMobilePhone2
-              - WorkEmailAddress1
-              - WorkEmailAddress2
-              - PersonalMobilePhone1
-              - PersonalEmailAddress1
-          secondary:
-            type: string
-            description: The secondary contact address for the `channel`.
-            enum:
-              - WorkMobilePhone1
-              - WorkMobilePhone2
-              - WorkEmailAddress1
-              - WorkEmailAddress2
-              - PersonalMobilePhone1
-              - PersonalEmailAddress1
-          tertiary:
-            type: string
-            description: The tertiary contact address for the `channel`.
-            enum:
-              - WorkMobilePhone1
-              - WorkMobilePhone2
-              - WorkEmailAddress1
-              - WorkEmailAddress2
-              - PersonalMobilePhone1
-              - PersonalEmailAddress1
-      x-tags:
-        - Contacts
+        - Workspaces
     activity:
       description: 'Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace.'
       type: object
@@ -8685,6 +9072,8 @@ components:
         link:
           $ref: '#/components/schemas/link'
       title: Activity Collection
+      x-tags:
+        - Activities
     user:
       type: object
       xml:
@@ -9130,6 +9519,9 @@ components:
                 method: GET
                 host: api.au.whispir.com
                 port: -1
+      title: User Collection
+      x-tags:
+        - Users
     event:
       type: object
       xml:
@@ -9268,10 +9660,9 @@ components:
                     host: api.au.whispir.com
                     port: -1
             status: 1 to 2 of 2
-        x-stoplight:
-          id: 21285fb34ba4f
-      x-stoplight:
-        id: 262bfb3978d86
+      title: Event Collection
+      x-tags:
+        - Events
     import:
       type: object
       xml:
@@ -9294,7 +9685,45 @@ components:
             *'contact'* is the only supported *importType* at this stage.
           example: contact
         importOptions:
-          $ref: '#/components/schemas/fieldMapping'
+          type: object
+          xml:
+            name: fieldMapping
+          title: Field Mapping
+          description: Mapping the data column in your resource file to the contact field value
+          x-examples:
+            example-1:
+              firstName: firstName
+              lastName: lastName
+              workMobilePhone1: workMobilePhone1
+              workCountry: workCountry
+              timezone: timeZone
+          properties:
+            firstName:
+              type: string
+              description: First Name of the Contact. Value of this field is used to map the field within the resource.
+              example: firstName
+            lastName:
+              type: string
+              description: Last Name of the Contact. Value of this field is used to map the field within the resource.
+              example: lastName
+            workMobilePhone1:
+              type: string
+              description: The mobile phone number of the Contact. Value of this field is used to map the field within the newly created resource.
+              example: workMobilePhone1
+            workCountry:
+              type: string
+              description: The country field of the contact. The value of this field is used to map to the field within the newly created contact.
+              example: workCountry
+            timezone:
+              type: string
+              description: The timezone field of the contact. The value of this field is used to map to the timezone field within the newly created contact.
+              example: timeZone
+          required:
+            - firstName
+            - lastName
+            - workMobilePhone1
+            - workCountry
+            - timezone
         importMode:
           type: string
           description: The type of contact import that is occurring.
@@ -9319,528 +9748,6 @@ components:
             workCountry: workCountry
             timezone: timeZone
           importMode: replace
-    fieldMapping:
-      type: object
-      xml:
-        name: fieldMapping
-      title: Field Mapping
-      description: Mapping the data column in your resource file to the contact field value
-      x-examples:
-        example-1:
-          firstName: firstName
-          lastName: lastName
-          workMobilePhone1: workMobilePhone1
-          workCountry: workCountry
-          timezone: timeZone
-      properties:
-        firstName:
-          type: string
-          description: First Name of the Contact. Value of this field is used to map the field within the resource.
-          example: firstName
-        lastName:
-          type: string
-          description: Last Name of the Contact. Value of this field is used to map the field within the resource.
-          example: lastName
-        workMobilePhone1:
-          type: string
-          description: The mobile phone number of the Contact. Value of this field is used to map the field within the newly created resource.
-          example: workMobilePhone1
-        workCountry:
-          type: string
-          description: The country field of the contact. The value of this field is used to map to the field within the newly created contact.
-          example: workCountry
-        timezone:
-          type: string
-          description: The timezone field of the contact. The value of this field is used to map to the timezone field within the newly created contact.
-          example: timeZone
-      required:
-        - firstName
-        - lastName
-        - workMobilePhone1
-        - workCountry
-        - timezone
-      x-tags:
-        - Imports
-    attachment:
-      type: object
-      description: |-
-        Attachments can be of any type [e.g. PDF, images and documents], and the maximum size of all attached files combined is 10 MB
-
-        Attachments must be provided in the payload of the message. URLs can be referenced in the email but will not be added as message attachments.
-      x-examples:
-        JSON:
-          attachmentName: sample.json
-          attachmentDesc: Sample
-          derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
-      title: Attachment
-      properties:
-        attachmentName:
-          type: string
-          description: 'The name of the attachment, including the extension.'
-          example: TestIcon.png
-        derefUri:
-          type: string
-          description: The Base64 encoded value for the email attachment.
-          example: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
-        attachmentDesc:
-          type: string
-          description: A description for the attachment.
-          example: My photo
-      required:
-        - attachmentName
-        - derefUri
-      x-tags:
-        - Messages
-    link:
-      type: array
-      description: 'A [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) link object, describing all discoverable resources in relation to the original request.'
-      x-examples:
-        Example:
-          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=responserule'
-            rel: detailedResponsesWithResponseRule
-            method: GET
-            host: api.au.whispir.com
-            port: -1
-      title: Link
-      items:
-        type: object
-        description: The HATEOAS link object.
-        properties:
-          uri:
-            description: The Universal Resource Identifier for the related resource.
-            type: string
-            example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-            format: uri
-            readOnly: true
-          rel:
-            description: The description of the related resource.
-            type: string
-            example: self
-            readOnly: true
-          method:
-            description: 'The [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) method required to request the related resource.'
-            type: string
-            example: GET
-            readOnly: true
-          host:
-            description: The host of the related resource.
-            type: string
-            example: api.au.whispir.com
-            readOnly: true
-          port:
-            description: The port of the related resource.
-            type: number
-            enum:
-              - -1
-            readOnly: true
-      readOnly: true
-    dlr:
-      title: Delivery Receipt
-      description: A fixed object structure used by for Whispir internally for tracking purposes.
-      type: object
-      readOnly: true
-      required:
-        - period
-        - rule
-        - type
-        - publishToWeb
-        - expiryDay
-        - expiryHour
-        - expiryMin
-        - feedIds
-        - bool
-      properties:
-        period:
-          description: The period of the message delivery.
-          type: string
-          example: ''
-        rule:
-          description: The rule of the message delivery.
-          type: string
-          example: ''
-        type:
-          description: The type of the message delivery.
-          type: string
-          example: ''
-        publishToWeb:
-          description: Specifies whether the message was published to the web.
-          type: boolean
-        expiryDay:
-          description: Specifies the number of days before the message expires.
-          type: number
-          example: 0
-        expiryHour:
-          description: Specifies the number of hours before the message expires.
-          type: number
-          example: 0
-        expiryMin:
-          description: Specifies the number of minutes before the message expires.
-          type: number
-          example: 0
-        feedIds:
-          description: The feeds identifier for the message delivery.
-          type: string
-          example: ''
-        bool:
-          description: The bool field for the message delivery.
-          type: boolean
-      x-examples:
-        Example:
-          period: ''
-          rule: ''
-          type: ''
-          publishToWeb: false
-          expiryDay: 0
-          expiryHour: 0
-          expiryMin: 0
-          feedIds: ''
-          bool: false
-    messageStatus:
-      description: 'The message status object, describing the delivery of the sent message.'
-      type: object
-      x-examples:
-        Summary:
-          messageStatuses:
-            - link:
-                - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
-                  rel: self
-                  method: GET
-                  host: api.au.whispir.com
-                  port: -1
-              categories:
-                - name: Sent
-                  recipientCount: 0
-                  percentageTotal: 0.0%
-                - name: Pending
-                  recipientCount: 0
-                  percentageTotal: 0.0%
-                - name: Received
-                  recipientCount: 1
-                  percentageTotal: 100.0%
-                - name: Acknowledged
-                  recipientCount: 0
-                  percentageTotal: 0.0%
-                - name: Undeliverable
-                  recipientCount: 0
-                  percentageTotal: 0.0%
-          link: []
-        Detailed:
-          messageStatuses:
-            - name: '61400400400'
-              info: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
-              link:
-                - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed'
-                  rel: self
-                  method: GET
-                  host: api.au.whispir.com
-                  port: -1
-              status:
-                - type: email
-                  status: ''
-                  destination: ''
-                - type: sms
-                  status: DELIVRD
-                  destination: '61400400400'
-                  sentTimestamp: 1647466923000
-                  receivedTimestamp: 1647466931000
-                - type: voice
-                  status: ''
-                  destination: ''
-          status: '1 to 1 of 1    '
-          link: []
-      title: Message Status
-      x-tags:
-        - Messages
-      properties:
-        messageStatuses:
-          description: The object defining the message delivery status.
-          type: array
-          uniqueItems: true
-          items:
-            type: object
-            properties:
-              link:
-                $ref: '#/components/schemas/link'
-              categories:
-                type: array
-                uniqueItems: true
-                minItems: 5
-                maxItems: 5
-                description: Present when `view` is `summary`.
-                items:
-                  type: object
-                  additionalProperties: false
-                  properties:
-                    name:
-                      description: The delivery status of the message.
-                      type: string
-                      enum:
-                        - Sent
-                        - Pending
-                        - Received
-                        - Acknowledged
-                        - Undeliverable
-                    recipientCount:
-                      description: The number of recipients with the given `name` status.
-                      type: number
-                      example: 1
-                    percentageTotal:
-                      description: The percentage of recipients with the given `name` status.
-                      type: string
-                      example: 100.0%
-              name:
-                type: string
-                example: '61400400400'
-                description: Present when `view` is `detailed`.
-              info:
-                type: string
-                example: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
-                description: Present when `view` is `detailed`.
-              status:
-                type: array
-                description: Present when `view` is `detailed`.
-                items: {}
-        link:
-          $ref: '#/components/schemas/link'
-        status:
-          type: string
-          example: '1 to 1 of 1    '
-          description: Present when `view` is `detailed`.
-    messageResponseSummary:
-      title: Message Response Summary
-      description: The summary message response object.
-      type: object
-      x-examples:
-        Example:
-          messageresponses:
-            - percentageTotal: 50%
-              responseCount: '1'
-              link: []
-              type: noresponse
-            - percentageTotal: 50%
-              responseCount: '1'
-              link: []
-              type: notmatched
-          link:
-            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
-              rel: self
-              method: GET
-      x-tags:
-        - Messages
-      properties:
-        messageresponses:
-          description: The message response statuses.
-          type: array
-          uniqueItems: true
-          readOnly: true
-          items:
-            description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
-            type: object
-            properties:
-              percentageTotal:
-                description: Details the percentage of responses received for the sent message across all channels.
-                type: string
-                example: 100%
-                readOnly: true
-              responseCount:
-                description: Details the number of responses received for the sent message across all channels.
-                type: string
-                example: '1'
-                readOnly: true
-              link:
-                $ref: '#/components/schemas/link'
-              type:
-                description: |-
-                  The message response category. 
-                  * `noresponse` - the message was sent but was not replied to
-                  * `notmatched` - the message was replied to and the answer didn't match any search criteria
-                type: string
-                enum:
-                  - noresponse
-                  - notmatched
-                readOnly: true
-            required:
-              - percentageTotal
-              - responseCount
-              - link
-              - type
-        link:
-          $ref: '#/components/schemas/link'
-      required:
-        - messageresponses
-        - link
-    messageResponseDetailed:
-      title: Message Response Detailed
-      description: The detailed message response object.
-      type: object
-      x-examples:
-        Example:
-          messageresponses:
-            - percentageTotal: 50%
-              responseCount: '1'
-              link: []
-              type: noresponse
-            - percentageTotal: 50%
-              responseCount: '1'
-              link: []
-              type: notmatched
-          link:
-            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=summary'
-              rel: self
-              method: GET
-      x-tags:
-        - Messages
-      properties:
-        messageresponses:
-          type: array
-          description: The message response statuses.
-          uniqueItems: true
-          readOnly: true
-          items:
-            type: object
-            properties:
-              from:
-                description: The message responder object.
-                readOnly: true
-                type: object
-                required:
-                  - name
-                  - mri
-                  - mobile
-                  - email
-                  - voice
-                properties:
-                  name:
-                    description: The message responder's name.
-                    type: string
-                    example: Test User
-                    readOnly: true
-                  mri:
-                    description: The message responder's MRI.
-                    type: string
-                    example: testUser.au@User.whispir.com
-                    readOnly: true
-                  mobile:
-                    description: The message responder's mobile number.
-                    type: string
-                    example: '61400400400'
-                    readOnly: true
-                  email:
-                    description: The message responder's email address.
-                    type: string
-                    example: tuser@whispir.com
-                    readOnly: true
-                  voice:
-                    description: The message responder's voice number.
-                    type: string
-                    example: '61400400400'
-                    readOnly: true
-              responseCategory:
-                description: |-
-                  The message response category. 
-                  * `noresponse` - the message was sent but was not replied to
-                  * `notmatched` - the message was replied to and the answer didn't match any search criteria
-                type: string
-                readOnly: true
-                required:
-                  - content
-                  - acknowledged
-                  - channel
-                enum:
-                  - noresponse
-                  - notmatched
-              responseMessage:
-                description: The message response object.
-                type: object
-                readOnly: true
-                properties:
-                  content:
-                    description: The message response content.
-                    type: string
-                    example: A test response from the recipient.
-                    readOnly: true
-                  acknowledged:
-                    description: The message response acknowledgement status.
-                    type: string
-                    example: 'true'
-                    readOnly: true
-                  channel:
-                    description: The message response channel.
-                    type: string
-                    readOnly: true
-                    enum:
-                      - N/A
-                      - sms
-                      - email
-                      - voice
-            required:
-              - from
-              - responseCategory
-              - responseMessage
-        link:
-          $ref: '#/components/schemas/link'
-        status:
-          type: string
-          example: '1 to 1 of 1    '
-          description: The message response pagination status.
-          readOnly: true
-      required:
-        - messageresponses
-        - link
-    messageResponse:
-      description: The message response object.
-      oneOf:
-        - $ref: '#/components/schemas/messageResponseDetailed'
-        - $ref: '#/components/schemas/messageResponseSummary'
-      x-examples:
-        Summary:
-          value:
-            messageresponses:
-              - percentageTotal: 50%
-                responseCount: '1'
-                link: []
-                type: noresponse
-              - percentageTotal: 50%
-                responseCount: '1'
-                link: []
-                type: notmatched
-            link:
-              - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                rel: self
-                method: GET
-                host: api.au.whispir.com
-                port: -1
-        Detailed:
-          value:
-            status: '1 to 2 of 2    '
-            messageresponses:
-              - from:
-                  name: John Smith
-                  mri: John_Smith.484215.Critical_Incident_Management@Contact.whispir.com
-                  mobile: '+1000000000'
-                  email: jsmith@test.com
-                  voice: '+1000000000'
-                responseCategory: noresponse
-                responseMessage:
-                  content: N/A
-                  acknowledged: N/A
-                  channel: N/A
-              - from:
-                  name: Fred Smith
-                  mri: Fred_Smith.341550.Critical_Incident_Management@Contact.whispir.com
-                  mobile: '+1000000000'
-                  email: fsmith@test.com
-                  voice: '+1000000000'
-                responseCategory: notmatched
-                responseMessage:
-                  content: 'OK, got it. Thanks.'
-                  acknowledged: '28/09/12 08:48'
-                  channel: sms
-            link: []
-        x-stoplight:
-          id: 21285fb34ba4f
-      x-stoplight:
-        id: 262bfb3978d86
     customList:
       type: object
       x-examples:
@@ -9969,8 +9876,70 @@ components:
                     method: GET
                     host: api.au.whispir.com
                     port: -1
-      x-stoplight:
-        id: 262bfb3978d86
+      title: Custom List Collection
+      x-tags:
+        - Custom Lists
+    auth:
+      description: The create auth object.
+      type: object
+      properties:
+        token:
+          type: string
+          description: The JWT token.
+          example: your-generated-token-string
+        link:
+          $ref: '#/components/schemas/link'
+      x-examples:
+        Example:
+          value:
+            token: your-generated-token-string
+            link: []
+      x-tags:
+        - Auth
+      title: Auth
+    link:
+      type: array
+      description: 'A [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) link object, describing all discoverable resources in relation to the original request.'
+      x-examples:
+        Example:
+          - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=responserule'
+            rel: detailedResponsesWithResponseRule
+            method: GET
+            host: api.au.whispir.com
+            port: -1
+      title: Link
+      items:
+        type: object
+        description: The HATEOAS link object.
+        properties:
+          uri:
+            description: The Universal Resource Identifier for the related resource.
+            type: string
+            example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+            format: uri
+            readOnly: true
+          rel:
+            description: The description of the related resource.
+            type: string
+            example: self
+            readOnly: true
+          method:
+            description: 'The [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) method required to request the related resource.'
+            type: string
+            example: GET
+            readOnly: true
+          host:
+            description: The host of the related resource.
+            type: string
+            example: api.au.whispir.com
+            readOnly: true
+          port:
+            description: The port of the related resource.
+            type: number
+            enum:
+              - -1
+            readOnly: true
+      readOnly: true
     apiError:
       description: The generic error object
       type: object
@@ -10000,23 +9969,7 @@ components:
         - errorSummary
         - errorText
         - errorDetail
-      x-stoplight:
-        id: 9e4608f490ee2
-    auth:
-      description: The create auth response object.
-      type: object
-      properties:
-        token:
-          type: string
-          description: The JWT token.
-          example: your-generated-token-string
-        link:
-          $ref: '#/components/schemas/link'
-      x-examples:
-        Example:
-          value:
-            token: your-generated-token-string
-            link: []
+      title: API Error
   parameters:
     X-Api-Key:
       name: X-Api-Key

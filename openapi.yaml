@@ -7805,7 +7805,9 @@ components:
         devices:
           type: array
           description: Specifies the devices associated to this contact. See Contact Devices for more details about it
-          items: {}
+          items:
+            type: object
+            title: Contact Device
           readOnly: true
         link:
           $ref: '#/components/schemas/link'

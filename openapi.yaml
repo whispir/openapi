@@ -8003,7 +8003,10 @@ components:
                 port: -1
       properties:
         distributionLists:
-          $ref: '#/components/schemas/distributionList'
+          type: array
+          description: List of distribution lists
+          items:
+            $ref: '#/components/schemas/distributionList'
         status:
           type: string
           example: 1 to 1 of 1

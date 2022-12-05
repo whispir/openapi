@@ -1043,6 +1043,12 @@ public class ApiClient {
             contentType = "application/json";
         }
         if (isJsonMime(contentType)) {
+            // debugging
+            String location = response.headers().get("Location");
+            if (location != null) {
+                System.out.println(">>>>>> LOCATION HEADER FOUND:" + location);
+            }
+
             return JSON.deserialize(respBody, returnType);
         } else if (returnType.equals(String.class)) {
             // Expecting string, return the raw response body.

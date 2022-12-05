@@ -302,8 +302,23 @@ public class {{classname}} {
     }
     {{/vendorExtensions.x-streaming}}
     {{^vendorExtensions.x-streaming}}
-    // operation call 
+    // operation call {{returnType}}
     public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}}{{vendorExtensions.x-sdkOperation}}(Map<String, Object> params{{#bodyParam}}, {{{dataType}}} {{paramName}}{{/bodyParam}}) throws ApiException {
+{{#allParams}}{{#vendorExtensions}}{{^x-isApiKey}}{{^x-isContentType}}{{^isBodyParam}}
+        {{{dataType}}} {{paramName}} = ({{{dataType}}}) params.get("{{paramName}}");{{/isBodyParam}}{{/x-isContentType}}{{/x-isApiKey}}{{/vendorExtensions}}{{/allParams}}
+{{#headerParams}}{{#vendorExtensions}}{{#x-isContentType}}
+        {{dataType}} {{paramName}} = "{{defaultValue}}";{{/x-isContentType}}{{/vendorExtensions}}{{/headerParams}}
+
+        {{#returnType}}ApiResponse<{{{.}}}> localVarResp = {{/returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{#vendorExtensions}}{{^x-isApiKey}}{{paramName}}{{^-last}}, {{/-last}}{{/x-isApiKey}}{{/vendorExtensions}}{{/allParams}});{{#returnType}}
+        return localVarResp.getData();{{/returnType}}
+    }
+
+    public class {{#lambda.titlecase}}{{classVarName}}{{/lambda.titlecase}}{{#lambda.titlecase}}{{vendorExtensions.x-sdkOperation}}{{/lambda.titlecase}}Params {
+        public Object get(String paramKey) {
+            return new Object();
+        }
+    }
+    public {{#returnType}}{{{.}}} {{/returnType}}{{^returnType}}void {{/returnType}} {{vendorExtensions.x-sdkOperation}}({{#lambda.titlecase}}{{classVarName}}{{/lambda.titlecase}}{{#lambda.titlecase}}{{vendorExtensions.x-sdkOperation}}{{/lambda.titlecase}}Params params{{#bodyParam}}, {{{dataType}}} {{paramName}}{{/bodyParam}}) throws ApiException {
 {{#allParams}}{{#vendorExtensions}}{{^x-isApiKey}}{{^x-isContentType}}{{^isBodyParam}}
         {{{dataType}}} {{paramName}} = ({{{dataType}}}) params.get("{{paramName}}");{{/isBodyParam}}{{/x-isContentType}}{{/x-isApiKey}}{{/vendorExtensions}}{{/allParams}}
 {{#headerParams}}{{#vendorExtensions}}{{#x-isContentType}}

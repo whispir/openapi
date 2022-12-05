@@ -5878,9 +5878,6 @@ components:
   schemas:
     message:
       type: object
-      xml:
-        name: message
-        prefix: ns2
       x-examples:
         SMS:
           to: '61400400400'
@@ -6131,8 +6128,6 @@ components:
         - Messages
     messageEmail:
       type: object
-      xml:
-        name: email
       title: Email
       description: |-
         The email channel payload, used when sending an email Message.
@@ -6185,8 +6180,6 @@ components:
         - body
     messageVoice:
       type: object
-      xml:
-        name: voice
       title: Voice
       description: |-
         The voice channel payload, used when sending a Message.
@@ -6317,8 +6310,6 @@ components:
 
         Not required when a template is provided.
       type: object
-      xml:
-        name: web
       title: Web
       properties:
         body:
@@ -6340,8 +6331,6 @@ components:
           type: text/plain
     messageSocial:
       type: object
-      xml:
-        name: social
       title: Social
       x-tags:
         - Messages
@@ -6389,8 +6378,6 @@ components:
                   - text/html
     messageFeatures:
       type: object
-      xml:
-        name: features
       title: Features
       x-tags:
         - Messages
@@ -6978,9 +6965,6 @@ components:
       title: Message Response
     resource:
       type: object
-      xml:
-        name: resource
-        prefix: ns3
       x-tags:
         - Resources
       title: Resource
@@ -7070,9 +7054,6 @@ components:
       title: Resource Collection
     template:
       type: object
-      xml:
-        name: template
-        prefix: ns3
       x-tags:
         - Templates
       title: Template
@@ -7284,9 +7265,6 @@ components:
         - Templates
     responseRule:
       type: object
-      xml:
-        name: responserule
-        prefix: ns3
       x-tags:
         - Response Rules
       title: Response Rule
@@ -7316,8 +7294,6 @@ components:
           example: My Response Rule
         responseTemplatePatterns:
           type: object
-          xml:
-            name: responseTemplatePattern
           x-tags:
             - Response Rules
           title: Response Template Pattern
@@ -7404,9 +7380,6 @@ components:
         - Response Rules
     contact:
       type: object
-      xml:
-        name: contact
-        prefix: ns2
       x-tags:
         - Contacts
       title: Contact
@@ -7729,8 +7702,6 @@ components:
         locations:
           description: The locations for the contact.
           type: array
-          xml:
-            name: locations
           title: Locations
           items:
             type: object
@@ -8016,9 +7987,6 @@ components:
         - Distribution Lists
     distributionListStatic:
       type: object
-      xml:
-        name: distributionlists
-        prefix: ns1
       x-tags:
         - Distribution Lists
       title: Static Distribution List
@@ -8142,9 +8110,6 @@ components:
       required:
         - name
     distributionListDynamic:
-      xml:
-        name: distributionListDynamic
-        prefix: ns1
       x-tags:
         - Distribution Lists
       title: Dynamic Distribution List
@@ -8174,7 +8139,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
-      description: 'Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don''t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List'
+      description: "Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don't need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List"
       type: object
       properties:
         name:
@@ -8239,9 +8204,6 @@ components:
         - rules
     scenario:
       type: object
-      xml:
-        name: scenario
-        prefix: ns2
       x-tags:
         - Scenarios
       title: Scenario
@@ -8380,9 +8342,6 @@ components:
       title: Scenario Collection
     callback:
       type: object
-      xml:
-        name: companyapicallback
-        prefix: ns2
       x-tags:
         - Callbacks
       title: Callback
@@ -8845,9 +8804,6 @@ components:
         - Callbacks
     workspace:
       type: object
-      xml:
-        name: workspace
-        prefix: ns3
       x-tags:
         - Workspaces
       title: Workspace
@@ -9076,9 +9032,6 @@ components:
         - Activities
     user:
       type: object
-      xml:
-        name: user
-        prefix: ns2
       x-tags:
         - Users
       title: User
@@ -9441,9 +9394,6 @@ components:
           description: List of retrieved users
           items:
             type: object
-            xml:
-              name: user
-              prefix: ns2
             x-tags:
               - Users
             title: User Collection
@@ -9524,9 +9474,6 @@ components:
         - Users
     event:
       type: object
-      xml:
-        name: event
-        prefix: ns3
       x-tags:
         - Events
       title: Event
@@ -9665,9 +9612,6 @@ components:
         - Events
     import:
       type: object
-      xml:
-        name: import
-        prefix: ns2
       x-tags:
         - Imports
       title: Import
@@ -9686,8 +9630,6 @@ components:
           example: contact
         importOptions:
           type: object
-          xml:
-            name: fieldMapping
           title: Field Mapping
           description: Mapping the data column in your resource file to the contact field value
           x-examples:

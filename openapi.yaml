@@ -3253,7 +3253,7 @@ paths:
     post:
       tags:
         - Scenarios
-      x-sdkOperation: run
+      x-sdkOperation: createRun
       summary: Run a scenario
       description: |
         Running a scenario triggers the communication to the intended recipients. The message (static or dynamic) will be sent on all the provided channels.
@@ -5661,7 +5661,7 @@ paths:
         - $ref: '#/components/parameters/Auth-Accept'
       description: Verify a JWT authentication token
       operationId: getAuthVerification
-      x-sdkOperation: verify
+      x-sdkOperation: retrieveVerification
       responses:
         '200':
           description: OK

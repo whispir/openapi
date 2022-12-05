@@ -8484,7 +8484,7 @@ components:
           format: email
         callbacks:
           type: object
-          title: Callback Events
+          title: Callback Event
           description: The object to specify which events callbacks should be enabled for.
           required:
             - reply

@@ -6111,6 +6111,7 @@ components:
           readOnly: true
         status:
           description: The status of the list request.
+          example: '1 to 2 of 2    '
           type: string
           readOnly: true
         link:

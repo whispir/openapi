@@ -5969,6 +5969,7 @@ components:
         callbackParameters:
           description: Set of key-value pairs that you can attach to a callback. This can be useful for returning additional information about the object in a structured format.
           type: object
+          title: Message Callback Parameters
         label:
           type: string
           example: sample
@@ -6159,6 +6160,7 @@ components:
         resources:
           type: object
           description: The resources to attach to the email Message.
+          title: Message Email Resources
           properties:
             attachments:
               description: A list of attachments to attach to the email Message.
@@ -6277,6 +6279,7 @@ components:
           readOnly: true
         resources:
           type: object
+          title: Message Voice Resources
           description: Provides a configuration object for specifying custom audio for the voice header and body.
           properties:
             attachment:
@@ -6421,6 +6424,7 @@ components:
       properties:
         pushOptions:
           type: object
+          title: Message Features Push Options
           description: The object defining options for push messages.
           properties:
             notifications:
@@ -6454,6 +6458,7 @@ components:
               example: NORMAL
             fcm:
               type: object
+              title: Message Features Push Options FCM
               description: The fcm object holds attributes specific to the contacts' Firebase-registered Android devices
               properties:
                 androidChannelId:
@@ -6485,6 +6490,7 @@ components:
                   example: 'https://mycompany.com/sales/campaign.png'
             apns:
               type: object
+              title: Message Features Push Options APNS
               description: The apns object holds attributes specific to the contacts' APNS-registered (Apple Push Notification Service) iOS devices
               properties:
                 sound:
@@ -6501,6 +6507,7 @@ components:
                   example: campaign_action
             data:
               type: object
+              title: Message Features Push Options Data
               description: |-
                 Custom key-value pairs of the notification's payload. These values can be used by the target app for enhanced functionality provided that it has been designed to handle them (images, videos, links etc).
 
@@ -6511,6 +6518,7 @@ components:
             - appId
         aliasOption:
           type: object
+          title: Message Features Alias Option
           description: The object defining options for message sender aliasing.
           properties:
             aliasName:
@@ -6837,10 +6845,11 @@ components:
           readOnly: true
           items:
             type: object
-            title: Message Response Detailed Status
+            title: Message Response Detailed Status From
             properties:
               from:
                 description: The message responder object.
+                title: Message Response Detailed Status
                 readOnly: true
                 type: object
                 required:
@@ -6891,6 +6900,7 @@ components:
                   - notmatched
               responseMessage:
                 description: The message response object.
+                title: Message Response Detailed Status Response Message
                 type: object
                 readOnly: true
                 properties:
@@ -8411,6 +8421,7 @@ components:
           format: uri
         auth:
           type: object
+          title: Callback Auth
           description: |-
             The authentication model details. You will receive - 
 
@@ -8473,6 +8484,7 @@ components:
           format: email
         callbacks:
           type: object
+          title: Callback Events
           description: The object to specify which events callbacks should be enabled for.
           required:
             - reply
@@ -8655,6 +8667,7 @@ components:
           readOnly: true
         from:
           type: object
+          title: Callback Call From
           description: The details about this particular message sender/responder
           properties:
             name:
@@ -8688,6 +8701,7 @@ components:
           readOnly: true
         responseMessage:
           type: object
+          title: Callback Call Response Message
           description: |-
             The details about this particular message that have been sent to the callback
 
@@ -8723,6 +8737,7 @@ components:
           readOnly: true
         callback:
           type: object
+          title: Callback Call Event
           description: The details about this particular callback attempt
           properties:
             id:

@@ -20,6 +20,21 @@ Run the generator with the following steps:
 > yarn generate # generate SDK from the OpenAPI Specification
 ```
 
+> ⚠️ **Important - SDK Generation Ignore** ⚠️
+> 
+> Several SDKs utilise the [`.openapi-generator-ignore`](https://openapi-generator.tech/docs/customization/#ignore-file-format) file to conditionally generate only parts of the SDK. This ignore file works similarly to a `.gitignore` file, whereby the specified paths are ignored from the generation process. For example, this is useful for SDKs with customised `README.md` files, where the generator should not overwrite the customised contents. This way, the target SDK Git repository can independently specify which SDK contents to include/exclude in generation.
+>
+> To get the same generated contents as occurs in the [`.generate-sdks.yml`](../.github/workflows/generate-sdks.yml) Github workflow, the target SDK Git repositories must be checked out to include the `.openapi-generator-ignore` in the generation process. Simply clone the target SDK repository you are testing, then generate again:
+> ```bash
+> # from the repo root directory, given an SDK {language}
+> > git clone https://github.com/whispir/whispir-{language}.git
+> # e.g. for the Node SDK:
+> # git clone https://github.com/whispir/whispir-node.git
+> # then, generate again
+> cd codegen
+> yarn generate
+> ```
+
 ## Supported Languages
 
 Various languages are supported in separately published SDKs.

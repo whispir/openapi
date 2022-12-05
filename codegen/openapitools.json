@@ -16,7 +16,6 @@
         "templateDir": "mustache/node"
       },
       "java": {
-        "config": "config/java/config.yaml",
         "generatorName": "java",
         "output": "#{cwd}/../whispir-java",
         "glob": "../openapi.yaml",

@@ -93,11 +93,15 @@ export default createRulesetFunction(
           path: ['paths', path, operation, 'x-sdkOperation'],
         });
       } else if (operation === 'get' && path.endsWith("}") && !sdkOperation.startsWith("retrieve")) {
+        // Paths that end with "}" have an ID as the last path parameter, and therefore refer to retrieving a single resource
+        // when paired with a `GET` operation
         results.push({
           message: '"x-sdkOperation" must start with one of: "create", "retrieve", "update", "delete", or "list", as appropriate.',
           path: ['paths', path, operation, 'x-sdkOperation'],
         });
       } else if (operation === 'get' && !path.endsWith("}") && !sdkOperation.startsWith("list")) {
+        // Paths that do not end with "}" have the resource name as the last path part, and therefore refer to retrieving a list of resources
+        // when paired with a `GET` operation
         results.push({
           message: '"x-sdkOperation" must start with one of: "create", "retrieve", "update", "delete", or "list", as appropriate.',
           path: ['paths', path, operation, 'x-sdkOperation'],

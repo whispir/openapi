@@ -1723,6 +1723,22 @@
       "rules": {
         "required-list-pagination-request-query-parameters": "off"
       }
+    },
+    {
+      "files": [
+        "**#/paths/~1auth~1verify/get/operationId"
+      ],
+      "rules": {
+        "operation-operationId-format": "off"
+      }
+    },
+    {
+      "files": [
+        "**#/paths/~1auth~1verify/get/x-sdkOperation"
+      ],
+      "rules": {
+        "operation-sdkOperation-format": "off"
+      }
     }
   ],
   "functions": [

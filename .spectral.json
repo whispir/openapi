@@ -1659,8 +1659,8 @@
         },
         "field": "x-sdkOperation"
       },
-      "description": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names.\n\nMust start with one of:\n* `create`\n* `read`\n* `update`\n* `delete`\n* `list`\n\nAn optional noun suffix describing any sub-resources may be included as appropriate.\n\n**Valid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"create\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"listWebhookCalls\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"post\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"getWebhookCalls\"\n}\n```",
-      "message": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names. Must start with one of \"create\", \"read\", \"update\", \"delete\", or \"list\", with an optional noun suffixed describing any sub-resources as appropriate."
+      "description": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names.\n\nMust start with one of:\n* `create`\n* `retrieve`\n* `update`\n* `delete`\n* `list`\n\nAn optional noun suffix describing any sub-resources may be included as appropriate.\n\n**Valid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"create\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"listWebhookCalls\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"post\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"getWebhookCalls\"\n}\n```",
+      "message": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names. Must start with one of \"create\", \"retrieve\", \"update\", \"delete\", or \"list\", with an optional noun suffixed describing any sub-resources as appropriate."
     }
   },
   "overrides": [

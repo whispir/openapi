@@ -17,6 +17,27 @@ import { HttpError, RequestFile, Response, CreateResponse, ApiConfig, RequestOpt
 */
 {{/description}}
 
+{{#operation}}
+type {{operationIdCamelCase}}Params = {
+    {{#allParams}}
+    {{^isBodyParam}}
+    {{#vendorExtensions}}
+    {{^x-isApiKey}}
+    {{^x-isContentType}}
+    {{#description}}
+    /**
+    * {{{.}}}
+    */{{/description}}
+    {{paramName}}{{#required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}?{{/defaultValue}}{{/required}}: {{{dataType}}};
+    {{/x-isContentType}}
+    {{/x-isApiKey}}
+    {{/vendorExtensions}}
+    {{/isBodyParam}}
+    {{/allParams}}
+}{{#bodyParam}} & {{baseType}}Write{{/bodyParam}};
+
+{{/operation}}
+
 export class {{classname}} {
     protected defaultHeaders: any = {};
     protected useQuerystring: boolean = false;
@@ -42,19 +63,9 @@ export class {{classname}} {
      * @param {{paramName}} {{description}}
      {{/allParams}}
      */
-    public async {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}(params?: {
-    {{#allParams}}
-    {{^isBodyParam}}
-        {{#vendorExtensions}}
-        {{^x-isApiKey}}
-        {{^x-isContentType}}
-        {{paramName}}{{#required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}?{{/defaultValue}}{{/required}}: {{{dataType}}},
-        {{/x-isContentType}}
-        {{/x-isApiKey}}
-        {{/vendorExtensions}}
-    {{/isBodyParam}}
-    {{/allParams}}
-    }{{#bodyParam}} & {{baseType}}Write{{/bodyParam}}, options?: RequestOptions): Promise<{{#vendorExtensions}}{{#x-isPost}}CreateResponse{{/x-isPost}}{{^x-isPost}}Response{{/x-isPost}}{{/vendorExtensions}}{{#returnType}}<{{returnType}}>{{/returnType}}> {
+    public async {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}(
+        params?: {{operationIdCamelCase}}Params,
+        options?: RequestOptions): Promise<{{#vendorExtensions}}{{#x-isPost}}CreateResponse{{/x-isPost}}{{^x-isPost}}Response{{/x-isPost}}{{/vendorExtensions}}{{#returnType}}<{{returnType}}>{{/returnType}}> {
         const {
             {{#allParams}}
             {{^isBodyParam}}

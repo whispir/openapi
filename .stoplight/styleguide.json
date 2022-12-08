@@ -3625,18 +3625,6 @@
   "overrides": [
     {
       "files": [
-        "**#/paths/~1activities",
-        "**#/paths/~1users",
-        "**#/paths/~1auth",
-        "**#/paths/~1workspaces~1{workspaceId}~1contacts",
-        "**#/paths/~1workspaces~1{workspaceId}~1templates"
-      ],
-      "rules": {
-        "payload-examples": "off"
-      }
-    },
-    {
-      "files": [
         "**#/paths/~1auth~1verify/get"
       ],
       "rules": {

@@ -266,7 +266,7 @@
       "name": "required-post-response-headers",
       "description": "Successful post endpoint responses must have the following \"headers\": \"Location\"."
     },
-    "operation-sdk-operation-format": {
+    "operation-sdkOperation-format": {
       "given": [
         "#API_Document"
       ],
@@ -277,7 +277,7 @@
           "exceptions": []
         }
       },
-      "name": "operation-sdk-operation-format",
+      "name": "operation-sdkOperation-format",
       "description": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names.\n\nMust start with one of the following values, corresponding to the operation on the resource:\n* `create` - `POST /resource`\n* `retrieve` - `GET /resource/{resourceId}`\n* `update` - `PUT /resource/{resourceId}`\n* `delete` - `DELETE /resource/{resourceId}`\n* `list` - `GET /resource`\n\nAn optional noun suffix describing any sub-resources may be included as appropriate.\n\n**Valid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"create\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"listWebhookCalls\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"post\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"getWebhookCalls\"\n}\n```",
       "message": "Every operation must have an \"x-sdkOperation\" starting with one of \"create\", \"retrieve\", \"update\", \"delete\", or \"list\", as appropriate for the operation on the resource. An optional noun suffixed to describe any sub-resources may be included."
     },

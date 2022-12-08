@@ -1647,7 +1647,7 @@
       },
       "description": "Successful post endpoint responses must have the following \"headers\": \"Location\"."
     },
-    "operation-sdk-operation-format": {
+    "operation-sdkOperation-format": {
       "given": [
         "#API_Document"
       ],

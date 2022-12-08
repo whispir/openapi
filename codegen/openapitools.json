@@ -13,6 +13,7 @@
           "supportsES6": "true",
           "npmVersion": "1.0.0"
         },
+        "config": "config/node.yml",
         "templateDir": "mustache/node"
       },
       "java": {

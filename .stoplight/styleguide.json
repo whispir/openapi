@@ -3625,23 +3625,6 @@
   "overrides": [
     {
       "files": [
-        "**#/components/schemas/messagingoptions",
-        "**#/components/schemas/locations",
-        "**#/components/schemas/location",
-        "**#/components/schemas/user",
-        "**#/components/schemas/fieldMapping",
-        "**#/components/schemas/auth",
-        "**#/components/requestBodies/event"
-      ],
-      "rules": {
-        "schema-examples": "off",
-        "schema-descriptions": "off",
-        "schema-property-descriptions": "off",
-        "schema-property-examples": "off"
-      }
-    },
-    {
-      "files": [
         "**#/paths/~1workspaces~1{workspaceId}~1events",
         "**#/components/requestBodies/event",
         "**#/components/schemas/activity"

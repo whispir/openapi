@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/whispir/openapi/compare/v1.1.2...v1.1.3) (2022-12-06)
+
+
+### Bug Fixes
+
+* Modular model references ([#166](https://github.com/whispir/openapi/issues/166)) ([b00f303](https://github.com/whispir/openapi/commit/b00f30318e0a8e8c2390dc520b012d3a48554722))
+
 ## [1.1.2](https://github.com/whispir/openapi/compare/v1.1.1...v1.1.2) (2022-11-22)
 
 

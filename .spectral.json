@@ -1679,16 +1679,6 @@
   "overrides": [
     {
       "files": [
-        "**#/paths/~1workspaces~1{workspaceId}~1events",
-        "**#/components/requestBodies/event",
-        "**#/components/schemas/activity"
-      ],
-      "rules": {
-        "payload-examples": "off"
-      }
-    },
-    {
-      "files": [
         "**#/paths/~1activities",
         "**#/paths/~1users",
         "**#/paths/~1auth",

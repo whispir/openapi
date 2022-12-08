@@ -7321,7 +7321,7 @@ components:
           type: object
           x-tags:
             - Response Rules
-          title: Response Template Pattern
+          title: Response Rule Template Pattern
           description: 'This object contains the responseTemplatePattern array, which contains each of the response rule elements. More details on the configuration of this object can be found below'
           properties:
             name:
@@ -9671,7 +9671,7 @@ components:
           example: contact
         importOptions:
           type: object
-          title: Field Mapping
+          title: Import Field Mapping
           description: Mapping the data column in your resource file to the contact field value
           x-examples:
             example-1:

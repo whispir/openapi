@@ -1597,6 +1597,58 @@ paths:
           application/vnd.whispir.template-v1+json:
             schema:
               $ref: '#/components/schemas/template'
+            examples:
+              Template:
+                value:
+                  messageTemplateName: Sample SMS Template
+                  messageTemplateDescription: Template to provide an example on whispir.io
+                  responseTemplateId: responseTemplateId
+                  subject: Test SMS Message
+                  body: This is the body of my test SMS message
+                  email:
+                    body: This is the body of my email message.
+                    footer: This is the footer of my message.
+                    type: text/plain
+                    resources:
+                      attachments:
+                        - attachmentName: TestIcon.png
+                          attachmentDesc: MyPhoto
+                          derefUri: iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMvSURBVDhPTVT5S1RhFD3fezOOOePTXHKriWgjsogWC1TSMuuHIFqoX0KsIIgSWwiq/6FFU8MKK6KyXYSKpkUKR4QMSSpCLQpyxHHUZpztzdu63xub5vKWj/fu+c6599z3mMfjSU9P13UdZoiCaLfZYQWiUGKq1WrBLEBDOBpWNTWeQyEIwvT0NAsEAgROPKXFxceNbQOtv4ShkKCkaZZ5kYU1Sw6dqT0NMTkLBIbf7zf+xaOuJzgG4RmyPyP/Kwq/oWAYeT+R6gYOofnmlUQmLQjI6JQkifasu368KdCQWwFEwBiYQOIgiDBETDFIORh/iZ0De55cehgXQJIphce9d/ebJhuyV0P3QY9Cj/HDUKhseIPomP/CW2QYB42nSx+db76YUM9IusPhYHVM2g5Bpo5xNuIkZibCF8On0oGVjhWabmR8EBx5GDuHaItsy0zhzA6bo/H5ZSyDMQ1d4YQa0Sqc1hdAe3E7IYkqp9tiUcHGkXIQZ8+fm+k5uXK3/46YAV3mMMLEt/BHUJ1Vua9oH+WV9ayLyLpVhRYFkT8d4mUzRuI0DAcHmQngSLrGoBJ/GC/L31JSy/cm91ifXTcboYDJGLX+1kI6WS3AQFSRCUDvwhGEwubiD1yVLkLKWuxoT50kzGwab6Ru6HIsahpiwTybkwTLU9iUU1Ezf394CmuyV20p2kLg8mcbRHLLxGimLlWFFMpMc6TRFlx29aJqePBgx4M3u7tubb1dMXfjw6rHhOwb+/jhV3+qNtMFKspQEZnA+oxSPr9UdjgUllV59pHZhSUFI/We5AnMv5o7bvhsFu5f3DlmR7ATr/a+rtq2mVulqEqmlFlbUuv5MbqudW0C7PrhGpvwidRhIoyXqiHoRam/tGrT5n9Wmfcb9TfmBOf0DXy80H0h/uKU6yQRcqlmk+mji0RhbbN2XOpAygzF/9nmfp4oc4+4y6vLqRnuUTdsfNqYFRop/4JFw4t723qz52YlZpvPd/K30vm+03nAie1ADXAYOADsgHOXs/laix7RkzMJyJJ/BjQ09lQ7me8f9/cP9nsnvemzpOIFy3PzclkK0wyNgvDEHP8Z/AXQ58rAz69IBAAAAABJRU5ErkJggg==
+                  voice:
+                    header: 'This is the introduction, read out to the recipient prior to any key press.'
+                    body: 'This is the body of the voice call, read out after the key press'
+                    type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                  web:
+                    body: This is the content of my web publishing or Rich Push Message
+                    type: text/plain
+                  social:
+                    social:
+                      - id: social
+                        body: Facebook Content
+                        type: text/plain
+                  type: defaultNoReply
+                  features:
+                    pushOptions:
+                      notifications: enabled
+                      escalationMins: '3'
+                      appId: appId
+                  dlr:
+                    period: string
+                    publishToWeb: false
+                    rule: string
+                    expiryDay: 0
+                    expiryHour: 0
+                    expiryMin: 0
+                    feedIds: string
+                    bool: false
+                    type: string
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
+                  tags: string
         description: Templates object that needs to be create Templates
         required: true
       responses:
@@ -1768,6 +1820,58 @@ paths:
           application/vnd.whispir.template-v1+json:
             schema:
               $ref: '#/components/schemas/template'
+            examples:
+              Template:
+                value:
+                  messageTemplateName: Sample SMS Template
+                  messageTemplateDescription: Template to provide an example on whispir.io
+                  responseTemplateId: responseTemplateId
+                  subject: Test SMS Message
+                  body: This is the body of my test SMS message
+                  email:
+                    body: This is the body of my email message.
+                    footer: This is the footer of my message.
+                    type: text/plain
+                    resources:
+                      attachments:
+                        - attachmentName: TestIcon.png
+                          attachmentDesc: MyPhoto
+                          derefUri: iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMvSURBVDhPTVT5S1RhFD3fezOOOePTXHKriWgjsogWC1TSMuuHIFqoX0KsIIgSWwiq/6FFU8MKK6KyXYSKpkUKR4QMSSpCLQpyxHHUZpztzdu63xub5vKWj/fu+c6599z3mMfjSU9P13UdZoiCaLfZYQWiUGKq1WrBLEBDOBpWNTWeQyEIwvT0NAsEAgROPKXFxceNbQOtv4ShkKCkaZZ5kYU1Sw6dqT0NMTkLBIbf7zf+xaOuJzgG4RmyPyP/Kwq/oWAYeT+R6gYOofnmlUQmLQjI6JQkifasu368KdCQWwFEwBiYQOIgiDBETDFIORh/iZ0De55cehgXQJIphce9d/ebJhuyV0P3QY9Cj/HDUKhseIPomP/CW2QYB42nSx+db76YUM9IusPhYHVM2g5Bpo5xNuIkZibCF8On0oGVjhWabmR8EBx5GDuHaItsy0zhzA6bo/H5ZSyDMQ1d4YQa0Sqc1hdAe3E7IYkqp9tiUcHGkXIQZ8+fm+k5uXK3/46YAV3mMMLEt/BHUJ1Vua9oH+WV9ayLyLpVhRYFkT8d4mUzRuI0DAcHmQngSLrGoBJ/GC/L31JSy/cm91ifXTcboYDJGLX+1kI6WS3AQFSRCUDvwhGEwubiD1yVLkLKWuxoT50kzGwab6Ru6HIsahpiwTybkwTLU9iUU1Ezf394CmuyV20p2kLg8mcbRHLLxGimLlWFFMpMc6TRFlx29aJqePBgx4M3u7tubb1dMXfjw6rHhOwb+/jhV3+qNtMFKspQEZnA+oxSPr9UdjgUllV59pHZhSUFI/We5AnMv5o7bvhsFu5f3DlmR7ATr/a+rtq2mVulqEqmlFlbUuv5MbqudW0C7PrhGpvwidRhIoyXqiHoRam/tGrT5n9Wmfcb9TfmBOf0DXy80H0h/uKU6yQRcqlmk+mji0RhbbN2XOpAygzF/9nmfp4oc4+4y6vLqRnuUTdsfNqYFRop/4JFw4t723qz52YlZpvPd/K30vm+03nAie1ADXAYOADsgHOXs/laix7RkzMJyJJ/BjQ09lQ7me8f9/cP9nsnvemzpOIFy3PzclkK0wyNgvDEHP8Z/AXQ58rAz69IBAAAAABJRU5ErkJggg==
+                  voice:
+                    header: 'This is the introduction, read out to the recipient prior to any key press.'
+                    body: 'This is the body of the voice call, read out after the key press'
+                    type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                  web:
+                    body: This is the content of my web publishing or Rich Push Message
+                    type: text/plain
+                  social:
+                    social:
+                      - id: social
+                        body: Facebook Content
+                        type: text/plain
+                  type: defaultNoReply
+                  features:
+                    pushOptions:
+                      notifications: enabled
+                      escalationMins: '3'
+                      appId: appId
+                  dlr:
+                    period: string
+                    publishToWeb: false
+                    rule: string
+                    expiryDay: 0
+                    expiryHour: 0
+                    expiryMin: 0
+                    feedIds: string
+                    bool: false
+                    type: string
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
+                  tags: string
         description: Templates object that needs to be update Templates
         required: true
       responses:
@@ -2281,6 +2385,84 @@ paths:
           application/vnd.whispir.contact-v1+xml:
             schema:
               $ref: '#/components/schemas/contact'
+            examples:
+              Basic:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+              Comprehensive:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+                  title: Dr
+                  workMobilePhone2: '61500500500'
+                  workEmailAddress2: newUser@example.com
+                  workPhoneAreaCode1: '09'
+                  workPhone1: '5006000'
+                  workPhoneAreaCode2: '09'
+                  workPhone2: '5007000'
+                  workFaxAreaCode1: '09'
+                  workFax1: '5008000'
+                  workSatellitePhone: '61600600600'
+                  workOtherPhone: '61700700700'
+                  workAddress1: Level 15
+                  workAddress2: 360 Collins St
+                  workSuburb: Melboure
+                  workState: Victoria
+                  workPostCode: '3000'
+                  workPostalAddress1: Level 15
+                  workPostalAddress2: 360 Collins St
+                  workPostalSuburb: Melboure
+                  workPostalState: Victoria
+                  workPostalPostCode: '3000'
+                  personalEmailAddress1: personalPrimaryUser@example.com
+                  personalEmailAddress2: personalSecondaryUser@example.com
+                  personalAddress1: Level 15
+                  personalAddress2: 360 Collins St
+                  personalSuburb: Melboure
+                  personalState: Victoria
+                  personalPostCode: '3000'
+                  personalCountry: Australia
+                  personalPhoneAreaCode1: '09'
+                  personalPhone1: '5006000'
+                  personalPhoneAreaCode2: '09'
+                  personalPhone2: '5007000'
+                  personalFaxAreaCode1: '09'
+                  personalFax1: '5008000'
+                  otherPhoneAreaCode1: '09'
+                  otherPhone1: '5009000'
+                  otherMobile: '61900900900'
+                  otherFirstName: Harold
+                  otherLastName: Wickman
+                  otherTitle: Mr
+                  status: A
+                  companyName: Whispir
+                  jobTitle: Software Engineer
+                  division: Technology
+                  businessUnit: Core Platform
+                  department: Research & Development
+                  teamName1: Optimus Prime
+                  teamName2: Bumblebee
+                  role1: Administrator
+                  role2: Analyst
+                  locations:
+                    - latitude: 41.9028
+                      longitude: -12.4964
+                      type: CurrentLocation
+                  messagingoptions:
+                    - channel: sms
+                      enabled: true
+                      primary: WorkMobilePhone1
+                      secondary: WorkMobilePhone1
+                      tertiary: WorkMobilePhone1
         description: Contact object to be created
         required: true
       responses:
@@ -2423,6 +2605,87 @@ paths:
             application/vnd.whispir.contact-v1+json:
               schema:
                 $ref: '#/components/schemas/contact'
+              examples:
+                Example 1:
+                  value:
+                    firstName: John
+                    lastName: Wick
+                    workMobilePhone1: '61400400400'
+                    workEmailAddress1: testUser@example.com
+                    workCountry: Australia
+                    timezone: Australia/Melbourne
+                    title: Dr
+                    workMobilePhone2: '61500500500'
+                    workEmailAddress2: newUser@example.com
+                    workPhoneAreaCode1: '09'
+                    workPhone1: '5006000'
+                    workPhoneAreaCode2: '09'
+                    workPhone2: '5007000'
+                    workFaxAreaCode1: '09'
+                    workFax1: '5008000'
+                    workSatellitePhone: '61600600600'
+                    workOtherPhone: '61700700700'
+                    workAddress1: Level 15
+                    workAddress2: 360 Collins St
+                    workSuburb: Melboure
+                    workState: Victoria
+                    workPostCode: '3000'
+                    workPostalAddress1: Level 15
+                    workPostalAddress2: 360 Collins St
+                    workPostalSuburb: Melboure
+                    workPostalState: Victoria
+                    workPostalPostCode: '3000'
+                    personalEmailAddress1: personalPrimaryUser@example.com
+                    personalEmailAddress2: personalSecondaryUser@example.com
+                    personalAddress1: Level 15
+                    personalAddress2: 360 Collins St
+                    personalSuburb: Melboure
+                    personalState: Victoria
+                    personalPostCode: '3000'
+                    personalCountry: Australia
+                    personalPhoneAreaCode1: '09'
+                    personalPhone1: '5006000'
+                    personalPhoneAreaCode2: '09'
+                    personalPhone2: '5007000'
+                    personalFaxAreaCode1: '09'
+                    personalFax1: '5008000'
+                    otherPhoneAreaCode1: '09'
+                    otherPhone1: '5009000'
+                    otherMobile: '61900900900'
+                    otherFirstName: Harold
+                    otherLastName: Wickman
+                    otherTitle: Mr
+                    status: A
+                    companyName: Whispir
+                    jobTitle: Software Engineer
+                    division: Technology
+                    businessUnit: Core Platform
+                    department: Research & Development
+                    teamName1: Optimus Prime
+                    teamName2: Bumblebee
+                    role1: Administrator
+                    role2: Analyst
+                    locations:
+                      - latitude: 41.9028
+                        longitude: -12.4964
+                        type: CurrentLocation
+                    messagingoptions:
+                      - channel: sms
+                        enabled: true
+                        primary: WorkMobilePhone1
+                        secondary: WorkMobilePhone1
+                        tertiary: WorkMobilePhone1
+                    type: PROJECT
+                    mri: '61400400400'
+                    devices:
+                      - {}
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                    lastModifiedTime: '2022-03-29T16:30:18+11:00'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2558,6 +2821,84 @@ paths:
           application/vnd.whispir.contact-v1+xml:
             schema:
               $ref: '#/components/schemas/contact'
+            examples:
+              Basic:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+              Comprehensive:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+                  title: Dr
+                  workMobilePhone2: '61500500500'
+                  workEmailAddress2: newUser@example.com
+                  workPhoneAreaCode1: '09'
+                  workPhone1: '5006000'
+                  workPhoneAreaCode2: '09'
+                  workPhone2: '5007000'
+                  workFaxAreaCode1: '09'
+                  workFax1: '5008000'
+                  workSatellitePhone: '61600600600'
+                  workOtherPhone: '61700700700'
+                  workAddress1: Level 15
+                  workAddress2: 360 Collins St
+                  workSuburb: Melboure
+                  workState: Victoria
+                  workPostCode: '3000'
+                  workPostalAddress1: Level 15
+                  workPostalAddress2: 360 Collins St
+                  workPostalSuburb: Melboure
+                  workPostalState: Victoria
+                  workPostalPostCode: '3000'
+                  personalEmailAddress1: personalPrimaryUser@example.com
+                  personalEmailAddress2: personalSecondaryUser@example.com
+                  personalAddress1: Level 15
+                  personalAddress2: 360 Collins St
+                  personalSuburb: Melboure
+                  personalState: Victoria
+                  personalPostCode: '3000'
+                  personalCountry: Australia
+                  personalPhoneAreaCode1: '09'
+                  personalPhone1: '5006000'
+                  personalPhoneAreaCode2: '09'
+                  personalPhone2: '5007000'
+                  personalFaxAreaCode1: '09'
+                  personalFax1: '5008000'
+                  otherPhoneAreaCode1: '09'
+                  otherPhone1: '5009000'
+                  otherMobile: '61900900900'
+                  otherFirstName: Harold
+                  otherLastName: Wickman
+                  otherTitle: Mr
+                  status: A
+                  companyName: Whispir
+                  jobTitle: Software Engineer
+                  division: Technology
+                  businessUnit: Core Platform
+                  department: Research & Development
+                  teamName1: Optimus Prime
+                  teamName2: Bumblebee
+                  role1: Administrator
+                  role2: Analyst
+                  locations:
+                    - latitude: 41.9028
+                      longitude: -12.4964
+                      type: CurrentLocation
+                  messagingoptions:
+                    - channel: sms
+                      enabled: true
+                      primary: WorkMobilePhone1
+                      secondary: WorkMobilePhone1
+                      tertiary: WorkMobilePhone1
         description: contact object that needs to be update contact
         required: true
       responses:
@@ -4706,6 +5047,77 @@ paths:
           application/vnd.whispir.user-v1+json:
             schema:
               $ref: '#/components/schemas/user'
+            examples:
+              Example:
+                value:
+                  id: 4DC922649AFE370C
+                  userName: john.w
+                  password: foobarbaz
+                  firstName: John
+                  middleName: ''
+                  lastName: Wick
+                  title: ''
+                  nickname: Babayaga
+                  status: PENDING
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+                  workMobilePhone2: '61500500500'
+                  workEmailAddress2: newUser@example.com
+                  workPhoneAreaCode1: '09'
+                  workPhone1: '5006000'
+                  workPhoneAreaCode2: '09'
+                  workPhone2: '5007000'
+                  workFaxAreaCode1: '09'
+                  workFax1: '5008000'
+                  workSatellitePhone: '61600600600'
+                  workOtherPhone: '61700700700'
+                  workAddress1: Level 15
+                  workAddress2: 360 Collins St
+                  workSuburb: Melboure
+                  workState: Victoria
+                  workPostCode: '3000'
+                  workPostalAddress1: Level 15
+                  workPostalAddress2: 360 Collins St
+                  workPostalSuburb: Melboure
+                  workPostalState: Victoria
+                  workPostalPostCode: '3000'
+                  personalEmailAddress1: personalPrimaryUser@example.com
+                  personalEmailAddress2: personalSecondaryUser@example.com
+                  personalAddress1: Level 15
+                  personalAddress2: 360 Collins St
+                  personalSuburb: Melboure
+                  personalState: Victoria
+                  personalPostCode: '3000'
+                  personalCountry: Australia
+                  personalPhoneAreaCode1: '09'
+                  personalPhone1: '5006000'
+                  personalPhoneAreaCode2: '09'
+                  personalPhone2: '5007000'
+                  personalFaxAreaCode1: '09'
+                  personalFax1: '5008000'
+                  otherPhoneAreaCode1: '09'
+                  otherPhone1: '5009000'
+                  otherMobile: '61900900900'
+                  otherFirstName: Harold
+                  otherLastName: Wickman
+                  otherTitle: Mr
+                  companyName: Whispir
+                  jobTitle: Software Engineer
+                  division: Technology
+                  businessUnit: Core Platform
+                  department: Research & Development
+                  teamName1: Optimus Prime
+                  teamName2: Bumblebee
+                  role1: Administrator
+                  role2: Analyst
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
         description: The User object to create.
         required: true
       responses:
@@ -4933,6 +5345,77 @@ paths:
           application/vnd.whispir.user-v1+json:
             schema:
               $ref: '#/components/schemas/user'
+            examples:
+              Example:
+                value:
+                  id: 4DC922649AFE370C
+                  userName: john.w
+                  password: foobarbaz
+                  firstName: John
+                  middleName: ''
+                  lastName: Wick
+                  title: ''
+                  nickname: Babayaga
+                  status: PENDING
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+                  workMobilePhone2: '61500500500'
+                  workEmailAddress2: newUser@example.com
+                  workPhoneAreaCode1: '09'
+                  workPhone1: '5006000'
+                  workPhoneAreaCode2: '09'
+                  workPhone2: '5007000'
+                  workFaxAreaCode1: '09'
+                  workFax1: '5008000'
+                  workSatellitePhone: '61600600600'
+                  workOtherPhone: '61700700700'
+                  workAddress1: Level 15
+                  workAddress2: 360 Collins St
+                  workSuburb: Melboure
+                  workState: Victoria
+                  workPostCode: '3000'
+                  workPostalAddress1: Level 15
+                  workPostalAddress2: 360 Collins St
+                  workPostalSuburb: Melboure
+                  workPostalState: Victoria
+                  workPostalPostCode: '3000'
+                  personalEmailAddress1: personalPrimaryUser@example.com
+                  personalEmailAddress2: personalSecondaryUser@example.com
+                  personalAddress1: Level 15
+                  personalAddress2: 360 Collins St
+                  personalSuburb: Melboure
+                  personalState: Victoria
+                  personalPostCode: '3000'
+                  personalCountry: Australia
+                  personalPhoneAreaCode1: '09'
+                  personalPhone1: '5006000'
+                  personalPhoneAreaCode2: '09'
+                  personalPhone2: '5007000'
+                  personalFaxAreaCode1: '09'
+                  personalFax1: '5008000'
+                  otherPhoneAreaCode1: '09'
+                  otherPhone1: '5009000'
+                  otherMobile: '61900900900'
+                  otherFirstName: Harold
+                  otherLastName: Wickman
+                  otherTitle: Mr
+                  companyName: Whispir
+                  jobTitle: Software Engineer
+                  division: Technology
+                  businessUnit: Core Platform
+                  department: Research & Development
+                  teamName1: Optimus Prime
+                  teamName2: Bumblebee
+                  role1: Administrator
+                  role2: Analyst
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
         description: Users object that needs to be update Users
         required: true
       responses:
@@ -9077,6 +9560,7 @@ components:
       x-examples:
         Example:
           id: 4DC922649AFE370C
+          userName: john.w
           firstName: John
           middleName: ''
           lastName: Wick

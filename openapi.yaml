@@ -4048,7 +4048,33 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
       requestBody:
-        $ref: '#/components/requestBodies/callback'
+        content:
+          application/vnd.whispir.api-callback-v1+json:
+            schema:
+              $ref: '#/components/schemas/callback'
+            examples:
+              Example 1:
+                value:
+                  id: 4452AC8359535C46
+                  name: Callback Name
+                  url: 'https://example.com/callback'
+                  auth:
+                    type: basicauth
+                    key: test34
+                  contentType: json
+                  removeHTML: disabled
+                  retriesEnabled: true
+                  email: me@example.com
+                  callbacks:
+                    reply: disabled
+                    undeliverable: disabled
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
+        description: The Callback object to update
     delete:
       summary: Delete a callback
       x-sdkOperation: delete
@@ -5865,7 +5891,114 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
       requestBody:
-        $ref: '#/components/requestBodies/event'
+        content:
+          application/vnd.whispir.event-v1+json:
+            schema:
+              $ref: '#/components/schemas/event'
+            examples:
+              Example 1:
+                value:
+                  id: B27ABC9D8E98A9B
+                  eventLabel: 2701095 - Outage of Local Systems in Sydney
+                  status: Active
+                  eventFormList:
+                    - formName: MetroEvent
+                      eventFieldList:
+                        - name: summary
+                          value: Outage of systems in Sydney
+                        - name: location
+                          value: '0.0,0.0'
+                        - name: endDate
+                        - name: type
+                          value: ''
+                        - name: actionDetails2
+                          value: ''
+                        - name: actionDetails3
+                          value: ''
+                        - name: actionDetails1
+                          value: investigation to take place asap.
+                        - name: priority
+                          value: ''
+                        - name: description
+                          value: 'ATMs are non responsive, teams to be sent to investigate.'
+                        - name: actionDetails8
+                          value: ''
+                        - name: actionDetails9
+                          value: ''
+                        - name: actionDetails6
+                          value: ''
+                        - name: actionDetails7
+                          value: ''
+                        - name: actionDetails4
+                          value: ''
+                        - name: actionOwner10
+                          value: ''
+                        - name: actionDetails5
+                          value: ''
+                        - name: platform
+                          value: ''
+                        - name: services
+                          value: ''
+                        - name: status
+                          value: Open
+                        - name: openedBy
+                          value: ''
+                        - name: category
+                          value: Internal
+                        - name: externalVendor
+                          value: ''
+                        - name: externalCaseNumber
+                          value: ''
+                        - name: actionOwner6
+                          value: ''
+                        - name: startDate
+                          value: '11/09/2019 00:00:00'
+                        - name: actionOwner5
+                          value: ''
+                        - name: actionOwner8
+                          value: ''
+                        - name: actionOwner7
+                          value: ''
+                        - name: actionOwner9
+                          value: ''
+                        - name: actionDate8
+                        - name: actionDate9
+                        - name: actionDetails10
+                          value: ''
+                        - name: actionDate4
+                        - name: actionOwner2
+                          value: ''
+                        - name: actionDate5
+                        - name: actionOwner1
+                          value: John Wick
+                        - name: actionDate6
+                        - name: actionOwner4
+                          value: ''
+                        - name: actionDate7
+                        - name: actionOwner3
+                          value: ''
+                        - name: actionDate1
+                          value: '11/09/2019 00:00:00'
+                        - name: actionDate3
+                        - name: actionDate2
+                        - name: locations
+                          value: ''
+                        - name: impactToOrg
+                          value: ''
+                        - name: actionDate10
+                        - name: locationDisplay
+                          value: ''
+                        - name: subCategory
+                          value: ''
+                        - name: severity
+                          value: Severity 3 - Minor Outage (Some Service Degradation)
+                        - name: duration
+                          value: ''
+                        - name: lineNumber
+                          value: ''
+                        - name: impactCondition
+                          value: ''
+        description: The Event object to create
     parameters:
       - name: workspaceId
         in: path
@@ -5939,8 +6072,6 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Event-Content-Type'
         - $ref: '#/components/parameters/Event-Accept'
-      requestBody:
-        $ref: '#/components/requestBodies/event'
       responses:
         '204':
           description: No Content
@@ -5975,6 +6106,29 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
+      requestBody:
+        content:
+          application/vnd.whispir.event-v1+json:
+            schema:
+              $ref: '#/components/schemas/event'
+            examples:
+              Example 1:
+                value:
+                  id: 888E0A343770A7D1
+                  eventLabel: 2701095 - Outage of Local Systems in Sydney
+                  status: Open
+                  eventFormList:
+                    - formName: Metro Event
+                      eventFieldList:
+                        - name: actionOwner1
+                          value: John Wick
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
+        description: The Event object to update
   '/workspaces/{workspaceId}/imports':
     post:
       tags:
@@ -6206,138 +6360,7 @@ servers:
   - url: 'https://api.education.whispir.com'
     description: Education
 components:
-  requestBodies:
-    event:
-      content:
-        application/vnd.whispir.event-v1+json:
-          schema:
-            $ref: '#/components/schemas/event'
-          examples:
-            Event request body example:
-              value:
-                id: B27ABC9D8E98A9B
-                eventLabel: 2701095 - Outage of Local Systems in Sydney
-                status: Active
-                eventFormList:
-                  - formName: MetroEvent
-                    eventFieldList:
-                      - name: summary
-                        value: Outage of systems in Sydney
-                      - name: location
-                        value: '0.0,0.0'
-                      - name: endDate
-                      - name: type
-                        value: ''
-                      - name: actionDetails2
-                        value: ''
-                      - name: actionDetails3
-                        value: ''
-                      - name: actionDetails1
-                        value: investigation to take place asap.
-                      - name: priority
-                        value: ''
-                      - name: description
-                        value: 'ATMs are non responsive, teams to be sent to investigate.'
-                      - name: actionDetails8
-                        value: ''
-                      - name: actionDetails9
-                        value: ''
-                      - name: actionDetails6
-                        value: ''
-                      - name: actionDetails7
-                        value: ''
-                      - name: actionDetails4
-                        value: ''
-                      - name: actionOwner10
-                        value: ''
-                      - name: actionDetails5
-                        value: ''
-                      - name: platform
-                        value: ''
-                      - name: services
-                        value: ''
-                      - name: status
-                        value: Open
-                      - name: openedBy
-                        value: ''
-                      - name: category
-                        value: Internal
-                      - name: externalVendor
-                        value: ''
-                      - name: externalCaseNumber
-                        value: ''
-                      - name: actionOwner6
-                        value: ''
-                      - name: startDate
-                        value: '11/09/2019 00:00:00'
-                      - name: actionOwner5
-                        value: ''
-                      - name: actionOwner8
-                        value: ''
-                      - name: actionOwner7
-                        value: ''
-                      - name: actionOwner9
-                        value: ''
-                      - name: actionDate8
-                      - name: actionDate9
-                      - name: actionDetails10
-                        value: ''
-                      - name: actionDate4
-                      - name: actionOwner2
-                        value: ''
-                      - name: actionDate5
-                      - name: actionOwner1
-                        value: John Wick
-                      - name: actionDate6
-                      - name: actionOwner4
-                        value: ''
-                      - name: actionDate7
-                      - name: actionOwner3
-                        value: ''
-                      - name: actionDate1
-                        value: '11/09/2019 00:00:00'
-                      - name: actionDate3
-                      - name: actionDate2
-                      - name: locations
-                        value: ''
-                      - name: impactToOrg
-                        value: ''
-                      - name: actionDate10
-                      - name: locationDisplay
-                        value: ''
-                      - name: subCategory
-                        value: ''
-                      - name: severity
-                        value: Severity 3 - Minor Outage (Some Service Degradation)
-                      - name: duration
-                        value: ''
-                      - name: lineNumber
-                        value: ''
-                      - name: impactCondition
-                        value: ''
-      description: events object that needs to be create events
-    callback:
-      content:
-        application/vnd.whispir.callback-v1+json:
-          schema:
-            $ref: '#/components/schemas/callback'
-          examples:
-            Callback Object:
-              value:
-                id: 4452AC8359535C46
-                name: Callback Name
-                url: 'https://example.com/callback'
-                auth:
-                  type: queryparam
-                  key: string
-                contentType: json
-                removeHTML: disabled
-                retriesEnabled: true
-                email: me@example.com
-                callbacks:
-                  reply: disabled
-                  undeliverable: disabled
-      description: The Callback Object
+  requestBodies: {}
   securitySchemes:
     BasicAuth:
       type: http

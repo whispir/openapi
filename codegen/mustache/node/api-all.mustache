@@ -8,9 +8,10 @@ export * from './{{ classFilename }}Interface'
 {{/withInterfaces}}
 {{/apis}}
 import * as http from 'http';
+import { ApiError } from '../model/models';
 
 export class HttpError extends Error {
-    constructor(public body: any, public statusCode?: number) {
+    constructor(public body: ApiError) {
         super(body.errorText);
         this.name = 'HttpError';
     }

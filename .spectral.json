@@ -1647,62 +1647,36 @@
       },
       "description": "Successful post endpoint responses must have the following \"headers\": \"Location\"."
     },
-    "required-path-sdk-operation": {
+    "operation-sdkOperation-format": {
       "given": [
-        "$.paths[*][get,put,post,delete,options,head,patch,trace]"
+        "#API_Document"
       ],
       "severity": "error",
       "then": {
-        "function": "pattern",
+        "function": "oasOpSdk",
         "functionOptions": {
-          "match": "/^create|retrieve|update|delete|list/g"
-        },
-        "field": "x-sdkOperation"
+          "exceptions": []
+        }
       },
-      "description": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names.\n\nMust start with one of:\n* `create`\n* `read`\n* `update`\n* `delete`\n* `list`\n\nAn optional noun suffix describing any sub-resources may be included as appropriate.\n\n**Valid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"create\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"listWebhookCalls\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"post\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"getWebhookCalls\"\n}\n```",
-      "message": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names. Must start with one of \"create\", \"read\", \"update\", \"delete\", or \"list\", with an optional noun suffixed describing any sub-resources as appropriate."
+      "description": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names.\n\nMust start with one of the following values, corresponding to the operation on the resource:\n* `create` - `POST /resource`\n* `retrieve` - `GET /resource/{resourceId}`\n* `update` - `PUT /resource/{resourceId}`\n* `delete` - `DELETE /resource/{resourceId}`\n* `list` - `GET /resource`\n\nAn optional noun suffix describing any sub-resources may be included as appropriate.\n\n**Valid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"create\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"listWebhookCalls\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"post\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"getWebhookCalls\"\n}\n```",
+      "message": "Every operation must have an \"x-sdkOperation\" starting with one of \"create\", \"retrieve\", \"update\", \"delete\", or \"list\", as appropriate for the operation on the resource. An optional noun suffixed to describe any sub-resources may be included."
+    },
+    "operation-operationId-format": {
+      "given": [
+        "#API_Document"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "oasOpIdFormat",
+        "functionOptions": {
+          "exceptions": []
+        }
+      },
+      "description": "All operations must include an appropriately named \"operationId\".\r\n\r\nMust end with one of the following values, corresponding to the operation on the resource:\r\n* `Create` - `POST /resource`\r\n* `Retrieve` - `GET /resource/{resourceId}`\r\n* `Update` - `PUT /resource/{resourceId}`\r\n* `Delete` - `DELETE /resource/{resourceId}`\r\n* `List` - `GET /resource`\r\n\r\nAn optional noun prefix describing any sub-resources may be included as appropriate.\r\n\r\n**Valid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"messageCreate\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"webhookCallList\"\r\n}\r\n```\r\n\r\n**Invalid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"getMessage\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"getWebhookCalls\"\r\n}\r\n```",
+      "message": "Every operation must have an \"operationId\" ending with one of \"Create\", \"Retrieve\", \"Update\", \"Delete\", or \"List\", as appropriate for the operation on the resource. An optional noun prefixed to describe any sub-resources may be included"
     }
   },
   "overrides": [
-    {
-      "files": [
-        "**#/components/schemas/messagingoptions",
-        "**#/components/schemas/locations",
-        "**#/components/schemas/location",
-        "**#/components/schemas/user",
-        "**#/components/schemas/fieldMapping",
-        "**#/components/schemas/auth",
-        "**#/components/requestBodies/event"
-      ],
-      "rules": {
-        "schema-examples": "off",
-        "schema-descriptions": "off",
-        "schema-property-descriptions": "off",
-        "schema-property-examples": "off"
-      }
-    },
-    {
-      "files": [
-        "**#/paths/~1workspaces~1{workspaceId}~1events",
-        "**#/components/requestBodies/event",
-        "**#/components/schemas/activity"
-      ],
-      "rules": {
-        "payload-examples": "off"
-      }
-    },
-    {
-      "files": [
-        "**#/paths/~1activities",
-        "**#/paths/~1users",
-        "**#/paths/~1auth",
-        "**#/paths/~1workspaces~1{workspaceId}~1contacts",
-        "**#/paths/~1workspaces~1{workspaceId}~1templates"
-      ],
-      "rules": {
-        "payload-examples": "off"
-      }
-    },
     {
       "files": [
         "**#/paths/~1auth~1verify/get"
@@ -1710,9 +1684,27 @@
       "rules": {
         "required-list-pagination-request-query-parameters": "off"
       }
+    },
+    {
+      "files": [
+        "**#/paths/~1auth~1verify/get/operationId"
+      ],
+      "rules": {
+        "operation-operationId-format": "off"
+      }
+    },
+    {
+      "files": [
+        "**#/paths/~1auth~1verify/get/x-sdkOperation"
+      ],
+      "rules": {
+        "operation-sdkOperation-format": "off"
+      }
     }
   ],
   "functions": [
+    "oasOpIdFormat",
+    "oasOpSdk",
     "oasDocumentSchema",
     "oasDiscriminator",
     "oasExample",

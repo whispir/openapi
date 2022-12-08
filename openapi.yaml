@@ -456,7 +456,7 @@ paths:
             <repeatMin>0</repeatMin>
         </ns2:message>
         ```
-      operationId: postMessages
+      operationId: messageCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Message-Content-Type'
@@ -647,7 +647,7 @@ paths:
         List all sent messages for the workspace.
 
         Pagination is available.
-      operationId: getMessages
+      operationId: messageList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Message-Accept'
@@ -764,7 +764,7 @@ paths:
         - **summaryResponsesWithResponseRule:** Returns the response information of the message as a messageresponse object, filtered by the Response Rule (if one was used) in a summary view.  
 
         - **detailedResponsesWithResponseRule:** Returns the response information of the message as a messageresponse object, filtered by the Response Rule (if one was used) in a detailed view.
-      operationId: getMessageById
+      operationId: messageRetrieve
       responses:
         '200':
           description: OK
@@ -889,8 +889,8 @@ paths:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}/messagestatus':
     get:
-      summary: Retrieve a message status
-      x-sdkOperation: retrieveMessageStatus
+      summary: List message status for a sent message
+      x-sdkOperation: listMessageStatus
       description: |
         Whispir will automatically monitor the status of each message after it has been sent to each recipient. Using the message status information, you are able to determine who received the message, what exact time they received it, on what message channel (SMS, Email, Voice, Web, Push Notification), whether they replied to the message, what time they replied, and on what messaging channel.  
 
@@ -951,7 +951,7 @@ paths:
         *   The information text describing how this message has progressed.
 
         Once you have processed the status information, the next likely piece of information you will be looking to find is the content of the responses (if any). The section on Message Responses describes how to retrieve this information.
-      operationId: getMessageStatus
+      operationId: messageStatusList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/MessageStatus-Accept'
@@ -1081,8 +1081,8 @@ paths:
       - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/messages/{messageId}/messageresponses':
     get:
-      summary: Retrieve a message response
-      x-sdkOperation: retrieveMessageResponse
+      summary: List responses for a sent message
+      x-sdkOperation: listMessageResponse
       description: |
         ## Summary Responses
 
@@ -1128,7 +1128,7 @@ paths:
         *   The **responseMessage content** describes the actual content of the inbound message.
 
         *   The **responseMessage acknowledged** shows the date of when the response was received by the Whispir Platform
-      operationId: getMessageResponsesById
+      operationId: messageResponseList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/MessageResponse-Accept'
@@ -1290,7 +1290,7 @@ paths:
         **Note:** The types of files allowed are - `CSV`, `JSON`, `XML`, Images [`JPEG`, `PNG`], and `WAV`.  
 
         Information about the resources endpoint is documented in the Resources section of the documentation.
-      operationId: postResources
+      operationId: resourceCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Resource-Content-Type'
@@ -1379,7 +1379,7 @@ paths:
         **Note:** The name including the file extension makes it a unique search.
 
         **Eg:** - &name=australia.csv
-      operationId: getResources
+      operationId: resourceList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Resource-Accept'
@@ -1436,7 +1436,7 @@ paths:
       x-sdkOperation: retrieve
       description: |
         A single resource (public|private) can be retrieved from the available resource by using the resource’s specific link uri
-      operationId: getResourcesById
+      operationId: resourceRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Resource-Accept'
@@ -1479,7 +1479,7 @@ paths:
         Updating a resource involves the same process as in creating a resource. The process of using one of the format (CSV, JSON, XML) for private and any format for public -> converting to base64 encoded data is the same.  
         The change is doing a PUT to the existing resource URL that needs to be updated. Please be careful that doing an update overwrites the previous resource. There is no versioning available in Whispir for the resources.  
         Any or all of the 4 values can be changed. i.e, name, scope, mimeType, derefUri, but all 4 are mandatory values to be sent.
-      operationId: putResourcesById
+      operationId: resourceUpdate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Resource-Content-Type'
@@ -1537,7 +1537,7 @@ paths:
         Resources can be deleted after use. These can be both public and private in scope.  
 
         **Note:** Deleting a public resource may result in 404 File Not Found error for any sites or material referencing to it. So, ensure that DELETE is only executed when the reference to all material is removed or the content has to be removed for other purposes immediately.
-      operationId: deleteResourcesById
+      operationId: resourceDelete
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: resourceId
@@ -1587,7 +1587,7 @@ paths:
       x-sdkOperation: create
       x-isPost: true
       description: 'Create a message template, combining multi-channel content for use with the Message resource. The message template can be reused across multiple sent messages.'
-      operationId: postTemplates
+      operationId: templateCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Template-Content-Type'
@@ -1597,6 +1597,58 @@ paths:
           application/vnd.whispir.template-v1+json:
             schema:
               $ref: '#/components/schemas/template'
+            examples:
+              Template:
+                value:
+                  messageTemplateName: Sample SMS Template
+                  messageTemplateDescription: Template to provide an example on whispir.io
+                  responseTemplateId: responseTemplateId
+                  subject: Test SMS Message
+                  body: This is the body of my test SMS message
+                  email:
+                    body: This is the body of my email message.
+                    footer: This is the footer of my message.
+                    type: text/plain
+                    resources:
+                      attachments:
+                        - attachmentName: TestIcon.png
+                          attachmentDesc: MyPhoto
+                          derefUri: iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMvSURBVDhPTVT5S1RhFD3fezOOOePTXHKriWgjsogWC1TSMuuHIFqoX0KsIIgSWwiq/6FFU8MKK6KyXYSKpkUKR4QMSSpCLQpyxHHUZpztzdu63xub5vKWj/fu+c6599z3mMfjSU9P13UdZoiCaLfZYQWiUGKq1WrBLEBDOBpWNTWeQyEIwvT0NAsEAgROPKXFxceNbQOtv4ShkKCkaZZ5kYU1Sw6dqT0NMTkLBIbf7zf+xaOuJzgG4RmyPyP/Kwq/oWAYeT+R6gYOofnmlUQmLQjI6JQkifasu368KdCQWwFEwBiYQOIgiDBETDFIORh/iZ0De55cehgXQJIphce9d/ebJhuyV0P3QY9Cj/HDUKhseIPomP/CW2QYB42nSx+db76YUM9IusPhYHVM2g5Bpo5xNuIkZibCF8On0oGVjhWabmR8EBx5GDuHaItsy0zhzA6bo/H5ZSyDMQ1d4YQa0Sqc1hdAe3E7IYkqp9tiUcHGkXIQZ8+fm+k5uXK3/46YAV3mMMLEt/BHUJ1Vua9oH+WV9ayLyLpVhRYFkT8d4mUzRuI0DAcHmQngSLrGoBJ/GC/L31JSy/cm91ifXTcboYDJGLX+1kI6WS3AQFSRCUDvwhGEwubiD1yVLkLKWuxoT50kzGwab6Ru6HIsahpiwTybkwTLU9iUU1Ezf394CmuyV20p2kLg8mcbRHLLxGimLlWFFMpMc6TRFlx29aJqePBgx4M3u7tubb1dMXfjw6rHhOwb+/jhV3+qNtMFKspQEZnA+oxSPr9UdjgUllV59pHZhSUFI/We5AnMv5o7bvhsFu5f3DlmR7ATr/a+rtq2mVulqEqmlFlbUuv5MbqudW0C7PrhGpvwidRhIoyXqiHoRam/tGrT5n9Wmfcb9TfmBOf0DXy80H0h/uKU6yQRcqlmk+mji0RhbbN2XOpAygzF/9nmfp4oc4+4y6vLqRnuUTdsfNqYFRop/4JFw4t723qz52YlZpvPd/K30vm+03nAie1ADXAYOADsgHOXs/laix7RkzMJyJJ/BjQ09lQ7me8f9/cP9nsnvemzpOIFy3PzclkK0wyNgvDEHP8Z/AXQ58rAz69IBAAAAABJRU5ErkJggg==
+                  voice:
+                    header: 'This is the introduction, read out to the recipient prior to any key press.'
+                    body: 'This is the body of the voice call, read out after the key press'
+                    type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                  web:
+                    body: This is the content of my web publishing or Rich Push Message
+                    type: text/plain
+                  social:
+                    social:
+                      - id: social
+                        body: Facebook Content
+                        type: text/plain
+                  type: defaultNoReply
+                  features:
+                    pushOptions:
+                      notifications: enabled
+                      escalationMins: '3'
+                      appId: appId
+                  dlr:
+                    period: string
+                    publishToWeb: false
+                    rule: string
+                    expiryDay: 0
+                    expiryHour: 0
+                    expiryMin: 0
+                    feedIds: string
+                    bool: false
+                    type: string
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
+                  tags: string
         description: Templates object that needs to be create Templates
         required: true
       responses:
@@ -1631,7 +1683,7 @@ paths:
         List all message templates for the workspace.
 
         Pagination is available.
-      operationId: getTemplates
+      operationId: templateList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Template-Accept'
@@ -1710,7 +1762,7 @@ paths:
       summary: Retrieve a template
       x-sdkOperation: retrieve
       description: Retrieves a message template
-      operationId: getTemplatesById
+      operationId: templateRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
@@ -1751,7 +1803,7 @@ paths:
       x-sdkOperation: update
       description: |
         **Note:** Currently users cannot update templates with the same name as a template that already exists in Whispir. Users can overcome this by saving the updated template with a new name, then either changing this back in a subsequent save, or retaining the updated name.
-      operationId: putTemplatesById
+      operationId: templateUpdate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
@@ -1768,6 +1820,58 @@ paths:
           application/vnd.whispir.template-v1+json:
             schema:
               $ref: '#/components/schemas/template'
+            examples:
+              Template:
+                value:
+                  messageTemplateName: Sample SMS Template
+                  messageTemplateDescription: Template to provide an example on whispir.io
+                  responseTemplateId: responseTemplateId
+                  subject: Test SMS Message
+                  body: This is the body of my test SMS message
+                  email:
+                    body: This is the body of my email message.
+                    footer: This is the footer of my message.
+                    type: text/plain
+                    resources:
+                      attachments:
+                        - attachmentName: TestIcon.png
+                          attachmentDesc: MyPhoto
+                          derefUri: iVBORw0KGgoAAAANSUhEUgAAABQAAAASCAIAAADUsmlHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAMvSURBVDhPTVT5S1RhFD3fezOOOePTXHKriWgjsogWC1TSMuuHIFqoX0KsIIgSWwiq/6FFU8MKK6KyXYSKpkUKR4QMSSpCLQpyxHHUZpztzdu63xub5vKWj/fu+c6599z3mMfjSU9P13UdZoiCaLfZYQWiUGKq1WrBLEBDOBpWNTWeQyEIwvT0NAsEAgROPKXFxceNbQOtv4ShkKCkaZZ5kYU1Sw6dqT0NMTkLBIbf7zf+xaOuJzgG4RmyPyP/Kwq/oWAYeT+R6gYOofnmlUQmLQjI6JQkifasu368KdCQWwFEwBiYQOIgiDBETDFIORh/iZ0De55cehgXQJIphce9d/ebJhuyV0P3QY9Cj/HDUKhseIPomP/CW2QYB42nSx+db76YUM9IusPhYHVM2g5Bpo5xNuIkZibCF8On0oGVjhWabmR8EBx5GDuHaItsy0zhzA6bo/H5ZSyDMQ1d4YQa0Sqc1hdAe3E7IYkqp9tiUcHGkXIQZ8+fm+k5uXK3/46YAV3mMMLEt/BHUJ1Vua9oH+WV9ayLyLpVhRYFkT8d4mUzRuI0DAcHmQngSLrGoBJ/GC/L31JSy/cm91ifXTcboYDJGLX+1kI6WS3AQFSRCUDvwhGEwubiD1yVLkLKWuxoT50kzGwab6Ru6HIsahpiwTybkwTLU9iUU1Ezf394CmuyV20p2kLg8mcbRHLLxGimLlWFFMpMc6TRFlx29aJqePBgx4M3u7tubb1dMXfjw6rHhOwb+/jhV3+qNtMFKspQEZnA+oxSPr9UdjgUllV59pHZhSUFI/We5AnMv5o7bvhsFu5f3DlmR7ATr/a+rtq2mVulqEqmlFlbUuv5MbqudW0C7PrhGpvwidRhIoyXqiHoRam/tGrT5n9Wmfcb9TfmBOf0DXy80H0h/uKU6yQRcqlmk+mji0RhbbN2XOpAygzF/9nmfp4oc4+4y6vLqRnuUTdsfNqYFRop/4JFw4t723qz52YlZpvPd/K30vm+03nAie1ADXAYOADsgHOXs/laix7RkzMJyJJ/BjQ09lQ7me8f9/cP9nsnvemzpOIFy3PzclkK0wyNgvDEHP8Z/AXQ58rAz69IBAAAAABJRU5ErkJggg==
+                  voice:
+                    header: 'This is the introduction, read out to the recipient prior to any key press.'
+                    body: 'This is the body of the voice call, read out after the key press'
+                    type: 'Pin:7171,ConfCall:1800123123,ConfAccountNo:098711234,ConfPinNo:8181,ConfModPinNo:4242'
+                  web:
+                    body: This is the content of my web publishing or Rich Push Message
+                    type: text/plain
+                  social:
+                    social:
+                      - id: social
+                        body: Facebook Content
+                        type: text/plain
+                  type: defaultNoReply
+                  features:
+                    pushOptions:
+                      notifications: enabled
+                      escalationMins: '3'
+                      appId: appId
+                  dlr:
+                    period: string
+                    publishToWeb: false
+                    rule: string
+                    expiryDay: 0
+                    expiryHour: 0
+                    expiryMin: 0
+                    feedIds: string
+                    bool: false
+                    type: string
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/618CAD33669AD31A/templates/3148356543415EE7'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
+                  tags: string
         description: Templates object that needs to be update Templates
         required: true
       responses:
@@ -1807,7 +1911,7 @@ paths:
       x-sdkOperation: delete
       description: |
         **Note:** When a template is DELETED, all the associated Scenarios, events, and references of template use in other endpoints will fail. So, ensure that the template is not used anywhere before it is deleted. Whispir **will not** do that check before it deletes the template.
-      operationId: deleteTemplatesById
+      operationId: templateDelete
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: templateId
@@ -1868,7 +1972,7 @@ paths:
         Each of the Patterns specified will also dynamically create buttons within any Rich Message that is associated with the Response Rule.
 
         This provides an out of the box capability to quickly gather feedback from the field using a Rich User interface, and leveraging SMS as the delivery mechanism.
-      operationId: postResponseRules
+      operationId: responseRuleCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/ResponseRule-Content-Type'
@@ -1937,7 +2041,7 @@ paths:
       x-sdkOperation: list
       summary: List response rules
       description: Returns a list of response rules.
-      operationId: getResponseRules
+      operationId: reponseRuleList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/ResponseRule-Accept'
@@ -2006,7 +2110,7 @@ paths:
       x-sdkOperation: retrieve
       summary: Retrieve a response rule
       description: Retrieves a response rule object.
-      operationId: getResponseRulesById
+      operationId: responseRuleRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/ResponseRule-Accept'
@@ -2073,7 +2177,7 @@ paths:
       x-sdkOperation: update
       summary: Update a response rule
       description: Updates a Response Rule object.
-      operationId: putResponseRulesById
+      operationId: responseRuleUpdate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/ResponseRule-Content-Type'
@@ -2140,7 +2244,7 @@ paths:
       x-sdkOperation: delete
       summary: Delete a response rule
       description: Deletes a Response Rule object.
-      operationId: deleteResponseRulesById
+      operationId: responseRuleDelete
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: responseRuleId
@@ -2190,7 +2294,7 @@ paths:
       x-isPost: true
       summary: Create a contact
       description: Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.
-      operationId: postContacts
+      operationId: contactCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Contact-Accept'
@@ -2281,6 +2385,84 @@ paths:
           application/vnd.whispir.contact-v1+xml:
             schema:
               $ref: '#/components/schemas/contact'
+            examples:
+              Basic:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+              Comprehensive:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+                  title: Dr
+                  workMobilePhone2: '61500500500'
+                  workEmailAddress2: newUser@example.com
+                  workPhoneAreaCode1: '09'
+                  workPhone1: '5006000'
+                  workPhoneAreaCode2: '09'
+                  workPhone2: '5007000'
+                  workFaxAreaCode1: '09'
+                  workFax1: '5008000'
+                  workSatellitePhone: '61600600600'
+                  workOtherPhone: '61700700700'
+                  workAddress1: Level 15
+                  workAddress2: 360 Collins St
+                  workSuburb: Melboure
+                  workState: Victoria
+                  workPostCode: '3000'
+                  workPostalAddress1: Level 15
+                  workPostalAddress2: 360 Collins St
+                  workPostalSuburb: Melboure
+                  workPostalState: Victoria
+                  workPostalPostCode: '3000'
+                  personalEmailAddress1: personalPrimaryUser@example.com
+                  personalEmailAddress2: personalSecondaryUser@example.com
+                  personalAddress1: Level 15
+                  personalAddress2: 360 Collins St
+                  personalSuburb: Melboure
+                  personalState: Victoria
+                  personalPostCode: '3000'
+                  personalCountry: Australia
+                  personalPhoneAreaCode1: '09'
+                  personalPhone1: '5006000'
+                  personalPhoneAreaCode2: '09'
+                  personalPhone2: '5007000'
+                  personalFaxAreaCode1: '09'
+                  personalFax1: '5008000'
+                  otherPhoneAreaCode1: '09'
+                  otherPhone1: '5009000'
+                  otherMobile: '61900900900'
+                  otherFirstName: Harold
+                  otherLastName: Wickman
+                  otherTitle: Mr
+                  status: A
+                  companyName: Whispir
+                  jobTitle: Software Engineer
+                  division: Technology
+                  businessUnit: Core Platform
+                  department: Research & Development
+                  teamName1: Optimus Prime
+                  teamName2: Bumblebee
+                  role1: Administrator
+                  role2: Analyst
+                  locations:
+                    - latitude: 41.9028
+                      longitude: -12.4964
+                      type: CurrentLocation
+                  messagingoptions:
+                    - channel: sms
+                      enabled: true
+                      primary: WorkMobilePhone1
+                      secondary: WorkMobilePhone1
+                      tertiary: WorkMobilePhone1
         description: Contact object to be created
         required: true
       responses:
@@ -2323,7 +2505,7 @@ paths:
         For example, if the field name is **StaffId**, then the URL would search for:
 
         `/contacts?custom_StaffId=12345`
-      operationId: getContacts
+      operationId: contactList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/limit'
@@ -2385,7 +2567,7 @@ paths:
         In order to reveal these custom fields on the contact profile, you can use the `customFields=true` flag within your API request.
 
         Example: `/contacts/AB38CB3EFD38AFDB?customFields=true`
-      operationId: getContactsById
+      operationId: contactRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: contactId
@@ -2423,6 +2605,87 @@ paths:
             application/vnd.whispir.contact-v1+json:
               schema:
                 $ref: '#/components/schemas/contact'
+              examples:
+                Example 1:
+                  value:
+                    firstName: John
+                    lastName: Wick
+                    workMobilePhone1: '61400400400'
+                    workEmailAddress1: testUser@example.com
+                    workCountry: Australia
+                    timezone: Australia/Melbourne
+                    title: Dr
+                    workMobilePhone2: '61500500500'
+                    workEmailAddress2: newUser@example.com
+                    workPhoneAreaCode1: '09'
+                    workPhone1: '5006000'
+                    workPhoneAreaCode2: '09'
+                    workPhone2: '5007000'
+                    workFaxAreaCode1: '09'
+                    workFax1: '5008000'
+                    workSatellitePhone: '61600600600'
+                    workOtherPhone: '61700700700'
+                    workAddress1: Level 15
+                    workAddress2: 360 Collins St
+                    workSuburb: Melboure
+                    workState: Victoria
+                    workPostCode: '3000'
+                    workPostalAddress1: Level 15
+                    workPostalAddress2: 360 Collins St
+                    workPostalSuburb: Melboure
+                    workPostalState: Victoria
+                    workPostalPostCode: '3000'
+                    personalEmailAddress1: personalPrimaryUser@example.com
+                    personalEmailAddress2: personalSecondaryUser@example.com
+                    personalAddress1: Level 15
+                    personalAddress2: 360 Collins St
+                    personalSuburb: Melboure
+                    personalState: Victoria
+                    personalPostCode: '3000'
+                    personalCountry: Australia
+                    personalPhoneAreaCode1: '09'
+                    personalPhone1: '5006000'
+                    personalPhoneAreaCode2: '09'
+                    personalPhone2: '5007000'
+                    personalFaxAreaCode1: '09'
+                    personalFax1: '5008000'
+                    otherPhoneAreaCode1: '09'
+                    otherPhone1: '5009000'
+                    otherMobile: '61900900900'
+                    otherFirstName: Harold
+                    otherLastName: Wickman
+                    otherTitle: Mr
+                    status: A
+                    companyName: Whispir
+                    jobTitle: Software Engineer
+                    division: Technology
+                    businessUnit: Core Platform
+                    department: Research & Development
+                    teamName1: Optimus Prime
+                    teamName2: Bumblebee
+                    role1: Administrator
+                    role2: Analyst
+                    locations:
+                      - latitude: 41.9028
+                        longitude: -12.4964
+                        type: CurrentLocation
+                    messagingoptions:
+                      - channel: sms
+                        enabled: true
+                        primary: WorkMobilePhone1
+                        secondary: WorkMobilePhone1
+                        tertiary: WorkMobilePhone1
+                    type: PROJECT
+                    mri: '61400400400'
+                    devices:
+                      - {}
+                    link:
+                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                        rel: self
+                        method: GET
+                        host: api.au.whispir.com
+                        port: -1
+                    lastModifiedTime: '2022-03-29T16:30:18+11:00'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -2460,7 +2723,7 @@ paths:
         3.  PUT `/contact/{id of contact}` the new object
 
         The response to the PUT request upon success is usually a 204 with no content being provided.
-      operationId: putContactsById
+      operationId: contactUpdate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: contactId
@@ -2558,6 +2821,84 @@ paths:
           application/vnd.whispir.contact-v1+xml:
             schema:
               $ref: '#/components/schemas/contact'
+            examples:
+              Basic:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+              Comprehensive:
+                value:
+                  firstName: John
+                  lastName: Wick
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+                  title: Dr
+                  workMobilePhone2: '61500500500'
+                  workEmailAddress2: newUser@example.com
+                  workPhoneAreaCode1: '09'
+                  workPhone1: '5006000'
+                  workPhoneAreaCode2: '09'
+                  workPhone2: '5007000'
+                  workFaxAreaCode1: '09'
+                  workFax1: '5008000'
+                  workSatellitePhone: '61600600600'
+                  workOtherPhone: '61700700700'
+                  workAddress1: Level 15
+                  workAddress2: 360 Collins St
+                  workSuburb: Melboure
+                  workState: Victoria
+                  workPostCode: '3000'
+                  workPostalAddress1: Level 15
+                  workPostalAddress2: 360 Collins St
+                  workPostalSuburb: Melboure
+                  workPostalState: Victoria
+                  workPostalPostCode: '3000'
+                  personalEmailAddress1: personalPrimaryUser@example.com
+                  personalEmailAddress2: personalSecondaryUser@example.com
+                  personalAddress1: Level 15
+                  personalAddress2: 360 Collins St
+                  personalSuburb: Melboure
+                  personalState: Victoria
+                  personalPostCode: '3000'
+                  personalCountry: Australia
+                  personalPhoneAreaCode1: '09'
+                  personalPhone1: '5006000'
+                  personalPhoneAreaCode2: '09'
+                  personalPhone2: '5007000'
+                  personalFaxAreaCode1: '09'
+                  personalFax1: '5008000'
+                  otherPhoneAreaCode1: '09'
+                  otherPhone1: '5009000'
+                  otherMobile: '61900900900'
+                  otherFirstName: Harold
+                  otherLastName: Wickman
+                  otherTitle: Mr
+                  status: A
+                  companyName: Whispir
+                  jobTitle: Software Engineer
+                  division: Technology
+                  businessUnit: Core Platform
+                  department: Research & Development
+                  teamName1: Optimus Prime
+                  teamName2: Bumblebee
+                  role1: Administrator
+                  role2: Analyst
+                  locations:
+                    - latitude: 41.9028
+                      longitude: -12.4964
+                      type: CurrentLocation
+                  messagingoptions:
+                    - channel: sms
+                      enabled: true
+                      primary: WorkMobilePhone1
+                      secondary: WorkMobilePhone1
+                      tertiary: WorkMobilePhone1
         description: contact object that needs to be update contact
         required: true
       responses:
@@ -2599,7 +2940,7 @@ paths:
         After performing this request, the response does not contain any information other than the headers as it is not necessary.
 
         The user has requested to delete a contact, and when the response of 204 No Content is returned, the contact is successfully deleted.
-      operationId: deleteContactsById
+      operationId: contactDelete
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: contactId
@@ -2659,7 +3000,7 @@ paths:
         Distribution lists can be created within the Default Workspace, or within a Specific Workspace. More information on Workspaces will be provided later in this documentation.
 
         The MRI value is important here. It is the required unique identifier for any communications that are to be sent out to this distribution list.
-      operationId: postDistributionLists
+      operationId: distributionListCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/DistributionList-Content-Type'
@@ -2732,7 +3073,7 @@ paths:
         Apart from the name, the description field can also be used to search for a distribution list. While name can be directly used to send in messages, the description is solely for the purpose of search. Once search yields the required result, the mri has to be picked from the selected DL and then used to send the messages.
 
         Both these operations can be performed by passing in the relevant search parameters in the URL as query params.
-      operationId: getDistributionLists
+      operationId: distributionListList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/DistributionList-Accept'
@@ -2812,7 +3153,7 @@ paths:
         1.  If an existing contactId is again added, it does neither throws an error, nor create two entries. The contactId is just neglected and only 1 record is maintained.
         2.  If the PUT request was successful, the expected response code is a 204 No Content
         3.  For Modifying the Location Information refer to Location Tags for Distribution Lists
-      operationId: getDistributionListsById
+      operationId: distributionListRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/DistributionList-Accept'
@@ -2869,7 +3210,7 @@ paths:
         - If an existing contactId is again added, it does neither throws an error, nor create two entries. The contactId is just neglected and only 1 record is maintained.
         - If the PUT request was successful, the expected response code is a 204 No Content
         - For Modifying the Location Information refer to Location Tags for Distribution Lists
-      operationId: putDistributionListsById
+      operationId: distributionListUpdate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/DistributionList-Content-Type'
@@ -2952,7 +3293,7 @@ paths:
       summary: Delete a distribution list
       description: |
         You can only delete the distribution list that you have created or a valid userId associated with the specific distribution list.
-      operationId: deleteDistributionListsById
+      operationId: distributionListDelete
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: distributionlistId
@@ -3003,7 +3344,7 @@ paths:
       summary: Create a scenario
       description: |
         A scenario is a combination of a message and contacts. So, its structure contains section for both message as well as contact information. API currently only supports creation of scenario with SMS as communication mode.
-      operationId: postScenarios
+      operationId: scenarioCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Scenario-Content-Type'
@@ -3071,7 +3412,7 @@ paths:
       x-sdkOperation: list
       summary: List scenarios
       description: Returns a list of your scenarios.
-      operationId: getScenarios
+      operationId: scenarioList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Scenario-Accept'
@@ -3164,7 +3505,7 @@ paths:
       x-sdkOperation: retrieve
       summary: Retrieve a scenario
       description: Retrieves a Scenario object.
-      operationId: getScenariosById
+      operationId: scenarioRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Scenario-Accept'
@@ -3266,7 +3607,7 @@ paths:
         3. Make a /POST call
 
         Now invoking this scenario is just making a /POST call.
-      operationId: postScenariosById
+      operationId: scenarioRunCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Scenario-Content-Type'
@@ -3323,7 +3664,7 @@ paths:
       x-sdkOperation: update
       summary: Update a scenario
       description: Updates a Scenario object.
-      operationId: putScenariosById
+      operationId: scenarioUpdate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Scenario-Content-Type'
@@ -3415,7 +3756,7 @@ paths:
       x-sdkOperation: delete
       summary: Delete a scenario
       description: Deletes a Scenario object.
-      operationId: deleteScenariosById
+      operationId: scenarioDelete
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: scenarioId
@@ -3493,7 +3834,7 @@ paths:
         - Limit the port to 80 or 443. Do not use any other ports.
         - Depending on the type chosen (‘json’ or ‘xml’) for the Content-Type, Whispir would make a similar `GET` (and subsequently `POST`) call. Ensure that your web server is configured to handle such MIME types.
         - Most importantly, if your application infrastructure is behind a firewall, make sure that the firewall allows an incoming `POST` request.
-      operationId: postCallbacks
+      operationId: callbackCreate
       requestBody:
         content:
           application/vnd.whispir.api-callback-v1+json:
@@ -3550,7 +3891,7 @@ paths:
       x-sdkOperation: list
       summary: List callbacks
       description: List callbacks
-      operationId: getCallbacks
+      operationId: callbackList
       responses:
         '200':
           description: OK
@@ -3624,7 +3965,7 @@ paths:
       x-sdkOperation: retrieve
       summary: Retrieve a callback
       description: Retrieve a callback object
-      operationId: getCallbackById
+      operationId: callbackRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
@@ -3664,7 +4005,7 @@ paths:
       x-sdkOperation: update
       summary: Update a callback
       description: Update a callback object
-      operationId: putCallbackById
+      operationId: callbackUpdate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
@@ -3711,7 +4052,7 @@ paths:
     delete:
       summary: Delete a callback
       x-sdkOperation: delete
-      operationId: deleteCallbackById
+      operationId: callbackDelete
       responses:
         '200':
           description: OK
@@ -3761,7 +4102,7 @@ paths:
       x-sdkOperation: listCalls
       summary: List callback calls
       description: List of calls to the callback
-      operationId: getCallbackCalls
+      operationId: callbackCallList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/limit'
@@ -3835,7 +4176,7 @@ paths:
         This ensures that all callbacks that have been processed can be updated in a single API call, rather than having to make a single API call per callback attempt.
 
         The PUT request takes a single API parameter in the body
-      operationId: putCallbackCallStatus
+      operationId: callbackCallUpdate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
@@ -3911,7 +4252,7 @@ paths:
       summary: Create a workspace
       description: |
         Note: There is no limit to the amount of workspaces each API user can create.
-      operationId: postWorkspaces
+      operationId: workspaceCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Content-Type'
@@ -3966,7 +4307,7 @@ paths:
       summary: List workspaces
       x-sdkOperation: list
       description: Returns a list of your workspaces.
-      operationId: getWorkspaces
+      operationId: workspaceList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Accept'
@@ -4004,7 +4345,7 @@ paths:
       x-sdkOperation: retrieve
       summary: Retrieve a workspace
       description: 'Use GET on a Workspace Id to verify it is a valid Workspace ID, and see a list of all the other endpoint URIs in that workspace'
-      operationId: getWorkspacesById
+      operationId: workspaceRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Accept'
@@ -4036,7 +4377,7 @@ paths:
     put:
       summary: Update a workspace
       x-sdkOperation: update
-      operationId: putWorkspaceById
+      operationId: workspaceUpdate
       responses:
         '204':
           $ref: '#/components/responses/Workspace'
@@ -4110,7 +4451,7 @@ paths:
         * They must specify a valid _‘Action’_, _‘Description’_ and _‘Status’_ within their request
         * Posting to the _/activities_ endpoint will create a new activity
         * Posting to the _/activities/{ID}_ endpoint will append the content to the detail of the specified activity
-      operationId: postActivities
+      operationId: activityCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Activity-Content-Type'
@@ -4203,7 +4544,7 @@ paths:
         All filter options are to be passed in as URL query parameters.
 
         **Note:** The API currently results in a 404 Not Found when there are no activities present in the log for a given search criteria. This should not be not confused with a failed response. But rather as No Data Found.
-      operationId: getActivities
+      operationId: activityList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Activity-Accept'
@@ -4421,7 +4762,7 @@ paths:
       description: |
         ## Restricting to only a single workspace 
         By default, GET /activities returns all the activities at company level. This covers all the workspaces. So, if the items has to limited to a specific workspace, one has to use the workspace as the endpoint and activities followed by it.
-      operationId: getWorkspaceActivities
+      operationId: activityWorkspaceList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Activity-Accept'
@@ -4538,7 +4879,7 @@ paths:
 
         ***
         **Note:** The API currently results in a 404 Not Found when there are no activities present in the log for a given search criteria. This should not be not confused with a failed response. But rather as No Data Found.
-      operationId: getCustomLists
+      operationId: customListList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/CustomList-Accept'
@@ -4632,7 +4973,7 @@ paths:
         *   uri - the link to access the list
         *   rel - the descriptor for what the link will do
         *   method - the HTTP method to use with this particular link
-      operationId: getCustomListsById
+      operationId: customListRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/CustomList-Accept'
@@ -4696,7 +5037,7 @@ paths:
         **Note:** The status text is case sensitive. Lowercase or mixed case text is invalid. Always use uppercase.
 
         Example: active != ACTIVE; inActive != INACTIVE
-      operationId: postUsers
+      operationId: userCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/User-Content-Type'
@@ -4706,6 +5047,77 @@ paths:
           application/vnd.whispir.user-v1+json:
             schema:
               $ref: '#/components/schemas/user'
+            examples:
+              Example:
+                value:
+                  id: 4DC922649AFE370C
+                  userName: john.w
+                  password: foobarbaz
+                  firstName: John
+                  middleName: ''
+                  lastName: Wick
+                  title: ''
+                  nickname: Babayaga
+                  status: PENDING
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+                  workMobilePhone2: '61500500500'
+                  workEmailAddress2: newUser@example.com
+                  workPhoneAreaCode1: '09'
+                  workPhone1: '5006000'
+                  workPhoneAreaCode2: '09'
+                  workPhone2: '5007000'
+                  workFaxAreaCode1: '09'
+                  workFax1: '5008000'
+                  workSatellitePhone: '61600600600'
+                  workOtherPhone: '61700700700'
+                  workAddress1: Level 15
+                  workAddress2: 360 Collins St
+                  workSuburb: Melboure
+                  workState: Victoria
+                  workPostCode: '3000'
+                  workPostalAddress1: Level 15
+                  workPostalAddress2: 360 Collins St
+                  workPostalSuburb: Melboure
+                  workPostalState: Victoria
+                  workPostalPostCode: '3000'
+                  personalEmailAddress1: personalPrimaryUser@example.com
+                  personalEmailAddress2: personalSecondaryUser@example.com
+                  personalAddress1: Level 15
+                  personalAddress2: 360 Collins St
+                  personalSuburb: Melboure
+                  personalState: Victoria
+                  personalPostCode: '3000'
+                  personalCountry: Australia
+                  personalPhoneAreaCode1: '09'
+                  personalPhone1: '5006000'
+                  personalPhoneAreaCode2: '09'
+                  personalPhone2: '5007000'
+                  personalFaxAreaCode1: '09'
+                  personalFax1: '5008000'
+                  otherPhoneAreaCode1: '09'
+                  otherPhone1: '5009000'
+                  otherMobile: '61900900900'
+                  otherFirstName: Harold
+                  otherLastName: Wickman
+                  otherTitle: Mr
+                  companyName: Whispir
+                  jobTitle: Software Engineer
+                  division: Technology
+                  businessUnit: Core Platform
+                  department: Research & Development
+                  teamName1: Optimus Prime
+                  teamName2: Bumblebee
+                  role1: Administrator
+                  role2: Analyst
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
         description: The User object to create.
         required: true
       responses:
@@ -4773,7 +5185,7 @@ paths:
         *   Status * (see note below)
 
         **Note:** While searching for users via status, use the short code ‘A’ for ACTIVE, similarly, 'I’ for INACTIVE, rather than the full words ACTIVE, INACTIVE, etc. so, it is &status=A not &status=ACTIVE.
-      operationId: getUsers
+      operationId: userList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: fieldname
@@ -4821,7 +5233,7 @@ paths:
         Delete all users in the company.
 
         **Note**: use this endpoint with caution!
-      operationId: deleteUsers
+      operationId: usersDelete
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/User-Content-Type'
@@ -4863,7 +5275,7 @@ paths:
       x-sdkOperation: retrieve
       summary: Retrieve a user
       description: Retrieves a User object.
-      operationId: getUsersById
+      operationId: userRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: userId
@@ -4916,7 +5328,7 @@ paths:
         3.  PUT `/users/{id of user}` the new object
 
         The response to the PUT request upon success is usually a 204 with no content being provided.
-      operationId: putUsersById
+      operationId: userUpdate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: userId
@@ -4933,6 +5345,77 @@ paths:
           application/vnd.whispir.user-v1+json:
             schema:
               $ref: '#/components/schemas/user'
+            examples:
+              Example:
+                value:
+                  id: 4DC922649AFE370C
+                  userName: john.w
+                  password: foobarbaz
+                  firstName: John
+                  middleName: ''
+                  lastName: Wick
+                  title: ''
+                  nickname: Babayaga
+                  status: PENDING
+                  workMobilePhone1: '61400400400'
+                  workEmailAddress1: testUser@example.com
+                  workCountry: Australia
+                  timezone: Australia/Melbourne
+                  workMobilePhone2: '61500500500'
+                  workEmailAddress2: newUser@example.com
+                  workPhoneAreaCode1: '09'
+                  workPhone1: '5006000'
+                  workPhoneAreaCode2: '09'
+                  workPhone2: '5007000'
+                  workFaxAreaCode1: '09'
+                  workFax1: '5008000'
+                  workSatellitePhone: '61600600600'
+                  workOtherPhone: '61700700700'
+                  workAddress1: Level 15
+                  workAddress2: 360 Collins St
+                  workSuburb: Melboure
+                  workState: Victoria
+                  workPostCode: '3000'
+                  workPostalAddress1: Level 15
+                  workPostalAddress2: 360 Collins St
+                  workPostalSuburb: Melboure
+                  workPostalState: Victoria
+                  workPostalPostCode: '3000'
+                  personalEmailAddress1: personalPrimaryUser@example.com
+                  personalEmailAddress2: personalSecondaryUser@example.com
+                  personalAddress1: Level 15
+                  personalAddress2: 360 Collins St
+                  personalSuburb: Melboure
+                  personalState: Victoria
+                  personalPostCode: '3000'
+                  personalCountry: Australia
+                  personalPhoneAreaCode1: '09'
+                  personalPhone1: '5006000'
+                  personalPhoneAreaCode2: '09'
+                  personalPhone2: '5007000'
+                  personalFaxAreaCode1: '09'
+                  personalFax1: '5008000'
+                  otherPhoneAreaCode1: '09'
+                  otherPhone1: '5009000'
+                  otherMobile: '61900900900'
+                  otherFirstName: Harold
+                  otherLastName: Wickman
+                  otherTitle: Mr
+                  companyName: Whispir
+                  jobTitle: Software Engineer
+                  division: Technology
+                  businessUnit: Core Platform
+                  department: Research & Development
+                  teamName1: Optimus Prime
+                  teamName2: Bumblebee
+                  role1: Administrator
+                  role2: Analyst
+                  link:
+                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
+                      rel: self
+                      method: GET
+                      host: api.au.whispir.com
+                      port: -1
         description: Users object that needs to be update Users
         required: true
       responses:
@@ -4974,7 +5457,7 @@ paths:
         After performing this request, the response does not contain any information other than the headers as it is not necessary.
 
         The delete a user if successful shall respond with a 204 No Content.
-      operationId: deleteUsersById
+      operationId: userDelete
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - name: userId
@@ -5023,7 +5506,7 @@ paths:
       x-sdkOperation: listByWorkspace
       summary: List workspace users
       description: Returns a list of your Users.
-      operationId: getWorkspaceUsers
+      operationId: UserWorkspaceList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/User-Accept'
@@ -5063,7 +5546,7 @@ paths:
       x-sdkOperation: list
       summary: List events
       description: List event objects
-      operationId: getEvents
+      operationId: eventList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Event-Accept'
@@ -5353,7 +5836,7 @@ paths:
         > #### Things to note
         > * If the `Event` doesn't contain an event field, and there is no relevant attribute field supplied > in the message payload, the `@@` tag will not be resolved.
         > * If you don't supply an attribute in the message payload, and this has also not been supplied from the event, the field simply will not be resolved within the message.
-      operationId: createEvent
+      operationId: eventCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Event-Content-Type'
@@ -5399,7 +5882,7 @@ paths:
       x-sdkOperation: retrieve
       summary: Retrieve an event
       description: Retrieve an event object
-      operationId: getEventById
+      operationId: eventRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Event-Accept'
@@ -5450,7 +5933,7 @@ paths:
         - Events
       x-sdkOperation: update
       summary: Update an event
-      operationId: putEventById
+      operationId: eventUpdate
       description: Update an event object
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -5528,7 +6011,7 @@ paths:
         Once the application has an appropriate resource ID to use within the import endpoint, the following request can be used to begin the import process.  
 
         **Note:** Import processes take place asynchronously. Any contacts will be created once the import process starts, and users will be able to utilise imported contacts as soon as each is completed.
-      operationId: postImports
+      operationId: importCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Import-Content-Type'
@@ -5596,7 +6079,7 @@ paths:
     parameters: []
     post:
       summary: Create an auth token
-      operationId: postAuth
+      operationId: authCreate
       x-sdkOperation: create
       x-isPost: true
       responses:
@@ -5660,7 +6143,7 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Auth-Accept'
       description: Verify a JWT authentication token
-      operationId: getAuthVerification
+      operationId: authVerificationRetrieve
       x-sdkOperation: retrieveVerification
       responses:
         '200':
@@ -9077,6 +9560,7 @@ components:
       x-examples:
         Example:
           id: 4DC922649AFE370C
+          userName: john.w
           firstName: John
           middleName: ''
           lastName: Wick

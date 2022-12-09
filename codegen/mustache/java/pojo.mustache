@@ -19,6 +19,8 @@ import java.util.Set;
 
 import {{invokerPackage}}.JSON;
 
+// isEnum: {{isEnum}}
+
 /**
  * {{description}}{{^description}}{{classname}}{{/description}}{{#isDeprecated}}
  * @deprecated{{/isDeprecated}}
@@ -46,6 +48,17 @@ import {{invokerPackage}}.JSON;
 public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{#-last}} {{/-last}}{{/vendorExtensions.x-implements}}{
   @SerializedName("docId")
   private String docId;
+
+  @SerializedName("rawOutput")
+  private String rawOutput;
+
+  // Additional getters
+  public String getDocId() {
+    return docId;
+  }
+  public String getRawOutput() {
+    return rawOutput;
+  }
 
 {{#serializableModel}}
   private static final long serialVersionUID = 1L;
@@ -251,6 +264,7 @@ public class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{{#vendorExtens
   {{!unannotated, Jackson would pick this up automatically and add it *in addition* to the _JsonNullable getter field}}
   @JsonIgnore
 {{/vendorExtensions.x-is-jackson-optional-nullable}}
+
 {{^vendorExtensions.x-is-jackson-optional-nullable}}{{#jackson}}{{> jackson_annotations}}{{/jackson}}{{/vendorExtensions.x-is-jackson-optional-nullable}}
   public {{{datatypeWithEnum}}} {{getter}}() {
     {{#vendorExtensions.x-is-jackson-optional-nullable}}

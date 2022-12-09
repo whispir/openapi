@@ -1060,9 +1060,10 @@ public class ApiClient {
                     jsonObject.addProperty("docId", location);
                     return (T) jsonObject;
                 } catch (Exception e) {
-                    // TODO: handle exception
-                    e.printStackTrace();
-                    throw e;
+                    System.out.println("respBody is:" + respBody);
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("rawOutput", respBody);
+                    return JSON.deserialize(jsonObject.toString(), returnType);
                 }
 
             } else {

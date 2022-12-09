@@ -260,11 +260,11 @@ public class {{classname}} {
         {{/vendorExtensions.x-isApiKey}}
         {{/isHeaderParam}}
         {{/isBodyParam}}
-        {{/requiredParams}}
         {{! Listing body params if there are any}}
-        {{#bodyParam}}
+        {{#isBodyParam}}
         private {{{dataType}}} {{paramName}};
-        {{/bodyParam}}
+        {{/isBodyParam}}
+        {{/requiredParams}}
         {{! Listing optional params if there are any}}
         {{#optionalParams}}
         private {{{dataType}}} {{paramName}};
@@ -280,10 +280,10 @@ public class {{classname}} {
             {{/vendorExtensions.x-isApiKey}}
             {{/isHeaderParam}}
             {{/isBodyParam}}
-            {{/requiredParams}}
-            {{#bodyParam}}
+            {{#isBodyParam}}
             {{{dataType}}} {{paramName}}{{^-last}},{{/-last}}
-            {{/bodyParam}}
+            {{/isBodyParam}}
+            {{/requiredParams}}
             {{#optionalParams}}
             {{{dataType}}} {{paramName}}{{^-last}},{{/-last}}
             {{/optionalParams}}
@@ -296,10 +296,10 @@ public class {{classname}} {
             {{/vendorExtensions.x-isApiKey}}
             {{/isHeaderParam}}
             {{/isBodyParam}}
-            {{/requiredParams}}
-            {{#bodyParam}}
+            {{#isBodyParam}}
             this.{{paramName}} = {{paramName}};
-            {{/bodyParam}}
+            {{/isBodyParam}}
+            {{/requiredParams}}
             {{#optionalParams}}
             this.{{paramName}} = {{paramName}};
             {{/optionalParams}}
@@ -314,12 +314,12 @@ public class {{classname}} {
             {{/vendorExtensions.x-isApiKey}}
             {{/isHeaderParam}}
             {{/isBodyParam}}
-            {{/requiredParams}}
-            {{#bodyParam}}
+            {{#isBodyParam}}
             public {{{dataType}}} get{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}() {
                 return {{paramName}};
             }
-            {{/bodyParam}}
+            {{/isBodyParam}}
+            {{/requiredParams}}
             {{#optionalParams}}
             public {{{dataType}}} get{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}() {
                 return {{paramName}};
@@ -339,10 +339,10 @@ public class {{classname}} {
             {{/vendorExtensions.x-isApiKey}}
             {{/isHeaderParam}}
             {{/isBodyParam}}
-            {{/requiredParams}}
-            {{#bodyParam}}
+            {{#isBodyParam}}
             private {{{dataType}}} {{paramName}};
-            {{/bodyParam}}
+            {{/isBodyParam}}
+            {{/requiredParams}}
             {{#optionalParams}}
             private {{{dataType}}} {{paramName}};
             {{/optionalParams}}
@@ -358,10 +358,10 @@ public class {{classname}} {
                     {{/vendorExtensions.x-isApiKey}}
                     {{/isHeaderParam}}
                     {{/isBodyParam}}
-                    {{/requiredParams}}
-                    {{#bodyParam}}
+                    {{#isBodyParam}}
                     {{paramName}}{{^-last}},{{/-last}}
-                    {{/bodyParam}}
+                    {{/isBodyParam}}
+                    {{/requiredParams}}
                     {{#optionalParams}}
                     {{paramName}}{{^-last}},{{/-last}}
                     {{/optionalParams}}
@@ -379,13 +379,13 @@ public class {{classname}} {
             {{/vendorExtensions.x-isApiKey}}
             {{/isHeaderParam}}
             {{/isBodyParam}}
-            {{/requiredParams}}
-            {{#bodyParam}}
+            {{#isBodyParam}}
             public Builder set{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{{dataType}}} {{paramName}}) {
                 this.{{paramName}} = {{paramName}};
                 return this;
             }
-            {{/bodyParam}}
+            {{/isBodyParam}}
+            {{/requiredParams}}
             {{#optionalParams}}
             public Builder set{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{{dataType}}} {{paramName}}) {
                 this.{{paramName}} = {{paramName}};
@@ -513,10 +513,10 @@ public class {{classname}} {
         {{/vendorExtensions.x-isApiKey}}
         {{/isHeaderParam}}
         {{/isBodyParam}}
-        {{/requiredParams}}
-        {{#bodyParam}}
+        {{#isBodyParam}}
         {{{dataType}}} {{paramName}} = params.get{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}();
-        {{/bodyParam}}
+        {{/isBodyParam}}
+        {{/requiredParams}}
 
         {{operationIdCamelCase}}Request request = new {{operationIdCamelCase}}Request({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}});
 

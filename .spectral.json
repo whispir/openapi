@@ -1685,7 +1685,7 @@
         }
       },
       "description": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names.\n\nMust start with one of the following values, corresponding to the operation on the resource:\n* `create` - `POST /resource`\n* `retrieve` - `GET /resource/{resourceId}`\n* `update` - `PUT /resource/{resourceId}`\n* `delete` - `DELETE /resource/{resourceId}`\n* `list` - `GET /resource`\n\nAn optional noun suffix describing any sub-resources may be included as appropriate.\n\n**Valid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"create\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"listWebhookCalls\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"post\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"getWebhookCalls\"\n}\n```",
-      "message": "Every operation must have an \"x-sdkOperation\" starting with one of \"create\", \"retrieve\", \"update\", \"delete\", or \"list\", as appropriate for the operation on the resource. An optional noun suffixed to describe any sub-resources may be included."
+      "message": "{{error}}"
     },
     "operation-operationId-format": {
       "given": [
@@ -1699,7 +1699,7 @@
         }
       },
       "description": "All operations must include an appropriately named \"operationId\".\r\n\r\nMust end with one of the following values, corresponding to the operation on the resource:\r\n* `Create` - `POST /resource`\r\n* `Retrieve` - `GET /resource/{resourceId}`\r\n* `Update` - `PUT /resource/{resourceId}`\r\n* `Delete` - `DELETE /resource/{resourceId}`\r\n* `List` - `GET /resource`\r\n\r\nAn optional noun prefix describing any sub-resources may be included as appropriate.\r\n\r\n**Valid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"messageCreate\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"webhookCallList\"\r\n}\r\n```\r\n\r\n**Invalid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"getMessage\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"getWebhookCalls\"\r\n}\r\n```",
-      "message": "Every operation must have an \"operationId\" ending with one of \"Create\", \"Retrieve\", \"Update\", \"Delete\", or \"List\", as appropriate for the operation on the resource. An optional noun prefixed to describe any sub-resources may be included"
+      "message": "{{error}}"
     },
     "operation-list-schema-title": {
       "given": [

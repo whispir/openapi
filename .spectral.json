@@ -624,6 +624,32 @@
           ]
         }
       ]
+    },
+    "Operation_List_Schema": {
+      "description": "The schema of all operations that list resources, e.g. GET /resources",
+      "targets": [
+        {
+          "formats": [
+            "oas3"
+          ],
+          "given": [
+            "#Operation_List.responses[?(@property >= 200 && @property < 300)].content[*].schema"
+          ]
+        }
+      ]
+    },
+    "Operation_List": {
+      "description": "All operations that list resources, e.g. `GET /resources`",
+      "targets": [
+        {
+          "formats": [
+            "oas3"
+          ],
+          "given": [
+            "$.paths[?(!(@property).endsWith('}'))].get"
+          ]
+        }
+      ]
     }
   },
   "rules": {
@@ -1674,6 +1700,21 @@
       },
       "description": "All operations must include an appropriately named \"operationId\".\r\n\r\nMust end with one of the following values, corresponding to the operation on the resource:\r\n* `Create` - `POST /resource`\r\n* `Retrieve` - `GET /resource/{resourceId}`\r\n* `Update` - `PUT /resource/{resourceId}`\r\n* `Delete` - `DELETE /resource/{resourceId}`\r\n* `List` - `GET /resource`\r\n\r\nAn optional noun prefix describing any sub-resources may be included as appropriate.\r\n\r\n**Valid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"messageCreate\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"webhookCallList\"\r\n}\r\n```\r\n\r\n**Invalid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"getMessage\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"getWebhookCalls\"\r\n}\r\n```",
       "message": "Every operation must have an \"operationId\" ending with one of \"Create\", \"Retrieve\", \"Update\", \"Delete\", or \"List\", as appropriate for the operation on the resource. An optional noun prefixed to describe any sub-resources may be included"
+    },
+    "operation-list-schema-title": {
+      "given": [
+        "#Operation_List_Schema"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "pattern",
+        "functionOptions": {
+          "match": "Collection$"
+        },
+        "field": "title"
+      },
+      "description": "List operation response schema must have title ending with \"Collection\".\n\n**Valid Example**\n\n```json\n{\n   \"title\": \"Message Collection\"\n}\n// OR\n{\n   \"title\": \"Webhook Call Collection\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"title\": \"Message List Response\"\n}\n// OR\n{\n   \"title\": \"Webhook Call List\"\n}\n```",
+      "message": "List operation response schema must have title ending with \"Collection\"."
     }
   },
   "overrides": [

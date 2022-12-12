@@ -1056,9 +1056,9 @@ public class ApiClient {
                 final Matcher matcher = pattern.matcher(location);
                 try {
                     matcher.find();
-                    JsonObject jsonObject = JSON.deserialize(respBody, returnType);
-                    jsonObject.addProperty("docId", location);
-                    return (T) jsonObject;
+                    JsonObject jsonObject = JsonParser.parseString(respBody).getAsJsonObject();
+                    jsonObject.addProperty("docId", matcher.group(1));
+                    return JSON.deserialize(jsonObject.toString(), returnType);
                 } catch (Exception e) {
                     System.out.println("respBody is:" + respBody);
                     JsonObject jsonObject = new JsonObject();

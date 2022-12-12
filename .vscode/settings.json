@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/richardfontein/Workspace/openapi/codegen/node_modules/@openapitools/openapi-generator-cli/versions/6.0.1.jar"
+    ]
+}

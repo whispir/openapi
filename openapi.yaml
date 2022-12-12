@@ -7178,7 +7178,7 @@ components:
                   destination: ''
           status: '1 to 1 of 1    '
           link: []
-      title: Message Status
+      title: Message Status Collection
       x-tags:
         - Messages
       properties:
@@ -7496,7 +7496,7 @@ components:
             link: []
       x-tags:
         - Messages
-      title: Message Response
+      title: Message Response Collection
     resource:
       type: object
       x-tags:

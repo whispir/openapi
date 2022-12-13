@@ -39,7 +39,9 @@ public class {{classname}}Test {
         {{/isHeaderParam}}
         {{/isBodyParam}}
         {{#isBodyParam}}
-        {{{dataType}}} {{paramName}} = null;
+        {{#vars}}
+        {{{dataType}}} {{baseName}} = null;
+        {{/vars}}
         {{/isBodyParam}}
         {{/requiredParams}}
         {{#optionalParams}}
@@ -55,7 +57,14 @@ public class {{classname}}Test {
         {{/isHeaderParam}}
         {{/isBodyParam}}
         {{#isBodyParam}}
-                                        .set{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{paramName}})
+        {{#vars}}
+        {{^isArray}}
+                                        .{{setter}}({{baseName}})
+        {{/isArray}}                                        
+        {{#isArray}}
+                                        .addDefault{{complexType}}({{baseName}})
+        {{/isArray}}
+        {{/vars}}                                        
         {{/isBodyParam}}
         {{/requiredParams}}
         {{#optionalParams}}

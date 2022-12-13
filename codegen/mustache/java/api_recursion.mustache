@@ -1,0 +1,116 @@
+{{#vars}}
+{{#isModel}}
+        {{! Recursively defining a builder pattern for variable that has a corresponding POJO (plain old java object) class}}
+        public static class {{baseType}} {
+            {{#vars}}
+            private {{{dataType}}} {{baseName}};
+            {{/vars}}
+
+            private {{baseType}}({{#vars}}{{{dataType}}}  {{baseName}}{{^-last}},{{/-last}}{{/vars}}){
+                {{#vars}}
+                this.{{baseName}} = {{baseName}};
+                {{/vars}}
+            }
+
+            {{#vars}}
+            public {{{dataType}}} {{getter}}(){
+                return {{{baseName}}};
+            }
+            {{/vars}}
+
+            public static Builder builder() {
+               return new Builder();
+            }   
+
+            public static class Builder {
+                {{#vars}}
+                private {{{dataType}}} {{baseName}};
+                {{/vars}}
+
+                public {{baseType}} build() {
+                    return new {{baseType}}(
+                        {{#vars}}
+                        this.{{baseName}}{{^-last}},{{/-last}}
+                        {{/vars}}
+                    );
+                }
+                {{#vars}}
+                {{^isArray}}
+                public Builder {{setter}}({{{dataType}}} {{baseName}}) {
+                    this.{{baseName}} = {{baseName}};
+                    return this;
+                }
+                {{/isArray}}
+                {{#isArray}}
+                {{! A special case when 'var' is type of array to create 'add' and 'addAll' methods}}
+                public Builder addDefault{{complexType}}({{complexType}} element) {
+                    if (this.{{baseName}} == null) {
+                            this.{{baseName}} = new ArrayList<>();
+                    }
+                    this.{{baseName}}.add(element);
+                    return this
+                }
+        
+                public Builder addAllDefault{{complexType}}({{{dataType}}} elements) {
+                    if (this.{{baseName}} == null) {
+                            this.{{baseName}} = new ArrayList<>();
+                    }
+                    this.{{baseName}}.addAll(elements);
+                    return this
+                }
+                {{/isArray}}
+                {{/vars}}
+            }
+    {{>api_recursion}}
+        }
+{{/isModel}}
+{{#isArray}}
+{{^isReadOnly}}
+{{#items}}
+        {{! Create a builder pattern for instance that is part of an array}}
+        public static class {{baseType}} {
+            {{#vars}}
+            private {{{dataType}}} {{baseName}};
+            {{/vars}}
+
+            private {{baseType}}({{#vars}}{{{dataType}}}  {{baseName}}{{^-last}},{{/-last}}{{/vars}}){
+                {{#vars}}
+                this.{{baseName}} = {{baseName}};
+                {{/vars}}
+            }
+
+            {{#vars}}
+            public {{{dataType}}} {{getter}}(){
+                return {{{baseName}}};
+            }
+            {{/vars}}
+
+            public static Builder builder() {
+               return new Builder();
+            }   
+
+            public static class Builder {
+                {{#vars}}
+                private {{{dataType}}} {{baseName}};
+                {{/vars}}
+
+                public {{baseType}} build() {
+                    return new {{baseType}}(
+                        {{#vars}}
+                        this.{{baseName}}{{^-last}},{{/-last}}
+                        {{/vars}}
+                    );
+                }
+                {{#vars}}
+                public Builder {{setter}}({{{dataType}}} {{baseName}}) {
+                    this.{{baseName}} = {{baseName}};
+                    return this;
+                }
+                {{/vars}}
+            }
+    {{>api_recursion}}
+        }
+{{/items}}
+{{/isReadOnly}}
+{{/isArray}}
+{{/vars}}

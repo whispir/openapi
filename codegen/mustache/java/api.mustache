@@ -165,7 +165,6 @@ public class {{classname}} {
     {{/isDeprecated}}
     @SuppressWarnings("rawtypes")
     private okhttp3.Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
-        {{^performBeanValidation}}
         {{#allParams}}
         {{#required}}
         // verify the required parameter '{{paramName}}' is set
@@ -176,51 +175,8 @@ public class {{classname}} {
         {{/required}}
         {{/allParams}}
         return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}_callback);
-
-        {{/performBeanValidation}}
-        {{#performBeanValidation}}
-        try {
-            ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-            ExecutableValidator executableValidator = factory.getValidator().forExecutables();
-            Object[] parameterValues = { {{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}} };
-            Method method = this.getClass().getMethod("{{operationId}}WithHttpInfo"{{#allParams}}, {{#isArray}}java.util.List{{/isArray}}{{#isMap}}java.util.Map{{/isMap}}{{^isArray}}{{^isMap}}{{{dataType}}}{{/isMap}}{{/isArray}}.class{{/allParams}});
-            Set<ConstraintViolation<{{classname}}>> violations = executableValidator.validateParameters(this, method,
-                    parameterValues);
-
-            if (violations.size() == 0) {
-                return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}_callback);
-            } else {
-                throw new BeanValidationException((Set) violations);
-            }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            throw new ApiException(e.getMessage());
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            throw new ApiException(e.getMessage());
-        }
-        {{/performBeanValidation}}
     }
-    
-    private{{#vendorExtensions.x-streaming}} InputStream {{operationId}}WithHttpInfo({{#allParams}}{{#useBeanValidation}}{{>beanValidationQueryParams}}{{/useBeanValidation}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
-        okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
-        {{#returnType}}
-        {{#errorObjectType}}
-        try {
-            Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
-            return localVarApiClient.executeStream(localVarCall, localVarReturnType);
-        } catch (ApiException e) {
-            e.setErrorObject(localVarApiClient.getJSON().getGson().fromJson(e.getResponseBody(), new TypeToken<{{{errorObjectType}}}>(){}.getType()));
-            throw e;
-        }
-        {{/errorObjectType}}
-        {{^errorObjectType}}
-        Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
-        return localVarApiClient.executeStream(localVarCall, localVarReturnType);
-        {{/errorObjectType}}
-        {{/returnType}}
-    }
-    {{/vendorExtensions.x-streaming}}{{^vendorExtensions.x-streaming}} ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{#useBeanValidation}}{{>beanValidationQueryParams}}{{/useBeanValidation}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
+    ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
         okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
         {{^returnType}}
         return localVarApiClient.execute(localVarCall);
@@ -241,7 +197,6 @@ public class {{classname}} {
         {{/errorObjectType}}
         {{/returnType}}
     }
-    {{/vendorExtensions.x-streaming}}
 
     private okhttp3.Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws ApiException {
         okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}_callback);
@@ -262,7 +217,9 @@ public class {{classname}} {
         {{/isBodyParam}}
         {{! Listing body params if there are any}}
         {{#isBodyParam}}
-        private {{{dataType}}} {{paramName}};
+        {{#vars}}
+        private {{{dataType}}} {{baseName}};
+        {{/vars}}
         {{/isBodyParam}}
         {{/requiredParams}}
         {{! Listing optional params if there are any}}
@@ -281,7 +238,9 @@ public class {{classname}} {
             {{/isHeaderParam}}
             {{/isBodyParam}}
             {{#isBodyParam}}
-            {{{dataType}}} {{paramName}}{{^-last}},{{/-last}}
+            {{#vars}}
+            {{{dataType}}} {{baseName}}{{^-last}},{{/-last}}
+            {{/vars}}
             {{/isBodyParam}}
             {{/requiredParams}}
             {{#optionalParams}}
@@ -297,7 +256,9 @@ public class {{classname}} {
             {{/isHeaderParam}}
             {{/isBodyParam}}
             {{#isBodyParam}}
-            this.{{paramName}} = {{paramName}};
+            {{#vars}}
+            this.{{baseName}} = {{baseName}};
+            {{/vars}}
             {{/isBodyParam}}
             {{/requiredParams}}
             {{#optionalParams}}
@@ -315,9 +276,11 @@ public class {{classname}} {
             {{/isHeaderParam}}
             {{/isBodyParam}}
             {{#isBodyParam}}
-            public {{{dataType}}} get{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}() {
-                return {{paramName}};
+            {{#vars}}
+            public {{{dataType}}} {{getter}}() {
+                return {{baseName}};
             }
+            {{/vars}}
             {{/isBodyParam}}
             {{/requiredParams}}
             {{#optionalParams}}
@@ -340,7 +303,9 @@ public class {{classname}} {
             {{/isHeaderParam}}
             {{/isBodyParam}}
             {{#isBodyParam}}
-            private {{{dataType}}} {{paramName}};
+            {{#vars}}
+            private {{{dataType}}} {{baseName}};
+            {{/vars}}
             {{/isBodyParam}}
             {{/requiredParams}}
             {{#optionalParams}}
@@ -359,7 +324,9 @@ public class {{classname}} {
                     {{/isHeaderParam}}
                     {{/isBodyParam}}
                     {{#isBodyParam}}
-                    {{paramName}}{{^-last}},{{/-last}}
+                    {{#vars}}
+                    {{baseName}}{{^-last}},{{/-last}}
+                    {{/vars}}
                     {{/isBodyParam}}
                     {{/requiredParams}}
                     {{#optionalParams}}
@@ -380,10 +347,12 @@ public class {{classname}} {
             {{/isHeaderParam}}
             {{/isBodyParam}}
             {{#isBodyParam}}
-            public Builder set{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{{dataType}}} {{paramName}}) {
-                this.{{paramName}} = {{paramName}};
+            {{#vars}}
+            public Builder {{setter}}({{{dataType}}} {{baseName}}) {
+                this.{{baseName}} = {{baseName}};
                 return this;
             }
+            {{/vars}}
             {{/isBodyParam}}
             {{/requiredParams}}
             {{#optionalParams}}
@@ -393,6 +362,13 @@ public class {{classname}} {
             }
             {{/optionalParams}}
         }
+        
+        {{#requiredParams}}
+        {{#isBodyParam}}
+        {{>api_recursion}}
+        {{/isBodyParam}}
+        {{/requiredParams}}
+
     }
 
     public class {{operationIdCamelCase}}Request {
@@ -489,8 +465,7 @@ public class {{classname}} {
 
     /**
      * {{summary}}
-     * {{notes}}
-     * @param param The param instance required to create {{operationIdCamelCase}}Request
+     * @param params The param instance required to create {{operationIdCamelCase}}Request
      * @return {{{returnType}}}{{^returnType}}void{{/returnType}}
      */
     public {{{returnType}}}{{^returnType}}void{{/returnType}} {{vendorExtensions.x-sdkOperation}}({{operationIdCamelCase}}Params params) throws ApiException {

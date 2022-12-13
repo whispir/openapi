@@ -661,7 +661,7 @@ paths:
           content:
             application/vnd.whispir.message-v1+json:
               schema:
-                $ref: '#/components/schemas/messageCollection'
+                $ref: '#/components/schemas/MessageCollection'
               examples:
                 Response:
                   value:
@@ -5532,7 +5532,7 @@ paths:
       x-sdkOperation: listByWorkspace
       summary: List workspace users
       description: Returns a list of your Users.
-      operationId: UserWorkspaceList
+      operationId: userWorkspaceList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/User-Accept'
@@ -6373,7 +6373,7 @@ components:
       type: http
       scheme: bearer
   schemas:
-    message:
+    Message:
       type: object
       x-examples:
         SMS:
@@ -6562,7 +6562,9 @@ components:
       required:
         - to
         - subject
-    messageCollection:
+      x-stoplight:
+        id: ef29ae9d42ab0
+    MessageCollection:
       description: The list messages response object.
       type: object
       x-examples:
@@ -6625,6 +6627,8 @@ components:
       title: Message Collection
       x-tags:
         - Messages
+      x-stoplight:
+        id: 5bf43d15dab90
     messageEmail:
       type: object
       title: Email

@@ -6,6 +6,11 @@ function isObject(value) {
 }
 
 const validOperationKeys = ['get', 'post', 'put', 'delete'];
+const CAMEL_CASE_REGEX = new RegExp(/^[a-z]+([A-Z][a-z]+)+$/);
+
+function isCamelCase(str) {
+  return CAMEL_CASE_REGEX.test(str);
+}
 
 function* getAllOperations(paths) {
   if (!isPlainObject(paths)) {
@@ -76,6 +81,13 @@ export default createRulesetFunction(
       }
 
       const { operationId } = operationValue;
+      
+      if (!isCamelCase(operationId)) {
+        results.push({
+          message: '"operationId" must be camelCased.',
+          path: ['paths', path, operation, 'operationId'],
+        });
+      }
 
       if (operation === 'post' && !operationId.endsWith("Create")) {
         results.push({

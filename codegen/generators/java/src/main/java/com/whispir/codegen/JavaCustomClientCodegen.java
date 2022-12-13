@@ -1,16 +1,20 @@
 package com.whispir.codegen;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.model.*;
 import org.openapitools.codegen.languages.JavaClientCodegen;
 
 public class JavaCustomClientCodegen extends JavaClientCodegen {
+    private Map<String, ModelsMap> modelsMapGlobal = new HashMap<String, ModelsMap>();
+
     public JavaCustomClientCodegen() {
         super();
-        System.out.println("STARTING THE CODEGEN FOR JAVA");
     }
 
     public String getName() {
@@ -18,27 +22,66 @@ public class JavaCustomClientCodegen extends JavaClientCodegen {
     }
 
     @Override
+    public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> models) {
+        for (ModelsMap modelsMap : models.values()) {
+            for (ModelMap modelMap : modelsMap.getModels()) {
+                CodegenModel model = modelMap.getModel();
+                for (CodegenProperty cp : model.vars) {
+                    // ADD VARS FOR ALL REFERENCED OBJECT MODELS
+                    if (cp.isModel == true) {
+                        // FIND MATCHING MODEL FOR VAR
+                        for (ModelsMap modelsMap2 : models.values()) {
+                            for (ModelMap modelMap2 : modelsMap2.getModels()) {
+                                CodegenModel model2 = modelMap2.getModel();
+
+                                if (cp.baseType == model2.classname) {
+                                    cp.setVars(model2.vars);
+                                }
+                            }
+                        }
+                    }
+                    // ADD VARS FOR ALL REFERENCED ARRAY MODELS
+                    if (cp.isArray == true) {
+                        // FIND MATCHING MODEL FOR VAR
+                        for (ModelsMap modelsMap2 : models.values()) {
+                            for (ModelMap modelMap2 : modelsMap2.getModels()) {
+                                CodegenModel model2 = modelMap2.getModel();
+                                if (cp.complexType == model2.classname) {
+                                    cp.items.setVars(model2.vars);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        modelsMapGlobal = models;
+        return models;
+    }
+
+    // @Override
+    @Override
     public OperationsMap postProcessOperationsWithModels(OperationsMap operations, List<ModelMap> allModels) {
         OperationMap objs = operations.getOperations();
-        System.out.println(objs.getPathPrefix());
 
         for (CodegenOperation op : objs.getOperation()) {
-            System.out.println(op.operationId);
-            System.out.println(op.bodyParam);
-            System.out.println("\n");
+            if (op.bodyParam != null) {
+                for (CodegenProperty cp : op.bodyParam.vars) {
+                    if (cp.isModel == true) {
+                        // FIND MATCHING MODEL FOR VAR
+                        for (ModelsMap modelsMap2 : modelsMapGlobal.values()) {
+                            for (ModelMap modelMap2 : modelsMap2.getModels()) {
+                                CodegenModel model2 = modelMap2.getModel();
 
-            // Whispir is not RESTful per the OpenAPI Generator methods, because it contains
-            // /workspace/{workspaceId} in the path. Overriding these parameter attributes
-            // to allow templating based on the REST method.
-            // op.isRestfulCreate = "POST".equalsIgnoreCase(op.httpMethod);
-            // op.isRestfulShow = "GET".equalsIgnoreCase(op.httpMethod);
-            // op.isRestfulUpdate = Arrays.asList("PUT",
-            // "PATCH").contains(op.httpMethod.toUpperCase());
-            // op.isRestfulDestroy = "DELETE".equalsIgnoreCase(op.httpMethod);
-            // op.isRestfulCreate = true;
-            // op.isRestfulShow = true;
-            // op.isRestfulUpdate = true;
-            // op.isRestfulDestroy = true;
+                                if (cp.baseType == model2.classname) {
+                                    cp.setVars(model2.vars);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         return operations;

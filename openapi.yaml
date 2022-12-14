@@ -465,7 +465,7 @@ paths:
         content:
           application/vnd.whispir.message-v1+json:
             schema:
-              $ref: '#/components/schemas/message'
+              $ref: '#/components/schemas/Message'
             examples:
               SMS:
                 value:
@@ -551,7 +551,7 @@ paths:
           content:
             application/vnd.whispir.message-v1+json:
               schema:
-                $ref: '#/components/schemas/message'
+                $ref: '#/components/schemas/Message'
               examples:
                 Response:
                   value:
@@ -782,7 +782,7 @@ paths:
           content:
             application/vnd.whispir.message-v1+json:
               schema:
-                $ref: '#/components/schemas/message'
+                $ref: '#/components/schemas/Message'
               examples:
                 Response:
                   value:
@@ -1054,7 +1054,7 @@ paths:
                     status: '1 to 1 of 1    '
                     link: []
               schema:
-                $ref: '#/components/schemas/messageStatus'
+                $ref: '#/components/schemas/MessageStatus'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1180,7 +1180,7 @@ paths:
           content:
             application/vnd.whispir.messageresponse-v1+json:
               schema:
-                $ref: '#/components/schemas/messageResponse'
+                $ref: '#/components/schemas/MessageResponse'
               examples:
                 Summary:
                   value:
@@ -1299,7 +1299,7 @@ paths:
         content:
           application/vnd.whispir.resource-v1+json:
             schema:
-              $ref: '#/components/schemas/resource'
+              $ref: '#/components/schemas/Resource'
             examples:
               Example:
                 value:
@@ -1495,7 +1495,7 @@ paths:
         content:
           application/vnd.whispir.resource-v1+json:
             schema:
-              $ref: '#/components/schemas/resource'
+              $ref: '#/components/schemas/Resource'
             examples:
               Example:
                 value:
@@ -1596,7 +1596,7 @@ paths:
         content:
           application/vnd.whispir.template-v1+json:
             schema:
-              $ref: '#/components/schemas/template'
+              $ref: '#/components/schemas/Template'
             examples:
               Template:
                 value:
@@ -1721,7 +1721,7 @@ paths:
                             port: -1
                     link: []
               schema:
-                $ref: '#/components/schemas/templateCollection'
+                $ref: '#/components/schemas/TemplateCollection'
           headers:
             Content-Type:
               $ref: '#/components/headers/Template-Content-Type'
@@ -1819,7 +1819,7 @@ paths:
         content:
           application/vnd.whispir.template-v1+json:
             schema:
-              $ref: '#/components/schemas/template'
+              $ref: '#/components/schemas/Template'
             examples:
               Template:
                 value:
@@ -1981,7 +1981,7 @@ paths:
         content:
           application/vnd.whispir.responserule-v1+json:
             schema:
-              $ref: '#/components/schemas/responseRule'
+              $ref: '#/components/schemas/ResponseRule'
             examples:
               Example:
                 value:
@@ -2066,7 +2066,7 @@ paths:
           content:
             application/vnd.whispir.responserule-v1+json:
               schema:
-                $ref: '#/components/schemas/responseRuleCollection'
+                $ref: '#/components/schemas/ResponseRuleCollection'
               examples:
                 Example 1:
                   value:
@@ -2138,7 +2138,7 @@ paths:
           content:
             application/vnd.whispir.responserule-v1+json:
               schema:
-                $ref: '#/components/schemas/responseRule'
+                $ref: '#/components/schemas/ResponseRule'
               examples:
                 Example 1:
                   value:
@@ -2193,7 +2193,7 @@ paths:
         content:
           application/vnd.whispir.responserule-v1+json:
             schema:
-              $ref: '#/components/schemas/responseRule'
+              $ref: '#/components/schemas/ResponseRule'
             examples:
               Example:
                 value:
@@ -2303,7 +2303,7 @@ paths:
         content:
           application/vnd.whispir.contact-v1+json:
             schema:
-              $ref: '#/components/schemas/contact'
+              $ref: '#/components/schemas/Contact'
             examples:
               Basic:
                 value:
@@ -2384,7 +2384,7 @@ paths:
                       tertiary: WorkMobilePhone1
           application/vnd.whispir.contact-v1+xml:
             schema:
-              $ref: '#/components/schemas/contact'
+              $ref: '#/components/schemas/Contact'
             examples:
               Basic:
                 value:
@@ -2604,7 +2604,7 @@ paths:
           content:
             application/vnd.whispir.contact-v1+json:
               schema:
-                $ref: '#/components/schemas/contact'
+                $ref: '#/components/schemas/Contact'
               examples:
                 Example 1:
                   value:
@@ -2739,7 +2739,7 @@ paths:
         content:
           application/vnd.whispir.contact-v1+json:
             schema:
-              $ref: '#/components/schemas/contact'
+              $ref: '#/components/schemas/Contact'
             examples:
               Basic:
                 value:
@@ -2820,7 +2820,7 @@ paths:
                       tertiary: WorkMobilePhone1
           application/vnd.whispir.contact-v1+xml:
             schema:
-              $ref: '#/components/schemas/contact'
+              $ref: '#/components/schemas/Contact'
             examples:
               Basic:
                 value:
@@ -2956,7 +2956,7 @@ paths:
               - deleteAll
           in: query
           name: action
-          description: 'The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it''s triggered. **Use the action only when you''re definitely sure you want to delete the contact from all workspaces**'
+          description: "The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it's triggered. **Use the action only when you're definitely sure you want to delete the contact from all workspaces**"
       responses:
         '204':
           description: No Content
@@ -3009,7 +3009,7 @@ paths:
         content:
           application/vnd.whispir.distributionlist-v1+json:
             schema:
-              $ref: '#/components/schemas/distributionList'
+              $ref: '#/components/schemas/DistributionList'
             examples:
               Example:
                 value:
@@ -3226,7 +3226,7 @@ paths:
         content:
           application/vnd.whispir.distributionlist-v1+json:
             schema:
-              $ref: '#/components/schemas/distributionList'
+              $ref: '#/components/schemas/DistributionList'
             examples:
               Example:
                 value:
@@ -3353,7 +3353,7 @@ paths:
         content:
           application/vnd.whispir.scenario-v1+json:
             schema:
-              $ref: '#/components/schemas/scenario'
+              $ref: '#/components/schemas/Scenario'
             examples:
               example-1:
                 value:
@@ -3437,7 +3437,7 @@ paths:
           content:
             application/vnd.whispir.scenario-v1+json:
               schema:
-                $ref: '#/components/schemas/scenarioCollection'
+                $ref: '#/components/schemas/ScenarioCollection'
               examples:
                 example-1:
                   value:
@@ -3533,7 +3533,7 @@ paths:
           content:
             application/vnd.whispir.scenario-v1+json:
               schema:
-                $ref: '#/components/schemas/scenario'
+                $ref: '#/components/schemas/Scenario'
               examples:
                 example:
                   value:
@@ -3680,7 +3680,7 @@ paths:
         content:
           application/vnd.whispir.scenario-v1+json:
             schema:
-              $ref: '#/components/schemas/scenario'
+              $ref: '#/components/schemas/Scenario'
             examples:
               example-1:
                 value:
@@ -3839,7 +3839,7 @@ paths:
         content:
           application/vnd.whispir.api-callback-v1+json:
             schema:
-              $ref: '#/components/schemas/callback'
+              $ref: '#/components/schemas/Callback'
             examples:
               Callback object:
                 value:
@@ -3898,7 +3898,7 @@ paths:
           content:
             application/vnd.whispir.api-callback-v1+json:
               schema:
-                $ref: '#/components/schemas/callbackCollection'
+                $ref: '#/components/schemas/CallbackCollection'
               examples:
                 example-1:
                   value:
@@ -4051,7 +4051,7 @@ paths:
         content:
           application/vnd.whispir.api-callback-v1+json:
             schema:
-              $ref: '#/components/schemas/callback'
+              $ref: '#/components/schemas/Callback'
             examples:
               Example 1:
                 value:
@@ -4256,7 +4256,7 @@ paths:
         content:
           application/vnd.whispir.api-call-v1+json:
             schema:
-              $ref: '#/components/schemas/callbackCall'
+              $ref: '#/components/schemas/CallbackCall'
             examples:
               Example:
                 value:
@@ -4287,7 +4287,7 @@ paths:
         content:
           application/vnd.whispir.workspace-v1+json:
             schema:
-              $ref: '#/components/schemas/workspace'
+              $ref: '#/components/schemas/Workspace'
             examples:
               example-1:
                 value:
@@ -4436,7 +4436,7 @@ paths:
         content:
           application/vnd.whispir.workspace-v1+json:
             schema:
-              $ref: '#/components/schemas/workspace'
+              $ref: '#/components/schemas/Workspace'
             examples:
               example-1:
                 value:
@@ -4486,7 +4486,7 @@ paths:
         content:
           application/vnd.whispir.activity-v1+json:
             schema:
-              $ref: '#/components/schemas/activity'
+              $ref: '#/components/schemas/Activity'
             examples:
               example-1:
                 value:
@@ -4521,7 +4521,7 @@ paths:
           content:
             application/vnd.whispir.activity-v1+json:
               schema:
-                $ref: '#/components/schemas/activity'
+                $ref: '#/components/schemas/Activity'
               examples:
                 example-1:
                   value:
@@ -4758,7 +4758,7 @@ paths:
                             port: -1
                     link: []
               schema:
-                $ref: '#/components/schemas/activityCollection'
+                $ref: '#/components/schemas/ActivityCollection'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -4813,7 +4813,7 @@ paths:
           content:
             application/vnd.whispir.activity-v1+json:
               schema:
-                $ref: '#/components/schemas/activityCollection'
+                $ref: '#/components/schemas/ActivityCollection'
               examples:
                 Example 1:
                   value:
@@ -5072,7 +5072,7 @@ paths:
         content:
           application/vnd.whispir.user-v1+json:
             schema:
-              $ref: '#/components/schemas/user'
+              $ref: '#/components/schemas/User'
             examples:
               Example:
                 value:
@@ -5370,7 +5370,7 @@ paths:
         content:
           application/vnd.whispir.user-v1+json:
             schema:
-              $ref: '#/components/schemas/user'
+              $ref: '#/components/schemas/User'
             examples:
               Example:
                 value:
@@ -5894,7 +5894,7 @@ paths:
         content:
           application/vnd.whispir.event-v1+json:
             schema:
-              $ref: '#/components/schemas/event'
+              $ref: '#/components/schemas/Event'
             examples:
               Example 1:
                 value:
@@ -6110,7 +6110,7 @@ paths:
         content:
           application/vnd.whispir.event-v1+json:
             schema:
-              $ref: '#/components/schemas/event'
+              $ref: '#/components/schemas/Event'
             examples:
               Example 1:
                 value:
@@ -6174,7 +6174,7 @@ paths:
         content:
           application/vnd.whispir.importcontact-v1+json:
             schema:
-              $ref: '#/components/schemas/import'
+              $ref: '#/components/schemas/Import'
             examples:
               example-1:
                 value:
@@ -6258,7 +6258,7 @@ paths:
           content:
             application/vnd.whispir.auth-v1+json:
               schema:
-                $ref: '#/components/schemas/auth'
+                $ref: '#/components/schemas/Auth'
               examples:
                 Example:
                   value:
@@ -6436,13 +6436,13 @@ components:
             The 1570 length is a combination of subject and body.
           maxLength: 1570
         email:
-          $ref: '#/components/schemas/messageEmail'
+          $ref: '#/components/schemas/Email'
         voice:
-          $ref: '#/components/schemas/messageVoice'
+          $ref: '#/components/schemas/Voice'
         web:
-          $ref: '#/components/schemas/messageWeb'
+          $ref: '#/components/schemas/Web'
         social:
-          $ref: '#/components/schemas/messageSocial'
+          $ref: '#/components/schemas/Social'
         type:
           type: string
           enum:
@@ -6456,9 +6456,9 @@ components:
             - `defaultNoReply`: Used to reject any replies to this message.
             - `noDlr`: Used to specify that DLRs should not be enabled for this message.
         features:
-          $ref: '#/components/schemas/messageFeatures'
+          $ref: '#/components/schemas/Features'
         resource:
-          $ref: '#/components/schemas/resource'
+          $ref: '#/components/schemas/Resource'
         messageTemplateId:
           type: string
           example: BACEB8D46BEF5315
@@ -6475,7 +6475,7 @@ components:
         callbackParameters:
           description: Set of key-value pairs that you can attach to a callback. This can be useful for returning additional information about the object in a structured format.
           type: object
-          title: Message Callback Parameters
+          title: Callback Parameters
         label:
           type: string
           example: sample
@@ -6556,14 +6556,12 @@ components:
           type: boolean
           readOnly: true
         dlr:
-          $ref: '#/components/schemas/messageDlr'
+          $ref: '#/components/schemas/DeliveryReceipt'
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       required:
         - to
         - subject
-      x-stoplight:
-        id: ef29ae9d42ab0
     MessageCollection:
       description: The list messages response object.
       type: object
@@ -6615,7 +6613,7 @@ components:
           uniqueItems: true
           minItems: 1
           items:
-            $ref: '#/components/schemas/message'
+            $ref: '#/components/schemas/Message'
           readOnly: true
         status:
           description: The status of the list request.
@@ -6623,13 +6621,11 @@ components:
           type: string
           readOnly: true
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       title: Message Collection
       x-tags:
         - Messages
-      x-stoplight:
-        id: 5bf43d15dab90
-    messageEmail:
+    Email:
       type: object
       title: Email
       description: |-
@@ -6671,18 +6667,18 @@ components:
         resources:
           type: object
           description: The resources to attach to the email Message.
-          title: Message Email Resources
+          title: Resources
           properties:
             attachments:
               description: A list of attachments to attach to the email Message.
               type: array
               uniqueItems: false
               items:
-                $ref: '#/components/schemas/messageAttachment'
+                $ref: '#/components/schemas/Attachment'
           writeOnly: true
       required:
         - body
-    messageVoice:
+    Voice:
       type: object
       title: Voice
       description: |-
@@ -6790,7 +6786,7 @@ components:
           readOnly: true
         resources:
           type: object
-          title: Message Voice Resources
+          title: Resources
           description: Provides a configuration object for specifying custom audio for the voice header and body.
           properties:
             attachment:
@@ -6805,11 +6801,11 @@ components:
                 | header         | `"voiceintro.wav"` |
                 | body           | `"voicebody.wav"` |
               items:
-                $ref: '#/components/schemas/messageAttachment'
+                $ref: '#/components/schemas/Attachment'
       required:
         - body
         - type
-    messageWeb:
+    Web:
       description: |-
         The web channel payload, used when attaching web content to a Message.
 
@@ -6834,7 +6830,7 @@ components:
         Web:
           body: This is the content of my web publishing or Rich Push Message
           type: text/plain
-    messageSocial:
+    Social:
       type: object
       title: Social
       x-tags:
@@ -6856,7 +6852,7 @@ components:
           type: array
           description: The list of social channel content.
           items:
-            title: Message Social Channel
+            title: Channel
             type: object
             description: The social channel object.
             properties:
@@ -6882,7 +6878,7 @@ components:
                 enum:
                   - text/plain
                   - text/html
-    messageFeatures:
+    Features:
       type: object
       title: Features
       x-tags:
@@ -6935,7 +6931,7 @@ components:
       properties:
         pushOptions:
           type: object
-          title: Message Features Push Options
+          title: Push Options
           description: The object defining options for push messages.
           properties:
             notifications:
@@ -6969,7 +6965,7 @@ components:
               example: NORMAL
             fcm:
               type: object
-              title: Message Features Push Options FCM
+              title: FCM
               description: The fcm object holds attributes specific to the contacts' Firebase-registered Android devices
               properties:
                 androidChannelId:
@@ -7001,7 +6997,7 @@ components:
                   example: 'https://mycompany.com/sales/campaign.png'
             apns:
               type: object
-              title: Message Features Push Options APNS
+              title: APNS
               description: The apns object holds attributes specific to the contacts' APNS-registered (Apple Push Notification Service) iOS devices
               properties:
                 sound:
@@ -7018,7 +7014,7 @@ components:
                   example: campaign_action
             data:
               type: object
-              title: Message Features Push Options Data
+              title: Data
               description: |-
                 Custom key-value pairs of the notification's payload. These values can be used by the target app for enhanced functionality provided that it has been designed to handle them (images, videos, links etc).
 
@@ -7029,14 +7025,14 @@ components:
             - appId
         aliasOption:
           type: object
-          title: Message Features Alias Option
+          title: Alias Option
           description: The object defining options for message sender aliasing.
           properties:
             aliasName:
               type: string
               description: The name of the alias configured to modify the message sender.
               example: Marketing
-    messageAttachment:
+    Attachment:
       type: object
       description: |-
         Attachments can be of any type [e.g. PDF, images and documents], and the maximum size of all attached files combined is 10 MB
@@ -7066,7 +7062,7 @@ components:
         - derefUri
       x-tags:
         - Messages
-    messageDlr:
+    DeliveryReceipt:
       title: Delivery Receipt
       description: A fixed object structure used by for Whispir internally for tracking purposes.
       type: object
@@ -7129,7 +7125,7 @@ components:
           bool: false
       x-tags:
         - Messages
-    messageStatus:
+    MessageStatus:
       description: 'The message status object, describing the delivery of the sent message.'
       type: object
       x-examples:
@@ -7192,10 +7188,10 @@ components:
           uniqueItems: true
           items:
             type: object
-            title: Message Status Summary
+            title: Summary
             properties:
               link:
-                $ref: '#/components/schemas/link'
+                $ref: '#/components/schemas/Link'
               categories:
                 type: array
                 uniqueItems: true
@@ -7204,7 +7200,7 @@ components:
                 description: Present when `view` is `summary`.
                 items:
                   type: object
-                  title: Message Status Summary Category
+                  title: Category
                   additionalProperties: false
                   properties:
                     name:
@@ -7240,7 +7236,7 @@ components:
                 uniqueItems: true
                 items:
                   type: object
-                  title: Message Status Channel
+                  title: Status
                   properties:
                     type:
                       type: string
@@ -7258,12 +7254,12 @@ components:
                       description: The message destination
                       example: '61400400400'
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
         status:
           type: string
           example: '1 to 1 of 1    '
           description: Present when `view` is `detailed`.
-    messageResponseSummary:
+    MessageResponseSummary:
       title: Message Response Summary
       description: The summary message response object.
       type: object
@@ -7293,7 +7289,7 @@ components:
           items:
             description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
             type: object
-            title: Message Response Summary Status
+            title: Status
             properties:
               percentageTotal:
                 description: Details the percentage of responses received for the sent message across all channels.
@@ -7306,7 +7302,7 @@ components:
                 example: '1'
                 readOnly: true
               link:
-                $ref: '#/components/schemas/link'
+                $ref: '#/components/schemas/Link'
               type:
                 description: |-
                   The message response category. 
@@ -7323,11 +7319,11 @@ components:
               - link
               - type
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       required:
         - messageresponses
         - link
-    messageResponseDetailed:
+    MessageResponseDetailed:
       title: Message Response Detailed
       description: The detailed message response object.
       type: object
@@ -7356,11 +7352,11 @@ components:
           readOnly: true
           items:
             type: object
-            title: Message Response Detailed Status From
+            title: Status
             properties:
               from:
                 description: The message responder object.
-                title: Message Response Detailed Status
+                title: Responder
                 readOnly: true
                 type: object
                 required:
@@ -7411,7 +7407,7 @@ components:
                   - notmatched
               responseMessage:
                 description: The message response object.
-                title: Message Response Detailed Status Response Message
+                title: Response Message
                 type: object
                 readOnly: true
                 properties:
@@ -7439,7 +7435,7 @@ components:
               - responseCategory
               - responseMessage
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
         status:
           type: string
           example: '1 to 1 of 1    '
@@ -7448,11 +7444,11 @@ components:
       required:
         - messageresponses
         - link
-    messageResponse:
+    MessageResponse:
       description: The message response object.
       oneOf:
-        - $ref: '#/components/schemas/messageResponseDetailed'
-        - $ref: '#/components/schemas/messageResponseSummary'
+        - $ref: '#/components/schemas/MessageResponseDetailed'
+        - $ref: '#/components/schemas/MessageResponseSummary'
       x-examples:
         Summary:
           value:
@@ -7501,7 +7497,7 @@ components:
       x-tags:
         - Messages
       title: Message Response Collection
-    resource:
+    Resource:
       type: object
       x-tags:
         - Resources
@@ -7552,13 +7548,13 @@ components:
           example: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
           writeOnly: true
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       required:
         - name
         - scope
         - mimeType
         - derefUri
-    resourceCollection:
+    ResourceCollection:
       type: object
       description: List of resources object
       properties:
@@ -7571,7 +7567,7 @@ components:
           type: array
           description: List of resources
           items:
-            $ref: '#/components/schemas/resource'
+            $ref: '#/components/schemas/Resource'
           readOnly: true
       x-examples:
         status: 1 to 2 of 2
@@ -7590,7 +7586,7 @@ components:
       x-tags:
         - Resources
       title: Resource Collection
-    template:
+    Template:
       type: object
       x-tags:
         - Templates
@@ -7704,23 +7700,23 @@ components:
           description: Specifies the content of the SMS message.
           example: This is the body of my test SMS message
         email:
-          $ref: '#/components/schemas/messageEmail'
+          $ref: '#/components/schemas/Email'
         voice:
-          $ref: '#/components/schemas/messageVoice'
+          $ref: '#/components/schemas/Voice'
         web:
-          $ref: '#/components/schemas/messageWeb'
+          $ref: '#/components/schemas/Web'
         social:
-          $ref: '#/components/schemas/messageSocial'
+          $ref: '#/components/schemas/Social'
         type:
           type: string
           description: Allows the user to modify the message behaviour for replies and DLRs (delivery receipts)
           example: defaultNoReply
         features:
-          $ref: '#/components/schemas/messageFeatures'
+          $ref: '#/components/schemas/Features'
         dlr:
-          $ref: '#/components/schemas/messageDlr'
+          $ref: '#/components/schemas/DeliveryReceipt'
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
         tags:
           type: string
           description: Information which helps to label related message templates together
@@ -7736,7 +7732,7 @@ components:
         - messageTemplateName
         - subject
         - body
-    templateCollection:
+    TemplateCollection:
       description: Returns a list of templates
       type: object
       x-examples:
@@ -7767,7 +7763,7 @@ components:
           description: Specifies the name of the message template
           items:
             type: object
-            title: Message Template Short
+            title: Summary
             properties:
               messageTemplateName:
                 type: string
@@ -7788,17 +7784,17 @@ components:
                 example: 236EA3E3E63439DA
                 readOnly: true
               link:
-                $ref: '#/components/schemas/link'
+                $ref: '#/components/schemas/Link'
           readOnly: true
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       required:
         - status
         - messagetemplates
       title: Template Collection
       x-tags:
         - Templates
-    responseRule:
+    ResponseRule:
       type: object
       x-tags:
         - Response Rules
@@ -7831,7 +7827,7 @@ components:
           type: object
           x-tags:
             - Response Rules
-          title: Response Rule Template Pattern
+          title: Template Pattern
           description: 'This object contains the responseTemplatePattern array, which contains each of the response rule elements. More details on the configuration of this object can be found below'
           properties:
             name:
@@ -7879,7 +7875,7 @@ components:
       required:
         - name
         - responseTemplatePatterns
-    responseRuleCollection:
+    ResponseRuleCollection:
       type: object
       properties:
         status:
@@ -7891,7 +7887,7 @@ components:
           type: array
           description: The list of response rules
           items:
-            $ref: '#/components/schemas/responseRule'
+            $ref: '#/components/schemas/ResponseRule'
           readOnly: true
       required:
         - status
@@ -7913,7 +7909,7 @@ components:
       title: Response Rule Collection
       x-tags:
         - Response Rules
-    contact:
+    Contact:
       type: object
       x-tags:
         - Contacts
@@ -8237,10 +8233,9 @@ components:
         locations:
           description: The locations for the contact.
           type: array
-          title: Locations
           items:
             type: object
-            title: ContactLocation
+            title: Location
             description: The location object.
             properties:
               latitude:
@@ -8262,10 +8257,9 @@ components:
         messagingoptions:
           description: The message channel options for the contact.
           type: array
-          title: Messaging Options
           items:
             type: object
-            title: Contact Messaging Option
+            title: Messaging Option
             description: The object to configure message channel options.
             properties:
               channel:
@@ -8328,10 +8322,10 @@ components:
           description: Specifies the devices associated to this contact. See Contact Devices for more details about it
           items:
             type: object
-            title: Contact Device
+            title: Device
           readOnly: true
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
         lastModifiedTime:
           type: string
           example: '2022-03-29T16:30:18+11:00'
@@ -8344,7 +8338,7 @@ components:
         - workEmailAddress1
         - workCountry
         - timezone
-    contactCollection:
+    ContactCollection:
       type: object
       description: List contacts object
       properties:
@@ -8357,7 +8351,7 @@ components:
           type: array
           description: list of contacts
           items:
-            $ref: '#/components/schemas/contact'
+            $ref: '#/components/schemas/Contact'
       x-examples:
         Example:
           value:
@@ -8442,11 +8436,11 @@ components:
       title: Contact Collection
       x-tags:
         - Contacts
-    distributionList:
+    DistributionList:
       description: Either a static or dynamic distribution list
       oneOf:
-        - $ref: '#/components/schemas/distributionListStatic'
-        - $ref: '#/components/schemas/distributionListDynamic'
+        - $ref: '#/components/schemas/DistributionListStatic'
+        - $ref: '#/components/schemas/DistributionListDynamic'
       x-examples:
         Example Static DL:
           value:
@@ -8473,7 +8467,7 @@ components:
       title: Distribution List
       x-tags:
         - Distribution Lists
-    distributionListCollection:
+    DistributionListCollection:
       type: object
       description: list of distribution lists
       x-examples:
@@ -8516,18 +8510,18 @@ components:
           type: array
           description: List of distribution lists
           items:
-            $ref: '#/components/schemas/distributionList'
+            $ref: '#/components/schemas/DistributionList'
         status:
           type: string
           example: 1 to 1 of 1
           description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
           readOnly: true
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       title: Distribution List Collection
       x-tags:
         - Distribution Lists
-    distributionListStatic:
+    DistributionListStatic:
       type: object
       x-tags:
         - Distribution Lists
@@ -8599,7 +8593,7 @@ components:
             - Public: Any user or active contact in any workspace can map themselves to this DL in the Whispir Contact Portal
             - Private: Only users or active contacts in the current workspace can map themselves to this DL
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
         contactIds:
           type: string
           description: Comma separated list of Contacts to be associated to this DL. This information can be provided at the time of the DL creation or updated later via a PUT request
@@ -8630,7 +8624,7 @@ components:
           description: Details of Contacts included in the Distribution List
           items:
             type: object
-            title: Distribution List Details
+            title: Details
             properties:
               id:
                 type: string
@@ -8648,11 +8642,11 @@ components:
                 description: Type of Contact
                 readOnly: true
               link:
-                $ref: '#/components/schemas/link'
+                $ref: '#/components/schemas/Link'
           readOnly: true
       required:
         - name
-    distributionListDynamic:
+    DistributionListDynamic:
       x-tags:
         - Distribution Lists
       title: Dynamic Distribution List
@@ -8682,7 +8676,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
-      description: 'Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don''t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List'
+      description: "Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don't need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List"
       type: object
       properties:
         name:
@@ -8737,7 +8731,7 @@ components:
             - ruleContent: Contains the matching string to be compared with the contact element for being a part of the DL [required]
           example: '[{"ruleFilter" : "division", "ruleFilterActualName" : "Division", "ruleContent" : "sales"}]'
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       required:
         - name
         - access
@@ -8745,7 +8739,7 @@ components:
         - entityType
         - visibility
         - rules
-    scenario:
+    Scenario:
       type: object
       x-tags:
         - Scenarios
@@ -8772,7 +8766,7 @@ components:
           description: Specifies the comma separated list of users who can run this scenario.Only contains value when the allowedUsers is set to `SELECTEDUSERS`
           example: 4DC922649AFE370C
         message:
-          $ref: '#/components/schemas/message'
+          $ref: '#/components/schemas/Message'
         to:
           type: string
           description: Specifies the phone number or MRI or distribution list to which the message has to be sent
@@ -8786,13 +8780,13 @@ components:
           description: Specifies the label for the message (to view during reporting)
           example: fire-evacuation
         email:
-          $ref: '#/components/schemas/messageEmail'
+          $ref: '#/components/schemas/Email'
         voice:
-          $ref: '#/components/schemas/messageVoice'
+          $ref: '#/components/schemas/Voice'
         web:
-          $ref: '#/components/schemas/messageWeb'
+          $ref: '#/components/schemas/Web'
         social:
-          $ref: '#/components/schemas/messageSocial'
+          $ref: '#/components/schemas/Social'
       required:
         - name
         - description
@@ -8833,7 +8827,7 @@ components:
               - id: social
                 body: Facebook Content
                 type: text/plain
-    scenarioCollection:
+    ScenarioCollection:
       type: object
       description: List of retrieved scenarios
       properties:
@@ -8841,7 +8835,7 @@ components:
           type: array
           description: Scenario object
           items:
-            $ref: '#/components/schemas/scenario'
+            $ref: '#/components/schemas/Scenario'
       x-examples:
         example-1:
           value:
@@ -8883,7 +8877,7 @@ components:
       x-tags:
         - Scenarios
       title: Scenario Collection
-    callback:
+    Callback:
       type: object
       x-tags:
         - Callbacks
@@ -8935,7 +8929,7 @@ components:
           format: uri
         auth:
           type: object
-          title: Callback Auth
+          title: Auth
           description: |-
             The authentication model details. You will receive - 
 
@@ -8998,7 +8992,7 @@ components:
           format: email
         callbacks:
           type: object
-          title: Callback Event
+          title: Event
           description: The object to specify which events callbacks should be enabled for.
           required:
             - reply
@@ -9019,7 +9013,7 @@ components:
               description: A boolean flag specifying whether undeliverable message callbacks are enabled.
               default: disabled
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       required:
         - name
         - url
@@ -9029,7 +9023,7 @@ components:
         - retriesEnabled
         - email
         - callbacks
-    callbackCollection:
+    CallbackCollection:
       description: List of callbacks
       type: object
       properties:
@@ -9046,7 +9040,7 @@ components:
           minItems: 1
           items:
             type: object
-            title: Callback Short
+            title: Summary
             properties:
               id:
                 type: string
@@ -9083,10 +9077,10 @@ components:
                   Refer to callback calls for more details on retrieving the SUCCESS and FAIL logs
                 readOnly: true
               link:
-                $ref: '#/components/schemas/link'
+                $ref: '#/components/schemas/Link'
           readOnly: true
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       x-examples:
         example-1:
           value:
@@ -9111,7 +9105,7 @@ components:
       x-tags:
         - Callbacks
       title: Callback Collection
-    callbackCall:
+    CallbackCall:
       description: A callback call object
       type: object
       x-examples:
@@ -9181,7 +9175,7 @@ components:
           readOnly: true
         from:
           type: object
-          title: Callback Call From
+          title: Responder
           description: The details about this particular message sender/responder
           properties:
             name:
@@ -9215,7 +9209,7 @@ components:
           readOnly: true
         responseMessage:
           type: object
-          title: Callback Call Response Message
+          title: Response Message
           description: |-
             The details about this particular message that have been sent to the callback
 
@@ -9251,7 +9245,7 @@ components:
           readOnly: true
         callback:
           type: object
-          title: Callback Call Event
+          title: Event
           description: The details about this particular callback attempt
           properties:
             id:
@@ -9291,10 +9285,10 @@ components:
               readOnly: true
           readOnly: true
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       required:
         - status
-    callbackCallCollection:
+    CallbackCallCollection:
       type: object
       description: List of callback calls
       properties:
@@ -9302,13 +9296,13 @@ components:
           type: array
           description: A list of callbacks
           items:
-            $ref: '#/components/schemas/callbackCall'
+            $ref: '#/components/schemas/CallbackCall'
         status:
           type: string
           example: 1 to 8 of 8
           description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       x-examples:
         Example:
           value:
@@ -9351,7 +9345,7 @@ components:
       title: Callback Call Collection
       x-tags:
         - Callbacks
-    workspace:
+    Workspace:
       type: object
       x-tags:
         - Workspaces
@@ -9398,11 +9392,11 @@ components:
           description: Only applicable to customers with the Billing Cost Centre Module enabled. Allows the user to set a billing cost centre for the Workspace.
           example: Hollywood
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       required:
         - projectName
         - status
-    workspaceCollection:
+    WorkspaceCollection:
       type: object
       description: List of workspaces
       properties:
@@ -9410,7 +9404,7 @@ components:
           type: array
           description: List of workspaces
           items:
-            $ref: '#/components/schemas/workspace'
+            $ref: '#/components/schemas/Workspace'
           readOnly: true
         status:
           type: string
@@ -9436,7 +9430,7 @@ components:
       title: Workspace Collection
       x-tags:
         - Workspaces
-    activity:
+    Activity:
       description: 'Activities are all the individual changes, tasks, calls, messages and so on performed in a given company workspace.'
       type: object
       x-examples:
@@ -9539,8 +9533,8 @@ components:
           example: Whispir User
           description: Fullname of the user
         link:
-          $ref: '#/components/schemas/link'
-    activityCollection:
+          $ref: '#/components/schemas/Link'
+    ActivityCollection:
       description: List activities response object
       type: object
       x-examples:
@@ -9572,14 +9566,14 @@ components:
           description: List of activities
           type: array
           items:
-            $ref: '#/components/schemas/activity'
+            $ref: '#/components/schemas/Activity'
           readOnly: true
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       title: Activity Collection
       x-tags:
         - Activities
-    user:
+    User:
       type: object
       x-tags:
         - Users
@@ -9927,7 +9921,7 @@ components:
           description: The secondary role of the user.
           example: Analyst
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       required:
         - userName
         - password
@@ -9935,7 +9929,7 @@ components:
         - lastName
         - workCountry
         - timezone
-    userCollection:
+    UserCollection:
       type: object
       description: List users object
       properties:
@@ -9988,7 +9982,7 @@ components:
                 description: The primary work email address of the user.
                 readOnly: true
               link:
-                $ref: '#/components/schemas/link'
+                $ref: '#/components/schemas/Link'
           readOnly: true
         status:
           type: string
@@ -9996,7 +9990,7 @@ components:
           description: Provides the total number of records fetched. This attribute may return "No records found" when there are no users available.
           readOnly: true
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       x-examples:
         Example:
           value:
@@ -10022,7 +10016,7 @@ components:
       title: User Collection
       x-tags:
         - Users
-    event:
+    Event:
       type: object
       x-tags:
         - Events
@@ -10097,7 +10091,7 @@ components:
           description: Event form list
           items:
             type: object
-            title: Event Form
+            title: Form
             description: Constitutes the name of the form and its fields
             properties:
               formName:
@@ -10109,7 +10103,7 @@ components:
                 description: 'Contains a list of event fields, see create /POST event endpoint to learn more about the available fields'
                 items:
                   type: object
-                  title: Event Form Field
+                  title: Field
                   description: A key-value pair of name and its value
                   properties:
                     name:
@@ -10121,11 +10115,11 @@ components:
                       description: Specifies the value of a given field
                       example: John Wick
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       required:
         - eventLabel
         - status
-    eventCollection:
+    EventCollection:
       type: object
       description: List of events
       properties:
@@ -10138,7 +10132,7 @@ components:
           type: array
           description: List of events
           items:
-            $ref: '#/components/schemas/event'
+            $ref: '#/components/schemas/Event'
           readOnly: true
       x-examples:
         Events response example:
@@ -10162,7 +10156,7 @@ components:
       title: Event Collection
       x-tags:
         - Events
-    import:
+    Import:
       type: object
       x-tags:
         - Imports
@@ -10182,7 +10176,7 @@ components:
           example: contact
         importOptions:
           type: object
-          title: Import Field Mapping
+          title: Field Mapping
           description: Mapping the data column in your resource file to the contact field value
           x-examples:
             example-1:
@@ -10242,7 +10236,7 @@ components:
             workCountry: workCountry
             timezone: timeZone
           importMode: replace
-    customList:
+    CustomList:
       type: object
       x-examples:
         Custom List example:
@@ -10317,7 +10311,7 @@ components:
           description: Contains the individual items that make up this list
           items:
             type: object
-            title: Custom List Item
+            title: Item
             description: |-
               Contains the individual items that make up this list
 
@@ -10337,9 +10331,9 @@ components:
             readOnly: true
           readOnly: true
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       readOnly: true
-    customListCollection:
+    CustomListCollection:
       type: object
       description: List of custom lists
       properties:
@@ -10352,7 +10346,7 @@ components:
           type: array
           description: A list of custom lists
           items:
-            $ref: '#/components/schemas/customList'
+            $ref: '#/components/schemas/CustomList'
           readOnly: true
       x-examples:
         custom lists response example:
@@ -10374,7 +10368,7 @@ components:
       title: Custom List Collection
       x-tags:
         - Custom Lists
-    auth:
+    Auth:
       description: The create auth object.
       type: object
       properties:
@@ -10383,7 +10377,7 @@ components:
           description: The JWT token.
           example: your-generated-token-string
         link:
-          $ref: '#/components/schemas/link'
+          $ref: '#/components/schemas/Link'
       x-examples:
         Example:
           value:
@@ -10392,7 +10386,7 @@ components:
       x-tags:
         - Auth
       title: Auth
-    link:
+    Link:
       type: array
       description: 'A [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) link object, describing all discoverable resources in relation to the original request.'
       x-examples:
@@ -10436,7 +10430,7 @@ components:
               - -1
             readOnly: true
       readOnly: true
-    apiError:
+    ApiError:
       description: The generic error object
       type: object
       x-examples:
@@ -10925,7 +10919,7 @@ components:
       content:
         application/vnd.whispir.user-v1+json:
           schema:
-            $ref: '#/components/schemas/user'
+            $ref: '#/components/schemas/User'
           examples:
             Example:
               value:
@@ -11018,7 +11012,7 @@ components:
       content:
         application/vnd.whispir.user-v1+json:
           schema:
-            $ref: '#/components/schemas/userCollection'
+            $ref: '#/components/schemas/UserCollection'
           examples:
             Example:
               value:
@@ -11057,7 +11051,7 @@ components:
       content:
         application/vnd.whispir.template-v1+json:
           schema:
-            $ref: '#/components/schemas/template'
+            $ref: '#/components/schemas/Template'
           examples:
             Example:
               value:
@@ -11137,7 +11131,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/apiError'
+            $ref: '#/components/schemas/ApiError'
           examples:
             Example:
               value:
@@ -11163,7 +11157,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/apiError'
+            $ref: '#/components/schemas/ApiError'
           examples:
             Example:
               value:
@@ -11192,7 +11186,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/apiError'
+            $ref: '#/components/schemas/ApiError'
           examples:
             Example:
               value:
@@ -11220,7 +11214,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/apiError'
+            $ref: '#/components/schemas/ApiError'
           examples:
             Example:
               value:
@@ -11248,7 +11242,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/apiError'
+            $ref: '#/components/schemas/ApiError'
           examples:
             Example:
               value:
@@ -11274,7 +11268,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/apiError'
+            $ref: '#/components/schemas/ApiError'
           examples:
             Example:
               value:
@@ -11311,7 +11305,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/apiError'
+            $ref: '#/components/schemas/ApiError'
           examples:
             Example:
               value:
@@ -11323,7 +11317,7 @@ components:
       content:
         application/vnd.whispir.api-callback-v1+json:
           schema:
-            $ref: '#/components/schemas/callback'
+            $ref: '#/components/schemas/Callback'
           examples:
             Callback object:
               value:
@@ -11370,7 +11364,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/apiError'
+            $ref: '#/components/schemas/ApiError'
           examples:
             Example:
               value:
@@ -11407,7 +11401,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/apiError'
+            $ref: '#/components/schemas/ApiError'
           examples:
             Example:
               value:
@@ -11445,7 +11439,7 @@ components:
       content:
         application/vnd.whispir.api-call-v1+json:
           schema:
-            $ref: '#/components/schemas/callbackCallCollection'
+            $ref: '#/components/schemas/CallbackCallCollection'
           examples:
             Example:
               value:
@@ -11501,7 +11495,7 @@ components:
       content:
         application/vnd.whispir.contact-v1+json:
           schema:
-            $ref: '#/components/schemas/contact'
+            $ref: '#/components/schemas/Contact'
           examples:
             Example:
               value:
@@ -11603,7 +11597,7 @@ components:
       content:
         application/vnd.whispir.contact-v1+json:
           schema:
-            $ref: '#/components/schemas/contactCollection'
+            $ref: '#/components/schemas/ContactCollection'
           examples:
             Example:
               value:
@@ -11701,7 +11695,7 @@ components:
       content:
         application/vnd.whispir.workspace-v1+json:
           schema:
-            $ref: '#/components/schemas/workspace'
+            $ref: '#/components/schemas/Workspace'
           examples:
             example-1:
               value:
@@ -11734,7 +11728,7 @@ components:
       content:
         application/vnd.whispir.workspace-v1+json:
           schema:
-            $ref: '#/components/schemas/workspaceCollection'
+            $ref: '#/components/schemas/WorkspaceCollection'
           examples:
             example-1:
               value:
@@ -11767,7 +11761,7 @@ components:
       content:
         application/vnd.whispir.resource-v1+json:
           schema:
-            $ref: '#/components/schemas/resource'
+            $ref: '#/components/schemas/Resource'
           examples:
             example-1:
               value:
@@ -11800,7 +11794,7 @@ components:
       content:
         application/vnd.whispir.resource-v1+json:
           schema:
-            $ref: '#/components/schemas/resourceCollection'
+            $ref: '#/components/schemas/ResourceCollection'
           examples:
             example-1:
               value:
@@ -11833,7 +11827,7 @@ components:
       content:
         application/vnd.whispir.distributionlist-v1+json:
           schema:
-            $ref: '#/components/schemas/distributionList'
+            $ref: '#/components/schemas/DistributionList'
           examples:
             Example Static DL:
               value:
@@ -11875,7 +11869,7 @@ components:
       content:
         application/vnd.whispir.distributionlist-v1+json:
           schema:
-            $ref: '#/components/schemas/distributionListCollection'
+            $ref: '#/components/schemas/DistributionListCollection'
           examples:
             Example Dynamic Distribution List:
               value:
@@ -11929,7 +11923,7 @@ components:
       content:
         application/vnd.whispir.customlist-v1+json:
           schema:
-            $ref: '#/components/schemas/customListCollection'
+            $ref: '#/components/schemas/CustomListCollection'
           examples:
             custom lists response example:
               value:
@@ -11965,7 +11959,7 @@ components:
       content:
         application/vnd.whispir.customlist-v1+json:
           schema:
-            $ref: '#/components/schemas/customList'
+            $ref: '#/components/schemas/CustomList'
           examples:
             custom list response example:
               value:
@@ -12006,7 +12000,7 @@ components:
       content:
         application/vnd.whispir.event-v1+json:
           schema:
-            $ref: '#/components/schemas/eventCollection'
+            $ref: '#/components/schemas/EventCollection'
           examples:
             Events response example:
               value:
@@ -12042,7 +12036,7 @@ components:
       content:
         application/vnd.whispir.event-v1+json:
           schema:
-            $ref: '#/components/schemas/event'
+            $ref: '#/components/schemas/Event'
           examples:
             example-1:
               value:

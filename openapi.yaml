@@ -1702,6 +1702,8 @@ paths:
                     status: '1 to 2 of 2    '
                     messagetemplates:
                       - messageTemplateName: Sample SMS Template 2
+                        subject: Sample
+                        body: Example
                         messageTemplateDescription: Template to provide an example on whispir.io no.1
                         id: 236EA3E3E63439DA
                         link:
@@ -1711,6 +1713,8 @@ paths:
                             host: api.au.whispir.com
                             port: -1
                       - messageTemplateName: Sample SMS Template with tags
+                        subject: Sample
+                        body: Example
                         messageTemplateDescription: Template to provide an example on whispir.io no.1
                         id: D09B63AD6BD1A503
                         link:
@@ -3900,14 +3904,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/CallbackCollection'
               examples:
-                example-1:
+                Example:
                   value:
                     status: 1 to 1 of 1
                     callbacks:
-                      - id: D7D2295E2A08388C
-                        name: callback1
-                        url: 'https://e05237bf.ngrol.io/'
-                        retriesEnabled: false
+                      - id: 4452AC8359535C46
+                        name: Callback Name
+                        url: 'https://example.com/callback'
+                        auth:
+                          type: basicauth
+                          key: test34
+                        contentType: json
+                        removeHTML: disabled
+                        retriesEnabled: true
+                        email: me@example.com
+                        callbacks:
+                          reply: disabled
+                          undeliverable: disabled
                         link:
                           - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
                             rel: self
@@ -6667,7 +6680,7 @@ components:
         resources:
           type: object
           description: The resources to attach to the email Message.
-          title: Resources
+          title: Email Resources
           properties:
             attachments:
               description: A list of attachments to attach to the email Message.
@@ -6786,7 +6799,7 @@ components:
           readOnly: true
         resources:
           type: object
-          title: Resources
+          title: Voice Resources
           description: Provides a configuration object for specifying custom audio for the voice header and body.
           properties:
             attachment:
@@ -6965,7 +6978,7 @@ components:
               example: NORMAL
             fcm:
               type: object
-              title: FCM
+              title: Fcm
               description: The fcm object holds attributes specific to the contacts' Firebase-registered Android devices
               properties:
                 androidChannelId:
@@ -6997,7 +7010,7 @@ components:
                   example: 'https://mycompany.com/sales/campaign.png'
             apns:
               type: object
-              title: APNS
+              title: Apns
               description: The apns object holds attributes specific to the contacts' APNS-registered (Apple Push Notification Service) iOS devices
               properties:
                 sound:
@@ -7188,7 +7201,7 @@ components:
           uniqueItems: true
           items:
             type: object
-            title: Summary
+            title: Delivery Status
             properties:
               link:
                 $ref: '#/components/schemas/Link'
@@ -7236,7 +7249,7 @@ components:
                 uniqueItems: true
                 items:
                   type: object
-                  title: Status
+                  title: Detailed Delivery Status
                   properties:
                     type:
                       type: string
@@ -7289,7 +7302,7 @@ components:
           items:
             description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
             type: object
-            title: Status
+            title: Summary Status
             properties:
               percentageTotal:
                 description: Details the percentage of responses received for the sent message across all channels.
@@ -7352,11 +7365,11 @@ components:
           readOnly: true
           items:
             type: object
-            title: Status
+            title: Detailed Response Status
             properties:
               from:
                 description: The message responder object.
-                title: Responder
+                title: From
                 readOnly: true
                 type: object
                 required:
@@ -7407,7 +7420,7 @@ components:
                   - notmatched
               responseMessage:
                 description: The message response object.
-                title: Response Message
+                title: Detailed Response Message
                 type: object
                 readOnly: true
                 properties:
@@ -7749,6 +7762,9 @@ components:
                   host: api.au.whispir.com
                   port: -1
           link: []
+      title: Template Collection
+      x-tags:
+        - Templates
       properties:
         status:
           type: string
@@ -7762,38 +7778,13 @@ components:
           minItems: 1
           description: Specifies the name of the message template
           items:
-            type: object
-            title: Summary
-            properties:
-              messageTemplateName:
-                type: string
-                minLength: 1
-                description: Specifies the name of the message template
-                example: Test Template
-                readOnly: true
-              messageTemplateDescription:
-                type: string
-                minLength: 1
-                description: 'Specifies the description of the message template, so that anyone can understand its purpose'
-                example: The test messate template.
-                readOnly: true
-              id:
-                type: string
-                minLength: 1
-                description: Specifies the template id needed for all the API Operations
-                example: 236EA3E3E63439DA
-                readOnly: true
-              link:
-                $ref: '#/components/schemas/Link'
+            $ref: '#/components/schemas/Template'
           readOnly: true
         link:
           $ref: '#/components/schemas/Link'
       required:
         - status
         - messagetemplates
-      title: Template Collection
-      x-tags:
-        - Templates
     ResponseRule:
       type: object
       x-tags:
@@ -8624,7 +8615,7 @@ components:
           description: Details of Contacts included in the Distribution List
           items:
             type: object
-            title: Details
+            title: Distribution List Contacts
             properties:
               id:
                 type: string
@@ -8929,7 +8920,7 @@ components:
           format: uri
         auth:
           type: object
-          title: Auth
+          title: Callback Auth
           description: |-
             The authentication model details. You will receive - 
 
@@ -8992,7 +8983,7 @@ components:
           format: email
         callbacks:
           type: object
-          title: Event
+          title: Callback Options
           description: The object to specify which events callbacks should be enabled for.
           required:
             - reply
@@ -9026,61 +9017,6 @@ components:
     CallbackCollection:
       description: List of callbacks
       type: object
-      properties:
-        status:
-          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
-          type: string
-          minLength: 1
-          example: 1 to 1 of 1
-          readOnly: true
-        callbacks:
-          description: A list of callbacks
-          type: array
-          uniqueItems: true
-          minItems: 1
-          items:
-            type: object
-            title: Summary
-            properties:
-              id:
-                type: string
-                minLength: 1
-                description: |-
-                  The id of the callback. 
-
-                  This is the value that should be passed when referring to the callback using the API endpoints
-                example: D7D2295E2A08388C
-                readOnly: true
-              name:
-                type: string
-                minLength: 1
-                description: |-
-                  The name of the callback. 
-
-                  This is the value that should be passed in the message payload for triggering the callbacks
-                example: callback1
-                readOnly: true
-              url:
-                type: string
-                minLength: 1
-                description: The destination url on your servers that Whispir should reach out to.
-                example: 'https://e05237bf.ngrol.io/'
-                readOnly: true
-              retriesEnabled:
-                type: boolean
-                default: false
-                description: |-
-                  If retriesEnabled is false, then Whispir will only try once and when a failure (non 200 OK response code) happens, it will not retry again
-
-                  When true, it will try every 5 mins for a maximum of 10 times.
-
-                  Refer to callback calls for more details on retrieving the SUCCESS and FAIL logs
-                readOnly: true
-              link:
-                $ref: '#/components/schemas/Link'
-          readOnly: true
-        link:
-          $ref: '#/components/schemas/Link'
       x-examples:
         example-1:
           value:
@@ -9105,6 +9041,23 @@ components:
       x-tags:
         - Callbacks
       title: Callback Collection
+      properties:
+        status:
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
+          type: string
+          minLength: 1
+          example: 1 to 1 of 1
+          readOnly: true
+        callbacks:
+          description: A list of callbacks
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Callback'
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/Link'
     CallbackCall:
       description: A callback call object
       type: object
@@ -9209,7 +9162,7 @@ components:
           readOnly: true
         responseMessage:
           type: object
-          title: Response Message
+          title: Callback Response Message
           description: |-
             The details about this particular message that have been sent to the callback
 
@@ -9245,7 +9198,7 @@ components:
           readOnly: true
         callback:
           type: object
-          title: Event
+          title: Invocation
           description: The details about this particular callback attempt
           properties:
             id:
@@ -9932,65 +9885,6 @@ components:
     UserCollection:
       type: object
       description: List users object
-      properties:
-        users:
-          type: array
-          description: List of retrieved users
-          items:
-            type: object
-            x-tags:
-              - Users
-            title: User Collection
-            x-examples:
-              Example:
-                id: 4DC922649AFE370C
-                firstName: John
-                lastName: Wick
-                companyName: Whispir
-                workEmailAddress1: testUser@example.com
-                link:
-                  - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                    rel: self
-                    method: GET
-                    host: api.au.whispir.com
-                    port: -1
-            description: List users response object
-            properties:
-              id:
-                type: string
-                description: The ID of the user.
-                example: 4DC922649AFE370C
-                readOnly: true
-              firstName:
-                type: string
-                description: The first name of the user.
-                example: John
-                readOnly: true
-              lastName:
-                type: string
-                description: The last name of the user.
-                example: Wick
-                readOnly: true
-              companyName:
-                type: string
-                description: The company name of the user.
-                example: Whispir
-                readOnly: true
-              workEmailAddress1:
-                type: string
-                example: testUser@example.com
-                description: The primary work email address of the user.
-                readOnly: true
-              link:
-                $ref: '#/components/schemas/Link'
-          readOnly: true
-        status:
-          type: string
-          example: 1 to 20 of 73
-          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no users available.
-          readOnly: true
-        link:
-          $ref: '#/components/schemas/Link'
       x-examples:
         Example:
           value:
@@ -10016,6 +9910,20 @@ components:
       title: User Collection
       x-tags:
         - Users
+      properties:
+        users:
+          type: array
+          description: List of retrieved users
+          items:
+            $ref: '#/components/schemas/User'
+          readOnly: true
+        status:
+          type: string
+          example: 1 to 20 of 73
+          description: Provides the total number of records fetched. This attribute may return "No records found" when there are no users available.
+          readOnly: true
+        link:
+          $ref: '#/components/schemas/Link'
     Event:
       type: object
       x-tags:
@@ -10396,10 +10304,10 @@ components:
             method: GET
             host: api.au.whispir.com
             port: -1
-      title: Link
+      title: Links
       items:
         type: object
-        title: Link
+        title: LinkObject
         description: The HATEOAS link object.
         properties:
           uri:
@@ -11019,16 +10927,73 @@ components:
                 users:
                   - id: 4DC922649AFE370C
                     firstName: John
+                    middleName: Bjork
                     lastName: Wick
-                    companyName: Whispir
+                    userName: johnw
+                    password: foobar
+                    title: Dr
+                    nickname: Babayaga
+                    status: PENDING
+                    workMobilePhone1: '61400400400'
                     workEmailAddress1: testUser@example.com
+                    workCountry: Australia
+                    timezone: Australia/Melbourne
+                    workMobilePhone2: '61500500500'
+                    workEmailAddress2: newUser@example.com
+                    workPhoneAreaCode1: '09'
+                    workPhone1: '5006000'
+                    workPhoneAreaCode2: '09'
+                    workPhone2: '5007000'
+                    workFaxAreaCode1: '09'
+                    workFax1: '5008000'
+                    workSatellitePhone: '61600600600'
+                    workOtherPhone: '61700700700'
+                    workAddress1: Level 15
+                    workAddress2: 360 Collins St
+                    workSuburb: Melboure
+                    workState: Victoria
+                    workPostCode: '3000'
+                    workPostalAddress1: Level 15
+                    workPostalAddress2: 360 Collins St
+                    workPostalSuburb: Melboure
+                    workPostalState: Victoria
+                    workPostalPostCode: '3000'
+                    personalEmailAddress1: personalPrimaryUser@example.com
+                    personalEmailAddress2: personalSecondaryUser@example.com
+                    personalAddress1: Level 15
+                    personalAddress2: 360 Collins St
+                    personalSuburb: Melboure
+                    personalState: Victoria
+                    personalPostCode: '3000'
+                    personalCountry: Australia
+                    personalPhoneAreaCode1: '09'
+                    personalPhone1: '5006000'
+                    personalPhoneAreaCode2: '09'
+                    personalPhone2: '5007000'
+                    personalFaxAreaCode1: '09'
+                    personalFax1: '5008000'
+                    otherPhoneAreaCode1: '09'
+                    otherPhone1: '5009000'
+                    otherMobile: '61900900900'
+                    otherFirstName: Harold
+                    otherLastName: Wickman
+                    otherTitle: Mr
+                    companyName: Whispir
+                    jobTitle: Software Engineer
+                    division: Technology
+                    businessUnit: Core Platform
+                    department: Research & Development
+                    teamName1: Optimus Prime
+                    teamName2: Bumblebee
+                    role1: Administrator
+                    role2: Analyst
                     link:
                       - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
                         rel: self
                         method: GET
                         host: api.au.whispir.com
                         port: -1
-                status: 1 to 8 of 8
+                status: 1 to 20 of 73
                 link:
                   - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
                     rel: self

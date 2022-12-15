@@ -1,30 +1,38 @@
 {{#vars}}
 {{#isModel}}
-        {{! Recursively defining a builder pattern for variable that has a corresponding POJO (plain old java object) class}}
+{{! Recursively defining a builder pattern for variable that has a corresponding POJO (plain old java object) class}}
         public static class {{baseType}} {
             {{#vars}}
+            {{^isReadOnly}}
             private {{{dataType}}} {{baseName}};
+            {{/isReadOnly}}
             {{/vars}}
 
-            private {{baseType}}({{#vars}}{{{dataType}}}  {{baseName}}{{^-last}},{{/-last}}{{/vars}}){
-                {{#vars}}
-                this.{{baseName}} = {{baseName}};
-                {{/vars}}
+            private {{baseType}}({{#vars}}{{^isReadOnly}}{{{dataType}}} {{baseName}}{{^-last}}, {{/-last}}{{/isReadOnly}}{{/vars}}){
+            {{#vars}}
+            {{^isReadOnly}}
+            this.{{baseName}} = {{baseName}};
+            {{/isReadOnly}}
+            {{/vars}}
             }
 
             {{#vars}}
+            {{^isReadOnly}}
             public {{{dataType}}} {{getter}}(){
                 return {{{baseName}}};
             }
+            {{/isReadOnly}}
             {{/vars}}
 
             public static Builder builder() {
-               return new Builder();
+                return new Builder();
             }   
 
             public static class Builder {
                 {{#vars}}
+                {{^isReadOnly}}
                 private {{{dataType}}} {{baseName}};
+                {{/isReadOnly}}
                 {{/vars}}
 
                 public {{baseType}} build() {
@@ -36,10 +44,12 @@
                 }
                 {{#vars}}
                 {{^isArray}}
+                {{^isReadOnly}}
                 public Builder {{setter}}({{{dataType}}} {{baseName}}) {
                     this.{{baseName}} = {{baseName}};
                     return this;
                 }
+                {{/isReadOnly}}
                 {{/isArray}}
                 {{#isArray}}
                 {{! A special case when 'var' is type of array to create 'add' and 'addAll' methods}}
@@ -48,68 +58,78 @@
                             this.{{baseName}} = new ArrayList<>();
                     }
                     this.{{baseName}}.add(element);
-                    return this
+                    return this;
                 }
-        
+
                 public Builder addAllDefault{{complexType}}({{{dataType}}} elements) {
                     if (this.{{baseName}} == null) {
                             this.{{baseName}} = new ArrayList<>();
                     }
                     this.{{baseName}}.addAll(elements);
-                    return this
+                    return this;
                 }
                 {{/isArray}}
                 {{/vars}}
             }
+
     {{>api_recursion}}
         }
 {{/isModel}}
 {{#isArray}}
 {{^isReadOnly}}
 {{#items}}
-        {{! Create a builder pattern for instance that is part of an array}}
-        public static class {{baseType}} {
+    {{! Create a builder pattern for instance that is part of an array}}
+    public static class {{baseType}} {
+        {{#vars}}
+        {{^isReadOnly}}
+        private {{{dataType}}} {{baseName}};
+        {{/isReadOnly}}
+        {{/vars}}
+
+        private {{baseType}}({{#vars}}{{^isReadOnly}}{{{dataType}}}  {{baseName}}{{^-last}},{{/-last}}{{/isReadOnly}}{{/vars}}){
             {{#vars}}
-            private {{{dataType}}} {{baseName}};
+            this.{{baseName}} = {{baseName}};
             {{/vars}}
-
-            private {{baseType}}({{#vars}}{{{dataType}}}  {{baseName}}{{^-last}},{{/-last}}{{/vars}}){
-                {{#vars}}
-                this.{{baseName}} = {{baseName}};
-                {{/vars}}
-            }
-
-            {{#vars}}
-            public {{{dataType}}} {{getter}}(){
-                return {{{baseName}}};
-            }
-            {{/vars}}
-
-            public static Builder builder() {
-               return new Builder();
-            }   
-
-            public static class Builder {
-                {{#vars}}
-                private {{{dataType}}} {{baseName}};
-                {{/vars}}
-
-                public {{baseType}} build() {
-                    return new {{baseType}}(
-                        {{#vars}}
-                        this.{{baseName}}{{^-last}},{{/-last}}
-                        {{/vars}}
-                    );
-                }
-                {{#vars}}
-                public Builder {{setter}}({{{dataType}}} {{baseName}}) {
-                    this.{{baseName}} = {{baseName}};
-                    return this;
-                }
-                {{/vars}}
-            }
-    {{>api_recursion}}
         }
+
+        {{#vars}}
+        {{^isReadOnly}}
+        public {{{dataType}}} {{getter}}(){
+            return {{{baseName}}};
+        }
+        {{/isReadOnly}}
+        {{/vars}}
+
+        public static Builder builder() {
+            return new Builder();
+        }   
+
+        public static class Builder {
+            {{#vars}}
+            {{^isReadOnly}}
+            private {{{dataType}}} {{baseName}};
+            {{/isReadOnly}}
+            {{/vars}}
+
+            public {{baseType}} build() {
+                return new {{baseType}}(
+                {{#vars}}
+                    his.{{baseName}}{{^-last}},{{/-last}}
+                {{/vars}}
+                );
+            }
+            {{#vars}}
+            {{^isReadOnly}}
+            public Builder {{setter}}({{{dataType}}} {{baseName}}) {
+                this.{{baseName}} = {{baseName}};
+                return this;
+            }
+            {{/isReadOnly}}
+            {{/vars}}
+        }
+
+    {{>api_recursion}}
+    }
 {{/items}}
 {{/isReadOnly}}
 {{/isArray}}

@@ -5532,7 +5532,7 @@ paths:
       x-sdkOperation: listByWorkspace
       summary: List workspace users
       description: Returns a list of your Users.
-      operationId: UserWorkspaceList
+      operationId: userWorkspaceList
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/User-Accept'

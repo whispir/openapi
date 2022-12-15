@@ -2,9 +2,11 @@ package com.whispir.codegen;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.model.*;
@@ -21,38 +23,39 @@ public class JavaCustomClientCodegen extends JavaClientCodegen {
         return "java-custom";
     }
 
+    private class CustomSort implements Comparator<CodegenProperty> {
+        @Override
+        public int compare(CodegenProperty o1, CodegenProperty o2) {
+            boolean b1 = o1.isReadOnly;
+            boolean b2 = o2.isReadOnly;
+            return Boolean.compare(b2, b1);
+        }
+    }
+
+    private void populateModelVars(Map<String, ModelsMap> models, CodegenProperty cp) {
+        for (ModelsMap modelsMap : models.values()) {
+            for (ModelMap mp : modelsMap.getModels()) {
+                CodegenModel codegenModel = mp.getModel();
+
+                if (cp.isModel && cp.baseType == codegenModel.classname) {
+                    cp.setVars(codegenModel.vars);
+                }
+
+                if (cp.isArray && cp.complexType == codegenModel.classname) {
+                    cp.items.setVars(codegenModel.vars);
+                }
+            }
+        }
+    }
+
     @Override
     public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> models) {
         for (ModelsMap modelsMap : models.values()) {
             for (ModelMap modelMap : modelsMap.getModels()) {
                 CodegenModel model = modelMap.getModel();
+                model.vars.sort(new CustomSort());
                 for (CodegenProperty cp : model.vars) {
-                    // ADD VARS FOR ALL REFERENCED OBJECT MODELS
-                    if (cp.isModel == true) {
-                        // FIND MATCHING MODEL FOR VAR
-                        for (ModelsMap modelsMap2 : models.values()) {
-                            for (ModelMap modelMap2 : modelsMap2.getModels()) {
-                                CodegenModel model2 = modelMap2.getModel();
-
-                                if (cp.baseType == model2.classname) {
-                                    cp.setVars(model2.vars);
-                                }
-                            }
-                        }
-                    }
-                    // ADD VARS FOR ALL REFERENCED ARRAY MODELS
-                    if (cp.isArray == true) {
-                        // FIND MATCHING MODEL FOR VAR
-                        for (ModelsMap modelsMap2 : models.values()) {
-                            for (ModelMap modelMap2 : modelsMap2.getModels()) {
-                                CodegenModel model2 = modelMap2.getModel();
-                                if (cp.complexType == model2.classname) {
-                                    cp.items.setVars(model2.vars);
-
-                                }
-                            }
-                        }
-                    }
+                    populateModelVars(models, cp);
                 }
             }
         }
@@ -65,21 +68,35 @@ public class JavaCustomClientCodegen extends JavaClientCodegen {
     public OperationsMap postProcessOperationsWithModels(OperationsMap operations, List<ModelMap> allModels) {
         OperationMap objs = operations.getOperations();
 
+        // SPECIFIC CASE FOR DISTRIBUTION LIST (CREATE & UPDATE ENDPOINTS)
+
+        // Filtering DistributionList 'Create' and 'Update' operations
+        List<CodegenOperation> distributionListWriteOps = objs.getOperation().stream()
+                .filter(item -> item.bodyParam != null && item.bodyParam.baseName.equals("DistributionList"))
+                .collect(Collectors.toList());
+
+        // Populating the 'vars' of 'DistributionList' bodyParam within 'requiredParams'
+        // obtained from 'ModelMap'
+        for (CodegenOperation op : distributionListWriteOps) {
+            List<CodegenParameter> requiredParamsWithBody = op.requiredParams.stream()
+                    .filter(item -> item.baseName.equals("DistributionList"))
+                    .collect(Collectors.toList());
+
+            for (CodegenParameter param : requiredParamsWithBody) {
+                for (ModelMap modelMap : allModels) {
+                    CodegenModel codegenModel = modelMap.getModel();
+                    if (param.baseName.equals(codegenModel.classname)) {
+                        param.vars = codegenModel.vars;
+                    }
+                }
+            }
+        }
+
         for (CodegenOperation op : objs.getOperation()) {
             if (op.bodyParam != null) {
+                op.bodyParam.vars.sort(new CustomSort());
                 for (CodegenProperty cp : op.bodyParam.vars) {
-                    if (cp.isModel == true) {
-                        // FIND MATCHING MODEL FOR VAR
-                        for (ModelsMap modelsMap2 : modelsMapGlobal.values()) {
-                            for (ModelMap modelMap2 : modelsMap2.getModels()) {
-                                CodegenModel model2 = modelMap2.getModel();
-
-                                if (cp.baseType == model2.classname) {
-                                    cp.setVars(model2.vars);
-                                }
-                            }
-                        }
-                    }
+                    populateModelVars(modelsMapGlobal, cp);
                 }
             }
         }

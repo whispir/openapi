@@ -1706,6 +1706,7 @@
         "#Operation_List_Schema"
       ],
       "severity": "error",
+      "resolved": false,
       "then": {
         "function": "pattern",
         "functionOptions": {

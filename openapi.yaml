@@ -7515,11 +7515,6 @@ components:
           mimeType: application/json
           derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
       properties:
-        id:
-          type: string
-          example: 9B9E2425AAFEEE49E9D9112B6BAC22A9
-          description: The identifier for the resource.
-          readOnly: true
         name:
           type: string
           description: Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name.
@@ -7721,12 +7716,6 @@ components:
           type: string
           description: Information which helps to label related message templates together
           example: campaign
-          readOnly: true
-        id:
-          type: string
-          example: 7DB65E1D8853D1C8
-          description: specifies the id of the message template
-          default: 7DB65E1D8853D1C8
           readOnly: true
       required:
         - messageTemplateName
@@ -8907,15 +8896,6 @@ components:
               host: api.au.whispir.com
               port: -1
       properties:
-        id:
-          type: string
-          maxLength: 32
-          description: |-
-            The id of the callback. 
-
-            This is the value that should be passed when referring to the callback using the API endpoints
-          example: 4452AC8359535C46
-          readOnly: true
         name:
           type: string
           description: |-
@@ -9372,11 +9352,6 @@ components:
               host: api.au.whispir.com
               port: -1
       properties:
-        id:
-          type: string
-          example: 70F2492146292826
-          description: Specifies the ID for the workspace that has been created
-          readOnly: true
         projectName:
           type: string
           description: Specifies the name of the Workspace to be created.
@@ -9958,11 +9933,6 @@ components:
                     port: -1
             description: List users response object
             properties:
-              id:
-                type: string
-                description: The ID of the user.
-                example: 4DC922649AFE370C
-                readOnly: true
               firstName:
                 type: string
                 description: The first name of the user.
@@ -10070,11 +10040,6 @@ components:
               rel: retrieveEventMessages
               method: GET
       properties:
-        id:
-          type: string
-          description: Id of the event
-          example: 888E0A343770A7D1
-          readOnly: true
         eventLabel:
           type: string
           description: Specifies the name of the label used for the messages sent under this event. This needs to match with the name of the event templates available
@@ -10266,11 +10231,6 @@ components:
         - Custom Lists
       title: Custom List
       properties:
-        id:
-          type: string
-          example: 4B4625BAEB7E4D58
-          description: Specifies the unique ID of the list
-          readOnly: true
         name:
           type: string
           example: Day of Week

@@ -1701,7 +1701,22 @@
       "description": "All operations must include an appropriately named \"operationId\".\r\n\r\nMust end with one of the following values, corresponding to the operation on the resource:\r\n* `Create` - `POST /resource`\r\n* `Retrieve` - `GET /resource/{resourceId}`\r\n* `Update` - `PUT /resource/{resourceId}`\r\n* `Delete` - `DELETE /resource/{resourceId}`\r\n* `List` - `GET /resource`\r\n\r\nAn optional noun prefix describing any sub-resources may be included as appropriate.\r\n\r\n**Valid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"messageCreate\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"webhookCallList\"\r\n}\r\n```\r\n\r\n**Invalid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"getMessage\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"getWebhookCalls\"\r\n}\r\n```",
       "message": "{{error}}"
     },
-    "operation-list-schema-title": {
+    "operation-list-schema-keys": {
+      "given": [
+        "#Operation_List_Schema"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "pattern",
+        "functionOptions": {
+          "match": "Collection$"
+        },
+        "field": "$ref"
+      },
+      "description": "List operation response schema must have key ending with \"Collection\".",
+      "message": "List operation response schema must have key ending with \"Collection\"."
+    },
+    "operation-list-schema-title-duplicate": {
       "given": [
         "#Operation_List_Schema"
       ],
@@ -1715,20 +1730,6 @@
       },
       "description": "List operation response schema must have title ending with \"Collection\".\n\n**Valid Example**\n\n```json\n{\n   \"title\": \"Message Collection\"\n}\n// OR\n{\n   \"title\": \"Webhook Call Collection\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"title\": \"Message List Response\"\n}\n// OR\n{\n   \"title\": \"Webhook Call List\"\n}\n```",
       "message": "List operation response schema must have title ending with \"Collection\"."
-    },
-    "schema-names-pascal-case": {
-      "given": [
-        "$.components.schemas.*~"
-      ],
-      "severity": "error",
-      "then": {
-        "function": "casing",
-        "functionOptions": {
-          "type": "pascal"
-        }
-      },
-      "description": "Schema names MUST be written in PascalCase",
-      "message": "Schema names MUST be written in PascalCase"
     }
   },
   "overrides": [

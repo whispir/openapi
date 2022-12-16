@@ -1054,7 +1054,7 @@ paths:
                     status: '1 to 1 of 1    '
                     link: []
               schema:
-                $ref: '#/components/schemas/MessageStatus'
+                $ref: '#/components/schemas/MessageStatusCollection'
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':
@@ -1180,7 +1180,7 @@ paths:
           content:
             application/vnd.whispir.messageresponse-v1+json:
               schema:
-                $ref: '#/components/schemas/MessageResponse'
+                $ref: '#/components/schemas/MessageResponseCollection'
               examples:
                 Summary:
                   value:
@@ -7138,7 +7138,7 @@ components:
           bool: false
       x-tags:
         - Messages
-    MessageStatus:
+    MessageStatusCollection:
       description: 'The message status object, describing the delivery of the sent message.'
       type: object
       x-examples:
@@ -7457,7 +7457,7 @@ components:
       required:
         - messageresponses
         - link
-    MessageResponse:
+    MessageResponseCollection:
       description: The message response object.
       oneOf:
         - $ref: '#/components/schemas/MessageResponseDetailed'

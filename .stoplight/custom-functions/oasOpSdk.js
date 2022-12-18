@@ -79,31 +79,31 @@ export default createRulesetFunction(
 
       if (operation === 'post' && !sdkOperation.startsWith("create")) {
         results.push({
-          message: '"x-sdkOperation" must start with one of: "create", "retrieve", "update", "delete", or "list", as appropriate.',
+          message: '"x-sdkOperation" must start with: "create".',
           path: ['paths', path, operation, 'x-sdkOperation'],
         });
       } else if (operation === 'put' && !sdkOperation.startsWith("update")) {
         results.push({
-          message: '"x-sdkOperation" must start with one of: "create", "retrieve", "update", "delete", or "list", as appropriate.',
+          message: '"x-sdkOperation" must start with: "update".',
           path: ['paths', path, operation, 'x-sdkOperation'],
         });
       } else if (operation === 'delete' && !sdkOperation.startsWith("delete")) {
         results.push({
-          message: '"x-sdkOperation" must start with one of: "create", "retrieve", "update", "delete", or "list", as appropriate.',
+          message: '"x-sdkOperation" must start with: "delete".',
           path: ['paths', path, operation, 'x-sdkOperation'],
         });
       } else if (operation === 'get' && path.endsWith("}") && !sdkOperation.startsWith("retrieve")) {
         // Paths that end with "}" have an ID as the last path parameter, and therefore refer to retrieving a single resource
         // when paired with a `GET` operation
         results.push({
-          message: '"x-sdkOperation" must start with one of: "create", "retrieve", "update", "delete", or "list", as appropriate.',
+          message: '"x-sdkOperation" must start with: "retrieve".',
           path: ['paths', path, operation, 'x-sdkOperation'],
         });
       } else if (operation === 'get' && !path.endsWith("}") && !sdkOperation.startsWith("list")) {
         // Paths that do not end with "}" have the resource name as the last path part, and therefore refer to retrieving a list of resources
         // when paired with a `GET` operation
         results.push({
-          message: '"x-sdkOperation" must start with one of: "create", "retrieve", "update", "delete", or "list", as appropriate.',
+          message: '"x-sdkOperation" must start with: "list".',
           path: ['paths', path, operation, 'x-sdkOperation'],
         });
       }

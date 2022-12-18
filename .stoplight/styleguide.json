@@ -1,4 +1,5 @@
 {
+  "name": "Platform API",
   "description": "",
   "spectralExtends": [],
   "extends": [
@@ -10,7 +11,32 @@
     "oas3.0",
     "oas3.1"
   ],
-  "aliases": {},
+  "aliases": {
+    "Operation_List_Schema": {
+      "description": "The schema of all operations that list resources, e.g. GET /resources",
+      "name": "Operation_List_Schema",
+      "targets": [
+        {
+          "formats": [
+            "oas3"
+          ],
+          "given": "#Operation_List.responses[?(@property >= 200 && @property < 300)].content[*].schema"
+        }
+      ]
+    },
+    "Operation_List": {
+      "description": "All operations that list resources, e.g. `GET /resources`",
+      "name": "Operation_List",
+      "targets": [
+        {
+          "formats": [
+            "oas3"
+          ],
+          "given": "$.paths[?(!(@property).endsWith('}'))].get"
+        }
+      ]
+    }
+  },
   "rules": {
     "required-all-request-headers": {
       "given": [
@@ -279,7 +305,7 @@
       },
       "name": "operation-sdkOperation-format",
       "description": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names.\n\nMust start with one of the following values, corresponding to the operation on the resource:\n* `create` - `POST /resource`\n* `retrieve` - `GET /resource/{resourceId}`\n* `update` - `PUT /resource/{resourceId}`\n* `delete` - `DELETE /resource/{resourceId}`\n* `list` - `GET /resource`\n\nAn optional noun suffix describing any sub-resources may be included as appropriate.\n\n**Valid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"create\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"listWebhookCalls\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"post\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"getWebhookCalls\"\n}\n```",
-      "message": "Every operation must have an \"x-sdkOperation\" starting with one of \"create\", \"retrieve\", \"update\", \"delete\", or \"list\", as appropriate for the operation on the resource. An optional noun suffixed to describe any sub-resources may be included."
+      "message": "{{error}}"
     },
     "operation-operationId-format": {
       "given": [
@@ -294,7 +320,40 @@
       },
       "name": "operation-operationId-format",
       "description": "All operations must include an appropriately named \"operationId\".\r\n\r\nMust end with one of the following values, corresponding to the operation on the resource:\r\n* `Create` - `POST /resource`\r\n* `Retrieve` - `GET /resource/{resourceId}`\r\n* `Update` - `PUT /resource/{resourceId}`\r\n* `Delete` - `DELETE /resource/{resourceId}`\r\n* `List` - `GET /resource`\r\n\r\nAn optional noun prefix describing any sub-resources may be included as appropriate.\r\n\r\n**Valid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"messageCreate\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"webhookCallList\"\r\n}\r\n```\r\n\r\n**Invalid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"getMessage\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"getWebhookCalls\"\r\n}\r\n```",
-      "message": "Every operation must have an \"operationId\" ending with one of \"Create\", \"Retrieve\", \"Update\", \"Delete\", or \"List\", as appropriate for the operation on the resource. An optional noun prefixed to describe any sub-resources may be included"
+      "message": "{{error}}"
+    },
+    "operation-list-schema-keys": {
+      "given": [
+        "#Operation_List_Schema"
+      ],
+      "severity": "error",
+      "resolved": false,
+      "then": {
+        "function": "pattern",
+        "functionOptions": {
+          "match": "Collection$"
+        },
+        "field": "$ref"
+      },
+      "name": "operation-list-schema-keys",
+      "description": "List operation response schema must have key ending with \"Collection\".",
+      "message": "List operation response schema must have key ending with \"Collection\"."
+    },
+    "operation-list-schema-title": {
+      "given": [
+        "#Operation_List_Schema"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "pattern",
+        "functionOptions": {
+          "match": "Collection$"
+        },
+        "field": "title"
+      },
+      "name": "operation-list-schema-title",
+      "description": "List operation response schema must have title ending with \"Collection\".\n\n**Valid Example**\n\n```json\n{\n   \"title\": \"Message Collection\"\n}\n// OR\n{\n   \"title\": \"Webhook Call Collection\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"title\": \"Message List Response\"\n}\n// OR\n{\n   \"title\": \"Webhook Call List\"\n}\n```",
+      "message": "List operation response schema must have title ending with \"Collection\"."
     }
   },
   "x-embeddedFunctions": [
@@ -302,13 +361,13 @@
       "id": "x1GAhj8zxT02QA0z_QrfL",
       "extendedFrom": "",
       "name": "oasOpIdFormat",
-      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\nimport { isPlainObject } from '@stoplight/json';\n\nfunction isObject(value) {\n  return value !== null && typeof value === 'object';\n}\n\nconst validOperationKeys = ['get', 'post', 'put', 'delete'];\n\nfunction* getAllOperations(paths) {\n  if (!isPlainObject(paths)) {\n    return;\n  }\n\n  const item = {\n    path: '',\n    operation: '',\n    value: null,\n  };\n\n  for (const path of Object.keys(paths)) {\n    const operations = paths[path];\n    if (!isPlainObject(operations)) {\n      continue;\n    }\n\n    item.path = path;\n\n    for (const operation of Object.keys(operations)) {\n      if (!isPlainObject(operations[operation]) || !validOperationKeys.includes(operation)) {\n        continue;\n      }\n\n      item.operation = operation;\n      item.value = operations[operation];\n\n      yield item;\n    }\n  }\n}\n\nexport default createRulesetFunction(\n  {\n    input: null,\n    options: {\n      type: \"object\",\n      additionalProperties: false,\n\n      properties: {\n        exceptions: {\n          type: \"array\",\n\n          items: {\n            type: \"string\"\n          }\n        }\n      }\n    },\n  },\n  function oasOpIdFormat(input, options, context) {\n    if (!isObject(input) || !isObject(input.paths)) return;\n\n    const results = [];\n\n    const { paths } = input;\n\n    for (const { path, operation } of getAllOperations(paths)) {\n      const pathValue = paths[path];\n\n      if (!isObject(pathValue)) continue;\n\n      const operationValue = pathValue[operation];\n\n      if (!isObject(operationValue) || !('operationId' in operationValue)) {\n        continue;\n      }\n\n      const { operationId } = operationValue;\n\n      if (operation === 'post' && !operationId.endsWith(\"Create\")) {\n        results.push({\n          message: '\"operationId\" must end with one of: \"Create\", \"Retrieve\", \"Update\", \"Delete\", or \"List\", as appropriate.',\n          path: ['paths', path, operation, 'operationId'],\n        });\n      } else if (operation === 'put' && !operationId.endsWith(\"Update\")) {\n        results.push({\n          message: '\"operationId\" must end with one of: \"Create\", \"Retrieve\", \"Update\", \"Delete\", or \"List\", as appropriate.',\n          path: ['paths', path, operation, 'operationId'],\n        });\n      } else if (operation === 'delete' && !operationId.endsWith(\"Delete\")) {\n        results.push({\n          message: '\"operationId\" must end with one of: \"Create\", \"Retrieve\", \"Update\", \"Delete\", or \"List\", as appropriate.',\n          path: ['paths', path, operation, 'operationId'],\n        });\n      } else if (operation === 'get' && path.endsWith(\"}\") && !operationId.endsWith(\"Retrieve\")) {\n        // Paths that end with \"}\" have an ID as the last path parameter, and therefore refer to retrieving a single resource\n        // when paired with a `GET` operation\n        results.push({\n          message: '\"operationId\" must end with one of: \"Create\", \"Retrieve\", \"Update\", \"Delete\", or \"List\", as appropriate.',\n          path: ['paths', path, operation, 'operationId'],\n        });\n        // Paths that do not end with \"}\" have the resource name as the last path part, and therefore refer to retrieving a list of resources\n        // when paired with a `GET` operation\n      } else if (operation === 'get' && !path.endsWith(\"}\") && !operationId.endsWith(\"List\")) {\n        results.push({\n          message: '\"operationId\" must end with one of: \"Create\", \"Retrieve\", \"Update\", \"Delete\", or \"List\", as appropriate.',\n          path: ['paths', path, operation, 'operationId'],\n        });\n      }\n    }\n\n    return results;\n  },\n);"
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\nimport { isPlainObject } from '@stoplight/json';\n\nfunction isObject(value) {\n  return value !== null && typeof value === 'object';\n}\n\nconst validOperationKeys = ['get', 'post', 'put', 'delete'];\nconst CAMEL_CASE_REGEX = new RegExp(/^[a-z]+([A-Z][a-z]+)+$/);\n\nfunction isCamelCase(str) {\n  return CAMEL_CASE_REGEX.test(str);\n}\n\nfunction* getAllOperations(paths) {\n  if (!isPlainObject(paths)) {\n    return;\n  }\n\n  const item = {\n    path: '',\n    operation: '',\n    value: null,\n  };\n\n  for (const path of Object.keys(paths)) {\n    const operations = paths[path];\n    if (!isPlainObject(operations)) {\n      continue;\n    }\n\n    item.path = path;\n\n    for (const operation of Object.keys(operations)) {\n      if (!isPlainObject(operations[operation]) || !validOperationKeys.includes(operation)) {\n        continue;\n      }\n\n      item.operation = operation;\n      item.value = operations[operation];\n\n      yield item;\n    }\n  }\n}\n\nexport default createRulesetFunction(\n  {\n    input: null,\n    options: {\n      type: \"object\",\n      additionalProperties: false,\n\n      properties: {\n        exceptions: {\n          type: \"array\",\n\n          items: {\n            type: \"string\"\n          }\n        }\n      }\n    },\n  },\n  function oasOpIdFormat(input, options, context) {\n    if (!isObject(input) || !isObject(input.paths)) return;\n\n    const results = [];\n\n    const { paths } = input;\n\n    for (const { path, operation } of getAllOperations(paths)) {\n      const pathValue = paths[path];\n\n      if (!isObject(pathValue)) continue;\n\n      const operationValue = pathValue[operation];\n\n      if (!isObject(operationValue) || !('operationId' in operationValue)) {\n        continue;\n      }\n\n      const { operationId } = operationValue;\n      \n      if (!isCamelCase(operationId)) {\n        results.push({\n          message: '\"operationId\" must be camelCased.',\n          path: ['paths', path, operation, 'operationId'],\n        });\n      }\n\n      if (operation === 'post' && !operationId.endsWith(\"Create\")) {\n        results.push({\n          message: '\"operationId\" must end with \"Create\".',\n          path: ['paths', path, operation, 'operationId'],\n        });\n      } else if (operation === 'put' && !operationId.endsWith(\"Update\")) {\n        results.push({\n          message: '\"operationId\" must end with \"Update\".',\n          path: ['paths', path, operation, 'operationId'],\n        });\n      } else if (operation === 'delete' && !operationId.endsWith(\"Delete\")) {\n        results.push({\n          message: '\"operationId\" must end with \"Delete\".',\n          path: ['paths', path, operation, 'operationId'],\n        });\n      } else if (operation === 'get' && path.endsWith(\"}\") && !operationId.endsWith(\"Retrieve\")) {\n        // Paths that end with \"}\" have an ID as the last path parameter, and therefore refer to retrieving a single resource\n        // when paired with a `GET` operation\n        results.push({\n          message: '\"operationId\" must end with \"Retrieve\".',\n          path: ['paths', path, operation, 'operationId'],\n        });\n        // Paths that do not end with \"}\" have the resource name as the last path part, and therefore refer to retrieving a list of resources\n        // when paired with a `GET` operation\n      } else if (operation === 'get' && !path.endsWith(\"}\") && !operationId.endsWith(\"List\")) {\n        results.push({\n          message: '\"operationId\" must end with \"List\".',\n          path: ['paths', path, operation, 'operationId'],\n        });\n      }\n    }\n\n    return results;\n  },\n);"
     },
     {
       "id": "H8m8NJ2B1IbeKXBh3XBsE",
       "extendedFrom": "",
       "name": "oasOpSdk",
-      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\nimport { isPlainObject } from '@stoplight/json';\n\nfunction isObject(value) {\n  return value !== null && typeof value === 'object';\n}\n\nconst validOperationKeys = ['get', 'post', 'put', 'delete'];\n\nfunction* getAllOperations(paths) {\n  if (!isPlainObject(paths)) {\n    return;\n  }\n\n  const item = {\n    path: '',\n    operation: '',\n    value: null,\n  };\n\n  for (const path of Object.keys(paths)) {\n    const operations = paths[path];\n    if (!isPlainObject(operations)) {\n      continue;\n    }\n\n    item.path = path;\n\n    for (const operation of Object.keys(operations)) {\n      if (!isPlainObject(operations[operation]) || !validOperationKeys.includes(operation)) {\n        continue;\n      }\n\n      item.operation = operation;\n      item.value = operations[operation];\n\n      yield item;\n    }\n  }\n}\n\nexport default createRulesetFunction(\n  {\n    input: null,\n    options: {\n      type: \"object\",\n      additionalProperties: false,\n\n      properties: {\n        exceptions: {\n          type: \"array\",\n\n          items: {\n            type: \"string\"\n          }\n        }\n      }\n    },\n  },\n  function oasOpSdk(input, options, context) {\n    if (!isObject(input) || !isObject(input.paths)) return;\n\n    const results = [];\n\n    const { paths } = input;\n\n    for (const { path, operation } of getAllOperations(paths)) {\n      const pathValue = paths[path];\n\n      if (!isObject(pathValue)) continue;\n\n      const operationValue = pathValue[operation];\n\n      if (!isObject(operationValue) || !('x-sdkOperation' in operationValue)) {\n        continue;\n      }\n\n      const sdkOperation = operationValue['x-sdkOperation'];\n\n      if (operation === 'post' && !sdkOperation.startsWith(\"create\")) {\n        results.push({\n          message: '\"x-sdkOperation\" must start with one of: \"create\", \"retrieve\", \"update\", \"delete\", or \"list\", as appropriate.',\n          path: ['paths', path, operation, 'x-sdkOperation'],\n        });\n      } else if (operation === 'put' && !sdkOperation.startsWith(\"update\")) {\n        results.push({\n          message: '\"x-sdkOperation\" must start with one of: \"create\", \"retrieve\", \"update\", \"delete\", or \"list\", as appropriate.',\n          path: ['paths', path, operation, 'x-sdkOperation'],\n        });\n      } else if (operation === 'delete' && !sdkOperation.startsWith(\"delete\")) {\n        results.push({\n          message: '\"x-sdkOperation\" must start with one of: \"create\", \"retrieve\", \"update\", \"delete\", or \"list\", as appropriate.',\n          path: ['paths', path, operation, 'x-sdkOperation'],\n        });\n      } else if (operation === 'get' && path.endsWith(\"}\") && !sdkOperation.startsWith(\"retrieve\")) {\n        // Paths that end with \"}\" have an ID as the last path parameter, and therefore refer to retrieving a single resource\n        // when paired with a `GET` operation\n        results.push({\n          message: '\"x-sdkOperation\" must start with one of: \"create\", \"retrieve\", \"update\", \"delete\", or \"list\", as appropriate.',\n          path: ['paths', path, operation, 'x-sdkOperation'],\n        });\n      } else if (operation === 'get' && !path.endsWith(\"}\") && !sdkOperation.startsWith(\"list\")) {\n        // Paths that do not end with \"}\" have the resource name as the last path part, and therefore refer to retrieving a list of resources\n        // when paired with a `GET` operation\n        results.push({\n          message: '\"x-sdkOperation\" must start with one of: \"create\", \"retrieve\", \"update\", \"delete\", or \"list\", as appropriate.',\n          path: ['paths', path, operation, 'x-sdkOperation'],\n        });\n      }\n    }\n\n    return results;\n  },\n);"
+      "content": "import { createRulesetFunction } from '@stoplight/spectral-core';\nimport { isPlainObject } from '@stoplight/json';\n\nfunction isObject(value) {\n  return value !== null && typeof value === 'object';\n}\n\nconst validOperationKeys = ['get', 'post', 'put', 'delete'];\n\nfunction* getAllOperations(paths) {\n  if (!isPlainObject(paths)) {\n    return;\n  }\n\n  const item = {\n    path: '',\n    operation: '',\n    value: null,\n  };\n\n  for (const path of Object.keys(paths)) {\n    const operations = paths[path];\n    if (!isPlainObject(operations)) {\n      continue;\n    }\n\n    item.path = path;\n\n    for (const operation of Object.keys(operations)) {\n      if (!isPlainObject(operations[operation]) || !validOperationKeys.includes(operation)) {\n        continue;\n      }\n\n      item.operation = operation;\n      item.value = operations[operation];\n\n      yield item;\n    }\n  }\n}\n\nexport default createRulesetFunction(\n  {\n    input: null,\n    options: {\n      type: \"object\",\n      additionalProperties: false,\n\n      properties: {\n        exceptions: {\n          type: \"array\",\n\n          items: {\n            type: \"string\"\n          }\n        }\n      }\n    },\n  },\n  function oasOpSdk(input, options, context) {\n    if (!isObject(input) || !isObject(input.paths)) return;\n\n    const results = [];\n\n    const { paths } = input;\n\n    for (const { path, operation } of getAllOperations(paths)) {\n      const pathValue = paths[path];\n\n      if (!isObject(pathValue)) continue;\n\n      const operationValue = pathValue[operation];\n\n      if (!isObject(operationValue) || !('x-sdkOperation' in operationValue)) {\n        continue;\n      }\n\n      const sdkOperation = operationValue['x-sdkOperation'];\n\n      if (operation === 'post' && !sdkOperation.startsWith(\"create\")) {\n        results.push({\n          message: '\"x-sdkOperation\" must start with: \"create\".',\n          path: ['paths', path, operation, 'x-sdkOperation'],\n        });\n      } else if (operation === 'put' && !sdkOperation.startsWith(\"update\")) {\n        results.push({\n          message: '\"x-sdkOperation\" must start with: \"update\".',\n          path: ['paths', path, operation, 'x-sdkOperation'],\n        });\n      } else if (operation === 'delete' && !sdkOperation.startsWith(\"delete\")) {\n        results.push({\n          message: '\"x-sdkOperation\" must start with: \"delete\".',\n          path: ['paths', path, operation, 'x-sdkOperation'],\n        });\n      } else if (operation === 'get' && path.endsWith(\"}\") && !sdkOperation.startsWith(\"retrieve\")) {\n        // Paths that end with \"}\" have an ID as the last path parameter, and therefore refer to retrieving a single resource\n        // when paired with a `GET` operation\n        results.push({\n          message: '\"x-sdkOperation\" must start with: \"retrieve\".',\n          path: ['paths', path, operation, 'x-sdkOperation'],\n        });\n      } else if (operation === 'get' && !path.endsWith(\"}\") && !sdkOperation.startsWith(\"list\")) {\n        // Paths that do not end with \"}\" have the resource name as the last path part, and therefore refer to retrieving a list of resources\n        // when paired with a `GET` operation\n        results.push({\n          message: '\"x-sdkOperation\" must start with: \"list\".',\n          path: ['paths', path, operation, 'x-sdkOperation'],\n        });\n      }\n    }\n\n    return results;\n  },\n);"
     }
   ],
   "extendedStyleguides": [

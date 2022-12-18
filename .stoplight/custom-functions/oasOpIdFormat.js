@@ -6,6 +6,11 @@ function isObject(value) {
 }
 
 const validOperationKeys = ['get', 'post', 'put', 'delete'];
+const CAMEL_CASE_REGEX = new RegExp(/^[a-z]+([A-Z][a-z]+)+$/);
+
+function isCamelCase(str) {
+  return CAMEL_CASE_REGEX.test(str);
+}
 
 function* getAllOperations(paths) {
   if (!isPlainObject(paths)) {
@@ -76,34 +81,41 @@ export default createRulesetFunction(
       }
 
       const { operationId } = operationValue;
+      
+      if (!isCamelCase(operationId)) {
+        results.push({
+          message: '"operationId" must be camelCased.',
+          path: ['paths', path, operation, 'operationId'],
+        });
+      }
 
       if (operation === 'post' && !operationId.endsWith("Create")) {
         results.push({
-          message: '"operationId" must end with one of: "Create", "Retrieve", "Update", "Delete", or "List", as appropriate.',
+          message: '"operationId" must end with "Create".',
           path: ['paths', path, operation, 'operationId'],
         });
       } else if (operation === 'put' && !operationId.endsWith("Update")) {
         results.push({
-          message: '"operationId" must end with one of: "Create", "Retrieve", "Update", "Delete", or "List", as appropriate.',
+          message: '"operationId" must end with "Update".',
           path: ['paths', path, operation, 'operationId'],
         });
       } else if (operation === 'delete' && !operationId.endsWith("Delete")) {
         results.push({
-          message: '"operationId" must end with one of: "Create", "Retrieve", "Update", "Delete", or "List", as appropriate.',
+          message: '"operationId" must end with "Delete".',
           path: ['paths', path, operation, 'operationId'],
         });
       } else if (operation === 'get' && path.endsWith("}") && !operationId.endsWith("Retrieve")) {
         // Paths that end with "}" have an ID as the last path parameter, and therefore refer to retrieving a single resource
         // when paired with a `GET` operation
         results.push({
-          message: '"operationId" must end with one of: "Create", "Retrieve", "Update", "Delete", or "List", as appropriate.',
+          message: '"operationId" must end with "Retrieve".',
           path: ['paths', path, operation, 'operationId'],
         });
         // Paths that do not end with "}" have the resource name as the last path part, and therefore refer to retrieving a list of resources
         // when paired with a `GET` operation
       } else if (operation === 'get' && !path.endsWith("}") && !operationId.endsWith("List")) {
         results.push({
-          message: '"operationId" must end with one of: "Create", "Retrieve", "Update", "Delete", or "List", as appropriate.',
+          message: '"operationId" must end with "List".',
           path: ['paths', path, operation, 'operationId'],
         });
       }

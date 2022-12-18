@@ -7426,6 +7426,8 @@ components:
           mobile: '61400400400'
           voice: '61400400400'
           email: support@whispir.com
+      x-tags:
+        - Messages
     Response:
       type: object
       title: Response
@@ -7471,6 +7473,8 @@ components:
           content: 'OK, got it. Thanks.'
           acknowledged: '28/09/12 08:48'
           channel: sms
+      x-tags:
+        - Messages
     MessageResponseDetailed:
       title: Message Response Detailed
       description: The detailed message response object.
@@ -8501,36 +8505,140 @@ components:
       x-tags:
         - Contacts
     DistributionList:
-      description: Either a static or dynamic distribution list
-      oneOf:
-        - $ref: '#/components/schemas/DistributionListStatic'
-        - $ref: '#/components/schemas/DistributionListDynamic'
-      x-examples:
-        Example Static DL:
-          value:
-            id: B27ABC59D8E98A9B
-            name: My Distribution List
-            description: string
-            access: Open
-            visibility: Public
-            contactIds: string
-            userIds: string
-            distListIds: string
-            type: static
-        Example Dyanmic DL:
-          value:
-            id: B27ABC9D8E98A9B
-            name: My Distribution List
-            description: ''
-            access: Open
-            visibility: Public
-            contactIds: ''
-            userIds: ''
-            distListIds: ''
-            type: static
-      title: Distribution List
+      type: object
       x-tags:
         - Distribution Lists
+      title: Static Distribution List
+      x-examples:
+        Static:
+          name: My Distribution List
+          description: string
+          access: Open
+          visibility: Public
+          contactIds: string
+          userIds: string
+          distListIds: string
+          type: static
+        Dynamic:
+          name: My Distribution List
+          description: My Distribution list
+          access: Open
+          entityType: Contact
+          visibility: Public
+          rules: '[{"ruleFilter" : "division", "ruleFilterActualName" : "Division", "ruleContent" : "sales"}]'
+      description: 'Static Distribution Lists are manually managed and maintained. They can include Contacts, Users and other Distribution Lists'
+      properties:
+        id:
+          type: string
+          description: |
+            ID of the distribution list
+          example: 5AFEB61102963D7
+          readOnly: true
+        name:
+          type: string
+          example: My Distribution List
+          description: 'Specifies the name of the distribution list. This has to be unique, and should not contain any special characters (except spaces) in it'
+        mri:
+          type: string
+          description: Specifies the Message Resource Identifier of the Distribution List in Whispir
+          example: My_Distribution_List.company_name@list.company.whispir.sg
+          readOnly: true
+        description:
+          type: string
+          description: Specifies a description for other users to see what this distribution list should be used for.
+          example: My Distribution list
+        memberCount:
+          type: string
+          example: '4'
+          description: Total number of contacts in a Distribution List
+        access:
+          type: string
+          example: Open
+          description: |-
+            Allows you to specify the access type for this DL
+
+            - Open: anyone can subscribe to this distribution list via the Whispir Contact Portal
+            - ByApproval: anyone can subscribe using the Whispir Contact Portal. However, they are not officially on the list until their access is approved
+            - Restricted: the distribution list is not visible in the Whispir Contact Portal
+        visibility:
+          type: string
+          example: Public
+          description: |-
+            Allows you to specify the visibility for this DL
+
+            - Public: Any user or active contact in any workspace can map themselves to this DL in the Whispir Contact Portal
+            - Private: Only users or active contacts in the current workspace can map themselves to this DL
+        contactIds:
+          type: string
+          description: Comma separated list of Contacts to be associated to this DL. This information can be provided at the time of the DL creation or updated later via a PUT request
+          example: 3A21DCC420494A48
+          writeOnly: true
+        userIds:
+          type: string
+          description: Comma separated list of userIds who can manage this DL. This information can be provided at the time of the DL creation or also later updated via a PUT request
+          example: 3A21DCC420494A48
+          writeOnly: true
+        distListIds:
+          type: string
+          description: Comma separated list of Distribution List IDs that can be nested under this DL. This information can be provided at the time of the DL creation or later updated via a PUT request
+          example: '3A21DCC420494A48, 07172DC9AC3E97A75B5A41536C132CA0'
+        type:
+          type: string
+          description: |-
+            Allows you to specify the type for this DL
+
+            - Static: The contacts on the list don’t change unless you manually add or remove them (unlike a dynamic DL)
+
+            NOTE: "static" is also the default value for this parameter when this field is omitted
+          default: static
+          enum:
+            - static
+            - dynamic
+          writeOnly: true
+        distlistdetails:
+          type: array
+          description: Details of Contacts included in the Distribution List
+          items:
+            type: object
+            title: Distribution List Contacts
+            properties:
+              id:
+                type: string
+                example: 123ADAB420493B83
+                description: Id of contact
+                readOnly: true
+              name:
+                type: string
+                example: John Smith
+                description: Name of Contact
+                readOnly: true
+              type:
+                type: string
+                example: User
+                description: Type of Contact
+                readOnly: true
+              link:
+                $ref: '#/components/schemas/Links'
+          readOnly: true
+        rules:
+          type: string
+          description: |-
+            Present when `type` is `dynamic`.
+
+            The array that specify the rules that should be applied on the entityType values to pick the appropriate contacts at the moment of usage [not creation]
+
+            Each rule is an object with 3 keys in it. At least one rule must be specified when creating a Dynamic Distribution List
+
+            - ruleFilter: contains any of the contact profile elements that are available for searching. For example, division, department, role. More details on the values for this field can be found below [required]
+            - ruleFilterActualName: Contains the matching string to be compared for the DL. More details on the the values for this field can be found below [required]
+            - ruleContent: Contains the matching string to be compared with the contact element for being a part of the DL [required]
+          example: '[{"ruleFilter" : "division", "ruleFilterActualName" : "Division", "ruleContent" : "sales"}]'
+        link:
+          $ref: '#/components/schemas/Links'
+      required:
+        - name
+      x-stoplight:
+        id: 28a19b7a35a13
     DistributionListCollection:
       type: object
       description: list of distribution lists
@@ -8585,224 +8693,6 @@ components:
       title: Distribution List Collection
       x-tags:
         - Distribution Lists
-    DistributionListStatic:
-      type: object
-      x-tags:
-        - Distribution Lists
-      title: Static Distribution List
-      x-examples:
-        Example Request:
-          name: My Distribution List
-          description: string
-          access: Open
-          visibility: Public
-          contactIds: string
-          userIds: string
-          distListIds: string
-          type: static
-        Example Response:
-          id: 5AFEB61102963D7
-          name: My Distribution List
-          mri: My_Distribution_List.company_name@list.company.whispir.sg
-          description: string
-          memberCount: '4'
-          access: Open
-          visibility: Public
-          link:
-            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-              rel: self
-              method: GET
-              host: api.au.whispir.com
-              port: -1
-      description: 'Static Distribution Lists are manually managed and maintained. They can include Contacts, Users and other Distribution Lists'
-      properties:
-        id:
-          type: string
-          description: |
-            ID of the distribution list
-          example: 5AFEB61102963D7
-          readOnly: true
-        name:
-          type: string
-          example: My Distribution List
-          description: 'Specifies the name of the distribution list. This has to be unique, and should not contain any special characters (except spaces) in it'
-        mri:
-          type: string
-          description: Specifies the Message Resource Identifier of the Distribution List in Whispir
-          example: My_Distribution_List.company_name@list.company.whispir.sg
-          readOnly: true
-        description:
-          type: string
-          description: Specifies a description for other users to see what this distribution list should be used for.
-          example: My Distribution list
-        memberCount:
-          type: string
-          example: '4'
-          description: Total number of contacts in a Distribution List
-        access:
-          type: string
-          example: Open
-          description: |-
-            Allows you to specify the access type for this DL
-
-            - Open: anyone can subscribe to this distribution list via the Whispir Contact Portal
-            - ByApproval: anyone can subscribe using the Whispir Contact Portal. However, they are not officially on the list until their access is approved
-            - Restricted: the distribution list is not visible in the Whispir Contact Portal
-        visibility:
-          type: string
-          example: Public
-          description: |-
-            Allows you to specify the visibility for this DL
-
-            - Public: Any user or active contact in any workspace can map themselves to this DL in the Whispir Contact Portal
-            - Private: Only users or active contacts in the current workspace can map themselves to this DL
-        link:
-          $ref: '#/components/schemas/Links'
-        contactIds:
-          type: string
-          description: Comma separated list of Contacts to be associated to this DL. This information can be provided at the time of the DL creation or updated later via a PUT request
-          example: 3A21DCC420494A48
-          writeOnly: true
-        userIds:
-          type: string
-          description: Comma separated list of userIds who can manage this DL. This information can be provided at the time of the DL creation or also later updated via a PUT request
-          example: 3A21DCC420494A48
-          writeOnly: true
-        distListIds:
-          type: string
-          description: Comma separated list of Distribution List IDs that can be nested under this DL. This information can be provided at the time of the DL creation or later updated via a PUT request
-          example: '3A21DCC420494A48, 07172DC9AC3E97A75B5A41536C132CA0'
-        type:
-          type: string
-          description: |-
-            Allows you to specify the type for this DL
-
-            - Static: The contacts on the list don’t change unless you manually add or remove them (unlike a dynamic DL)
-
-            NOTE: "static" is also the default value for this parameter when this field is omitted
-          example: static
-          default: static
-          writeOnly: true
-        distlistdetails:
-          type: array
-          description: Details of Contacts included in the Distribution List
-          items:
-            type: object
-            title: Distribution List Contacts
-            properties:
-              id:
-                type: string
-                example: 123ADAB420493B83
-                description: Id of contact
-                readOnly: true
-              name:
-                type: string
-                example: John Smith
-                description: Name of Contact
-                readOnly: true
-              type:
-                type: string
-                example: User
-                description: Type of Contact
-                readOnly: true
-              link:
-                $ref: '#/components/schemas/Links'
-          readOnly: true
-      required:
-        - name
-    DistributionListDynamic:
-      x-tags:
-        - Distribution Lists
-      title: Dynamic Distribution List
-      x-examples:
-        Example Request:
-          name: My Distribution List
-          description: My Distribution list
-          access: Open
-          entityType: Contact
-          visibility: Public
-          rules: '[{"ruleFilter" : "division", "ruleFilterActualName" : "Division", "ruleContent" : "sales"}]'
-          link: null
-        Example Response:
-          name: My Dynamic DistributionList
-          description: My Distribution list
-          access: Open
-          type: dynamic
-          entityType: Contact
-          visibility: Public
-          rules:
-            - ruleFilter: role1
-              ruleFilterActualName: Role
-              ruleContent: Product
-          link:
-            - uri: 'https://api.au.whispir.com/workspaces/5E89F4525738D415/distributionlists/CFEC689151534251'
-              rel: self
-              method: GET
-              host: api.au.whispir.com
-              port: -1
-      description: Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don’t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List
-      type: object
-      properties:
-        name:
-          example: My Distribution List
-          description: 'Specifies the name of the distribution list. This has to be unique, and should not contain any special characters (except spaces) in it'
-          type: string
-        description:
-          type: string
-          description: Specifies a description for other users to see what this distribution list should be used for.
-          example: My Distribution list
-        access:
-          type: string
-          example: Open
-          description: |-
-            Allows you to specify the access type for this DL
-
-            - Open: anyone can subscribe to this distribution list via the Whispir Contact Portal
-            - ByApproval: anyone can subscribe using the Whispir Contact Portal. However, they are not officially on the list until their access is approved
-            - Restricted: the distribution list is not visible in the Whispir Contact Portal
-        type:
-          type: string
-          description: |-
-            Allows you to specify the type for this DL
-
-            - Static: The contacts on the list don’t change unless you manually add or remove them (unlike a dynamic DL)
-
-            NOTE: "static" is also the default value for this parameter when this field is omitted
-          example: static
-          default: static
-          writeOnly: true
-        entityType:
-          type: string
-          description: The value is currently strictly limited to "contact"
-          example: Contact
-        visibility:
-          type: string
-          example: Public
-          description: |-
-            Allows you to specify the visibility for this DL
-
-            - Public: Any user or active contact in any workspace can map themselves to this DL in the Whispir Contact Portal
-            - Private: Only users or active contacts in the current workspace can map themselves to this DL
-        rules:
-          type: string
-          description: |-
-            The array that specify the rules that should be applied on the entityType values to pick the appropriate contacts at the moment of usage [not creation]
-
-            Each rule is an object with 3 keys in it. At least one rule must be specified when creating a Dynamic Distribution List
-
-            - ruleFilter: contains any of the contact profile elements that are available for searching. For example, division, department, role. More details on the values for this field can be found below [required]
-            - ruleFilterActualName: Contains the matching string to be compared for the DL. More details on the the values for this field can be found below [required]
-            - ruleContent: Contains the matching string to be compared with the contact element for being a part of the DL [required]
-          example: '[{"ruleFilter" : "division", "ruleFilterActualName" : "Division", "ruleContent" : "sales"}]'
-        link:
-          $ref: '#/components/schemas/Links'
-      required:
-        - name
-        - access
-        - type
-        - entityType
-        - visibility
-        - rules
     Scenario:
       type: object
       x-tags:

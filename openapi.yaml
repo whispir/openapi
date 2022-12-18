@@ -7207,6 +7207,51 @@ components:
                 type: string
                 description: The message destination
                 example: '61400400400'
+      x-examples:
+        Summary:
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+          categories:
+            - name: Sent
+              recipientCount: 0
+              percentageTotal: 0.0%
+            - name: Pending
+              recipientCount: 0
+              percentageTotal: 0.0%
+            - name: Received
+              recipientCount: 1
+              percentageTotal: 100.0%
+            - name: Acknowledged
+              recipientCount: 0
+              percentageTotal: 0.0%
+            - name: Undeliverable
+              recipientCount: 0
+              percentageTotal: 0.0%
+        Detailed:
+          name: '61400400400'
+          info: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
+          link:
+            - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messagestatus?view=detailed'
+              rel: self
+              method: GET
+              host: api.au.whispir.com
+              port: -1
+          status:
+            - type: email
+              status: ''
+              destination: ''
+            - type: sms
+              status: DELIVRD
+              destination: '61400400400'
+              sentTimestamp: 1647466923000
+              receivedTimestamp: 1647466931000
+            - type: voice
+              status: ''
+              destination: ''
     MessageStatusCollection:
       description: 'The message status object, describing the delivery of the sent message.'
       type: object
@@ -7265,7 +7310,10 @@ components:
         - Messages
       properties:
         messageStatuses:
-          $ref: '#/components/schemas/MessageStatus'
+          description: The message statuses.
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageStatus'
         link:
           $ref: '#/components/schemas/Link'
         status:

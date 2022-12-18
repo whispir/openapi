@@ -6678,17 +6678,7 @@ components:
           default: text/plain
           description: The email Message content type.
         resources:
-          type: object
-          description: The resources to attach to the email Message.
-          title: Email Resources
-          properties:
-            attachments:
-              description: A list of attachments to attach to the email Message.
-              type: array
-              uniqueItems: false
-              items:
-                $ref: '#/components/schemas/Attachment'
-          writeOnly: true
+          $ref: '#/components/schemas/Attachments'
       required:
         - body
     Voice:
@@ -6731,6 +6721,11 @@ components:
         ### WAV files requirements
 
         WAV files can be used in place of Text-To-Speech to provide a custom `header` and `body`.
+
+        | Voice field    | attachmentDesc |
+        | -------------- |--------------- |
+        | header         | `"voiceintro.wav"` |
+        | body           | `"voicebody.wav"` |
 
         Before a WAV file can be used for the Voice module, it needs to conform to certain criteria:
 
@@ -6798,23 +6793,7 @@ components:
             - ''
           readOnly: true
         resources:
-          type: object
-          title: Voice Resources
-          description: Provides a configuration object for specifying custom audio for the voice header and body.
-          properties:
-            attachment:
-              type: array
-              description: |-
-                The header and body attachments containing WAV files. Read the following section for configuring each voice field attachment:
-
-                In addition to the parameters already specified for the TTS Voice calls, each attached WAV file must have the `attachmentDesc` named these specific values, to override the TTS voice:
-
-                | Voice field    | attachmentDesc |
-                | -------------- |--------------- |
-                | header         | `"voiceintro.wav"` |
-                | body           | `"voicebody.wav"` |
-              items:
-                $ref: '#/components/schemas/Attachment'
+          $ref: '#/components/schemas/Attachments'
       required:
         - body
         - type
@@ -7045,36 +7024,52 @@ components:
               type: string
               description: The name of the alias configured to modify the message sender.
               example: Marketing
-    Attachment:
+    Attachments:
       type: object
-      description: |-
-        Attachments can be of any type [e.g. PDF, images and documents], and the maximum size of all attached files combined is 10 MB
-
-        Attachments must be provided in the payload of the message. URLs can be referenced in the email but will not be added as message attachments.
-      x-examples:
-        JSON:
-          attachmentName: sample.json
-          attachmentDesc: Sample
-          derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
-      title: Attachment
+      description: The resources to attach to the Message.
+      title: Attachments
       properties:
-        attachmentName:
-          type: string
-          description: 'The name of the attachment, including the extension.'
-          example: TestIcon.png
-        derefUri:
-          type: string
-          description: The Base64 encoded value for the email attachment.
-          example: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
-        attachmentDesc:
-          type: string
-          description: A description for the attachment.
-          example: My photo
-      required:
-        - attachmentName
-        - derefUri
+        attachments:
+          description: A list of attachments to attach to the Message.
+          type: array
+          uniqueItems: false
+          items:
+            type: object
+            description: |-
+              Attachments can be of any type [e.g. PDF, images and documents], and the maximum size of all attached files combined is 10 MB
+
+              Attachments must be provided in the payload of the message. URLs can be referenced in the email but will not be added as message attachments.
+            title: Attachment
+            properties:
+              attachmentName:
+                type: string
+                description: 'The name of the attachment, including the extension.'
+                example: TestIcon.png
+              derefUri:
+                type: string
+                description: The Base64 encoded value for the email attachment.
+                example: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+              attachmentDesc:
+                type: string
+                description: A description for the attachment.
+                example: My photo
+            required:
+              - attachmentName
+              - derefUri
+      writeOnly: true
       x-tags:
         - Messages
+      x-examples:
+        Image:
+          attachments:
+            - attachmentName: TestIcon.png
+              derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+              attachmentDesc: My photo
+        JSON:
+          attachments:
+            - attachmentName: sample.json
+              attachmentDesc: Sample
+              derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
     DeliveryReceipt:
       title: Delivery Receipt
       description: A fixed object structure used by for Whispir internally for tracking purposes.

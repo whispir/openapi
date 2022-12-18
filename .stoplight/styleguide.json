@@ -339,7 +339,7 @@
       "description": "List operation response schema must have key ending with \"Collection\".",
       "message": "List operation response schema must have key ending with \"Collection\"."
     },
-    "operation-list-schema-title-duplicate": {
+    "operation-list-schema-title": {
       "given": [
         "#Operation_List_Schema"
       ],
@@ -351,7 +351,7 @@
         },
         "field": "title"
       },
-      "name": "operation-list-schema-title-duplicate",
+      "name": "operation-list-schema-title",
       "description": "List operation response schema must have title ending with \"Collection\".\n\n**Valid Example**\n\n```json\n{\n   \"title\": \"Message Collection\"\n}\n// OR\n{\n   \"title\": \"Webhook Call Collection\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"title\": \"Message List Response\"\n}\n// OR\n{\n   \"title\": \"Webhook Call List\"\n}\n```",
       "message": "List operation response schema must have title ending with \"Collection\"."
     }

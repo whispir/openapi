@@ -2960,7 +2960,7 @@ paths:
               - deleteAll
           in: query
           name: action
-          description: "The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it's triggered. **Use the action only when you're definitely sure you want to delete the contact from all workspaces**"
+          description: 'The API call involves passing an `action=deleteAll` query parameter. Once this action is triggered, all the contact references in all workspaces for a given `contact_id` are deleted asynchronously. There is no way to stop the process once it’s triggered. **Use the action only when you’re definitely sure you want to delete the contact from all workspaces**'
       responses:
         '204':
           description: No Content

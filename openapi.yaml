@@ -8745,7 +8745,7 @@ components:
               method: GET
               host: api.au.whispir.com
               port: -1
-      description: "Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don't need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List"
+      description: Dynamic Distribution Lists are lists that are updated based on rules to automatically determine and update the members. For this reason - unlike the Static Distribution Lists - we don’t need to specify any members because only the rule[s] will determine the members of a Dynamic Distribution List
       type: object
       properties:
         name:

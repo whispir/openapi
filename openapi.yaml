@@ -7138,6 +7138,75 @@ components:
           bool: false
       x-tags:
         - Messages
+    MessageStatus:
+      type: object
+      title: Message Status
+      x-tags:
+        - Messages
+      properties:
+        link:
+          $ref: '#/components/schemas/Link'
+        categories:
+          type: array
+          uniqueItems: true
+          minItems: 5
+          maxItems: 5
+          description: Present when `view` is `summary`.
+          items:
+            type: object
+            title: Delivery Category
+            additionalProperties: false
+            properties:
+              name:
+                description: The delivery status of the message.
+                type: string
+                enum:
+                  - Sent
+                  - Pending
+                  - Received
+                  - Acknowledged
+                  - Undeliverable
+              recipientCount:
+                description: The number of recipients with the given `name` status.
+                type: number
+                example: 1
+              percentageTotal:
+                description: The percentage of recipients with the given `name` status.
+                type: string
+                example: 100.0%
+        name:
+          type: string
+          example: '61400400400'
+          description: Present when `view` is `detailed`.
+        info:
+          type: string
+          example: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
+          description: Present when `view` is `detailed`.
+        status:
+          type: array
+          description: Present when `view` is `detailed`.
+          minItems: 3
+          maxItems: 3
+          uniqueItems: true
+          items:
+            type: object
+            title: Delivery Status
+            properties:
+              type:
+                type: string
+                enum:
+                  - sms
+                  - email
+                  - voice
+                description: The message channel
+              status:
+                type: string
+                example: DELIVRD
+                description: The delivery status
+              destination:
+                type: string
+                description: The message destination
+                example: '61400400400'
     MessageStatusCollection:
       description: 'The message status object, describing the delivery of the sent message.'
       type: object
@@ -7196,76 +7265,7 @@ components:
         - Messages
       properties:
         messageStatuses:
-          description: The object defining the message delivery status.
-          type: array
-          uniqueItems: true
-          items:
-            type: object
-            title: Delivery Status
-            properties:
-              link:
-                $ref: '#/components/schemas/Link'
-              categories:
-                type: array
-                uniqueItems: true
-                minItems: 5
-                maxItems: 5
-                description: Present when `view` is `summary`.
-                items:
-                  type: object
-                  title: Category
-                  additionalProperties: false
-                  properties:
-                    name:
-                      description: The delivery status of the message.
-                      type: string
-                      enum:
-                        - Sent
-                        - Pending
-                        - Received
-                        - Acknowledged
-                        - Undeliverable
-                    recipientCount:
-                      description: The number of recipients with the given `name` status.
-                      type: number
-                      example: 1
-                    percentageTotal:
-                      description: The percentage of recipients with the given `name` status.
-                      type: string
-                      example: 100.0%
-              name:
-                type: string
-                example: '61400400400'
-                description: Present when `view` is `detailed`.
-              info:
-                type: string
-                example: '  SMS message sent. SMSCODE=008 SMS message received by device. SMSCODE=001 '
-                description: Present when `view` is `detailed`.
-              status:
-                type: array
-                description: Present when `view` is `detailed`.
-                minItems: 3
-                maxItems: 3
-                uniqueItems: true
-                items:
-                  type: object
-                  title: Detailed Delivery Status
-                  properties:
-                    type:
-                      type: string
-                      enum:
-                        - sms
-                        - email
-                        - voice
-                      description: The message channel
-                    status:
-                      type: string
-                      example: DELIVRD
-                      description: The delivery status
-                    destination:
-                      type: string
-                      description: The message destination
-                      example: '61400400400'
+          $ref: '#/components/schemas/MessageStatus'
         link:
           $ref: '#/components/schemas/Link'
         status:

@@ -7350,7 +7350,7 @@ components:
           items:
             description: 'First object if `view` is `summary`, second object if `view` is `detailed`.'
             type: object
-            title: Summary Status
+            title: Response Status Summary
             properties:
               percentageTotal:
                 description: Details the percentage of responses received for the sent message across all channels.
@@ -7505,7 +7505,7 @@ components:
           readOnly: true
           items:
             type: object
-            title: Detailed Response Status
+            title: Response Status Detailed
             properties:
               from:
                 $ref: '#/components/schemas/Responder'
@@ -10023,7 +10023,7 @@ components:
                 description: 'Contains a list of event fields, see create /POST event endpoint to learn more about the available fields'
                 items:
                   type: object
-                  title: Field
+                  title: Form Field
                   description: A key-value pair of name and its value
                   properties:
                     name:
@@ -10231,7 +10231,7 @@ components:
           description: Contains the individual items that make up this list
           items:
             type: object
-            title: Item
+            title: List Label
             description: |-
               Contains the individual items that make up this list
 
@@ -10319,7 +10319,7 @@ components:
       title: Links
       items:
         type: object
-        title: LinkObject
+        title: Link
         description: The HATEOAS link object.
         properties:
           uri:

@@ -9210,7 +9210,7 @@ components:
           $ref: '#/components/schemas/Response'
         callback:
           type: object
-          title: Invocation
+          title: Callback Invocation
           description: The details about this particular callback attempt
           properties:
             id:

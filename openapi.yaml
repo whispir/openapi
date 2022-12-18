@@ -7384,6 +7384,98 @@ components:
       required:
         - messageresponses
         - link
+    Responder:
+      description: The message responder object.
+      title: Responder
+      readOnly: true
+      type: object
+      required:
+        - name
+        - mri
+        - mobile
+        - email
+        - voice
+      properties:
+        name:
+          type: string
+          minLength: 1
+          description: The name of the sender of this message
+          example: John Wick
+          readOnly: true
+        mri:
+          example: support@whispir.com
+          type: string
+          description: The unique identifier for this contact within Whispir
+          readOnly: true
+        mobile:
+          example: '61400400400'
+          type: string
+          minLength: 1
+          description: The mobile phone number associated with this sender
+          readOnly: true
+        voice:
+          example: '61400400400'
+          type: string
+          minLength: 1
+          description: The phone number associated with the voice channel for this sender
+          readOnly: true
+        email:
+          example: support@whispir.com
+          type: string
+          description: The email address associated with the email channel for this sender
+          readOnly: true
+      x-examples:
+        Example 1:
+          name: John Wick
+          mri: support@whispir.com
+          mobile: '61400400400'
+          voice: '61400400400'
+          email: support@whispir.com
+    Response:
+      type: object
+      title: Response
+      description: |-
+        The details about this particular message that have been sent to the callback
+
+        IMPORTANT: Depending on the flow, you may only see  one of the acknowledged or undeliverable keys with timestamps as their value
+      properties:
+        channel:
+          type: string
+          minLength: 1
+          description: 'The channel that this message was sent on. Either SMS, email or voice'
+          enum:
+            - sms
+            - email
+            - voice
+            - N/A
+          readOnly: true
+        acknowledged:
+          example: '22/10/20 10:29'
+          type: string
+          minLength: 1
+          description: The date/time that this message was acknowledged
+          readOnly: true
+        undeliverable:
+          example: '22/10/20 10:29'
+          type: string
+          description: The date/time that this message was marked as undeliverable
+          readOnly: true
+        content:
+          type: string
+          minLength: 1
+          description: The content of the message
+          example: 'Delivered successfully to 61430430306 at 22/10/20 09:28'
+          readOnly: true
+      readOnly: true
+      required:
+        - content
+        - acknowledged
+        - channel
+      x-examples:
+        Example 1:
+          content: 'OK, got it. Thanks.'
+          acknowledged: '28/09/12 08:48'
+          channel: sms
     MessageResponseDetailed:
       title: Message Response Detailed
       description: The detailed message response object.
@@ -7416,42 +7508,7 @@ components:
             title: Detailed Response Status
             properties:
               from:
-                description: The message responder object.
-                title: From
-                readOnly: true
-                type: object
-                required:
-                  - name
-                  - mri
-                  - mobile
-                  - email
-                  - voice
-                properties:
-                  name:
-                    description: The message responder's name.
-                    type: string
-                    example: Test User
-                    readOnly: true
-                  mri:
-                    description: The message responder's MRI.
-                    type: string
-                    example: testUser.au@User.whispir.com
-                    readOnly: true
-                  mobile:
-                    description: The message responder's mobile number.
-                    type: string
-                    example: '61400400400'
-                    readOnly: true
-                  email:
-                    description: The message responder's email address.
-                    type: string
-                    example: tuser@whispir.com
-                    readOnly: true
-                  voice:
-                    description: The message responder's voice number.
-                    type: string
-                    example: '61400400400'
-                    readOnly: true
+                $ref: '#/components/schemas/Responder'
               responseCategory:
                 description: |-
                   The message response category. 
@@ -7459,38 +7516,11 @@ components:
                   * `notmatched` - the message was replied to and the answer didn't match any search criteria
                 type: string
                 readOnly: true
-                required:
-                  - content
-                  - acknowledged
-                  - channel
                 enum:
                   - noresponse
                   - notmatched
               responseMessage:
-                description: The message response object.
-                title: Detailed Response Message
-                type: object
-                readOnly: true
-                properties:
-                  content:
-                    description: The message response content.
-                    type: string
-                    example: A test response from the recipient.
-                    readOnly: true
-                  acknowledged:
-                    description: The message response acknowledgement status.
-                    type: string
-                    example: 'true'
-                    readOnly: true
-                  channel:
-                    description: The message response channel.
-                    type: string
-                    readOnly: true
-                    enum:
-                      - N/A
-                      - sms
-                      - email
-                      - voice
+                $ref: '#/components/schemas/Response'
             required:
               - from
               - responseCategory
@@ -9175,75 +9205,9 @@ components:
           maxLength: 256
           readOnly: true
         from:
-          type: object
-          title: Responder
-          description: The details about this particular message sender/responder
-          properties:
-            name:
-              type: string
-              minLength: 1
-              description: The name of the sender of this message
-              example: John Wick
-              readOnly: true
-            mri:
-              example: support@whispir.com
-              type: string
-              description: The unique identifier for this contact within Whispir
-              readOnly: true
-            mobile:
-              example: '61400400400'
-              type: string
-              minLength: 1
-              description: The mobile phone number associated with this sender
-              readOnly: true
-            voice:
-              example: '61400400400'
-              type: string
-              minLength: 1
-              description: The phone number associated with the voice channel for this sender
-              readOnly: true
-            email:
-              example: support@whispir.com
-              type: string
-              description: The email address associated with the email channel for this sender
-              readOnly: true
-          readOnly: true
+          $ref: '#/components/schemas/Responder'
         responseMessage:
-          type: object
-          title: Callback Response Message
-          description: |-
-            The details about this particular message that have been sent to the callback
-
-            IMPORTANT: Depending on the flow, you may only see  one of the acknowledged or undeliverable keys with timestamps as their value
-          properties:
-            channel:
-              type: string
-              minLength: 1
-              description: 'The channel that this message was sent on. Either SMS, email or voice'
-              enum:
-                - sms
-                - email
-                - voice
-                - N/A
-              readOnly: true
-            acknowledged:
-              example: '22/10/20 10:29'
-              type: string
-              minLength: 1
-              description: The date/time that this message was acknowledged
-              readOnly: true
-            undeliverable:
-              example: '22/10/20 10:29'
-              type: string
-              description: The date/time that this message was marked as undeliverable
-              readOnly: true
-            content:
-              type: string
-              minLength: 1
-              description: The content of the message
-              example: 'Delivered successfully to 61430430306 at 22/10/20 09:28'
-              readOnly: true
-          readOnly: true
+          $ref: '#/components/schemas/Response'
         callback:
           type: object
           title: Invocation

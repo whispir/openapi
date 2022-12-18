@@ -7426,6 +7426,8 @@ components:
           mobile: '61400400400'
           voice: '61400400400'
           email: support@whispir.com
+      x-tags:
+        - Messages
     Response:
       type: object
       title: Response
@@ -7471,6 +7473,8 @@ components:
           content: 'OK, got it. Thanks.'
           acknowledged: '28/09/12 08:48'
           channel: sms
+      x-tags:
+        - Messages
     MessageResponseDetailed:
       title: Message Response Detailed
       description: The detailed message response object.

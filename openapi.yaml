@@ -6571,7 +6571,7 @@ components:
         dlr:
           $ref: '#/components/schemas/DeliveryReceipt'
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       required:
         - to
         - subject
@@ -6634,7 +6634,7 @@ components:
           type: string
           readOnly: true
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       title: Message Collection
       x-tags:
         - Messages
@@ -7145,7 +7145,7 @@ components:
         - Messages
       properties:
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
         categories:
           type: array
           uniqueItems: true
@@ -7315,7 +7315,7 @@ components:
           items:
             $ref: '#/components/schemas/MessageStatus'
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
         status:
           type: string
           example: '1 to 1 of 1    '
@@ -7363,7 +7363,7 @@ components:
                 example: '1'
                 readOnly: true
               link:
-                $ref: '#/components/schemas/Link'
+                $ref: '#/components/schemas/Links'
               type:
                 description: |-
                   The message response category. 
@@ -7380,7 +7380,7 @@ components:
               - link
               - type
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       required:
         - messageresponses
         - link
@@ -7526,7 +7526,7 @@ components:
               - responseCategory
               - responseMessage
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
         status:
           type: string
           example: '1 to 1 of 1    '
@@ -7639,7 +7639,7 @@ components:
           example: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
           writeOnly: true
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       required:
         - name
         - scope
@@ -7807,7 +7807,7 @@ components:
         dlr:
           $ref: '#/components/schemas/DeliveryReceipt'
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
         tags:
           type: string
           description: Information which helps to label related message templates together
@@ -7859,7 +7859,7 @@ components:
             $ref: '#/components/schemas/Template'
           readOnly: true
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       required:
         - status
         - messagetemplates
@@ -8394,7 +8394,7 @@ components:
             title: Device
           readOnly: true
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
         lastModifiedTime:
           type: string
           example: '2022-03-29T16:30:18+11:00'
@@ -8586,7 +8586,7 @@ components:
           description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
           readOnly: true
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       title: Distribution List Collection
       x-tags:
         - Distribution Lists
@@ -8662,7 +8662,7 @@ components:
             - Public: Any user or active contact in any workspace can map themselves to this DL in the Whispir Contact Portal
             - Private: Only users or active contacts in the current workspace can map themselves to this DL
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
         contactIds:
           type: string
           description: Comma separated list of Contacts to be associated to this DL. This information can be provided at the time of the DL creation or updated later via a PUT request
@@ -8711,7 +8711,7 @@ components:
                 description: Type of Contact
                 readOnly: true
               link:
-                $ref: '#/components/schemas/Link'
+                $ref: '#/components/schemas/Links'
           readOnly: true
       required:
         - name
@@ -8800,7 +8800,7 @@ components:
             - ruleContent: Contains the matching string to be compared with the contact element for being a part of the DL [required]
           example: '[{"ruleFilter" : "division", "ruleFilterActualName" : "Division", "ruleContent" : "sales"}]'
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       required:
         - name
         - access
@@ -9082,7 +9082,7 @@ components:
               description: A boolean flag specifying whether undeliverable message callbacks are enabled.
               default: disabled
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       required:
         - name
         - url
@@ -9135,7 +9135,7 @@ components:
             $ref: '#/components/schemas/Callback'
           readOnly: true
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
     CallbackCall:
       description: A callback call object
       type: object
@@ -9250,7 +9250,7 @@ components:
               readOnly: true
           readOnly: true
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       required:
         - status
     CallbackCallCollection:
@@ -9267,7 +9267,7 @@ components:
           example: 1 to 8 of 8
           description: Provides the total number of records fetched. This attribute may return "No records found" when there are no callbacks available.
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       x-examples:
         Example:
           value:
@@ -9357,7 +9357,7 @@ components:
           description: Only applicable to customers with the Billing Cost Centre Module enabled. Allows the user to set a billing cost centre for the Workspace.
           example: Hollywood
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       required:
         - projectName
         - status
@@ -9498,7 +9498,7 @@ components:
           example: Whispir User
           description: Fullname of the user
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
     ActivityCollection:
       description: List activities response object
       type: object
@@ -9534,7 +9534,7 @@ components:
             $ref: '#/components/schemas/Activity'
           readOnly: true
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       title: Activity Collection
       x-tags:
         - Activities
@@ -9886,7 +9886,7 @@ components:
           description: The secondary role of the user.
           example: Analyst
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       required:
         - userName
         - password
@@ -9935,7 +9935,7 @@ components:
           description: Provides the total number of records fetched. This attribute may return "No records found" when there are no users available.
           readOnly: true
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
     Event:
       type: object
       x-tags:
@@ -10035,7 +10035,7 @@ components:
                       description: Specifies the value of a given field
                       example: John Wick
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       required:
         - eventLabel
         - status
@@ -10251,7 +10251,7 @@ components:
             readOnly: true
           readOnly: true
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       readOnly: true
     CustomListCollection:
       type: object
@@ -10297,7 +10297,7 @@ components:
           description: The JWT token.
           example: your-generated-token-string
         link:
-          $ref: '#/components/schemas/Link'
+          $ref: '#/components/schemas/Links'
       x-examples:
         Example:
           value:
@@ -10306,9 +10306,9 @@ components:
       x-tags:
         - Auth
       title: Auth
-    Link:
+    Links:
       type: array
-      description: 'A [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) link object, describing all discoverable resources in relation to the original request.'
+      description: 'A [HATEOAS](https://en.wikipedia.org/wiki/HATEOAS) link array, describing all discoverable resources in relation to the original request.'
       x-examples:
         Example:
           - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses?view=detailed&filter=responserule'

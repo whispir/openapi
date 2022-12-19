@@ -1,8 +1,6 @@
 /* tslint:disable:no-unused-locals */
-import { ZObject, Bundle, HttpRequestOptions } from 'zapier-platform-core'
-{{#imports}}
-import { {{classname}}, {{classname}}Write } from '{{import}}';
-{{/imports}}
+import { ZObject, Bundle } from 'zapier-platform-core'
+import qs from 'querystring';
 import { ObjectSerializer } from '../model/models';
 
 // ===============================================
@@ -10,24 +8,37 @@ import { ObjectSerializer } from '../model/models';
 // ===============================================
 {{#operations}}
 
+type InputBundle<T extends readonly Record<'key', any>[]> = Bundle<Record<T[number]['key'], any>>;
+
 {{#operation}}
-type {{operationIdCamelCase}}Params = {
+const {{operationId}}Input = [
     {{#allParams}}
     {{^isBodyParam}}
     {{#vendorExtensions}}
     {{^x-isApiKey}}
     {{^x-isContentType}}
-    {{#description}}
-    /**
-    * {{{.}}}
-    */{{/description}}
-    {{paramName}}{{#required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}?{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}?{{/defaultValue}}{{/required}}: {{{dataType}}};
+    {
+        key: '{{paramName}}',
+        required: {{#required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}false{{/defaultValue}}{{/required}}{{#required}}{{^defaultValue}}true{{/defaultValue}}{{/required}},
+        label: '{{baseName}}',
+        helpText: '{{{description}}}',
+        {{#isEnum}}
+        choices: {
+            {{#_enum}}
+                '{{.}}': '{{.}}',
+            {{/_enum}}
+        }
+        {{/isEnum}}
+    },
     {{/x-isContentType}}
     {{/x-isApiKey}}
     {{/vendorExtensions}}
     {{/isBodyParam}}
+    {{#isBodyParam}}
+{{>body_param_recursive}}
+    {{/isBodyParam}}
     {{/allParams}}
-}{{#bodyParam}} & {{baseType}}Write{{/bodyParam}};
+] as const;
 
 {{/operation}}
 
@@ -42,12 +53,8 @@ export const {{operationId}} = {
   },
 
   operation: {
-    inputFields: [
-      {key: 'repo', label:'Repo', required: true, dynamic: 'repo.full_name.full_name'},
-      {key: 'title', label:'Title', required: true},
-      {key: 'body', label:'Body', required: false}
-    ],
-    perform: (z: ZObject, bundle: Bundle<{{operationIdCamelCase}}Params>) => {
+    inputFields: {{operationId}}Input,
+    perform: async (z: ZObject, bundle: InputBundle<typeof {{operationId}}Input>) => {
         const {
             {{#allParams}}
             {{^isBodyParam}}
@@ -105,23 +112,20 @@ export const {{operationId}} = {
 {{/isFile}}
 
 {{/formParams}}
-        let localVarRequestOptions = {
+        const queryString = qs.stringify(localVarQueryParameters);
+        const responsePromise = z.request({
             method: '{{httpMethod}}' as const,
-            {{! qs: localVarQueryParameters, }}
             headers: localVarHeaderParams,
-            url: localVarPath,
-{{^isResponseFile}}
-            {{! json: true, }}
-{{/isResponseFile}}
-{{#isResponseFile}}
+            url: `${localVarPath}${queryString}`,
+            {{^isResponseFile}}
+            {{/isResponseFile}}
+            {{#isResponseFile}}
             encoding: null,
-{{/isResponseFile}}
-{{#bodyParam}}
+            {{/isResponseFile}}
+            {{#bodyParam}}
             body: ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}")
-{{/bodyParam}}
-        };
-
-        const responsePromise = z.request(localVarRequestOptions);
+            {{/bodyParam}}
+        });
         return responsePromise
             .then(response => {
                 if (response.status && response.status >= 200 && response.status <= 299) {

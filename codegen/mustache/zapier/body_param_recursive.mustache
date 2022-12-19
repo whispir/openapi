@@ -1,0 +1,37 @@
+    {{#vars}}
+    {{^isReadOnly}}
+    {{#isModel}}
+        {{>body_param_recursive}}
+    {{/isModel}}
+    {{^isModel}}
+    {{^isArray}}
+    {
+        key: '{{#vendorExtensions}}{{/vendorExtensions}}{{baseName}}',
+        required: {{#required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}false{{/defaultValue}}{{/required}}{{#required}}{{^defaultValue}}true{{/defaultValue}}{{/required}},
+        label: '{{nameInCamelCase}}',
+        helpText: '{{{description}}}',
+        {{#isEnum}}
+        choices: {
+            {{#_enum}}
+                '{{.}}': '{{.}}',
+            {{/_enum}}
+        }
+        {{/isEnum}}
+    },
+    {{/isArray}}
+    {{/isModel}}
+    {{#isArray}}
+    {{#items}}
+    {
+        key: '{{baseName}}',
+        children: [
+        {{>body_param_recursive}}
+        ],
+        required: {{#required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}false{{/defaultValue}}{{/required}}{{#required}}{{^defaultValue}}true{{/defaultValue}}{{/required}},
+        label: '{{nameInCamelCase}}',
+        helpText: 'List of {{nameInCamelCase}}',
+    },
+    {{/items}}
+    {{/isArray}}
+    {{/isReadOnly}}
+    {{/vars}}

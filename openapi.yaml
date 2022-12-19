@@ -8517,12 +8517,6 @@ components:
           rules: '[{"ruleFilter" : "division", "ruleFilterActualName" : "Division", "ruleContent" : "sales"}]'
       description: 'Static Distribution Lists are manually managed and maintained. They can include Contacts, Users and other Distribution Lists'
       properties:
-        id:
-          type: string
-          description: |
-            ID of the distribution list
-          example: 5AFEB61102963D7
-          readOnly: true
         name:
           type: string
           example: My Distribution List
@@ -9040,12 +9034,6 @@ components:
       x-tags:
         - Callbacks
       properties:
-        id:
-          type: string
-          description: The unique ID of the specific call within Whispir
-          maxLength: 32
-          example: C96962B74DC57EF30F00E7097AC81A45
-          readOnly: true
         messageId:
           type: string
           minLength: 1
@@ -9472,11 +9460,6 @@ components:
               port: -1
       description: The user object.
       properties:
-        id:
-          type: string
-          description: The ID of the user.
-          example: 4DC922649AFE370C
-          readOnly: true
         userName:
           type: string
           description: Specifies the username for the account

@@ -68,30 +68,6 @@ public class JavaCustomClientCodegen extends JavaClientCodegen {
     public OperationsMap postProcessOperationsWithModels(OperationsMap operations, List<ModelMap> allModels) {
         OperationMap objs = operations.getOperations();
 
-        // SPECIFIC CASE FOR DISTRIBUTION LIST (CREATE & UPDATE ENDPOINTS)
-
-        // Filtering DistributionList 'Create' and 'Update' operations
-        List<CodegenOperation> distributionListWriteOps = objs.getOperation().stream()
-                .filter(item -> item.bodyParam != null && item.bodyParam.baseName.equals("DistributionList"))
-                .collect(Collectors.toList());
-
-        // Populating the 'vars' of 'DistributionList' bodyParam within 'requiredParams'
-        // obtained from 'ModelMap'
-        for (CodegenOperation op : distributionListWriteOps) {
-            List<CodegenParameter> requiredParamsWithBody = op.requiredParams.stream()
-                    .filter(item -> item.baseName.equals("DistributionList"))
-                    .collect(Collectors.toList());
-
-            for (CodegenParameter param : requiredParamsWithBody) {
-                for (ModelMap modelMap : allModels) {
-                    CodegenModel codegenModel = modelMap.getModel();
-                    if (param.baseName.equals(codegenModel.classname)) {
-                        param.vars = codegenModel.vars;
-                    }
-                }
-            }
-        }
-
         for (CodegenOperation op : objs.getOperation()) {
             if (op.bodyParam != null) {
                 op.bodyParam.vars.sort(new CustomSort());

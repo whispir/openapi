@@ -10,6 +10,7 @@
   "scripts": {
     "generate:zapier": "yarn generate --generator-key zapier --custom-generator ./generators/node/target/node-openapi-generator-1.0.0.jar",
     "build:node": "cd generators/node && rm -rf target && mvn package",
+    "debug:node": "openapi-generator-cli generate --log-to-stderr -g node-custom -i ../openapi.yaml --custom-generator ./generators/node/target/node-openapi-generator-1.0.0.jar --global-property debugSupportingFiles=true --dry-run > openapi-generator-debug.json",
     "generate:java": "yarn generate --generator-key java --custom-generator ./generators/java/target/java-openapi-generator-1.0.0.jar",
     "build:java": "cd generators/java && rm -rf target && mvn package",
     "debug:java": "openapi-generator-cli generate --log-to-stderr -g java-custom -i ../openapi.yaml --custom-generator ./generators/java/target/java-openapi-generator-1.0.0.jar --global-property debugSupportingFiles=true --dry-run > openapi-generator-debug.json",

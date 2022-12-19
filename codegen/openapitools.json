@@ -41,7 +41,7 @@
         }
       },
       "zapier": {
-        "generatorName": "typescript-node",
+        "generatorName": "node-custom",
         "output": "#{cwd}/../whispir-zapier",
         "glob": "../openapi.yaml",
         "additionalProperties": {

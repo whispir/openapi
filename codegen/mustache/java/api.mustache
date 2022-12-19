@@ -487,23 +487,13 @@ public class {{classname}} {
             throw new ApiException("Missing the required parameter 'xApiKey'");
         }
 
-        String accept = "{{vendorExtensions.x-content-type}}";
-        String contentType = "{{vendorExtensions.x-content-type}}";
-
-        {{^vendorExtensions.x-content-type}}
         {{#requiredParams}}
         {{#isHeaderParam}}
-        {{^vendorExtensions.x-isApiKey}}
-        {{! Ensure to pass a defaultValue for 'accept & 'contentType'}}
-        if({{paramName}}.isEmpty()) {
-            {{paramName}} = "{{defaultValue}}";
-        }
-        {{/vendorExtensions.x-isApiKey}}
+        {{#vendorExtensions.x-isContentType}}
+        {{{dataType}}} {{paramName}} = "{{defaultValue}}";
+
+        {{/vendorExtensions.x-isContentType}}
         {{/isHeaderParam}}
-        {{/requiredParams}}
-        {{/vendorExtensions.x-content-type}}
-        
-        {{#requiredParams}}
         {{^isBodyParam}}
         {{^isHeaderParam}}
         {{^vendorExtensions.x-isApiKey}}
@@ -512,6 +502,7 @@ public class {{classname}} {
         if({{paramName}} == null || {{paramName}}.isEmpty()) {
             throw new ApiException("Missing the required parameter '{{paramName}}'");
         }
+        
         {{/vendorExtensions.x-isApiKey}}
         {{/isHeaderParam}}
         {{/isBodyParam}}
@@ -521,6 +512,11 @@ public class {{classname}} {
         {{#vars}}
         {{^isReadOnly}}
         {{{dataType}}} {{baseName}} = params.{{getter}}();
+        {{#required}}
+        if({{baseName}} == null) {
+            throw new ApiException("Missing the required property value of '{{baseName}}'");
+        }
+        {{/required}}
         {{paramName}}.set{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{baseName}});
         
         {{/isReadOnly}}

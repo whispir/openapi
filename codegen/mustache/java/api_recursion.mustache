@@ -53,7 +53,7 @@
                 {{/isArray}}
                 {{#isArray}}
                 {{! A special case when 'var' is type of array to create 'add' and 'addAll' methods}}
-                public Builder addDefault{{complexType}}({{complexType}} element) {
+                public Builder add{{complexType}}({{complexType}} element) {
                     if (this.{{baseName}} == null) {
                             this.{{baseName}} = new ArrayList<>();
                     }
@@ -61,7 +61,7 @@
                     return this;
                 }
 
-                public Builder addAllDefault{{complexType}}({{{dataType}}} elements) {
+                public Builder addAll{{complexType}}({{{dataType}}} elements) {
                     if (this.{{baseName}} == null) {
                             this.{{baseName}} = new ArrayList<>();
                     }

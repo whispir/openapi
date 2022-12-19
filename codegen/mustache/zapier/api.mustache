@@ -1,0 +1,73 @@
+export * from './api/apis';
+export * from './model/models';
+import { Interceptor } from './model/models';
+import { VERSION } from './version';
+{{#apiInfo}}
+{{#apis}}
+{{#operations}}
+import { {{ classname }} } from './api/{{ classFilename }}';
+{{/operations}}
+{{/apis}}
+
+export type ClientConfig = {
+    host: string;
+    username?: string;
+    password?: string;
+    apiKey?: string;
+    accessToken?: string;
+};
+
+type AuthHeaders = {
+    'X-Api-Key'?: string;
+    Authorization?: string;
+};
+
+const Client = (config: ClientConfig) => {
+    let authHeaders: AuthHeaders = {};
+
+    if (config.username && config.password && config.apiKey) {
+        authHeaders['Authorization'] = `Basic ${Buffer.from(`${config.username}:${config.password}`).toString("base64")}`;
+        authHeaders['X-Api-Key'] = config.apiKey;
+    } else if (config.accessToken && config.apiKey) {
+        authHeaders['Authorization'] = `Bearer ${config.accessToken}`;
+        authHeaders['X-Api-Key'] = config.apiKey;
+    } else {
+        throw new Error(`Unsupported authorization:
+        Please provide either username, password, and apiKey combination
+        OR accessToken and apiKey combination.`);
+    }
+
+    const defaultHeaders = {
+        'User-Agent': `whispir-node-${VERSION}`,
+        ...authHeaders,
+    };
+
+    const apiConfig = { defaultHeaders, host: config.host };
+
+    {{#apis}}
+    {{#operations}}
+    const {{ pathPrefix }} = new {{ classname }}(apiConfig);
+    {{/operations}}
+    {{/apis}}
+
+    const apis = { 
+        {{#apis}}
+        {{#operations}}
+        {{ pathPrefix }},
+        {{/operations}}
+        {{/apis}}
+    };
+
+    const addInterceptor = (interceptor: Interceptor) => {
+        Object.values(apis).forEach(api => {
+            api.addInterceptor(interceptor);
+        });
+    };
+
+    return { addInterceptor, ...apis };
+};
+{{/apiInfo}}
+
+export default Client;
+module.exports = Client;
+module.exports.default = Client;

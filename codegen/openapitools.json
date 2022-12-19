@@ -39,6 +39,18 @@
           "licenseName": "MIT",
           "licenseUrl": "https://opensource.org/licenses/MIT"
         }
+      },
+      "zapier": {
+        "generatorName": "typescript-node",
+        "output": "#{cwd}/../whispir-zapier",
+        "glob": "../openapi.yaml",
+        "additionalProperties": {
+          "npmName": "whispir-zapier",
+          "supportsES6": "true",
+          "npmVersion": "1.0.0"
+        },
+        "config": "config/zapier.yml",
+        "templateDir": "mustache/zapier"
       }
     }
   }

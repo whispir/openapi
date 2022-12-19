@@ -8626,8 +8626,6 @@ components:
           $ref: '#/components/schemas/Links'
       required:
         - name
-      x-stoplight:
-        id: 28a19b7a35a13
     DistributionListCollection:
       type: object
       description: list of distribution lists

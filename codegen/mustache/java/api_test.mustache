@@ -62,7 +62,7 @@ public class {{classname}}Test {
                                         .{{setter}}({{baseName}})
         {{/isArray}}                                        
         {{#isArray}}
-                                        .addDefault{{complexType}}({{baseName}})
+                                        .add{{complexType}}({{baseName}})
         {{/isArray}}
         {{/vars}}                                        
         {{/isBodyParam}}

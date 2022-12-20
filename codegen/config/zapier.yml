@@ -1,4 +1,0 @@
-files:
-  version.mustache:
-    destinationFilename: version.ts
-    templateType: SupportingFiles

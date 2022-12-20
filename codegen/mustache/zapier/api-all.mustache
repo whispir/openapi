@@ -7,47 +7,67 @@ export * from './{{ classFilename }}';
 export * from './{{ classFilename }}Interface'
 {{/withInterfaces}}
 {{/apis}}
-import * as http from 'http';
-import { ApiError } from '../model/models';
+import { Bundle } from 'zapier-platform-core'
 
-export class HttpError extends Error {
-    constructor(public body: ApiError) {
-        super(body.errorText);
-        this.name = 'HttpError';
+export type InputBundle<T extends readonly Record<'key', any>[]> = Bundle<Record<T[number]['key'], any>>;
+
+export const generateInputFields = (nestedInputData: any) => {
+    return nestedInputData.flatMap(generateInputDataRecursive);
+};
+
+const FIELD_SEPARATOR = '__';
+
+const generateInputDataRecursive = (data) => {
+    const updateData = (data, key, label) => ({
+        ...data,
+        key: `${key}${FIELD_SEPARATOR}${data.key}`,
+        label: `${label} ${data.label}`,
+    });
+
+    if (data.properties) {
+        const newProps = data.properties.map((prop) => updateData(prop, data.key, data.label));
+        return newProps.reduce((acc, cur) => [...acc, ...generateInputDataRecursive(cur)], []);
+    } else if (data.children) {
+        const newChildren = data.children.map((prop) => updateData(prop, data.key, data.label));
+        return [{ ...data, children: newChildren }];
+    } else {
+        return [data];
     }
 };
 
-export type ApiConfig = {
-    /**
-     * The default header to be included in the request
-     */
-    defaultHeaders: { [name: string]: string };
-    /**
-     * The host domain that requests will be made to
-     */
-    host: string;
-};
-
-export type RequestOptions = {
-    /**
-     * The additional headers to be included in the request
-     */
-    headers: { [name: string]: string };
-};
-
-export type Response<T = {}> = T & {
-    /**
-     * The last response, useful to get direct access to response headers
-     */
-    lastResponse: http.IncomingMessage;
-};
-
-export type CreateResponse<T = {}> = Response<T> & {
-    /**
-     * The resource identifier
-     */
-    id: string;
-};
-
-export { RequestFile } from '../model/models';
+export const transformInputData = (input: any): any => {
+    const output: any = {};
+  
+    for (const key in input) {
+      if (key.includes(FIELD_SEPARATOR)) {
+        let current = output;
+        const subkeys = key.split(FIELD_SEPARATOR);
+        for (const subkey of subkeys.slice(0, -1)) {
+          let subcurrent = current[subkey];
+          if (!subcurrent) {
+            subcurrent = current[subkey] = {};
+          }
+          current = subcurrent;
+        }
+  
+        if (Array.isArray(input[key])) {
+          current[subkeys[subkeys.length - 1]] = input[key].map((item: any) => {
+            const transformedItem: any = {};
+            for (const subkey in item) {
+              if (subkey.includes(FIELD_SEPARATOR)) {
+                transformedItem[subkey.split(FIELD_SEPARATOR).slice(-1)[0]] = item[subkey];
+              }
+            }
+            return transformedItem;
+          });
+        } else {
+          current[subkeys[subkeys.length - 1]] = input[key];
+        }
+      } else {
+        output[key] = input[key];
+      }
+    }
+  
+    return output;
+}
 {{/apiInfo}}

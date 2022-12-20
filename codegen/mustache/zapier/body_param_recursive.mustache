@@ -1,12 +1,19 @@
     {{#vars}}
     {{^isReadOnly}}
     {{#isModel}}
-        {{>body_param_recursive}}
+    {
+        key: '{{baseName}}',
+        required: {{#required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}false{{/defaultValue}}{{/required}}{{#required}}{{^defaultValue}}true{{/defaultValue}}{{/required}},
+        label: '{{nameInCamelCase}}',
+        properties: [
+            {{>body_param_recursive}}
+        ],
+    },
     {{/isModel}}
     {{^isModel}}
     {{^isArray}}
     {
-        key: '{{>key}}',
+        key: '{{baseName}}',
         required: {{#required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}false{{/defaultValue}}{{/required}}{{#required}}{{^defaultValue}}true{{/defaultValue}}{{/required}},
         label: '{{nameInCamelCase}}',
         helpText: '{{{description}}}',
@@ -23,7 +30,7 @@
     {{#isArray}}
     {{#items}}
     {
-        key: '{{>key}}',
+        key: '{{baseName}}',
         required: {{#required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}false{{/defaultValue}}{{/required}}{{#required}}{{^defaultValue}}true{{/defaultValue}}{{/required}},
         label: '{{nameInCamelCase}}',
         helpText: 'List of {{nameInCamelCase}}',

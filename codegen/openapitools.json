@@ -49,6 +49,7 @@
           "supportsES6": "true",
           "npmVersion": "1.0.0"
         },
+        "config": "config/zapier.yml",
         "templateDir": "mustache/zapier"
       }
     }

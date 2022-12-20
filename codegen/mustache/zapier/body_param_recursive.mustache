@@ -6,7 +6,7 @@
     {{^isModel}}
     {{^isArray}}
     {
-        key: '{{#vendorExtensions}}{{/vendorExtensions}}{{baseName}}',
+        key: '{{>key}}',
         required: {{#required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}false{{/defaultValue}}{{/required}}{{#required}}{{^defaultValue}}true{{/defaultValue}}{{/required}},
         label: '{{nameInCamelCase}}',
         helpText: '{{{description}}}',
@@ -23,13 +23,13 @@
     {{#isArray}}
     {{#items}}
     {
-        key: '{{baseName}}',
-        children: [
-        {{>body_param_recursive}}
-        ],
+        key: '{{>key}}',
         required: {{#required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}false{{/defaultValue}}{{/required}}{{#required}}{{^defaultValue}}true{{/defaultValue}}{{/required}},
         label: '{{nameInCamelCase}}',
         helpText: 'List of {{nameInCamelCase}}',
+        children: [
+        {{>body_param_recursive}}
+        ],
     },
     {{/items}}
     {{/isArray}}

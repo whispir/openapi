@@ -33,7 +33,6 @@
         key: '{{baseName}}',
         required: {{#required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}false{{/defaultValue}}{{/required}}{{#required}}{{^defaultValue}}true{{/defaultValue}}{{/required}},
         label: '{{nameInCamelCase}}',
-        helpText: 'List of {{nameInCamelCase}}',
         children: [
         {{>body_param_recursive}}
         ],

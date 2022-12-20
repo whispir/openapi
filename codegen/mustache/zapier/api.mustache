@@ -53,7 +53,7 @@ const authentication = {
   const addHeaders = (request, z, bundle) => {
     request.headers['X-API-KEY'] = bundle.authData.apiKey;
     request.headers.Authorization = `Basic ${Buffer.from(`${bundle.authData.username}:${bundle.authData.password}`).toString("base64")}`;
-    request.headers['User-Agent'] = `whispir-node-${VERSION}`;
+    request.headers['User-Agent'] = `whispir-zapier-${VERSION}`;
     return request;
   };
 
@@ -73,7 +73,7 @@ const authentication = {
   
     // beforeRequest & afterResponse are optional hooks into the provided HTTP client
     beforeRequest: [
-        addHeaders,
+      addHeaders,
     ],
   
     afterResponse: [

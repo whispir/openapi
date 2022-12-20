@@ -1,12 +1,3 @@
-{{#apiInfo}}
-{{#apis}}
-{{#operations}}
-export * from './{{ classFilename }}';
-{{/operations}}
-{{#withInterfaces}}
-export * from './{{ classFilename }}Interface'
-{{/withInterfaces}}
-{{/apis}}
 import { Bundle } from 'zapier-platform-core'
 
 export type InputBundle<T extends readonly Record<'key', any>[]> = Bundle<Record<T[number]['key'], any>>;
@@ -70,4 +61,3 @@ export const transformInputData = (input: any): any => {
   
     return output;
 }
-{{/apiInfo}}

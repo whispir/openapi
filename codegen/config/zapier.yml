@@ -2,3 +2,6 @@ files:
   version.mustache:
     destinationFilename: version.ts
     templateType: SupportingFiles
+  index.mustache:
+    destinationFilename: index.js
+    templateType: SupportingFiles

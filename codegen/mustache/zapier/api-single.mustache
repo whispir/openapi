@@ -1,6 +1,5 @@
 /* tslint:disable:no-unused-locals */
 import { ZObject } from 'zapier-platform-core'
-import qs from 'querystring';
 import { ObjectSerializer } from '../model/models';
 import { generateInputFields, transformInputData, InputBundle } from './apis';
 
@@ -24,9 +23,9 @@ const {{operationId}}Input = [
         {{#isEnum}}
         choices: {
             {{#_enum}}
-                '{{.}}': '{{.}}',
+            '{{.}}': '{{.}}',
             {{/_enum}}
-        }
+        },
         {{/isEnum}}
     },
     {{/x-isContentType}}
@@ -41,110 +40,110 @@ const {{operationId}}Input = [
 
 {{/operation}}
 
-{{#operation}}
-export const {{operationId}} = {
+export const {{classname}} = {
   key: '{{classVarName}}',
   noun: '{{baseName}}',
+  {{#operation}}
+  {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}: {
+    display: {
+        label: '{{classVarName}}',
+        description: '{{notes}}'
+    },
+    operation: {
+        inputFields: generateInputFields({{operationId}}Input),
+        perform: async (z: ZObject, bundle: InputBundle<typeof {{operationId}}Input>) => {
+            const {
+                {{#allParams}}
+                {{^isBodyParam}}
+                {{#vendorExtensions}}
+                {{^x-isApiKey}}
+                {{^x-isContentType}}
+                {{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}},
+                {{/x-isContentType}}
+                {{/x-isApiKey}}
+                {{/vendorExtensions}}
+                {{/isBodyParam}}
+                {{/allParams}}
+                {{#bodyParam}}
+                ...{{paramName}}
+                {{/bodyParam}}
+            } = transformInputData(bundle.inputData);
 
-  display: {
-    label: '{{summary}}',
-    description: '{{notes}}'
-  },
+            const localVarPath = bundle.authData.host + '{{{path}}}'{{#pathParams}}
+                .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
+            let localVarQueryParameters: any = {};
+            let localVarHeaderParams: any = (<any>Object).assign({}, bundle.authData.headers);
 
-  operation: {
-    inputFields: generateInputFields({{operationId}}Input),
-    perform: async (z: ZObject, bundle: InputBundle<typeof {{operationId}}Input>) => {
-        const {
-            {{#allParams}}
-            {{^isBodyParam}}
+            let localVarFormParams: any = {};
+    {{#queryParams}}
+            if ({{paramName}} !== undefined) {
+                localVarQueryParameters['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
+            }
+    {{/queryParams}}
+    {{#headerParams}}
             {{#vendorExtensions}}
             {{^x-isApiKey}}
             {{^x-isContentType}}
-            {{paramName}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}},
+            localVarHeaderParams['{{baseName}}'] = {{paramName}} || localVarHeaderParams['{{baseName}}'];
             {{/x-isContentType}}
             {{/x-isApiKey}}
+            {{#x-isContentType}}
+            localVarHeaderParams['{{baseName}}'] = {{{defaultValue}}};
+            {{/x-isContentType}}
             {{/vendorExtensions}}
-            {{/isBodyParam}}
-            {{/allParams}}
-            {{#bodyParam}}
-            ...{{paramName}}
-            {{/bodyParam}}
-        } = transformInputData(bundle.inputData);
+    {{/headerParams}}
 
-        const localVarPath = bundle.authData.host + '{{{path}}}'{{#pathParams}}
-            .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, bundle.authData.headers);
+            let localVarUseFormData = false;
 
-        let localVarFormParams: any = {};
-{{#queryParams}}
-        if ({{paramName}} !== undefined) {
-            localVarQueryParameters['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
-        }
-{{/queryParams}}
-{{#headerParams}}
-        {{#vendorExtensions}}
-        {{^x-isApiKey}}
-        {{^x-isContentType}}
-        localVarHeaderParams['{{baseName}}'] = {{paramName}} || localVarHeaderParams['{{baseName}}'];
-        {{/x-isContentType}}
-        {{/x-isApiKey}}
-        {{#x-isContentType}}
-        localVarHeaderParams['{{baseName}}'] = {{{defaultValue}}};
-        {{/x-isContentType}}
-        {{/vendorExtensions}}
-{{/headerParams}}
+    {{#formParams}}
+            if ({{paramName}} !== undefined) {
+                {{#isFile}}
+                localVarFormParams['{{baseName}}'] = {{paramName}};
+                {{/isFile}}
+                {{^isFile}}
+                localVarFormParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
+                {{/isFile}}
+            }
+    {{#isFile}}
+            localVarUseFormData = true;
+    {{/isFile}}
 
-        let localVarUseFormData = false;
-
-{{#formParams}}
-        if ({{paramName}} !== undefined) {
-            {{#isFile}}
-            localVarFormParams['{{baseName}}'] = {{paramName}};
-            {{/isFile}}
-            {{^isFile}}
-            localVarFormParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
-            {{/isFile}}
-        }
-{{#isFile}}
-        localVarUseFormData = true;
-{{/isFile}}
-
-{{/formParams}}
-        const queryString = qs.stringify(localVarQueryParameters);
-        const responsePromise = z.request({
-            method: '{{httpMethod}}' as const,
-            headers: localVarHeaderParams,
-            url: `${localVarPath}${queryString}`,
-            {{^isResponseFile}}
-            {{/isResponseFile}}
-            {{#isResponseFile}}
-            encoding: null,
-            {{/isResponseFile}}
-            {{#bodyParam}}
-            body: ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}")
-            {{/bodyParam}}
-        });
-        return responsePromise
-            .then(response => {
-                if (response.status && response.status >= 200 && response.status <= 299) {
-                        let body = {};
-                        {{#returnType}}
-                        body = ObjectSerializer.deserialize(response.data, "{{{.}}}");
-                        {{/returnType}}
-                        {{#vendorExtensions}}{{#x-isPost}}
-                        // Special case to extract the resource identifier from the `Location` header.
-                        const checkLocation = response?.headers?.location?.match(/\/([^\/]+)\/?$/);
-                        let id = (checkLocation && checkLocation[1]) ? checkLocation[1] : undefined;
-                        {{/x-isPost}}{{/vendorExtensions}}
-                        return { {{#vendorExtensions}}{{#x-isPost}}id,{{/x-isPost}}{{/vendorExtensions}} ...body };
-                } else {
-                        throw new z.errors.Error(response.data);
-                }
+    {{/formParams}}
+            const responsePromise = z.request({
+                method: '{{httpMethod}}',
+                headers: localVarHeaderParams,
+                params: localVarQueryParameters,
+                url: localVarPath,
+                {{^isResponseFile}}
+                {{/isResponseFile}}
+                {{#isResponseFile}}
+                encoding: null,
+                {{/isResponseFile}}
+                {{#bodyParam}}
+                body: ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}")
+                {{/bodyParam}}
             });
-    },
+            return responsePromise
+                .then(response => {
+                    if (response.status && response.status >= 200 && response.status <= 299) {
+                            let body = {};
+                            {{#returnType}}
+                            body = ObjectSerializer.deserialize(response.data, "{{{.}}}");
+                            {{/returnType}}
+                            {{#vendorExtensions}}{{#x-isPost}}
+                            // Special case to extract the resource identifier from the `Location` header.
+                            const checkLocation = response?.headers?.location?.match(/\/([^\/]+)\/?$/);
+                            let id = (checkLocation && checkLocation[1]) ? checkLocation[1] : undefined;
+                            {{/x-isPost}}{{/vendorExtensions}}
+                            return { {{#vendorExtensions}}{{#x-isPost}}id,{{/x-isPost}}{{/vendorExtensions}} ...body };
+                    } else {
+                            throw new z.errors.Error(response.data);
+                    }
+                });
+        },
+    }
     {{! sample: sample }}
-  }
+  },
+  {{/operation}}
 };
-{{/operation}}
 {{/operations}}

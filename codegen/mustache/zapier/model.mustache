@@ -1,42 +1,7 @@
 {{>licenseInfo}}{{#models}}
 {{#model}}
-import { RequestFile } from './models';
-{{#tsImports}}
-import { {{classname}}, {{classname}}Write } from '{{filename}}';
-{{/tsImports}}
 
-
-export type {{classname}}Write = {
-{{#vars}}
-{{^isReadOnly}}
-{{#description}}
-    /**
-    * {{{.}}}
-    */
-{{/description}}
-    '{{name}}'{{^required}}?{{/required}}: {{#isEnum}}{{#allowableValues}}{{#values}}'{{.}}'{{^-last}} | {{/-last}}{{/values}}{{/allowableValues}}{{/isEnum}}{{^isEnum}}{{#isPrimitiveType}}{{{dataType}}}{{/isPrimitiveType}}{{^isPrimitiveType}}{{#isArray}}Array<{{{complexType}}}Write>{{/isArray}}{{^isArray}}{{{dataType}}}Write{{/isArray}}{{/isPrimitiveType}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
-{{/isReadOnly}}
-{{/vars}}
-}
-
-{{#description}}
-/**
-* {{{.}}}
-*/
-{{/description}}
-{{^isEnum}}
 export class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{
-{{#vars}}
-{{^isWriteOnly}}
-{{#description}}
-    /**
-    * {{{.}}}
-    */
-{{/description}}
-    '{{name}}': {{#isEnum}}{{#allowableValues}}{{#values}}'{{.}}'{{^-last}} | {{/-last}}{{/values}}{{/allowableValues}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}};
-{{/isWriteOnly}}
-{{/vars}}
-
     {{#discriminator}}
     static discriminator: string | undefined = "{{discriminatorName}}";
     {{/discriminator}}
@@ -51,8 +16,7 @@ export class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{
             "name": "{{name}}",
             "baseName": "{{baseName}}",
             "type": "{{{dataType}}}"
-        }{{^-last}},
-        {{/-last}}
+        },
         {{/vars}}
     ];
 
@@ -66,16 +30,5 @@ export class {{classname}} {{#parent}}extends {{{.}}} {{/parent}}{
     }
     {{/isArray}}
 }
-
-{{/isEnum}}
-{{#isEnum}}
-export enum {{classname}} {
-    {{#allowableValues}}
-    {{#enumVars}}
-    {{name}} = <any> {{{value}}}{{^-last}},{{/-last}}
-    {{/enumVars}}
-    {{/allowableValues}}
-}
-{{/isEnum}}
 {{/model}}
 {{/models}}

@@ -44,10 +44,12 @@ export const {{classname}} = {
   key: '{{classVarName}}',
   noun: '{{baseName}}',
   {{#operation}}
+  {{#vendorExtensions}}
+  {{#x-isPost}}
   {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}: {
     display: {
-        label: '{{classVarName}}',
         description: '{{notes}}'
+        label: 'Create a {{returnBaseType}}',
     },
     operation: {
         inputFields: generateInputFields({{operationId}}Input),
@@ -144,6 +146,8 @@ export const {{classname}} = {
     }
     {{! sample: sample }}
   },
+  {{/x-isPost}}
+  {{/vendorExtensions}}
   {{/operation}}
 };
 {{/operations}}

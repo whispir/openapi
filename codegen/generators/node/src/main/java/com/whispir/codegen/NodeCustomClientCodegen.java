@@ -62,6 +62,24 @@ public class NodeCustomClientCodegen extends TypeScriptNodeClientCodegen {
                     populateModelVars(modelsMapGlobal, cp);
                 }
             }
+
+            if (op.httpMethod == "POST") {
+                op.vendorExtensions.put("x-isCreate", true);
+            } else if (op.httpMethod == "PUT") {
+                op.vendorExtensions.put("x-isUpdate", true);
+            } else if (op.httpMethod == "DELETE") {
+                op.vendorExtensions.put("x-isDelete", true);
+            } else if (op.httpMethod == "GET" && op.path.endsWith("}")) {
+                // op.paths that end with "}" have an ID as the last path parameter, and
+                // therefore refer to retrieving a single resource
+                // when paired with a `GET` operation
+                op.vendorExtensions.put("x-isIndex", true);
+            } else if (op.httpMethod == "GET" && !op.path.endsWith("}")) {
+                // Paths that do not end with "}" have the resource name as the last path part,
+                // and therefore refer to retrieving a list of resources
+                // when paired with a `GET` operation
+                op.vendorExtensions.put("x-isShow", true);
+            }
         }
 
         return operations;

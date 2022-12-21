@@ -19,7 +19,7 @@ const {{operationId}}Input = [
         key: '{{paramName}}',
         required: {{#required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{#defaultValue}}false{{/defaultValue}}{{/required}}{{^required}}{{^defaultValue}}false{{/defaultValue}}{{/required}}{{#required}}{{^defaultValue}}true{{/defaultValue}}{{/required}},
         label: '{{baseName}}',
-        helpText: '{{{description}}}',
+        helpText: 'Test',
         {{#isEnum}}
         choices: {
             {{#_enum}}
@@ -48,8 +48,8 @@ export const {{classname}} = {
   {{#x-isPost}}
   {{#vendorExtensions}}{{x-sdkOperation}}{{/vendorExtensions}}: {
     display: {
-        description: '{{notes}}'
         label: 'Create a {{returnBaseType}}',
+        description: 'Test'
     },
     operation: {
         inputFields: generateInputFields({{operationId}}Input),

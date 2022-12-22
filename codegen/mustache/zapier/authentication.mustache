@@ -5,6 +5,7 @@ export const authentication = {
     test: (z, bundle) => {
         const options = {
             url: bundle.authData.host,
+            headers: addHeaders({}, bundle),
             method: 'GET',
         };
 

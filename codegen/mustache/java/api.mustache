@@ -8,6 +8,7 @@ import {{invokerPackage}}.Configuration;
 import {{invokerPackage}}.Pair;
 import {{invokerPackage}}.ProgressRequestBody;
 import {{invokerPackage}}.ProgressResponseBody;
+import {{invokerPackage}}.auth.ApiKeyAuth;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.Map;
 {{/fullJavaUtil}}
 import javax.ws.rs.core.GenericType;
+import java.net.URI;
+import java.util.stream.Collectors;
 
 {{#operations}}
 public class {{classname}} {
@@ -206,17 +209,15 @@ public class {{classname}} {
     }
 
     public static class {{operationIdCamelCase}}Params {
-        {{! Listing all of the required params excluding: "xApikey, content, accept"}}
         {{#requiredParams}}
-        {{^isBodyParam}}
-        {{^isHeaderParam}}
         {{^vendorExtensions.x-isApiKey}}
+        {{^vendorExtensions.x-isContentType}}
+        {{! list all required "query", "path", "header" params except for "x-ApiKey", "contentType" and "accept"}}
         private {{{dataType}}} {{paramName}};
+        {{/vendorExtensions.x-isContentType}}
         {{/vendorExtensions.x-isApiKey}}
-        {{/isHeaderParam}}
-        {{/isBodyParam}}
         {{! Listing body params if there are any}}
-        {{#isBodyParam}}
+        {{#isBodyParam}}      
         {{#vars}}
         {{^isReadOnly}}
         private {{{dataType}}} {{baseName}};
@@ -231,14 +232,11 @@ public class {{classname}} {
 
         private {{operationIdCamelCase}}Params(
             {{#requiredParams}}
-            {{^isBodyParam}}
-            {{^isHeaderParam}}
             {{^vendorExtensions.x-isApiKey}}
-            {{! ensure to put a comma if it's the last element OR if there's at least an optional or body param}}
+            {{^vendorExtensions.x-isContentType}}
             {{{dataType}}} {{paramName}}{{^-last}},{{/-last}}{{#-last}}{{#hasOptionalParams}}{{#hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{#hasOptionalParams}}{{^hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{^hasOptionalParams}}{{#hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{/-last}}
+            {{/vendorExtensions.x-isContentType}}
             {{/vendorExtensions.x-isApiKey}}
-            {{/isHeaderParam}}
-            {{/isBodyParam}}
             {{#isBodyParam}}
             {{#vars}}
             {{^isReadOnly}}
@@ -252,13 +250,11 @@ public class {{classname}} {
             {{/optionalParams}}
         ){
             {{#requiredParams}}
-            {{^isBodyParam}}
-            {{^isHeaderParam}}
-            {{^vendorExtensions.x-isApiKey}}
+            {{^vendorExtensions.x-isApiKey}}    
+            {{^vendorExtensions.x-isContentType}}
             this.{{paramName}} = {{paramName}};
+            {{/vendorExtensions.x-isContentType}}
             {{/vendorExtensions.x-isApiKey}}
-            {{/isHeaderParam}}
-            {{/isBodyParam}}
             {{#isBodyParam}}
             {{#vars}}
             {{^isReadOnly}}
@@ -272,17 +268,54 @@ public class {{classname}} {
             {{/optionalParams}}
         }
             {{#requiredParams}}
-            {{^isBodyParam}}
-            {{^isHeaderParam}}
             {{^vendorExtensions.x-isApiKey}}
+            {{^vendorExtensions.x-isContentType}}
             public {{{dataType}}} get{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}() {
                 return {{paramName}};
             }
+            {{/vendorExtensions.x-isContentType}}
             {{/vendorExtensions.x-isApiKey}}
-            {{/isHeaderParam}}
-            {{/isBodyParam}}
             {{#isBodyParam}}
             {{#vars}}
+            {{#isEnum}}
+            public enum {{datatypeWithEnum}} {
+            {{#allowableValues}}
+            {{#enumVars}}
+            {{{name}}}({{{value}}}){{^-last}},
+            {{/-last}}{{#-last}};{{/-last}}
+            {{/enumVars}}
+            {{^enumVars}}
+            {{#values}}
+            {{#lambda.uppercase}}{{#lambda.snakecase}}{{{.}}}{{/lambda.snakecase}}{{/lambda.uppercase}}("{{{.}}}"){{^-last}},
+            {{/-last}}{{#-last}};{{/-last}}
+            {{/values}}
+            {{/enumVars}}
+            {{/allowableValues}}
+                private {{dataType}} value;
+                {{datatypeWithEnum}}({{dataType}} value){
+                    this.value = value;
+                }
+
+                public {{dataType}} getValue() {
+                    return value;
+                }
+                
+                @Override
+                public {{dataType}} toString() {
+                    return {{dataType}}.valueOf(value);
+                }
+
+                public static {{datatypeWithEnum}} fromValue({{dataType}} value) {
+                    for ({{datatypeWithEnum}} b : {{datatypeWithEnum}}.values()) {
+                        if (b.value.equals(value)) {
+                            return b;
+                        }
+                    }
+                    throw new IllegalArgumentException("Unexpected value '" + value + "'");
+                }
+
+            }
+            {{/isEnum}}              
             {{^isReadOnly}}
             public {{{dataType}}} {{getter}}() {
                 return {{baseName}};
@@ -303,13 +336,11 @@ public class {{classname}} {
 
         public static class Builder {
             {{#requiredParams}}
-            {{^isBodyParam}}
-            {{^isHeaderParam}}
             {{^vendorExtensions.x-isApiKey}}
+            {{^vendorExtensions.x-isContentType}}
             private {{{dataType}}} {{paramName}};
+            {{/vendorExtensions.x-isContentType}}
             {{/vendorExtensions.x-isApiKey}}
-            {{/isHeaderParam}}
-            {{/isBodyParam}}
             {{#isBodyParam}}
             {{#vars}}
             {{^isReadOnly}}
@@ -324,11 +355,12 @@ public class {{classname}} {
 
             public {{operationIdCamelCase}}Params build() {
                 return new {{operationIdCamelCase}}Params(
-                    {{! Listing all of the required params excluding: "xApikey, content, accept"}}
                     {{#requiredParams}}
-                    {{#isPathParam}}
-                    {{paramName}}{{^-last}}, {{/-last}}{{#-last}}{{#hasOptionalParams}}{{#hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{#hasOptionalParams}}{{^hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{^hasOptionalParams}}{{#hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{/-last}}
-                    {{/isPathParam}}
+                    {{^vendorExtensions.x-isApiKey}}    
+                    {{^vendorExtensions.x-isContentType}}
+                    {{paramName}}{{^-last}},{{/-last}}{{#-last}}{{#hasOptionalParams}}{{#hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{#hasOptionalParams}}{{^hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{^hasOptionalParams}}{{#hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{/-last}}
+                    {{/vendorExtensions.x-isContentType}}
+                    {{/vendorExtensions.x-isApiKey}}
                     {{#isBodyParam}}
                     {{#vars}}
                     {{^isReadOnly}}
@@ -344,21 +376,24 @@ public class {{classname}} {
             }
 
             {{#requiredParams}}
-            {{^isBodyParam}}
-            {{^isHeaderParam}}
             {{^vendorExtensions.x-isApiKey}}
+            {{^vendorExtensions.x-isContentType}}
             public Builder set{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{{dataType}}} {{paramName}}) {
                 this.{{paramName}} = {{paramName}};
                 return this;
             }
+            {{/vendorExtensions.x-isContentType}}
             {{/vendorExtensions.x-isApiKey}}
-            {{/isHeaderParam}}
-            {{/isBodyParam}}
             {{#isBodyParam}}
             {{#vars}}
             {{^isReadOnly}}
-            public Builder {{setter}}({{{dataType}}} {{baseName}}) {
+            public Builder {{setter}}({{#isEnum}}{{enumName}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}} {{baseName}}) {
+                {{#isEnum}}
+                this.{{baseName}} = {{baseName}}.getValue();
+                {{/isEnum}}
+                {{^isEnum}}
                 this.{{baseName}} = {{baseName}};
+                {{/isEnum}}
                 return this;
             }
             {{/isReadOnly}}
@@ -488,37 +523,60 @@ public class {{classname}} {
         }
 
         {{#requiredParams}}
-        {{#isHeaderParam}}
         {{#vendorExtensions.x-isContentType}}
         {{{dataType}}} {{paramName}} = "{{defaultValue}}";
-
         {{/vendorExtensions.x-isContentType}}
-        {{/isHeaderParam}}
+
         {{^isBodyParam}}
-        {{^isHeaderParam}}
         {{^vendorExtensions.x-isApiKey}}
+        {{^vendorExtensions.x-isContentType}}
         {{{dataType}}} {{paramName}} = params.get{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}();
 
         if({{paramName}} == null || {{paramName}}.isEmpty()) {
             throw new ApiException("Missing the required parameter '{{paramName}}'");
         }
-        
+        {{/vendorExtensions.x-isContentType}}
         {{/vendorExtensions.x-isApiKey}}
-        {{/isHeaderParam}}
         {{/isBodyParam}}
         {{#isBodyParam}}
         // Constructing '{{dataType}}' from '{{operationIdCamelCase}}Params' instance passed
         {{{dataType}}} {{paramName}} = new {{dataType}}();
         {{#vars}}
         {{^isReadOnly}}
-        {{{dataType}}} {{baseName}} = params.{{getter}}();
+        {{^isPrimitiveType}}
+        {{#isArray}}
+        List<Object> {{baseName}} = new ArrayList<Object>(params.{{getter}}());
+        List<{{modelPackage}}.{{{complexType}}}> {{baseName}}Value = {{baseName}}.stream()
+            .map(e -> ({{modelPackage}}.{{{complexType}}}) e).collect(Collectors.toList());
+        {{/isArray}}
+
+        {{^isUri}}
+        {{^isArray}}
+        {{^isNumber}}
+        Object {{baseName}}Value = params.{{getter}}();
+        {{/isNumber}}
+        {{/isArray}}
+        {{/isUri}}
+
+        {{#isNumber}}
+        {{{dataType}}} {{baseName}}Value = params.{{getter}}();
+        {{/isNumber}}
+
+        {{#isUri}}
+        {{{dataType}}} {{baseName}}Value = params.{{getter}}();
+        {{/isUri}}
+        {{/isPrimitiveType}}
+
+        {{#isPrimitiveType}}
+        {{{dataType}}} {{baseName}}Value = params.{{getter}}();
+        {{/isPrimitiveType}}
         {{#required}}
-        if({{baseName}} == null) {
+        if({{baseName}}Value == null) {
             throw new ApiException("Missing the required property value of '{{baseName}}'");
         }
         {{/required}}
-        {{paramName}}.set{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{baseName}});
-        
+        {{paramName}}.set{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{#isModel}}({{modelPackage}}.{{{complexType}}}) {{/isModel}}{{baseName}}Value);
+
         {{/isReadOnly}}
         {{/vars}}
         {{/isBodyParam}}
@@ -533,7 +591,8 @@ public class {{classname}} {
             request.{{paramName}}({{paramName}});
         }
         {{/optionalParams}}
-        return request.execute();
+
+        {{#returnType}}return {{/returnType}}request.execute();
     }
     {{/operation}}
 }

@@ -74,7 +74,7 @@ export const {{classname}} = {
             const localVarPath = bundle.authData.host + '{{{path}}}'{{#pathParams}}
                 .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
             let localVarQueryParameters: any = {};
-            let localVarHeaderParams: any = (<any>Object).assign({}, bundle.authData.headers);
+            let localVarHeaderParams: any = {};
 
             let localVarFormParams: any = {};
     {{#queryParams}}

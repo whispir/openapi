@@ -7075,16 +7075,6 @@ components:
       description: A fixed object structure used by for Whispir internally for tracking purposes.
       type: object
       readOnly: true
-      required:
-        - period
-        - rule
-        - type
-        - publishToWeb
-        - expiryDay
-        - expiryHour
-        - expiryMin
-        - feedIds
-        - bool
       properties:
         period:
           description: The period of the message delivery.

@@ -32,16 +32,6 @@ import {{invokerPackage}}.JSON;
 public class {{classname}} {
 
   {{#vars}}
-    {{#isEnum}}
-    {{^isContainer}}
-{{>modelInnerEnum}}
-    {{/isContainer}}
-    {{#isContainer}}
-    {{#mostInnerItems}}
-{{>modelInnerEnum}}
-    {{/mostInnerItems}}
-    {{/isContainer}}
-    {{/isEnum}}
   {{#gson}}
   public static final String SERIALIZED_NAME_{{nameInSnakeCase}} = "{{baseName}}";
   {{/gson}}
@@ -49,10 +39,10 @@ public class {{classname}} {
   @SerializedName(SERIALIZED_NAME_{{nameInSnakeCase}})
   {{/gson}}
   {{#isContainer}}
-  private {{{datatypeWithEnum}}} {{name}}{{#required}}{{#defaultValue}} = {{{.}}}{{/defaultValue}}{{/required}}{{^required}} = null{{/required}};
+  private {{{dataType}}} {{name}}{{#required}} = {{#isEnum}}{{#allowableValues}}{{#values}}{{#-first}}"{{{.}}}"{{/-first}}{{/values}}{{/allowableValues}}{{/isEnum}}{{^isEnum}}{{#defaultValue}}{{{.}}}{{/defaultValue}}{{/isEnum}}{{/required}}{{^required}} = null{{/required}};
   {{/isContainer}}
   {{^isContainer}}
-  {{#isDiscriminator}}protected{{/isDiscriminator}}{{^isDiscriminator}}private{{/isDiscriminator}} {{{datatypeWithEnum}}} {{name}}{{#defaultValue}} = {{{.}}}{{/defaultValue}};
+  {{#isDiscriminator}}protected{{/isDiscriminator}}{{^isDiscriminator}}private{{/isDiscriminator}} {{{dataType}}} {{name}}{{#defaultValue}} = {{{.}}}{{/defaultValue}};
   {{/isContainer}}
 
   {{/vars}}
@@ -69,7 +59,7 @@ public class {{classname}} {
 
   public {{classname}}(
   {{#readOnlyVars}}
-  {{{datatypeWithEnum}}} {{name}}{{^-last}}, {{/-last}}
+  {{{dataType}}} {{name}}{{^-last}}, {{/-last}}
   {{/readOnlyVars}}
   ) {
     this();
@@ -82,13 +72,13 @@ public class {{classname}} {
   {{#vars}}
 
   {{^isReadOnly}}
-  public {{classname}} {{name}}({{{datatypeWithEnum}}} {{name}}) {
+  public {{classname}} {{name}}({{{dataType}}} {{name}}) {
     this.{{name}} = {{name}};
     return this;
   }
 
   {{#isArray}}
-  public {{classname}} add{{nameInCamelCase}}Item({{{items.datatypeWithEnum}}} {{name}}Item) {
+  public {{classname}} add{{nameInCamelCase}}Item({{{items.dataType}}} {{name}}Item) {
     {{^required}}
     if (this.{{name}} == null) {
       this.{{name}} = {{{defaultValue}}};
@@ -100,9 +90,9 @@ public class {{classname}} {
   {{/isArray}}
   {{#isMap}}
 
-  public {{classname}} put{{nameInCamelCase}}Item(String key, {{{items.datatypeWithEnum}}} {{name}}Item) {
+  public {{classname}} put{{nameInCamelCase}}Item(String key, {{{items.dataType}}} {{name}}Item) {
     if (this.{{name}} == null || !this.{{name}}.isPresent()) {
-      this.{{name}} = JsonNullable.<{{{datatypeWithEnum}}}>of({{{defaultValue}}});
+      this.{{name}} = JsonNullable.<{{{dataType}}}>of({{{defaultValue}}});
     }
     try {
       this.{{name}}.get().put(key, {{name}}Item);
@@ -156,12 +146,12 @@ public class {{classname}} {
 {{#swagger1AnnotationLibrary}}
   @ApiModelProperty({{#example}}example = "{{{.}}}", {{/example}}{{#required}}required = {{required}}, {{/required}}value = "{{{description}}}")
 {{/swagger1AnnotationLibrary}}
-  public {{{datatypeWithEnum}}} {{getter}}() {
+  public {{{dataType}}} {{getter}}() {
     return {{name}};
   }
 
   {{^isReadOnly}}
-  public void {{setter}}({{{datatypeWithEnum}}} {{name}}) {
+  public void {{setter}}({{{dataType}}} {{name}}) {
     this.{{name}} = {{name}};
   }
   {{/isReadOnly}}
@@ -245,10 +235,10 @@ public class {{classname}} {
 {{/parent}}
 {{#vars}}
 {{#isPrimitiveType}}
-    {{name}} = ({{{datatypeWithEnum}}})in.readValue(null);
+    {{name}} = ({{{dataType}}})in.readValue(null);
 {{/isPrimitiveType}}
 {{^isPrimitiveType}}
-    {{name}} = ({{{datatypeWithEnum}}})in.readValue({{complexType}}.class.getClassLoader());
+    {{name}} = ({{{dataType}}})in.readValue({{complexType}}.class.getClassLoader());
 {{/isPrimitiveType}}
 {{/vars}}
 {{/isArray}}

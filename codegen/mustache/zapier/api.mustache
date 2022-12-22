@@ -1,60 +1,11 @@
 import { VERSION } from './version';
+import { authentication } from './authentication';
 {{#apiInfo}}
 {{#apis}}
 {{#operations}}
 import { {{ classname }} } from './api/{{ classFilename }}';
 {{/operations}}
 {{/apis}}
-
-const authentication = {
-    type: 'custom',
-    test: (request, z, bundle) => {
-        const options = {
-            url: bundle.authData.host,
-            method: 'GET',
-        };
-
-        return z.request(options);
-    },
-    fields: [
-      {
-        key: 'host',
-        type: 'string',
-        required: true,
-        helpText: 'Found in your browsers address bar after logging in.',
-        choices: {
-            'https://api.au.whispir.com': 'Australia',
-            'https://api.ap1.whispir.com': 'Asia',
-            'https://api.us.whispir.com': 'United States',
-        }
-      },
-      {
-        key: 'username',
-        type: 'string',
-        required: true,
-        helpText: 'Used to login.',
-      },
-      {
-        key: 'password',
-        type: 'password',
-        required: true,
-        helpText: 'Used to login.',
-      },
-      {
-        key: 'apiKey',
-        type: 'password',
-        required: true,
-        helpText: 'Found on your settings page.',
-      },
-    ],
-  };
-  
-  const addHeaders = (request, z, bundle) => {
-    request.headers['X-API-KEY'] = bundle.authData.apiKey;
-    request.headers.Authorization = `Basic ${Buffer.from(`${bundle.authData.username}:${bundle.authData.password}`).toString("base64")}`;
-    request.headers['User-Agent'] = `whispir-zapier-${VERSION}`;
-    return request;
-  };
 
   const handleHTTPError = (response, z) => {
     if (response.status >= 400) {
@@ -72,7 +23,6 @@ const authentication = {
   
     // beforeRequest & afterResponse are optional hooks into the provided HTTP client
     beforeRequest: [
-      addHeaders,
     ],
   
     afterResponse: [

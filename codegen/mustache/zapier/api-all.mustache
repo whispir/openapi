@@ -1,4 +1,5 @@
 import { Bundle } from 'zapier-platform-core'
+import { VERSION } from '../version';
 
 export type InputBundle<T extends readonly Record<'key', any>[]> = Bundle<Record<T[number]['key'], any>>;
 
@@ -61,3 +62,10 @@ export const transformInputData = (input: any): any => {
   
     return output;
 }
+
+export const addHeaders = (request, z, bundle) => {
+  request.headers['X-API-KEY'] = bundle.authData.apiKey;
+  request.headers.Authorization = `Basic ${Buffer.from(`${bundle.authData.username}:${bundle.authData.password}`).toString("base64")}`;
+  request.headers['User-Agent'] = `whispir-zapier-${VERSION}`;
+  return request;
+};

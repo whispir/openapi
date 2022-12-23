@@ -17,7 +17,7 @@ public class JavaCustomClientCodegen extends JavaClientCodegen {
 
     public JavaCustomClientCodegen() {
         super();
-        apiNameSuffix = "";
+        apiNameSuffix = "Api";
     }
 
     public String getName() {

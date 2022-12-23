@@ -3981,6 +3981,7 @@ paths:
       operationId: callbackRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Callback-Accept'
         - name: callbackId
           in: path
           required: true
@@ -3988,7 +3989,6 @@ paths:
           schema:
             type: string
             example: F98A1DD47C3CA1F5
-        - $ref: '#/components/parameters/Callback-Accept'
       responses:
         '200':
           $ref: '#/components/responses/Callback'

@@ -549,7 +549,6 @@ public class {{classname}} {
         List<{{modelPackage}}.{{{complexType}}}> {{baseName}}Value = {{baseName}}.stream()
             .map(e -> ({{modelPackage}}.{{{complexType}}}) e).collect(Collectors.toList());
         {{/isArray}}
-
         {{^isUri}}
         {{^isArray}}
         {{^isNumber}}
@@ -557,16 +556,13 @@ public class {{classname}} {
         {{/isNumber}}
         {{/isArray}}
         {{/isUri}}
-
         {{#isNumber}}
         {{{dataType}}} {{baseName}}Value = params.{{getter}}();
         {{/isNumber}}
-
         {{#isUri}}
         {{{dataType}}} {{baseName}}Value = params.{{getter}}();
         {{/isUri}}
         {{/isPrimitiveType}}
-
         {{#isPrimitiveType}}
         {{{dataType}}} {{baseName}}Value = params.{{getter}}();
         {{/isPrimitiveType}}

@@ -1,0 +1,4 @@
+files:
+  Version.mustache:
+    destinationFilename: src/main/java/com/whispir/client/Version.java
+    templateType: SupportingFiles

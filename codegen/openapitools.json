@@ -39,6 +39,7 @@
           "licenseName": "MIT",
           "licenseUrl": "https://opensource.org/licenses/MIT"
         },
+        "config": "config/java.yml",
         "templateDir": "mustache/java"
       }
     }

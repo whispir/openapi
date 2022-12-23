@@ -3,15 +3,12 @@ package com.whispir;
 import java.util.Base64;
 
 public abstract class Whispir {
-    public static final String API_VERSION = "1.0.0";
-    public static final String DEFAULT_HOST = "https://api.whispir.com";
-
     public static volatile String username;
     public static volatile String password;
     public static volatile String apiKey;
-    public static volatile String host = DEFAULT_HOST;
+    public static volatile String host;
 
-    public static String getAuthenticationHeader() {
+    public static String getAuthorizationHeader() {
         return Base64.getEncoder().encodeToString((String.format("%s:%s", username, password)).getBytes());
     }
 }

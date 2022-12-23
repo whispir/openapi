@@ -30,13 +30,9 @@ import {{invokerPackage}}.JSON;
 {{/description}}
 {{/swagger1AnnotationLibrary}}
 public class {{classname}} {
-
   {{#vars}}
   {{#gson}}
-  public static final String SERIALIZED_NAME_{{nameInSnakeCase}} = "{{baseName}}";
-  {{/gson}}
-  {{#gson}}
-  @SerializedName(SERIALIZED_NAME_{{nameInSnakeCase}})
+  @SerializedName("{{baseName}}")
   {{/gson}}
   {{#isContainer}}
   private {{{dataType}}} {{name}};
@@ -46,72 +42,8 @@ public class {{classname}} {
   {{/isContainer}}
 
   {{/vars}}
-  public {{classname}}() {
-    {{#gson}}
-    {{#discriminator}}
-    {{^discriminator.isEnum}}
-    this.{{{discriminatorName}}} = this.getClass().getSimpleName();
-    {{/discriminator.isEnum}}
-    {{/discriminator}}
-    {{/gson}}
-  }
-  {{#vendorExtensions.x-has-readonly-properties}}
-
-  public {{classname}}(
-  {{#readOnlyVars}}
-  {{{dataType}}} {{name}}{{^-last}}, {{/-last}}
-  {{/readOnlyVars}}
-  ) {
-    this();
-  {{#readOnlyVars}}
-    this.{{name}} = {{name}};
-  {{/readOnlyVars}}
-  }
-
-  {{/vendorExtensions.x-has-readonly-properties}}
   {{#vars}}
-
-  {{^isReadOnly}}
-  public {{classname}} {{name}}({{{dataType}}} {{name}}) {
-    this.{{name}} = {{name}};
-    return this;
-  }
-
-  {{#isArray}}
-  public {{classname}} add{{nameInCamelCase}}Item({{{items.dataType}}} {{name}}Item) {
-    {{^required}}
-    if (this.{{name}} == null) {
-      this.{{name}} = {{{defaultValue}}};
-    }
-    {{/required}}
-    this.{{name}}.add({{name}}Item);
-    return this;
-  }
-  {{/isArray}}
-  {{#isMap}}
-
-  public {{classname}} put{{nameInCamelCase}}Item(String key, {{{items.dataType}}} {{name}}Item) {
-    if (this.{{name}} == null || !this.{{name}}.isPresent()) {
-      this.{{name}} = JsonNullable.<{{{dataType}}}>of({{{defaultValue}}});
-    }
-    try {
-      this.{{name}}.get().put(key, {{name}}Item);
-    } catch (java.util.NoSuchElementException e) {
-      // this can never happen, as we make sure above that the value is present
-    }
-    return this;
-    {{^required}}
-    if (this.{{name}} == null) {
-      this.{{name}} = {{{defaultValue}}};
-    }
-    {{/required}}
-    this.{{name}}.put(key, {{name}}Item);
-    return this;
-  }
-  {{/isMap}}
-
-  {{/isReadOnly}}
-   /**
+  /**
   {{#description}}
    * {{.}}
   {{/description}}
@@ -149,7 +81,6 @@ public class {{classname}} {
   public {{{dataType}}} {{getter}}() {
     return {{name}};
   }
-
   {{^isReadOnly}}
   public void {{setter}}({{{dataType}}} {{name}}) {
     this.{{name}} = {{name}};
@@ -157,35 +88,6 @@ public class {{classname}} {
   {{/isReadOnly}}
   {{/vars}}
 {{>libraries/okhttp-gson/additional_properties}}
-
-  @Override
-  public boolean equals(Object o) {
-  {{#useReflectionEqualsHashCode}}
-    return EqualsBuilder.reflectionEquals(this, o, false, null, true);
-  {{/useReflectionEqualsHashCode}}
-  {{^useReflectionEqualsHashCode}}
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }{{#hasVars}}
-    {{classname}} {{classVarName}} = ({{classname}}) o;
-    return {{#vars}}{{#vendorExtensions.x-is-jackson-optional-nullable}}equalsNullable(this.{{name}}, {{classVarName}}.{{name}}){{/vendorExtensions.x-is-jackson-optional-nullable}}{{^vendorExtensions.x-is-jackson-optional-nullable}}{{#isByteArray}}Arrays{{/isByteArray}}{{^isByteArray}}Objects{{/isByteArray}}.equals(this.{{name}}, {{classVarName}}.{{name}}){{/vendorExtensions.x-is-jackson-optional-nullable}}{{^-last}} &&
-        {{/-last}}{{/vars}}{{#isAdditionalPropertiesTrue}}&&
-        Objects.equals(this.additionalProperties, {{classVarName}}.additionalProperties){{/isAdditionalPropertiesTrue}}{{#parent}} &&
-        super.equals(o){{/parent}};{{/hasVars}}{{^hasVars}}
-    return {{#parent}}super.equals(o){{/parent}}{{^parent}}true{{/parent}};{{/hasVars}}
-  {{/useReflectionEqualsHashCode}}
-  }{{#vendorExtensions.x-jackson-optional-nullable-helpers}}
-  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
-    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
-  }{{/vendorExtensions.x-jackson-optional-nullable-helpers}}
-
-  @Override
-  public int hashCode() {
-    return Objects.hash({{#vars}}{{^isByteArray}}{{name}}{{/isByteArray}}{{#isByteArray}}Arrays.hashCode({{name}}){{/isByteArray}}{{^-last}}, {{/-last}}{{/vars}}{{#parent}}{{#hasVars}}, {{/hasVars}}super.hashCode(){{/parent}}{{#isAdditionalPropertiesTrue}}{{#hasVars}}, {{/hasVars}}{{^hasVars}}{{#parent}}, {{/parent}}{{/hasVars}}additionalProperties{{/isAdditionalPropertiesTrue}});
-  }
 
   @Override
   public String toString() {
@@ -275,8 +177,8 @@ public class {{classname}} {
   };
 {{/parcelableModel}}
 
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
+  private static HashSet<String> openapiFields;
+  private static HashSet<String> openapiRequiredFields;
 
   static {
     // a set of all properties/fields (JSON key names)

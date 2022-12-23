@@ -7075,51 +7075,50 @@ components:
       description: A fixed object structure used by for Whispir internally for tracking purposes.
       type: object
       readOnly: true
-      required:
-        - period
-        - rule
-        - type
-        - publishToWeb
-        - expiryDay
-        - expiryHour
-        - expiryMin
-        - feedIds
-        - bool
       properties:
         period:
           description: The period of the message delivery.
           type: string
           example: ''
+          readOnly: true
         rule:
           description: The rule of the message delivery.
           type: string
           example: ''
+          readOnly: true
         type:
           description: The type of the message delivery.
           type: string
           example: ''
+          readOnly: true
         publishToWeb:
           description: Specifies whether the message was published to the web.
           type: boolean
+          readOnly: true
         expiryDay:
           description: Specifies the number of days before the message expires.
           type: number
           example: 0
+          readOnly: true
         expiryHour:
           description: Specifies the number of hours before the message expires.
           type: number
           example: 0
+          readOnly: true
         expiryMin:
           description: Specifies the number of minutes before the message expires.
           type: number
           example: 0
+          readOnly: true
         feedIds:
           description: The feeds identifier for the message delivery.
           type: string
           example: ''
+          readOnly: true
         bool:
           description: The bool field for the message delivery.
           type: boolean
+          readOnly: true
       x-examples:
         Example:
           period: ''

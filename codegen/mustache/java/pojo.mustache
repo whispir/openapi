@@ -39,10 +39,10 @@ public class {{classname}} {
   @SerializedName(SERIALIZED_NAME_{{nameInSnakeCase}})
   {{/gson}}
   {{#isContainer}}
-  private {{{dataType}}} {{name}}{{#required}} = {{#isEnum}}{{#allowableValues}}{{#values}}{{#-first}}"{{{.}}}"{{/-first}}{{/values}}{{/allowableValues}}{{/isEnum}}{{^isEnum}}{{#defaultValue}}{{{.}}}{{/defaultValue}}{{/isEnum}}{{/required}}{{^required}} = null{{/required}};
+  private {{{dataType}}} {{name}};
   {{/isContainer}}
   {{^isContainer}}
-  {{#isDiscriminator}}protected{{/isDiscriminator}}{{^isDiscriminator}}private{{/isDiscriminator}} {{{dataType}}} {{name}}{{#defaultValue}} = {{{.}}}{{/defaultValue}};
+  {{#isDiscriminator}}protected{{/isDiscriminator}}{{^isDiscriminator}}private{{/isDiscriminator}} {{{dataType}}} {{name}};
   {{/isContainer}}
 
   {{/vars}}
@@ -160,6 +160,10 @@ public class {{classname}} {
 
   @Override
   public boolean equals(Object o) {
+  {{#useReflectionEqualsHashCode}}
+    return EqualsBuilder.reflectionEquals(this, o, false, null, true);
+  {{/useReflectionEqualsHashCode}}
+  {{^useReflectionEqualsHashCode}}
     if (this == o) {
       return true;
     }
@@ -167,12 +171,16 @@ public class {{classname}} {
       return false;
     }{{#hasVars}}
     {{classname}} {{classVarName}} = ({{classname}}) o;
-    return {{#vars}}equalsNullable(this.{{name}}, {{classVarName}}.{{name}}){{#isByteArray}}Arrays{{/isByteArray}}{{^isByteArray}}Objects{{/isByteArray}}.equals(this.{{name}}, {{classVarName}}.{{name}}){{^-last}} &&
+    return {{#vars}}{{#vendorExtensions.x-is-jackson-optional-nullable}}equalsNullable(this.{{name}}, {{classVarName}}.{{name}}){{/vendorExtensions.x-is-jackson-optional-nullable}}{{^vendorExtensions.x-is-jackson-optional-nullable}}{{#isByteArray}}Arrays{{/isByteArray}}{{^isByteArray}}Objects{{/isByteArray}}.equals(this.{{name}}, {{classVarName}}.{{name}}){{/vendorExtensions.x-is-jackson-optional-nullable}}{{^-last}} &&
         {{/-last}}{{/vars}}{{#isAdditionalPropertiesTrue}}&&
         Objects.equals(this.additionalProperties, {{classVarName}}.additionalProperties){{/isAdditionalPropertiesTrue}}{{#parent}} &&
         super.equals(o){{/parent}};{{/hasVars}}{{^hasVars}}
     return {{#parent}}super.equals(o){{/parent}}{{^parent}}true{{/parent}};{{/hasVars}}
-  }
+  {{/useReflectionEqualsHashCode}}
+  }{{#vendorExtensions.x-jackson-optional-nullable-helpers}}
+  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
+    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
+  }{{/vendorExtensions.x-jackson-optional-nullable-helpers}}
 
   @Override
   public int hashCode() {

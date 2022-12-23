@@ -7075,51 +7075,50 @@ components:
       description: A fixed object structure used by for Whispir internally for tracking purposes.
       type: object
       readOnly: true
-      required:
-        - period
-        - rule
-        - type
-        - publishToWeb
-        - expiryDay
-        - expiryHour
-        - expiryMin
-        - feedIds
-        - bool
       properties:
         period:
           description: The period of the message delivery.
           type: string
           example: ''
+          readOnly: true
         rule:
           description: The rule of the message delivery.
           type: string
           example: ''
+          readOnly: true
         type:
           description: The type of the message delivery.
           type: string
           example: ''
+          readOnly: true
         publishToWeb:
           description: Specifies whether the message was published to the web.
           type: boolean
+          readOnly: true
         expiryDay:
           description: Specifies the number of days before the message expires.
           type: number
           example: 0
+          readOnly: true
         expiryHour:
           description: Specifies the number of hours before the message expires.
           type: number
           example: 0
+          readOnly: true
         expiryMin:
           description: Specifies the number of minutes before the message expires.
           type: number
           example: 0
+          readOnly: true
         feedIds:
           description: The feeds identifier for the message delivery.
           type: string
           example: ''
+          readOnly: true
         bool:
           description: The bool field for the message delivery.
           type: boolean
+          readOnly: true
       x-examples:
         Example:
           period: ''
@@ -7605,11 +7604,6 @@ components:
           mimeType: application/json
           derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
       properties:
-        id:
-          type: string
-          example: 9B9E2425AAFEEE49E9D9112B6BAC22A9
-          description: The identifier for the resource.
-          readOnly: true
         name:
           type: string
           description: Specifies the name of the file being uploaded. The extension of the file too is allowed to be present in the name.
@@ -7811,12 +7805,6 @@ components:
           type: string
           description: Information which helps to label related message templates together
           example: campaign
-          readOnly: true
-        id:
-          type: string
-          example: 7DB65E1D8853D1C8
-          description: specifies the id of the message template
-          default: 7DB65E1D8853D1C8
           readOnly: true
       required:
         - messageTemplateName
@@ -8528,12 +8516,6 @@ components:
           rules: '[{"ruleFilter" : "division", "ruleFilterActualName" : "Division", "ruleContent" : "sales"}]'
       description: 'Static Distribution Lists are manually managed and maintained. They can include Contacts, Users and other Distribution Lists'
       properties:
-        id:
-          type: string
-          description: |
-            ID of the distribution list
-          example: 5AFEB61102963D7
-          readOnly: true
         name:
           type: string
           example: My Distribution List
@@ -8637,8 +8619,6 @@ components:
           $ref: '#/components/schemas/Links'
       required:
         - name
-      x-stoplight:
-        id: 28a19b7a35a13
     DistributionListCollection:
       type: object
       description: list of distribution lists
@@ -8859,15 +8839,6 @@ components:
               host: api.au.whispir.com
               port: -1
       properties:
-        id:
-          type: string
-          maxLength: 32
-          description: |-
-            The id of the callback. 
-
-            This is the value that should be passed when referring to the callback using the API endpoints
-          example: 4452AC8359535C46
-          readOnly: true
         name:
           type: string
           description: |-
@@ -9062,12 +9033,6 @@ components:
       x-tags:
         - Callbacks
       properties:
-        id:
-          type: string
-          description: The unique ID of the specific call within Whispir
-          maxLength: 32
-          example: C96962B74DC57EF30F00E7097AC81A45
-          readOnly: true
         messageId:
           type: string
           minLength: 1
@@ -9220,11 +9185,6 @@ components:
               host: api.au.whispir.com
               port: -1
       properties:
-        id:
-          type: string
-          example: 70F2492146292826
-          description: Specifies the ID for the workspace that has been created
-          readOnly: true
         projectName:
           type: string
           description: Specifies the name of the Workspace to be created.
@@ -9499,11 +9459,6 @@ components:
               port: -1
       description: The user object.
       properties:
-        id:
-          type: string
-          description: The ID of the user.
-          example: 4DC922649AFE370C
-          readOnly: true
         userName:
           type: string
           description: Specifies the username for the account
@@ -9873,11 +9828,6 @@ components:
               rel: retrieveEventMessages
               method: GET
       properties:
-        id:
-          type: string
-          description: Id of the event
-          example: 888E0A343770A7D1
-          readOnly: true
         eventLabel:
           type: string
           description: Specifies the name of the label used for the messages sent under this event. This needs to match with the name of the event templates available
@@ -10069,11 +10019,6 @@ components:
         - Custom Lists
       title: Custom List
       properties:
-        id:
-          type: string
-          example: 4B4625BAEB7E4D58
-          description: Specifies the unique ID of the list
-          readOnly: true
         name:
           type: string
           example: Day of Week

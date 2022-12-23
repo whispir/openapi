@@ -15,6 +15,13 @@ import java.util.Map;
 import java.io.InputStream;
 {{/supportStreaming}}
 {{/fullJavaUtil}}
+import java.net.URI;
+
+{{#operations}}
+{{#operation}}
+import {{package}}.{{classname}}.{{operationIdCamelCase}}Params;
+{{/operation}}
+{{/operations}}
 
 /**
  * API tests for {{classname}}
@@ -40,7 +47,34 @@ public class {{classname}}Test {
         {{/isBodyParam}}
         {{#isBodyParam}}
         {{#vars}}
+        {{^isReadOnly}}
+        {{^isPrimitiveType}}
+        {{#isArray}}
+        List<{{operationIdCamelCase}}Params.{{{complexType}}}> {{baseName}} = null; 
+        {{/isArray}}
+        {{#isUri}}  
         {{{dataType}}} {{baseName}} = null;
+        {{/isUri}}              
+        {{#isNumber}}
+         {{{dataType}}} {{baseName}} = null;
+        {{/isNumber}}
+        {{^isUri}}
+        {{^isArray}}
+        {{^isNumber}}
+        {{operationIdCamelCase}}Params.{{{dataType}}} {{baseName}} = null;
+        {{/isNumber}}
+        {{/isArray}}
+        {{/isUri}}            
+        {{/isPrimitiveType}}
+        {{#isPrimitiveType}}
+        {{#isEnum}}
+        {{operationIdCamelCase}}Params.{{enumName}} {{baseName}} = null;
+        {{/isEnum}}
+        {{^isEnum}}
+        {{{dataType}}} {{baseName}} = null;
+        {{/isEnum}}
+        {{/isPrimitiveType}}
+        {{/isReadOnly}}
         {{/vars}}
         {{/isBodyParam}}
         {{/requiredParams}}
@@ -58,12 +92,9 @@ public class {{classname}}Test {
         {{/isBodyParam}}
         {{#isBodyParam}}
         {{#vars}}
-        {{^isArray}}
+        {{^isReadOnly}}
                                         .{{setter}}({{baseName}})
-        {{/isArray}}                                        
-        {{#isArray}}
-                                        .add{{complexType}}({{baseName}})
-        {{/isArray}}
+        {{/isReadOnly}}
         {{/vars}}                                        
         {{/isBodyParam}}
         {{/requiredParams}}

@@ -24,7 +24,7 @@
           "groupId": "com.whispir",
           "invokerPackage": "com.whispir.client",
           "modelPackage": "com.whispir.model",
-          "apiPackage": "com.whispir.params",
+          "apiPackage": "com.whispir.api",
           "artifactId": "whispir-java",
           "artifactUrl": "https://github.com/whispir/whispir-java",
           "artifactDescription": "Whispir Java Library",

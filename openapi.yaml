@@ -1769,6 +1769,7 @@ paths:
       operationId: templateRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Template-Accept'
         - name: templateId
           in: path
           description: The identifier for the template.
@@ -1776,7 +1777,6 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
-        - $ref: '#/components/parameters/Template-Accept'
       responses:
         '201':
           $ref: '#/components/responses/Template'
@@ -1810,6 +1810,8 @@ paths:
       operationId: templateUpdate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Template-Content-Type'
+        - $ref: '#/components/parameters/Template-Accept'
         - name: templateId
           in: path
           description: The identifier for the template.
@@ -1817,8 +1819,6 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
-        - $ref: '#/components/parameters/Template-Content-Type'
-        - $ref: '#/components/parameters/Template-Accept'
       requestBody:
         content:
           application/vnd.whispir.template-v1+json:
@@ -1918,6 +1918,8 @@ paths:
       operationId: templateDelete
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Template-Content-Type'
+        - $ref: '#/components/parameters/Template-Accept'
         - name: templateId
           in: path
           description: The identifier for the template.
@@ -1925,8 +1927,6 @@ paths:
           schema:
             type: string
             example: 321D8505157C5F27
-        - $ref: '#/components/parameters/Template-Content-Type'
-        - $ref: '#/components/parameters/Template-Accept'
       responses:
         '204':
           description: No Content
@@ -4123,6 +4123,8 @@ paths:
       description: Delete a callback object
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Callback-Content-Type'
+        - $ref: '#/components/parameters/Callback-Accept'
         - name: callbackId
           in: path
           description: Enter Callback id.
@@ -4130,8 +4132,6 @@ paths:
           schema:
             type: string
             example: 41048D9483C8CF2A
-        - $ref: '#/components/parameters/Callback-Content-Type'
-        - $ref: '#/components/parameters/Callback-Accept'
       tags:
         - Callbacks
   '/callbacks/{callbackId}/calls':
@@ -4388,6 +4388,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Accept'
+        - $ref: '#/components/parameters/workspaceId'
       responses:
         '200':
           $ref: '#/components/responses/Workspace'
@@ -4411,8 +4412,6 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
-    parameters:
-      - $ref: '#/components/parameters/workspaceId'
     put:
       summary: Update a workspace
       x-sdkOperation: update
@@ -4445,6 +4444,7 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Content-Type'
         - $ref: '#/components/parameters/Workspace-Accept'
+        - $ref: '#/components/parameters/workspaceId'
       requestBody:
         content:
           application/vnd.whispir.workspace-v1+json:
@@ -5317,6 +5317,7 @@ paths:
       operationId: userRetrieve
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/User-Accept'
         - name: userId
           description: The identifier for the User.
           in: path
@@ -5324,7 +5325,6 @@ paths:
           schema:
             type: string
             example: 4821DCC420494A3A
-        - $ref: '#/components/parameters/User-Accept'
       responses:
         '200':
           $ref: '#/components/responses/User'
@@ -5370,6 +5370,8 @@ paths:
       operationId: userUpdate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
         - name: userId
           in: path
           description: Enter Users id.
@@ -5377,8 +5379,6 @@ paths:
           schema:
             type: string
             example: 4821DCC420494A3A
-        - $ref: '#/components/parameters/User-Content-Type'
-        - $ref: '#/components/parameters/User-Accept'
       requestBody:
         content:
           application/vnd.whispir.user-v1+json:
@@ -5499,6 +5499,8 @@ paths:
       operationId: userDelete
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/User-Content-Type'
+        - $ref: '#/components/parameters/User-Accept'
         - name: userId
           in: path
           description: Enter User id
@@ -5506,8 +5508,6 @@ paths:
           schema:
             type: string
             example: 4821DCC420494A3A
-        - $ref: '#/components/parameters/User-Content-Type'
-        - $ref: '#/components/parameters/User-Accept'
       responses:
         '204':
           description: No Content

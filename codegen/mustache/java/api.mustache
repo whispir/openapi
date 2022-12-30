@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 {{/fullJavaUtil}}
 import javax.ws.rs.core.GenericType;
 import java.net.URI;
@@ -455,6 +456,119 @@ public class {{classname}} {
      * @param params The param instance required to create {{operationIdCamelCase}}Request
      * @return {{{returnType}}}{{^returnType}}void{{/returnType}}
      */
+
+    public static {{{returnType}}}{{^returnType}}void{{/returnType}} {{vendorExtensions.x-sdkOperation}}(Map<String, Object> params) throws ApiException {
+        // retrieving apiKeyAuth value from apiClient
+        String xApiKey = Whispir.apiKey;
+        {{#requiredParams}}
+        {{^isBodyParam}}
+        {{#vendorExtensions.x-isContentType}}
+        {{{dataType}}} {{paramName}} = "{{defaultValue}}";
+        {{/vendorExtensions.x-isContentType}}        
+        {{^vendorExtensions.x-isApiKey}}
+        {{^vendorExtensions.x-isContentType}}
+        {{{dataType}}} {{paramName}} = ({{{dataType}}}) params.get("{{{paramName}}}");
+
+        if({{paramName}} == null || {{paramName}}.isEmpty()) {
+            throw new ApiException("Missing the required parameter '{{paramName}}'");
+        }
+        {{/vendorExtensions.x-isContentType}}
+        {{/vendorExtensions.x-isApiKey}}
+        {{/isBodyParam}}
+        {{#isBodyParam}}
+        {{#vars}}
+        {{^isReadOnly}}
+        {{^isPrimitiveType}}
+        {{^isEnum}}
+        {{#isArray}}
+        List<Object> {{baseName}} = Arrays.asList(params.get("{{baseName}}"));
+        List<{{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}> {{baseName}}Value = {{baseName}}.stream()
+            .map(e -> ({{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}) e).collect(Collectors.toList());
+        {{/isArray}}
+        {{^isUri}}
+        {{^isArray}}
+        {{^isNumber}}
+        Object {{baseName}}Value = params.get("{{{baseName}}}");
+        {{/isNumber}}
+        {{/isArray}}
+        {{/isUri}}
+        {{#isNumber}}
+        {{{dataType}}} {{baseName}}Value = ({{{dataType}}}) params.get("{{{baseName}}}");
+        {{/isNumber}}
+        {{#isUri}}
+        {{{dataType}}} {{baseName}}Value = ({{{dataType}}}) params.get("{{{baseName}}}");
+        {{/isUri}}
+        {{/isEnum}}
+        {{#isEnum}}
+        {{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{datatypeWithEnum}}} {{baseName}}Value = {{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{datatypeWithEnum}}}.valueOf(({{dataType}}) params.get("{{{baseName}}}"));
+        {{/isEnum}}
+        {{/isPrimitiveType}}
+        {{#isPrimitiveType}}
+        {{#isEnum}}
+        {{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{datatypeWithEnum}}} {{baseName}}Value = {{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{datatypeWithEnum}}}.valueOf(({{dataType}}) params.get("{{{baseName}}}"));
+        {{/isEnum}}
+        {{^isEnum}}
+        {{{dataType}}} {{baseName}}Value = ({{{dataType}}}) params.get("{{{baseName}}}");
+        {{/isEnum}}
+        {{/isPrimitiveType}}
+        {{#required}}
+        if({{baseName}}Value == null) {
+            throw new ApiException("Missing the required property value of '{{baseName}}'");
+        }
+        {{/required}}
+        {{/isReadOnly}}
+        {{/vars}}
+        {{/isBodyParam}}
+        {{/requiredParams}}
+        {{^hasBodyParam}}
+        {{! Instantiate request object when the operation does not contain 'bodyParam', as  }}
+        {{operationIdCamelCase}}Request request = new {{operationIdCamelCase}}Request({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}});
+        {{/hasBodyParam}}
+        {{#hasBodyParam}}
+        {{^hasOptionalParams}}
+        {{operationIdCamelCase}}Params tempParams = {{operationIdCamelCase}}Params.builder()
+        {{#requiredParams}}
+        {{^isBodyParam}}
+        {{! Ensure to include requiredParams that aren't 'bodyParam' (like "workspaceId") to be included into the builder pattern constructor }}
+        {{^vendorExtensions.x-isApiKey}}
+        {{^vendorExtensions.x-isContentType}}
+            .set{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{#isModel}}({{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}) {{/isModel}}{{baseName}}){{#-last}}{{^optionalParams}}.build();{{/optionalParams}}{{/-last}}
+        {{/vendorExtensions.x-isContentType}}
+        {{/vendorExtensions.x-isApiKey}}  
+        {{/isBodyParam}}
+        {{#isBodyParam}}
+        {{#vars}}
+        {{^isReadOnly}}
+            .set{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{#isModel}}({{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}) {{/isModel}}{{baseName}}Value){{#-last}}{{^optionalParams}}.build();{{/optionalParams}}{{/-last}}
+        {{/isReadOnly}}
+        {{/vars}}
+        {{/isBodyParam}}
+        {{/requiredParams}}
+        {{#optionalParams}}
+            .set{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{paramName}}){{#-last}}.build();{{/-last}}
+        {{/optionalParams}}
+        
+        {{#returnType}}return {{/returnType}}{{vendorExtensions.x-sdkOperation}}(tempParams);
+        {{/hasOptionalParams}}
+        {{#hasOptionalParams}}
+        // Instantiate 'request' object when the operation contains 'optionalParams'
+        {{operationIdCamelCase}}Request request = new {{operationIdCamelCase}}Request({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}});
+        {{#optionalParams}}
+        // Ensure to include all of the 'optionalParams' that are passed
+        {{! ensure to include all of the optionalParams that get passed in }}
+        {{{dataType}}} {{paramName}} = null;
+        if(params.containsKey("{{paramName}}") && params.get("{{{paramName}}}") != null){
+            {{paramName}} = ({{{dataType}}}) params.get("{{{paramName}}}");
+            request.{{paramName}}({{paramName}});
+        }
+        {{/optionalParams}}        
+        {{#returnType}}return {{/returnType}}request.execute();
+        {{/hasOptionalParams}}
+        {{/hasBodyParam}}
+        {{^hasBodyParam}}
+        {{#returnType}}return {{/returnType}}request.execute();
+        {{/hasBodyParam}}          
+    }
 
     public static {{{returnType}}}{{^returnType}}void{{/returnType}} {{vendorExtensions.x-sdkOperation}}({{operationIdCamelCase}}Params params) throws ApiException {
         // retrieving apiKeyAuth value from apiClient

@@ -458,22 +458,25 @@ public class {{classname}} {
      */
 
     public static {{{returnType}}}{{^returnType}}void{{/returnType}} {{vendorExtensions.x-sdkOperation}}(Map<String, Object> params) throws ApiException {
-        // retrieving apiKeyAuth value from apiClient
-        String xApiKey = Whispir.apiKey;
+        {{#optionalParams}}
+        {{! ensure to include all of the optionalParams that get passed in }}
+        {{{dataType}}} {{paramName}} = null;
+        if(params.containsKey("{{paramName}}") && params.get("{{{paramName}}}") != null){
+            {{paramName}} = ({{{dataType}}}) params.get("{{{paramName}}}");
+        }
+        {{/optionalParams}} 
         {{#requiredParams}}
         {{^isBodyParam}}
-        {{#vendorExtensions.x-isContentType}}
-        {{{dataType}}} {{paramName}} = "{{defaultValue}}";
-        {{/vendorExtensions.x-isContentType}}        
         {{^vendorExtensions.x-isApiKey}}
         {{^vendorExtensions.x-isContentType}}
+        {{! extracting all required path and header params (e.g. "workspaceId", "eventType") }}
         {{{dataType}}} {{paramName}} = ({{{dataType}}}) params.get("{{{paramName}}}");
 
         if({{paramName}} == null || {{paramName}}.isEmpty()) {
             throw new ApiException("Missing the required parameter '{{paramName}}'");
         }
         {{/vendorExtensions.x-isContentType}}
-        {{/vendorExtensions.x-isApiKey}}
+        {{/vendorExtensions.x-isApiKey}}       
         {{/isBodyParam}}
         {{#isBodyParam}}
         {{#vars}}
@@ -520,21 +523,44 @@ public class {{classname}} {
         {{/vars}}
         {{/isBodyParam}}
         {{/requiredParams}}
-        {{^hasBodyParam}}
-        {{! Instantiate request object when the operation does not contain 'bodyParam', as  }}
-        {{operationIdCamelCase}}Request request = new {{operationIdCamelCase}}Request({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}});
-        {{/hasBodyParam}}
+        {{#hasRequiredParams}}
+        {{#hasHeaderParams}}
         {{#hasBodyParam}}
-        {{^hasOptionalParams}}
+        {{! for any operation that only has 'bodyParam' (e.g. /PUT and /POST ops) }}
         {{operationIdCamelCase}}Params tempParams = {{operationIdCamelCase}}Params.builder()
+        {{/hasBodyParam}}
+        {{#hasPathParams}}
+        {{^hasBodyParam}}
+        {{! for any operation that only has path params (e.g. /GET "workspaces/{workspaceId}/messages{messageId}") }}
+        {{operationIdCamelCase}}Params tempParams = {{operationIdCamelCase}}Params.builder()
+        {{/hasBodyParam}}
+        {{/hasPathParams}}
+        {{#hasOptionalParams}}
+        {{^hasBodyParam}}
+        {{^hasPathParams}}
+        {{! for any operation that only has optional params (e.g. /GET list operations where you need to specify 'limit', 'offset', 'view') }}
+        {{operationIdCamelCase}}Params tempParams = {{operationIdCamelCase}}Params.builder()
+        {{/hasPathParams}}
+        {{/hasBodyParam}}
+        {{/hasOptionalParams}}
+        {{^hasBodyParam}}
+        {{^hasOptionalParams}}
+        {{^hasPathParams}}
+        {{! for any operation that does not have a body, optional and path params (e.g. Auth & Users endpoints) }}
+        {{operationIdCamelCase}}Params tempParams = null;
+        {{/hasPathParams}}
+        {{/hasOptionalParams}}
+        {{/hasBodyParam}}
+        {{/hasHeaderParams}}
+        {{/hasRequiredParams}}
         {{#requiredParams}}
         {{^isBodyParam}}
-        {{! Ensure to include requiredParams that aren't 'bodyParam' (like "workspaceId") to be included into the builder pattern constructor }}
         {{^vendorExtensions.x-isApiKey}}
         {{^vendorExtensions.x-isContentType}}
+        {{! Ensure to include requiredParams that aren't 'bodyParam' (like "workspaceId") to be included into the builder pattern constructor }}
             .set{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{#isModel}}({{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}) {{/isModel}}{{baseName}}){{#-last}}{{^optionalParams}}.build();{{/optionalParams}}{{/-last}}
         {{/vendorExtensions.x-isContentType}}
-        {{/vendorExtensions.x-isApiKey}}  
+        {{/vendorExtensions.x-isApiKey}}
         {{/isBodyParam}}
         {{#isBodyParam}}
         {{#vars}}
@@ -547,27 +573,8 @@ public class {{classname}} {
         {{#optionalParams}}
             .set{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{paramName}}){{#-last}}.build();{{/-last}}
         {{/optionalParams}}
-        
+
         {{#returnType}}return {{/returnType}}{{vendorExtensions.x-sdkOperation}}(tempParams);
-        {{/hasOptionalParams}}
-        {{#hasOptionalParams}}
-        // Instantiate 'request' object when the operation contains 'optionalParams'
-        {{operationIdCamelCase}}Request request = new {{operationIdCamelCase}}Request({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}});
-        {{#optionalParams}}
-        // Ensure to include all of the 'optionalParams' that are passed
-        {{! ensure to include all of the optionalParams that get passed in }}
-        {{{dataType}}} {{paramName}} = null;
-        if(params.containsKey("{{paramName}}") && params.get("{{{paramName}}}") != null){
-            {{paramName}} = ({{{dataType}}}) params.get("{{{paramName}}}");
-            request.{{paramName}}({{paramName}});
-        }
-        {{/optionalParams}}        
-        {{#returnType}}return {{/returnType}}request.execute();
-        {{/hasOptionalParams}}
-        {{/hasBodyParam}}
-        {{^hasBodyParam}}
-        {{#returnType}}return {{/returnType}}request.execute();
-        {{/hasBodyParam}}          
     }
 
     public static {{{returnType}}}{{^returnType}}void{{/returnType}} {{vendorExtensions.x-sdkOperation}}({{operationIdCamelCase}}Params params) throws ApiException {

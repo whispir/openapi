@@ -4,6 +4,9 @@ import {{groupId}}.Whispir;
 import {{invokerPackage}}.ApiCallback;
 import {{invokerPackage}}.ApiClient;
 import {{invokerPackage}}.ApiException;
+{{#dynamicOperations}}
+import {{invokerPackage}}.ApiOperation;
+{{/dynamicOperations}}
 import {{invokerPackage}}.ApiResponse;
 import {{invokerPackage}}.Configuration;
 import {{invokerPackage}}.Pair;
@@ -13,6 +16,10 @@ import {{invokerPackage}}.auth.ApiKeyAuth;
 import {{invokerPackage}}.Version;
 
 import com.google.gson.reflect.TypeToken;
+{{#dynamicOperations}}
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.parameters.Parameter;
+{{/dynamicOperations}}
 
 import java.io.IOException;
 {{#imports}}import {{import}};
@@ -142,8 +149,9 @@ public class {{classname}} {
         {{/allParams}}
         return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}_callback);
     }
-    static ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/allParams}}) throws ApiException {
-        okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}null);
+
+    private static ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{#vendorExtensions}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/vendorExtensions}}{{/allParams}}) throws ApiException {
+        okhttp3.Call localVarCall = {{operationId}}Call({{#allParams}}{{#vendorExtensions}}{{paramName}}, {{/vendorExtensions}}{{/allParams}}null);
         {{^returnType}}
         return localVarApiClient.execute(localVarCall);
         {{/returnType}}

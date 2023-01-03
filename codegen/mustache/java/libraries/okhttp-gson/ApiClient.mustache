@@ -54,6 +54,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import {{invokerPackage}}.auth.Authentication;
 import {{invokerPackage}}.auth.HttpBasicAuth;
 import {{invokerPackage}}.auth.HttpBearerAuth;
@@ -1095,7 +1100,26 @@ public class ApiClient {
             contentType = "application/json";
         }
         if (isJsonMime(contentType)) {
-            return JSON.deserialize(respBody, returnType);
+            // retrieve location from headers
+            String location = response.headers().get("Location");
+            if (location != null) {
+                final String regex = "\\/([^\\/]+)\\/?$";
+                final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+                final Matcher matcher = pattern.matcher(location);
+                try {
+                    matcher.find();
+                    JsonObject jsonObject = JsonParser.parseString(respBody).getAsJsonObject();
+                    jsonObject.addProperty("docId", matcher.group(1));
+                    return JSON.deserialize(jsonObject.toString(), returnType);
+                } catch (Exception e) {
+                    System.out.println("respBody is:" + respBody);
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("rawOutput", respBody);
+                    return JSON.deserialize(jsonObject.toString(), returnType);
+                }
+            } else {
+                return JSON.deserialize(respBody, returnType);
+            }
         } else if (returnType.equals(String.class)) {
             // Expecting string, return the raw response body.
             return (T) respBody;

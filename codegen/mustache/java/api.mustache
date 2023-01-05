@@ -493,8 +493,11 @@ public class {{classname}} {
         {{^isEnum}}
         {{#isArray}}
         List<Object> {{baseName}} = Arrays.asList(params.get("{{baseName}}"));
-        List<{{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}> {{baseName}}Value = {{baseName}}.stream()
-            .map(e -> ({{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}) e).collect(Collectors.toList());
+        List<{{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}> {{baseName}}Value = null;
+        if({{baseName}} != null) {
+            {{baseName}}Value = {{baseName}}.stream()
+                .map(e -> ({{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}) e).collect(Collectors.toList());
+        }
         {{/isArray}}
         {{^isUri}}
         {{^isArray}}
@@ -616,9 +619,13 @@ public class {{classname}} {
         {{^isReadOnly}}
         {{^isPrimitiveType}}
         {{#isArray}}
-        List<Object> {{baseName}} = new ArrayList<Object>(params.{{getter}}());
-        List<{{modelPackage}}.{{{complexType}}}> {{baseName}}Value = {{baseName}}.stream()
-            .map(e -> ({{modelPackage}}.{{{complexType}}}) e).collect(Collectors.toList());
+        List<{{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}> {{baseName}}List = params.{{getter}}();
+        List<{{modelPackage}}.{{{complexType}}}> {{baseName}}Value = null;
+        if({{baseName}}List != null) {
+            List<Object> {{baseName}} = new ArrayList<Object>(params.{{getter}}());
+            {{baseName}}Value = {{baseName}}.stream()
+                .map(e -> ({{modelPackage}}.{{{complexType}}}) e).collect(Collectors.toList());
+        }
         {{/isArray}}
         {{^isUri}}
         {{^isArray}}

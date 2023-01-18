@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.whispir.client.ApiResponse;
 import {{invokerPackage}}.JSON;
 
 /**
@@ -35,7 +36,7 @@ public class {{classname}} {
   public String getRawOutput() {
     return rawOutput;
   }
-
+  public ApiResponse lastResponse;
 {{#serializableModel}}
   private static final long serialVersionUID = 1L;
 
@@ -220,6 +221,7 @@ public class {{classname}} {
   * @throws IOException if the JSON Object is invalid with respect to {{classname}}
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
+  /*
       if (jsonObj == null) {
         if (!{{classname}}.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in {{{classname}}} is not found in the empty JSON string", {{classname}}.openapiRequiredFields.toString()));
@@ -315,6 +317,7 @@ public class {{classname}} {
       {{/isModel}}
       {{/isContainer}}
       {{/vars}}
+  */
   }
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
     @SuppressWarnings("unchecked")

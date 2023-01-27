@@ -393,6 +393,7 @@ public class {{classname}} {
         {{#optionalParams}}
         private {{{dataType}}} {{paramName}};
         {{/optionalParams}}
+        ApiResponse _lastResponse;
 
         private {{operationIdCamelCase}}Request({{#requiredParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}) {
             {{#requiredParams}}
@@ -436,8 +437,19 @@ public class {{classname}} {
         {{^vendorExtensions.x-streaming}}
         public {{{returnType}}}{{^returnType}}void{{/returnType}} execute() throws ApiException {
             {{#returnType}}ApiResponse<{{{.}}}> localVarResp = {{/returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});{{#returnType}}
-            return localVarResp.getData();{{/returnType}}
+            _lastResponse = localVarResp;
+            {{returnType}} data = localVarResp.getData();
+            data.lastResponse = localVarResp;
+            return data;{{/returnType}}
         }
+        /**
+         * Return the last executed API response
+         * @return ApiResponse
+         */
+        public ApiResponse getLastResponse()  {
+            return _lastResponse;
+        }
+
         {{/vendorExtensions.x-streaming}}
         {{#vendorExtensions.x-streaming}}
         public InputStream execute() throws ApiException {

@@ -1112,7 +1112,7 @@ public class ApiClient {
                     jsonObject.addProperty("docId", matcher.group(1));
                     return JSON.deserialize(jsonObject.toString(), returnType);
                 } catch (Exception e) {
-                    System.out.println("respBody is:" + respBody);
+                    System.out.println("Expected JSON response body was not received. Actual response body was `" + respBody + "`");
                     JsonObject jsonObject = new JsonObject();
                     jsonObject.addProperty("rawOutput", respBody);
                     return JSON.deserialize(jsonObject.toString(), returnType);

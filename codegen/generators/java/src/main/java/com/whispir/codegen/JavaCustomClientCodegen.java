@@ -24,7 +24,7 @@ public class JavaCustomClientCodegen extends JavaClientCodegen {
         return "java-custom";
     }
 
-    private class CustomSort implements Comparator<CodegenProperty> {
+    private class ReadOnlySort implements Comparator<CodegenProperty> {
         @Override
         public int compare(CodegenProperty o1, CodegenProperty o2) {
             boolean b1 = o1.isReadOnly;
@@ -54,7 +54,7 @@ public class JavaCustomClientCodegen extends JavaClientCodegen {
         for (ModelsMap modelsMap : models.values()) {
             for (ModelMap modelMap : modelsMap.getModels()) {
                 CodegenModel model = modelMap.getModel();
-                model.vars.sort(new CustomSort());
+                model.vars.sort(new ReadOnlySort());
                 for (CodegenProperty cp : model.vars) {
                     populateModelVars(models, cp);
                 }
@@ -71,7 +71,7 @@ public class JavaCustomClientCodegen extends JavaClientCodegen {
 
         for (CodegenOperation op : objs.getOperation()) {
             if (op.bodyParam != null) {
-                op.bodyParam.vars.sort(new CustomSort());
+                op.bodyParam.vars.sort(new ReadOnlySort());
                 for (CodegenProperty cp : op.bodyParam.vars) {
                     populateModelVars(modelsMapGlobal, cp);
                 }

@@ -2995,7 +2995,7 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-  '/workspaces/{workspaceId}/keys':
+  '/keys':
     post:
       tags:
         - Keys
@@ -3006,31 +3006,17 @@ paths:
       operationId: keyCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/Key-Accept'
-        - $ref: '#/components/parameters/Key-Content-Type'
+        - $ref: '#/components/parameters/Unified-Accept'
+        - $ref: '#/components/parameters/Unified-Content-Type'
       requestBody:
         content:
-          application/vnd.whispir.key-v1+json:
+          application/json:
             schema:
               $ref: '#/components/schemas/Key'
             examples:
               Example:
                 value:
                   id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
-                  type: basic
-                  userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
-                  clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
-                  accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
-                  enabled: true
-                  description: Key used by Engineering for testing
-                  createdTime: '2023-01-25T02:25:33+0000'
-                  lastModifiedTime: '2022-03-29T16:30:18+11:00'
-          application/vnd.whispir.key-v1+xml:
-            schema:
-              $ref: '#/components/schemas/Key'
-            examples:
-              Example:
-                value:
                   type: basic
                   userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
                   clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
@@ -3079,7 +3065,7 @@ paths:
         - $ref: '#/components/parameters/offset'
         - $ref: '#/components/parameters/sortOrder'
         - $ref: '#/components/parameters/sortFields'
-        - $ref: '#/components/parameters/Key-Accept'
+        - $ref: '#/components/parameters/Unified-Accept'
       responses:
         '200':
           $ref: '#/components/responses/Keys'
@@ -3104,9 +3090,7 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
       x-internal: true
-    parameters:
-      - $ref: '#/components/parameters/workspaceId'
-  '/workspaces/{workspaceId}/keys/{keyId}':
+  '/keys/{keyId}':
     get:
       tags:
         - Keys
@@ -3123,7 +3107,7 @@ paths:
           schema:
             type: string
             example: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
-        - $ref: '#/components/parameters/Key-Accept'
+        - $ref: '#/components/parameters/Unified-Accept'
         - $ref: '#/components/parameters/sortOrder'
         - $ref: '#/components/parameters/sortFields'
       responses:
@@ -3131,7 +3115,7 @@ paths:
           description: OK
           headers:
             Content-Type:
-              $ref: '#/components/headers/Key-Content-Type'
+              $ref: '#/components/headers/Unified-Content-Type'
             Content-Length:
               $ref: '#/components/headers/Content-Length'
             Access-Control-Allow-Origin:
@@ -3141,7 +3125,7 @@ paths:
             Expires:
               $ref: '#/components/headers/Expires'
           content:
-            application/vnd.whispir.key-v1+json:
+            application/json:
               schema:
                 $ref: '#/components/schemas/Key'
               examples:
@@ -3193,31 +3177,17 @@ paths:
           schema:
             type: string
             example: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
-        - $ref: '#/components/parameters/Key-Accept'
-        - $ref: '#/components/parameters/Key-Content-Type'
+        - $ref: '#/components/parameters/Unified-Accept'
+        - $ref: '#/components/parameters/Unified-Content-Type'
       requestBody:
         content:
-          application/vnd.whispir.key-v1+json:
+          application/json:
             schema:
               $ref: '#/components/schemas/Key'
             examples:
               Example:
                 value:
                   id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
-                  type: basic
-                  userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
-                  clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
-                  accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
-                  enabled: true
-                  description: Key used by Engineering for testing
-                  createdTime: '2023-01-25T02:25:33+0000'
-                  lastModifiedTime: '2022-03-29T16:30:18+11:00'
-          application/vnd.whispir.key-v1+xml:
-            schema:
-              $ref: '#/components/schemas/Key'
-            examples:
-              Example:
-                value:
                   type: basic
                   userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
                   clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
@@ -3306,8 +3276,6 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
       x-internal: true
-    parameters:
-      - $ref: '#/components/parameters/workspaceId'
   '/workspaces/{workspaceId}/distributionlists':
     post:
       tags:
@@ -10734,29 +10702,27 @@ components:
           - application/vnd.whispir.contact-v1+json
           - application/vnd.whispir.contact-v1+xml
       description: Application specific mime-type.
-    Key-Content-Type:
+    Unified-Content-Type:
       name: Content-Type
       x-isContentType: true
       in: header
       required: true
       schema:
         type: string
-        default: application/vnd.whispir.key-v1+json
+        default: application/json
         enum:
-          - application/vnd.whispir.key-v1+json
-          - application/vnd.whispir.key-v1+xml
+          - application/json
       description: Application specific mime-type.
-    Key-Accept:
+    Unified-Accept:
       name: Accept
       x-isContentType: true
       in: header
       required: true
       schema:
         type: string
-        default: application/vnd.whispir.key-v1+json
+        default: application/json
         enum:
-          - application/vnd.whispir.key-v1+json
-          - application/vnd.whispir.key-v1+xml
+          - application/json
       description: Application specific mime-type.
     Resource-Content-Type:
       name: Content-Type
@@ -11941,7 +11907,7 @@ components:
     Key:
       description: Example response
       content:
-        application/vnd.whispir.key-v1+json:
+        application/json:
           schema:
             $ref: '#/components/schemas/Key'
           examples:
@@ -11958,7 +11924,7 @@ components:
                 lastModifiedTime: '2022-03-29T16:30:18+11:00'
       headers:
         Content-Type:
-          $ref: '#/components/headers/Key-Content-Type'
+          $ref: '#/components/headers/Unified-Content-Type'
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
         Content-Length:
@@ -11970,12 +11936,12 @@ components:
         Location:
           schema:
             type: string
-            example: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/keys/747AB7E716C1802B6476784AEB5C9BB8'
+            example: 'https://api.au.whispir.com/keys/e2295960-1ccb-45e4-a012-bb06c4bd3fdc'
           description: The URI to fetch details of the resource.
     Keys:
       description: Example response
       content:
-        application/vnd.whispir.key-v1+json:
+        application/json:
           schema:
             $ref: '#/components/schemas/KeyCollection'
           examples:
@@ -11993,7 +11959,7 @@ components:
                     lastModifiedTime: '2022-03-29T16:30:18+11:00'
       headers:
         Content-Type:
-          $ref: '#/components/headers/Contact-Content-Type'
+          $ref: '#/components/headers/Unified-Content-Type'
         Access-Control-Allow-Origin:
           $ref: '#/components/headers/Access-Control-Allow-Origin'
         Content-Length:
@@ -12528,14 +12494,13 @@ components:
           - application/vnd.whispir.contact-v1+json
           - application/vnd.whispir.contact-v1+xml
       description: Application specific mime-type.
-    Key-Content-Type:
+    Unified-Content-Type:
       required: true
       schema:
         type: string
-        example: application/vnd.whispir.key-v1+json
+        example: application/json
         enum:
-          - application/vnd.whispir.key-v1+json
-          - application/vnd.whispir.key-v1+xml
+          - application/json
       description: Application specific mime-type.
     Event-Content-Type:
       required: true

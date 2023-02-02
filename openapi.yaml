@@ -34,6 +34,8 @@ tags:
     description: 'Contacts form the core of the Whispir offerings. They make up the base data to which and from which all communications are performed. The Whispir API provides secure cloud based storage for your contact information. This can then easily be retrieved by any application or device that requires access, and has permission to do so.'
     externalDocs:
       url: 'https://developers.whispir.com/c2NoOjM0ODAzNDA5-contact'
+  - name: Keys
+    description: 'Keys are used to manage user access.'
   - name: Distribution Lists
     description: Whispir’s API allows users to categorise their contacts into different groups to simplify the distribution of messages.
     externalDocs:
@@ -2993,6 +2995,287 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
+  '/keys':
+    post:
+      tags:
+        - Keys
+      x-sdkOperation: create
+      x-isPost: true
+      summary: Create a key
+      description: Creates a Key object.
+      operationId: keyCreate
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Unified-Accept'
+        - $ref: '#/components/parameters/Unified-Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Key'
+            examples:
+              Example:
+                value:
+                  id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
+                  type: basic
+                  userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
+                  clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
+                  accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
+                  enabled: true
+                  description: Key used by Engineering for testing
+                  createdTime: '2023-01-25T02:25:33+0000'
+                  lastModifiedTime: '2022-03-29T16:30:18+11:00'
+        description: Key object to be created
+        required: true
+      responses:
+        '201':
+          $ref: '#/components/responses/Key'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+      x-internal: true
+    get:
+      tags:
+        - Keys
+      x-sdkOperation: list
+      summary: List keys
+      description: |
+        List Keys
+      operationId: keyList
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/offset'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
+        - $ref: '#/components/parameters/Unified-Accept'
+      responses:
+        '200':
+          $ref: '#/components/responses/Keys'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+      x-internal: true
+  '/keys/{keyId}':
+    get:
+      tags:
+        - Keys
+      x-sdkOperation: retrieve
+      summary: Retrieve a key
+      description: Retrieves the specified key
+      operationId: keyRetrieve
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - name: keyId
+          in: path
+          description: The key id to fetch
+          required: true
+          schema:
+            type: string
+            example: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
+        - $ref: '#/components/parameters/Unified-Accept'
+        - $ref: '#/components/parameters/sortOrder'
+        - $ref: '#/components/parameters/sortFields'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              $ref: '#/components/headers/Unified-Content-Type'
+            Content-Length:
+              $ref: '#/components/headers/Content-Length'
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Key'
+              examples:
+                Example:
+                  value:
+                    id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
+                    type: basic
+                    userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
+                    clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
+                    accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
+                    enabled: true
+                    description: Key used by Engineering for testing
+                    createdTime: '2023-01-25T02:25:33+0000'
+                    lastModifiedTime: '2022-03-29T16:30:18+11:00'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+      x-internal: true
+    put:
+      tags:
+        - Keys
+      x-sdkOperation: update
+      summary: Update a key
+      description: Updates the specified key
+      operationId: keyUpdate
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - name: keyId
+          in: path
+          description: The key id to update
+          required: true
+          schema:
+            type: string
+            example: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
+        - $ref: '#/components/parameters/Unified-Accept'
+        - $ref: '#/components/parameters/Unified-Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Key'
+            examples:
+              Example:
+                value:
+                  id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
+                  type: basic
+                  userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
+                  clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
+                  accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
+                  enabled: true
+                  description: Key used by Engineering for testing
+                  createdTime: '2023-01-25T02:25:33+0000'
+                  lastModifiedTime: '2022-03-29T16:30:18+11:00'
+        description: Key object that needs to be updated
+        required: true
+      responses:
+        '204':
+          description: No Content
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+      x-internal: true
+    delete:
+      tags:
+        - Keys
+      x-sdkOperation: delete
+      summary: Delete a key
+      description: Deletes the speficied key
+      operationId: keyDelete
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - name: keyId
+          in: path
+          description: The id of the key to be deleted
+          required: true
+          schema:
+            type: string
+            example: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
+      responses:
+        '204':
+          description: No Content
+          headers:
+            Access-Control-Allow-Origin:
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            Cache-Control:
+              $ref: '#/components/headers/Cache-Control'
+            Expires:
+              $ref: '#/components/headers/Expires'
+        '400':
+          $ref: '#/components/responses/400BadRequest'
+        '401':
+          $ref: '#/components/responses/401Unauthorized'
+        '403':
+          $ref: '#/components/responses/403Forbidden'
+        '404':
+          $ref: '#/components/responses/404NotFound'
+        '405':
+          $ref: '#/components/responses/405MethodNotAllowed'
+        '413':
+          $ref: '#/components/responses/413EntityTooLarge'
+        '415':
+          $ref: '#/components/responses/415UnsupportedMediaType'
+        '422':
+          $ref: '#/components/responses/422UnprocessibleEntity'
+        '500':
+          $ref: '#/components/responses/500InternalServerError'
+        '501':
+          $ref: '#/components/responses/501MethodNotImplemented'
+      x-internal: true
   '/workspaces/{workspaceId}/distributionlists':
     post:
       tags:
@@ -8503,6 +8786,108 @@ components:
       title: Contact Collection
       x-tags:
         - Contacts
+    Key:
+      type: object
+      x-tags:
+        - Keys
+      title: Key
+      x-examples:
+        Example:
+          id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
+          type: basic
+          userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
+          clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
+          accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
+          enabled: true
+          description: Key used by Engineering for testing
+          createdTime: '2023-01-25T02:25:33+0000'
+          lastModifiedTime: '2022-03-29T16:30:18+11:00'
+      description: The key object.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The identifier for this key
+          example: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
+          readOnly: true
+        type:
+          type: string
+          example: basic
+          enum:
+            - basic
+            - bearer
+          description: The authentication type that this Key is used for
+          readOnly: true
+        userId:
+          type: string
+          format: uuid
+          description: The user identifier associated with this Key
+          example: d7d429e0-7e1e-4b03-ba34-e486483e76f2
+          readOnly: true
+        clientId:
+          type: string
+          format: uuid
+          description: The company identifier (client). Provided by Auth0 Management API used to revoke client access during deletion.
+          example: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
+          readOnly: true
+        accountId:
+          type: string
+          format: uuid
+          description: Nextgen account id associated with this Key
+          example: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
+          readOnly: true
+        enabled:
+          type: boolean
+          description: Determine if this Key is enabled or disabled
+        description:
+          type: string
+          description: User provided description usually used for identifying usage
+          example: Key used by Engineering for testing
+        createdTime:
+          type: string
+          format: date-time
+          example: '2023-01-25T02:25:33+0000'
+          description: Timestamp on when the Key has been created
+          readOnly: true
+        lastModifiedTime:
+          type: string
+          example: '2022-03-29T16:30:18+11:00'
+          description: Last Modified data and time
+          readOnly: true
+      required:
+        - type
+        - userId
+        - clientId
+        - accountId
+        - enabled
+      x-stoplight:
+        id: 00626f710da9c
+      x-internal: true
+    KeyCollection:
+      type: object
+      description: List keys object
+      properties:
+        keys:
+          type: array
+          description: list of keys
+          items:
+            $ref: '#/components/schemas/Key'
+      x-examples:
+        Example:
+          keys:
+            - id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
+              type: basic
+              userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
+              clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
+              accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
+              enabled: true
+              description: Key used by Engineering for testing
+              createdTime: '2023-01-25T02:25:33+0000'
+              lastModifiedTime: '2022-03-29T16:30:18+11:00'
+      title: Key Collection
+      x-tags:
+        - Keys
+      x-internal: true
     DistributionList:
       type: object
       x-tags:
@@ -10371,6 +10756,28 @@ components:
           - application/vnd.whispir.contact-v1+json
           - application/vnd.whispir.contact-v1+xml
       description: Application specific mime-type.
+    Unified-Content-Type:
+      name: Content-Type
+      x-isContentType: true
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+        enum:
+          - application/json
+      description: Application specific mime-type.
+    Unified-Accept:
+      name: Accept
+      x-isContentType: true
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+        enum:
+          - application/json
+      description: Application specific mime-type.
     Resource-Content-Type:
       name: Content-Type
       x-isContentType: true
@@ -11551,6 +11958,70 @@ components:
           $ref: '#/components/headers/Cache-Control'
         Expires:
           $ref: '#/components/headers/Expires'
+    Key:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Key'
+          examples:
+            Example:
+              value:
+                id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
+                type: basic
+                userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
+                clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
+                accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
+                enabled: true
+                description: Key used by Engineering for testing
+                createdTime: '2023-01-25T02:25:33+0000'
+                lastModifiedTime: '2022-03-29T16:30:18+11:00'
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Unified-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
+        Location:
+          schema:
+            type: string
+            example: 'https://api.au.whispir.com/keys/e2295960-1ccb-45e4-a012-bb06c4bd3fdc'
+          description: The URI to fetch details of the resource.
+    Keys:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/KeyCollection'
+          examples:
+            Example:
+              value:
+                keys:
+                  - id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
+                    type: basic
+                    userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
+                    clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
+                    accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
+                    enabled: true
+                    description: Key used by Engineering for testing
+                    createdTime: '2023-01-25T02:25:33+0000'
+                    lastModifiedTime: '2022-03-29T16:30:18+11:00'
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Unified-Content-Type'
+        Access-Control-Allow-Origin:
+          $ref: '#/components/headers/Access-Control-Allow-Origin'
+        Content-Length:
+          $ref: '#/components/headers/Content-Length'
+        Cache-Control:
+          $ref: '#/components/headers/Cache-Control'
+        Expires:
+          $ref: '#/components/headers/Expires'
     Workspace:
       description: Example workspace object response
       content:
@@ -12076,6 +12547,14 @@ components:
         enum:
           - application/vnd.whispir.contact-v1+json
           - application/vnd.whispir.contact-v1+xml
+      description: Application specific mime-type.
+    Unified-Content-Type:
+      required: true
+      schema:
+        type: string
+        example: application/json
+        enum:
+          - application/json
       description: Application specific mime-type.
     Event-Content-Type:
       required: true

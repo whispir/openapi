@@ -29,9 +29,17 @@ public class {{classname}} {
   private String docId;
   @SerializedName("rawOutput")
   private String rawOutput;
-  // Additional getters
+  // Additional getters/setters
+  /**
+   * The identifier for the resource
+   * 
+   * @return docId
+   **/
   public String getDocId() {
     return docId;
+  }
+  public void setDocId(String docId) {
+    this.docId = docId;
   }
   public String getRawOutput() {
     return rawOutput;
@@ -43,10 +51,7 @@ public class {{classname}} {
 {{/serializableModel}}
   {{#vars}}
   {{#gson}}
-  public static final String SERIALIZED_NAME_{{nameInSnakeCase}} = "{{baseName}}";
-  {{/gson}}
-  {{#gson}}
-  @SerializedName(SERIALIZED_NAME_{{nameInSnakeCase}})
+  @SerializedName("{{baseName}}")
   {{/gson}}
   {{#isContainer}}
   private {{{dataType}}} {{name}};
@@ -73,12 +78,7 @@ public class {{classname}} {
   }
   {{/vendorExtensions.x-has-readonly-properties}}
   {{#vars}}
-
   {{^isReadOnly}}
-  public {{classname}} {{name}}({{{dataType}}} {{name}}) {
-    this.{{name}} = {{name}};
-    return this;
-  }
   {{#isArray}}
 
   public {{classname}} add{{nameInCamelCase}}Item({{{items.dataType}}} {{name}}Item) {
@@ -195,130 +195,6 @@ public class {{classname}} {
     return o.toString().replace("\n", "\n    ");
   }
 
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-    {{#allVars}}
-    openapiFields.add("{{baseName}}");
-    {{/allVars}}
-    // TODO: update "docId" to "id"
-    openapiFields.add("rawOutput");
-    openapiFields.add("docId");
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
-    {{#requiredVars}}
-    // openapiRequiredFields.add("{{baseName}}");
-    {{/requiredVars}}
-  }
-
- /**
-  * Validates the JSON Object and throws an exception if issues found
-  *
-  * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to {{classname}}
-  */
-  public static void validateJsonObject(JsonObject jsonObj) throws IOException {
-  /*
-      if (jsonObj == null) {
-        if (!{{classname}}.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in {{{classname}}} is not found in the empty JSON string", {{classname}}.openapiRequiredFields.toString()));
-        }
-      }
-      {{^isAdditionalPropertiesTrue}}
-
-      Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Entry<String, JsonElement> entry : entries) {
-        if (!{{classname}}.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `{{classname}}` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
-        }
-      }
-      {{/isAdditionalPropertiesTrue}}
-      {{#requiredVars}}
-      {{#-first}}
-
-      // check to make sure all required properties/fields are present in the JSON string
-      for (String requiredField : {{classname}}.openapiRequiredFields) {
-        if (jsonObj.get(requiredField) == null) {
-          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
-        }
-      }
-      {{/-first}}
-      {{/requiredVars}}
-      {{#vars}}
-      {{#isArray}}
-      {{#items.isModel}}
-      {{#required}}
-      // ensure the json data is an array
-      if (!jsonObj.get("{{{baseName}}}").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `{{{baseName}}}` to be an array in the JSON string but got `%s`", jsonObj.get("{{{baseName}}}").toString()));
-      }
-
-      JsonArray jsonArray{{name}} = jsonObj.getAsJsonArray("{{{baseName}}}");
-      // validate the required field `{{{baseName}}}` (array)
-      for (int i = 0; i < jsonArray{{name}}.size(); i++) {
-        {{{items.dataType}}}.validateJsonObject(jsonArray{{name}}.get(i).getAsJsonObject());
-      };
-      {{/required}}
-      {{^required}}
-      if (jsonObj.get("{{{baseName}}}") != null && !jsonObj.get("{{{baseName}}}").isJsonNull()) {
-        JsonArray jsonArray{{name}} = jsonObj.getAsJsonArray("{{{baseName}}}");
-        if (jsonArray{{name}} != null) {
-          // ensure the json data is an array
-          if (!jsonObj.get("{{{baseName}}}").isJsonArray()) {
-            throw new IllegalArgumentException(String.format("Expected the field `{{{baseName}}}` to be an array in the JSON string but got `%s`", jsonObj.get("{{{baseName}}}").toString()));
-          }
-
-          // validate the optional field `{{{baseName}}}` (array)
-          for (int i = 0; i < jsonArray{{name}}.size(); i++) {
-            {{{items.dataType}}}.validateJsonObject(jsonArray{{name}}.get(i).getAsJsonObject());
-          };
-        }
-      }
-      {{/required}}
-      {{/items.isModel}}
-      {{^items.isModel}}
-      {{^required}}
-      // ensure the optional json data is an array if present
-      if (jsonObj.get("{{{baseName}}}") != null && !jsonObj.get("{{{baseName}}}").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `{{{baseName}}}` to be an array in the JSON string but got `%s`", jsonObj.get("{{{baseName}}}").toString()));
-      }
-      {{/required}}
-      {{#required}}
-      // ensure the required json array is present
-      if (jsonObj.get("{{{baseName}}}") == null) {
-        throw new IllegalArgumentException("Expected the field `linkedContent` to be an array in the JSON string but got `null`");
-      } else if (!jsonObj.get("{{{baseName}}}").isJsonArray()) {
-        throw new IllegalArgumentException(String.format("Expected the field `{{{baseName}}}` to be an array in the JSON string but got `%s`", jsonObj.get("{{{baseName}}}").toString()));
-      }
-      {{/required}}
-      {{/items.isModel}}
-      {{/isArray}}
-      {{^isContainer}}
-      {{#isString}}
-      if ({{^required}}(jsonObj.get("{{{baseName}}}") != null && !jsonObj.get("{{{baseName}}}").isJsonNull()) && {{/required}}!jsonObj.get("{{{baseName}}}").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `{{{baseName}}}` to be a primitive type in the JSON string but got `%s`", jsonObj.get("{{{baseName}}}").toString()));
-      }
-      {{/isString}}
-      {{#isModel}}
-      {{#required}}
-      // validate the required field `{{{baseName}}}`
-      {{{dataType}}}.validateJsonObject(jsonObj.getAsJsonObject("{{{baseName}}}"));
-      {{/required}}
-      {{^required}}
-      // validate the optional field `{{{baseName}}}`
-      if (jsonObj.get("{{{baseName}}}") != null && !jsonObj.get("{{{baseName}}}").isJsonNull()) {
-        {{{dataType}}}.validateJsonObject(jsonObj.getAsJsonObject("{{{baseName}}}"));
-      }
-      {{/required}}
-      {{/isModel}}
-      {{/isContainer}}
-      {{/vars}}
-  */
-  }
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
     @SuppressWarnings("unchecked")
     @Override
@@ -359,7 +235,6 @@ public class {{classname}} {
            @Override
            public {{classname}} read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
-             validateJsonObject(jsonObj);
              {{#isAdditionalPropertiesTrue}}
              // store additional fields in the deserialized instance
              {{classname}} instance = thisAdapter.fromJsonTree(jsonObj);

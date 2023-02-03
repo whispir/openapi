@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.Arrays;
 {{/fullJavaUtil}}
 import javax.ws.rs.core.GenericType;
@@ -439,6 +441,17 @@ public class {{classname}} {
             {{#returnType}}ApiResponse<{{{.}}}> localVarResp = {{/returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});{{#returnType}}
             _lastResponse = localVarResp;
             {{returnType}} data = localVarResp.getData();
+
+            {{#vendorExtensions}}{{#x-isPost}}
+            // Special case to extract the resource identifier from the `Location` header.
+            // TODO: remove this when ID is returned in response body
+            String locationHeader = localVarResp.getHeaders().get("Location").get(0);
+            Pattern pattern = Pattern.compile("/([^/]+)/?$", Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(locationHeader);
+            if (matcher.find()) {
+                data.setDocId(matcher.group(1));
+            }
+            {{/x-isPost}}{{/vendorExtensions}}
             data.lastResponse = localVarResp;
             return data;{{/returnType}}
         }

@@ -44,6 +44,7 @@ public class {{classname}} {
     private static ApiClient localVarApiClient = Configuration.getDefaultApiClient();
 
     {{#operation}}
+    {{^vendorExtensions.x-internal}}
     private static okhttp3.Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
         String basePath = Whispir.host;
         String authHeader = Whispir.getAuthorizationHeader();
@@ -693,6 +694,7 @@ public class {{classname}} {
 
         {{#returnType}}return {{/returnType}}request.execute();
     }
+    {{/vendorExtensions.x-internal}}
     {{/operation}}
 }
 {{/operations}}

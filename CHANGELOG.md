@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/whispir/openapi/compare/v1.2.0...v1.2.1) (2023-02-12)
+
+
+### Bug Fixes
+
+* **java:** Fix config typo ([#192](https://github.com/whispir/openapi/issues/192)) ([fab991c](https://github.com/whispir/openapi/commit/fab991cda6e7be66bd98d694038d8644423b66e6))
+
 ## [1.2.0](https://github.com/whispir/openapi/compare/v1.1.3...v1.2.0) (2023-02-12)
 
 

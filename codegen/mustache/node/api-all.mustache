@@ -35,14 +35,14 @@ export type RequestOptions = {
     headers: { [name: string]: string };
 };
 
-export type Response<T = {}> = T & {
+export type ApiResponse<T = {}> = T & {
     /**
      * The last response, useful to get direct access to response headers
      */
     lastResponse: http.IncomingMessage;
 };
 
-export type CreateResponse<T = {}> = Response<T> & {
+export type CreateResponse<T = {}> = ApiResponse<T> & {
     /**
      * The resource identifier
      */

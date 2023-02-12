@@ -18,6 +18,7 @@ import { HttpError, RequestFile, Response, CreateResponse, ApiConfig, RequestOpt
 {{/description}}
 
 {{#operation}}
+{{^vendorExtensions.x-internal}}
 type {{operationIdCamelCase}}Params = {
     {{#allParams}}
     {{^isBodyParam}}
@@ -36,6 +37,7 @@ type {{operationIdCamelCase}}Params = {
     {{/allParams}}
 }{{#bodyParam}} & {{baseType}}Write{{/bodyParam}};
 
+{{/vendorExtensions.x-internal}}
 {{/operation}}
 
 export class {{classname}} {
@@ -54,6 +56,7 @@ export class {{classname}} {
     }
 
 {{#operation}}
+{{^vendorExtensions.x-internal}}
     /**
      * {{&notes}}
      {{#summary}}
@@ -180,6 +183,7 @@ export class {{classname}} {
             });
         });
     }
+{{/vendorExtensions.x-internal}}
 {{/operation}}
 }
 {{/operations}}

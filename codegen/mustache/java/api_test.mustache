@@ -19,7 +19,9 @@ import java.net.URI;
 
 {{#operations}}
 {{#operation}}
+{{^vendorExtensions.x-internal}}
 import {{package}}.{{classname}}.{{operationIdCamelCase}}Params;
+{{/vendorExtensions.x-internal}}
 {{/operation}}
 {{/operations}}
 
@@ -32,6 +34,7 @@ public class {{classname}}Test {
 
     {{#operations}}
     {{#operation}}
+    {{^vendorExtensions.x-internal}}
     /**
      * @throws ApiException if the Api call fails
      */
@@ -106,6 +109,7 @@ public class {{classname}}Test {
         // TODO: test validations
     }
 
+    {{/vendorExtensions.x-internal}}
     {{/operation}}
     {{/operations}}
 }

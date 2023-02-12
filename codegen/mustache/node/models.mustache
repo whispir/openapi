@@ -4,7 +4,9 @@ import localVarRequest from 'request';
 
 {{#models}}
 {{#model}}
+{{^vendorExtensions.x-internal}}
 export * from '{{{ classFilename }}}';
+{{/vendorExtensions.x-internal}}
 {{/model}}
 {{/models}}
 

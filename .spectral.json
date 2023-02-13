@@ -624,6 +624,32 @@
           ]
         }
       ]
+    },
+    "Operation_List_Schema": {
+      "description": "The schema of all operations that list resources, e.g. GET /resources",
+      "targets": [
+        {
+          "formats": [
+            "oas3"
+          ],
+          "given": [
+            "#Operation_List.responses[?(@property >= 200 && @property < 300)].content[*].schema"
+          ]
+        }
+      ]
+    },
+    "Operation_List": {
+      "description": "All operations that list resources, e.g. `GET /resources`",
+      "targets": [
+        {
+          "formats": [
+            "oas3"
+          ],
+          "given": [
+            "$.paths[?(!(@property).endsWith('}'))].get"
+          ]
+        }
+      ]
     }
   },
   "rules": {
@@ -1647,58 +1673,67 @@
       },
       "description": "Successful post endpoint responses must have the following \"headers\": \"Location\"."
     },
-    "required-path-sdk-operation": {
+    "operation-sdkOperation-format": {
       "given": [
-        "$.paths[*][get,put,post,delete,options,head,patch,trace]"
+        "#API_Document"
       ],
       "severity": "error",
       "then": {
-        "function": "truthy",
-        "field": "x-sdkOperation"
+        "function": "oasOpSdk",
+        "functionOptions": {
+          "exceptions": []
+        }
       },
-      "message": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names."
+      "description": "All operations must include an \"x-sdkOperation\" vendor extension for use in human-readable SDK method names.\n\nMust start with one of the following values, corresponding to the operation on the resource:\n* `create` - `POST /resource`\n* `retrieve` - `GET /resource/{resourceId}`\n* `update` - `PUT /resource/{resourceId}`\n* `delete` - `DELETE /resource/{resourceId}`\n* `list` - `GET /resource`\n\nAn optional noun suffix describing any sub-resources may be included as appropriate.\n\n**Valid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"create\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"listWebhookCalls\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"x-sdkOperation\": \"post\"\n}\n// OR\n{\n   \"x-sdkOperation\": \"getWebhookCalls\"\n}\n```",
+      "message": "{{error}}"
+    },
+    "operation-operationId-format": {
+      "given": [
+        "#API_Document"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "oasOpIdFormat",
+        "functionOptions": {
+          "exceptions": []
+        }
+      },
+      "description": "All operations must include an appropriately named \"operationId\".\r\n\r\nMust end with one of the following values, corresponding to the operation on the resource:\r\n* `Create` - `POST /resource`\r\n* `Retrieve` - `GET /resource/{resourceId}`\r\n* `Update` - `PUT /resource/{resourceId}`\r\n* `Delete` - `DELETE /resource/{resourceId}`\r\n* `List` - `GET /resource`\r\n\r\nAn optional noun prefix describing any sub-resources may be included as appropriate.\r\n\r\n**Valid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"messageCreate\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"webhookCallList\"\r\n}\r\n```\r\n\r\n**Invalid Example**\r\n\r\n```json\r\n{\r\n   \"operationId\": \"getMessage\"\r\n}\r\n// OR\r\n{\r\n   \"operationId\": \"getWebhookCalls\"\r\n}\r\n```",
+      "message": "{{error}}"
+    },
+    "operation-list-schema-keys": {
+      "given": [
+        "#Operation_List_Schema"
+      ],
+      "severity": "error",
+      "resolved": false,
+      "then": {
+        "function": "pattern",
+        "functionOptions": {
+          "match": "Collection$"
+        },
+        "field": "$ref"
+      },
+      "description": "List operation response schema must have key ending with \"Collection\".",
+      "message": "List operation response schema must have key ending with \"Collection\"."
+    },
+    "operation-list-schema-title": {
+      "given": [
+        "#Operation_List_Schema"
+      ],
+      "severity": "error",
+      "then": {
+        "function": "pattern",
+        "functionOptions": {
+          "match": "Collection$"
+        },
+        "field": "title"
+      },
+      "description": "List operation response schema must have title ending with \"Collection\".\n\n**Valid Example**\n\n```json\n{\n   \"title\": \"Message Collection\"\n}\n// OR\n{\n   \"title\": \"Webhook Call Collection\"\n}\n```\n\n**Invalid Example**\n\n```json\n{\n   \"title\": \"Message List Response\"\n}\n// OR\n{\n   \"title\": \"Webhook Call List\"\n}\n```",
+      "message": "List operation response schema must have title ending with \"Collection\"."
     }
   },
   "overrides": [
-    {
-      "files": [
-        "**#/components/schemas/messagingoptions",
-        "**#/components/schemas/locations",
-        "**#/components/schemas/location",
-        "**#/components/schemas/user",
-        "**#/components/schemas/fieldMapping",
-        "**#/components/schemas/auth",
-        "**#/components/requestBodies/event"
-      ],
-      "rules": {
-        "schema-examples": "off",
-        "schema-descriptions": "off",
-        "schema-property-descriptions": "off",
-        "schema-property-examples": "off"
-      }
-    },
-    {
-      "files": [
-        "**#/paths/~1workspaces~1{workspaceId}~1events",
-        "**#/components/requestBodies/event",
-        "**#/components/schemas/activity"
-      ],
-      "rules": {
-        "payload-examples": "off"
-      }
-    },
-    {
-      "files": [
-        "**#/paths/~1activities",
-        "**#/paths/~1users",
-        "**#/paths/~1auth",
-        "**#/paths/~1workspaces~1{workspaceId}~1contacts",
-        "**#/paths/~1workspaces~1{workspaceId}~1templates"
-      ],
-      "rules": {
-        "payload-examples": "off"
-      }
-    },
     {
       "files": [
         "**#/paths/~1auth~1verify/get"
@@ -1706,9 +1741,27 @@
       "rules": {
         "required-list-pagination-request-query-parameters": "off"
       }
+    },
+    {
+      "files": [
+        "**#/paths/~1auth~1verify/get/operationId"
+      ],
+      "rules": {
+        "operation-operationId-format": "off"
+      }
+    },
+    {
+      "files": [
+        "**#/paths/~1auth~1verify/get/x-sdkOperation"
+      ],
+      "rules": {
+        "operation-sdkOperation-format": "off"
+      }
     }
   ],
   "functions": [
+    "oasOpIdFormat",
+    "oasOpSdk",
     "oasDocumentSchema",
     "oasDiscriminator",
     "oasExample",

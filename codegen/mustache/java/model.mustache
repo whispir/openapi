@@ -1,0 +1,13 @@
+package {{package}};
+import java.util.Objects;
+import java.util.Arrays;
+{{#imports}}
+import {{import}};
+{{/imports}}
+import java.net.URI;
+
+{{#models}}
+{{#model}}
+{{#oneOf}}{{#-first}}{{>oneof_model}}{{/-first}}{{/oneOf}}{{^oneOf}}{{#anyOf}}{{#-first}}{{>anyof_model}}{{/-first}}{{/anyOf}}{{^anyOf}}{{>pojo}}{{/anyOf}}{{/oneOf}}
+{{/model}}
+{{/models}}

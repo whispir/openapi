@@ -13,10 +13,11 @@
           "supportsES6": "true",
           "npmVersion": "1.0.0"
         },
+        "config": "config/node.yml",
         "templateDir": "mustache/node"
       },
       "java": {
-        "generatorName": "java",
+        "generatorName": "java-custom",
         "output": "#{cwd}/../whispir-java",
         "glob": "../openapi.yaml",
         "additionalProperties": {
@@ -37,7 +38,9 @@
           "scmConnection": "scm:git:git@github.com:whispir/whispir-java.git",
           "licenseName": "MIT",
           "licenseUrl": "https://opensource.org/licenses/MIT"
-        }
+        },
+        "config": "config/java.yml",
+        "templateDir": "mustache/java"
       }
     }
   }

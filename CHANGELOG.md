@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.2.1](https://github.com/whispir/openapi/compare/v1.2.0...v1.2.1) (2023-02-12)
+
+
+### Bug Fixes
+
+* **java:** Fix config typo ([#192](https://github.com/whispir/openapi/issues/192)) ([fab991c](https://github.com/whispir/openapi/commit/fab991cda6e7be66bd98d694038d8644423b66e6))
+
+## [1.2.0](https://github.com/whispir/openapi/compare/v1.1.3...v1.2.0) (2023-02-12)
+
+
+### Features
+
+* WFT-335 Add Keys CRUD API ([#187](https://github.com/whispir/openapi/issues/187)) ([c60daf8](https://github.com/whispir/openapi/commit/c60daf8e497effdd01902d2571ef93bf921558f0))
+
+
+### Bug Fixes
+
+* camelCased operationIds ([#178](https://github.com/whispir/openapi/issues/178)) ([57b9f95](https://github.com/whispir/openapi/commit/57b9f9525c20cdbadbbec7ac3b03cdea4646b5d8))
+* Include resource prefix in all model names ([#169](https://github.com/whispir/openapi/issues/169)) ([c11781c](https://github.com/whispir/openapi/commit/c11781ca36f43f1783f20602eff5e0a5316b9ebc))
+* **openapi:** Add readonly flag to DeliveryReceipt schema properties ([#183](https://github.com/whispir/openapi/issues/183)) ([ac454dc](https://github.com/whispir/openapi/commit/ac454dca1775e6bab56f60e943fe300388bacbef))
+* **openapi:** Operation operationId and sdkOperation spectral rule application ([#172](https://github.com/whispir/openapi/issues/172)) ([33bb630](https://github.com/whispir/openapi/commit/33bb63004985a002b28c7d6e1a4bf7d8d934971e))
+* **openapi:** Reordering callback retrieve params ([#185](https://github.com/whispir/openapi/issues/185)) ([e3e234e](https://github.com/whispir/openapi/commit/e3e234e68c215828e34687b40e1cbdc37c6bda26))
+* Operation list schema title ([#177](https://github.com/whispir/openapi/issues/177)) ([08c2ae0](https://github.com/whispir/openapi/commit/08c2ae0a8439bd11314a93aea414306fdc8968fd))
+* Remove id from schema spec ([#182](https://github.com/whispir/openapi/issues/182)) ([a4d1248](https://github.com/whispir/openapi/commit/a4d12484bfd281dbd99586427974e71ac6700510))
+* Removed the use of Request body schema or PUT and POST endpoint ([#175](https://github.com/whispir/openapi/issues/175)) ([715d977](https://github.com/whispir/openapi/commit/715d977099696094b8d5f20cbb693350484201c8))
+* Reorder params to have id last in order ([#184](https://github.com/whispir/openapi/issues/184)) ([ec666c3](https://github.com/whispir/openapi/commit/ec666c3f8a887b3cf95060550f53566e24fcdaae))
+* Schema key names to PascalCase & title duplication removal ([#179](https://github.com/whispir/openapi/issues/179)) ([292b86b](https://github.com/whispir/openapi/commit/292b86b33a0f33e0f53c265ead5ba87bd389d92a))
+
+## [1.1.3](https://github.com/whispir/openapi/compare/v1.1.2...v1.1.3) (2022-12-06)
+
+
+### Bug Fixes
+
+* Modular model references ([#166](https://github.com/whispir/openapi/issues/166)) ([b00f303](https://github.com/whispir/openapi/commit/b00f30318e0a8e8c2390dc520b012d3a48554722))
+
 ## [1.1.2](https://github.com/whispir/openapi/compare/v1.1.1...v1.1.2) (2022-11-22)
 
 

@@ -13,13 +13,13 @@ npm install whispir --save
 ```
 ```Java
 // build.gradle
-implementation 'com.whispir:whispir-java:1.0.0'
+implementation 'com.whispir:whispir-java:1.1.1'
 
 // pom.xml
 <dependency>
   <groupId>com.whispir</groupId>
   <artifactId>whispir-java</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.1</version>
 </dependency>
 ```
 

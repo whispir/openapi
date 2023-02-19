@@ -74,6 +74,6 @@ If you received this response, congratulations! You've successfuly connected to 
 
 **Other HTTP errors or no connectivity at all**
 
-If you’re still having issues contact the [Whispir Support Team](mailto:'support@whispir.com').
+If you’re still having issues contact the [Whispir Support Team](mailto:support@whispir.com).
 
 

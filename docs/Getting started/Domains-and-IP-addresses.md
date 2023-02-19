@@ -79,7 +79,7 @@ Whispir Region | AWS region
 Whispir regularly rotates SSL/TLS certificates as per best security practices and cannot notify customers in advance of certificate rotation.
 
 <!-- theme: danger -->
-> Whispir **strongly recommends against** implementing certificate allowlisting on your systems. Whispir services will be inaccessible after certificate rotation.
+> Whispir **strongly recommends against** implementing certificate allowlisting on your systems. Whispir services will be inaccessible after certificate rotation if allowlisting is configured.
 
 ## Contact us
 

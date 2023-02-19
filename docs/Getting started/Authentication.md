@@ -12,7 +12,7 @@ You will require both of these in order to make requests to the API.
 
 ### I am a Whispir customer
 
-If you're a Whispir customer with access to Whispir Classic and Workflows by Whispir, you can obtain an API key through the Workflows platform by following the steps outlined [here](https://help.whispir.com/en/articles/4940972-api-keys-portal).
+If you're a Whispir customer with access to Whispir Classic and Workflows by Whispir, you can obtain an API key through the Workflows platform by following the steps outlined <!-- markdown-link-check-disable -->[here](https://help.whispir.com/en/articles/4940972-api-keys-portal)<!-- markdown-link-check-enable-->.
 
 If you're a Whispir customer using only Whispir Classic, please contact your Whispir account manager or the [Whispir Support Team](mailto:support@whispir.com) to obtain an API key.
 

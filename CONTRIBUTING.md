@@ -23,7 +23,7 @@ The following is a set of guidelines for contributing to Whispir and its project
 
 
 ## Code of Conduct
-Please note that this project is released with a [Contributor Code of Conduct](/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](https://github.com/whispir/openapi/blob/main/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 ## I don't want to read this whole thing I just have a question!!!
 

@@ -35,7 +35,7 @@ Do one of the following:
 
 ## IP Range Allowlisting
 
-Allowlisting (historically referred to as [whitelisting](https://en.wikipedia.org/wiki/Whitelisting)) is a mechanism which grants certain applications or IP addresses access to your system.
+Allowlisting (formerly known as [whitelisting](https://en.wikipedia.org/wiki/Whitelisting)) is a mechanism which grants certain applications or IP addresses access to your system.
 
 Whispir's API is hosted via Amazon Web Services (AWS). If you wish to implement allowlisting, you will need to allowlist IP ranges belonging to AWS.
 
@@ -44,7 +44,7 @@ Before you do so, please understand the following:
 - These lists are dynamic and subject to change with minimal notice.
 - Whispir **does not** provide customers with notice of changes to AWS IP ranges.
 
-> Whispir **does not recommend** that you implement allowlisting on your system, unless you have a mandatory compliance requirement to do so.
+> Whispir **strongly recommends against** implementing IP allowlisting on your systems, unless you have a mandatory compliance requirement to do so.
 
 If you choose to implement allowlisting, you must have robust procedures in place to ensure that your allowlisted IP ranges are kept up to date following the release of new ranges by AWS.
 
@@ -79,7 +79,7 @@ Whispir Region | AWS region
 Whispir regularly rotates SSL/TLS certificates as per best security practices and cannot notify customers in advance of certificate rotation.
 
 <!-- theme: danger -->
-> Whispir **strongly recommends** against implementing certificate allowlisting on your system.
+> Whispir **strongly recommends against** implementing certificate allowlisting on your systems. Whispir services will be inaccessible after certificate rotation.
 
 ## Contact us
 

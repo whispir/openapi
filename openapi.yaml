@@ -35,7 +35,7 @@ tags:
     externalDocs:
       url: 'https://developers.whispir.com/c2NoOjM0ODAzNDA5-contact'
   - name: Keys
-    description: 'Keys are used to manage user access.'
+    description: Keys are used to manage user access.
   - name: Distribution Lists
     description: Whispir’s API allows users to categorise their contacts into different groups to simplify the distribution of messages.
     externalDocs:
@@ -2995,7 +2995,7 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-  '/keys':
+  /keys:
     post:
       tags:
         - Keys
@@ -6855,6 +6855,11 @@ components:
           $ref: '#/components/schemas/DeliveryReceipt'
         link:
           $ref: '#/components/schemas/Links'
+        whatsapp:
+          title: WhatsApp
+          description: support for whatsapp feature
+          type: object
+          minProperties: 1
       required:
         - to
         - subject
@@ -7999,6 +8004,7 @@ components:
               escalationMins: '3'
               appId: appId
           dlr:
+            example: 'test should be deleted'
             period: string
             publishToWeb: false
             rule: string

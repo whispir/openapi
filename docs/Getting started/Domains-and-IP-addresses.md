@@ -31,7 +31,7 @@ Do one of the following:
 
 - Log in to your Whispir account. The region is shown in your Whispir platform URL, where the format is https\://[region].whispir.com.
 - Ask your company administrator.
-- If you're still unsure, contact the [Whispir Support Team](mailto:'support@whispir.com'). The Support Team can tell you your region-specific API URL.
+- If you're still unsure, contact the [Whispir Support Team](mailto:support@whispir.com). The Support Team can tell you your region-specific API URL.
 
 ## IP Range Allowlisting
 
@@ -83,4 +83,4 @@ Whispir regularly rotates SSL/TLS certificates as per best security practices an
 
 ## Contact us
 
-As always, should you encounter any difficulties, do not hesitate to reach out to the [Whispir Support Team](mailto:'support@whispir.com') for assistance.
+As always, should you encounter any difficulties, do not hesitate to reach out to the [Whispir Support Team](mailto:support@whispir.com) for assistance.

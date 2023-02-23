@@ -3027,8 +3027,6 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/Key'
-        '202':
-          description: Accepted
         '400':
           $ref: '#/components/responses/400BadRequest'
         '401':

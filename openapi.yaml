@@ -35,7 +35,7 @@ tags:
     externalDocs:
       url: 'https://developers.whispir.com/c2NoOjM0ODAzNDA5-contact'
   - name: Keys
-    description: 'Keys are used to manage user access.'
+    description: Keys are used to manage user access.
   - name: Distribution Lists
     description: Whispir’s API allows users to categorise their contacts into different groups to simplify the distribution of messages.
     externalDocs:
@@ -2995,7 +2995,7 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-  '/keys':
+  /keys:
     post:
       tags:
         - Keys
@@ -8800,6 +8800,9 @@ components:
           createdTime: '2023-01-25T02:25:33+0000'
           lastModifiedTime: '2022-03-29T16:30:18+11:00'
       description: The key object.
+      x-stoplight:
+        id: 00626f710da9c
+      x-internal: true
       properties:
         id:
           type: string
@@ -8814,9 +8817,6 @@ components:
             - basic
           description: The authentication type that this Key is used for
           readOnly: true
-        enabled:
-          type: boolean
-          description: Determine if this Key is enabled or disabled
         description:
           type: string
           description: User provided description usually used for identifying usage
@@ -8832,12 +8832,10 @@ components:
           example: '2022-03-29T16:30:18+11:00'
           description: Last Modified data and time
           readOnly: true
+        secret:
+          type: string
       required:
         - type
-        - enabled
-      x-stoplight:
-        id: 00626f710da9c
-      x-internal: true
     KeyCollection:
       type: object
       description: List keys object

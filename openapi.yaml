@@ -8834,6 +8834,7 @@ components:
           readOnly: true
         secret:
           type: string
+          description: The authentication secret
       required:
         - type
     KeyCollection:

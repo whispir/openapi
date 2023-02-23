@@ -8783,7 +8783,7 @@ components:
         - Keys
       title: Key
       x-examples:
-        Example - Create:
+        Example:
           id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
           type: basic
           enabled: true
@@ -8791,14 +8791,6 @@ components:
           createdTime: '2023-01-25T02:25:33+0000'
           lastModifiedTime: '2022-03-29T16:30:18+11:00'
           secret: sk_yHyTZJJmHF5qe0RoAQQeT3BlbkFJp0Wfgs7HyBshPEF4Wjds
-        Example - Retrieve:
-          id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
-          type: basic
-          enabled: true
-          description: Key used by Engineering for testing
-          createdTime: '2023-01-25T02:25:33+0000'
-          lastModifiedTime: '2022-03-29T16:30:18+11:00'
-          secret: sk_yHyTZ***************************************Wjds
       description: The key object.
       x-stoplight:
         id: 00626f710da9c

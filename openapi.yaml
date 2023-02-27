@@ -6633,12 +6633,6 @@ paths:
       summary: Verify an auth token
       tags:
         - Auth
-  /status:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-status
 externalDocs:
   description: API Documentation for Whispir Platform API
   url: 'https://developers.whispir.com'
@@ -10775,7 +10769,23 @@ components:
               body:
                 - text: '11111'
                 - text: '22222'
-        'WhatsApp Message Using Link button (static url + call phone number) ':
+        'WhatsApp Message Using Link button (dynamic) ':
+          to: '61430933333'
+          subject: message subject
+          whatsapp:
+            type: icebreaker
+            name: new_media_message_rules
+            content:
+              header:
+                image:
+                  link: 'http://placekitten.com/200/300'
+              body:
+                - text: '11111'
+              buttons:
+                - index: '0'
+                  sub_type: url
+                  text: search?q=Whisprr
+        WhatsApp Message Using Link button (static url + call phonenumber):
           to: '61430933333'
           subject: message subject
           whatsapp:
@@ -10819,6 +10829,7 @@ components:
           type: array
           description: The contents of your WhatsApp message
           items:
+            title: Object
             type: object
         button:
           type: array
@@ -10834,6 +10845,22 @@ components:
             $ref: '#/components/schemas/WAContentButton'
       required:
         - body
+      x-examples:
+        Example 1:
+          header:
+            image:
+              link: 'http://placekitten.com/200/300'
+          body:
+            - text: '11111'
+            - text: '22222'
+            - text: '33333'
+          button:
+            - index: '0'
+              sub_type: quick_reply
+              payload: Yes-Button-Payload
+            - index: '1'
+              sub_type: quick_reply
+              payload: No-Button-Payload
     WAContentHeader:
       title: WAContentHeader
       x-stoplight:
@@ -10844,23 +10871,34 @@ components:
           header:
             image:
               link: 'http://placekitten.com/200/300'
-        Example 2:
-          image: {}
-          video: {}
-          document: {}
-          location: {}
+        Video Example:
+          video:
+            link: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'
+        Document Example:
+          document:
+            link: 'https://s3-eu-west-1.amazonaws.com/hughhopkins.co.uk/sample_media/Sf+flight+itinerary.pdf'
+        Location Example:
+          location:
+            longitude: -122.425332
+            latitude: 37.758056
+            name: Facebook HQ
+            address: '1 Hacker Way, Menlo Park, CA 94025'
       description: 'The header of your message can include one type of media content e.g. image, video, document and location.'
       properties:
         image:
+          title: Object
           type: object
           description: Link to image location
         video:
+          title: Object
           type: object
           description: Link to video location
         document:
+          title: Object
           type: object
           description: Link to document location
         location:
+          title: Object
           type: object
           description: '“Longitude”, "latitude", "name", and "address"'
     WAContentButton:
@@ -10876,9 +10914,19 @@ components:
 
         If the button subtype is a “quick reply”, you will need the following parameters:
         “Index”, “sub_type”, “payload
+      x-examples:
+        Example 1:
+          button:
+            - index: '0'
+              sub_type: quick_reply
+              payload: Yes-Button-Payload
+            - index: '1'
+              sub_type: url
+              payload: 'https://google.com'
       properties:
         index:
           type: string
+          description: The index value of the button this object represents
         sub_type:
           type: string
           description: The type of dynamic button i.e. "quick reply" or "url"
@@ -10895,15 +10943,6 @@ components:
       required:
         - index
         - sub_type
-      x-examples:
-        Example 1:
-          button:
-            - index: '0'
-              sub_type: quick_reply
-              payload: Yes-Button-Payload
-            - index: '1'
-              sub_type: url
-              payload: 'https://google.com'
   parameters:
     X-Api-Key:
       name: X-Api-Key

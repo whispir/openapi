@@ -3,7 +3,7 @@
   "description": "",
   "spectralExtends": [],
   "extends": [
-    "cHJqOjE2MzA2NA@3"
+    "cHJqOjEyMzU4Ng"
   ],
   "formats": [
     "oas2",
@@ -327,7 +327,6 @@
         "#Operation_List_Schema"
       ],
       "severity": "error",
-      "resolved": false,
       "then": {
         "function": "pattern",
         "functionOptions": {
@@ -372,19 +371,18 @@
   ],
   "extendedStyleguides": [
     {
-      "id": "cHJqOjE2MzA2NA",
-      "name": "Whispir API Style Guide",
-      "slug": "whispir-api-style-guide",
+      "id": "cHJqOjEyMzU4Ng",
+      "name": "Stoplight Style Guide",
+      "slug": "stoplight-style-guide",
       "workspace": {
-        "domain": "developers-next.whispirdev.com",
-        "slug": "whispirrestapi",
-        "name": "Whispir API"
+        "slug": "apistylebook",
+        "name": "API Stylebook"
       },
-      "icon": "book-atlas",
-      "color": "#ff9a00",
-      "description": "Automating enforcement of Whispir's API style.",
+      "icon": "robot",
+      "color": "#3898ff",
+      "description": "Default rules for Stoplight projects",
       "latestRelease": {
-        "release": 3
+        "release": 37
       }
     }
   ],

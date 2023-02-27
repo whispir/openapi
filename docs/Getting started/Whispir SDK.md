@@ -32,4 +32,4 @@ To help you get started, we've provided code samples for each of the available S
 | Language | GitHub | Download | Examples |
 |---|---|---|---|
 | Node | [whispir-node](https://github.com/whispir/whispir-node) | [NPM](https://www.npmjs.com/package/whispir) | [Examples](https://github.com/whispir/whispir-node/tree/main/examples) |
-| Java | [whispir-java](https://github.com/whispir/whispir-java) | [Maven](https://mvnrepository.com/artifact/com.whispir/whispir-java) | [Examples](https://github.com/whispir/whispir-java/tree/main/examples) |
+| Java | [whispir-java](https://github.com/whispir/whispir-java) | <!-- markdown-link-check-disable -->[Maven](https://mvnrepository.com/artifact/com.whispir/whispir-java)<!-- markdown-link-check-enable--> | [Examples](https://github.com/whispir/whispir-java/tree/main/examples) |

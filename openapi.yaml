@@ -6656,8 +6656,6 @@ servers:
     description: IT
   - url: 'https://api.education.whispir.com'
     description: Education
-  - url: 'https://whatsapp.ap1.whispir.com'
-    description: WhatsApp (AP1)
 components:
   requestBodies: {}
   securitySchemes:

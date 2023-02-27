@@ -8827,6 +8827,7 @@ components:
         secret:
           type: string
           description: The authentication secret
+          example: 'sk_yHyTZ***************************************Wjds'
       required:
         - type
     KeyCollection:

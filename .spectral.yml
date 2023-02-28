@@ -1,0 +1,451 @@
+extends: spectral:oas
+
+functions:
+  - oasOpIdFormat
+  - oasOpSdk
+
+aliases:
+  Operation_List_Schema:
+    description: The schema of all operations that list resources, e.g. GET /resources
+    targets:
+      - formats:
+          - oas3
+        given:
+          - "#Operation_List.responses[?(@property >= 200 && @property < 300)].content[*].schema"
+  Operation_List:
+    description: All operations that list resources, e.g. `GET /resources`
+    targets:
+      - formats:
+          - oas3
+        given:
+          - "$.paths[?(!(@property).endsWith('}'))].get"
+
+rules:
+  openapi-tags-alphabetical: off
+  operation-success-response: error
+  oas2-operation-formData-consume-check: error
+  operation-parameters: error
+  operation-tag-defined: error
+  contact-properties: error
+  duplicated-entry-in-enum: error
+  info-contact: error
+  info-description: error
+  info-license: error
+  license-url: error
+  no-eval-in-markdown: error
+  no-script-tags-in-markdown: error
+  openapi-tags: error
+  operation-description: error
+  operation-operationId: error
+  operation-operationId-valid-in-url: error
+  operation-singular-tag: error
+  operation-tags: error
+  path-declarations-must-exist: error
+  path-keys-no-trailing-slash: error
+  path-not-include-query: error
+  tag-description: error
+  typed-enum: error
+  oas2-api-host: error
+  oas2-api-schemes: error
+  oas2-host-not-example: error
+  oas2-host-trailing-slash: error
+  oas2-parameter-description: error
+  oas2-operation-security-defined: error
+  oas2-anyOf: error
+  oas2-oneOf: error
+  oas2-unused-definition: error
+  oas3-api-servers: error
+  oas3-examples-value-or-externalValue: error
+  oas3-operation-security-defined: error
+  oas3-parameter-description: error
+  oas3-server-not-example.com: error
+  oas3-server-trailing-slash: error
+  oas3-unused-component: error
+
+  ### CORE RULES ###
+  schema-examples:
+    description: Schemas must have non-empty "x-examples" object.
+    severity: error
+    given: $.components.schemas[*]
+    then:
+      field: x-examples
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          minProperties: 1
+  schema-descriptions:
+    description: Schemas must have a "description".
+    severity: error
+    given:
+      - $..schemas[*]
+      - $..responses[*].content[*]..schema
+      - $..requestBody.content[*]..schema
+    then:
+      field: description
+      function: truthy
+  schema-property-descriptions: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
+    description: Schema properties must have a "description".
+    severity: error
+    given:
+      - $..schema[*]..properties[*]
+      - $..responses[*].content[*]..schema..properties[*]
+      - $..requestBody.content[*]..schema..properties[*]
+      - $..headers[*]
+    then:
+      field: description
+      function: truthy
+  schema-property-examples: # Note: this rule is not de-duplicated, and will show on parents $ref'ing children with issues until all child issues are resolved.
+    description: Schema properties must have an "example".
+    severity: error
+    given:
+      - $..schema[*]..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+      - $..responses[*].content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+      - $..requestBody.content[*]..schema..properties[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+      - $..headers[?(@ && @.type && @.type !== "array" && @.type !== "object" && @.type !== "boolean" && !@.enum)]
+    then:
+      field: example
+      function: defined
+  payload-examples:
+    description: Request & response payload content must have non-empty "examples" object.
+    severity: error
+    given:
+      - $..responses[*].content[*]
+      - $..requestBody.content[*]
+    then:
+      field: examples
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          minProperties: 1
+
+  ### API SPECIFIC RULES ###
+  required-all-request-headers:
+    given:
+      - "$.paths[*][get,put,post,delete,options,head,patch,trace]"
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: array
+          contains:
+            type: object
+            properties:
+              name:
+                type: string
+                pattern: "^X-Api-Key$"
+      field: parameters
+    description: 'All requests must have the following headers "parameters": "X-Api-Key".'
+  required-read-request-headers:
+    given:
+      - "$.paths[*][get]"
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: array
+          contains:
+            type: object
+            properties:
+              name:
+                type: string
+                pattern: "^Accept$"
+      field: parameters
+    description: 'Read requests must have the following headers "parameters": "Accept".'
+  required-write-request-headers:
+    given:
+      - "$.paths[*][put,post]"
+    severity: error
+    then:
+      - function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^Content-Type$"
+        field: parameters
+      - function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^Accept$"
+        field: parameters
+    description:
+      'Write requests must have the following headers "parameters": "Content-Type",
+      "Accept".'
+  required-list-pagination-request-query-parameters:
+    given:
+      - "$.paths[?(!/{.*Id}$/i.test(@property))]['get']"
+    severity: error
+    then:
+      - function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^limit$"
+        field: parameters
+      - function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^offset$"
+        field: parameters
+      - function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^sortOrder$"
+        field: parameters
+      - function: schema
+        functionOptions:
+          dialect: draft7
+          schema:
+            type: array
+            contains:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: "^sortFields$"
+        field: parameters
+    description:
+      'Read list requests must have the following query "parameters": "limit",
+      "offset", "sortOrder", "sortFields".'
+  required-all-response-headers:
+    given:
+      - "$..responses[*]"
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          required:
+            - Access-Control-Allow-Origin
+            - Expires
+            - Cache-Control
+      field: headers
+    description:
+      'All responses must have the following "headers": "Access-Control-Allow-Origin",
+      "Expires", "Cache-Control".'
+  required-content-response-headers:
+    given:
+      - "$.paths[*]..responses[?(@property != 204)]"
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          required:
+            - Content-Type
+            - Content-Length
+      field: headers
+    description:
+      'Responses with content must have the following "headers": "Content-Type",
+      "Content-Length".'
+  required-post-response-headers:
+    given:
+      - "$.paths[*][post]..responses[?(@property != 204 && @property >= 200 && @property
+        < 300)]"
+    severity: error
+    then:
+      function: schema
+      functionOptions:
+        dialect: draft7
+        schema:
+          type: object
+          required:
+            - Location
+      field: headers
+    description:
+      'Successful post endpoint responses must have the following "headers":
+      "Location".'
+  operation-sdkOperation-format:
+    given:
+      - "$"
+    severity: error
+    then:
+      function: oasOpSdk
+      functionOptions:
+        exceptions: []
+    description: |-
+      All operations must include an "x-sdkOperation" vendor extension for use in human-readable SDK method names.
+
+      Must start with one of the following values, corresponding to the operation on the resource:
+      * `create` - `POST /resource`
+      * `retrieve` - `GET /resource/{resourceId}`
+      * `update` - `PUT /resource/{resourceId}`
+      * `delete` - `DELETE /resource/{resourceId}`
+      * `list` - `GET /resource`
+
+      An optional noun suffix describing any sub-resources may be included as appropriate.
+
+      **Valid Example**
+
+      ```json
+      {
+         "x-sdkOperation": "create"
+      }
+      // OR
+      {
+         "x-sdkOperation": "listWebhookCalls"
+      }
+      ```
+
+      **Invalid Example**
+
+      ```json
+      {
+         "x-sdkOperation": "post"
+      }
+      // OR
+      {
+         "x-sdkOperation": "getWebhookCalls"
+      }
+      ```
+    message: "{{error}}"
+  operation-operationId-format:
+    given:
+      - "$"
+    severity: error
+    then:
+      function: oasOpIdFormat
+      functionOptions:
+        exceptions: []
+    description: |-
+      All operations must include an appropriately named "operationId".
+
+      Must end with one of the following values, corresponding to the operation on the
+      resource:
+      * `Create` - `POST /resource`
+      * `Retrieve` - `GET /resource/{resourceId}`
+      * `Update` - `PUT /resource/{resourceId}`
+      * `Delete` - `DELETE /resource/{resourceId}`
+      * `List` - `GET /resource`
+
+      An optional noun prefix describing any sub-resources
+      may be included as appropriate.
+
+      **Valid Example**
+
+      ```json
+      {
+        "operationId": "messageCreate"
+      }
+      // OR
+      {
+        "operationId": "webhookCallList"
+      }
+      ```
+
+      **Invalid Example**
+
+      ```json
+      {
+        "operationId": "getMessage"
+      }
+      // OR
+      {
+        "operationId": "getWebhookCalls"
+      }
+      ```
+    message: "{{error}}"
+  operation-list-schema-keys:
+    given:
+      - "#Operation_List_Schema"
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: Collection$
+      field: "$ref"
+    description: List operation response schema must have key ending with "Collection".
+    message: List operation response schema must have key ending with "Collection".
+  operation-list-schema-title:
+    given:
+      - "#Operation_List_Schema"
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: Collection$
+      field: title
+    description: |-
+      List operation response schema must have title ending with "Collection".
+
+      **Valid Example**
+
+      ```json
+      {
+         "title": "Message Collection"
+      }
+      // OR
+      {
+         "title": "Webhook Call Collection"
+      }
+      ```
+
+      **Invalid Example**
+
+      ```json
+      {
+         "title": "Message List Response"
+      }
+      // OR
+      {
+         "title": "Webhook Call List"
+      }
+      ```
+    message: List operation response schema must have title ending with "Collection".
+overrides:
+  - files:
+      - "**#/paths/~1auth~1verify/get"
+    rules:
+      required-list-pagination-request-query-parameters: "off"
+  - files:
+      - "**#/paths/~1auth~1verify/get/operationId"
+    rules:
+      operation-operationId-format: "off"
+  - files:
+      - "**#/paths/~1auth~1verify/get/x-sdkOperation"
+    rules:
+      operation-sdkOperation-format: "off"

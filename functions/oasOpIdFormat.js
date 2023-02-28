@@ -81,7 +81,7 @@ export default createRulesetFunction(
       }
 
       const { operationId } = operationValue;
-      
+
       if (!isCamelCase(operationId)) {
         results.push({
           message: '"operationId" must be camelCased.',

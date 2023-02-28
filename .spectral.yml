@@ -1,6 +1,4 @@
-extends:
-  - - "spectral:oas"
-    - all
+extends: spectral:oas
 
 functions:
   - oasOpIdFormat
@@ -9,18 +7,18 @@ functions:
 aliases:
   Operation_List_Schema:
     description: The schema of all operations that list resources, e.g. GET /resources
-    name: Operation_List_Schema
     targets:
       - formats:
           - oas3
-        given: "#Operation_List.responses[?(@property >= 200 && @property < 300)].content[*].schema"
+        given:
+          - "#Operation_List.responses[?(@property >= 200 && @property < 300)].content[*].schema"
   Operation_List:
     description: All operations that list resources, e.g. `GET /resources`
-    name: Operation_List
     targets:
       - formats:
           - oas3
-        given: "$.paths[?(!(@property).endsWith('}'))].get"
+        given:
+          - "$.paths[?(!(@property).endsWith('}'))].get"
 
 rules:
   openapi-tags-alphabetical: off
@@ -142,7 +140,6 @@ rules:
                 type: string
                 pattern: "^X-Api-Key$"
       field: parameters
-    name: required-all-request-headers
     description: 'All requests must have the following headers "parameters": "X-Api-Key".'
   required-read-request-headers:
     given:
@@ -161,7 +158,6 @@ rules:
                 type: string
                 pattern: "^Accept$"
       field: parameters
-    name: required-read-request-headers
     description: 'Read requests must have the following headers "parameters": "Accept".'
   required-write-request-headers:
     given:
@@ -192,7 +188,6 @@ rules:
                   type: string
                   pattern: "^Accept$"
         field: parameters
-    name: required-write-request-headers
     description:
       'Write requests must have the following headers "parameters": "Content-Type",
       "Accept".'
@@ -249,7 +244,6 @@ rules:
                   type: string
                   pattern: "^sortFields$"
         field: parameters
-    name: required-list-pagination-request-query-parameters
     description:
       'Read list requests must have the following query "parameters": "limit",
       "offset", "sortOrder", "sortFields".'
@@ -268,7 +262,6 @@ rules:
             - Expires
             - Cache-Control
       field: headers
-    name: required-all-response-headers
     description:
       'All responses must have the following "headers": "Access-Control-Allow-Origin",
       "Expires", "Cache-Control".'
@@ -286,7 +279,6 @@ rules:
             - Content-Type
             - Content-Length
       field: headers
-    name: required-content-response-headers
     description:
       'Responses with content must have the following "headers": "Content-Type",
       "Content-Length".'
@@ -304,7 +296,6 @@ rules:
           required:
             - Location
       field: headers
-    name: required-post-response-headers
     description:
       'Successful post endpoint responses must have the following "headers":
       "Location".'
@@ -316,7 +307,6 @@ rules:
       function: oasOpSdk
       functionOptions:
         exceptions: []
-    name: operation-sdkOperation-format
     description: |-
       All operations must include an "x-sdkOperation" vendor extension for use in human-readable SDK method names.
 
@@ -361,7 +351,6 @@ rules:
       function: oasOpIdFormat
       functionOptions:
         exceptions: []
-    name: operation-operationId-format
     description:
       "All operations must include an appropriately named \"operationId\".\r\n\r\nMust
       end with one of the following values, corresponding to the operation on the
@@ -383,7 +372,6 @@ rules:
       functionOptions:
         match: Collection$
       field: "$ref"
-    name: operation-list-schema-keys
     description: List operation response schema must have key ending with "Collection".
     message: List operation response schema must have key ending with "Collection".
   operation-list-schema-title:
@@ -395,7 +383,6 @@ rules:
       functionOptions:
         match: Collection$
       field: title
-    name: operation-list-schema-title
     description: |-
       List operation response schema must have title ending with "Collection".
 

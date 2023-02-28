@@ -94,6 +94,7 @@ paths:
         - **Twitter** - support for instant publishing to multiple twitter accounts  
         - **Facebook** - simplify the process of publishing to multiple facebook accounts instantaneously  
         - **RSS** - easily generate RSS feeds for consumption by other services
+        - **WhatsApp** - send templated WhatsApp messages
 
         All communications are driven from the Messages endpoint resources within the API. This endpoint allows a user to perform the following tasks:
         1.  Create and send a new message
@@ -8827,7 +8828,7 @@ components:
         secret:
           type: string
           description: The authentication secret
-          example: 'sk_yHyTZ***************************************Wjds'
+          example: sk_yHyTZ***************************************Wjds
       required:
         - type
     KeyCollection:

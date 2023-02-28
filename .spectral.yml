@@ -65,15 +65,6 @@ rules:
   oas3-unused-component: error
 
   ### CORE RULES ###
-  info-matches-whispir:
-    description: The title field must contain Whispir.
-    severity: error
-    given: $.info
-    then:
-      field: title
-      function: pattern
-      functionOptions:
-        match: Whispir
   schema-examples:
     description: Schemas must have non-empty "x-examples" object.
     severity: error

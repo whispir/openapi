@@ -35,7 +35,7 @@ tags:
     externalDocs:
       url: 'https://developers.whispir.com/c2NoOjM0ODAzNDA5-contact'
   - name: Keys
-    description: 'Keys are used to manage user access.'
+    description: Keys are used to manage user access.
   - name: Distribution Lists
     description: Whispir’s API allows users to categorise their contacts into different groups to simplify the distribution of messages.
     externalDocs:
@@ -2995,7 +2995,7 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
     parameters:
       - $ref: '#/components/parameters/workspaceId'
-  '/keys':
+  /keys:
     post:
       tags:
         - Keys
@@ -3018,11 +3018,8 @@ paths:
                 value:
                   id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
                   type: basic
-                  userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
-                  clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
-                  accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
-                  enabled: true
                   description: Key used by Engineering for testing
+                  secret: sk_yHyTZJJmHF5qe0RoAQQeT3BlbkFJp0Wfgs7HyBshPEF4Wjds
                   createdTime: '2023-01-25T02:25:33+0000'
                   lastModifiedTime: '2022-03-29T16:30:18+11:00'
         description: Key object to be created
@@ -3133,11 +3130,8 @@ paths:
                   value:
                     id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
                     type: basic
-                    userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
-                    clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
-                    accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
-                    enabled: true
                     description: Key used by Engineering for testing
+                    secret: sk_yHyTZ***************************************Wjds
                     createdTime: '2023-01-25T02:25:33+0000'
                     lastModifiedTime: '2022-03-29T16:30:18+11:00'
         '400':
@@ -3189,11 +3183,8 @@ paths:
                 value:
                   id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
                   type: basic
-                  userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
-                  clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
-                  accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
-                  enabled: true
                   description: Key used by Engineering for testing
+                  secret: sk_yHyTZJJmHF5qe0RoAQQeT3BlbkFJp0Wfgs7HyBshPEF4Wjds
                   createdTime: '2023-01-25T02:25:33+0000'
                   lastModifiedTime: '2022-03-29T16:30:18+11:00'
         description: Key object that needs to be updated
@@ -8795,14 +8786,15 @@ components:
         Example:
           id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
           type: basic
-          userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
-          clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
-          accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
           enabled: true
           description: Key used by Engineering for testing
           createdTime: '2023-01-25T02:25:33+0000'
           lastModifiedTime: '2022-03-29T16:30:18+11:00'
+          secret: sk_yHyTZJJmHF5qe0RoAQQeT3BlbkFJp0Wfgs7HyBshPEF4Wjds
       description: The key object.
+      x-stoplight:
+        id: 00626f710da9c
+      x-internal: true
       properties:
         id:
           type: string
@@ -8815,30 +8807,8 @@ components:
           example: basic
           enum:
             - basic
-            - bearer
           description: The authentication type that this Key is used for
           readOnly: true
-        userId:
-          type: string
-          format: uuid
-          description: The user identifier associated with this Key
-          example: d7d429e0-7e1e-4b03-ba34-e486483e76f2
-          readOnly: true
-        clientId:
-          type: string
-          format: uuid
-          description: The company identifier (client). Provided by Auth0 Management API used to revoke client access during deletion.
-          example: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
-          readOnly: true
-        accountId:
-          type: string
-          format: uuid
-          description: Nextgen account id associated with this Key
-          example: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
-          readOnly: true
-        enabled:
-          type: boolean
-          description: Determine if this Key is enabled or disabled
         description:
           type: string
           description: User provided description usually used for identifying usage
@@ -8854,15 +8824,12 @@ components:
           example: '2022-03-29T16:30:18+11:00'
           description: Last Modified data and time
           readOnly: true
+        secret:
+          type: string
+          description: The authentication secret
+          example: 'sk_yHyTZ***************************************Wjds'
       required:
         - type
-        - userId
-        - clientId
-        - accountId
-        - enabled
-      x-stoplight:
-        id: 00626f710da9c
-      x-internal: true
     KeyCollection:
       type: object
       description: List keys object
@@ -8877,11 +8844,8 @@ components:
           keys:
             - id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
               type: basic
-              userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
-              clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
-              accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
-              enabled: true
               description: Key used by Engineering for testing
+              secret: sk_yHyTZ***************************************Wjds
               createdTime: '2023-01-25T02:25:33+0000'
               lastModifiedTime: '2022-03-29T16:30:18+11:00'
       title: Key Collection
@@ -12004,11 +11968,8 @@ components:
                 keys:
                   - id: 7f6a3d23-11f3-406c-9d72-8e8a80c248e4
                     type: basic
-                    userId: d7d429e0-7e1e-4b03-ba34-e486483e76f2
-                    clientId: ead5ac28-47df-4d52-9d4f-de4b5e3d31a8
-                    accountId: 30ab9bb0-373c-4f6c-b24d-1e4160af98b4
-                    enabled: true
                     description: Key used by Engineering for testing
+                    secret: sk_yHyTZ***************************************Wjds
                     createdTime: '2023-01-25T02:25:33+0000'
                     lastModifiedTime: '2022-03-29T16:30:18+11:00'
       headers:

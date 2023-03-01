@@ -7412,6 +7412,7 @@ components:
     MessageStatus:
       type: object
       title: Message Status
+      description: The object describing the delivery status of the message.
       x-tags:
         - Messages
       properties:
@@ -8221,6 +8222,7 @@ components:
         - responseTemplatePatterns
     ResponseRuleCollection:
       type: object
+      description: A collection of Response Rules.
       properties:
         status:
           type: string

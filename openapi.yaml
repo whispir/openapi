@@ -94,6 +94,7 @@ paths:
         - **Twitter** - support for instant publishing to multiple twitter accounts  
         - **Facebook** - simplify the process of publishing to multiple facebook accounts instantaneously  
         - **RSS** - easily generate RSS feeds for consumption by other services
+        - **WhatsApp** - send templated WhatsApp messages
 
         All communications are driven from the Messages endpoint resources within the API. This endpoint allows a user to perform the following tasks:
         1.  Create and send a new message
@@ -6730,6 +6731,8 @@ components:
           $ref: '#/components/schemas/Web'
         social:
           $ref: '#/components/schemas/Social'
+        whatsapp:
+          $ref: '#/components/schemas/WhatsApp'  
         type:
           type: string
           enum:
@@ -10615,6 +10618,294 @@ components:
         - errorText
         - errorDetail
       title: API Error
+    WhatsApp:
+      title: WhatsApp
+      x-stoplight:
+        id: 7ajh2y2qhyjk8
+      type: object
+      description: |-
+        ### Overview
+
+        Customers can send templated WhatsApp messages via Whispir's API. 
+
+        Templates must first be submitted for approval by WhatsApp in your WhatsApp Business Manager account before any template messages can be sent from Whispir. Please reach out to your Whispir account manager to help you get started.
+      x-examples:
+        WhatsApp Message Using an image:
+          to: '61430933333'
+          subject: message subject
+          whatsapp:
+            type: icebreaker
+            name: account_update_example_image_p
+            content:
+              header:
+                image:
+                  link: 'http://placekitten.com/200/300'
+              body:
+                - text: John
+                - text: ACTIVE
+                - text: '619704512462'
+        WhatsApp Message Using video:
+          to: '61430933333'
+          subject: message subject
+          whatsapp:
+            type: icebreaker
+            name: account_update_example_video_p
+            content:
+              header:
+                video:
+                  link: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'
+              body:
+                - text: John
+                - text: '619704512462'
+        WhatsApp Message Using text with fixed footer:
+          to: '61430933333'
+          subject: message subject
+          whatsapp:
+            type: icebreaker
+            name: standard_demo_01
+            content:
+              body:
+                - text: John
+        WhatsApp Message Using Document:
+          to: '61430933333'
+          subject: message subject
+          whatsapp:
+            type: icebreaker
+            name: account_update_example_doc_p
+            content:
+              header:
+                document:
+                  link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+              body:
+                - text: John
+                - text: '619704512462'
+        WhatsApp Message Using Location:
+          to: '61430933333'
+          subject: message subject
+          whatsapp:
+            type: icebreaker
+            name: account_update_example_loc_p
+            content:
+              header:
+                location:
+                  longitude: -122.425332
+                  latitude: 37.758056
+                  name: Facebook HQ
+                  address: '1 Hacker Way, Menlo Park, CA 94025'
+              body:
+                - text: John
+                - text: '619704512462'
+        WhatsApp Message Using Image and Button (Quick Reply):
+          to: '61430933333'
+          subject: WhatsApp Message Subject
+          whatsapp:
+            type: icebreaker
+            name: image_quick_reply
+            content:
+              header:
+                image:
+                  link: 'http://placekitten.com/200/300'
+              body:
+                - text: John
+                - text: ACTIVE
+                - text: '619704512462'
+              button:
+                - index: '0'
+                  sub_type: quick_reply
+                  payload: Yes-Button-Payload
+                - index: '1'
+                  sub_type: quick_reply
+                  payload: No-Button-Payload
+        WhatsApp Message Using Location and Link Button (static url):
+          to: '639177176978'
+          subject: message subject
+          whatsapp:
+            type: icebreaker
+            name: location_cta_staticurl
+            content:
+              header:
+                location:
+                  longitude: -122.425332
+                  latitude: 37.758056
+                  name: Facebook HQ
+                  address: '1 Hacker Way, Menlo Park, CA 94025'
+              body:
+                - text: John
+                - text: '619704512462'
+        'WhatsApp Message Using Link button (dynamic) ':
+          to: '61430933333'
+          subject: message subject
+          whatsapp:
+            type: icebreaker
+            name: new_media_message_rules
+            content:
+              header:
+                image:
+                  link: 'http://placekitten.com/200/300'
+              body:
+                - text: John
+              buttons:
+                - index: '0'
+                  sub_type: url
+                  text: search?q=Whisprr
+        WhatsApp Message Using Link button (static url + call phonenumber):
+          to: '61430933333'
+          subject: message subject
+          whatsapp:
+            type: icebreaker
+            name: hsbc_alert
+            content:
+              body:
+                - text: John
+                - text: Everything is connected!
+                - text: 'https://hsbc.com/renewal'
+                - text: 'https://hsbc.com/terms'
+                - text: 'https://hsbc.com/privacy'
+      properties:
+        type:
+          type: string
+          description: |-
+            The type of WhatsApp message to be sent, e.g. "template".
+
+            Whispir currently only supports type "template".
+        name:
+          type: string
+          description: |-
+            The name of the template to be sent 
+            > Must be the same as how it appears in your WhatsApp Business Manager
+        content:
+          $ref: '#/components/schemas/WAContent'
+      required:
+        - type
+        - name
+        - content
+    WAContent:
+      title: WAContent
+      x-stoplight:
+        id: fklmr2skqadi5
+      type: object
+      description: 'The content of your message which may contain any text and media that will be sent to the recipient. The contents can include a header, a body, and buttons.'
+      properties:
+        header:
+          $ref: '#/components/schemas/WAContentHeader'
+        body:
+          type: array
+          description: The contents of your WhatsApp message
+          items:
+            title: Object
+            type: object
+        button:
+          type: array
+          description: |-
+            The contents of your dynamic button.
+
+            If the button subtype is “url” you will need the following parameters:
+            “Index”, “sub_type”, “text”
+
+            If the button subtype is a “quick reply”, you will need the following parameters:
+            “Index”, “sub_type”, “payload"
+          items:
+            $ref: '#/components/schemas/WAContentButton'
+      required:
+        - body
+      x-examples:
+        Example 1:
+          header:
+            image:
+              link: 'http://placekitten.com/200/300'
+          body:
+            - text: John
+            - text: ACTIVE
+            - text: '+619702873117'
+          button:
+            - index: '0'
+              sub_type: quick_reply
+              payload: Yes-Button-Payload
+            - index: '1'
+              sub_type: quick_reply
+              payload: No-Button-Payload
+    WAContentHeader:
+      title: WAContentHeader
+      x-stoplight:
+        id: hevlc9qwqt4y3
+      type: object
+      x-examples:
+        Image Example:
+          header:
+            image:
+              link: 'http://placekitten.com/200/300'
+        Video Example:
+          video:
+            link: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'
+        Document Example:
+          document:
+            link: 'https://s3-eu-west-1.amazonaws.com/hughhopkins.co.uk/sample_media/Sf+flight+itinerary.pdf'
+        Location Example:
+          location:
+            longitude: -122.425332
+            latitude: 37.758056
+            name: Facebook HQ
+            address: '1 Hacker Way, Menlo Park, CA 94025'
+      description: 'The header of your message can include one type of media content e.g. image, video, document and location.'
+      properties:
+        image:
+          title: Object
+          type: object
+          description: Link to image location
+        video:
+          title: Object
+          type: object
+          description: Link to video location
+        document:
+          title: Object
+          type: object
+          description: Link to document location
+        location:
+          title: Object
+          type: object
+          description: '“Longitude”, "latitude", "name", and "address"'
+    WAContentButton:
+      title: WAContentButton
+      x-stoplight:
+        id: 8rugv1dziyhzp
+      type: object
+      description: |-
+        The contents of your dynamic button.
+
+        If the button subtype is “url” you will need the following parameters:
+        “Index”, “sub_type”, “text”
+
+        If the button subtype is a “quick reply”, you will need the following parameters:
+        “Index”, “sub_type”, “payload
+      x-examples:
+        Example 1:
+          button:
+            - index: '0'
+              sub_type: quick_reply
+              payload: Yes-Button-Payload
+            - index: '1'
+              sub_type: url
+              payload: 'https://google.com'
+      properties:
+        index:
+          type: string
+          description: The index value of the button this object represents
+        sub_type:
+          type: string
+          description: The type of dynamic button i.e. "quick reply" or "url"
+        text:
+          type: string
+          description: |-
+            the url destination when the button is clicked
+            > required when `sub_type` value is `url`
+        payload:
+          type: string
+          description: |-
+            Name of the quick reply buttons configured within your WhatsApp Business Manager account.
+            > required when `sub_type` value is `quick reply`
+      required:
+        - index
+        - sub_type  
   parameters:
     X-Api-Key:
       name: X-Api-Key

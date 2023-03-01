@@ -8830,7 +8830,7 @@ components:
         secret:
           type: string
           description: The authentication secret
-          example: 'sk_yHyTZ***************************************Wjds'
+          example: sk_yHyTZ***************************************Wjds
       required:
         - type
     KeyCollection:
@@ -10639,9 +10639,9 @@ components:
                 image:
                   link: 'http://placekitten.com/200/300'
               body:
-                - text: xxxxx
-                - text: yyyyy
-                - text: zzzzz
+                - text: John
+                - text: ACTIVE
+                - text: '619704512462'
         WhatsApp Message Using video:
           to: '61430933333'
           subject: message subject
@@ -10653,8 +10653,8 @@ components:
                 video:
                   link: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'
               body:
-                - text: '11111'
-                - text: '22222'
+                - text: John
+                - text: '619704512462'
         WhatsApp Message Using text with fixed footer:
           to: '61430933333'
           subject: message subject
@@ -10663,7 +10663,7 @@ components:
             name: standard_demo_01
             content:
               body:
-                - text: '11111'
+                - text: John
         WhatsApp Message Using Document:
           to: '61430933333'
           subject: message subject
@@ -10675,8 +10675,8 @@ components:
                 document:
                   link: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
               body:
-                - text: '11111'
-                - text: '22222'
+                - text: John
+                - text: '619704512462'
         WhatsApp Message Using Location:
           to: '61430933333'
           subject: message subject
@@ -10691,8 +10691,8 @@ components:
                   name: Facebook HQ
                   address: '1 Hacker Way, Menlo Park, CA 94025'
               body:
-                - text: '11111'
-                - text: '22222'
+                - text: John
+                - text: '619704512462'
         WhatsApp Message Using Image and Button (Quick Reply):
           to: '61430933333'
           subject: WhatsApp Message Subject
@@ -10704,9 +10704,9 @@ components:
                 image:
                   link: 'http://placekitten.com/200/300'
               body:
-                - text: xxxxx
-                - text: yyyyy
-                - text: zzzzz
+                - text: John
+                - text: ACTIVE
+                - text: '619704512462'
               button:
                 - index: '0'
                   sub_type: quick_reply
@@ -10728,8 +10728,8 @@ components:
                   name: Facebook HQ
                   address: '1 Hacker Way, Menlo Park, CA 94025'
               body:
-                - text: '11111'
-                - text: '22222'
+                - text: John
+                - text: '619704512462'
         'WhatsApp Message Using Link button (dynamic) ':
           to: '61430933333'
           subject: message subject
@@ -10741,7 +10741,7 @@ components:
                 image:
                   link: 'http://placekitten.com/200/300'
               body:
-                - text: '11111'
+                - text: John
               buttons:
                 - index: '0'
                   sub_type: url
@@ -10754,11 +10754,11 @@ components:
             name: hsbc_alert
             content:
               body:
-                - text: '111'
-                - text: '222'
-                - text: '333'
-                - text: '444'
-                - text: '555'
+                - text: John
+                - text: Everything is connected!
+                - text: 'https://hsbc.com/renewal'
+                - text: 'https://hsbc.com/terms'
+                - text: 'https://hsbc.com/privacy'
       properties:
         type:
           type: string
@@ -10812,9 +10812,9 @@ components:
             image:
               link: 'http://placekitten.com/200/300'
           body:
-            - text: '11111'
-            - text: '22222'
-            - text: '33333'
+            - text: John
+            - text: ACTIVE
+            - text: '+619702873117'
           button:
             - index: '0'
               sub_type: quick_reply

@@ -10623,6 +10623,8 @@ components:
       x-stoplight:
         id: 7ajh2y2qhyjk8
       type: object
+      x-tags:
+        - Messages
       description: |-
         ### Overview
 
@@ -10764,11 +10766,13 @@ components:
       properties:
         type:
           type: string
+          enum:
+            - template
           description: |-
             The type of WhatsApp message to be sent, e.g. "template".
 
             Whispir currently only supports type "template".
-          example: 'icebreaker'  
+          example: 'template'  
         name:
           type: string
           description: |-
@@ -10796,6 +10800,11 @@ components:
           items:
             title: Object
             type: object
+          properties:
+            text:
+              type: string
+              description: The value of the mapped placeholder in the WhatsApp template
+              example: 'ACTIVE'
         button:
           type: array
           description: |-
@@ -10854,18 +10863,50 @@ components:
           title: Object
           type: object
           description: Link to image location
+          properties:
+            link:
+              type: string
+              description: Url string of the image
+              example: 'http://placekitten.com/200/300'
         video:
           title: Object
           type: object
           description: Link to video location
+          properties:
+            link:
+              type: string
+              description: Url string of the video
+              example: 'https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4'
         document:
           title: Object
           type: object
           description: Link to document location
+          properties:
+            link:
+              type: string
+              description: Url string of the document
+              example: 'https://s3-eu-west-1.amazonaws.com/hughhopkins.co.uk/sample_media/Sf+flight+itinerary.pdf'
         location:
           title: Object
           type: object
           description: '“Longitude”, "latitude", "name", and "address"'
+          properties:
+            longitude:
+              type: number
+              description: Longitude value of the location
+              example: -122.425
+            latitude:
+              type: number
+              description: Latitude value of the location
+              example: -122.425  
+            name:
+              type: string
+              description: Name of the location
+              example: 'Facebook HQ'
+            address:
+              type: string
+              description: Address of the location
+              example: '1 Hacker Way, Menlo Park, CA 94025'
     WAContentButton:
       title: WAContentButton
       x-stoplight:
@@ -10895,6 +10936,9 @@ components:
           example: '0'
         sub_type:
           type: string
+          enum:
+            - quick reply
+            - url
           description: The type of dynamic button i.e. "quick reply" or "url"
           example: 'url'
         text:

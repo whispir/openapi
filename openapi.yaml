@@ -10813,7 +10813,7 @@ components:
             If the button subtype is “url” you will need the following parameters:
             “Index”, “sub_type”, “text”
 
-            If the button subtype is a “quick reply”, you will need the following parameters:
+            If the button subtype is a “quick_reply”, you will need the following parameters:
             “Index”, “sub_type”, “payload"
           items:
             $ref: '#/components/schemas/WAContentButton'
@@ -10918,7 +10918,7 @@ components:
         If the button subtype is “url” you will need the following parameters:
         “Index”, “sub_type”, “text”
 
-        If the button subtype is a “quick reply”, you will need the following parameters:
+        If the button subtype is a “quick_reply”, you will need the following parameters:
         “Index”, “sub_type”, “payload
       x-examples:
         Example 1:
@@ -10937,9 +10937,9 @@ components:
         sub_type:
           type: string
           enum:
-            - quick reply
+            - quick_reply
             - url
-          description: The type of dynamic button i.e. "quick reply" or "url"
+          description: The type of dynamic button i.e. "quick_reply" or "url"
           example: 'url'
         text:
           type: string
@@ -10951,7 +10951,7 @@ components:
           type: string
           description: |-
             Name of the quick reply buttons configured within your WhatsApp Business Manager account.
-            > required when `sub_type` value is `quick reply`
+            > required when `sub_type` value is `quick_reply`
           example: 'yes-button-payload'
       required:
         - index

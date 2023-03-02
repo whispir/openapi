@@ -10768,11 +10768,13 @@ components:
             The type of WhatsApp message to be sent, e.g. "template".
 
             Whispir currently only supports type "template".
+          example: 'icebreaker'  
         name:
           type: string
           description: |-
             The name of the template to be sent 
             > Must be the same as how it appears in your WhatsApp Business Manager
+          example: 'account_update_example_image_p'  
         content:
           $ref: '#/components/schemas/WAContent'
       required:
@@ -10890,19 +10892,23 @@ components:
         index:
           type: string
           description: The index value of the button this object represents
+          example: '0'
         sub_type:
           type: string
           description: The type of dynamic button i.e. "quick reply" or "url"
+          example: 'url'
         text:
           type: string
           description: |-
             the url destination when the button is clicked
             > required when `sub_type` value is `url`
+          example: 'https://abc.com'  
         payload:
           type: string
           description: |-
             Name of the quick reply buttons configured within your WhatsApp Business Manager account.
             > required when `sub_type` value is `quick reply`
+          example: 'yes-button-payload'
       required:
         - index
         - sub_type  

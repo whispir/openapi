@@ -1,0 +1,230 @@
+{{#vars}}
+{{#isModel}}
+{{! Recursively defining a builder pattern for variable that has a corresponding POJO (plain old java object) class}}
+        public static class {{baseType}} {
+            {{#vars}}
+            {{^isReadOnly}}
+            private {{{dataType}}} {{baseName}};
+            {{/isReadOnly}}
+            {{/vars}}
+
+            private {{baseType}}({{#vars}}{{^isReadOnly}}{{{dataType}}} {{baseName}}{{^-last}}, {{/-last}}{{/isReadOnly}}{{/vars}}){
+            {{#vars}}
+            {{^isReadOnly}}
+            this.{{baseName}} = {{baseName}};
+            {{/isReadOnly}}
+            {{/vars}}
+            }
+
+            {{#vars}}
+            {{^isReadOnly}}
+            public {{{dataType}}} {{getter}}(){
+                return {{{baseName}}};
+            }
+            {{#isEnum}}
+            {{^isReadOnly}}
+            public enum {{datatypeWithEnum}} {
+            {{#allowableValues}}
+            {{#enumVars}}
+                {{name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+            {{/enumVars}}
+            {{^enumVars}}
+            {{#values}}
+                {{#lambda.uppercase}}{{{.}}}{{/lambda.uppercase}}("{{{.}}}"){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+            {{/values}}
+            {{/enumVars}}
+            {{/allowableValues}}
+                private {{dataType}} value;
+                {{datatypeWithEnum}}({{dataType}} value){
+                    this.value = value;
+                }
+
+                public {{dataType}} getValue() {
+                    return value;
+                }
+                
+                @Override
+                public {{dataType}} toString() {
+                    return {{dataType}}.valueOf(value);
+                }
+
+                public static {{datatypeWithEnum}} fromValue({{dataType}} value) {
+                    for ({{datatypeWithEnum}} b : {{datatypeWithEnum}}.values()) {
+                        if (b.value.equals(value)) {
+                            return b;
+                        }
+                    }
+                    throw new IllegalArgumentException("Unexpected value '" + value + "'");
+                }
+
+            }
+            {{/isReadOnly}}
+            {{/isEnum}}
+            {{/isReadOnly}}
+            {{/vars}}
+
+            public static Builder builder() {
+                return new Builder();
+            }   
+
+            public static class Builder {
+                {{#vars}}
+                {{^isReadOnly}}
+                private {{{dataType}}} {{baseName}};
+                {{/isReadOnly}}
+                {{/vars}}
+
+                public {{baseType}} build() {
+                    return new {{baseType}}(
+                        {{#vars}}
+                        {{^isReadOnly}}
+                        this.{{baseName}}{{^-last}},{{/-last}}
+                        {{/isReadOnly}}
+                        {{/vars}}
+                    );
+                }
+                {{#vars}}
+                {{^isArray}}
+                {{^isReadOnly}}
+                public Builder {{setter}}({{#isEnum}}{{enumName}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}} {{baseName}}) {
+                    {{#isEnum}}
+                    this.{{baseName}} = {{baseName}}.getValue();
+                    {{/isEnum}}
+                    {{^isEnum}}
+                    this.{{baseName}} = {{baseName}};
+                    {{/isEnum}}
+                    return this;
+                }
+                {{/isReadOnly}}
+                {{/isArray}}
+                {{#isArray}}
+                {{^isReadOnly}}
+                {{! A special case when 'var' is type of array to create 'add' and 'addAll' methods}}
+                public Builder add{{complexType}}({{complexType}} element) {
+                    if (this.{{baseName}} == null) {
+                            this.{{baseName}} = new ArrayList<>();
+                    }
+                    this.{{baseName}}.add(element);
+                    return this;
+                }
+
+                public Builder addAll{{complexType}}({{#isEnum}}{{enumName}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}} elements) {
+                    if (this.{{baseName}} == null) {
+                            this.{{baseName}} = new ArrayList<>();
+                    }
+                    this.{{baseName}}.addAll(elements);
+                    return this;
+                }
+                {{/isReadOnly}}
+                {{/isArray}}
+                {{/vars}}
+            }
+
+    {{>api_recursion}}
+        }
+{{/isModel}}
+{{#isArray}}
+{{^isReadOnly}}
+{{#items}}
+    {{! Create a builder pattern for instance that is part of an array}}
+    public static class {{baseType}} {
+        {{#vars}}
+        {{^isReadOnly}}
+        private {{{dataType}}} {{baseName}};
+        {{/isReadOnly}}
+        {{/vars}}
+
+        private {{baseType}}({{#vars}}{{^isReadOnly}}{{{dataType}}} {{baseName}}{{^-last}},{{/-last}}{{/isReadOnly}}{{/vars}}){
+            {{#vars}}
+            {{^isReadOnly}}
+            this.{{baseName}} = {{baseName}};
+            {{/isReadOnly}}
+            {{/vars}}
+        }
+
+        {{#vars}}
+        {{^isReadOnly}}
+        public {{{dataType}}} {{getter}}(){
+            return {{{baseName}}};
+        }
+            {{#isEnum}}
+            public enum {{datatypeWithEnum}} {
+            {{#allowableValues}}
+            {{#enumVars}}
+                {{name}}({{{value}}}){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+            {{/enumVars}}
+            {{^enumVars}}
+            {{#values}}
+                {{#lambda.uppercase}}{{{.}}}{{/lambda.uppercase}}("{{{.}}}"){{^-last}},{{/-last}}{{#-last}};{{/-last}}
+            {{/values}}
+            {{/enumVars}}
+            {{/allowableValues}}
+                {{datatypeWithEnum}}({{dataType}} value){
+                    this.value = value;
+                }
+
+                private {{dataType}} value;
+                public {{dataType}} getValue() {
+                    return value;
+                }
+                
+                @Override
+                public {{dataType}} toString() {
+                    return {{dataType}}.valueOf(value);
+                }
+
+                public static {{datatypeWithEnum}} fromValue({{dataType}} value) {
+                    for ({{datatypeWithEnum}} b : {{datatypeWithEnum}}.values()) {
+                        if (b.value.equals(value)) {
+                            return b;
+                        }
+                    }
+                    throw new IllegalArgumentException("Unexpected value '" + value + "'");
+                }
+
+            }
+            {{/isEnum}}
+        {{/isReadOnly}}
+        {{/vars}}
+
+        public static Builder builder() {
+            return new Builder();
+        }   
+
+        public static class Builder {
+            {{#vars}}
+            {{^isReadOnly}}
+            private {{{dataType}}} {{baseName}};
+            {{/isReadOnly}}
+            {{/vars}}
+
+            public {{baseType}} build() {
+                return new {{baseType}}(
+                {{#vars}}
+                {{^isReadOnly}}
+                   this.{{baseName}}{{^-last}},{{/-last}}
+                {{/isReadOnly}}
+                {{/vars}}
+                );
+            }
+            {{#vars}}
+            {{^isReadOnly}}
+            public Builder {{setter}}({{#isEnum}}{{enumName}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}} {{baseName}}) {
+                {{#isEnum}}
+                this.{{baseName}} = {{baseName}}.getValue();
+                {{/isEnum}}
+                {{^isEnum}}
+                this.{{baseName}} = {{baseName}};
+                {{/isEnum}}
+                return this;
+            }
+            {{/isReadOnly}}
+            {{/vars}}
+        }
+
+    {{>api_recursion}}
+    }
+{{/items}}
+{{/isReadOnly}}
+{{/isArray}}
+{{/vars}}

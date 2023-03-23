@@ -31,11 +31,11 @@ Do one of the following:
 
 - Log in to your Whispir account. The region is shown in your Whispir platform URL, where the format is https\://[region].whispir.com.
 - Ask your company administrator.
-- If you're still unsure, contact the [Whispir Support Team](mailto:'support@whispir.com'). The Support Team can tell you your region-specific API URL.
+- If you're still unsure, contact the [Whispir Support Team](mailto:support@whispir.com). The Support Team can tell you your region-specific API URL.
 
-## Allowlisting IP ranges
+## IP Range Allowlisting
 
-Allowlisting (historically referred to as [whitelisting](https://en.wikipedia.org/wiki/Whitelisting)) is a mechanism which grants certain applications or IP addresses access to your system.
+Allowlisting (formerly known as [whitelisting](https://en.wikipedia.org/wiki/Whitelisting)) is a mechanism which grants certain applications or IP addresses access to your system.
 
 Whispir's API is hosted via Amazon Web Services (AWS). If you wish to implement allowlisting, you will need to allowlist IP ranges belonging to AWS.
 
@@ -44,7 +44,7 @@ Before you do so, please understand the following:
 - These lists are dynamic and subject to change with minimal notice.
 - Whispir **does not** provide customers with notice of changes to AWS IP ranges.
 
-> Whispir **does not recommend** that you implement allowlisting on your system, unless you have a mandatory compliance requirement to do so.
+> Whispir **strongly recommends against** implementing IP allowlisting on your systems, unless you have a mandatory compliance requirement to do so.
 
 If you choose to implement allowlisting, you must have robust procedures in place to ensure that your allowlisted IP ranges are kept up to date following the release of new ranges by AWS.
 
@@ -52,11 +52,11 @@ You can subcribe to a mailing list to be notified of future changes to AWS IP ra
 
 We strongly recommend that you subscribe to this list should you decide to implement allowlisting on your system. 
 
-## AWS IP ranges list
+### AWS IP ranges list
 
 The list of AWS IP ranges can be found via [the AWS website.](https://ip-ranges.amazonaws.com/ip-ranges.json)
 
-### What ranges do I need to allowlist?
+#### What ranges do I need to allowlist?
 
 Both global and region specific AWS IP ranges need to be allowlisted for Whispir's API.
 
@@ -74,6 +74,13 @@ Whispir Region | AWS region
  AP, AP1 | AP-SOUTHEAST-1
  US |  US-WEST-1
 
+## SSL/TLS Certificate Allowlisting
+
+Whispir regularly rotates SSL/TLS certificates as per best security practices and cannot notify customers in advance of certificate rotation.
+
+<!-- theme: danger -->
+> Whispir **strongly recommends against** implementing certificate allowlisting on your systems. Whispir services will be inaccessible after certificate rotation if allowlisting is configured.
+
 ## Contact us
 
-As always, should you encounter any difficulties, do not hesitate to reach out to the [Whispir Support Team](mailto:'support@whispir.com') for assistance.
+As always, should you encounter any difficulties, do not hesitate to reach out to the [Whispir Support Team](mailto:support@whispir.com) for assistance.

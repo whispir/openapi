@@ -22,7 +22,7 @@ curl --request GET \
   --header 'Authorization: Basic [YOUR AUTHORIZATION HEADER]' \
   --header 'x-api-key: [YOUR API KEY]'
 ```
-Copy the cURL code into the command line interface of your choice, or use a web-based cURL console such as [Reqbin.](https://reqbin.com/curl)
+Copy the cURL code into the command line interface of your choice, or use a web-based cURL console such as <!-- markdown-link-check-disable -->[Reqbin.](https://reqbin.com/curl)<!-- markdown-link-check-enable-->
 
 ## Using a generic REST client
 
@@ -74,6 +74,6 @@ If you received this response, congratulations! You've successfuly connected to 
 
 **Other HTTP errors or no connectivity at all**
 
-If you’re still having issues contact the [Whispir Support Team](mailto:'support@whispir.com').
+If you’re still having issues contact the [Whispir Support Team](mailto:support@whispir.com).
 
 

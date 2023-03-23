@@ -1,0 +1,700 @@
+package {{package}};
+
+import {{groupId}}.Whispir;
+import {{invokerPackage}}.ApiCallback;
+import {{invokerPackage}}.ApiClient;
+import {{invokerPackage}}.ApiException;
+{{#dynamicOperations}}
+import {{invokerPackage}}.ApiOperation;
+{{/dynamicOperations}}
+import {{invokerPackage}}.ApiResponse;
+import {{invokerPackage}}.Configuration;
+import {{invokerPackage}}.Pair;
+import {{invokerPackage}}.ProgressRequestBody;
+import {{invokerPackage}}.ProgressResponseBody;
+import {{invokerPackage}}.auth.ApiKeyAuth;
+import {{invokerPackage}}.Version;
+
+import com.google.gson.reflect.TypeToken;
+{{#dynamicOperations}}
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.parameters.Parameter;
+{{/dynamicOperations}}
+
+import java.io.IOException;
+{{#imports}}import {{import}};
+{{/imports}}
+
+import java.lang.reflect.Type;
+{{^fullJavaUtil}}
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.Arrays;
+{{/fullJavaUtil}}
+import javax.ws.rs.core.GenericType;
+import java.net.URI;
+import java.util.stream.Collectors;
+
+{{#operations}}
+public class {{classname}} {
+    private static ApiClient localVarApiClient = Configuration.getDefaultApiClient();
+
+    {{#operation}}
+    {{^vendorExtensions.x-internal}}
+    private static okhttp3.Call {{operationId}}Call({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
+        String basePath = Whispir.host;
+        String authHeader = Whispir.getAuthorizationHeader();
+
+        Object localVarPostBody = {{#bodyParam}}{{paramName}}{{/bodyParam}}{{^bodyParam}}null{{/bodyParam}};
+
+        // create path and map variables
+        {{^dynamicOperations}}
+        String localVarPath = "{{{path}}}"{{#pathParams}}
+            .replace("{" + "{{baseName}}" + "}", localVarApiClient.escapeString({{#collectionFormat}}localVarApiClient.collectionPathParameterToString("{{{collectionFormat}}}", {{{paramName}}}){{/collectionFormat}}{{^collectionFormat}}{{{paramName}}}.toString(){{/collectionFormat}})){{/pathParams}};
+        {{/dynamicOperations}}
+        {{#dynamicOperations}}
+        ApiOperation apiOperation = localVarApiClient.getOperationLookupMap().get("{{{operationId}}}");
+        if (apiOperation == null) {
+            throw new ApiException("Operation not found in OAS");
+        }
+        Operation operation = apiOperation.getOperation();
+        String localVarPath = apiOperation.getPath();
+        Map<String, Object> paramMap = new HashMap<>();
+        {{#allParams}}
+            {{^isFormParam}}
+            {{^isBodyParam}}
+        paramMap.put("{{baseName}}", {{paramName}});
+            {{/isBodyParam}}
+            {{/isFormParam}}
+        {{/allParams}}
+        {{/dynamicOperations}}
+
+        {{javaUtilPrefix}}List<Pair> localVarQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
+        {{javaUtilPrefix}}List<Pair> localVarCollectionQueryParams = new {{javaUtilPrefix}}ArrayList<Pair>();
+        {{javaUtilPrefix}}Map<String, String> localVarHeaderParams = new {{javaUtilPrefix}}HashMap<String, String>();
+        {{javaUtilPrefix}}Map<String, String> localVarCookieParams = new {{javaUtilPrefix}}HashMap<String, String>();
+        {{javaUtilPrefix}}Map<String, Object> localVarFormParams = new {{javaUtilPrefix}}HashMap<String, Object>();
+
+        localVarHeaderParams.put("Authorization", String.format("Basic %s", authHeader));
+        localVarHeaderParams.put("User-Agent", String.format("{{artifactId}}-%s", Version.VERSION));
+
+        {{#formParams}}
+        if ({{paramName}} != null) {
+            localVarFormParams.put("{{baseName}}", {{paramName}});
+        }
+
+        {{/formParams}}
+        {{^dynamicOperations}}
+        {{#queryParams}}
+        if ({{paramName}} != null) {
+            {{#collectionFormat}}localVarCollectionQueryParams.addAll(localVarApiClient.parameterToPairs("{{{.}}}", {{/collectionFormat}}{{^collectionFormat}}localVarQueryParams.addAll(localVarApiClient.parameterToPair({{/collectionFormat}}"{{baseName}}", {{paramName}}));
+        }
+
+        {{/queryParams}}
+        {{#headerParams}}
+        if ({{paramName}} != null) {
+            localVarHeaderParams.put("{{baseName}}", localVarApiClient.parameterToString({{paramName}}));
+        }
+
+        {{/headerParams}}
+        {{#cookieParams}}
+        if ({{paramName}} != null) {
+            localVarCookieParams.put("{{baseName}}", localVarApiClient.parameterToString({{paramName}}));
+        }
+
+        {{/cookieParams}}
+        {{/dynamicOperations}}
+        {{#dynamicOperations}}
+        localVarPath = localVarApiClient.fillParametersFromOperation(operation, paramMap, localVarPath, localVarQueryParams, localVarCollectionQueryParams, localVarHeaderParams, localVarCookieParams);
+
+        {{/dynamicOperations}}
+        final String[] localVarAccepts = {
+            {{#produces}}
+            "{{{mediaType}}}"{{^-last}},{{/-last}}
+            {{/produces}}
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            {{#consumes}}
+            "{{{mediaType}}}"{{^-last}},{{/-last}}
+            {{/consumes}}
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { {{#authMethods}}"{{name}}"{{^-last}}, {{/-last}}{{/authMethods}} };
+        return localVarApiClient.buildCall(basePath, localVarPath, {{^dynamicOperations}}"{{httpMethod}}"{{/dynamicOperations}}{{#dynamicOperations}}apiOperation.getMethod(){{/dynamicOperations}}, localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    {{#isDeprecated}}
+    @Deprecated
+    {{/isDeprecated}}
+    @SuppressWarnings("rawtypes")
+    private static okhttp3.Call {{operationId}}ValidateBeforeCall({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback _callback) throws ApiException {
+        {{#allParams}}
+        {{#required}}
+        // verify the required parameter '{{paramName}}' is set
+        if ({{paramName}} == null) {
+            throw new ApiException("Missing the required parameter '{{paramName}}' when calling {{operationId}}(Async)");
+        }
+
+        {{/required}}
+        {{/allParams}}
+        return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}_callback);
+    }
+
+    private static ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Void{{/returnType}}> {{operationId}}WithHttpInfo({{#allParams}}{{#vendorExtensions}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/vendorExtensions}}{{/allParams}}) throws ApiException {
+        okhttp3.Call localVarCall = {{operationId}}Call({{#allParams}}{{#vendorExtensions}}{{paramName}}, {{/vendorExtensions}}{{/allParams}}null);
+        {{^returnType}}
+        return localVarApiClient.execute(localVarCall);
+        {{/returnType}}
+        {{#returnType}}
+        {{#errorObjectType}}
+        try {
+            Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
+            return localVarApiClient.execute(localVarCall, localVarReturnType);
+        } catch (ApiException e) {
+            e.setErrorObject(localVarApiClient.getJSON().getGson().fromJson(e.getResponseBody(), new TypeToken<{{{errorObjectType}}}>(){}.getType()));
+            throw e;
+        }
+        {{/errorObjectType}}
+        {{^errorObjectType}}
+        Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        {{/errorObjectType}}
+        {{/returnType}}
+    }
+
+    private static okhttp3.Call {{operationId}}Async({{#allParams}}{{{dataType}}} {{paramName}}, {{/allParams}}final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws ApiException {
+        okhttp3.Call localVarCall = {{operationId}}ValidateBeforeCall({{#allParams}}{{paramName}}, {{/allParams}}_callback);
+        {{#returnType}}Type localVarReturnType = new TypeToken<{{{returnType}}}>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);{{/returnType}}{{^returnType}}localVarApiClient.executeAsync(localVarCall, _callback);{{/returnType}}
+        return localVarCall;
+    }
+
+    public static class {{operationIdCamelCase}}Params {
+        {{#requiredParams}}
+        {{^vendorExtensions.x-isApiKey}}
+        {{^vendorExtensions.x-isContentType}}
+        {{! list all required "query", "path", "header" params except for "x-ApiKey", "contentType" and "accept"}}
+        private {{{dataType}}} {{paramName}};
+        {{/vendorExtensions.x-isContentType}}
+        {{/vendorExtensions.x-isApiKey}}
+        {{! Listing body params if there are any}}
+        {{#isBodyParam}}      
+        {{#vars}}
+        {{^isReadOnly}}
+        private {{{dataType}}} {{baseName}};
+        {{/isReadOnly}}
+        {{/vars}}
+        {{/isBodyParam}}
+        {{/requiredParams}}
+        {{! Listing optional params if there are any}}
+        {{#optionalParams}}
+        private {{{dataType}}} {{paramName}};
+        {{/optionalParams}}
+
+        private {{operationIdCamelCase}}Params(
+            {{#requiredParams}}
+            {{^vendorExtensions.x-isApiKey}}
+            {{^vendorExtensions.x-isContentType}}
+            {{{dataType}}} {{paramName}}{{^-last}},{{/-last}}{{#-last}}{{#hasOptionalParams}}{{#hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{#hasOptionalParams}}{{^hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{^hasOptionalParams}}{{#hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{/-last}}
+            {{/vendorExtensions.x-isContentType}}
+            {{/vendorExtensions.x-isApiKey}}
+            {{#isBodyParam}}
+            {{#vars}}
+            {{^isReadOnly}}
+            {{{dataType}}} {{baseName}}{{^-last}},{{/-last}}
+            {{/isReadOnly}}
+            {{/vars}}
+            {{/isBodyParam}}
+            {{/requiredParams}}
+            {{#optionalParams}}
+            {{{dataType}}} {{paramName}}{{^-last}},{{/-last}}
+            {{/optionalParams}}
+        ){
+            {{#requiredParams}}
+            {{^vendorExtensions.x-isApiKey}}    
+            {{^vendorExtensions.x-isContentType}}
+            this.{{paramName}} = {{paramName}};
+            {{/vendorExtensions.x-isContentType}}
+            {{/vendorExtensions.x-isApiKey}}
+            {{#isBodyParam}}
+            {{#vars}}
+            {{^isReadOnly}}
+            this.{{baseName}} = {{baseName}};
+            {{/isReadOnly}}
+            {{/vars}}
+            {{/isBodyParam}}
+            {{/requiredParams}}
+            {{#optionalParams}}
+            this.{{paramName}} = {{paramName}};
+            {{/optionalParams}}
+        }
+            {{#requiredParams}}
+            {{^vendorExtensions.x-isApiKey}}
+            {{^vendorExtensions.x-isContentType}}
+            public {{{dataType}}} get{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}() {
+                return {{paramName}};
+            }
+            {{/vendorExtensions.x-isContentType}}
+            {{/vendorExtensions.x-isApiKey}}
+            {{#isBodyParam}}
+            {{#vars}}
+            {{#isEnum}}
+            public enum {{datatypeWithEnum}} {
+            {{#allowableValues}}
+            {{#enumVars}}
+            {{{name}}}({{{value}}}){{^-last}},
+            {{/-last}}{{#-last}};{{/-last}}
+            {{/enumVars}}
+            {{^enumVars}}
+            {{#values}}
+            {{#lambda.uppercase}}{{#lambda.snakecase}}{{{.}}}{{/lambda.snakecase}}{{/lambda.uppercase}}("{{{.}}}"){{^-last}},
+            {{/-last}}{{#-last}};{{/-last}}
+            {{/values}}
+            {{/enumVars}}
+            {{/allowableValues}}
+                private {{dataType}} value;
+                {{datatypeWithEnum}}({{dataType}} value){
+                    this.value = value;
+                }
+
+                public {{dataType}} getValue() {
+                    return value;
+                }
+                
+                @Override
+                public {{dataType}} toString() {
+                    return {{dataType}}.valueOf(value);
+                }
+
+                public static {{datatypeWithEnum}} fromValue({{dataType}} value) {
+                    for ({{datatypeWithEnum}} b : {{datatypeWithEnum}}.values()) {
+                        if (b.value.equals(value)) {
+                            return b;
+                        }
+                    }
+                    throw new IllegalArgumentException("Unexpected value '" + value + "'");
+                }
+
+            }
+            {{/isEnum}}              
+            {{^isReadOnly}}
+            public {{{dataType}}} {{getter}}() {
+                return {{baseName}};
+            }
+            {{/isReadOnly}}
+            {{/vars}}
+            {{/isBodyParam}}
+            {{/requiredParams}}
+            {{#optionalParams}}
+            public {{{dataType}}} get{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}() {
+                return {{paramName}};
+            }
+            {{/optionalParams}}
+
+        public static Builder builder() {
+            return new Builder();
+        }
+
+        public static class Builder {
+            {{#requiredParams}}
+            {{^vendorExtensions.x-isApiKey}}
+            {{^vendorExtensions.x-isContentType}}
+            private {{{dataType}}} {{paramName}};
+            {{/vendorExtensions.x-isContentType}}
+            {{/vendorExtensions.x-isApiKey}}
+            {{#isBodyParam}}
+            {{#vars}}
+            {{^isReadOnly}}
+            private {{{dataType}}} {{baseName}};
+            {{/isReadOnly}}
+            {{/vars}}
+            {{/isBodyParam}}
+            {{/requiredParams}}
+            {{#optionalParams}}
+            private {{{dataType}}} {{paramName}};
+            {{/optionalParams}}
+
+            public {{operationIdCamelCase}}Params build() {
+                return new {{operationIdCamelCase}}Params(
+                    {{#requiredParams}}
+                    {{^vendorExtensions.x-isApiKey}}    
+                    {{^vendorExtensions.x-isContentType}}
+                    {{paramName}}{{^-last}},{{/-last}}{{#-last}}{{#hasOptionalParams}}{{#hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{#hasOptionalParams}}{{^hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{^hasOptionalParams}}{{#hasBodyParam}},{{/hasBodyParam}}{{/hasOptionalParams}}{{/-last}}
+                    {{/vendorExtensions.x-isContentType}}
+                    {{/vendorExtensions.x-isApiKey}}
+                    {{#isBodyParam}}
+                    {{#vars}}
+                    {{^isReadOnly}}
+                    {{baseName}}{{^-last}},{{/-last}}
+                    {{/isReadOnly}}
+                    {{/vars}}
+                    {{/isBodyParam}}
+                    {{/requiredParams}}
+                    {{#optionalParams}}
+                    {{paramName}}{{^-last}},{{/-last}}
+                    {{/optionalParams}}
+                );
+            }
+
+            {{#requiredParams}}
+            {{^vendorExtensions.x-isApiKey}}
+            {{^vendorExtensions.x-isContentType}}
+            public Builder set{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{{dataType}}} {{paramName}}) {
+                this.{{paramName}} = {{paramName}};
+                return this;
+            }
+            {{/vendorExtensions.x-isContentType}}
+            {{/vendorExtensions.x-isApiKey}}
+            {{#isBodyParam}}
+            {{#vars}}
+            {{^isReadOnly}}
+            public Builder {{setter}}({{#isEnum}}{{enumName}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{/isEnum}} {{baseName}}) {
+                {{#isEnum}}
+                this.{{baseName}} = {{baseName}}.getValue();
+                {{/isEnum}}
+                {{^isEnum}}
+                this.{{baseName}} = {{baseName}};
+                {{/isEnum}}
+                return this;
+            }
+            {{/isReadOnly}}
+            {{/vars}}
+            {{/isBodyParam}}
+            {{/requiredParams}}
+            {{#optionalParams}}
+            public Builder set{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{{dataType}}} {{paramName}}) {
+                this.{{paramName}} = {{paramName}};
+                return this;
+            }
+            {{/optionalParams}}
+        }
+        
+        {{#requiredParams}}
+        {{#isBodyParam}}
+{{>api_recursion}}
+        {{/isBodyParam}}
+        {{/requiredParams}}
+    }
+
+    public static class {{operationIdCamelCase}}Request {
+        {{#requiredParams}}
+        private final {{{dataType}}} {{paramName}};
+        {{/requiredParams}}
+        {{#optionalParams}}
+        private {{{dataType}}} {{paramName}};
+        {{/optionalParams}}
+        ApiResponse _lastResponse;
+
+        private {{operationIdCamelCase}}Request({{#requiredParams}}{{{dataType}}} {{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}}) {
+            {{#requiredParams}}
+            this.{{paramName}} = {{paramName}};
+            {{/requiredParams}}
+        }
+
+        {{#optionalParams}}
+        /**
+         * Set {{paramName}}
+         * @param {{paramName}} {{description}} (optional{{^isContainer}}{{#defaultValue}}, default to {{.}}{{/defaultValue}}{{/isContainer}})
+         * @return API{{operationId}}Request
+         */
+        public {{operationIdCamelCase}}Request {{paramName}}({{{dataType}}} {{paramName}}) {
+            this.{{paramName}} = {{paramName}};
+            return this;
+        }
+
+        {{/optionalParams}}
+        /**
+         * Build call for {{operationId}}
+         * @param _callback ApiCallback API callback
+         * @return Call to execute
+         * @throws ApiException If fail to serialize the request body object
+         */
+        {{#isDeprecated}}
+        @Deprecated
+        {{/isDeprecated}}
+        public okhttp3.Call buildCall(final ApiCallback _callback) throws ApiException {
+            return {{operationId}}Call({{#allParams}}{{paramName}}, {{/allParams}}_callback);
+        }
+
+        /**
+         * Execute {{operationId}} request{{#returnType}}
+         * @return {{.}}{{/returnType}}
+         * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+         */
+        {{#isDeprecated}}
+        @Deprecated
+        {{/isDeprecated}}
+        {{^vendorExtensions.x-streaming}}
+        public {{{returnType}}}{{^returnType}}void{{/returnType}} execute() throws ApiException {
+            {{#returnType}}ApiResponse<{{{.}}}> localVarResp = {{/returnType}}{{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});{{#returnType}}
+            _lastResponse = localVarResp;
+            {{returnType}} data = localVarResp.getData();
+
+            {{#vendorExtensions}}{{#x-isPost}}
+            // Special case to extract the resource identifier from the `Location` header.
+            // TODO: remove this when ID is returned in response body
+            String locationHeader = localVarResp.getHeaders().get("Location").get(0);
+            Pattern pattern = Pattern.compile("/([^/]+)/?$", Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(locationHeader);
+            if (matcher.find()) {
+                data.setDocId(matcher.group(1));
+            }
+            {{/x-isPost}}{{/vendorExtensions}}
+            data.lastResponse = localVarResp;
+            return data;{{/returnType}}
+        }
+        /**
+         * Return the last executed API response
+         * @return ApiResponse
+         */
+        public ApiResponse getLastResponse()  {
+            return _lastResponse;
+        }
+
+        {{/vendorExtensions.x-streaming}}
+        {{#vendorExtensions.x-streaming}}
+        public InputStream execute() throws ApiException {
+            return {{operationId}}WithHttpInfo({{#allParams}}{{paramName}}{{^-last}}, {{/-last}}{{/allParams}});
+        }
+        {{/vendorExtensions.x-streaming}}
+
+        /**
+         * Execute {{operationId}} request (asynchronously)
+         * @param _callback The callback to be executed when the API call finishes
+         * @return The request call
+         * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+         */
+        {{#isDeprecated}}
+        @Deprecated
+        {{/isDeprecated}}
+        public okhttp3.Call executeAsync(final ApiCallback<{{{returnType}}}{{^returnType}}Void{{/returnType}}> _callback) throws ApiException {
+            return {{operationId}}Async({{#allParams}}{{paramName}}, {{/allParams}}_callback);
+        }
+    }
+
+    /**
+     * {{summary}}
+     * @param params The param instance required to create {{operationIdCamelCase}}Request
+     * @return {{{returnType}}}{{^returnType}}void{{/returnType}}
+     */
+
+    public static {{{returnType}}}{{^returnType}}void{{/returnType}} {{vendorExtensions.x-sdkOperation}}(Map<String, Object> params) throws ApiException {
+        {{#optionalParams}}
+        {{! ensure to include all of the optionalParams that get passed in }}
+        {{{dataType}}} {{paramName}} = null;
+        if(params.containsKey("{{paramName}}") && params.get("{{{paramName}}}") != null){
+            {{paramName}} = ({{{dataType}}}) params.get("{{{paramName}}}");
+        }
+        {{/optionalParams}} 
+        {{#requiredParams}}
+        {{^isBodyParam}}
+        {{^vendorExtensions.x-isApiKey}}
+        {{^vendorExtensions.x-isContentType}}
+        {{! extracting all required path and header params (e.g. "workspaceId", "eventType") }}
+        {{{dataType}}} {{paramName}} = ({{{dataType}}}) params.get("{{{paramName}}}");
+
+        if({{paramName}} == null || {{paramName}}.isEmpty()) {
+            throw new ApiException("Missing the required parameter '{{paramName}}'");
+        }
+        {{/vendorExtensions.x-isContentType}}
+        {{/vendorExtensions.x-isApiKey}}       
+        {{/isBodyParam}}
+        {{#isBodyParam}}
+        {{#vars}}
+        {{^isReadOnly}}
+        {{^isPrimitiveType}}
+        {{^isEnum}}
+        {{#isArray}}
+        List<Object> {{baseName}} = Arrays.asList(params.get("{{baseName}}"));
+        List<{{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}> {{baseName}}Value = null;
+        if({{baseName}} != null) {
+            {{baseName}}Value = {{baseName}}.stream()
+                .map(e -> ({{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}) e).collect(Collectors.toList());
+        }
+        {{/isArray}}
+        {{^isUri}}
+        {{^isArray}}
+        {{^isNumber}}
+        Object {{baseName}}Value = params.get("{{{baseName}}}");
+        {{/isNumber}}
+        {{/isArray}}
+        {{/isUri}}
+        {{#isNumber}}
+        {{{dataType}}} {{baseName}}Value = ({{{dataType}}}) params.get("{{{baseName}}}");
+        {{/isNumber}}
+        {{#isUri}}
+        {{{dataType}}} {{baseName}}Value = ({{{dataType}}}) params.get("{{{baseName}}}");
+        {{/isUri}}
+        {{/isEnum}}
+        {{#isEnum}}
+        {{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{datatypeWithEnum}}} {{baseName}}Value = {{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{datatypeWithEnum}}}.valueOf(({{dataType}}) params.get("{{{baseName}}}"));
+        {{/isEnum}}
+        {{/isPrimitiveType}}
+        {{#isPrimitiveType}}
+        {{#isEnum}}
+        {{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{datatypeWithEnum}}} {{baseName}}Value = {{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{datatypeWithEnum}}}.valueOf(({{dataType}}) params.get("{{{baseName}}}"));
+        {{/isEnum}}
+        {{^isEnum}}
+        {{{dataType}}} {{baseName}}Value = ({{{dataType}}}) params.get("{{{baseName}}}");
+        {{/isEnum}}
+        {{/isPrimitiveType}}
+        {{#required}}
+        if({{baseName}}Value == null) {
+            throw new ApiException("Missing the required property value of '{{baseName}}'");
+        }
+        {{/required}}
+        {{/isReadOnly}}
+        {{/vars}}
+        {{/isBodyParam}}
+        {{/requiredParams}}
+        {{#hasRequiredParams}}
+        {{#hasHeaderParams}}
+        {{#hasBodyParam}}
+        {{! for any operation that only has 'bodyParam' (e.g. /PUT and /POST ops) }}
+        {{operationIdCamelCase}}Params tempParams = {{operationIdCamelCase}}Params.builder()
+        {{/hasBodyParam}}
+        {{#hasPathParams}}
+        {{^hasBodyParam}}
+        {{! for any operation that only has path params (e.g. /GET "workspaces/{workspaceId}/messages{messageId}") }}
+        {{operationIdCamelCase}}Params tempParams = {{operationIdCamelCase}}Params.builder()
+        {{/hasBodyParam}}
+        {{/hasPathParams}}
+        {{#hasOptionalParams}}
+        {{^hasBodyParam}}
+        {{^hasPathParams}}
+        {{! for any operation that only has optional params (e.g. /GET list operations where you need to specify 'limit', 'offset', 'view') }}
+        {{operationIdCamelCase}}Params tempParams = {{operationIdCamelCase}}Params.builder()
+        {{/hasPathParams}}
+        {{/hasBodyParam}}
+        {{/hasOptionalParams}}
+        {{^hasBodyParam}}
+        {{^hasOptionalParams}}
+        {{^hasPathParams}}
+        {{! for any operation that does not have a body, optional and path params (e.g. Auth & Users endpoints) }}
+        {{operationIdCamelCase}}Params tempParams = null;
+        {{/hasPathParams}}
+        {{/hasOptionalParams}}
+        {{/hasBodyParam}}
+        {{/hasHeaderParams}}
+        {{/hasRequiredParams}}
+        {{#requiredParams}}
+        {{^isBodyParam}}
+        {{^vendorExtensions.x-isApiKey}}
+        {{^vendorExtensions.x-isContentType}}
+        {{! Ensure to include requiredParams that aren't 'bodyParam' (like "workspaceId") to be included into the builder pattern constructor }}
+            .set{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{#isModel}}({{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}) {{/isModel}}{{baseName}}){{#-last}}{{^optionalParams}}.build();{{/optionalParams}}{{/-last}}
+        {{/vendorExtensions.x-isContentType}}
+        {{/vendorExtensions.x-isApiKey}}
+        {{/isBodyParam}}
+        {{#isBodyParam}}
+        {{#vars}}
+        {{^isReadOnly}}
+            .set{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{#isModel}}({{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}) {{/isModel}}{{baseName}}Value){{#-last}}{{^optionalParams}}.build();{{/optionalParams}}{{/-last}}
+        {{/isReadOnly}}
+        {{/vars}}
+        {{/isBodyParam}}
+        {{/requiredParams}}
+        {{#optionalParams}}
+            .set{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}({{paramName}}){{#-last}}.build();{{/-last}}
+        {{/optionalParams}}
+
+        {{#returnType}}return {{/returnType}}{{vendorExtensions.x-sdkOperation}}(tempParams);
+    }
+
+    public static {{{returnType}}}{{^returnType}}void{{/returnType}} {{vendorExtensions.x-sdkOperation}}({{operationIdCamelCase}}Params params) throws ApiException {
+        // retrieving apiKeyAuth value from apiClient
+        String xApiKey = Whispir.apiKey;
+        
+        if(xApiKey == null) {
+            throw new ApiException("Missing the required parameter 'xApiKey'");
+        }
+
+        {{#requiredParams}}
+        {{#vendorExtensions.x-isContentType}}
+        {{{dataType}}} {{paramName}} = "{{defaultValue}}";
+        {{/vendorExtensions.x-isContentType}}
+
+        {{^isBodyParam}}
+        {{^vendorExtensions.x-isApiKey}}
+        {{^vendorExtensions.x-isContentType}}
+        {{{dataType}}} {{paramName}} = params.get{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}();
+
+        if({{paramName}} == null || {{paramName}}.isEmpty()) {
+            throw new ApiException("Missing the required parameter '{{paramName}}'");
+        }
+        {{/vendorExtensions.x-isContentType}}
+        {{/vendorExtensions.x-isApiKey}}
+        {{/isBodyParam}}
+        {{#isBodyParam}}
+        // Constructing '{{dataType}}' from '{{operationIdCamelCase}}Params' instance passed
+        {{{dataType}}} {{paramName}} = new {{dataType}}();
+        {{#vars}}
+        {{^isReadOnly}}
+        {{^isPrimitiveType}}
+        {{#isArray}}
+        List<{{package}}.{{classname}}.{{operationIdCamelCase}}Params.{{{complexType}}}> {{baseName}}List = params.{{getter}}();
+        List<{{modelPackage}}.{{{complexType}}}> {{baseName}}Value = null;
+        if({{baseName}}List != null) {
+            List<Object> {{baseName}} = new ArrayList<Object>(params.{{getter}}());
+            {{baseName}}Value = {{baseName}}.stream()
+                .map(e -> ({{modelPackage}}.{{{complexType}}}) e).collect(Collectors.toList());
+        }
+        {{/isArray}}
+        {{^isUri}}
+        {{^isArray}}
+        {{^isNumber}}
+        Object {{baseName}}Value = params.{{getter}}();
+        {{/isNumber}}
+        {{/isArray}}
+        {{/isUri}}
+        {{#isNumber}}
+        {{{dataType}}} {{baseName}}Value = params.{{getter}}();
+        {{/isNumber}}
+        {{#isUri}}
+        {{{dataType}}} {{baseName}}Value = params.{{getter}}();
+        {{/isUri}}
+        {{/isPrimitiveType}}
+        {{#isPrimitiveType}}
+        {{{dataType}}} {{baseName}}Value = params.{{getter}}();
+        {{/isPrimitiveType}}
+        {{#required}}
+        if({{baseName}}Value == null) {
+            throw new ApiException("Missing the required property value of '{{baseName}}'");
+        }
+        {{/required}}
+        {{paramName}}.set{{#lambda.titlecase}}{{baseName}}{{/lambda.titlecase}}({{#isModel}}({{modelPackage}}.{{{complexType}}}) {{/isModel}}{{baseName}}Value);
+
+        {{/isReadOnly}}
+        {{/vars}}
+        {{/isBodyParam}}
+        {{/requiredParams}}
+        {{operationIdCamelCase}}Request request = new {{operationIdCamelCase}}Request({{#requiredParams}}{{paramName}}{{^-last}}, {{/-last}}{{/requiredParams}});
+
+        // Ensure to include all of the 'optionalParams' that are passed
+        {{#optionalParams}}
+        {{! ensure to include all of the optionalParams that get passed in }}
+        if(params.{{paramName}} != null){
+            {{{dataType}}} {{paramName}} = params.get{{#lambda.titlecase}}{{paramName}}{{/lambda.titlecase}}();
+            request.{{paramName}}({{paramName}});
+        }
+        {{/optionalParams}}
+
+        {{#returnType}}return {{/returnType}}request.execute();
+    }
+    {{/vendorExtensions.x-internal}}
+    {{/operation}}
+}
+{{/operations}}

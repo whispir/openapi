@@ -4375,6 +4375,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Accept'
+        - $ref: '#/components/parameters/workspaceId'
       responses:
         '200':
           $ref: '#/components/responses/Workspace'
@@ -4398,8 +4399,6 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
-    parameters:
-      - $ref: '#/components/parameters/workspaceId'
     put:
       summary: Update a workspace
       x-sdkOperation: update
@@ -4432,6 +4431,7 @@ paths:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Content-Type'
         - $ref: '#/components/parameters/Workspace-Accept'
+        - $ref: '#/components/parameters/workspaceId'
       requestBody:
         content:
           application/vnd.whispir.workspace-v1+json:
@@ -6176,16 +6176,17 @@ paths:
             schema:
               $ref: '#/components/schemas/import'
             examples:
-              example-1:
+              Example 1:
                 value:
                   resourceId: 4FBBC384BCE3DAABFE3
                   importType: contact
                   importOptions:
-                    firstName: firstName
-                    lastName: lastName
-                    workMobilePhone1: workMobilePhone1
-                    workCountry: workCountry
-                    timezone: timeZone
+                    fieldMapping:
+                      firstName: firstName
+                      lastName: lastName
+                      workMobilePhone1: workMobilePhone1
+                      workCountry: workCountry
+                      timezone: timezone
                   importMode: replace
         description: import object that needs to be create import
       responses:
@@ -6670,6 +6671,7 @@ components:
           title: Message Email Resources
           properties:
             attachments:
+              title: Message Email Attachments
               description: A list of attachments to attach to the email Message.
               type: array
               uniqueItems: false
@@ -6790,6 +6792,7 @@ components:
           description: Provides a configuration object for specifying custom audio for the voice header and body.
           properties:
             attachment:
+              title: Message Voice Attachments
               type: array
               description: |-
                 The header and body attachments containing WAV files. Read the following section for configuring each voice field attachment:
@@ -9492,7 +9495,6 @@ components:
             - Map
             - Un-map
             - Logout
-          example: Create
         description:
           type: string
           description: The description of the activity. This is a free text that details about the activity.
@@ -10164,6 +10166,17 @@ components:
         - Imports
       title: Import
       description: Import model object
+      x-examples:
+        Import resource example:
+          resourceId: 4FBBC384BCE3DAABFE3
+          importType: contact
+          importOptions:
+            firstName: firstName
+            lastName: lastName
+            workMobilePhone1: workMobilePhone1
+            workCountry: workCountry
+            timezone: timeZone
+          importMode: replace
       properties:
         resourceId:
           type: string
@@ -10179,7 +10192,6 @@ components:
         importOptions:
           type: object
           title: Import Field Mapping
-          description: Mapping the data column in your resource file to the contact field value
           x-examples:
             example-1:
               firstName: firstName
@@ -10187,33 +10199,47 @@ components:
               workMobilePhone1: workMobilePhone1
               workCountry: workCountry
               timezone: timeZone
-          properties:
-            firstName:
-              type: string
-              description: First Name of the Contact. Value of this field is used to map the field within the resource.
-              example: firstName
-            lastName:
-              type: string
-              description: Last Name of the Contact. Value of this field is used to map the field within the resource.
-              example: lastName
-            workMobilePhone1:
-              type: string
-              description: The mobile phone number of the Contact. Value of this field is used to map the field within the newly created resource.
-              example: workMobilePhone1
-            workCountry:
-              type: string
-              description: The country field of the contact. The value of this field is used to map to the field within the newly created contact.
-              example: workCountry
-            timezone:
-              type: string
-              description: The timezone field of the contact. The value of this field is used to map to the timezone field within the newly created contact.
-              example: timeZone
           required:
-            - firstName
-            - lastName
-            - workMobilePhone1
-            - workCountry
-            - timezone
+            - fieldMapping
+          description: Provides the option to map the data column in your resource file to the contact field value
+          properties:
+            fieldMapping:
+              type: object
+              x-stoplight:
+                id: oflbbce2sozso
+              required:
+                - firstName
+                - lastName
+                - workMobilePhone1
+                - workCountry
+                - timezone
+              description: Mapping the data column in your resource file to the contact field value
+              properties:
+                firstName:
+                  type: string
+                  x-stoplight:
+                    id: 0gf6ef9xf3rhq
+                  description: First Name of the Contact. Value of this field is used to map the field within the resource.
+                lastName:
+                  type: string
+                  x-stoplight:
+                    id: ay5ngshk4949s
+                  description: Last Name of the Contact. Value of this field is used to map the field within the resource.
+                workMobilePhone1:
+                  type: string
+                  x-stoplight:
+                    id: zrtjbsjjxn0tx
+                  description: The mobile phone number of the Contact. Value of this field is used to map the field within the newly created resource.
+                workCountry:
+                  type: string
+                  x-stoplight:
+                    id: s7mg3oen866oa
+                  description: The country field of the contact. The value of this field is used to map to the field within the newly created contact.
+                timezone:
+                  type: string
+                  x-stoplight:
+                    id: dnpxzcqcd5pqd
+                  description: The timezone field of the contact. The value of this field is used to map to the timezone field within the newly created contact.
         importMode:
           type: string
           description: The type of contact import that is occurring.
@@ -10227,17 +10253,6 @@ components:
         - importType
         - importOptions
         - importMode
-      x-examples:
-        Import resource example:
-          resourceId: 4FBBC384BCE3DAABFE3
-          importType: contact
-          importOptions:
-            firstName: firstName
-            lastName: lastName
-            workMobilePhone1: workMobilePhone1
-            workCountry: workCountry
-            timezone: timeZone
-          importMode: replace
     customList:
       type: object
       x-examples:

@@ -4,7 +4,7 @@ info:
   x-release-please-start-version: true
   version: 1.2.1
   x-release-please-end: true
-  title: Whispir Platform API
+  title: Whispir Platform API - yeehaw!
   termsOfService: 'https://www.whispir.com/terms-of-service'
   contact:
     email: support@whispir.com
@@ -1257,7 +1257,6 @@ paths:
     post:
       tags:
         - Resources
-      x-sdkOperation: create
       x-isPost: true
       summary: Create a resource
       description: |

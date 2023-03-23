@@ -6464,16 +6464,17 @@ paths:
             schema:
               $ref: '#/components/schemas/Import'
             examples:
-              example-1:
+              Example 1:
                 value:
                   resourceId: 4FBBC384BCE3DAABFE3
                   importType: contact
                   importOptions:
-                    firstName: firstName
-                    lastName: lastName
-                    workMobilePhone1: workMobilePhone1
-                    workCountry: workCountry
-                    timezone: timeZone
+                    fieldMapping:
+                      firstName: firstName
+                      lastName: lastName
+                      workMobilePhone1: workMobilePhone1
+                      workCountry: workCountry
+                      timezone: timezone
                   importMode: replace
         description: import object that needs to be create import
       responses:
@@ -9693,7 +9694,6 @@ components:
             - Map
             - Un-map
             - Logout
-          example: Create
         description:
           type: string
           description: The description of the activity. This is a free text that details about the activity.
@@ -10320,6 +10320,18 @@ components:
         - Imports
       title: Import
       description: Import model object
+      x-examples:
+        Import resource example:
+          resourceId: 4FBBC384BCE3DAABFE3
+          importType: contact
+          fieldMapping:
+            importOptions:
+              firstName: firstName
+              lastName: lastName
+              workMobilePhone1: workMobilePhone1
+              workCountry: workCountry
+              timezone: timeZone
+          importMode: replace
       properties:
         resourceId:
           type: string
@@ -10343,33 +10355,51 @@ components:
               workMobilePhone1: workMobilePhone1
               workCountry: workCountry
               timezone: timeZone
-          properties:
-            firstName:
-              type: string
-              description: First Name of the Contact. Value of this field is used to map the field within the resource.
-              example: firstName
-            lastName:
-              type: string
-              description: Last Name of the Contact. Value of this field is used to map the field within the resource.
-              example: lastName
-            workMobilePhone1:
-              type: string
-              description: The mobile phone number of the Contact. Value of this field is used to map the field within the newly created resource.
-              example: workMobilePhone1
-            workCountry:
-              type: string
-              description: The country field of the contact. The value of this field is used to map to the field within the newly created contact.
-              example: workCountry
-            timezone:
-              type: string
-              description: The timezone field of the contact. The value of this field is used to map to the timezone field within the newly created contact.
-              example: timeZone
           required:
-            - firstName
-            - lastName
-            - workMobilePhone1
-            - workCountry
-            - timezone
+            - fieldMapping
+          properties:
+            fieldMapping:
+              type: object
+              x-stoplight:
+                id: oflbbce2sozso
+              required:
+                - firstName
+                - lastName
+                - workMobilePhone1
+                - workCountry
+                - timezone
+              description: Mapping the data column in your resource file to the contact field value
+              properties:
+                firstName:
+                  example: firstName
+                  type: string
+                  x-stoplight:
+                    id: 0gf6ef9xf3rhq
+                  description: First Name of the Contact. Value of this field is used to map the field within the resource.
+                lastName:
+                  example: lastName
+                  type: string
+                  x-stoplight:
+                    id: ay5ngshk4949s
+                  description: Last Name of the Contact. Value of this field is used to map the field within the resource.
+                workMobilePhone1:
+                  example: workMobilePhone1
+                  type: string
+                  x-stoplight:
+                    id: zrtjbsjjxn0tx
+                  description: The mobile phone number of the Contact. Value of this field is used to map the field within the newly created resource.
+                workCountry:
+                  example: workCountry
+                  type: string
+                  x-stoplight:
+                    id: s7mg3oen866oa
+                  description: The country field of the contact. The value of this field is used to map to the field within the newly created contact.
+                timezone:
+                  example: timezone
+                  type: string
+                  x-stoplight:
+                    id: dnpxzcqcd5pqd
+                  description: The timezone field of the contact. The value of this field is used to map to the timezone field within the newly created contact.
         importMode:
           type: string
           description: The type of contact import that is occurring.
@@ -10383,17 +10413,6 @@ components:
         - importType
         - importOptions
         - importMode
-      x-examples:
-        Import resource example:
-          resourceId: 4FBBC384BCE3DAABFE3
-          importType: contact
-          importOptions:
-            firstName: firstName
-            lastName: lastName
-            workMobilePhone1: workMobilePhone1
-            workCountry: workCountry
-            timezone: timeZone
-          importMode: replace
     CustomList:
       type: object
       x-examples:

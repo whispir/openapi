@@ -6733,7 +6733,7 @@ components:
         social:
           $ref: '#/components/schemas/Social'
         whatsapp:
-          $ref: '#/components/schemas/WhatsApp'  
+          $ref: '#/components/schemas/WhatsApp'
         type:
           type: string
           enum:
@@ -8833,7 +8833,7 @@ components:
         secret:
           type: string
           description: The authentication secret
-          example: 'sk_yHyTZ***************************************Wjds'
+          example: sk_yHyTZ***************************************Wjds
       required:
         - type
     KeyCollection:
@@ -8881,6 +8881,8 @@ components:
           visibility: Public
           rules: '[{"ruleFilter" : "division", "ruleFilterActualName" : "Division", "ruleContent" : "sales"}]'
       description: 'Static Distribution Lists are manually managed and maintained. They can include Contacts, Users and other Distribution Lists'
+      x-stoplight:
+        id: 28a19b7a35a13
       properties:
         id:
           type: string
@@ -8905,6 +8907,7 @@ components:
           type: string
           example: '4'
           description: Total number of contacts in a Distribution List
+          readOnly: true
         access:
           type: string
           example: Open
@@ -8991,8 +8994,6 @@ components:
           $ref: '#/components/schemas/Links'
       required:
         - name
-      x-stoplight:
-        id: 28a19b7a35a13
     DistributionListCollection:
       type: object
       description: list of distribution lists
@@ -9013,17 +9014,6 @@ components:
                     method: GET
                     host: api.au.whispir.com
                     port: -1
-                distListIds: string
-                distlistdetails:
-                  - id: 123ADAB420493B83
-                    name: John Smith
-                    type: User
-                    link:
-                      - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                        rel: self
-                        method: GET
-                        host: api.au.whispir.com
-                        port: -1
             status: 1 to 1 of 1
             link:
               - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
@@ -9031,12 +9021,79 @@ components:
                 method: GET
                 host: api.au.whispir.com
                 port: -1
+      title: Distribution List Collection
+      x-tags:
+        - Distribution Lists
       properties:
         distributionLists:
           type: array
           description: List of distribution lists
           items:
-            $ref: '#/components/schemas/DistributionList'
+            type: object
+            properties:
+              id:
+                type: string
+                x-stoplight:
+                  id: 1mrkncd75d4x3
+                example: 5AFEB61102963D7
+                description: ID of the distribution list
+                readOnly: true
+              name:
+                type: string
+                x-stoplight:
+                  id: yvrl8fp71fdj0
+                example: My Distribution List
+                description: 'Specifies the name of the distribution list. This has to be unique, and should not contain any special characters (except spaces) in it'
+                readOnly: true
+              mri:
+                type: string
+                x-stoplight:
+                  id: 7s47dejdxbii0
+                example: My_Distribution_List.company_name@list.company.whispir.sg
+                description: |
+                  Specifies the Message Resource Identifier of the Distribution List in Whispir
+                readOnly: true
+              description:
+                type: string
+                x-stoplight:
+                  id: a9cllyqm4shza
+                example: My Distribution list
+                description: |
+                  Specifies a description for other users to see what this distribution list should be used for.
+                readOnly: true
+              memberCount:
+                type: string
+                x-stoplight:
+                  id: knhin445g0kzi
+                example: '4'
+                description: |
+                  Total number of contacts in a Distribution List
+                readOnly: true
+              access:
+                type: string
+                x-stoplight:
+                  id: wlnkz1z26wz2z
+                example: Open
+                description: |-
+                  Allows you to specify the access type for this DL
+
+                  Open: anyone can subscribe to this distribution list via the Whispir Contact Portal
+                  ByApproval: anyone can subscribe using the Whispir Contact Portal. However, they are not officially on the list until their access is approved
+                  Restricted: the distribution list is not visible in the Whispir Contact Portal
+              visibility:
+                type: string
+                x-stoplight:
+                  id: v13xu4yw42f5v
+                example: Public
+                description: |-
+                  Allows you to specify the visibility for this DL
+
+                  Public: Any user or active contact in any workspace can map themselves to this DL in the Whispir Contact Portal
+                  Private: Only users or active contacts in the current workspace can map themselves to this DL
+              link:
+                $ref: '#/components/schemas/Links'
+            required:
+              - name
         status:
           type: string
           example: 1 to 1 of 1
@@ -9044,9 +9101,6 @@ components:
           readOnly: true
         link:
           $ref: '#/components/schemas/Links'
-      title: Distribution List Collection
-      x-tags:
-        - Distribution Lists
     Scenario:
       type: object
       x-tags:
@@ -10791,13 +10845,13 @@ components:
             The type of WhatsApp message to be sent, e.g. "template".
 
             Whispir currently only supports type "template".
-          example: 'template'  
+          example: template
         name:
           type: string
           description: |-
             The name of the template to be sent 
             > Must be the same as how it appears in your WhatsApp Business Manager
-          example: 'account_update_example_image_p'  
+          example: account_update_example_image_p
         content:
           $ref: '#/components/schemas/WAContent'
       required:
@@ -10823,7 +10877,7 @@ components:
             text:
               type: string
               description: The value of the mapped placeholder in the WhatsApp template
-              example: 'ACTIVE'
+              example: ACTIVE
         button:
           type: array
           description: |-
@@ -10917,11 +10971,11 @@ components:
             latitude:
               type: number
               description: Latitude value of the location
-              example: -122.425  
+              example: -122.425
             name:
               type: string
               description: Name of the location
-              example: 'Facebook HQ'
+              example: Facebook HQ
             address:
               type: string
               description: Address of the location
@@ -10959,22 +11013,22 @@ components:
             - quick_reply
             - url
           description: The type of dynamic button i.e. "quick_reply" or "url"
-          example: 'url'
+          example: url
         text:
           type: string
           description: |-
             the url destination when the button is clicked
             > required when `sub_type` value is `url`
-          example: 'https://abc.com'  
+          example: 'https://abc.com'
         payload:
           type: string
           description: |-
             Name of the quick reply buttons configured within your WhatsApp Business Manager account.
             > required when `sub_type` value is `quick_reply`
-          example: 'yes-button-payload'
+          example: yes-button-payload
       required:
         - index
-        - sub_type  
+        - sub_type
   parameters:
     X-Api-Key:
       name: X-Api-Key

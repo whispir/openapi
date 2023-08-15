@@ -8939,6 +8939,7 @@ components:
           type: string
           description: Comma separated list of Distribution List IDs that can be nested under this DL. This information can be provided at the time of the DL creation or later updated via a PUT request
           example: '3A21DCC420494A48, 07172DC9AC3E97A75B5A41536C132CA0'
+          writeOnly: true
         type:
           type: string
           description: |-

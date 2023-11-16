@@ -14,23 +14,72 @@ info:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
 tags:
-  - name: Activities
-  - name: Auth
-  - name: Callbacks
-  - name: Contacts
-  - name: Custom Lists
-  - name: Distribution Lists
-  - name: Events
-  - name: Imports
-  - name: Keys
   - name: Messages
+    description: Communications are the core of what the Whispir Platform API offers as a service to customers.
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjE0NDgyNjQ-message'
   - name: Resources
-  - name: Response Rules
-  - name: Scenarios
+    description: 'Using Whispir’s API, one can submit data payloads to be stored by Whispir and used in various API calls. These files are uploaded through the /resources endpoint.'
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjI0NTEwMjA-resource'
   - name: Templates
-  - name: Users
-  - name: Verify
+    description: 'Using the Whispir Platform API, messages can be stored as Message Templates that can be easily referenced within your API calls.'
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjM0ODAzNDA4-template'
+  - name: Response Rules
+    description: Using Response Rules in combination with Message Templates allows users to automatically group responses to messages into different response groups for reporting purposes.
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTA1-response-rule'
+  - name: Contacts
+    description: 'Contacts form the core of the Whispir offerings. They make up the base data to which and from which all communications are performed. The Whispir API provides secure cloud based storage for your contact information. This can then easily be retrieved by any application or device that requires access, and has permission to do so.'
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjM0ODAzNDA5-contact'
+  - name: Keys
+    description: Keys are used to manage user access.
+  - name: Distribution Lists
+    description: Whispir’s API allows users to categorise their contacts into different groups to simplify the distribution of messages.
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTE5-distribution-list'
+  - name: Scenarios
+    description: 'Scenarios allows users to simplify the message delivery processes through automated one click communications. The process involves creating a fixed message or a message template combined with a contact or a distribution list. When the scenario is executed, the message is sent to the contacts.'
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTIw-scenario'
+  - name: Callbacks
+    description: Whispir utilises API Callbacks to send simple notifications to different registered services in the event that some change has occurred on the Whispir Platform.
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTIx-callback'
   - name: Workspaces
+    description: 'Workspace allows application developers to create new work areas for the varying use cases of their application. They provides different functions that can be provided to users of the application, e.g. creating messages, executing scenarios, or viewing distribution lists.'
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTI0-workspace'
+  - name: Activities
+    description: 'Activities are all the individual changes, tasks, calls, messages.. just about everything performed in a given company workspaces. Each Activity log entry contains information about the workspace, the module (message, email, IVR..), the user who performed it, time stamps, description of the activity, and its status (success, fail) etc.'
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjQ2MzAxMjM-activity'
+  - name: Custom Lists
+    description: Custom Lists are user specific translations or preferred options in the various list controls used in the platform tool. These provide the freedom for the user to customize the list options in various modules like Messages and Events. These custom list either can complement or completely overwrite the existing list items.
+    externalDocs:
+      url: 'https://developers.whispir.com/b3A6Mzg5NDM5NzY-list-custom-lists'
+  - name: Users
+    description: 'Access to use the Whispir API, Platform and its features is strictly limited to user permission set. One needs to have proper permissions to access all the features provided by the platform, and when using the API, have appropriate permissions to modify the user attributes of themselves or others in their company workspaces.'
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjU4ODQwOQ-user'
+  - name: Events
+    description: 'Whispir’s Events API allows users to capture, create and manage Events (including Incidents, Issues, Places, and Assets). Link multi-channel communications to each event to track report and disseminate information textually and Geo-spatially.'
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjY5MTI5NA-event'
+  - name: Imports
+    description: The Imports endpoint allows users to import a CSV/JSON/XML file of contacts (via /resources) to be added to the contacts database.
+    externalDocs:
+      url: 'https://developers.whispir.com/c2NoOjM4OTQzOTI4-import'
+  - name: Auth
+    description: The Auth endpoint allows users to retrieve and verify a JWT authentication token.
+    externalDocs:
+      url: 'https://developers.whispir.com/b3A6NDEyMTEzOA-create-an-auth-token'
+  - name: Verify
+    description: This service enables the API client to generate and send codes to the recipient and have it verified through another endpoint.
+    externalDocs:
+      url: 'https://developers.whispir.com/b3A6NDEyMTEzOA-verify'
 paths:
   '/workspaces/{workspaceId}/messages':
     post:
@@ -6621,13 +6670,12 @@ paths:
                     Channel where to send the
                     one time passwords.
                   example: sms
-                phoneNumber:
+                to:
                   type: string
                   x-stoplight:
                     id: 84kcrupwfxevk
                   description: |-
-                    Indicates the phone number
-                    of the recipient
+                    Indicates the recipient's contact information.
                   example: '+1234567890'
                 codeLength:
                   type: integer
@@ -6652,7 +6700,7 @@ paths:
               required:
                 - workspaceId
                 - channel
-                - phoneNumber
+                - to
                 - codeLength
                 - expiresIn
             examples:
@@ -6660,7 +6708,7 @@ paths:
                 value:
                   workspaceId: '{{TEST_WORKSPACE_ID}}'
                   channel: sms
-                  phoneNumber: '+1234567890'
+                  to: '+1234567890'
                   codeLength: 6
                   expiresIn: 18000
         description: ''
@@ -6677,7 +6725,7 @@ paths:
                     id: azkP8DJEEsujuhwzO-O_N
                     channel: sms
                     codeLength: 6
-                    phoneNumber: '+1234567890'
+                    to: '+1234567890'
                     expiresAt: '2023-07-05T19:02:28.713Z'
                     status: pending
                     links:
@@ -6751,7 +6799,7 @@ paths:
                     id: azkP8DJEEsujuhwzO-O_N
                     channel: sms
                     codeLength: 6
-                    phoneNumber: '+1234567890'
+                    to: '+1234567890'
                     expiresAt: '2023-07-05T19:02:28.713Z'
                     status: pending
                     links:
@@ -6830,7 +6878,7 @@ paths:
                     id: azkP8DJEEsujuhwzO-O_N
                     channel: sms
                     codeLength: 6
-                    phoneNumber: '+1234567890'
+                    to: '+1234567890'
                     expiresAt: '2023-07-05T19:02:28.713Z'
                     status: pending
                     links: {}

@@ -6735,6 +6735,7 @@ paths:
               schema:
                 type: string
                 example: 'https://api.au.whispir.com/otp/send-code'
+              description: The URI to fetch details of the resource.
             Content-Type:
               schema:
                 type: string
@@ -6782,17 +6783,23 @@ paths:
           application/json:
             schema:
               type: object
+              description: |-
+                The object containing the
+                information required to verify
+                the one time password.
               properties:
                 to:
                   type: string
                   x-stoplight:
                     id: lvo4wcw8xdj1g
                   description: Indicates the phone number of the recipient
+                  example: '+1234567890'
                 code:
                   type: string
                   x-stoplight:
                     id: r0upm69sn446u
                   description: The code to match and verify
+                  example: '963315'
               required:
                 - to
                 - code

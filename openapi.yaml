@@ -6706,7 +6706,7 @@ paths:
             examples:
               Example 1:
                 value:
-                  workspaceId: '{{TEST_WORKSPACE_ID}}'
+                  workspaceId: 'ABCDEFGH'
                   channel: sms
                   to: '+1234567890'
                   codeLength: 6
@@ -6731,6 +6731,10 @@ paths:
                     links:
                       verify: 'https://au.api.whispir.com/otp/azkP8DJEEsujuhwzO-O_N/verify'
           headers:
+            Location:
+              schema:
+                type: string
+                example: 'https://api.au.whispir.com/otp/send-code'
             Content-Type:
               schema:
                 type: string
@@ -6759,73 +6763,6 @@ paths:
         id: pk6eca8bz1c3k
       tags:
         - Verify
-    post - copy:
-      tags:
-        - Imports
-      x-sdkOperation: create
-      x-isPost: true
-      summary: Send Code
-      description: Sends the OTP request generated
-      operationId: sendCode
-      parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
-        - $ref: '#/components/parameters/Import-Content-Type'
-        - $ref: '#/components/parameters/Import-Accept'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              description: Data needed to verify the OTP
-              properties:
-                to:
-                  type: string
-                code:
-                  type: string
-              required:
-                - to
-                - code
-        description: Data needed to verify the OTP
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Otp'
-              examples:
-                Example 1:
-                  value:
-                    id: azkP8DJEEsujuhwzO-O_N
-                    channel: sms
-                    codeLength: 6
-                    to: '+1234567890'
-                    expiresAt: '2023-07-05T19:02:28.713Z'
-                    status: pending
-                    links:
-                      verify: 'https://api-stage.whispirstage.com/otp/azkP8DJEEsujuhwzO-O_N/verify'
-          headers:
-            Content-Type:
-              schema:
-                type: string
-              description: Application specific mime-type.
-            Content-Length:
-              schema:
-                type: number
-              description: Length of the response content.
-            Access-Control-Allow-Origin:
-              schema:
-                type: string
-              description: Origins allowed to perform cross-origin requests.
-            header-3:
-              schema:
-                type: string
-            header-4:
-              schema:
-                type: string
-        '400':
-          $ref: '#/components/responses/400BadRequestNextGen'
-    parameters: []
   '/otp/{otpId}/verify-code':
     post:
       x-sdkOperation: create
@@ -6835,7 +6772,7 @@ paths:
         Verifies the code against the provided phone number.
 
         Using Verify has an associated cost of $xx.xx per successful verification (Successful verification is an OTP that has been verified through the Whispir Verify endpoints, if you sent 100 OTP messages and only successfully verified 10, then you will be charged 10 x $xx.xx)
-      operationId: verifyCode
+      operationId: verifyCodeCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Json-Content-Type'
@@ -11410,11 +11347,11 @@ components:
           description: Indicates the phone number of the recipient.
           example: '+1234567890'
         expiresAt:
-          type: number
+          type: string
           x-stoplight:
             id: aomkfl455w3h1
           description: Timestamp when the code will expire in UTC format.
-          example: 300
+          example: '2023-11-16T15:17:24.589Z'
         status:
           type: string
           x-stoplight:

@@ -6656,6 +6656,7 @@ paths:
                     The ID of the workspace
                     where you will use your one
                     time password.
+                  example: 'ABCDEFGH'
                 channel:
                   x-stoplight:
                     id: gvy0tf9054lbu
@@ -6664,6 +6665,7 @@ paths:
                   description: |-
                     Channel where to send the
                     one time passwords.
+                  example: sms
                 phoneNumber:
                   type: string
                   x-stoplight:
@@ -6671,6 +6673,7 @@ paths:
                   description: |-
                     Indicates the phone number
                     of the recipient
+                  example: '+1234567890'
                 codeLength:
                   type: integer
                   x-stoplight:
@@ -6680,6 +6683,7 @@ paths:
                   description: |-
                     Indicates the span of the
                     code to be generated.
+                  example: 6
                 expiresIn:
                   type: integer
                   x-stoplight:
@@ -6689,6 +6693,7 @@ paths:
                     code generated in the unit of
                     seconds
                   maximum: 86400
+                  example: 300
               required:
                 - workspaceId
                 - channel
@@ -6768,6 +6773,7 @@ paths:
           application/json:
             schema:
               type: object
+              description: Data needed to verify the OTP
               properties:
                 to:
                   type: string
@@ -6776,7 +6782,7 @@ paths:
               required:
                 - to
                 - code
-        description: import object that needs to be create import
+        description: Data needed to verify the OTP
       responses:
         '201':
           description: Created
@@ -6874,6 +6880,11 @@ paths:
                     status: pending
                     links: {}
           headers:
+            Location:
+              schema:
+                type: string
+                example: 'https://api.au.whispir.com/otp/azkP8DJEEsujuhwzO-O_N'
+              description: The URI to fetch details of the resource.
             Content-Type:
               schema:
                 type: string
@@ -11384,7 +11395,7 @@ components:
           description: Channel where to send the one time passwords.
           example: sms
         codeLength:
-          type: string
+          type: integer
           x-stoplight:
             id: w5dc76twa5nvm
           description: Indicates the span of the code to be generated.
@@ -11416,6 +11427,7 @@ components:
           properties:
             verify:
               type: string
+              description: The link to verify the code.
               x-stoplight:
                 id: wx4ogpxsj4x6s
               example: 'https://au.api.whispir.com/v1/otp/r4hDZ2fKD4jzY4L-_sbqk/verify-code'

@@ -79,7 +79,7 @@ tags:
   - name: Verify
     description: This service enables the API client to generate and send codes to the recipient and have it verified through another endpoint.
     externalDocs:
-      url: 'https://developers.whispir.com/b3A6NDEyMTEzOA-verify'
+      url: 'https://developers.whispir.com/pk6eca8bz1c3k-send-code'
 paths:
   '/workspaces/{workspaceId}/messages':
     post:

@@ -6772,7 +6772,20 @@ paths:
       description: |-
         Verifies the code against the provided phone number.
 
-        Using Verify has an associated cost of $xx.xx per successful verification (Successful verification is an OTP that has been verified through the Whispir Verify endpoints, if you sent 100 OTP messages and only successfully verified 10, then you will be charged 10 x $xx.xx)
+        Using Verify has an associated cost per successful verification as shown in the table below.
+        
+        Successful verification is an OTP that has been verified through the Whispir Verify endpoints. If you sent 100 OTP messages and only successfully verified 10, then you will be charged 10 x unit price.
+
+        Refer to the table below for pricing per region:
+
+        | Region | Price |
+        |-----|-----|
+        | AUD   | $0.05   |
+        | NZD   | $0.06   |
+        | SGD   | $0.045   |
+        | USD   | $0.035   |
+        | IDR   | Rp500   |
+        | PHP   | ₱20   |
       operationId: verifyCodeCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'

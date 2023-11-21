@@ -76,6 +76,10 @@ tags:
     description: The Auth endpoint allows users to retrieve and verify a JWT authentication token.
     externalDocs:
       url: 'https://developers.whispir.com/b3A6NDEyMTEzOA-create-an-auth-token'
+  - name: Verify
+    description: This service enables the API client to generate and send codes to the recipient and have it verified through another endpoint.
+    externalDocs:
+      url: 'https://developers.whispir.com/pk6eca8bz1c3k-send-code'
 paths:
   '/workspaces/{workspaceId}/messages':
     post:
@@ -6625,6 +6629,259 @@ paths:
       summary: Verify an auth token
       tags:
         - Auth
+  /otp/send-code:
+    post:
+      x-sdkOperation: create
+      x-isPost: true
+      summary: Send Code
+      description: |-
+        Sends a code to the recipient’s number which can be verified with
+        another endpoint. Currently, we send the SMS with a default template of OTP: Your verification code is {{CODE}}.
+      operationId: sendCodeCreate
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Json-Content-Type'
+        - $ref: '#/components/parameters/Json-Accept'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: |-
+                The object containing the
+                information required to send
+                the one time password.
+              properties:
+                workspaceId:
+                  type: string
+                  x-stoplight:
+                    id: 0cemnmxm4ap98
+                  description: |-
+                    The ID of the workspace
+                    where you will use your one
+                    time password.
+                  example: 'ABCDEFGH'
+                channel:
+                  x-stoplight:
+                    id: gvy0tf9054lbu
+                  type: string
+                  default: sms
+                  description: |-
+                    Channel where to send the
+                    one time passwords.
+                  example: sms
+                to:
+                  type: string
+                  x-stoplight:
+                    id: 84kcrupwfxevk
+                  description: |-
+                    Indicates the recipient's contact information.
+                  example: '+1234567890'
+                codeLength:
+                  type: integer
+                  x-stoplight:
+                    id: gasshv9rq28xb
+                  minimum: 6
+                  maximum: 15
+                  description: |-
+                    Indicates the span of the
+                    code to be generated.
+                  example: 6
+                expiresIn:
+                  type: integer
+                  x-stoplight:
+                    id: 13r0jpk43oj1y
+                  description: |-
+                    Indicates the expiry of the
+                    code generated in the unit of
+                    seconds
+                  maximum: 86400
+                  example: 300
+              required:
+                - workspaceId
+                - channel
+                - to
+                - codeLength
+                - expiresIn
+            examples:
+              Example 1:
+                value:
+                  workspaceId: 'ABCDEFGH'
+                  channel: sms
+                  to: '+1234567890'
+                  codeLength: 6
+                  expiresIn: 18000
+        description: ''
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Otp'
+              examples:
+                Success:
+                  value:
+                    id: azkP8DJEEsujuhwzO-O_N
+                    channel: sms
+                    codeLength: 6
+                    to: '+1234567890'
+                    expiresAt: '2023-07-05T19:02:28.713Z'
+                    status: pending
+                    links:
+                      verify: 'https://au.api.whispir.com/otp/azkP8DJEEsujuhwzO-O_N/verify'
+          headers:
+            Location:
+              schema:
+                type: string
+                example: 'https://api.au.whispir.com/otp/send-code'
+              description: The URI to fetch details of the resource.
+            Content-Type:
+              schema:
+                type: string
+              description: Application specific mime-type.
+            Content-Length:
+              schema:
+                type: number
+              description: Length of the response content.
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+              description: Origins allowed to perform cross-origin requests.
+            Cache-Control:
+              schema:
+                type: string
+              description: 'The directives that control caching in browsers and shared caches (e.g. Proxies, CDNs).'
+            Expires:
+              schema:
+                type: string
+              description: The date/time after which the response is considered expired.
+        '400':
+          $ref: '#/components/responses/400BadRequestNextGen'
+        '500':
+          $ref: '#/components/responses/500InternalServerErrorNextGen'
+      x-stoplight:
+        id: pk6eca8bz1c3k
+      tags:
+        - Verify
+  '/otp/{otpId}/verify-code':
+    post:
+      x-sdkOperation: create
+      x-isPost: true
+      summary: Verify Code
+      description: |-
+        Verifies the code against the provided phone number.
+
+        Using Verify has an associated cost per successful verification as shown in the table below.
+        
+        Successful verification is an OTP that has been verified through the Whispir Verify endpoints. If you sent 100 OTP messages and only successfully verified 10, then you will be charged 10 x unit price.
+
+        Refer to the table below for pricing per region:
+
+        | Region | Price |
+        |-----|-----|
+        | AUD   | $0.05   |
+        | NZD   | $0.06   |
+        | SGD   | $0.045   |
+        | USD   | $0.035   |
+        | IDR   | Rp500   |
+        | PHP   | ₱20   |
+      operationId: verifyCodeCreate
+      parameters:
+        - $ref: '#/components/parameters/X-Api-Key'
+        - $ref: '#/components/parameters/Json-Content-Type'
+        - $ref: '#/components/parameters/Json-Accept'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: |-
+                The object containing the
+                information required to verify
+                the one time password.
+              properties:
+                to:
+                  type: string
+                  x-stoplight:
+                    id: lvo4wcw8xdj1g
+                  description: Indicates the phone number of the recipient
+                  example: '+1234567890'
+                code:
+                  type: string
+                  x-stoplight:
+                    id: r0upm69sn446u
+                  description: The code to match and verify
+                  example: '963315'
+              required:
+                - to
+                - code
+            examples:
+              Example 1:
+                value:
+                  to: '+1234567890'
+                  code: '963315'
+        description: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Otp'
+              examples:
+                Success:
+                  value:
+                    id: azkP8DJEEsujuhwzO-O_N
+                    channel: sms
+                    codeLength: 6
+                    to: '+1234567890'
+                    expiresAt: '2023-07-05T19:02:28.713Z'
+                    status: pending
+                    links: {}
+          headers:
+            Location:
+              schema:
+                type: string
+                example: 'https://api.au.whispir.com/otp/azkP8DJEEsujuhwzO-O_N'
+              description: The URI to fetch details of the resource.
+            Content-Type:
+              schema:
+                type: string
+              description: Application specific mime-type.
+            Content-Length:
+              schema:
+                type: number
+              description: Length of the response content.
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+              description: Origins allowed to perform cross-origin requests.
+            Cache-Control:
+              schema:
+                type: string
+              description: 'The directives that control caching in browsers and shared caches (e.g. Proxies, CDNs).'
+            Expires:
+              schema:
+                type: string
+              description: The date/time after which the response is considered expired.
+        '400':
+          $ref: '#/components/responses/400BadRequestNextGen'
+        '404':
+          $ref: '#/components/responses/404NotFoundNextGen'
+        '500':
+          $ref: '#/components/responses/500InternalServerErrorNextGen'
+      x-stoplight:
+        id: mlx3rlzhsvbt3
+      tags:
+        - Verify
+    parameters:
+      - schema:
+          type: string
+        name: otpId
+        in: path
+        required: true
+        description: Supply the id that was provided from the send-code endpoint response
 externalDocs:
   description: API Documentation for Whispir Platform API
   url: 'https://developers.whispir.com'
@@ -10692,6 +10949,44 @@ components:
         - errorText
         - errorDetail
       title: API Error
+    ApiErrorNextGen:
+      description: The generic error object returned by new downstream services
+      x-stoplight:
+        id: kqs62o435yv1y
+      type: object
+      x-examples:
+        Example:
+          status: 400
+          message: 'Client specified an invalid argument, request body or query param'
+          detail: 'Error in parameter "codeLength", number must be lesser than or equal to 15.'
+      title: API Error - NextGen
+      properties:
+        status:
+          type: number
+          example: 400
+          x-stoplight:
+            id: m4av9l0ffa1zv
+          description: The status code
+          readOnly: true
+        message:
+          type: string
+          minLength: 1
+          example: 'Client specified an invalid argument, request body or query param'
+          x-stoplight:
+            id: 15teay67ciznw
+          description: The detailed description of the error encountered.
+          readOnly: true
+        detail:
+          type: string
+          description: The additional details describing the error.
+          example: The authenticationId is no longer valid
+          x-stoplight:
+            id: mw5c7dxstkn33
+          readOnly: true
+      required:
+        - status
+        - message
+        - detail
     WhatsApp:
       title: WhatsApp
       x-stoplight:
@@ -11030,6 +11325,80 @@ components:
       required:
         - index
         - sub_type
+    Otp:
+      title: OTP
+      x-stoplight:
+        id: nuvbdaf0v8emj
+      type: object
+      description: The OTP object returned when generating and verifying whispir verify codes
+      x-examples:
+        Example 1:
+          id: r4hDZ2fKD4jzY4L-_sbqk
+          channel: sms
+          codeLength: 6
+          to: '+1234567890'
+          expiresAt: '2023-11-16T15:17:24.589Z'
+          status: pending
+          links:
+            verify: 'https://au.api.whispir.com/v1/otp/r4hDZ2fKD4jzY4L-_sbqk/verify-code'
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: adfqdr65w6nzf
+          description: The ID of the OTP transaction that has been created.
+          example: r4hDZ2fKD4jzY4L-_sbqk
+        channel:
+          type: string
+          x-stoplight:
+            id: lksi3vq801ckh
+          description: Channel where to send the one time passwords.
+          example: sms
+        codeLength:
+          type: integer
+          x-stoplight:
+            id: w5dc76twa5nvm
+          description: Indicates the span of the code to be generated.
+          example: 6
+        to:
+          type: string
+          x-stoplight:
+            id: crmdruuiqxv84
+          description: Indicates the phone number of the recipient.
+          example: '+1234567890'
+        expiresAt:
+          type: string
+          x-stoplight:
+            id: aomkfl455w3h1
+          description: Timestamp when the code will expire in UTC format.
+          example: '2023-11-16T15:17:24.589Z'
+        status:
+          type: string
+          x-stoplight:
+            id: e48ecbkib2c03
+          description: Current status of the otp transaction.
+          example: pending
+        links:
+          type: object
+          x-stoplight:
+            id: 4f7vzevuodobn
+          description: 'Links related to the resource, verify link is provided to make it easy for UI integrations.'
+          example: {}
+          properties:
+            verify:
+              type: string
+              description: The link to verify the code.
+              x-stoplight:
+                id: wx4ogpxsj4x6s
+              example: 'https://au.api.whispir.com/v1/otp/r4hDZ2fKD4jzY4L-_sbqk/verify-code'
+      required:
+        - id
+        - channel
+        - codeLength
+        - to
+        - expiresAt
+        - status
+        - links
   parameters:
     X-Api-Key:
       name: X-Api-Key
@@ -11081,7 +11450,6 @@ components:
       name: Accept
       x-isContentType: true
       in: header
-      required: true
       schema:
         type: string
         default: application/vnd.whispir.template-v1+json
@@ -11089,6 +11457,7 @@ components:
           - application/vnd.whispir.template-v1+json
           - application/vnd.whispir.template-v1+xml
       description: Application specific mime-type.
+      required: true
     Callback-Content-Type:
       name: Content-Type
       x-isContentType: true
@@ -11504,6 +11873,26 @@ components:
         enum:
           - application/vnd.whispir.api-call-v1+json
           - application/vnd.whispir.api-call-v1+xml
+      description: Application specific mime-type.
+    Json-Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+        enum:
+          - application/json
+      description: Application specific mime-type.
+    Json-Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+        enum:
+          - application/json
       description: Application specific mime-type.
   responses:
     User:
@@ -12806,6 +13195,118 @@ components:
           $ref: '#/components/headers/Content-Type'
         Location:
           $ref: '#/components/headers/Location'
+    400BadRequestNextGen:
+      description: |-
+        Invalid or missing request parameters.
+
+        Inspect the request parameters and ensure that all required parameters are supplied.
+
+        Note the error text in the response and update the request accordingly.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiErrorNextGen'
+          examples:
+            Example 1:
+              value:
+                status: 400
+                message: 'Client specified an invalid argument, request body or query param'
+                detail: The authenticationId is no longer valid
+      headers:
+        Access-Control-Allow-Origin:
+          schema:
+            type: string
+          description: Origins allowed to perform cross-origin requests.
+        Content-Length:
+          schema:
+            type: number
+          description: Length of the response content.
+        Content-Type:
+          schema:
+            type: string
+          description: The content type of the request header.
+        Cache-Control:
+          schema:
+            type: string
+          description: 'The directives that control caching in browsers and shared caches (e.g. Proxies, CDNs).'
+        Expires:
+          schema:
+            type: string
+          description: The date/time after which the response is considered expired.
+    404NotFoundNextGen:
+      description: |-
+        The requested URL doesn't exist.
+
+        The requested resource was not found. Inspect the ID in the URL that was used and ensure that it's valid.
+
+        Also, inspect the Accept and Content-Type headers that are being used to make sure they’re correct for the URL that is being requested.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiErrorNextGen'
+          examples:
+            Example 1:
+              value:
+                status: 404
+                message: A specified resource is not found
+                detail: OTP Record FgOzgoe6YAEaWPDW1PDKi associated with +6390756529232 does not exist
+      headers:
+        Access-Control-Allow-Origin:
+          schema:
+            type: string
+          description: Origins allowed to perform cross-origin requests.
+        Content-Length:
+          schema:
+            type: number
+          description: Length of the response content.
+        Content-Type:
+          schema:
+            type: string
+          description: The content type of the request header.
+        Cache-Control:
+          schema:
+            type: string
+          description: 'The directives that control caching in browsers and shared caches (e.g. Proxies, CDNs).'
+        Expires:
+          schema:
+            type: string
+          description: The date/time after which the response is considered expired.
+    500InternalServerErrorNextGen:
+      description: |-
+        An internal error occurred when processing the request.
+
+        Attempt the request again and if the HTTP 500 error re-occurs contact the Whispir Support Team.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiErrorNextGen'
+          examples:
+            Example 1:
+              value:
+                status: 500
+                message: Server error
+                detail: Your request could not be processed by the server at the moment. Please try again or contact your company administrator.
+      headers:
+        Content-Type:
+          schema:
+            type: string
+          description: The content type of the request header.
+        Content-Length:
+          schema:
+            type: number
+          description: Length of the response content.
+        Access-Control-Allow-Origin:
+          schema:
+            type: string
+          description: Origins allowed to perform cross-origin requests.
+        Cache-Control:
+          schema:
+            type: string
+          description: 'The directives that control caching in browsers and shared caches (e.g. Proxies, CDNs).'
+        Expires:
+          schema:
+            type: string
+          description: The date/time after which the response is considered expired.
   headers:
     Location:
       description: The URI to fetch details of the resource.

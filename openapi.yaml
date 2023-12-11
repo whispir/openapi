@@ -6637,6 +6637,8 @@ paths:
       description: |-
         Sends a code to the recipient’s number which can be verified with
         another endpoint. Currently, we send the SMS with a default template of OTP: Your verification code is {{CODE}}.
+
+        > **IMPORTANT:** You will need to initially set up an alias name with value `otp` via `Alias Manager` within your Company account to use your designated Sender ID in each country for Whispir Verify. Please contact your company administrator if this is not arranged yet.
       operationId: sendCodeCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -6674,7 +6676,7 @@ paths:
                   type: string
                   x-stoplight:
                     id: 84kcrupwfxevk
-                  description: |-
+                  description: |- 
                     Indicates the recipient's contact information.
                   example: '+1234567890'
                 codeLength:
@@ -6773,7 +6775,7 @@ paths:
         Verifies the code against the provided phone number.
 
         Using Verify has an associated cost per successful verification as shown in the table below.
-        
+
         Successful verification is an OTP that has been verified through the Whispir Verify endpoints. If you sent 100 OTP messages and only successfully verified 10, then you will be charged 10 x unit price.
 
         Refer to the table below for pricing per region:

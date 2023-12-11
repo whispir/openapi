@@ -6662,7 +6662,7 @@ paths:
                     The ID of the workspace
                     where you will use your one
                     time password.
-                  example: ABCDEFGH
+                  example: 'ABCDEFGH'
                 channel:
                   x-stoplight:
                     id: gvy0tf9054lbu
@@ -6676,7 +6676,8 @@ paths:
                   type: string
                   x-stoplight:
                     id: 84kcrupwfxevk
-                  description: Indicates the recipient's contact information.
+                  description: |- 
+                    Indicates the recipient's contact information.
                   example: '+1234567890'
                 codeLength:
                   type: integer
@@ -6707,7 +6708,7 @@ paths:
             examples:
               Example 1:
                 value:
-                  workspaceId: ABCDEFGH
+                  workspaceId: 'ABCDEFGH'
                   channel: sms
                   to: '+1234567890'
                   codeLength: 6

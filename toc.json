@@ -31,6 +31,11 @@
     },
     {
       "type": "item",
+      "title": "TLS (SSL) Certificates",
+      "uri": "docs/Getting started/SSL-TLS-certificates.md"
+    },
+    {
+      "type": "item",
       "title": "Using JSON and XML headers",
       "uri": "docs/Getting started/JSON-and-XML-headers.md"
     },

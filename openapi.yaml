@@ -4347,7 +4347,6 @@ paths:
             examples:
               Example 1:
                 value:
-                  id: 4452AC8359535C46
                   name: Callback Name
                   url: 'https://example.com/callback'
                   auth:
@@ -4360,12 +4359,6 @@ paths:
                   callbacks:
                     reply: disabled
                     undeliverable: disabled
-                  link:
-                    - uri: 'https://api.au.whispir.com/workspaces/9A4C5521FFC7B15B/messages/747AB7E716C1802B6476784AEB5C9BB8/messageresponses'
-                      rel: self
-                      method: GET
-                      host: api.au.whispir.com
-                      port: -1
         description: The Callback object to update
     delete:
       summary: Delete a callback

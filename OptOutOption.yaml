@@ -1,9 +1,0 @@
-title: OptOutOption
-x-stoplight:
-  id: sxhslldkr5ivm
-type: object
-properties:
-  id:
-    type: string
-    x-stoplight:
-      id: 4z64u098p38wx

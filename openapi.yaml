@@ -211,7 +211,7 @@ paths:
          
         * * *
 
-        #### Custom Tags
+        #### Custom Tags 
 
         Using message attributes and message Templates allows developers to cleanly separate these responsibilities. This is done by combining the message channels being used for the message and the data driving the message.
         Under the operational point of view this solution is achieved with two steps:
@@ -11456,7 +11456,7 @@ components:
       type: object
       description: |-
         The opt-out option payload.
-      example:
+      x-examples:
         rmsUnsubscribeUrl: '@@web_link@@'
         oneClickApiMapping: "unsubscribe"
       x-tags:

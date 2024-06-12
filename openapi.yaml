@@ -508,22 +508,22 @@ paths:
         In this sample we will send a message with an opt out option property
         <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
         <ns2:message xmlns:ns2="http://schemas.api.whispir.com" xmlns:ns3="http://schemas.api.whispir.com/dap">
-            <to>john.smith@test.com</to>
-            <subject>Test scheduled email message</subject>
-            <email>
-                <body>This is my scheduled content</body>
-                <type>text/plain</type>
-                <optOutOption>
-                  <rmsUnsubscribeUrl>@@web_link@@#unsubscribe</rmsUnsubscribeUrl>
-                  <oneClickApiMapping>unsubscribe</oneClickApiMapping>
-                </optOutOption>
-            </email>
-            <web>
-              <type>text/html</type>
-              <body>
-                <div class='content'>This is the body of my rich message</div>
-              </body>
-            </web>
+          <to>john.smith@test.com</to>
+          <subject>Test scheduled email message</subject>
+          <email>
+              <body>This is my scheduled content</body>
+              <type>text/plain</type>
+              <optOutOption>
+                <rmsUnsubscribeUrl>@@web_link@@#unsubscribe</rmsUnsubscribeUrl>
+                <oneClickApiMapping>unsubscribe</oneClickApiMapping>
+              </optOutOption>
+          </email>
+          <web>
+            <type>text/html</type>
+            <body>
+              <div class='content'>This is the body of my rich message</div>
+            </body>
+          </web>
         </ns2:message>
         ```
 

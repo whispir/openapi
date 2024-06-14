@@ -515,7 +515,7 @@ paths:
               <type>text/plain</type>
               <optOutOption>
                 <rmsUnsubscribeUrl>@@web_link@@#unsubscribe</rmsUnsubscribeUrl>
-                <oneClickApiMapping>unsubscribe</oneClickApiMapping>
+                <oneClickApiMapping>2ab64862</oneClickApiMapping>
               </optOutOption>
           </email>
           <web>
@@ -534,7 +534,7 @@ paths:
 
         The `oneClickApiMapping` property requires you to have an existing API Mapping and have access to its details. This API Mapping is triggered for one-click unsubscribe functionality.
         
-        Both the `rmsUnsubscribeUrl` and `oneClickApiMapping` properties are optional.
+        Both the `rmsUnsubscribeUrl` and `oneClickApiMapping` properties are optional, but `rmsUnsubscribeUrl` is required to enable unsubscribe, `oneClickApiMapping` is required to enable one-click unsubscribe.
       operationId: messageCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'

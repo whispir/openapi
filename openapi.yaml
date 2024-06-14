@@ -530,7 +530,7 @@ paths:
         In this example we're utilizing the `@@web_link@@` tag that generates an unsubscribe link for the recipients.
         The `web` payload is required when using the `@@web_link@@` value in the `email`.`optOutOption`.
         
-        The `rmsUnsubcribeUrl` is a URL link to the web channel unsubscribe content for `GET` requests, and for one-click unsubscribe functionality via `POST` requests.
+        The `rmsUnsubscribeUrl` is a URL link to the web channel unsubscribe content for `GET` requests, and for one-click unsubscribe functionality via `POST` requests.
 
         The `oneClickApiMapping` property requires you to have an existing API Mapping and have access to its details. This API Mapping is triggered for one-click unsubscribe functionality.
         

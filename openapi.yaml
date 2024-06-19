@@ -156,6 +156,7 @@ paths:
          @@team_name1@@ | Resolves to the recipient’s ‘Team Name’ field.<br/><br/> For example, Red Team. 
          @@messagelabel@@| Resolves to the label field of the sent message. <br/><br/>For example, Incident #1234. 
          @@messagecategories@@ | Resolves to the list of categories used in the message, separated with commas. <br/><br/>For example, Product Update. 
+         @@web_link@@ | Resolves to a generated link for the web channel content. This can be used for one-click unsubscribe.<br /><br />For example, <pre>https://<region>.whispir.com/unsubscribe?_parameters=value</pre>
          
         ``` JSON
         POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
@@ -210,7 +211,7 @@ paths:
          
         * * *
 
-        #### Custom Tags
+        #### Custom Tags 
 
         Using message attributes and message Templates allows developers to cleanly separate these responsibilities. This is done by combining the message channels being used for the message and the data driving the message.
         Under the operational point of view this solution is achieved with two steps:
@@ -463,6 +464,77 @@ paths:
             <repeatMin>0</repeatMin>
         </ns2:message>
         ```
+        * * *
+
+        ### Opt-out and Unsubscribe
+
+        Whispir provides a way for clients who require sending to a marketing email to include two new headers as directed by mail inboxes providers.
+        It creates a way for recipients to opt out of email lists easily, which will add up to a sender's reputation and deliverability.
+
+        This additional request body is optional under the `email` property.
+
+        ```JSON
+        POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
+         
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+json
+        Accept: application/vnd.whispir.message-v1+json
+        In this sample we will send a message with an opt out option property
+        {
+            "to" : "jsmith@test.com",
+            "subject" : "Test Opt-out and Unsubscribe",
+            "email" : {
+                "body" : "This is a test message",
+                "type" : "text/plain"
+                "optOutOption": {
+                  "rmsUnsubscribeUrl": "@@web_link@@#unsubscribe",
+                  "oneClickApiMapping": "2ab64862"
+                }
+            },
+            "web": {
+              "type": "text/html",
+              "body": "<div class='content'>This is the body of my rich message</div>"
+            }
+        }
+        ```
+        ```XML
+        POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
+
+        Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
+        x-api-key: your_api_key
+        Content-Type: application/vnd.whispir.message-v1+xml
+        Accept: application/vnd.whispir.message-v1+xml
+        In this sample we will send a message with an opt out option property
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <ns2:message xmlns:ns2="http://schemas.api.whispir.com" xmlns:ns3="http://schemas.api.whispir.com/dap">
+          <to>john.smith@test.com</to>
+          <subject>Test scheduled email message</subject>
+          <email>
+              <body>This is my scheduled content</body>
+              <type>text/plain</type>
+              <optOutOption>
+                <rmsUnsubscribeUrl>@@web_link@@#unsubscribe</rmsUnsubscribeUrl>
+                <oneClickApiMapping>2ab64862</oneClickApiMapping>
+              </optOutOption>
+          </email>
+          <web>
+            <type>text/html</type>
+            <body>
+              <div class='content'>This is the body of my rich message</div>
+            </body>
+          </web>
+        </ns2:message>
+        ```
+
+        In this example we're utilizing the `@@web_link@@` tag that generates an unsubscribe link for the recipients.
+        The `web` payload is required when using the `@@web_link@@` value in the `email`.`optOutOption`.
+        
+        The `rmsUnsubscribeUrl` is a URL link to the web channel unsubscribe content for `GET` requests, and for one-click unsubscribe functionality via `POST` requests.
+
+        The `oneClickApiMapping` property requires you to have an existing API Mapping and have access to its details. This API Mapping is triggered for one-click unsubscribe functionality.
+        
+        Both the `rmsUnsubscribeUrl` and `oneClickApiMapping` properties are optional, but `rmsUnsubscribeUrl` is required to enable unsubscribe, `oneClickApiMapping` is required to enable one-click unsubscribe.
       operationId: messageCreate
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
@@ -6655,7 +6727,7 @@ paths:
                     The ID of the workspace
                     where you will use your one
                     time password.
-                  example: 'ABCDEFGH'
+                  example: ABCDEFGH
                 channel:
                   x-stoplight:
                     id: gvy0tf9054lbu
@@ -6669,8 +6741,7 @@ paths:
                   type: string
                   x-stoplight:
                     id: 84kcrupwfxevk
-                  description: |- 
-                    Indicates the recipient's contact information.
+                  description: Indicates the recipient's contact information.
                   example: '+1234567890'
                 codeLength:
                   type: integer
@@ -6701,7 +6772,7 @@ paths:
             examples:
               Example 1:
                 value:
-                  workspaceId: 'ABCDEFGH'
+                  workspaceId: ABCDEFGH
                   channel: sms
                   to: '+1234567890'
                   codeLength: 6
@@ -7207,6 +7278,8 @@ components:
             - text/html
           default: text/plain
           description: The email Message content type.
+        optOutOption:
+          $ref: '#/components/schemas/OptOutOption'
         resources:
           $ref: '#/components/schemas/Attachments'
       required:
@@ -11394,6 +11467,39 @@ components:
         - expiresAt
         - status
         - links
+    OptOutOption:
+      title: OptOutOption
+      type: object
+      description: |-
+        The opt-out option payload is optional in line with the Email Distribution List standardization making it a requirement for recipients to opt out of email lists easily, which will add up to a sender's reputation and deliverability.
+        
+        The `rmsUnsubscribeUrl` is a URL link to the web channel unsubscribe content for `GET` requests, and for one-click unsubscribe functionality via `POST` requests.
+        This is in line with the [RFC-2369](https://www.ietf.org/rfc/rfc2369.txt) (*The Use of URLs as Meta-Syntax for Core Mail List Commands and their Transport through Message Header Fields*).
+        This will append the `List-Unsubscribe` header in the email message for distribution lists with the URL `rmsUnsubscribeUrl` info as its value.
+
+        The `oneClickApiMapping` property requires you to have an existing API Mapping and have access to its details. This API Mapping is triggered for one-click unsubscribe functionality.
+        This is in line with the [RFC-8058](https://www.ietf.org/rfc/rfc8058.txt) (*Signaling One-Click Functionality for List Email Headers*).
+        This will append the `List-Unsubscribe-Post` header in the email message for distribution lists with the `List-Unsubscribe=One-Click` header as its `POST` endpoint for one-click.
+        
+        Both the `rmsUnsubscribeUrl` and `oneClickApiMapping` properties are optional, but `rmsUnsubscribeUrl` is required to enable unsubscribe, `oneClickApiMapping` is required to enable one-click unsubscribe.
+      x-examples:
+        rmsUnsubscribeUrl: '@@web_link@@'
+        oneClickApiMapping: "2ab64862"
+      x-tags:
+        - Email
+      properties:
+        rmsUnsubscribeUrl:
+          type: string
+          example: "@@web_link@@#unsubscribe"
+          description: |-
+            This is a URL link to the web channel unsubscribe content for `GET` requests,
+            and for one-click unsubscribe functionality via `POST` requests.
+        oneClickApiMapping:
+          type: string
+          example: "2ab64862"
+          description: |-
+            This is the API mapping code or ID triggered for one-click unsubscribe functionality.
+            This code can be retrieved from the API Mapping page.
   parameters:
     X-Api-Key:
       name: X-Api-Key

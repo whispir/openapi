@@ -6978,7 +6978,7 @@ components:
       type: http
       scheme: basic
     ApiKeyAuth:
-      name: Api-Key
+      name: X-Api-Key
       type: apiKey
       in: header
     BearerAuth:

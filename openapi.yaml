@@ -529,11 +529,11 @@ paths:
 
         In this example we're utilizing the `@@web_link@@` tag that generates an unsubscribe link for the recipients.
         The `web` payload is required when using the `@@web_link@@` value in the `email`.`optOutOption`.
-        
+
         The `rmsUnsubscribeUrl` is a URL link to the web channel unsubscribe content for `GET` requests, and for one-click unsubscribe functionality via `POST` requests.
 
         The `oneClickApiMapping` property requires you to have an existing API Mapping and have access to its details. This API Mapping is triggered for one-click unsubscribe functionality.
-        
+
         Both the `rmsUnsubscribeUrl` and `oneClickApiMapping` properties are optional, but `rmsUnsubscribeUrl` is required to enable unsubscribe, `oneClickApiMapping` is required to enable one-click unsubscribe.
       operationId: messageCreate
       parameters:
@@ -11062,12 +11062,41 @@ components:
       type: object
       x-tags:
         - Messages
-      description: |-
+      description: |
         ### Overview
 
         Customers can send templated WhatsApp messages via Whispir's API. 
 
         Templates must first be submitted for approval by WhatsApp in your WhatsApp Business Manager account before any template messages can be sent from Whispir. Please reach out to your Whispir account manager to help you get started.
+
+
+        #### WhatsApp Messages via Rich Message Templates
+        Note that from **October 2025** WhatsApp messages can also be configured in Whispir Rich Message Templates and used to send  via the Whispir API! 
+        Please contact your Whispir account manager to see how you can have this feature enabled. 
+
+        ##### Examples
+        Sending via Rich Message Templates is shown in the following examples:
+        * _WhatsApp Message via WhatsApp Enabled Rich Message Template_
+        * _WhatsApp Bulk Message via Rich Message Template_
+        * _WhatsApp Message via Rich Message Template with Field Overrides_
+
+        Customers who have this feature enabled will also have access to using the new _parameters_ object, shown in the following examples:
+        * _WhatsApp Message with Throttling, Alias, Web Link and Body Positional Parameters_
+        * _WhatsApp Bulk Message with Web Link and Body Positional Parameters_
+
+        **Overriding fields from Rich Message Templates (RMT)**
+
+        Customers have the ability to provide the body positional parameters, alias etc. as part of a Rich Message Template (RMT).  
+         
+        By default, when sending via our API with a given RMT, all values will be collected from the provided RMT. (See _WhatsApp Message via WhatsApp Enabled Rich Message Template_ example)
+
+        However, these values can also be overriden via the API when sending via the Rich Message Template (see _WhatsApp Message via Rich Message Template with Field Overrides_ example).
+
+        In that sample payload, "subject", "features", and "whatsapp" fields will override what is defined in the provided Rich Message Template.
+
+        For clarity and simplicity, however, it is recommended to choose to send your WhatsApp message either via:
+        * a WhatsApp enabled Rich Message Template previously defined in our portal 
+        * or providing a WhatsApp object in the payload with all the required details
       x-examples:
         WhatsApp Message Using an image:
           to: '61430933333'
@@ -11200,6 +11229,69 @@ components:
                 - text: 'https://hsbc.com/renewal'
                 - text: 'https://hsbc.com/terms'
                 - text: 'https://hsbc.com/privacy'
+        'WhatsApp Message with Throttling, Alias, Web Link and Body Positional Parameters':
+          to: '61417123121,61417123122,61417123123'
+          subject: WhatsApp Message Subject
+          body: test WhatsApp @@recipient_first_name@@
+          features:
+            throttlingOptions:
+              throttling: enabled
+              configName: testThrottle
+            aliasOption:
+              aliasName: OnboardingMessageAlias
+          web:
+            body: <html><head><title>Test</title></head><body><p class='p1'><span class='s1'>Test</span></p></body></html>
+            type: text/plain
+          whatsapp:
+            type: en
+            name: onboarding_message
+            parameters:
+              - '@@first_name@@'
+              - '@@date@@'
+              - '@@sender_full_name@@'
+              - '@@web_link@@'
+        WhatsApp Bulk Message with Web Link and Body Positional Parameters:
+          resource:
+            resourceId: 422D0A8A4C73BBEA
+            smsMappingField: mobile
+          subject: WhatsApp Message Subject
+          body: test WhatsApp Bulk @@FirstName@@ @@web_link@@
+          web:
+            body: <html><head><title>Test</title></head><body><p class='p1'><span class='s1'>Test</span></p></body></html>
+            type: text/plain
+          whatsapp:
+            type: en
+            name: onboarding_message
+            parameters:
+              - '@@firstname@@ and @@date@@'
+              - '@@sender_full_name@@ and @@web_link@@'
+        WhatsApp Message via WhatsApp Enabled Rich Message Template:
+          to: '61417123121,61417123122,61417123123'
+          messageTemplateName: RMT with WhatsApp Channel Enabled
+        WhatsApp Bulk Message via Rich Message Template:
+          resource:
+            resourceId: 422D0A8A4C73BBEA
+            smsMappingField: mobile
+          messageTemplateName: Sample RMT with WhatsApp Channel Enabled
+          subject: WhatsApp Message Subject
+        WhatsApp Message via Rich Message Template with Field Overrides:
+          to: '61417123121,61417123122,61417123123'
+          messageTemplateName: Sample WhatsApp Enabled Rich Message Template
+          subject: WhatsApp Message Subject
+          features:
+            aliasOption:
+              aliasName: OverrideAlias
+          whatsapp:
+            type: en
+            name: onboarding_message
+            parameters:
+              - '@@first_name@@'
+              - '@@date@@'
+              - '@@sender_full_name@@'
+      x-internal: false
+      required:
+        - type
+        - name
       properties:
         type:
           type: string
@@ -11216,12 +11308,24 @@ components:
             The name of the template to be sent 
             > Must be the same as how it appears in your WhatsApp Business Manager
           example: account_update_example_image_p
+        parameters:
+          type: array
+          x-stoplight:
+            id: plfyb1qfo0aup
+          description: |-
+            Array of positional parameters that are used to personalise the body of the WhatsApp message. 
+
+            For example, 
+            "Hello {{1}}!" 
+            would become 
+            "Hello John!" 
+            if "John" is the first positional parameter
+          items:
+            x-stoplight:
+              id: knri1ijzksqjx
+            type: string
         content:
           $ref: '#/components/schemas/WAContent'
-      required:
-        - type
-        - name
-        - content
     WAContent:
       title: WAContent
       x-stoplight:
@@ -11472,7 +11576,7 @@ components:
       type: object
       description: |-
         The opt-out option payload is optional in line with the Email Distribution List standardization making it a requirement for recipients to opt out of email lists easily, which will add up to a sender's reputation and deliverability.
-        
+
         The `rmsUnsubscribeUrl` is a URL link to the web channel unsubscribe content for `GET` requests, and for one-click unsubscribe functionality via `POST` requests.
         This is in line with the [RFC-2369](https://www.ietf.org/rfc/rfc2369.txt) (*The Use of URLs as Meta-Syntax for Core Mail List Commands and their Transport through Message Header Fields*).
         This will append the `List-Unsubscribe` header in the email message for distribution lists with the URL `rmsUnsubscribeUrl` info as its value.
@@ -11480,23 +11584,23 @@ components:
         The `oneClickApiMapping` property requires you to have an existing API Mapping and have access to its details. This API Mapping is triggered for one-click unsubscribe functionality.
         This is in line with the [RFC-8058](https://www.ietf.org/rfc/rfc8058.txt) (*Signaling One-Click Functionality for List Email Headers*).
         This will append the `List-Unsubscribe-Post` header in the email message for distribution lists with the `List-Unsubscribe=One-Click` header as its `POST` endpoint for one-click.
-        
+
         Both the `rmsUnsubscribeUrl` and `oneClickApiMapping` properties are optional, but `rmsUnsubscribeUrl` is required to enable unsubscribe, `oneClickApiMapping` is required to enable one-click unsubscribe.
       x-examples:
         rmsUnsubscribeUrl: '@@web_link@@'
-        oneClickApiMapping: "2ab64862"
+        oneClickApiMapping: 2ab64862
       x-tags:
         - Email
       properties:
         rmsUnsubscribeUrl:
           type: string
-          example: "@@web_link@@#unsubscribe"
+          example: '@@web_link@@#unsubscribe'
           description: |-
             This is a URL link to the web channel unsubscribe content for `GET` requests,
             and for one-click unsubscribe functionality via `POST` requests.
         oneClickApiMapping:
           type: string
-          example: "2ab64862"
+          example: 2ab64862
           description: |-
             This is the API mapping code or ID triggered for one-click unsubscribe functionality.
             This code can be retrieved from the API Mapping page.

@@ -1,0 +1,17 @@
+{
+   "ignorePatterns":[
+      {
+         "pattern":"^https://github.com/whispir/openapi/blob/main/CODE_OF_CONDUCT.md"
+      },
+      {
+         "pattern":"^https://stackoverflow.com/questions/tagged/whispir?sort=Newest"
+      },
+      {
+         "pattern":"^https://www.npmjs.com/package/whispir"
+      },
+      {
+	"pattern":"^https://github.com/whispir/whispir-node/blob/faf5f708caeb3f638b6dbe05dae8d08bbe2cfc98/version.ts"
+      }
+   ,
+   "retryOn429":false
+}

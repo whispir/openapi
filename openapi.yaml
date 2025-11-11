@@ -11067,11 +11067,15 @@ components:
 
         Customers can send templated WhatsApp messages via Whispir's API. 
 
-        Templates must first be submitted for approval by WhatsApp in your WhatsApp Business Manager account before any template messages can be sent from Whispir. Please reach out to your Whispir account manager to help you get started.
+        Templates must first be submitted for approval by WhatsApp in your WhatsApp Business Manager account before any template messages can be sent from Whispir. 
+
+        Please reach out to your Whispir account manager to help you get started.
 
 
-        #### WhatsApp Messages via Rich Message Templates
-        Note that from **October 2025** WhatsApp messages can also be configured in Whispir Rich Message Templates and used to send  via the Whispir API! 
+        #### WhatsApp Messages via Rich Message Templates (V2)
+        Note that from **October 2025** WhatsApp messages can also be configured in Whispir Rich Message Templates. These templates can then be used to send WhatsApp messages via the Whispir API. 
+
+
         Please contact your Whispir account manager to see how you can have this feature enabled. 
 
         ##### Examples
@@ -11086,15 +11090,15 @@ components:
 
         **Overriding fields from Rich Message Templates (RMT)**
 
-        Customers have the ability to provide the body positional parameters, alias etc. as part of a Rich Message Template (RMT).  
+        Customers have the ability to configure the body positional parameters, alias etc. as part of a Rich Message Template (RMT).  
          
         By default, when sending via our API with a given RMT, all values will be collected from the provided RMT. (See _WhatsApp Message via WhatsApp Enabled Rich Message Template_ example)
 
-        However, these values can also be overriden via the API when sending via the Rich Message Template (see _WhatsApp Message via Rich Message Template with Field Overrides_ example).
+        However, the platform allows you to include both the Rich Message Template reference **and** a WhatsApp object in the API payload. 
 
-        In that sample payload, "subject", "features", and "whatsapp" fields will override what is defined in the provided Rich Message Template.
+        Please note that in this case the platform will give priority to the message configuration in the **WhatsApp object** over the Rich Message Template. (see _WhatsApp Message via Rich Message Template with Field Overrides_ example).
 
-        For clarity and simplicity, however, it is recommended to choose to send your WhatsApp message either via:
+        For clarity and simplicity,  it is recommended to choose to send your WhatsApp message via one of:
         * a WhatsApp enabled Rich Message Template previously defined in our portal 
         * or providing a WhatsApp object in the payload with all the required details
       x-examples:
@@ -11229,7 +11233,7 @@ components:
                 - text: 'https://hsbc.com/renewal'
                 - text: 'https://hsbc.com/terms'
                 - text: 'https://hsbc.com/privacy'
-        'WhatsApp Message with Throttling, Alias, Web Link and Body Positional Parameters':
+        '(V2) WhatsApp Message with Throttling, Alias, Web Link and Body Positional Parameters':
           to: '61417123121,61417123122,61417123123'
           subject: WhatsApp Message Subject
           body: test WhatsApp @@recipient_first_name@@
@@ -11245,12 +11249,13 @@ components:
           whatsapp:
             type: en
             name: onboarding_message
+            language: en
             parameters:
               - '@@first_name@@'
               - '@@date@@'
               - '@@sender_full_name@@'
               - '@@web_link@@'
-        WhatsApp Bulk Message with Web Link and Body Positional Parameters:
+        (V2) WhatsApp Bulk Message with Web Link and Body Positional Parameters:
           resource:
             resourceId: 422D0A8A4C73BBEA
             smsMappingField: mobile
@@ -11265,16 +11270,16 @@ components:
             parameters:
               - '@@firstname@@ and @@date@@'
               - '@@sender_full_name@@ and @@web_link@@'
-        WhatsApp Message via WhatsApp Enabled Rich Message Template:
+        (V2) WhatsApp Message via WhatsApp Enabled Rich Message Template:
           to: '61417123121,61417123122,61417123123'
           messageTemplateName: RMT with WhatsApp Channel Enabled
-        WhatsApp Bulk Message via Rich Message Template:
+        (V2) WhatsApp Bulk Message via Rich Message Template:
           resource:
             resourceId: 422D0A8A4C73BBEA
             smsMappingField: mobile
           messageTemplateName: Sample RMT with WhatsApp Channel Enabled
           subject: WhatsApp Message Subject
-        WhatsApp Message via Rich Message Template with Field Overrides:
+        (V2) WhatsApp Message via Rich Message Template with Field Overrides:
           to: '61417123121,61417123122,61417123123'
           messageTemplateName: Sample WhatsApp Enabled Rich Message Template
           subject: WhatsApp Message Subject
@@ -11284,6 +11289,7 @@ components:
           whatsapp:
             type: en
             name: onboarding_message
+            language: en_SG
             parameters:
               - '@@first_name@@'
               - '@@date@@'
@@ -11301,12 +11307,16 @@ components:
             The type of WhatsApp message to be sent, e.g. "template".
 
             Whispir currently only supports type "template".
+
+            **Versions Supported:** *V1*, *V2*
           example: template
         name:
           type: string
           description: |-
             The name of the template to be sent 
             > Must be the same as how it appears in your WhatsApp Business Manager
+
+            **Versions Supported:** *V1*, *V2*
           example: account_update_example_image_p
         language:
           type: string
@@ -11315,8 +11325,10 @@ components:
           x-stoplight:
             id: wxn62vex5hsis
           description: |-
-            The language to use for the WhatsApp Template e.g. "en", "en_AU", "en_SG" etc.
+            The language to use for your WhatsApp Template e.g. "en", "en_AU", "en_SG" etc.
             > Must be the same as how it appears in your WhatsApp Business Manager
+
+            **Versions Supported:** *V2*
         parameters:
           type: array
           x-stoplight:
@@ -11329,6 +11341,8 @@ components:
             would become 
             "Hello John!" 
             if "John" is the first positional parameter
+
+            **Versions Supported:** *V1*, *V2*
           items:
             x-stoplight:
               id: knri1ijzksqjx

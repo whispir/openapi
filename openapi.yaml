@@ -11308,6 +11308,15 @@ components:
             The name of the template to be sent 
             > Must be the same as how it appears in your WhatsApp Business Manager
           example: account_update_example_image_p
+        language:
+          type: string
+          minLength: 2
+          maxLength: 5
+          x-stoplight:
+            id: wxn62vex5hsis
+          description: |-
+            The language to use for the WhatsApp Template e.g. "en", "en_AU", "en_SG" etc.
+            > Must be the same as how it appears in your WhatsApp Business Manager
         parameters:
           type: array
           x-stoplight:

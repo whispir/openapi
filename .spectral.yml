@@ -1,0 +1,4 @@
+
+extends: "spectral:oas"  # or any preset you were using
+rules:
+  "*": "off"

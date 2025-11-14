@@ -11072,7 +11072,7 @@ components:
         Please reach out to your Whispir account manager to help you get started.
 
 
-        #### WhatsApp Messages via Rich Message Templates (V2)
+        #### WhatsApp Messages via Rich Message Templates (v2)
         Note that from **October 2025** WhatsApp messages can also be configured in Whispir Rich Message Templates. These templates can then be used to send WhatsApp messages via the Whispir API. 
 
 
@@ -11101,6 +11101,10 @@ components:
         For clarity and simplicity,  it is recommended to choose to send your WhatsApp message via one of:
         * a WhatsApp enabled Rich Message Template previously defined in our portal 
         * or providing a WhatsApp object in the payload with all the required details
+
+        **v2 compatibility**
+
+        Please note that our WhatsApp v2 version only supports the use of positional body parameters (via the new _parameters_ object). The _content_ object is not supported.  
       x-examples:
         WhatsApp Message Using an image:
           to: '61430933333'
@@ -11303,20 +11307,16 @@ components:
           type: string
           enum:
             - template
-          description: |-
+          description: |
             The type of WhatsApp message to be sent, e.g. "template".
 
             Whispir currently only supports type "template".
-
-            **Versions Supported:** *V1*, *V2*
           example: template
         name:
           type: string
-          description: |-
+          description: |
             The name of the template to be sent 
             > Must be the same as how it appears in your WhatsApp Business Manager
-
-            **Versions Supported:** *V1*, *V2*
           example: account_update_example_image_p
         language:
           type: string
@@ -11328,7 +11328,7 @@ components:
             The language to use for your WhatsApp Template e.g. "en", "en_AU", "en_SG" etc.
             > Must be the same as how it appears in your WhatsApp Business Manager
 
-            **Versions Supported:** *V2*
+            > Supported in v2 **only**
         parameters:
           type: array
           x-stoplight:
@@ -11342,7 +11342,7 @@ components:
             "Hello John!" 
             if "John" is the first positional parameter
 
-            **Versions Supported:** *V1*, *V2*
+            > Supported in v2 **only**
           items:
             x-stoplight:
               id: knri1ijzksqjx
@@ -11399,6 +11399,7 @@ components:
             - index: '1'
               sub_type: quick_reply
               payload: No-Button-Payload
+      x-internal: false
     WAContentHeader:
       title: WAContentHeader
       x-stoplight:

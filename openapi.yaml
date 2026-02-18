@@ -7256,12 +7256,14 @@ components:
           footer: This is the footer of my message
           type: text/html
           resources:
-            attachments:
+            attachment:
               - attachmentName: sample.json
                 attachmentDesc: Sample
                 derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
       x-tags:
         - Messages
+      required:
+        - body
       properties:
         body:
           type: string
@@ -7282,8 +7284,6 @@ components:
           $ref: '#/components/schemas/OptOutOption'
         resources:
           $ref: '#/components/schemas/Attachments'
-      required:
-        - body
     Voice:
       type: object
       title: Voice
@@ -7631,11 +7631,23 @@ components:
       type: object
       description: The resources to attach to the Message.
       title: Attachments
+      x-tags:
+        - Messages
+      x-examples:
+        Image:
+          attachment:
+            - attachmentName: TestIcon.png
+              derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
+              attachmentDesc: My photo
+        JSON:
+          attachment:
+            - attachmentName: sample.json
+              attachmentDesc: Sample
+              derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
       properties:
-        attachments:
+        attachment:
           description: A list of attachments to attach to the Message.
           type: array
-          uniqueItems: false
           items:
             type: object
             description: |-
@@ -7643,6 +7655,11 @@ components:
 
               Attachments must be provided in the payload of the message. URLs can be referenced in the email but will not be added as message attachments.
             title: Attachment
+            x-stoplight:
+              id: jh33wbnmtaz7g
+            required:
+              - attachmentName
+              - derefUri
             properties:
               attachmentName:
                 type: string
@@ -7656,23 +7673,7 @@ components:
                 type: string
                 description: A description for the attachment.
                 example: My photo
-            required:
-              - attachmentName
-              - derefUri
       writeOnly: true
-      x-tags:
-        - Messages
-      x-examples:
-        Image:
-          attachments:
-            - attachmentName: TestIcon.png
-              derefUri: iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==
-              attachmentDesc: My photo
-        JSON:
-          attachments:
-            - attachmentName: sample.json
-              attachmentDesc: Sample
-              derefUri: eyAKICAgICJzYW1wbGUiOiB0cnVlCn0=
     DeliveryReceipt:
       title: Delivery Receipt
       description: A fixed object structure used by for Whispir internally for tracking purposes.

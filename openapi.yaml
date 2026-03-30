@@ -99,6 +99,8 @@ paths:
         - **Facebook** - simplify the process of publishing to multiple facebook accounts instantaneously  
         - **RSS** - easily generate RSS feeds for consumption by other services
         - **WhatsApp** - send templated WhatsApp messages
+        - **RCS** - send RCS messages
+
 
         All communications are driven from the Messages endpoint resources within the API. This endpoint allows a user to perform the following tasks:
         1.  Create and send a new message
@@ -7009,6 +7011,9 @@ components:
       description: |
         Whispir has a maximum API request payload size of 10MB. Whispir will reject the request if the payload is any bigger. This payload size limit should be adhered to when creatin the message payload.
       additionalProperties: false
+      required:
+        - to
+        - subject
       properties:
         to:
           type: string
@@ -7057,6 +7062,8 @@ components:
           $ref: '#/components/schemas/Social'
         whatsapp:
           $ref: '#/components/schemas/WhatsApp'
+        rcs:
+          $ref: '#/components/schemas/RCS'
         type:
           type: string
           enum:
@@ -7173,9 +7180,6 @@ components:
           $ref: '#/components/schemas/DeliveryReceipt'
         link:
           $ref: '#/components/schemas/Links'
-      required:
-        - to
-        - subject
     MessageCollection:
       description: The list messages response object.
       type: object
@@ -7523,11 +7527,17 @@ components:
               custom-link: 'https://ad-campaign-feedback/id'
               custom-gif: 'https://ad-campaign-resources/2022/campaign.gif'
               updated-title: New Campaign Title
+        Fallback:
+          fallback:
+            channel: SMS
+            templateName: rcs_fallback_template
       properties:
         pushOptions:
           type: object
           title: Push Options
           description: The object defining options for push messages.
+          required:
+            - appId
           properties:
             notifications:
               type: string
@@ -7616,8 +7626,6 @@ components:
                 These attributes translate to <span style="color:red">*data*</span>  in the FCM payload.
 
                 For APNS, the custom attributes of *data* are inserted as custom properties outside of the <span style="color:red">*aps*</span> payload.
-          required:
-            - appId
         aliasOption:
           type: object
           title: Alias Option
@@ -7627,6 +7635,34 @@ components:
               type: string
               description: The name of the alias configured to modify the message sender.
               example: Marketing
+        fallback:
+          type: object
+          x-stoplight:
+            id: jtcck35ezwpmm
+          description: |-
+            The fallback feature allows the sender to configure a 
+            fallback channel in case the original channel fails
+            to deliver the message. 
+            Note that currently this feature is *only* 
+            supported for RCS message and the only
+            allowed fallback channel is SMS.
+          required:
+            - channel
+            - templateName
+          properties:
+            channel:
+              x-stoplight:
+                id: 5uxjdu0je4g19
+              enum:
+                - SMS
+            templateName:
+              type: string
+              x-stoplight:
+                id: pa98xzhatrola
+              description: |-
+                The name of the Rich Message Template to use when 
+                delivering the message via the fallback 
+                channel.
     Attachments:
       type: object
       description: The resources to attach to the Message.
@@ -11350,6 +11386,422 @@ components:
             type: string
         content:
           $ref: '#/components/schemas/WAContent'
+    RCS:
+      title: RCS
+      x-stoplight:
+        id: nnzhpz8m5tpmq
+      type: object
+      description: |-
+        ### Overview
+
+        RCS (Rich Communication Services) is a modern messaging standard designed to upgrade traditional SMS and MMS on mobile phones. It enables richer features such as read receipts, typing indicators, high‑resolution media sharing, group chats, and interactive buttons. RCS messages are sent over the internet (mobile data or Wi‑Fi) but are integrated directly into a device’s default messaging app. 
+
+        #### RCS Message
+
+        The RCS message can have one of the three following elements:
+
+        * Text
+        * Media
+        * Rich Card
+
+        followed by an optional:
+
+        * Suggestions list (for interactive buttons displayed at the bottom of the message)
+      properties:
+        text:
+          type: string
+          x-stoplight:
+            id: ej119ghwhtadi
+          maxLength: 2048
+          description: 'Text string for simple messages. '
+        media:
+          $ref: '#/components/schemas/RCSMedia'
+        richCard:
+          $ref: '#/components/schemas/RCSRichCard'
+        suggestions:
+          type: array
+          x-stoplight:
+            id: m5gliel3vj41q
+          items:
+            $ref: '#/components/schemas/RCSSuggestion'
+      x-examples:
+        Text Only:
+          text: Hello from Soprano!
+        Media with Suggestions:
+          text: string
+          media:
+            fileUrl: stringstri
+            height: MEDIUM
+          richCard:
+            cardOrientation: VERTICAL
+            cardWidth: MEDIUM
+            cards:
+              - title: string
+                description: string
+                media:
+                  fileUrl: stringstri
+                  height: MEDIUM
+                suggestions:
+                  - text: string
+                    postbackData: string
+                    urlAction:
+                      url: stringstri
+                    dialAction:
+                      phoneNumber: string
+                    shareLocationAction: {}
+                    viewLocationAction:
+                      latitude: 0
+                      longitude: 0
+                      label: string
+                      query: string
+          suggestions:
+            - text: string
+              postbackData: string
+              urlAction:
+                url: stringstri
+              dialAction:
+                phoneNumber: string
+              shareLocationAction: {}
+              viewLocationAction:
+                latitude: 0
+                longitude: 0
+                label: string
+                query: string
+        Rich Card:
+          richCard:
+            cardWidth: MEDIUM
+            cardOrientation: HORIZONTAL
+            cards:
+              - title: Card 1
+                description: Description 1
+                media:
+                  fileUrl: 'https://path.to.file'
+                  height: SHORT
+                suggestions:
+                  - text: C1
+                    postbackData: c1_b1
+                  - text: C1 Click
+                    postbackData: c1_b2
+                    urlAction:
+                      url: 'https://www.sopranodesign.com'
+                  - text: C1 Call
+                    postbackData: c1_b3
+                    dialAction:
+                      phoneNumber: '+61299002200'
+                  - text: C1 View
+                    postbackData: c2_b4
+                    viewLocationAction:
+                      label: SYD
+                      latitude: -33.865143
+                      longitude: 151.2099
+              - title: Card 2
+                description: Description 2
+                media:
+                  fileUrl: 'https://static.wikia.nocookie.net/garfield/images/2/26/Garfield_New_Look-removebg-preview.png/revision/latest/scale-to-width/360?cb=20250228052648'
+                  height: SHORT
+                suggestions:
+                  - text: C2 Yes
+                    postbackData: c2_yes
+                  - text: C2 No
+                    postbackData: c2_no
+          suggestions:
+            - text: 'Yes'
+              postbackData: b1
+            - text: Click
+              postbackData: b2
+              urlAction:
+                url: 'https://www.sopranodesign.com'
+            - text: Call Us
+              postbackData: b3
+              dialAction:
+                phoneNumber: '+61299002200'
+            - text: View
+              postbackData: b4
+              viewLocationAction:
+                latitude: -33.865143
+                longitude: 151.2099
+                label: North Sydney
+            - text: Share
+              postbackData: b5
+              shareLocationAction: {}
+    RCSMedia:
+      title: RCSMedia
+      x-stoplight:
+        id: jt5sqlzr7fcrp
+      type: object
+      required:
+        - fileUrl
+      properties:
+        fileUrl:
+          type: string
+          x-stoplight:
+            id: lwe9sirdosdfg
+          minLength: 10
+          maxLength: 1000
+        height:
+          x-stoplight:
+            id: 3elwj6k4lzmkt
+          enum:
+            - SHORT
+            - MEDIUM
+            - TALL
+          default: MEDIUM
+      description: Describes the media to be displayed in the RCS message.
+      x-examples:
+        Example 1:
+          fileUrl: 'https://static.wikia.nocookie.net/garfield/images/2/26/Garfield_New_Look-removebg-preview.png/revision/latest/scale-to-width/360?cb=20250228052648'
+          height: MEDIUM
+    RCSRichCard:
+      title: RCSRichCard
+      x-stoplight:
+        id: u9na5abgatmoa
+      type: object
+      required:
+        - cards
+      properties:
+        cardOrientation:
+          x-stoplight:
+            id: j997tsxv2n0gr
+          enum:
+            - VERTICAL
+            - HORIZONTAL
+          default: VERTICAL
+        cardWidth:
+          x-stoplight:
+            id: haeoy9p1xs4mg
+          enum:
+            - SMALL
+            - MEDIUM
+          default: MEDIUM
+        cards:
+          x-stoplight:
+            id: 3jk9lyeftpmy8
+          type: array
+          items:
+            $ref: '#/components/schemas/RCSCard'
+      description: |-
+        Describes a list of cards that will be displayed in the message.
+
+        There can be 1 or more cards. If the Rich Card contains more than one card, it is often referred to as a *carousel*. 
+      x-examples:
+        Example 1:
+          cardWidth: MEDIUM
+          cardOrientation: HORIZONTAL
+          cards:
+            - title: Card 1
+              description: Description 1
+              media:
+                fileUrl: 'https://static.wikia.nocookie.net/garfield/images/2/26/Garfield_New_Look-removebg-preview.png/revision/latest/scale-to-width/360?cb=20250228052648'
+                height: SHORT
+              suggestions:
+                - text: C1
+                  postbackData: c1_b1
+                - text: C1 Click
+                  postbackData: c1_b2
+                  urlAction:
+                    url: 'https://www.sopranodesign.com'
+                - text: C1 Call
+                  postbackData: c1_b3
+                  dialAction:
+                    phoneNumber: '+61299002200'
+                - text: C1 View
+                  postbackData: c2_b4
+                  viewLocationAction:
+                    label: SYD
+                    latitude: -33.865143
+                    longitude: 151.2099
+            - title: Card 2
+              description: Description 2
+              media:
+                fileUrl: 'https://static.wikia.nocookie.net/garfield/images/2/26/Garfield_New_Look-removebg-preview.png/revision/latest/scale-to-width/360?cb=20250228052648'
+                height: SHORT
+              suggestions:
+                - text: C2 Yes
+                  postbackData: c2_yes
+                - text: C2 No
+                  postbackData: c2_no
+    RCSCard:
+      title: RCSCard
+      x-stoplight:
+        id: xe5k4fvi6vcgf
+      type: object
+      properties:
+        title:
+          type: string
+          x-stoplight:
+            id: 76fwqj9qgzfhh
+          maxLength: 200
+        description:
+          type: string
+          x-stoplight:
+            id: ddm9t4y8hds9m
+          maxLength: 2000
+        media:
+          $ref: '#/components/schemas/RCSMedia'
+        suggestions:
+          type: array
+          items:
+            $ref: '#/components/schemas/RCSSuggestion'
+      description: Describes all the attributes needed to display a single RCS Card.
+      x-examples:
+        Example 1:
+          title: Card 1
+          description: Description 1
+          media:
+            fileUrl: 'https://static.wikia.nocookie.net/garfield/images/2/26/Garfield_New_Look-removebg-preview.png/revision/latest/scale-to-width/360?cb=20250228052648'
+            height: SHORT
+          suggestions:
+            - text: C1
+              postbackData: c1_b1
+            - text: C1 Click
+              postbackData: c1_b2
+              urlAction:
+                url: 'https://www.sopranodesign.com'
+            - text: C1 Call
+              postbackData: c1_b3
+              dialAction:
+                phoneNumber: '+61299002200'
+            - text: C1 View
+              postbackData: c2_b4
+              viewLocationAction:
+                label: SYD
+                latitude: -33.865143
+                longitude: 151.2099
+    RCSSuggestion:
+      title: RCSSuggestion
+      x-stoplight:
+        id: rv0cqei8pje3e
+      type: object
+      description: |-
+        A suggestion is an interactive button displayed on the recipient's message. 
+
+        If the suggestion consists of only the *text* and *postbackData* fields, it is referred to as a "normal action" and when the user clicks that button it results in the postback data being sent back to you. 
+
+        A suggestion can also be any one of urlAction, dialAction, shareLocationAction and viewLocationAction - depending on which one is included in the payload. 
+        If the user clicks on one of these buttons, they will also return the provided postback data but also have special behaviours described in the schema. 
+        Note that only *one* of the special actions can be included in a single suggestion. 
+      required:
+        - text
+        - postbackData
+      properties:
+        text:
+          type: string
+          x-stoplight:
+            id: fazk7c8qnt6sr
+          maxLength: 25
+        postbackData:
+          type: string
+          x-stoplight:
+            id: duru84g9wsong
+          maxLength: 2000
+        urlAction:
+          type: object
+          x-stoplight:
+            id: v1qcgslq6ekg6
+          description: |-
+            Triggers the opening of the provided url on 
+            the end recipient's phone. 
+          required:
+            - url
+          properties:
+            url:
+              type: string
+              x-stoplight:
+                id: v7b10uswyu9nq
+              minLength: 10
+              maxLength: 1000
+        dialAction:
+          type: object
+          x-stoplight:
+            id: ev3lo82j2w0pv
+          description: |-
+            Triggers a “call number” action on the 
+            recipient's phone using the provided phone 
+            number.
+          required:
+            - phoneNumber
+          properties:
+            phoneNumber:
+              type: string
+              x-stoplight:
+                id: 4b3w74h1dht56
+              minLength: 3
+              maxLength: 25
+        shareLocationAction:
+          type: object
+          x-stoplight:
+            id: h127vc71tsyl5
+          description: |-
+            Allows the recipient to share their location 
+            back to Soprano.
+
+            The Share Location suggestion/action does 
+            not have any fields, the presence of the 
+            object itself triggers the action on the phone. 
+        viewLocationAction:
+          type: object
+          x-stoplight:
+            id: jort5yiqkyzm3
+          description: |-
+            Allows sending a location so the end recipient
+            can open it on their phone.
+
+            The viewLocationAction can have a combination 
+            of latitude, longitude and label AND/OR a 
+            query link (which has those values embedded). 
+
+            If both combinations are provided, 
+            the phone will give higher priority to the 
+            query link.
+          properties:
+            latitude:
+              type: number
+              x-stoplight:
+                id: s38236a6wd576
+            longitude:
+              type: number
+              x-stoplight:
+                id: 4qqkltuogjqps
+            label:
+              type: string
+              x-stoplight:
+                id: oaz2zdombctet
+              maxLength: 200
+            query:
+              type: string
+              x-stoplight:
+                id: 24sr8cztqy7ln
+              maxLength: 2000
+      x-examples:
+        Normal Action:
+          text: 'Yes'
+          postbackData: Clicked Yes
+        View Location Action:
+          text: C1 View
+          postbackData: c2_b4
+          viewLocationAction:
+            label: SYD
+            latitude: -33.865143
+            longitude: 151.2099
+        URL Action:
+          text: C1 Click
+          postbackData: c1_b2
+          urlAction:
+            url: 'https://www.sopranodesign.com'
+        Dial Action:
+          text: C1 Call
+          postbackData: c1_b3
+          dialAction:
+            phoneNumber: '+61299002200'
+        Share Location Action:
+          text: Share Location
+          postbackData: Clicked_Share_Location
+          shareLocationAction: {}
+        View Location Action with query:
+          text: View Location
+          postbackData: Clicked_View_Location
+          viewLocationAction:
+            query: 'https://www.google.com/maps/place/Vonage/@51.5230371,-0.0852492,15z'
     WAContent:
       title: WAContent
       x-stoplight:
@@ -11401,6 +11853,55 @@ components:
               sub_type: quick_reply
               payload: No-Button-Payload
       x-internal: false
+    WAContentButton:
+      title: WAContentButton
+      x-stoplight:
+        id: 8rugv1dziyhzp
+      type: object
+      description: |-
+        The contents of your dynamic button.
+
+        If the button subtype is “url” you will need the following parameters:
+        “Index”, “sub_type”, “text”
+
+        If the button subtype is a “quick_reply”, you will need the following parameters:
+        “Index”, “sub_type”, “payload
+      x-examples:
+        Example 1:
+          button:
+            - index: '0'
+              sub_type: quick_reply
+              payload: Yes-Button-Payload
+            - index: '1'
+              sub_type: url
+              payload: 'https://google.com'
+      properties:
+        index:
+          type: string
+          description: The index value of the button this object represents
+          example: '0'
+        sub_type:
+          type: string
+          enum:
+            - quick_reply
+            - url
+          description: The type of dynamic button i.e. "quick_reply" or "url"
+          example: url
+        text:
+          type: string
+          description: |-
+            the url destination when the button is clicked
+            > required when `sub_type` value is `url`
+          example: 'https://abc.com'
+        payload:
+          type: string
+          description: |-
+            Name of the quick reply buttons configured within your WhatsApp Business Manager account.
+            > required when `sub_type` value is `quick_reply`
+          example: yes-button-payload
+      required:
+        - index
+        - sub_type
     WAContentHeader:
       title: WAContentHeader
       x-stoplight:
@@ -11473,55 +11974,6 @@ components:
               type: string
               description: Address of the location
               example: '1 Hacker Way, Menlo Park, CA 94025'
-    WAContentButton:
-      title: WAContentButton
-      x-stoplight:
-        id: 8rugv1dziyhzp
-      type: object
-      description: |-
-        The contents of your dynamic button.
-
-        If the button subtype is “url” you will need the following parameters:
-        “Index”, “sub_type”, “text”
-
-        If the button subtype is a “quick_reply”, you will need the following parameters:
-        “Index”, “sub_type”, “payload
-      x-examples:
-        Example 1:
-          button:
-            - index: '0'
-              sub_type: quick_reply
-              payload: Yes-Button-Payload
-            - index: '1'
-              sub_type: url
-              payload: 'https://google.com'
-      properties:
-        index:
-          type: string
-          description: The index value of the button this object represents
-          example: '0'
-        sub_type:
-          type: string
-          enum:
-            - quick_reply
-            - url
-          description: The type of dynamic button i.e. "quick_reply" or "url"
-          example: url
-        text:
-          type: string
-          description: |-
-            the url destination when the button is clicked
-            > required when `sub_type` value is `url`
-          example: 'https://abc.com'
-        payload:
-          type: string
-          description: |-
-            Name of the quick reply buttons configured within your WhatsApp Business Manager account.
-            > required when `sub_type` value is `quick_reply`
-          example: yes-button-payload
-      required:
-        - index
-        - sub_type
     Otp:
       title: OTP
       x-stoplight:

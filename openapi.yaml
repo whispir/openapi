@@ -7006,8 +7006,6 @@ components:
         subject: Test Message
         body: This is the body of my test SMS message
       title: Message
-      x-tags:
-        - Messages
       description: |
         Whispir has a maximum API request payload size of 10MB. Whispir will reject the request if the payload is any bigger. This payload size limit should be adhered to when creatin the message payload.
       additionalProperties: false
@@ -11524,6 +11522,8 @@ components:
             - text: Share
               postbackData: b5
               shareLocationAction: {}
+      x-tags:
+        - Messages
     RCSMedia:
       title: RCSMedia
       x-stoplight:
@@ -11551,6 +11551,8 @@ components:
         Example 1:
           fileUrl: 'https://static.wikia.nocookie.net/garfield/images/2/26/Garfield_New_Look-removebg-preview.png/revision/latest/scale-to-width/360?cb=20250228052648'
           height: MEDIUM
+      x-tags:
+        - Messages
     RCSRichCard:
       title: RCSRichCard
       x-stoplight:
@@ -11620,6 +11622,8 @@ components:
                   postbackData: c2_yes
                 - text: C2 No
                   postbackData: c2_no
+      x-tags:
+        - Messages
     RCSCard:
       title: RCSCard
       x-stoplight:
@@ -11667,6 +11671,8 @@ components:
                 label: SYD
                 latitude: -33.865143
                 longitude: 151.2099
+      x-tags:
+        - Messages
     RCSSuggestion:
       title: RCSSuggestion
       x-stoplight:
@@ -11802,6 +11808,8 @@ components:
           postbackData: Clicked_View_Location
           viewLocationAction:
             query: 'https://www.google.com/maps/place/Vonage/@51.5230371,-0.0852492,15z'
+      x-tags:
+        - Messages
     WAContent:
       title: WAContent
       x-stoplight:

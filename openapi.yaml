@@ -73,7 +73,7 @@ tags:
     externalDocs:
       url: 'https://developers.whispir.com/c2NoOjM4OTQzOTI4-import'
   - name: Auth
-    description: The Auth endpoint allows users to retrieve and verify a JWT authentication token.
+    description: 'The Auth endpoint allows users to retrieve and verify a JWT bearer token, authenticated with Basic Authentication and an `x-api-key`. The resulting bearer token can then be used in place of both the `Authorization: Basic` header and the `x-api-key` header on subsequent requests.'
     externalDocs:
       url: 'https://developers.whispir.com/b3A6NDEyMTEzOA-create-an-auth-token'
   - name: Verify
@@ -6644,7 +6644,10 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
-      description: Create a JWT authentication token
+      description: |-
+        Create a JWT bearer token, authenticated with Basic Authentication and an `x-api-key`.
+
+        This bearer token can then be used in place of both the Basic Authentication header and the `x-api-key` header on subsequent requests (`Authorization: Bearer {token}`). Do not send `x-api-key` alongside a Bearer token — it is not required and is ignored.
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Auth-Content-Type'
@@ -6656,7 +6659,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Auth-Accept'
-      description: Verify a JWT authentication token
+      description: 'Verify a previously issued bearer token (JWT) is still valid. Pass the token in the `Authorization: Bearer {token}` header; do not send `x-api-key` alongside it.'
       operationId: authVerificationRetrieve
       x-sdkOperation: retrieveVerification
       responses:
@@ -6957,7 +6960,6 @@ security:
   - BasicAuth: []
     ApiKeyAuth: []
   - BearerAuth: []
-    ApiKeyAuth: []
 servers:
   - url: 'https://api.au.whispir.com'
     description: Australia
@@ -6979,13 +6981,16 @@ components:
     BasicAuth:
       type: http
       scheme: basic
+      description: 'HTTP Basic Authentication using your Whispir username and password. Must be combined with `ApiKeyAuth` (`x-api-key` header).'
     ApiKeyAuth:
-      name: Api-Key
+      name: x-api-key
       type: apiKey
       in: header
+      description: 'Required only when authenticating with `BasicAuth`. Not required, and not used, when authenticating with a `BearerAuth` token issued by the Developer Portal.'
     BearerAuth:
       type: http
       scheme: bearer
+      description: 'A standalone API key issued by the Developer Portal, passed in the `Authorization: Bearer` header. This credential is self-contained — the `x-api-key` header must not be sent alongside it.'
   schemas:
     Message:
       type: object
@@ -12096,10 +12101,10 @@ components:
       name: X-Api-Key
       in: header
       x-isApiKey: true
-      required: true
+      required: false
       schema:
         type: string
-      description: The API key for authentication.
+      description: 'Required only when authenticating with Basic Authentication (`Authorization: Basic ...`). Omit this header when authenticating with a Developer Portal Bearer token (`Authorization: Bearer ...`) — the two credentials are not used together.'
     workspaceId:
       name: workspaceId
       in: path

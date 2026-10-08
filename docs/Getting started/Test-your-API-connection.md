@@ -7,8 +7,11 @@ tags: [Getting Started]
 To test your connectivity you will now need the following parameters:
 
 - The region you'd like to connect to
-- Your Authorization header
-- Your API key
+- Either:
+  - Your Authorization (Basic) header **and** your API key, or
+  - A Bearer token (used on its own, with no API key header)
+
+See [Authentication](Authentication.md) for details on both methods.
 
 ## Using cURL
 
@@ -22,6 +25,15 @@ curl --request GET \
   --header 'Authorization: Basic [YOUR AUTHORIZATION HEADER]' \
   --header 'x-api-key: [YOUR API KEY]'
 ```
+
+Alternatively, using a Bearer token instead (no `x-api-key` header required):
+
+```html
+curl --request GET \
+  --url https://api.[YOUR REGION].whispir.com \
+  --header 'Authorization: Bearer [YOUR BEARER TOKEN]'
+```
+
 Copy the cURL code into the command line interface of your choice, or use a web-based cURL console such as <!-- markdown-link-check-disable -->[Reqbin.](https://reqbin.com/curl)<!-- markdown-link-check-enable-->
 
 ## Using a generic REST client

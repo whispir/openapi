@@ -57,12 +57,14 @@ Once you’ve generated this header you can use it, together with your API key, 
 
 Instead of Basic Authentication + API key, you can authenticate with a single **Bearer token**, passed as `Authorization: Bearer YOUR-TOKEN` — with no `x-api-key` header.
 
-This token can come from either of:
+There are two sources of Bearer token, and each only works against a different endpoint format. Do not mix them up:
 
-- An API key generated from the [Developer Portal](https://devportal.whispir.com)'s **Dashboard > API Keys** page, used directly as a Bearer token (see steps below).
-- A JWT obtained by calling [Create an auth token](../../openapi.yaml/paths/~1auth/post), authenticated once with Basic Authentication and an API key.
+| Source | Endpoint format | Steps |
+|---|---|---|
+| Developer Portal API key | Current: `https://api.<region>.whispir.com/<path>` | See below |
+| JWT from the `/auth` endpoint | Legacy: `https://<region>.whispir.com/api/<path>` | See below |
 
-### Generate a Bearer token from the Developer Portal
+### Developer Portal API key (current endpoint)
 
 1. Sign in to the [Developer Portal](https://devportal.whispir.com).
 2. From the dashboard home, find the **API keys** card and select **Manage API Keys** (or go directly to **Dashboard > API Keys**).
@@ -76,6 +78,10 @@ This token can come from either of:
 Keys created from the Developer Portal are rate-limited to 30 transactions per second, with no daily call limit. If you need higher throughput, contact the [Whispir Support Team](mailto:support@whispir.com).
 
 You can view the status and creation date of your existing keys, and revoke or edit them, from the same **API Keys** page.
+
+### JWT from the `/auth` endpoint (legacy endpoint)
+
+Call [Create an auth token](../../openapi.yaml/paths/~1auth/post) — authenticated with Basic Authentication and an API key — to receive a JWT. This JWT is only valid against the legacy endpoint format `https://<region>.whispir.com/api/<path>`; it will not work against the current API endpoint format.
 
 ### Important points
 

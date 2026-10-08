@@ -19,9 +19,7 @@ The Whispir API supports **two independent authentication methods**. Use one or 
 
 #### I am a Whispir customer
 
-Sign in to the [Developer Portal](https://devportal.whispir.com) and go to **Dashboard > API Keys** to generate and manage your API keys.
-
-If you're a Whispir customer using only Whispir Classic and don't have access to the Developer Portal, please contact your Whispir account manager or the [Whispir Support Team](mailto:support@whispir.com) to obtain an API key.
+Please contact your Whispir account manager or the [Whispir Support Team](mailto:support@whispir.com) to obtain an API key.
 
 #### I am not yet a Whispir customer
 

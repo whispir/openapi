@@ -23,10 +23,10 @@ You can test your connection to the Whispir API with the following cURL code. Si
 curl --request GET \
   --url https://api.[YOUR REGION].whispir.com \
   --header 'Authorization: Basic [YOUR AUTHORIZATION HEADER]' \
-  --header 'x-api-key: [YOUR API KEY]'
+  --header 'X-Api-Key: [YOUR API KEY]'
 ```
 
-Alternatively, using a Bearer token instead (no `x-api-key` header required):
+Alternatively, using a Bearer token instead (no `X-Api-Key` header required):
 
 ```html
 curl --request GET \

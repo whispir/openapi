@@ -8,10 +8,10 @@ The Whispir API supports **two independent authentication methods**. Use one or 
 
 | Method | Headers required |
 |---|---|
-| 1. Basic Authentication | `Authorization: Basic ...` **and** `x-api-key: ...` |
+| 1. Basic Authentication | `Authorization: Basic ...` **and** `X-Api-Key: ...` |
 | 2. Bearer token | `Authorization: Bearer ...` only |
 
-> **IMPORTANT:** Sending `x-api-key` together with a Bearer token is unnecessary — the Bearer token is a self-contained credential and `x-api-key` is ignored. Sending `x-api-key` on its own, without an `Authorization` header, is **not** sufficient and will be rejected.
+> **IMPORTANT:** Sending `X-Api-Key` together with a Bearer token is unnecessary — the Bearer token is a self-contained credential and `X-Api-Key` is ignored. Sending `X-Api-Key` on its own, without an `Authorization` header, is **not** sufficient and will be rejected.
 
 ## Method 1: Basic Authentication + API key
 
@@ -27,14 +27,14 @@ Want to try out our API but you're not yet a Whispir customer? No worries. Simpl
 
 ### API key as a header
 
-API key information is provided via the ‘headers’, using the `x-api-key` header value.
+API key information is provided via the ‘headers’, using the `X-Api-Key` header value.
 
 ```json
 Example - if your region is AP
 
 https://api.ap.whispir.com
 Authorization: Basic YOUR-AUTH-HEADER
-x-api-key: YOUR-API-KEY
+X-Api-Key: YOUR-API-KEY
 ```
 
 ### Authorization header
@@ -55,7 +55,7 @@ Once you’ve generated this header you can use it, together with your API key, 
 
 ## Method 2: Bearer token
 
-Instead of Basic Authentication + API key, you can authenticate with a single **Bearer token**, passed as `Authorization: Bearer YOUR-TOKEN` — with no `x-api-key` header.
+Instead of Basic Authentication + API key, you can authenticate with a single **Bearer token**, passed as `Authorization: Bearer YOUR-TOKEN` — with no `X-Api-Key` header.
 
 There are two sources of Bearer token, and each only works against a different endpoint format. Do not mix them up:
 
@@ -71,7 +71,7 @@ There are two sources of Bearer token, and each only works against a different e
 3. Select **Create new API key**.
 4. Enter a **Label** for the key (e.g. a name describing where it will be used) and submit.
 5. The portal displays the generated **API Secret** once. Copy it immediately — it is not shown again, and if lost you will need to create a new key.
-6. Use this secret directly as your Bearer token: `Authorization: Bearer YOUR-API-SECRET`. Do not also send an `x-api-key` header.
+6. Use this secret directly as your Bearer token: `Authorization: Bearer YOUR-API-SECRET`. Do not also send an `X-Api-Key` header.
 
 > **IMPORTANT:** The API secret is shown only once at creation time. Store it securely (e.g. in a secrets manager or password vault) before closing the dialog.
 

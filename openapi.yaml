@@ -73,7 +73,7 @@ tags:
     externalDocs:
       url: 'https://developers.whispir.com/c2NoOjM4OTQzOTI4-import'
   - name: Auth
-    description: 'The Auth endpoint allows users to retrieve and verify a JWT bearer token, authenticated with Basic Authentication and an `x-api-key`. The resulting bearer token can then be used in place of both the `Authorization: Basic` header and the `x-api-key` header on subsequent requests.'
+    description: 'The Auth endpoint allows users to retrieve and verify a JWT bearer token, authenticated with Basic Authentication and an `X-Api-Key`. The resulting bearer token can then be used in place of both the `Authorization: Basic` header and the `X-Api-Key` header on subsequent requests.'
     externalDocs:
       url: 'https://developers.whispir.com/b3A6NDEyMTEzOA-create-an-auth-token'
   - name: Verify
@@ -164,7 +164,7 @@ paths:
         POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.message-v1+json
         Accept: application/vnd.whispir.message-v1+json
          
@@ -178,7 +178,7 @@ paths:
         POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.message-v1+xml
         Accept: application/vnd.whispir.message-v1+xml
          
@@ -231,7 +231,7 @@ paths:
         POST http://api.<region>.whispir.com/workspaces/{workspaceId}/messages
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.message-v1+json
         Accept: application/vnd.whispir.message-v1+json
          
@@ -249,7 +249,7 @@ paths:
         POST http://api.<region>.whispir.com/workspaces/{workspaceId}/messages
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.message-v1+xml
         Accept: application/vnd.whispir.message-v1+xml
          
@@ -274,7 +274,7 @@ paths:
         POST http://api.<region>.whispir.com/workspaces/{workspaceId}/templates
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.template-v1+json
         Accept: application/vnd.whispir.template-v1+json 
          
@@ -299,7 +299,7 @@ paths:
         POST http://api.<region>.whispir.com/workspaces/{workspaceId}/messages
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.message-v1+json
         Accept: application/vnd.whispir.message-v1+json
          
@@ -322,7 +322,7 @@ paths:
         POST http://api.<region>.whispir.com/workspaces/{workspaceId}/templates
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.template-v1+xml
         Accept: application/vnd.whispir.template-v1+xml
          
@@ -350,7 +350,7 @@ paths:
         POST http://api.<region>.whispir.com/workspaces/{workspaceId}/messages
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.message-v1+xml
         Accept: application/vnd.whispir.message-v1+xml
          
@@ -392,7 +392,7 @@ paths:
         POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.message-v1+json
         Accept: application/vnd.whispir.message-v1+json
         ONCE
@@ -430,7 +430,7 @@ paths:
         POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.message-v1+json
         Accept: application/vnd.whispir.message-v1+json
         ONCE
@@ -479,7 +479,7 @@ paths:
         POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
          
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.message-v1+json
         Accept: application/vnd.whispir.message-v1+json
         In this sample we will send a message with an opt out option property
@@ -504,7 +504,7 @@ paths:
         POST https://api.<region>.whispir.com/workspaces/{workspaceId}/messages
 
         Authorization: Basic am9obi5zbWl0aDpteXBhc3N3b3Jk
-        x-api-key: your_api_key
+        X-Api-Key: your_api_key
         Content-Type: application/vnd.whispir.message-v1+xml
         Accept: application/vnd.whispir.message-v1+xml
         In this sample we will send a message with an opt out option property
@@ -539,7 +539,6 @@ paths:
         Both the `rmsUnsubscribeUrl` and `oneClickApiMapping` properties are optional, but `rmsUnsubscribeUrl` is required to enable unsubscribe, `oneClickApiMapping` is required to enable one-click unsubscribe.
       operationId: messageCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Message-Content-Type'
         - $ref: '#/components/parameters/Message-Accept'
       requestBody:
@@ -730,7 +729,6 @@ paths:
         Pagination is available.
       operationId: messageList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Message-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -957,7 +955,6 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Message-Accept'
         - schema:
             type: string
@@ -1034,7 +1031,6 @@ paths:
         Once you have processed the status information, the next likely piece of information you will be looking to find is the content of the responses (if any). The section on Message Responses describes how to retrieve this information.
       operationId: messageStatusList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/MessageStatus-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -1211,7 +1207,6 @@ paths:
         *   The **responseMessage acknowledged** shows the date of when the response was received by the Whispir Platform
       operationId: messageResponseList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/MessageResponse-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -1373,7 +1368,6 @@ paths:
         Information about the resources endpoint is documented in the Resources section of the documentation.
       operationId: resourceCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Resource-Content-Type'
         - $ref: '#/components/parameters/Resource-Accept'
       requestBody:
@@ -1462,7 +1456,6 @@ paths:
         **Eg:** - &name=australia.csv
       operationId: resourceList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Resource-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -1519,7 +1512,6 @@ paths:
         A single resource (public|private) can be retrieved from the available resource by using the resource’s specific link uri
       operationId: resourceRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Resource-Accept'
         - name: resourceId
           description: The identifier for the resource.
@@ -1562,7 +1554,6 @@ paths:
         Any or all of the 4 values can be changed. i.e, name, scope, mimeType, derefUri, but all 4 are mandatory values to be sent.
       operationId: resourceUpdate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Resource-Content-Type'
         - $ref: '#/components/parameters/Resource-Accept'
         - name: resourceId
@@ -1620,7 +1611,6 @@ paths:
         **Note:** Deleting a public resource may result in 404 File Not Found error for any sites or material referencing to it. So, ensure that DELETE is only executed when the reference to all material is removed or the content has to be removed for other purposes immediately.
       operationId: resourceDelete
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: resourceId
           in: path
           description: The id of the resources to be deleted
@@ -1670,7 +1660,6 @@ paths:
       description: 'Create a message template, combining multi-channel content for use with the Message resource. The message template can be reused across multiple sent messages.'
       operationId: templateCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Template-Content-Type'
         - $ref: '#/components/parameters/Template-Accept'
       requestBody:
@@ -1766,7 +1755,6 @@ paths:
         Pagination is available.
       operationId: templateList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Template-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -1849,7 +1837,6 @@ paths:
       description: Retrieves a message template
       operationId: templateRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Template-Accept'
         - name: templateId
           in: path
@@ -1890,7 +1877,6 @@ paths:
         **Note:** Currently users cannot update templates with the same name as a template that already exists in Whispir. Users can overcome this by saving the updated template with a new name, then either changing this back in a subsequent save, or retaining the updated name.
       operationId: templateUpdate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Template-Content-Type'
         - $ref: '#/components/parameters/Template-Accept'
         - name: templateId
@@ -1998,7 +1984,6 @@ paths:
         **Note:** When a template is DELETED, all the associated Scenarios, events, and references of template use in other endpoints will fail. So, ensure that the template is not used anywhere before it is deleted. Whispir **will not** do that check before it deletes the template.
       operationId: templateDelete
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Template-Content-Type'
         - $ref: '#/components/parameters/Template-Accept'
         - name: templateId
@@ -2059,7 +2044,6 @@ paths:
         This provides an out of the box capability to quickly gather feedback from the field using a Rich User interface, and leveraging SMS as the delivery mechanism.
       operationId: responseRuleCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/ResponseRule-Content-Type'
         - $ref: '#/components/parameters/ResponseRule-Accept'
       requestBody:
@@ -2128,7 +2112,6 @@ paths:
       description: Returns a list of response rules.
       operationId: reponseRuleList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/ResponseRule-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -2197,7 +2180,6 @@ paths:
       description: Retrieves a response rule object.
       operationId: responseRuleRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/ResponseRule-Accept'
         - name: responseRuleId
           in: path
@@ -2264,7 +2246,6 @@ paths:
       description: Updates a Response Rule object.
       operationId: responseRuleUpdate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/ResponseRule-Content-Type'
         - $ref: '#/components/parameters/ResponseRule-Accept'
         - name: responseRuleId
@@ -2331,7 +2312,6 @@ paths:
       description: Deletes a Response Rule object.
       operationId: responseRuleDelete
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: responseRuleId
           in: path
           required: true
@@ -2381,7 +2361,6 @@ paths:
       description: Creates a Contact object. The Contact can be used as a recipient when sending multi-channel messages.
       operationId: contactCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Contact-Accept'
         - $ref: '#/components/parameters/Contact-Content-Type'
       requestBody:
@@ -2592,7 +2571,6 @@ paths:
         `/contacts?custom_StaffId=12345`
       operationId: contactList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
         - $ref: '#/components/parameters/sortOrder'
@@ -2654,7 +2632,6 @@ paths:
         Example: `/contacts/AB38CB3EFD38AFDB?customFields=true`
       operationId: contactRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: contactId
           in: path
           description: Enter contact id.
@@ -2810,7 +2787,6 @@ paths:
         The response to the PUT request upon success is usually a 204 with no content being provided.
       operationId: contactUpdate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: contactId
           in: path
           description: Enter contact id.
@@ -3027,7 +3003,6 @@ paths:
         The user has requested to delete a contact, and when the response of 204 No Content is returned, the contact is successfully deleted.
       operationId: contactDelete
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: contactId
           in: path
           description: The id of the contact to be deleted
@@ -3084,7 +3059,6 @@ paths:
       description: Creates a Key object.
       operationId: keyCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Unified-Accept'
         - $ref: '#/components/parameters/Unified-Content-Type'
       requestBody:
@@ -3136,7 +3110,6 @@ paths:
         List Keys
       operationId: keyList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
         - $ref: '#/components/parameters/sortOrder'
@@ -3175,7 +3148,6 @@ paths:
       description: Retrieves the specified key
       operationId: keyRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: keyId
           in: path
           description: The key id to fetch
@@ -3242,7 +3214,6 @@ paths:
       description: Updates the specified key
       operationId: keyUpdate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: keyId
           in: path
           description: The key id to update
@@ -3307,7 +3278,6 @@ paths:
       description: Deletes the speficied key
       operationId: keyDelete
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: keyId
           in: path
           description: The id of the key to be deleted
@@ -3359,7 +3329,6 @@ paths:
         The MRI value is important here. It is the required unique identifier for any communications that are to be sent out to this distribution list.
       operationId: distributionListCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/DistributionList-Content-Type'
         - $ref: '#/components/parameters/DistributionList-Accept'
       requestBody:
@@ -3432,7 +3401,6 @@ paths:
         Both these operations can be performed by passing in the relevant search parameters in the URL as query params.
       operationId: distributionListList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/DistributionList-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -3512,7 +3480,6 @@ paths:
         3.  For Modifying the Location Information refer to Location Tags for Distribution Lists
       operationId: distributionListRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/DistributionList-Accept'
         - name: distributionlistId
           in: path
@@ -3569,7 +3536,6 @@ paths:
         - For Modifying the Location Information refer to Location Tags for Distribution Lists
       operationId: distributionListUpdate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/DistributionList-Content-Type'
         - $ref: '#/components/parameters/DistributionList-Accept'
         - name: distributionlistId
@@ -3652,7 +3618,6 @@ paths:
         You can only delete the distribution list that you have created or a valid userId associated with the specific distribution list.
       operationId: distributionListDelete
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: distributionlistId
           in: path
           description: The id of the distributionlists to be deleted
@@ -3703,7 +3668,6 @@ paths:
         A scenario is a combination of a message and contacts. So, its structure contains section for both message as well as contact information. API currently only supports creation of scenario with SMS as communication mode.
       operationId: scenarioCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Scenario-Content-Type'
         - $ref: '#/components/parameters/Scenario-Accept'
       requestBody:
@@ -3771,7 +3735,6 @@ paths:
       description: Returns a list of your scenarios.
       operationId: scenarioList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Scenario-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -3864,7 +3827,6 @@ paths:
       description: Retrieves a Scenario object.
       operationId: scenarioRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Scenario-Accept'
         - name: scenarioId
           in: path
@@ -3966,7 +3928,6 @@ paths:
         Now invoking this scenario is just making a /POST call.
       operationId: scenarioRunCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Scenario-Content-Type'
         - $ref: '#/components/parameters/Scenario-Accept'
         - name: scenarioId
@@ -4023,7 +3984,6 @@ paths:
       description: Updates a Scenario object.
       operationId: scenarioUpdate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Scenario-Content-Type'
         - $ref: '#/components/parameters/Scenario-Accept'
         - name: scenarioId
@@ -4115,7 +4075,6 @@ paths:
       description: Deletes a Scenario object.
       operationId: scenarioDelete
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: scenarioId
           in: path
           description: The id of the Scenarios to be deleted
@@ -4239,7 +4198,6 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Callback-Content-Type'
         - $ref: '#/components/parameters/Callback-Accept'
     get:
@@ -4318,7 +4276,6 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Callback-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -4333,7 +4290,6 @@ paths:
       description: Retrieve a callback object
       operationId: callbackRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Callback-Accept'
         - name: callbackId
           in: path
@@ -4373,7 +4329,6 @@ paths:
       description: Update a callback object
       operationId: callbackUpdate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
           in: path
           description: Enter Callback id.
@@ -4468,7 +4423,6 @@ paths:
           $ref: '#/components/responses/500InternalServerError'
       description: Delete a callback object
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Callback-Content-Type'
         - $ref: '#/components/parameters/Callback-Accept'
         - name: callbackId
@@ -4489,7 +4443,6 @@ paths:
       description: List of calls to the callback
       operationId: callbackCallList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
         - $ref: '#/components/parameters/sortOrder'
@@ -4563,7 +4516,6 @@ paths:
         The PUT request takes a single API parameter in the body
       operationId: callbackCallUpdate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: callbackId
           in: path
           description: Enter Callback id.
@@ -4639,7 +4591,6 @@ paths:
         Note: There is no limit to the amount of workspaces each API user can create.
       operationId: workspaceCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Content-Type'
         - $ref: '#/components/parameters/Workspace-Accept'
       requestBody:
@@ -4694,7 +4645,6 @@ paths:
       description: Returns a list of your workspaces.
       operationId: workspaceList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -4732,7 +4682,6 @@ paths:
       description: 'Use GET on a Workspace Id to verify it is a valid Workspace ID, and see a list of all the other endpoint URIs in that workspace'
       operationId: workspaceRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Accept'
         - $ref: '#/components/parameters/workspaceId'
       responses:
@@ -4787,7 +4736,6 @@ paths:
           $ref: '#/components/responses/501MethodNotImplemented'
       description: Update a workspace endpoint
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Workspace-Content-Type'
         - $ref: '#/components/parameters/Workspace-Accept'
         - $ref: '#/components/parameters/workspaceId'
@@ -4838,7 +4786,6 @@ paths:
         * Posting to the _/activities/{ID}_ endpoint will append the content to the detail of the specified activity
       operationId: activityCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Activity-Content-Type'
         - $ref: '#/components/parameters/Activity-Accept'
       requestBody:
@@ -4931,7 +4878,6 @@ paths:
         **Note:** The API currently results in a 404 Not Found when there are no activities present in the log for a given search criteria. This should not be not confused with a failed response. But rather as No Data Found.
       operationId: activityList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Activity-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -5149,7 +5095,6 @@ paths:
         By default, GET /activities returns all the activities at company level. This covers all the workspaces. So, if the items has to limited to a specific workspace, one has to use the workspace as the endpoint and activities followed by it.
       operationId: activityWorkspaceList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Activity-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -5266,7 +5211,6 @@ paths:
         **Note:** The API currently results in a 404 Not Found when there are no activities present in the log for a given search criteria. This should not be not confused with a failed response. But rather as No Data Found.
       operationId: customListList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/CustomList-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -5360,7 +5304,6 @@ paths:
         *   method - the HTTP method to use with this particular link
       operationId: customListRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/CustomList-Accept'
         - name: customlistId
           in: path
@@ -5424,7 +5367,6 @@ paths:
         Example: active != ACTIVE; inActive != INACTIVE
       operationId: userCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/User-Content-Type'
         - $ref: '#/components/parameters/User-Accept'
       requestBody:
@@ -5572,7 +5514,6 @@ paths:
         **Note:** While searching for users via status, use the short code ‘A’ for ACTIVE, similarly, 'I’ for INACTIVE, rather than the full words ACTIVE, INACTIVE, etc. so, it is &status=A not &status=ACTIVE.
       operationId: userList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - name: fieldname
           description: A filter on the User attributes. Only Users with matching attributes will be returned.
           in: query
@@ -5620,7 +5561,6 @@ paths:
         **Note**: use this endpoint with caution!
       operationId: usersDelete
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/User-Content-Type'
         - $ref: '#/components/parameters/User-Accept'
       responses:
@@ -5662,7 +5602,6 @@ paths:
       description: Retrieves a User object.
       operationId: userRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/User-Accept'
         - name: userId
           description: The identifier for the User.
@@ -5715,7 +5654,6 @@ paths:
         The response to the PUT request upon success is usually a 204 with no content being provided.
       operationId: userUpdate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/User-Content-Type'
         - $ref: '#/components/parameters/User-Accept'
         - name: userId
@@ -5844,7 +5782,6 @@ paths:
         The delete a user if successful shall respond with a 204 No Content.
       operationId: userDelete
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/User-Content-Type'
         - $ref: '#/components/parameters/User-Accept'
         - name: userId
@@ -5893,7 +5830,6 @@ paths:
       description: Returns a list of your Users.
       operationId: userWorkspaceList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/User-Accept'
         - $ref: '#/components/parameters/sortOrder'
         - $ref: '#/components/parameters/sortFields'
@@ -5933,7 +5869,6 @@ paths:
       description: List event objects
       operationId: eventList
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Event-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -6223,7 +6158,6 @@ paths:
         > * If you don't supply an attribute in the message payload, and this has also not been supplied from the event, the field simply will not be resolved within the message.
       operationId: eventCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Event-Content-Type'
         - $ref: '#/components/parameters/Event-Accept'
       responses:
@@ -6376,7 +6310,6 @@ paths:
       description: Retrieve an event object
       operationId: eventRetrieve
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Event-Accept'
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -6428,7 +6361,6 @@ paths:
       operationId: eventUpdate
       description: Update an event object
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Event-Content-Type'
         - $ref: '#/components/parameters/Event-Accept'
       responses:
@@ -6526,7 +6458,6 @@ paths:
         **Note:** Import processes take place asynchronously. Any contacts will be created once the import process starts, and users will be able to utilise imported contacts as soon as each is completed.
       operationId: importCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Import-Content-Type'
         - $ref: '#/components/parameters/Import-Accept'
       requestBody:
@@ -6596,6 +6527,9 @@ paths:
       operationId: authCreate
       x-sdkOperation: create
       x-isPost: true
+      security:
+        - BasicAuth: []
+          ApiKeyAuth: []
       responses:
         '200':
           description: OK
@@ -6645,11 +6579,10 @@ paths:
         '501':
           $ref: '#/components/responses/501MethodNotImplemented'
       description: |-
-        Create a JWT bearer token, authenticated with Basic Authentication and an `x-api-key`.
+        Create a JWT bearer token, authenticated with Basic Authentication and an `X-Api-Key`. This endpoint does not accept an existing Bearer token — you must authenticate with Basic Authentication and an `X-Api-Key` to obtain one.
 
-        This bearer token can then be used in place of both the Basic Authentication header and the `x-api-key` header on subsequent requests (`Authorization: Bearer {token}`). Do not send `x-api-key` alongside a Bearer token — it is not required and is ignored.
+        The resulting bearer token can then be used in place of both the Basic Authentication header and the `X-Api-Key` header on subsequent requests (`Authorization: Bearer {token}`). Do not send `X-Api-Key` alongside a Bearer token — it is not required and is ignored.
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Auth-Content-Type'
         - $ref: '#/components/parameters/Auth-Accept'
       tags:
@@ -6657,11 +6590,12 @@ paths:
   /auth/verify:
     get:
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Auth-Accept'
-      description: 'Verify a previously issued bearer token (JWT) is still valid. Pass the token in the `Authorization: Bearer {token}` header; do not send `x-api-key` alongside it.'
+      description: 'Verify a previously issued bearer token (JWT) is still valid. Pass the token in the `Authorization: Bearer {token}` header; do not send `X-Api-Key` alongside it.'
       operationId: authVerificationRetrieve
       x-sdkOperation: retrieveVerification
+      security:
+        - BearerAuth: []
       responses:
         '200':
           description: OK
@@ -6711,7 +6645,6 @@ paths:
         > **IMPORTANT:** You will need to initially set up an alias name with value `otp` via `Alias Manager` within your Company account to use your designated Sender ID in each country for Whispir Verify. Please contact your company administrator if this is not arranged yet.
       operationId: sendCodeCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Json-Content-Type'
         - $ref: '#/components/parameters/Json-Accept'
       requestBody:
@@ -6859,7 +6792,6 @@ paths:
         | PHP   | ₱20   |
       operationId: verifyCodeCreate
       parameters:
-        - $ref: '#/components/parameters/X-Api-Key'
         - $ref: '#/components/parameters/Json-Content-Type'
         - $ref: '#/components/parameters/Json-Accept'
       requestBody:
@@ -6981,16 +6913,16 @@ components:
     BasicAuth:
       type: http
       scheme: basic
-      description: 'HTTP Basic Authentication using your Whispir username and password. Must be combined with `ApiKeyAuth` (`x-api-key` header).'
+      description: 'HTTP Basic Authentication using your Whispir username and password. Must be combined with `ApiKeyAuth` (`X-Api-Key` header).'
     ApiKeyAuth:
-      name: x-api-key
+      name: X-Api-Key
       type: apiKey
       in: header
       description: 'Required only when authenticating with `BasicAuth`. Not required, and not used, when authenticating with a `BearerAuth` token issued by the Developer Portal.'
     BearerAuth:
       type: http
       scheme: bearer
-      description: 'A standalone API key issued by the Developer Portal, passed in the `Authorization: Bearer` header. This credential is self-contained — the `x-api-key` header must not be sent alongside it.'
+      description: 'A standalone API key issued by the Developer Portal, passed in the `Authorization: Bearer` header. This credential is self-contained — the `X-Api-Key` header must not be sent alongside it.'
   schemas:
     Message:
       type: object
@@ -12097,14 +12029,6 @@ components:
             This is the API mapping code or ID triggered for one-click unsubscribe functionality.
             This code can be retrieved from the API Mapping page.
   parameters:
-    X-Api-Key:
-      name: X-Api-Key
-      in: header
-      x-isApiKey: true
-      required: false
-      schema:
-        type: string
-      description: 'Required only when authenticating with Basic Authentication (`Authorization: Basic ...`). Omit this header when authenticating with a Developer Portal Bearer token (`Authorization: Bearer ...`) — the two credentials are not used together.'
     workspaceId:
       name: workspaceId
       in: path

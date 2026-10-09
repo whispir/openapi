@@ -23,7 +23,7 @@ In the event that Whispir’s rate limits are breached, the following error mess
 
 GET /messages
 
-x-api-key: 89aUAtBusdfohhZI6zoFNasd89023rsdf3X3h44c
+X-Api-Key: 89aUAtBusdfohhZI6zoFNasd89023rsdf3X3h44c
 
 HTTP 403 Forbidden
 
@@ -37,7 +37,7 @@ X-Error-Detail: Account Over Queries Per Second Limit
 
 GET /messages
 
-x-api-key: 89aUAtBusdfohhZI6zoFNasd89023rsdf3X3h44c
+X-Api-Key: 89aUAtBusdfohhZI6zoFNasd89023rsdf3X3h44c
 
 HTTP 403 Forbidden
 

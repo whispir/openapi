@@ -82,7 +82,7 @@ Accept: application/vnd.whispir.message-v1+json
 
 Method | Header | Comment
 ---------|----------|---------
- ALL | x-api-key | Missing x-api-key will result in 403 Forbidden and message body: '{"message" : "Forbidden"}`
+ ALL | X-Api-Key | Missing X-Api-Key will result in 403 Forbidden and message body: '{"message" : "Forbidden"}`
  GET | Accept | Specify the format for receiving Whispir data.
  PUT / POST | Content Type / Accept | PUT and POST both send content to Whispir to create and update resources and entities. Methods that return the created resource in the body will use the Accept content type specified if appropriate.
  DELETE|  | Technically DELETE requires neither Accept or Content-Type, however you may elect to specify Accept type in the event of an error message returned.
